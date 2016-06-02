@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.brokerage.dao.mysql.mapper.DistributionBrokerageMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="DistributionBrokerage">  
+        select * from `brokerage_distribution_brokerage` 
+        where 1 = 1
+        <if test="startDate!=null and startDate!=''">
+           and `orderTime` between #{startDate} and #{endDate}
+        </if>
+        <if test="type !=0">
+        	and `type`=#{type}
+        </if>
+        <if test="state !=0">
+        	and `state`=#{state}
+        </if>
+        limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `brokerage_distribution_brokerage` 
+        where 1 = 1
+        <if test="startDate!=null and startDate!=''">
+           and `orderTime` between #{startDate} and #{endDate}
+        </if>
+        <if test="type!=0">
+        	and `type`=#{type}
+        </if>
+        <if test="state !=0">
+        	and `state`=#{state}
+        </if>
+    </select> 
+</mapper>

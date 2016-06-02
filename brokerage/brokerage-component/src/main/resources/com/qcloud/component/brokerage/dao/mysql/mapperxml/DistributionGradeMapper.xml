@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.brokerage.dao.mysql.mapper.DistributionGradeMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="DistributionGrade">  
+        select * from `brokerage_distribution_grade` limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `brokerage_distribution_grade`
+    </select> 
+    
+    <select id="getByClassify" parameterType="java.util.HashMap" resultType="DistributionGrade">  
+        select * from `brokerage_distribution_grade`
+         
+        where 1=1 and `classifyId`=#{classifyId}
+        
+    </select>  
+    
+    <select id="getDefault" parameterType="java.util.HashMap" resultType="DistributionGrade">  
+        select * from `brokerage_distribution_grade` where userResource = 2 order by bsid limit 0,1
+    </select> 
+    
+</mapper>
