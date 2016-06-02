@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml>
+	<module-list code="loginIndex">
+		<item name="loginLogo">/qcloud-admin/assets/images/logo.png</item>
+		<item name="loginMessage">©旗云科技</item>
+	</module-list>
+	<!-- 
+	<module-list code="loginIndex"> <item name="loginLogo">/qcloud-admin/assets/img/exy.jpg</item> 
+		<item name="loginMessage">商家后台</item> 
+	</module-list> 
+	-->
+	<module-list code="personalcenter_user_account_type">
+		<item key="mobile" enable="true">手机作账号</item>		
+	</module-list>
+
+	<!--begin of 唯一编码设置  -->
+	<module-list code="qi-cloud-UniqueCodeGeneratorConfig">
+		<item>personalcenter-my-coupon-code</item>
+		<item>sellercenter-merchant-code</item>
+		<item>sellercenter-member-code</item>
+	</module-list>
+	
+	<module-list code="personalcenter-my-coupon-code">
+		<item type="string">DSL</item>
+		<item type="time">yyyyMMdd</item>
+		<item type="random">000000</item>
+	</module-list>
+	
+	<module-list code="sellercenter-merchant-code">
+		<item type="random">000000</item>
+	</module-list>
+	
+	<module-list code="sellercenter-member-code">	
+		<item type="variable">merchant_code</item>	
+		<item type="number">0000</item>
+	</module-list>
+	<!--end of  唯一编码设置-->
+
+	
+	<!--begin of  发送短信模板配置 -->	
+	<module-list code="publicservice-sms-template">
+		<item code="personalcenter-user-sms-template" 						name="用户注册短信验证码模板" >用户注册短信验证码模板</item>
+		<item code="personalcenter-user-sms-fPswTemplate" 					name="用户找回密码短信模板">用户找回密码短信模板</item>
+		<item code="personalcenter-user-sms-pay-notifyTemplate" 			name="用户支付通知短信模板">用户支付通知短信模板</item>
+		<item code="personalcenter-user-activate-exist-sms-template" 		name="会员卡绑定短信模板">会员卡绑定短信模板</item>
+		<item code="personalcenter-activate-not-exist-user-sms-template" 	name="会员卡激活短信模板">会员卡激活短信模板</item>
+		<item code="personalcenter-user-sms-refund-notifyTemplate" 			name="申请退款短信模板">申请退款短信模板</item>
+		<item code="personalcenter-user-sms-return-notifyTemplate" 			name="申请退货短信模板">申请退货短信模板</item>
+		<item code="personalcenter-user-sms-exchange-notifyTemplate" 		name="申请换货短信模板">申请换货短信模板</item>
+		<item code="personalcenter-user-sms-pay-refund-notifyTemplate" 		name="卖家退款通知短信模板">卖家退款通知短信模板</item>
+		<item code="personalcenter-user-sms-refund-agree-notifyTemplate" 	name="门店同意退款通知短信模板">门店同意退款通知短信模板</item>
+		<item code="personalcenter-user-sms-return-receive-notifyTemplate" 	name="门店退货签收通知短信模板">门店退货签收通知短信模板</item>
+		<item code="personalcenter-user-sms-houseperty-purchase-notifyTemplate" 	name="房产商城我要发布验证码短信模板">房产商城我要发布验证码短信模板</item>		
+		<item code="merchant-distribute-ready-card-sms-template" 	name="商家代发卡短信确认验证码">商家代发卡短信确认验证码</item>		
+		<item code="merchant-distribute-success-card-sms-template" 	name="商家代发卡成功短信提示">商家代发卡成功短信提示</item>		
+	</module-list>
+	
+	<module-list code="commoditycenter-pointexchange-message">
+		<item name="title">积分兑好礼</item>
+		<item name="message">每周一更新</item>
+	</module-list>			
+	<!--end of  发送短信模板配置 -->	
+	
+	<module-list code="sellercenter-merchant-admin-account">
+		<item account="admin">所有商家管理员账号</item>
+	</module-list>
+	
+	<!-- app首页4个模块 -->
+	<module-list code="forest-app-index-module">
+		<item code="forest-discount" tips="天天特价 爽不停">折扣专区</item>
+		<item code="forest-brand" tips="抢大牌、不封顶">品牌特卖</item>
+		<item code="forest-new-person" tips="50元红包">新人尊享</item>
+		<item code="forest-member" tips="不是买药 是买健康">会员特卖</item>
+	</module-list>
+	
+	
+	<module-list code="pirates-@-member">
+		<item name="索隆"></item>
+		<item name="龙马"></item>
+		<item name="艾斯"></item>
+		<item name="蕾贝卡"></item>
+		<item name="伊万"></item>
+		<item name="蒂奇"></item>
+		<item name="白星"></item>
+		<item name="玛琪诺"></item>
+		<item name="奥卡"></item>
+		<item name="妮可"></item>
+		<item name="雷利"></item>
+		<item name="小八"></item>
+	</module-list>
+</xml>
