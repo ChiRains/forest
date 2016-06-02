@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.orderform.dao.mysql.mapper.SubOrderMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="SubOrder">  
+        select * from `${table_name}` limit #{start},#{count}
+    </select>  
+    
+     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `${table_name}`
+    </select> 
+    
+    <select id="listByCollectOrder" parameterType="java.util.HashMap" resultType="SubOrder">  
+        select * from `${table_name}` where `orderId`= #{collectOrderId}
+    </select>     
+    
+     <select id="getByOrderNumber" parameterType="java.util.HashMap" resultType="SubOrder">  
+        select * from `${table_name}` where orderNumber = #{orderNumber}
+        limit #{start},#{count}
+    </select>  
+    
+     <select id="listByMerchantAndDay" parameterType="java.util.HashMap" resultType="SubOrder">  
+        select * from `${table_name}` where `merchantId`= #{merchantId} and (`state`=20 || `state`=30 || `state`=40 || `state`=50) and 
+        (deliveryTimeStr like concat(#{date},'%'))
+    </select> 
+</mapper>

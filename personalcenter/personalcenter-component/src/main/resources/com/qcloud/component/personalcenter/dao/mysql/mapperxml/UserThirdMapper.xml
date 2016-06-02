@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.personalcenter.dao.mysql.mapper.UserThirdMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="UserThird">  
+        select * from `personalcenter_user_third` limit #{start},#{count}
+    </select>  
+    
+     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `personalcenter_user_third`
+    </select> 
+    
+    <select id="getByThird" parameterType="java.util.HashMap" resultType="UserThird">  
+        select * from `personalcenter_user_third` where `thirdId`=#{thirdId} and `accountType`=#{accountType}
+    </select>    
+    
+    <select id="getByUser" parameterType="java.util.HashMap" resultType="UserThird">  
+        select * from `personalcenter_user_third` where `userId`=#{userId}
+    </select>            
+</mapper>

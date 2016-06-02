@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.my.dao.mysql.mapper.InvoiceModeMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="InvoiceMode">  
+        select * from `my_invoice_mode` limit #{start},#{count}
+    </select>  
+    
+     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `my_invoice_mode`
+    </select> 
+        
+    <select id="getByUser" parameterType="Long" resultType="InvoiceMode">  
+        select * from `my_invoice_mode` where userId = #{userId}
+    </select> 
+</mapper>

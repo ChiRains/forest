@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.commoditycenter.dao.mysql.mapper.MerchandiseSpecificationsRelationMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="MerchandiseSpecificationsRelation">  
+        select * from `commoditycenter_merchandise_specifications_relation` 
+        limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `commoditycenter_merchandise_specifications_relation`
+    </select> 
+    
+	<select id="listByMerchandiseId" parameterType="java.util.HashMap" resultType="MerchandiseSpecificationsRelation">
+		 select * from `commoditycenter_merchandise_specifications_relation` 
+		 where 1=1  and `merchandiseId`=#{merchandiseId}
+	</select>  
+	
+	<update id="updateSpecByMap" parameterType="java.util.HashMap" >
+		update `commoditycenter_merchandise_specifications_relation`
+		set  `merchandiseId`=#{merchandiseId} , `attributeId`=#{attributeId}
+	</update>  
+	
+	<select id="listByMap" parameterType="java.util.HashMap" resultType="MerchandiseSpecificationsRelation">
+		select * from `commoditycenter_merchandise_specifications_relation` 
+		where 1=1  
+		and `merchandiseId`=#{merchandiseId}
+		and `attributeId`=#{attributeId}
+	</select>  
+	
+</mapper>

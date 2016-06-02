@@ -1,0 +1,39 @@
+package com.qcloud.component.commoditycenter.web.form;
+
+import com.qcloud.component.commoditycenter.model.CombinationMerchandise;
+import com.qcloud.component.commoditycenter.model.CombinationMerchandiseItem;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by brook on 2015/6/24.
+ */
+public class CombinationMerchandiseForm {
+    private CombinationMerchandise combinationMerchandise=new  CombinationMerchandise();
+    private List<CombinationMerchandiseItem> combinationMerchandiseItems = new ArrayList<CombinationMerchandiseItem>();
+
+    public CombinationMerchandiseForm() {
+    }
+
+    public CombinationMerchandiseForm(CombinationMerchandise combinationMerchandise, List<CombinationMerchandiseItem> combinationMerchandiseItems) {
+        this.combinationMerchandise = combinationMerchandise;
+        this.combinationMerchandiseItems = combinationMerchandiseItems;
+    }
+
+    public CombinationMerchandise getCombinationMerchandise() {
+        return combinationMerchandise;
+    }
+
+    public void setCombinationMerchandise(CombinationMerchandise combinationMerchandise) {
+        this.combinationMerchandise = combinationMerchandise;
+    }
+
+    public List<CombinationMerchandiseItem> getCombinationMerchandiseItems() {
+        return combinationMerchandiseItems;
+    }
+
+    public void setCombinationMerchandiseItems(List<CombinationMerchandiseItem> combinationMerchandiseItems) {
+        this.combinationMerchandiseItems = combinationMerchandiseItems;
+    }
+}

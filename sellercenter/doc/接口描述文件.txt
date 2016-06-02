@@ -1,0 +1,133 @@
+组件sellercenter接口
+
+1.  获取商家分类
+
+URL：  
+/classifyMerchant/listClassify.do?format=true
+
+参数：  
+无
+
+返回值
+{
+    "status": 200,
+    "message": "获取商家分类成功",
+    "data": {
+        "classifyList": [
+            {
+                "id": 9999999000001000,
+                "name": "吃",
+                "image": "",
+                "childrenList": []
+            },
+            {
+                "id": 9999999000001002,
+                "name": "穿",
+                "image": "",
+                "childrenList": []
+            },
+            {
+                "id": 9999999000001004,
+                "name": "住",
+                "image": "",
+                "childrenList": []
+            },
+            {
+                "id": 9999999000001004,
+                "name": "行",
+                "image": "",
+                "childrenList": []
+            }
+        ]
+    }
+}
+
+2.  获取商家列表
+
+URL：  
+/merchant/list.do?name=当&distance=1000&latitude=30.500&longitude=120.500&pageNum=1&pageSize=1&type=1&classifyId=1010006000000001&regionalCenterId=1
+参数：  
+name			商家名称
+classifyId   	商家分类
+pageNum			页码
+distance		距离（米）
+latitude 		经度
+longitude		纬度
+pageSize		分页大小(不传则用10)
+type			1、2、3、4	1最新;2最热；3最近；4最受欢迎
+regionalCenterId	中心区域ID，如果有传,则忽略经纬度，服务器自动进行转换
+
+返回值
+{
+  "status" : 200,
+  "message" : "查询商家成功.",
+  "data" : {
+    "total" : 1,
+    "next" : false,
+    "pageSize" : 1,
+    "merchantList" : [ {
+      "id" : 1010006000000002,
+      "name" : "麦当劳",
+      "address" : "广东中山小榄汽车站右侧50米",
+      "longitude" : null,
+      "latitude" : null,
+      "logo" : null,
+      "introduction" : "快吃店"
+    } ],
+    "pageNum" : 1
+  }
+}
+
+3.  获取热门商家列表
+
+URL：  
+/merchant/listHot.do
+
+参数与返回值  参考2
+
+4.  获取好评商家列表
+
+URL：  
+/merchant/listFavourable.do
+
+参数与返回值  参考2
+
+5.  获取最近商家列表
+
+URL：  
+/merchant/listRecently.do
+
+参数与返回值  参考2
+
+6.  获取最新商家列表
+
+URL：  
+/merchant/listNew.do
+
+参数与返回值  参考2
+
+
+7.  获取优质商家列表
+/merchant/listHighQuality.do
+
+参数：  
+无
+
+返回值
+{
+    "status": 200,
+    "message": "查询成功",
+    "data": {
+        "result": [
+            {
+                "id": 9999999000002000,
+                "name": "KFC",
+                "address": "广东珠海香洲南方软件软",
+                "longitude": null,
+                "latitude": null,
+                "logo": null,
+                "introduction": ""
+            }
+        ]
+    }
+}

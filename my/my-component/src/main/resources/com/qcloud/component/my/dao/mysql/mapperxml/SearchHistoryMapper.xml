@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.my.dao.mysql.mapper.SearchHistoryMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="SearchHistory">  
+        select * from `my_search_history` limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `my_search_history`
+    </select> 
+        
+    <select id="list" parameterType="java.util.HashMap" resultType="SearchHistory">  
+        select * from `my_search_history` where userId = #{userId} and type = #{type} order by `time` desc limit 0,#{number}
+    </select>        
+    
+    <select id="getByKeywords" parameterType="java.util.HashMap" resultType="SearchHistory">  
+        select * from `my_search_history` where userId = #{userId} and type = #{type} and keywords = #{keywords} limit 0,1
+    </select>        
+    
+    <delete id="clear" parameterType="java.util.HashMap">
+    	delete from `my_search_history` where userId = #{userId} and type = #{type}
+    </delete>          
+</mapper>

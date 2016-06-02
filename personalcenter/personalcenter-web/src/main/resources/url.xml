@@ -1,0 +1,634 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml>
+	<!-- 模块URL列表 标签-->
+	<module-list code="personalcenter-pirates-url-list">					
+	<item module="personnalcenter" name="签到规则" url="/mySignIn/getHtmlRule.do" parameterCode="">
+		<![CDATA[			
+			<style>img{width:100%;} </style><p>
+			    <strong>签到规格</strong><br/>
+			</p>			
+			<ol class=" list-paddingleft-2" style="list-style-type: decimal;">
+			    <li>
+			        <p>
+			            用户首次签到可获得5积分
+			        </p>
+			    </li>
+			    <li>
+			        <p>
+			            连续10天签到奖励10积分
+			        </p>
+			    </li>
+			    <li>
+			        <p>
+			            连续30天签到奖励40积分
+			        </p>
+			    </li>
+			    <li>
+			        <p>
+			            连续90天签到奖励135积分
+			        </p>
+			    </li>
+			    <li>
+			        <p>
+			            连续180天签到奖励300积分<br/>
+			        </p>
+			    </li>
+			</ol>		
+		]]>	
+	</item>	
+								
+	<item module="personnalcenter" name="签到" url="/app/mySignIn/signIn.do" parameterCode="">
+		<![CDATA[{
+		    "status" : 200,
+			"message" : "签到成功.",
+			"data" : {
+			 }
+		}]]>
+	</item>		
+	
+	<item module="personnalcenter" name="获取签到信息" url="/app/mySignIn/getSignInMseeage.do" parameterCode="" returnFieldCode="mySignIn_returnGetSignInMseeage">
+		<![CDATA[{
+			  "status" : 200,
+			  "message" : "签到成功.",
+			  "data" : {
+			    "nextDayNumber" : 18,
+			    "nextIntegral" : 40,
+			    "signNumber" : 12,
+			    "integral" : 10
+			  }
+		}]]>	
+	</item>		
+	
+	<item module="personnalcenter" name="获取每月签到列表" url="/app/mySignIn/listSignInMonth.do" parameterCode="mySignIn_listSignInMonth" returnFieldCode="mySignIn_returnListSignInMonth">
+		<![CDATA[
+		{
+			  "status" : 200,
+			  "message" : "签到成功.",
+			  "data" : {
+			    "voList" : [ {
+			      "day" : 1,
+			      "sign" : false
+			    }, {
+			      "day" : 2,
+			      "sign" : false
+			    }, {
+			      "day" : 3,
+			      "sign" : false
+			    }, {
+			      "day" : 4,
+			      "sign" : false
+			    }, {
+			      "day" : 5,
+			      "sign" : false
+			    }, {
+			      "day" : 6,
+			      "sign" : false
+			    }, {
+			      "day" : 7,
+			      "sign" : false
+			    }, {
+			      "day" : 8,
+			      "sign" : false
+			    }, {
+			      "day" : 9,
+			      "sign" : false
+			    }, {
+			      "day" : 10,
+			      "sign" : false
+			    }, {
+			      "day" : 11,
+			      "sign" : false
+			    }, {
+			      "day" : 12,
+			      "sign" : false
+			    }, {
+			      "day" : 13,
+			      "sign" : false
+			    }, {
+			      "day" : 14,
+			      "sign" : false
+			    }, {
+			      "day" : 15,
+			      "sign" : false
+			    }, {
+			      "day" : 16,
+			      "sign" : false
+			    }, {
+			      "day" : 17,
+			      "sign" : false
+			    }, {
+			      "day" : 18,
+			      "sign" : false
+			    }, {
+			      "day" : 19,
+			      "sign" : false
+			    }, {
+			      "day" : 20,
+			      "sign" : false
+			    }, {
+			      "day" : 21,
+			      "sign" : false
+			    }, {
+			      "day" : 22,
+			      "sign" : false
+			    }, {
+			      "day" : 23,
+			      "sign" : false
+			    }, {
+			      "day" : 24,
+			      "sign" : false
+			    }, {
+			      "day" : 25,
+			      "sign" : true
+			    }, {
+			      "day" : 26,
+			      "sign" : true
+			    }, {
+			      "day" : 27,
+			      "sign" : false
+			    }, {
+			      "day" : 28,
+			      "sign" : false
+			    }, {
+			      "day" : 29,
+			      "sign" : false
+			    }, {
+			      "day" : 30,
+			      "sign" : false
+			    }, {
+			      "day" : 31,
+			      "sign" : false
+			    } ]
+			  }
+			}		
+		]]>	
+	</item>			
+												
+	<item module="personnalcenter" name="发送注册短信验证码" url="/app/user/sendMsgForRegister.do" parameterCode="personnalcenter_sendMsgForRegister"><![CDATA[{
+				"status":200,
+				"message":"发送短信成功",
+				"data":{}
+			}
+		}]]>
+	</item>		
+	
+	<item module="personnalcenter" name="发送激活账户短信验证码" url="/app/user/sendMsgForActivateMembershipCard.do" parameterCode="personnalcenter_sendMsgForRegister">
+		<![CDATA[{
+			  "status" : 200,
+			  "message" : "发送短信成功",
+			  "data" : {
+			    "" : 1
+			  }
+			}
+			}]]>
+	</item>
+		
+	<item module="personnalcenter" name="激活用户" url="/app/user/activateUser.do" parameterCode="personnalcenter_activateUser">
+		<![CDATA[
+			{
+			  "status" : 200,
+			  "message" : "绑定会员卡成功",
+			  "data" : {
+			  }
+			}			
+		]]>
+	</item>
+	
+	<item module="personnalcenter" name="注册" url="/app/user/registerByMobile.do " parameterCode="personnalcenter_registerByMobile">
+	<![CDATA[{
+	  "status" : 200,
+	  "message" : "注册成功",
+	  "data" : {
+	    "code" : "099290"
+	  }
+	}]]></item>
+	
+	<item module="personnalcenter" name="登录" url="/app/user/login.do" parameterCode="personnalcenter_login">
+	<![CDATA[{
+	  "status" : 200,
+	  "message" : "登录成功",
+	  "data" : {
+	    "token" : "2_70F96B50293D498CA62895CBC466FF4F"
+	  }
+	  }]]></item>
+	  
+	<item module="personnalcenter" name="忘记密码发送短信" url="/app/user/sendMsgForForgetPwd.do" parameterCode="personnalcenter_sendMsgForForgetPwd">
+	<![CDATA[{
+		"status":200,
+		"message":"发送短信成功",
+		"data":{}
+	}]]></item>
+	
+	<item module="personnalcenter" name="忘记密码设置新密码" url="/app/user/setPwdByCode.do" parameterCode="personnalcenter_setPwdByCode">
+	<![CDATA[{
+		"status":200,
+		"message":"设置密码成功",
+		"data":{}
+	}]]></item>
+	
+	<item module="personnalcenter" name="修改用户密码" url="/app/user/changePwd.do" parameterCode="personnalcenter_changePwd" returnFieldCode="">
+	<![CDATA[{
+		"status":200,
+		"message":"修改密码成功",
+		"data":{}
+	}]]></item>
+	
+	<item module="personnalcenter" name="获取登录用户信息" url="/app/user/getUser.do" parameterCode="personnalcenter_getUser" returnFieldCode="personnalcenter_returnGetUser">
+	<![CDATA[{
+		"status" : 200,
+  "message" : "个人信息获取成功.",
+  "data" : {
+    "user" : {
+      "nickname" : "11",
+      "name" : "索隆",
+      "mobile" : "13232281111",
+      "email" : "zoro@qcloud.com",
+      "headImage" : "",
+      "sexStr" : "男",
+      "grade" : "普通会员",
+      "integral" : 0,
+      "commission" : 0.0,
+      "consumptionCurrency" : 0.0,
+      "birthYear" : 0,
+      "birthMonth" : 0,
+      "birthDay" : 0,
+      "province" : null,
+      "city" : null,
+      "district" : null,
+      "withdrawedCommission" : 0.0,
+      "withdrawingCommission" : 0.0,
+      "entryTimeStr" : "2016-01-24 17:06:24",
+      "membershipCard" : null,
+      "merchandiseCollectNumber" : 0,
+      "merchantCollectNumber" : 0
+    }
+  }
+}]]></item>
+	
+	<item module="personnalcenter" name="修改用户信息" url="/app/user/edit.do" parameterCode="personnalcenter_editPersonalMessage">
+	<![CDATA[{
+	"status" : 200,
+	  "message" : "修改个人信息成功.",
+	  "data" : {}
+	}]]></item>
+	
+		<item module="personnalcenter" name="积分记录" url="/app/myWealth/listIntegralDetail.do" parameterCode="personnalcenter_listIntegralDetail" returnFieldCode="personnalcenter_returnListIntegralDetail">
+	<![CDATA[{
+	  "status" : 200,
+	  "message" : "查询财富排行榜成功.",
+	  "data" : {
+	    "list" : [ {
+	      "point" : 7.78,
+	      "timeStr" : "2015-10-04 17:59:29",
+	      "desc" : "佣金计算4F3E053AC2474411B216CD375964FFB6"
+	    }, {
+	      "point" : 1.56,
+	      "timeStr" : "2015-10-04 17:59:29",
+	      "desc" : "佣金计算9C6BDAF8DA35465E87533BE41FF653EC"
+	    }, {
+	      "point" : 7.78,
+	      "timeStr" : "2015-10-04 17:59:29",
+	      "desc" : "佣金计算5353278BF21749999506EB93C8DA57C5"
+	    }, {
+	      "point" : 96.23,
+	      "timeStr" : "2015-10-04 17:59:29",
+	      "desc" : "佣金计算D97165770D7B48A08194A08C3EBAE95A"
+	    }, {
+	      "point" : 24.3,
+	      "timeStr" : "2015-10-04 17:59:29",
+	      "desc" : "佣金计算09B7359FB3C34C9DB5108B5E18E5D54A"
+	    } ]
+	  }
+	}]]></item>
+	
+	<item module="personnalcenter" name="佣金记录" url="/app/myWealth/listCommissionDetail.do" parameterCode="personnalcenter_listCommissionDetail" returnFieldCode="personnalcenter_returnListCommissionDetail">
+	<![CDATA[{
+			"status" : 200,
+		  "message" : "查询财富排行榜成功.",
+		  "data" : {
+		    "list" : [ {
+		      "point" : 7.78,
+		      "timeStr" : "2015-10-04 17:59:29",
+		      "desc" : "佣金计算4F3E053AC2474411B216CD375964FFB6"
+		    }, {
+		      "point" : 1.56,
+		      "timeStr" : "2015-10-04 17:59:29",
+		      "desc" : "佣金计算9C6BDAF8DA35465E87533BE41FF653EC"
+		    }, {
+		      "point" : 7.78,
+		      "timeStr" : "2015-10-04 17:59:29",
+		      "desc" : "佣金计算5353278BF21749999506EB93C8DA57C5"
+		    }, {
+		      "point" : 96.23,
+		      "timeStr" : "2015-10-04 17:59:29",
+		      "desc" : "佣金计算D97165770D7B48A08194A08C3EBAE95A"
+		    }, {
+		      "point" : 24.3,
+		      "timeStr" : "2015-10-04 17:59:29",
+		      "desc" : "佣金计算09B7359FB3C34C9DB5108B5E18E5D54A"
+		    } ]
+		  }
+	}]]></item>
+	
+	<item module="personnalcenter" name="消费币记录" url="/app/myWealth/listCurrencyDetail.do" parameterCode="personnalcenter_listCurrencyDetail" returnFieldCode="personnalcenter_reutrnListCurrencyDetail">
+	<![CDATA[{
+			status" : 200,
+		  "message" : "查询财富排行榜成功.",
+		  "data" : {
+		    "list" : [ {
+		      "point" : 7.78,
+		      "timeStr" : "2015-10-04 17:59:29",
+		      "desc" : "佣金计算4F3E053AC2474411B216CD375964FFB6"
+		    }, {
+		      "point" : 1.56,
+		      "timeStr" : "2015-10-04 17:59:29",
+		      "desc" : "佣金计算9C6BDAF8DA35465E87533BE41FF653EC"
+		    }, {
+		      "point" : 7.78,
+		      "timeStr" : "2015-10-04 17:59:29",
+		      "desc" : "佣金计算5353278BF21749999506EB93C8DA57C5"
+		    }, {
+		      "point" : 96.23,
+		      "timeStr" : "2015-10-04 17:59:29",
+		      "desc" : "佣金计算D97165770D7B48A08194A08C3EBAE95A"
+		    }, {
+		      "point" : 24.3,
+		      "timeStr" : "2015-10-04 17:59:29",
+		      "desc" : "佣金计算09B7359FB3C34C9DB5108B5E18E5D54A"
+		    } ]
+		  }
+	}]]></item>
+	
+	<item module="personnalcenter" name="心源宝趋势" url="/app/myWealth/statCommissionTrend.do" parameterCode="personnalcenter_statCommissionTrend" returnFieldCode="personnalcenter_returnStatCommissionTrend">
+	<![CDATA[{
+	  "status" : 200,
+	  "message" : "统计财富排行榜成功.",
+	  "data" : {
+	    "list" : [ {
+	      "point" : 7568.0,
+	      "timeStr" : "2015-10-02 22:23:27",
+	      "desc" : "订单：VPFH201509281154,现金消费：15136.0",
+	      "remainder" : 100.0
+	    }, {
+	      "point" : 7568.0,
+	      "timeStr" : "2015-10-04 22:23:28",
+	      "desc" : "订单：XAXB201509281119,现金消费：15136.0",
+	      "remainder" : 100.0
+	    } ]
+	  }
+	}]]></item>
+	
+	<item module="personnalcenter" name="积分趋势" url="/app/myWealth/statIntegralTrend.do" parameterCode="personnalcenter_statIntegralTrend" returnFieldCode="personnalcenter_returnStatIntegralTrend">
+	<![CDATA[{
+	  "status" : 200,
+	  "message" : "统计财富排行榜成功.",
+	  "data" : {
+	    "list" : [ {
+	      "point" : 7568.0,
+	      "timeStr" : "2015-10-02 22:23:27",
+	      "desc" : "订单：VPFH201509281154,现金消费：15136.0",
+	      "remainder" : 100.0
+	    }, {
+	      "point" : 7568.0,
+	      "timeStr" : "2015-10-04 22:23:28",
+	      "desc" : "订单：XAXB201509281119,现金消费：15136.0",
+	      "remainder" : 100.0
+	    } ]
+	  }
+	}]]></item>
+	
+	<item module="personnalcenter" name="消费币趋势" url="/app/myWealth/statCurrencyTrend.do" parameterCode="personnalcenter_statCurrencyTrend" returnFieldCode="personnalcenter_returnStatCurrencyTrend">
+	<![CDATA[{
+			"status" : 200,
+			  "message" : "统计财富排行榜成功.",
+			  "data" : {
+			    "list" : [ {
+			      "point" : 7568.0,
+			      "timeStr" : "2015-10-02 22:23:27",
+			      "desc" : "订单：VPFH201509281154,现金消费：15136.0",
+			      "remainder" : 100.0
+			    }, {
+			      "point" : 7568.0,
+			      "timeStr" : "2015-10-04 22:23:28",
+			      "desc" : "订单：XAXB201509281119,现金消费：15136.0",
+			      "remainder" : 100.0
+			    } ]
+			  }
+	}]]></item>
+	
+	<item module="personnalcenter" name="修改个人头像" url="/app/user/editHeadImage.do" parameterCode="personnalcenter_editHeadImage">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "修改头像成功",
+				  "data" : {
+				  }
+	}]]></item>
+	
+	<item module="personnalcenter" name="修改个人性别" url="/app/user/editSex.do" parameterCode="personnalcenter_editSex">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "修改性别成功",
+				  "data" : {
+				  }
+	}]]></item>
+	
+	<item module="personnalcenter" name="修改个人昵称" url="/app/user/editNickname.do" parameterCode="personnalcenter_editNickname">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "修改昵称成功",
+				  "data" : {
+				  }
+	}]]></item>
+	
+	<item module="personnalcenter" name="修改个人手机号" url="/app/user/editMobile.do" parameterCode="personnalcenter_editMobile">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "修改手机号成功",
+				  "data" : {
+				  }
+	}]]></item>
+	
+	<item module="personnalcenter" name="修改个人邮箱" url="/app/user/editEmail.do" parameterCode="personnalcenter_editEmail">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "修改邮箱成功",
+				  "data" : {
+				  }
+	}]]></item>	
+	</module-list>
+	<!-- 模块URL列表 标签-->
+	
+	<!-- 模块URL明细-->	
+	<module-list code="mySignIn_returnGetSignInMseeage">
+		<item key="nextDayNumber">下次签到次数</item>
+		<item key="nextIntegral">下次签到积分</item>
+		<item key="signNumber">签到次数</item>
+		<item key="integral">积分</item>
+	</module-list>
+	<module-list code="personnalcenter_returnGetUser">
+		<item key="nickname">昵称</item>
+		<item key="name">姓名</item>
+		<item key="mobile">手机号</item>
+		<item key="email">邮箱</item>
+		<item key="headImage">头像</item>
+		<item key="sexStr">性别</item>
+		<item key="grade">用户等级</item>
+		<item key="integral">积分</item>
+		<item key="commission">佣金</item>
+		<item key="consumptionCurrency">消费币</item>
+		<item key="birthYear">出生年</item>
+		<item key="birthMonth">出生月</item>
+		<item key="birthDay">出生日</item>
+		<item key="province">省</item>
+		<item key="city">市</item>
+		<item key="district">区</item>
+		<item key="withdrawedCommission">累计提现</item>
+		<item key="withdrawingCommission">正在提现</item>
+		<item key="entryTimeStr">注册时间</item>
+		<item key="membershipCard">会员卡</item>
+		<item key="merchandiseCollectNumber">商品收藏数量</item>
+		<item key="merchantCollectNumber">商家收藏数量</item>
+	</module-list>	
+		
+	<module-list code="mySignIn_listSignInMonth">
+		<item key="year">年份,2000年以后,不含2000</item>
+		<item key="month">月份 1到12</item>
+	</module-list>	
+	<module-list code="mySignIn_returnListSignInMonth">
+		<item key="day">日期</item>
+		<item key="sign">是否签到，true是，false否</item>
+	</module-list>	
+	
+	<module-list code="personnalcenter_activateUser">	
+		<item key="membershipCard">会员卡号:可为空</item>	
+		<item key="code">激活验证码</item> 
+		<item key="pwd">密码</item>
+		<item key="mobile">手机号</item>
+	</module-list>	
+	
+	<module-list code="personnalcenter_sendMsgForRegister">
+		<item key="mobile">手机号</item>
+	</module-list>
+	
+	<module-list code="personnalcenter_registerByMobile">
+		<item key="mobile">手机号</item>
+		<item key="code">短信验证码</item>
+	</module-list>
+	
+	<module-list code="personnalcenter_login">
+		<item key="username">手机号</item>
+		<item key="pwd">密码</item>
+	</module-list>	
+		
+	<module-list code="personnalcenter_sendMsgForForgetPwd">
+		<item key="mobile">手机号</item>
+	</module-list>		
+	
+	<module-list code="personnalcenter_setPwdByCode">
+		<item key="username">手机号</item>
+		<item key="newPwd">新密码</item>
+	</module-list>	
+		
+	<module-list code="personnalcenter_changePwd">
+	<item key="oldPwd">旧密码</item>
+	<item key="newPwd">新密码</item>
+	</module-list>	
+	
+	<module-list code="personnalcenter_editPersonalMessage">
+	<item key="nickname">昵称</item>
+	<item key="name">姓名</item>
+	<item key="email">邮箱</item>
+	<item key="sex">性别</item>
+	<item key="birthYear">出生年</item>
+	<item key="birthMonth">出生月</item>
+	<item key="birthDay">出生日</item>
+	<item key="province">省</item>
+	<item key="city">市</item>
+	<item key="district">区</item>
+	</module-list>	
+	
+	<module-list code="personnalcenter_listIntegralDetail">
+	<item key="detailType">1全部 2收入 3支出</item>
+	</module-list>	
+	<module-list code="personnalcenter_returnListIntegralDetail">
+	<item key="list[i].point">当次财富值</item>
+	<item key="list[i].timeStr">发生时间</item>
+	<item key="list[i].desc">财富描述</item>
+	</module-list>
+	
+	<module-list code="personnalcenter_listCommissionDetail">
+	<item key="detailType">1全部 2收入 3支出</item>
+	</module-list>
+	
+	<module-list code="personnalcenter_returnListCommissionDetail">
+	<item key="list[i].point">当次财富值</item>
+	<item key="list[i].timeStr">发生时间</item>
+	<item key="list[i].desc">财富描述</item>
+	</module-list>
+	
+	<module-list code="personnalcenter_listCurrencyDetail">
+	<item key="detailType">1全部 2收入 3支出</item>
+	</module-list>	
+	<module-list code="personnalcenter_reutrnListCurrencyDetail">
+	<item key="list[i].point">当次财富值</item>
+	<item key="list[i].timeStr">发生时间</item>
+	<item key="list[i].desc">财富描述</item>
+	</module-list>	
+	<module-list code="personnalcenter_statCommissionTrend">
+	<item key="begin">开始日期</item>
+	<item key="end">结束日期</item>
+	</module-list>	
+	
+	<module-list code="personnalcenter_returnStatCommissionTrend">
+	<item key="point">当次财富值</item>
+	<item key="timeStr">发生时间</item>
+	<item key="desc">财富描述</item>
+	<item key="remainder">余额</item>
+	</module-list>	
+	
+	<module-list code="personnalcenter_statIntegralTrend">
+	<item key="begin">开始日期</item>
+	<item key="end">结束日期</item>
+	</module-list>	
+	
+	<module-list code="personnalcenter_returnStatIntegralTrend">
+	<item key="point">当次财富值</item>
+	<item key="timeStr">发生时间</item>
+	<item key="desc">财富描述</item>
+	<item key="remainder">余额</item>
+	</module-list>
+	
+	<module-list code="personnalcenter_statCurrencyTrend">
+	<item key="begin">开始日期</item>
+	<item key="end">结束日期</item>
+	</module-list>		
+	
+	<module-list code="personnalcenter_returnStatCurrencyTrend">
+	<item key="point">当次财富值</item>
+	<item key="timeStr">发生时间</item>
+	<item key="desc">财富描述</item>
+	<item key="remainder">余额</item>
+	</module-list>
+	
+	<module-list code="personnalcenter_editHeadImage">
+		<item key="headImage">头像</item>
+	</module-list>	
+	
+	<module-list code="personnalcenter_editNickname">
+		<item key="nickname">昵称</item>
+	</module-list>	
+	
+	<module-list code="personnalcenter_editSex">
+		<item key="sex">性别1男2女3保密</item>
+	</module-list>	
+	
+	<module-list code="personnalcenter_editMobile">
+		<item key="mobile">手机号码</item>
+	</module-list>	
+	
+	<module-list code="personnalcenter_editEmail">
+		<item key="emaill">邮箱</item>
+	</module-list>			
+	
+	<!-- 模块URL明细-->	
+</xml>

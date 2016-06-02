@@ -1,0 +1,208 @@
+
+INSERT INTO `parameter_param` VALUES ('9999999000000004', 'merchandise-classify-specifications-number', 'merchandise-classify-specifications-number', '2', '1', '2', '商品分类对应规格属性个数');
+INSERT INTO `parameter_param` VALUES ('9999999000000005', 'marketing-slide-sence-type', 'marketing-slide-sence-type', '1', '1', '1:万商创富商城;2:源生联盟商城', '促销广告栏图片类型');
+INSERT INTO `parameter_param` VALUES ('9999999000000001', 'personalcenter-account-data-type-key', 'personalcenter-account-data-type-key', '1', '1', 'mobile', '系统用户账号支持1 mobile 2 email');
+INSERT INTO `parameter_param` VALUES ('9999999000000002', 'personalcenter-user-default-password', 'personalcenter-user-default-password', '1', '1', '123456', '用户默认密码');
+INSERT INTO `parameter_param` VALUES ('9999999000000006', 'personalcenter-user-sms-template', 'personalcenter-user-sms-template', '1', '1', '您好，注册码是{code},有效时间{minute},请xxxx', '用户注册短信验证码');
+INSERT INTO `parameter_param` VALUES ('9999999000000007', 'personalcenter-user-grade', 'personalcenter-user-grade', '3', '1', '9999999000000001', '用户注册默认级别');
+INSERT INTO `parameter_param` VALUES ('9999999000000003', 'sellercenter-member-default-password', 'sellercenter-member-default-password', '1', '1', '654321', '企业用户默认密码');
+
+INSERT INTO `parameter_param` VALUES ('9999999000000010', 'ums-86-enterpriseNumber', 'ums-86-enterpriseNumber', '1', '1', '223185', '联通一信通企业号');
+INSERT INTO `parameter_param` VALUES ('9999999000000011', 'ums-86-adminName', 'ums-86-adminName', '1', '1', 'admin2', '联通一信通账号');
+INSERT INTO `parameter_param` VALUES ('9999999000000012', 'ums-86-adminPsw', 'ums-86-adminPsw', '1', '1', 'qcloud#@3399366', '联通一信通密码');
+
+INSERT INTO `parameter_param` VALUES ('9999999000000020', 'weixin-appId', 'weixin-appId', '1', '1', 'wx3fd5da72655f8c3c', '联通一信通企业号');
+INSERT INTO `parameter_param` VALUES ('9999999000000021', 'weixin-appSecret', 'weixin-appSecret', '1', '1', '6cd0911b47ba90c116ac5e133537a75d', '联通一信通账号');
+INSERT INTO `parameter_param` VALUES ('9999999000000022', 'weixin-pay-mchID', 'weixin-pay-mchID', '1', '1', '1234237002', '联通一信通密码');
+INSERT INTO `parameter_param` VALUES ('9999999000000023', 'weixin-pay-certPassword', 'weixin-pay-certPassword', '1', '1', '1234237002', '联通一信通账号');
+INSERT INTO `parameter_param` VALUES ('9999999000000024', 'weixin-pay-key', 'weixin-pay-key', '1', '1', '526t2Jx9IVXY2t70JVaG8I87635sso8U', '联通一信通密码');
+
+INSERT INTO `permission_role` VALUES ('9999999000000101', '商家职员', '商家职员', '9999999000000002');
+INSERT INTO `permission_role` VALUES ('9999999000000102', '门店职员', '门店职员', '9999999000000002');
+INSERT INTO `permission_role` VALUES ('9999999000000103', '商品审核员', '商品审核员', '9999999000000002');
+
+-- 商城菜单分类
+INSERT INTO `permission_catalog` VALUES ('9999999000000101', '基础设置', '1010', '1');
+INSERT INTO `permission_catalog` VALUES ('9999999000000102', '会员中心', '1020', '1');
+INSERT INTO `permission_catalog` VALUES ('9999999000000103', '卖家中心', '1030', '1');
+INSERT INTO `permission_catalog` VALUES ('9999999000000104', '商品中心', '1040', '1');
+INSERT INTO `permission_catalog` VALUES ('9999999000000105', '订单管理', '1050', '1');
+INSERT INTO `permission_catalog` VALUES ('9999999000000106', '评价管理', '1060', '1');
+INSERT INTO `permission_catalog` VALUES ('9999999000000107', '分销设置', '1070', '1');
+INSERT INTO `permission_catalog` VALUES ('9999999000000108', '营销管理', '1080', '1');
+
+INSERT INTO `permission_menu` VALUES ('9999999000000101', '省', '', '1010', 'admin/province/list', '9999999000000101');
+INSERT INTO `permission_menu` VALUES ('9999999000000102', '市', '', '1020', 'admin/city/list', '9999999000000101');
+INSERT INTO `permission_menu` VALUES ('9999999000000103', '区', '', '1030', 'admin/district/list', '9999999000000101');
+-- INSERT INTO `permission_menu` VALUES ('9999999000000104', '分类管理', '', '1040', 'admin/classify/list', '9999999000000101');
+INSERT INTO `permission_menu` VALUES ('9999999000000105', '短信设置', '', '1050', 'admin/umsConfig/getUmsConfig', '9999999000000101');
+INSERT INTO `permission_menu` VALUES ('9999999000000106', '微信设置', '', '1060', 'admin/weixinConfig/getWeiXinConfig', '9999999000000101');
+INSERT INTO `permission_menu` VALUES ('9999999000000107', '支付设置', '', '1070', 'admin/paySetting/list', '9999999000000101');
+INSERT INTO `permission_menu` VALUES ('9999999000000108', '支付时间设置', '', '1080', 'admin/paySetting/settingTime', '9999999000000101');
+
+INSERT INTO `permission_permission` VALUES ('9999999000000101', '省', '1', '9999999000000101');
+INSERT INTO `permission_permission` VALUES ('9999999000000102', '市', '1', '9999999000000102');
+INSERT INTO `permission_permission` VALUES ('9999999000000103', '区', '1', '9999999000000103');
+-- INSERT INTO `permission_permission` VALUES ('9999999000000104', '分类管理', '1', '9999999000000104');
+INSERT INTO `permission_permission` VALUES ('9999999000000105', '短信设置', '1', '9999999000000105');
+INSERT INTO `permission_permission` VALUES ('9999999000000106', '微信设置', '1', '9999999000000106');
+INSERT INTO `permission_permission` VALUES ('9999999000000107', '支付设置', '1', '9999999000000107');
+INSERT INTO `permission_permission` VALUES ('9999999000000108', '支付时间设置', '1', '9999999000000108');
+
+INSERT INTO `permission_role_permission` VALUES ('9999999000000101', '9999999000000101', '9999999000000001');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000102', '9999999000000102', '9999999000000001');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000103', '9999999000000103', '9999999000000001');
+-- INSERT INTO `permission_role_permission` VALUES ('9999999000000104', '9999999000000104', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000105', '9999999000000105', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000106', '9999999000000106', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000107', '9999999000000107', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000108', '9999999000000108', '9999999000000002');
+
+INSERT INTO `permission_menu` VALUES ('9999999000000121', '用户等级', '', '1210', 'admin/grade/list', '9999999000000102');
+INSERT INTO `permission_menu` VALUES ('9999999000000122', '用户', '', '1220', 'admin/user/list', '9999999000000102');
+INSERT INTO `permission_menu` VALUES ('9999999000000123', '用户财务', '', '1230', 'admin/myWealth/list', '9999999000000102');
+
+INSERT INTO `permission_permission` VALUES ('9999999000000121', '用户等级', '1', '9999999000000121');
+INSERT INTO `permission_permission` VALUES ('9999999000000122', '用户', '1', '9999999000000122');
+INSERT INTO `permission_permission` VALUES ('9999999000000123', '用户财务', '1', '9999999000000123');
+
+INSERT INTO `permission_role_permission` VALUES ('9999999000000151', '9999999000000121', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000152', '9999999000000122', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000153', '9999999000000123', '9999999000000002');
+
+INSERT INTO `permission_menu` VALUES ('9999999000000141', '商家分类', '', '1410', 'admin/classifyMerchant/list', '9999999000000103');
+INSERT INTO `permission_menu` VALUES ('9999999000000142', '商家列表', '', '1420', 'admin/merchant/list', '9999999000000103');
+INSERT INTO `permission_menu` VALUES ('9999999000000143', '优质商家', '', '1430', 'admin/merchantSort/list', '9999999000000103');
+INSERT INTO `permission_menu` VALUES ('9999999000000144', '门店管理', '', '1440', 'admin/store/list', '9999999000000103');
+INSERT INTO `permission_menu` VALUES ('9999999000000145', '商家信息维护', '', '1450', 'admin/merchant/toPerfect', '9999999000000103');
+-- INSERT INTO `permission_menu` VALUES ('9999999000000146', '区域中心点', '', '1460', 'admin/neighbourhood/list', '9999999000000103');
+INSERT INTO `permission_menu` VALUES ('9999999000000147', '距离设置', '', '1470', 'admin/distanceConfig/getDistanceConfig', '9999999000000103');
+
+INSERT INTO `permission_permission` VALUES ('9999999000000141', '商家分类', '1', '9999999000000141');
+INSERT INTO `permission_permission` VALUES ('9999999000000142', '商家列表', '1', '9999999000000142');
+INSERT INTO `permission_permission` VALUES ('9999999000000143', '优质商家', '1', '9999999000000143');
+INSERT INTO `permission_permission` VALUES ('9999999000000144', '门店管理', '1', '9999999000000144');
+INSERT INTO `permission_permission` VALUES ('9999999000000145', '商家信息维护', '1', '9999999000000145');
+-- INSERT INTO `permission_permission` VALUES ('9999999000000146', '区域中心点', '1', '9999999000000146');
+INSERT INTO `permission_permission` VALUES ('9999999000000147', '距离设置', '1', '9999999000000147');
+
+INSERT INTO `permission_role_permission` VALUES ('9999999000000201', '9999999000000141', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000202', '9999999000000142', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000203', '9999999000000143', '9999999000000002');
+-- INSERT INTO `permission_role_permission` VALUES ('9999999000000204', '9999999000000146', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000205', '9999999000000147', '9999999000000002');
+
+INSERT INTO `permission_role_permission` VALUES ('9999999000000206', '9999999000000144', '9999999000000101');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000207', '9999999000000145', '9999999000000101');
+
+-- INSERT INTO `permission_menu` VALUES ('9999999000000161', '属性管理', '', '1610', 'admin/attributeDefinition/list', '9999999000000104');
+INSERT INTO `permission_menu` VALUES ('9999999000000162', '商城商品分类', '', '1620', 'admin/classifyAttribute/classifyList', '9999999000000104');
+INSERT INTO `permission_menu` VALUES ('9999999000000163', '商家商品分类', '', '1630', 'admin/classifyMerchandise/listForMerchant', '9999999000000104');
+INSERT INTO `permission_menu` VALUES ('9999999000000164', '商品管理', '', '1640', 'admin/merchandise/list', '9999999000000104');
+INSERT INTO `permission_menu` VALUES ('9999999000000165', '商品审核', '', '1650', 'admin/merchandise/list4UnAudit', '9999999000000104');
+INSERT INTO `permission_menu` VALUES ('9999999000000166', '库存管理', '', '1670', 'admin/merchandiseStock/list', '9999999000000104');
+INSERT INTO `permission_menu` VALUES ('9999999000000167', '规格类目', '', '1618', 'admin/classifyAttribute/list', '9999999000000104');
+-- INSERT INTO `permission_menu` VALUES ('9999999000000168', '商品审核', '', '1680', 'admin/merchandise/list4UnAudit', '9999999000000104');
+-- INSERT INTO `permission_menu` VALUES ('9999999000000169', '规格管理', '', '1615', 'admin/attributeDefinition/specList', '9999999000000104');
+
+
+-- INSERT INTO `permission_permission` VALUES ('9999999000000161', '属性管理', '1', '9999999000000161');
+INSERT INTO `permission_permission` VALUES ('9999999000000162', '商城商品分类', '1', '9999999000000162');
+INSERT INTO `permission_permission` VALUES ('9999999000000163', '商家商品分类', '1', '9999999000000163');
+INSERT INTO `permission_permission` VALUES ('9999999000000164', '商品管理', '1', '9999999000000164');
+INSERT INTO `permission_permission` VALUES ('9999999000000165', '商品审核', '1', '9999999000000165');
+INSERT INTO `permission_permission` VALUES ('9999999000000166', '库存管理', '1', '9999999000000166');
+INSERT INTO `permission_permission` VALUES ('9999999000000167', '规格类目', '1', '9999999000000167');
+-- INSERT INTO `permission_permission` VALUES ('9999999000000168', '商品审核', '1', '9999999000000168');
+-- INSERT INTO `permission_permission` VALUES ('9999999000000169', '商品管理', '1', '9999999000000169');
+
+
+-- INSERT INTO `permission_role_permission` VALUES ('9999999000000251', '9999999000000161', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000252', '9999999000000162', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000253', '9999999000000163', '9999999000000101');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000254', '9999999000000164', '9999999000000101');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000255', '9999999000000165', '9999999000000103');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000256', '9999999000000166', '9999999000000102');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000257', '9999999000000167', '9999999000000002');
+-- INSERT INTO `permission_role_permission` VALUES ('9999999000000258', '9999999000000168', '9999999000000103');
+-- INSERT INTO `permission_role_permission` VALUES ('9999999000000259', '9999999000000169', '9999999000000002');
+
+
+INSERT INTO `permission_menu` VALUES ('9999999000000181', '订单管理', '', '1810', 'admin/merchantOrderForm/list', '9999999000000105');
+INSERT INTO `permission_menu` VALUES ('9999999000000182', '总单管理', '', '1820', 'admin/collectOrder/list', '9999999000000105');
+INSERT INTO `permission_menu` VALUES ('9999999000000183', '退货管理', '', '1830', 'admin/returnOrder/list', '9999999000000105');
+INSERT INTO `permission_menu` VALUES ('9999999000000184', '换货管理', '', '1840', 'admin/exchangeOrder/list', '9999999000000105');
+INSERT INTO `permission_menu` VALUES ('9999999000000185', '订单管理', '', '1815', 'admin/merchantOrderForm/listStore', '9999999000000105');
+
+INSERT INTO `permission_permission` VALUES ('9999999000000181', '订单管理', '1', '9999999000000181');
+INSERT INTO `permission_permission` VALUES ('9999999000000182', '总单管理', '1', '9999999000000182');
+INSERT INTO `permission_permission` VALUES ('9999999000000183', '退货管理', '1', '9999999000000183');
+INSERT INTO `permission_permission` VALUES ('9999999000000184', '换货管理', '1', '9999999000000184');
+INSERT INTO `permission_permission` VALUES ('9999999000000185', '换货列表', '1', '9999999000000185');
+
+INSERT INTO `permission_role_permission` VALUES ('9999999000000301', '9999999000000181', '9999999000000101');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000302', '9999999000000182', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000303', '9999999000000183', '9999999000000102');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000304', '9999999000000184', '9999999000000102');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000305', '9999999000000185', '9999999000000102');
+
+INSERT INTO `permission_menu` VALUES ('9999999000000201', '评价管理', '', '2010', 'admin/merchantEvaluation/list', '9999999000000106');
+
+INSERT INTO `permission_permission` VALUES ('9999999000000201', '评价管理', '1', '9999999000000201');
+
+INSERT INTO `permission_role_permission` VALUES ('9999999000000351', '9999999000000201', '9999999000000101');
+
+INSERT INTO `permission_menu` VALUES ('9999999000000221', '分销等级', '', '2210', 'admin/commissionGrade/list', '9999999000000107');
+INSERT INTO `permission_menu` VALUES ('9999999000000222', '分销方案', '', '2220', 'admin/commissionScheme/list', '9999999000000107');
+INSERT INTO `permission_menu` VALUES ('9999999000000223', '用户分销等级', '', '2230', 'admin/userModeGrade/gradeModeTypeList', '9999999000000107');
+-- INSERT INTO `permission_menu` VALUES ('9999999000000224', '商品分销模式', '', '2240', 'admin/modeMerchandise/list', '9999999000000107');
+INSERT INTO `permission_menu` VALUES ('9999999000000225', '推荐关系', '', '2250', 'admin/userRelationship/list', '9999999000000107');
+INSERT INTO `permission_menu` VALUES ('9999999000000226', '团队组织关系', '', '2260', 'admin/userTeam/list', '9999999000000107');
+INSERT INTO `permission_menu` VALUES ('9999999000000227', '佣金审核', '', '2212', 'admin/commissionAccountRecords/list', '9999999000000107');
+INSERT INTO `permission_menu` VALUES ('9999999000000228', '模式等级折扣', '', '2215', 'admin/modeGradeDiscount/list', '9999999000000107');
+
+INSERT INTO `permission_permission` VALUES ('9999999000000221', '分销等级', '1', '9999999000000221');
+INSERT INTO `permission_permission` VALUES ('9999999000000222', '分销方案', '1', '9999999000000222');
+INSERT INTO `permission_permission` VALUES ('9999999000000223', '用户分销等级', '1', '9999999000000223');
+-- INSERT INTO `permission_permission` VALUES ('9999999000000224', '商品分销模式', '1', '9999999000000224');
+INSERT INTO `permission_permission` VALUES ('9999999000000225', '推荐关系', '1', '9999999000000225');
+INSERT INTO `permission_permission` VALUES ('9999999000000226', '团队组织关系', '1', '9999999000000226');
+INSERT INTO `permission_permission` VALUES ('9999999000000227', '推荐关系', '1', '9999999000000227');
+INSERT INTO `permission_permission` VALUES ('9999999000000228', '团队组织关系', '1', '9999999000000228');
+
+INSERT INTO `permission_role_permission` VALUES ('9999999000000401', '9999999000000221', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000402', '9999999000000222', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000403', '9999999000000223', '9999999000000002');
+-- INSERT INTO `permission_role_permission` VALUES ('9999999000000404', '9999999000000224', '9999999000000101');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000405', '9999999000000225', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000406', '9999999000000226', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000407', '9999999000000227', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000408', '9999999000000228', '9999999000000002');
+
+INSERT INTO `permission_menu` VALUES ('9999999000000241', '首页轮播图管理', '', '2410', 'admin/slide/list', '9999999000000108');
+INSERT INTO `permission_menu` VALUES ('9999999000000242', '优惠券活动', '', '2420', 'admin/coupon/list', '9999999000000108');
+INSERT INTO `permission_menu` VALUES ('9999999000000243', '套餐管理', '', '2430', 'admin/combinationMerchandise/list', '9999999000000104');
+-- INSERT INTO `permission_menu` VALUES ('9999999000000244', '商城商品归类', '', '2440', 'admin/merchandiseCustomClassification/mallList', '9999999000000104');
+-- INSERT INTO `permission_menu` VALUES ('9999999000000245', '商家商品归类', '', '2450', 'admin/merchandiseCustomClassification/list', '9999999000000104');
+INSERT INTO `permission_menu` VALUES ('9999999000000246', '积分兑换商品', '', '2460', 'admin/pointExchange/exchangeList', '9999999000000104');
+INSERT INTO `permission_menu` VALUES ('9999999000000247', '消费币兑换商品', '', '2470', 'admin/currencyExchange/exchangeList', '9999999000000104');
+
+INSERT INTO `permission_permission` VALUES ('9999999000000241', '首页轮播图管理', '1', '9999999000000241');
+INSERT INTO `permission_permission` VALUES ('9999999000000242', '优惠券活动', '1', '9999999000000242');
+INSERT INTO `permission_permission` VALUES ('9999999000000243', '套餐管理', '1', '9999999000000243');
+-- INSERT INTO `permission_permission` VALUES ('9999999000000244', '商城商品归类', '1', '9999999000000244');
+-- INSERT INTO `permission_permission` VALUES ('9999999000000245', '商家商品归类', '1', '9999999000000245');
+INSERT INTO `permission_permission` VALUES ('9999999000000246', '积分兑换商品', '1', '9999999000000246');
+INSERT INTO `permission_permission` VALUES ('9999999000000247', '消费币兑换商品', '1', '9999999000000247');
+
+INSERT INTO `permission_role_permission` VALUES ('9999999000000451', '9999999000000241', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000452', '9999999000000242', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000453', '9999999000000243', '9999999000000101');
+-- INSERT INTO `permission_role_permission` VALUES ('9999999000000454', '9999999000000244', '9999999000000002');
+-- INSERT INTO `permission_role_permission` VALUES ('9999999000000455', '9999999000000245', '9999999000000101');
+
+INSERT INTO `permission_role_permission` VALUES ('9999999000000456', '9999999000000246', '9999999000000002');
+INSERT INTO `permission_role_permission` VALUES ('9999999000000457', '9999999000000247', '9999999000000002');
+
+INSERT INTO `publicservice_message_type` VALUES ('9999999000000001', 'user', '用户消息', '100', '12');
+INSERT INTO `publicservice_message_type` VALUES ('9999999000000002', 'merchant', '商家消息', '10', '12');

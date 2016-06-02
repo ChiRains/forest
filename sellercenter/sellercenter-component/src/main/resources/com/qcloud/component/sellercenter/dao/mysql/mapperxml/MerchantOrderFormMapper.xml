@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.sellercenter.dao.mysql.mapper.MerchantOrderFormMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="MerchantOrderForm">  
+       <![CDATA[ select * from `${table_name}` where `merchantId`=#{merchantId} and `state`=#{state} and #{startDate} <= `time` and `time` <= #{endDate} order by `time` desc limit #{start},#{count}]]>
+    </select>  
+    
+     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        <![CDATA[  select count(*) from `${table_name}` where `merchantId`=#{merchantId} and `state`=#{state} and #{startDate} <= `time` and `time` <= #{endDate} order by `time` desc]]>
+    </select> 
+    <select id="getBySubOrder" parameterType="java.util.HashMap" resultType="MerchantOrderForm">
+       select * from `${table_name}` where `merchantId`=#{merchantId} and `subOrderId`=#{subOrderId} limit #{start},#{count}
+    </select>
+    
+    <select id="list4query2" parameterType="java.util.HashMap" resultType="MerchantOrderForm">  
+       select * from `${table_name}` where `storeId`=#{storeId} 
+       <if test="state !=9">and `state`=#{state}  </if>
+       <if test="state ==9">and (`state`=9 or `state`=10 or `state`=11 or`state`=12)  </if>
+        <![CDATA[ and #{startDate} <= `time` and `time` <= #{endDate} order by `time` desc limit #{start},#{count}]]>
+    </select>  
+    
+    <select id="count4query2" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `${table_name}` where `storeId`=#{storeId} 
+       <if test="state !=9">and `state`=#{state}  </if>
+       <if test="state ==9">and `state`=10 or `state`=11 or`state`=12   </if>
+       <![CDATA[and #{startDate} <= `time` and `time` <= #{endDate} order by `time` desc]]>
+    </select>
+    
+    
+    <select id="reportForm4merchant" parameterType="java.util.HashMap" resultType="MerchantOrderForm">
+    	 <![CDATA[  select * from `${table_name}` 
+    	 where `merchantId`=#{merchantId}  and `state`=8
+    	 and #{startDate} <= `time` and `time` <= #{endDate}  
+    	 order by `time` desc]]>
+    </select>
+    
+    <select id="reportForm4store" parameterType="java.util.HashMap" resultType="MerchantOrderForm">
+    	 <![CDATA[  
+    	 select * from `${table_name}`
+    	 where `storeId`=#{storeId}  and `state`=8
+    	 and #{startDate} <= `time` and `time` <= #{endDate}  
+    	 order by `time` desc]]>
+    </select>
+    
+    <select id="getByOrderId" parameterType="java.util.HashMap" resultType="MerchantOrderForm">  
+       select * from `${table_name}` where `merchantId`=#{merchantId} and `orderId`=#{orderId} and `storeId`=#{storeId} 
+       limit #{start},#{count}
+    </select> 
+    
+    <select id="list4Store" parameterType="java.util.HashMap" resultType="MerchantOrderForm">  
+        select * from `${table_name}` where `merchantId`=#{merchantId}        
+        <if test="state > 0"> and `state`=#{state} </if>     
+        <if test="state == 0"> and (`state`= 1 or `state`= 4 or `state`= 5) </if>     
+        <if test="storeId > 0"> and `storeId`=#{storeId} </if>       
+        <![CDATA[ order by `time` desc limit #{start},#{count} ]]>
+    </select>
+</mapper>

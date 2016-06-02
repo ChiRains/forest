@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.my.dao.mysql.mapper.MyCollectionStatisticsMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="MyCollectionStatistics">  
+        select * from `my_my_collection_statistics` limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `my_my_collection_statistics`
+    </select> 
+    
+    <select id="getByUserAndClassifyAndType" parameterType="java.util.HashMap" resultType="MyCollectionStatistics">  
+        select * from `my_my_collection_statistics` where `userId`=#{userId} and `classifyId`=#{classifyId} and `type`=#{type}
+    </select>  
+    
+    <select id="listByUserAndType" parameterType="java.util.HashMap" resultType="MyCollectionStatistics">  
+        select * from `my_my_collection_statistics` where `userId`=#{userId} and `type`=#{type}
+    </select>  
+</mapper>

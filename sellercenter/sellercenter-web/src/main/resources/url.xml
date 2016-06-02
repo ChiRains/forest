@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml>
+	<!-- 模块URL列表 标签-->
+	<module-list code="sellercenter-pirates-url-list">
+	
+		<item module="sellercenter" name="企业端:发卡，卡号获取会员卡待发卡信息" url="/app/distributeMembershipCard/getToSendCard.do" parameterCode="sellercenter_getToSendCard" returnFieldCode="sellercenter_returnGetToSendCard">
+		<![CDATA[{
+			  "status" : 200,
+			  "message" : "",
+			  "data" : {
+			    "time" : "2016-01-01",
+			    "company" : "中山心源网络科技有限公司",
+			    "type" : "创富会员卡",
+			    "cardNumber" : "0276000006"
+			  }
+			}
+			]]>
+		</item>	
+		
+		<item module="sellercenter" name="企业端:发卡，获取用户短信验证码" url="/app/distributeMembershipCard/sendSmsMsg4DistributeCard.do" parameterCode="sellercenter_sendSmsMsg4DistributeCard">
+		<![CDATA[
+		{
+		  "status" : 200,
+		  "message" : "发送短信成功",
+		  "data" : {
+		  }
+		}
+		]]>
+		</item>		
+		
+		<item module="sellercenter" name="企业端:发卡，给用户发卡" url="/app/distributeMembershipCard/distributeCard.do" parameterCode="sellercenter_distributeCard">
+		<![CDATA[
+		{
+		  "status" : 200,
+		  "message" : "发卡成功",
+		  "data" : {
+		  }
+		}		
+		]]>
+		</item>				
+	
+		<item module="sellercenter" name="企业端:店员登录" url="/app/member/login.do" parameterCode="sellercenter_memberLogin" returnFieldCode="sellercenter_returnMemberLogin">
+		<![CDATA[{
+		  "status" : 200,
+		  "message" : "登录成功",
+		  "data" : {
+		    "token" : "2_01B9C3F4ABD5498CBD78B673BD373B3B",
+		    "memberType" : 1
+		  }
+		}]]>
+		</item>		
+		<item module="sellercenter" name="企业端:门店订单列表" url="/app/merchantOrderForm/list.do" parameterCode="sellercenter_merchantOrderFormList" returnFieldCode="sellercenter_returnMerchantOrderFormList">
+		<![CDATA[{
+			  "status" : 200,
+			  "message" : "查询商家订单成功.",
+			  "data" : {
+			    "list" : [ {
+			      "id" : 1010006000001501,
+			      "orderId" : 1010006000001701,
+			      "subOrderId" : 1010006000001501,
+			      "stateStr" : "待确认",
+			      "dateStr" : "2015-10-30",
+			      "sum" : 0.0,
+			      "orderNumber" : "LSVI201510301723",
+			      "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=E1F8E93CA16B48FB9C8DD50E42A9BCB3.jpg",
+			      "explain" : ""
+			    }, {
+			      "id" : 1010006000001483,
+			      "orderId" : 1010006000001683,
+			      "subOrderId" : 1010006000001483,
+			      "stateStr" : "待确认",
+			      "dateStr" : "2015-10-30",
+			      "sum" : 8.0,
+			      "orderNumber" : "KMPO201510301572",
+			      "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=8D66DFEE54F542468198280E53D789A0.jpg",
+			      "explain" : "123456"
+			    }, {
+			      "id" : 1010006000001478,
+			      "orderId" : 1010006000001678,
+			      "subOrderId" : 1010006000001478,
+			      "stateStr" : "待确认",
+			      "dateStr" : "2015-10-30",
+			      "sum" : 6.0,
+			      "orderNumber" : "KIQS201510301520",
+			      "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=9EF542CB06F843D7BC40BFE7DC017D51.jpg",
+			      "explain" : ""
+			    } ]
+			  }
+			}]]>
+		</item>
+		
+		<item module="sellercenter" name="企业端:消息列表" url="/app/storeMessage/list.do" parameterCode="sellercenter_storeMessagelist" returnFieldCode="sellercenter_returnStoreMessagelist">
+		<![CDATA[{
+		  "status" : 200,
+		  "message" : "获取门店消息成功.",
+		  "data" : {
+		    "list" : [ {
+		      "id" : 1010006000004003,
+		      "title" : "我是测试2",
+		      "content" : "",
+		      "time" : "2015-12-06 06:02:28",
+		      "read" : false
+		    }, {
+		      "id" : 1010006000004004,
+		      "title" : "我是测试3",
+		      "content" : "",
+		      "time" : "2015-12-06 06:02:28",
+		      "read" : true
+		    } ]
+		  }
+		}
+		]]>
+		</item>	
+		<item module="sellercenter" name="企业端:获取一条消息" url="/app/storeMessage/get.do" parameterCode="sellercenter_storeMessageid" returnFieldCode="sellercenter_returnStoreMessageid">
+		<![CDATA[{
+			  "status" : 200,
+			  "message" : "获取我的一条消息成功.",
+			  "data" : {
+			    "message" : {
+			      "id" : 1010006000004004,
+			      "title" : "我是测试3",
+			      "content" : "费水电费水电费水电费说的方式水电费水电费水电费说的发稍等的风格的凤凰飞更好..",
+			      "time" : "2015-12-06 06:02:28",
+			      "read" : true
+			    }
+			  }
+			}]]>
+		</item>	
+		<item module="sellercenter" name="企业端:设置消息已读" url="/app/storeMessage/read.do" parameterCode="sellercenter_storeMessageid">
+		<![CDATA[{
+			  "status" : 200,
+			  "message" : "设置一条消息为已读成功.",
+			  "data" : {
+			  }
+			}]]>
+		</item>	
+		<item module="sellercenter" name="企业端:获取消息总条数" url="/app/storeMessage/countAll.do" parameterCode="">
+		<![CDATA[{
+			  "status" : 200,
+			  "message" : "查询我的消息条数成功.",
+			  "data" : {
+			    "total" : 100
+			  }
+			}]]>
+		</item>	
+		<item module="sellercenter" name="企业端:获取未读消息条数" url="/app/storeMessage/countUnread.do" parameterCode="">
+		<![CDATA[{
+			  "status" : 200,
+			  "message" : "查询我的消息未读条数成功.",
+			  "data" : {
+			    "unreadTotal" : 98
+			  }
+			}]]>
+		</item>	
+		
+		<item module="sellercenter" name="企业端:获取新消息条数" url="/app/storeMessage/getNewMsgNumber.do" parameterCode="">
+		<![CDATA[{
+			  "status" : 200,
+			  "message" : "获取新短消息成功.",
+			  "data" : {
+			    "result" : 5
+			  }
+			}]]>
+		</item>	
+		
+		<item module="sellercenter" name="企业端:重置新消息条数" url="/app/storeMessage/resetNewMsgNumber.do" parameterCode="">
+		<![CDATA[{
+			  "status" : 200,
+			  "message" : "重置新消息条数为0成功.",
+			  "data" : {
+			  }
+			}]]>
+		</item>				
+
+	</module-list>
+	<!-- 模块URL列表 标签-->
+	<!-- 模块URL明细-->		
+	<module-list code="sellercenter_storeMessagelist">
+		<item key="pageNum">页码</item>
+		<item key="pageSize">数据条数</item>
+	</module-list>		
+	
+	<module-list code="sellercenter_returnStoreMessagelist">
+		<item key="list[i].id">id</item>
+		<item key="list[i].title">标题</item>
+		<item key="list[i].content">内容</item>
+		<item key="list[i].time">发布时间</item>
+		<item key="list[i].read">是否已读</item>
+	</module-list>
+	
+	<module-list code="sellercenter_returnStoreMessageid">
+		<item key="id">id</item>
+		<item key="title">标题</item>
+		<item key="content">内容</item>
+		<item key="time">发布时间</item>
+		<item key="read">是否已读</item>
+	</module-list>
+	
+	<module-list code="sellercenter_storeMessageid">
+		<item key="id">ID</item>
+	</module-list>	
+	
+	<module-list code="sellercenter_memberLogin">
+		<item key="username">手机号</item>
+		<item key="pwd">密码</item>
+	</module-list>		
+	
+	<module-list code="sellercenter_returnMemberLogin">
+		<item key="token">登录token</item>
+		<item key="memberType">会员类型</item>
+	</module-list>	
+	
+	<module-list code="sellercenter_merchantOrderFormList">			
+		<item key="stateType">0 所有 1待付款 2待确认  3待发货</item>
+	</module-list>	
+	
+	<module-list code="sellercenter_returnMerchantOrderFormList">			
+		<item key="list[i].id">ID</item>
+		<item key="list[i].orderId">总单ID</item>
+		<item key="list[i].subOrderId">子单ID</item>
+		<item key="list[i].stateStr">状态</item>
+		<item key="list[i].dateStr">下单时间</item>
+		<item key="list[i].sum">订单金额</item>
+		<item key="list[i].orderNumber">订单号</item>
+		<item key="list[i].image">缩略图</item>
+		<item key="list[i].explain">说明</item>
+	</module-list>		
+	
+	<module-list code="sellercenter_getToSendCard">
+		<item key="cardNumber">卡号</item>
+	</module-list>
+		
+	<module-list code="sellercenter_returnGetToSendCard">
+		<item key="time">扫卡时间</item>
+		<item key="company">公司</item>
+		<item key="type">类型</item>
+		<item key="cardNumber">卡号</item>
+	</module-list>
+	
+	<module-list code="sellercenter_sendSmsMsg4DistributeCard">
+		<item key="mobile">手机号</item>
+	</module-list>	
+	
+	<module-list code="sellercenter_distributeCard">
+		<item key="cardNumber">卡号</item>
+		<item key="mobile">手机号</item>
+		<item key="name">姓名</item>
+		<item key="sex">性别</item>	
+		<item key="code">验证码</item>		
+	</module-list>	
+		
+	<!-- 模块URL明细-->	
+</xml>

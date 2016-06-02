@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.marketing.dao.mysql.mapper.CouponItemsMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="CouponItems">  
+        select * from `marketing_coupon_items` where `couponID`=#{couponID} limit #{start},#{count}
+    </select>  
+    
+     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `marketing_coupon_items`  where `couponID`=#{couponID}
+    </select> 
+    
+    <select id="list4Counpon" parameterType="java.util.HashMap" resultType="CouponItems">  
+        select * from `marketing_coupon_items` where `couponId`=#{couponId} order by  `totalNum`-`sendnum` asc
+    </select> 
+    
+    <select id="list4Extract" parameterType="java.util.HashMap" resultType="CouponItems">  
+         <![CDATA[ select * from `marketing_coupon_items` where `couponId`=#{couponId} and `sendNum` < `totalNum` order by  `totalNum`-`sendnum` asc]]>
+    </select> 
+    
+     <select id="listByCouponId" parameterType="java.util.HashMap" resultType="CouponItems">  
+        select * from `marketing_coupon_items` where `couponID`=#{couponId}
+    </select>    
+</mapper>
