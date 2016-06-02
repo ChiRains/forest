@@ -1,0 +1,3 @@
+update commoditycenter_merchandise_item  INNER JOIN publicdata_classify ON commoditycenter_merchandise_item.mallClassifyId = publicdata_classify.Id set mallClassifyBsid = publicdata_classify.bsid ;
+update commoditycenter_merchandise_item  INNER JOIN commoditycenter_merchandise ON commoditycenter_merchandise_item.merchandiseId = commoditycenter_merchandise.id set commoditycenter_merchandise_item.merchantClassifyid = commoditycenter_merchandise.merchantClassifyid ;
+update commoditycenter_merchandise_item  INNER JOIN publicdata_classify ON commoditycenter_merchandise_item.merchantClassifyid = publicdata_classify.Id set merchantClassifyBsid = publicdata_classify.bsid ;

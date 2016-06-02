@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.personalcenter.dao.mysql.mapper.MyCommissionWithdrawCashMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="MyCommissionWithdrawCash">  
+        select * from `personalcenter_my_commission_withdraw_cash`  where 1=1
+        <if test="date!='null%' ">
+			and time like #{date}
+		</if>
+		<if test="mode==2 ">
+			and state &gt; 1 and state != 4
+		</if>
+		<if test="mode==1 ">
+			and state != 3 and state != 5
+		</if>
+		<if test="state!=0 ">
+			and state =#{state}
+		</if>
+       limit  #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `personalcenter_my_commission_withdraw_cash` where 1=1
+       <if test="date!='null%' ">
+			and time like #{date}
+		</if>
+		<if test="mode==2 ">
+			and state &gt; 1 and state != 4
+		</if>
+		<if test="mode==1 ">
+			and state != 3 and state != 5
+		</if>
+		<if test="state!=0 ">
+			and state =#{state}
+		</if>
+    </select> 
+    
+    <select id="listByUser" parameterType="java.util.HashMap" resultType="MyCommissionWithdrawCash">  
+        select * from `personalcenter_my_commission_withdraw_cash` where userId = #{userId}
+        <if test="checkTime != null">
+	        and DATE_FORMAT(completeTime,'%Y-%m') = #{checkTime}
+    	</if> 
+        order by `time` desc
+        limit #{start},#{count}
+    </select>  
+    
+    <select id="statWithdrawingCommission" parameterType="java.util.HashMap" resultType="MyCommissionWithdrawCash">  
+        select sum(commissionCash) from `personalcenter_my_commission_withdraw_cash` where userId = #{userId} and state = 3
+    </select>  
+    
+    <select id="statWithdrawedCommission" parameterType="java.util.HashMap" resultType="MyCommissionWithdrawCash">  
+        <![CDATA[select sum(commissionCash) from `personalcenter_my_commission_withdraw_cash` where userId = #{userId} and state <> 3]]>
+    </select>     
+    
+    <select id="listWithdrawedByUser" parameterType="java.util.HashMap" resultType="MyCommissionWithdrawCash">  
+        select * from `personalcenter_my_commission_withdraw_cash` where userId = #{userId} and state = 3 order by `time` desc limit #{start},#{count}
+    </select>  
+    
+    <select id="listWithdrawingByUser" parameterType="java.util.HashMap" resultType="MyCommissionWithdrawCash">  
+        <![CDATA[select * from `personalcenter_my_commission_withdraw_cash` where userId = #{userId} and state <> 3 order by `time` desc limit #{start},#{count}]]>
+    </select>   
+</mapper>

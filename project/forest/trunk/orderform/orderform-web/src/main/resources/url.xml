@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml>
+	<!-- 模块URL列表 标签-->
+	<module-list code="orderform-pirates-url-list">
+		
+		<item module="orderform" name="退款原因列表" url="/dataDictionary/listByType.do?type=orderform-refund-reason" parameterCode="">
+	   	
+	    </item>		
+	    
+	    <item module="orderform" name="退货原因列表" url="/dataDictionary/listByType.do?type=orderform-return-reason" parameterCode="">
+	   	
+	    </item>
+	    
+	    <item module="orderform" name="换货原因列表" url="/dataDictionary/listByType.do?type=orderform-exchange-reason" parameterCode="">
+	   		
+	    </item>
+	    <item module="orderform" name="再次购买" url="/app/orderForm/orderAgain.do" parameterCode="orderform_orderAgain">
+	    <![CDATA[
+		{
+		  "status" : 200,
+		  "message" : "再次购买将订单商品加入购物车成功.",
+		  "data" : {
+		  }
+		}
+		]]>
+		</item>	
+	    <item module="orderform" name="订单详情" url="/app/orderForm/get.do" parameterCode="orderform_get" returnFieldCode="orderform_returnGet">
+	    <![CDATA[
+		{
+		  "status" : 200,
+		  "message" : "获取订单成功",
+		  "data" : {
+		    "order" : {
+		      "id" : 1010016000011324,
+		      "subOrderId" : 1010016000011124,
+		      "orderNumber" : "ZMRO201602241496",
+		      "orderDate" : 1456295058000,
+		      "personalOrderState" : 4,
+		      "orderDateStr" : "2016-02-24 14:24:18",
+		      "sum" : 12.2,
+		      "number" : 10,
+		      "consignee" : "烃",
+		      "address" : "福建省三明市梅列区糯-在",
+		      "mobile" : "13756465564",
+		      "state" : 4,
+		      "stateStr" : "待发货",
+		      "surplus" : 308.13,
+		      "cash" : 12.2,
+		      "postage" : 0.0,
+		      "integral" : 0.0,
+		      "consumption" : 0.0,
+		      "coupon" : 0.0,
+		      "afterSale" : true,
+		      "evaluation" : true,
+		      "paymentMode" : 0,
+		      "invoice" : "不开发票",
+		      "orderDeliveryVO" : {
+		        "expressName" : null,
+		        "expressNumber" : null,
+		        "deliveryMode" : 1,
+		        "pickupAddressStr" : "",
+		        "deliveryTimeStr" : ""
+		      },
+		      "expressName" : null,
+		      "expressNumber" : null,
+		      "changeStateTime" : "2016-03-09 16:57:43",
+		      "explain" : "我有话说,那个啥",
+		      "orderItemList" : [ {
+		        "unifiedMerchandiseId" : 1010016000010205,
+		        "discount" : 1.5,
+		        "price" : 12.8,
+		        "number" : 5,
+		        "name" : "玉米面粉",
+		        "specifications" : "",
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=12BE75AA2DD74EF78CB6E6C4A762E424.jpg",
+		        "code" : "1005411016134210",
+		        "orderItemId" : 1010016000011770,
+		        "afterSale" : true,
+		        "evaluation" : true
+		      }, {
+		        "unifiedMerchandiseId" : 1010016000010203,
+		        "discount" : 0.1,
+		        "price" : 6.68,
+		        "number" : 2,
+		        "name" : "水晶豆腐",
+		        "specifications" : "",
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=18A5ED498B614A7D93EFC923B449AC9E.jpg",
+		        "code" : "65432",
+		        "orderItemId" : 1010016000011771,
+		        "afterSale" : true,
+		        "evaluation" : true
+		      }, {
+		        "unifiedMerchandiseId" : 1010016000010201,
+		        "discount" : 1.5,
+		        "price" : 80.99,
+		        "number" : 3,
+		        "name" : "秘制烤鸭",
+		        "specifications" : "",
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=73B14C5C2F8E45A39F16D3FCD1DFA8DF.jpg",
+		        "code" : "454",
+		        "orderItemId" : 1010016000011772,
+		        "afterSale" : true,
+		        "evaluation" : true
+		      } ]
+		    }
+		  }
+		}
+		]]>
+		</item>	
+		<item module="orderform" name="扫卡积分:获取用户会员卡信息" url="/app/scanCard/getMembershipCard.do" parameterCode="orderform_returnGetMembershipCard" returnFieldCode="orderform_getMembershipCard">
+		<![CDATA[
+		{
+			  "status" : 200,
+			  "message" : "",
+			  "data" : {
+			    "merchant" : "0276000008",
+			    "name" : "女帝",
+			    "merchantName" : "0276000008",
+			    "integralRatio" : 100,
+			    "legalPerson" : "名字缺",
+			    "integral" : 25
+			  }
+			}
+		]]>
+		</item>	
+		
+		<item module="orderform" name="扫卡积分:提交积分信息" url="/app/scanCard/order4Integral.do" parameterCode="orderform_order4Integral">
+		<![CDATA[
+			{
+			  "status" : 200,
+			  "message" : "",
+			  "data" : {
+			  }
+			}
+		]]>
+		</item>			
+			
+		<item module="orderform" name="多商家:确认订单" url="/app/orderForm/prepareOrder4Merchant.do" parameterCode="orderform_prepareOrder4Merchant" returnFieldCode="orderform_returnPrepareOrder4Merchant">
+		<![CDATA[
+		{
+			  "status" : 200,
+			  "message" : "获取下单数据成功",
+			  "data" : {
+			    "preOrder" : {
+			      "totalNumber" : 10,
+			      "sum" : 10246.0,
+			      "cash" : 10246.0,
+			      "postage" : 46.0,
+			      "preferential" : 2550.0,
+			      "preMerchantList" : [ {
+			        "merchantId" : 1010006000001005,
+			        "merchantName" : "中山市宝艺实业工艺品有限公司",
+			        "image" : "http://file-dev.qi-cloud.net",
+			        "number" : 5,
+			        "sum" : 192.0,
+			        "cash" : 192.0,
+			        "postage" : 24.0,
+			        "express" : {
+			          "merchantId" : 1010006000001005,
+			          "expressCode" : "yuantong",
+			          "name" : "圆通",
+			          "postage" : 20.0
+			        },
+			        "preOrderItemList" : [ {
+			          "unifiedMerchandiseId" : 1010006000001601,
+			          "discount" : 33.6,
+			          "price" : 42.0,
+			          "number" : 5,
+			          "name" : "亿心源非洲花梨木+黑檀木笔搁复古文房摆件",
+			          "specifications" : "",
+			          "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A32EA73257094D6A9CC356EB5B3CB0B9.jpg",
+			          "code" : null,
+			          "sum" : 168.0
+			        } ],
+			        "expressList" : [ {
+			          "merchantId" : 1010006000001005,
+			          "expressCode" : "shunfeng",
+			          "name" : "顺丰",
+			          "postage" : 21.0
+			        }, {
+			          "merchantId" : 1010006000001005,
+			          "expressCode" : "yuantong",
+			          "name" : "圆通",
+			          "postage" : 20.0
+			        } ],
+			        "couponList" : [ {
+			          "id" : 1010006000011006,
+			          "validDate" : 1535644800000,
+			          "name" : "注册送优惠劵",
+			          "price" : 20.0,
+			          "limitPrice" : 100.0,
+			          "merchantId" : -1,
+			          "code" : "EXY20151209838472"
+			        }, {
+			          "id" : 1010006000011007,
+			          "validDate" : 1535644800000,
+			          "name" : "注册送优惠劵",
+			          "price" : 20.0,
+			          "limitPrice" : 100.0,
+			          "merchantId" : -1,
+			          "code" : "EXY20151209362213"
+			        }, {
+			          "id" : 1010006000011008,
+			          "validDate" : 1535644800000,
+			          "name" : "注册送优惠劵",
+			          "price" : 20.0,
+			          "limitPrice" : 100.0,
+			          "merchantId" : -1,
+			          "code" : "EXY20151209352257"
+			        }, {
+			          "id" : 1010006000011009,
+			          "validDate" : 1535644800000,
+			          "name" : "注册送优惠劵",
+			          "price" : 20.0,
+			          "limitPrice" : 100.0,
+			          "merchantId" : -1,
+			          "code" : "EXY20151209012026"
+			        }, {
+			          "id" : 1010006000011010,
+			          "validDate" : 1535644800000,
+			          "name" : "注册送优惠劵",
+			          "price" : 20.0,
+			          "limitPrice" : 100.0,
+			          "merchantId" : -1,
+			          "code" : "EXY20151209418598"
+			        } ]
+			      }, {
+			        "merchantId" : 1010006000001002,
+			        "merchantName" : "中山市超悦家具有限公司",
+			        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=17C7ECEAFB494BD6A34AFA846C4D68F5.png",
+			        "number" : 5,
+			        "sum" : 10054.0,
+			        "cash" : 10054.0,
+			        "postage" : 22.0,
+			        "express" : {
+			          "merchantId" : 1010006000001002,
+			          "expressCode" : "yuantong",
+			          "name" : "圆通",
+			          "postage" : 20.0
+			        },
+			        "preOrderItemList" : [ {
+			          "unifiedMerchandiseId" : 1010006000002435,
+			          "discount" : 0.0,
+			          "price" : 0.0,
+			          "number" : 3,
+			          "name" : "亿心源金丝楠木时尚多功能茶桌",
+			          "specifications" : "",
+			          "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=507A3002B25B424394B416A1BC6A8CCD.jpg",
+			          "code" : null,
+			          "sum" : 0.0
+			        }, {
+			          "unifiedMerchandiseId" : 1010006000002403,
+			          "discount" : 5016.0,
+			          "price" : 6270.0,
+			          "number" : 2,
+			          "name" : "亿心源金丝楠木中式架子",
+			          "specifications" : "",
+			          "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=4623C5F964E14C99BF4DA2A86A103786.jpg",
+			          "code" : null,
+			          "sum" : 10032.0
+			        } ],
+			        "expressList" : [ {
+			          "merchantId" : 1010006000001002,
+			          "expressCode" : "shunfeng",
+			          "name" : "顺丰",
+			          "postage" : 22.0
+			        }, {
+			          "merchantId" : 1010006000001002,
+			          "expressCode" : "yuantong",
+			          "name" : "圆通",
+			          "postage" : 20.0
+			        } ],
+			        "couponList" : [ {
+			          "id" : 1010006000011006,
+			          "validDate" : 1535644800000,
+			          "name" : "注册送优惠劵",
+			          "price" : 20.0,
+			          "limitPrice" : 100.0,
+			          "merchantId" : -1,
+			          "code" : "EXY20151209838472"
+			        }, {
+			          "id" : 1010006000011007,
+			          "validDate" : 1535644800000,
+			          "name" : "注册送优惠劵",
+			          "price" : 20.0,
+			          "limitPrice" : 100.0,
+			          "merchantId" : -1,
+			          "code" : "EXY20151209362213"
+			        }, {
+			          "id" : 1010006000011008,
+			          "validDate" : 1535644800000,
+			          "name" : "注册送优惠劵",
+			          "price" : 20.0,
+			          "limitPrice" : 100.0,
+			          "merchantId" : -1,
+			          "code" : "EXY20151209352257"
+			        }, {
+			          "id" : 1010006000011009,
+			          "validDate" : 1535644800000,
+			          "name" : "注册送优惠劵",
+			          "price" : 20.0,
+			          "limitPrice" : 100.0,
+			          "merchantId" : -1,
+			          "code" : "EXY20151209012026"
+			        }, {
+			          "id" : 1010006000011010,
+			          "validDate" : 1535644800000,
+			          "name" : "注册送优惠劵",
+			          "price" : 20.0,
+			          "limitPrice" : 100.0,
+			          "merchantId" : -1,
+			          "code" : "EXY20151209418598"
+			        }, {
+			          "id" : 1010006000011801,
+			          "validDate" : 1459353600000,
+			          "name" : "优惠券2",
+			          "price" : 10.0,
+			          "limitPrice" : 200.0,
+			          "merchantId" : -1,
+			          "code" : "EXY20151211187061"
+			        } ]
+			      } ]
+			    },
+			    "discount" : 80
+			  }
+			}]]>
+		</item>			
+				
+		<item module="orderform" name="多商家:下订单(说明一个商家最多一个，物流一个商家最多一个,优惠劵一个商家可多个)" url="/app/orderForm/order4MultiMerchant.do" parameterCode="orderform_order4MultiMerchant" returnFieldCode="orderform_returnOrder4MultiMerchant">
+		<![CDATA[			
+			{
+			  "status" : 200,
+			  "message" : "下订单成功",
+			  "data" : {
+			    "result" : "true",
+			    "orderDate" : "2015-12-27 23:45:31",
+			    "orderNumber" : "OKTV201512272396",
+			    "sum" : 10236.0,
+			    "orderId" : 1010006000010802
+			  }
+			}
+		]]>
+		</item>		
+		
+		<item module="orderform" name="按商家获取订单" url="/app/orderForm/get4Merchant.do" parameterCode="orderform_get" returnFieldCode="orderform_returnGet">
+		<![CDATA[		
+		{
+			  "status" : 200,
+			  "message" : "获取订单成功",
+			  "data" : {
+			    "order" : {
+			      "id" : 1010006000012201,
+			      "orderNumber" : "GQMV201512301047",
+			      "orderDate" : 1451441494000,
+			      "personalOrderState" : 2,
+			      "orderDateStr" : "2015-12-30 10:11:34",
+			      "sum" : 10236.0,
+			      "number" : 10,
+			      "consignee" : "邓小平",
+			      "address" : "白沙黎族自治县天天",
+			      "mobile" : "13200000000",
+			      "stateStr" : "已失效",
+			      "surplus" : 2550.0,
+			      "cash" : 10236.0,
+			      "postage" : 36.0,
+			      "integral" : 0.0,
+			      "consumption" : 0.0,
+			      "coupon" : 0.0,
+			      "afterSale" : true,
+			      "evaluation" : true,
+			      "paymentMode" : 0,
+			      "invoice" : "不开发票",
+			      "orderDeliveryVO" : null,
+			      "afterSaleList" : [ ],
+			      "merchantList" : [ {
+			        "merchantId" : 1010006000001005,
+			        "merchantName" : "中山市宝艺实业工艺品有限公司",
+			        "merchantImage" : "http://file-dev.qi-cloud.net",
+			        "sum" : 186.0,
+			        "cash" : 186.0,
+			        "number" : 5,
+			        "postage" : 18.0,
+			        "coupon" : 0.0,
+			        "explain" : null,
+			        "orderExpressVO" : {
+			          "expressName" : "顺丰",
+			          "expressNumber" : null
+			        },
+			        "orderItemList" : [ {
+			          "unifiedMerchandiseId" : 1010006000001601,
+			          "discount" : 33.6,
+			          "price" : 42.0,
+			          "number" : 5,
+			          "name" : "亿心源非洲花梨木+黑檀木笔搁复古文房摆件",
+			          "specifications" : "",
+			          "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A32EA73257094D6A9CC356EB5B3CB0B9.jpg",
+			          "code" : "YWCCC-BG0301",
+			          "orderItemId" : 1010006000009201,
+			          "afterSale" : true,
+			          "evaluation" : true
+			        } ]
+			      }, {
+			        "merchantId" : 1010006000001002,
+			        "merchantName" : "中山市超悦家具有限公司",
+			        "merchantImage" : "http://file-dev.qi-cloud.net/file/get.do?uid=17C7ECEAFB494BD6A34AFA846C4D68F5.png",
+			        "sum" : 10050.0,
+			        "cash" : 10050.0,
+			        "number" : 5,
+			        "postage" : 18.0,
+			        "coupon" : 0.0,
+			        "explain" : null,
+			        "orderExpressVO" : {
+			          "expressName" : "顺丰",
+			          "expressNumber" : null
+			        },
+			        "orderItemList" : [ {
+			          "unifiedMerchandiseId" : 1010006000002435,
+			          "discount" : 0.0,
+			          "price" : 0.0,
+			          "number" : 3,
+			          "name" : "亿心源金丝楠木时尚多功能茶桌",
+			          "specifications" : "1200*2000 ",
+			          "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=507A3002B25B424394B416A1BC6A8CCD.jpg",
+			          "code" : "KTJJ-YXY-JSN-CJ-003",
+			          "orderItemId" : 1010006000009202,
+			          "afterSale" : true,
+			          "evaluation" : true
+			        }, {
+			          "unifiedMerchandiseId" : 1010006000002403,
+			          "discount" : 5016.0,
+			          "price" : 6270.0,
+			          "number" : 2,
+			          "name" : "亿心源金丝楠木中式架子",
+			          "specifications" : "",
+			          "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=4623C5F964E14C99BF4DA2A86A103786.jpg",
+			          "code" : "KTJJ-YXY-JSN-ZSG-004",
+			          "orderItemId" : 1010006000009203,
+			          "afterSale" : true,
+			          "evaluation" : true
+			        } ]
+			      } ]
+			    }
+			  }
+			}
+		]]>
+		</item>		
+			
+		<item module="orderform" name="企业端:获取商家订单" url="/app/orderForm/getSubOrder.do" parameterCode="orderform_getSubOrder" returnFieldCode="orderform_returnGetSubOrder">
+		<![CDATA[{
+		  "status" : 200,
+		  "message" : "获取订单成功",
+		  "data" : {
+		    "order" : {
+		      "orderId" : 1010006000001611,
+		      "orderDateStr" : "2015-10-29",
+		      "orderNumber" : "TPQP201510291617",
+		      "merchantOrderNumber" : "FIWE201510291668",
+		      "consignee" : "离家里",
+		      "address" : "四川省成都市锦江区静默",
+		      "mobile" : "13400000000",
+		      "stateStr" : "已失效",
+		      "sum" : 25800.0,
+		      "cash" : 25800.0,
+		      "surplus" : 0.0,
+		      "explain" : "买家备注买家备注买家备注买家备注",
+		      "orderItemList" : [ {
+		        "discount" : 8600.0,
+		        "number" : 3,
+		        "specifications" : "1500*2000 ",
+		        "image" : "/file/get.do?uid=2F19057B76C04ED39351AA5C328E0972.jpg",
+		        "name" : "床"
+		      }, {
+		        "discount" : 0.0,
+		        "number" : 2,
+		        "specifications" : "",
+		        "image" : "/file/get.do?uid=0C6720E6DF944B2F8607F9129A518601.jpg",
+		        "name" : "亿心源金丝楠木创意大板台"
+		      } ]
+		    }
+		  }
+		}]]>
+		</item>			
+		
+	    <item module="orderform" name="积分兑换" url="/app/orderForm/exchangeIntegral.do" parameterCode="orderForm_exchange" returnFieldCode="orderForm_returnExchange">
+	    	<![CDATA[			
+			{
+				  "status" : 200,
+				  "message" : "下订单成功",
+				  "data" : {
+				    "result" : "true",
+				    "orderDate" : "2015-12-21 19:49:28",
+				    "orderNumber" : "CKVQ201512211910",
+				    "orderId" : 1010006000009201,
+				    "integral" : 32
+				  }
+			}		
+			]]>
+		</item>		
+		
+		<item module="orderform" name="兑兑劵兑换" url="/app/orderForm/exchangeConsumption.do" parameterCode="orderForm_exchange" returnFieldCode="orderForm_returnExchangeConsumption">
+	    	<![CDATA[			
+			{
+			  "status" : 200,
+			  "message" : "下订单成功",
+			  "data" : {
+			    "result" : "true",
+			    "orderDate" : "2015-12-21 20:17:38",
+			    "consumption" : 66.0,
+			    "orderNumber" : "LQVA201512212070",
+			    "orderId" : 1010006000009401
+			  }
+			}		
+			]]>
+		</item>	
+	</module-list>
+	<!-- 模块URL列表 标签-->
+	<!-- 模块URL明细-->	
+		
+	<module-list code="orderform_getMembershipCard">
+		<item key="cardNumber">会员卡号</item>
+	</module-list>	
+	
+	<module-list code="orderform_getMembershipCard">
+		<item key="merchant">商家</item>
+		<item key="name">用户名称</item>
+		<item key="merchantName">商家名称名称</item>
+		<item key="integralRatio">扫卡积分比率</item>
+		<item key="legalPerson"></item>
+		<item key="integral">积分</item>
+	</module-list>		
+	
+	<module-list code="orderform_orderAgain">
+		<item key="orderId">订单id</item>
+		<item key="orderDate">下订单时间</item>
+	</module-list>
+	<module-list code="orderform_get">
+		<item key="orderId">订单id</item>
+		<item key="orderDate">下订单时间</item>
+	</module-list>
+	
+	<module-list code="orderform_returnGet">
+		<item key="id">订单ID</item>
+		<item key="subOrderId">子单ID</item>
+		<item key="orderNumber">订单号</item>
+		<item key="orderDate">下单时间</item>
+		<item key="orderDateStr">下单时间</item>
+		<item key="personalOrderState">用户订单状态</item>
+		<item key="sum">订单金额</item>
+		<item key="number">数量</item>
+		<item key="consignee">收货人</item>
+		<item key="address">收货地址</item>
+		<item key="mobile">手机号</item>
+		<item key="state">订单状态</item>
+		<item key="stateStr">订单状态</item>
+		<item key="surplus">节省多少钱</item>
+		<item key="cash">现金</item>
+		<item key="postage">邮费</item>
+		<item key="integral">积分</item>
+		<item key="consumption">消费币</item>
+		<item key="coupon">优惠劵</item>
+		<item key="afterSale">能否售后,true可以  false不行</item>
+		<item key="evaluation">能否评论,true可以  false不行</item>
+		<item key="paymentMode">现金支付方式 101支付宝 102微信支付 103银联 104货到付款 105钱包</item>
+		<item key="invoice">是否开发票</item>
+		<item key="expressName">物流公司</item>
+		<item key="expressNumber">物流查询号</item>
+		<item key="deliveryMode">送货方式</item>
+		<item key="pickupAddressStr">提货地址</item>
+		<item key="deliveryTimeStr">发货时间</item>
+		<item key="changeStateTime">改变状态时间</item>
+		<item key="explain">说明</item>
+		<item key="orderItemList[i].unifiedMerchandiseId">统一商品ID</item>
+		<item key="orderItemList[i].discount">折扣价,成交价</item>
+		<item key="orderItemList[i].price">原价</item>
+		<item key="orderItemList[i].number">数量</item>
+		<item key="orderItemList[i].name">商品名称</item>
+		<item key="orderItemList[i].specifications">规格</item>
+		<item key="orderItemList[i].image">商品图片</item>
+		<item key="orderItemList[i].code">商品编号</item>
+		<item key="orderItemList[i].orderItemId">订单项ID</item>
+		<item key="orderItemList[i].afterSale">能否售后,true可以  false不行</item>
+		<item key="orderItemList[i].evaluation">能否评论,true可以  false不行</item>
+	</module-list>
+	
+	<module-list code="orderform_getSubOrder">
+		<item key="subOrderId">子订单</item>
+		<item key="orderDate">下订单时间</item>
+	</module-list>		
+	
+	<module-list code="orderform_returnGetSubOrder">
+		<item key="orderId">总单ID</item>
+		<item key="orderDateStr">下单时间</item>
+		<item key="orderNumber">订单号</item>
+		<item key="merchantOrderNumber">商家订单号</item>
+		<item key="consignee">收货人</item>
+		<item key="address">收货地址</item>
+		<item key="mobile">手机号</item>
+		<item key="stateStr">状态,待付款,已付款,待发货,发货中,已签收</item>
+		<item key="sum">订单金额</item>
+		<item key="cash">现金</item>
+		<item key="surplus">节省多少钱</item>
+		<item key="explain">说明</item>
+		<item key="orderItemList[i].discount">折扣价，优惠价</item>
+		<item key="orderItemList[i].number">数量</item>
+		<item key="orderItemList[i].specifications">规格</item>
+		<item key="orderItemList[i].image">图片</item>
+		<item key="orderItemList[i].name">名称</item>
+	</module-list>	
+	
+	<module-list code="orderform_get">
+		<item key="orderId">子订单</item>
+		<item key="orderDate">下订单时间</item>
+	</module-list>		
+	
+	<module-list code="orderForm_exchange">
+		<item key="name">收货人姓名</item>
+		<item key="mobile">手机</item>
+		<item key="address">地址</item>		
+		<item key="unifiedMerchandiseId">统一商品ID</item>		
+		<item key="number">商品数量</item>
+	</module-list>	
+	
+	<module-list code="orderForm_returnExchange">
+		<item key="orderDate">收货人姓名</item>
+		<item key="orderNumber">手机</item>
+		<item key="orderId">地址</item>		
+		<item key="integral">积分</item>		
+	</module-list>	
+	
+	<module-list code="orderForm_returnExchangeConsumption">
+		<item key="orderDate">收货人姓名</item>
+		<item key="orderNumber">手机</item>
+		<item key="orderId">地址</item>		
+		<item key="consumption">消费币</item>		
+	</module-list>	
+	
+	<module-list code="orderform_prepareOrder4Merchant">
+		<item key="expressCode">快递公司编码</item>
+		<item key="merchandiseList[0].unifiedMerchandiseId">商品列表第一个统一商品ID</item>
+		<item key="merchandiseList[0].number">商品列表第一个数量</item>
+		<item key="merchandiseList[1].unifiedMerchandiseId">商品列表第二个统一商品ID</item>
+		<item key="merchandiseList[1].number">商品列表第二个数量</item>
+		<item key="merchandiseList[n].unifiedMerchandiseId">商品列表第N个统一商品ID</item>
+		<item key="merchandiseList[n].number">商品列表第N个数量</item>
+	</module-list>	
+	
+	<module-list code="orderform_returnPrepareOrder4Merchant">
+		<item key="totalNumber">总数</item>
+		<item key="sum">订单金额</item>
+		<item key="cash">现金</item>
+		<item key="postage">邮费</item>
+		<item key="preferential">优惠面额</item>
+		<item key="preMerchantList[i].merchantId">商家ID</item>
+		<item key="preMerchantList[i].merchantName">名称</item>
+		<item key="preMerchantList[i].image">图片</item>
+		<item key="preMerchantList[i].number">数量</item>
+		<item key="preMerchantList[i].sum">订单金额</item>
+		<item key="preMerchantList[i].cash">现金</item>
+		<item key="preMerchantList[i].postage">邮费</item>
+		<item key="preMerchantList[i].express[j].merchantId">商家ID</item>
+		<item key="preMerchantList[i].express[j].expressCode">快递公司编码</item>
+		<item key="preMerchantList[i].express[j].name">快递公司名称</item>
+		<item key="preMerchantList[i].express[j].postage">邮费</item>
+		<item key="preMerchantList[i].preOrderItemList[j].unifiedMerchandiseId">统一商品ID</item>
+		<item key="preMerchantList[i].preOrderItemList[j].discount">折扣价</item>
+		<item key="preMerchantList[i].preOrderItemList[j].price">价格</item>
+		<item key="preMerchantList[i].preOrderItemList[j].number">数量</item>
+		<item key="preMerchantList[i].preOrderItemList[j].name">商品名称</item>
+		<item key="preMerchantList[i].preOrderItemList[j].specifications">规格</item>
+		<item key="preMerchantList[i].preOrderItemList[j].image">商品图片</item>
+		<item key="preMerchantList[i].preOrderItemList[j].code">商品编号</item>
+		<item key="preMerchantList[i].preOrderItemList[j].sum">商品金额</item>
+		<item key="preMerchantList[i].expressList[j].merchantId">商家ID</item>
+		<item key="preMerchantList[i].expressList[j].expressCode">快递公司编码</item>
+		<item key="preMerchantList[i].expressList[j].name">快递公司名称</item>
+		<item key="preMerchantList[i].expressList[j].postage">邮费</item>
+		<item key="preMerchantList[i].couponList[j].id">优惠券ID</item>
+		<item key="preMerchantList[i].couponList[j].validDate">有效时间</item>
+		<item key="preMerchantList[i].couponList[j].name">优惠券名称</item>
+		<item key="preMerchantList[i].couponList[j].price">面额</item>
+		<item key="preMerchantList[i].couponList[j].limitPrice">最低使用面额</item>
+		<item key="preMerchantList[i].couponList[j].merchantId">商家ID</item>
+		<item key="preMerchantList[i].couponList[j].code">编号</item>
+	</module-list>	
+	
+	<module-list code="orderform_order4Integral">
+		<item key="cardNumber">会员卡号</item>
+		<item key="sum">订单金额</item>
+		<item key="stringList[0]">第一个优惠劵</item>		
+		<item key="stringList[1]">第二个优惠劵</item>		
+		<item key="stringList[N]">第三个优惠劵</item>
+	</module-list>	
+	
+	<module-list code="orderform_returnOrder4MultiMerchant">
+		<item key="orderDate">下单时间</item>
+		<item key="orderNumber">订单号</item>		
+		<item key="sum">订单金额</item>		
+		<item key="orderId">订单ID</item>
+	</module-list>	
+	
+	<module-list code="orderform_order4MultiMerchant">	
+		<item key="consigneeId">收货人信息,不能为空</item>	
+		<item key="invoiceId">发票信息,不开发票，默认-1</item>					
+		<item key="merchandiseList[0].unifiedMerchandiseId">商品列表第一个统一商品ID</item>
+		<item key="merchandiseList[0].number">商品列表第一个数量</item>
+		<item key="merchandiseList[1].unifiedMerchandiseId">商品列表第二个统一商品ID</item>
+		<item key="merchandiseList[1].number">商品列表第二个数量</item>
+		<item key="merchandiseList[n].unifiedMerchandiseId">商品列表第N个统一商品ID</item>
+		<item key="merchandiseList[n].number">商品列表第N个数量</item>		
+		
+		<item key="expressList[0].merchantId">物流列表第一个商家ID</item>
+		<item key="expressList[0].expressCode">物流列表第一个物流公司编码</item>
+		<item key="expressList[1].merchantId">物流列表第二个商家ID</item>
+		<item key="expressList[1].expressCode">物流列表第二个物流公司编码</item>	
+		<item key="expressList[2].merchantId">物流列表第N个商家ID</item>
+		<item key="expressList[2].expressCode">物流列表第N个物流公司编码</item>		
+		
+		<item key="explainList[0].merchantId">说明列表第一个商家ID</item>
+		<item key="explainList[0].explain">说明列表第一个物流公司编码</item>
+		<item key="explainList[1].merchantId">说明列表第二个商家ID</item>
+		<item key="explainList[1].explain">说明列表第二个物流公司编码</item>
+		<item key="explainList[N].merchantId">说明列表第N个商家ID</item>
+		<item key="explainList[N].explain">说明列表第N个物流公司编码</item>		
+				
+		<item key="myCouponList[0].merchantId">优惠劵列表第一个优惠劵商家ID</item>
+		<item key="myCouponList[0].myCouponId">优惠劵列表第一个优惠劵物流公司编码</item>
+		<item key="myCouponList[0].merchantId">优惠劵列表第二个优惠劵商家ID</item>
+		<item key="myCouponList[0].myCouponId">优惠劵列表第二个优惠劵物流公司编码</item>
+		<item key="myCouponList[0].merchantId">优惠劵列表第N个优惠劵商家ID</item>
+		<item key="myCouponList[0].myCouponId">优惠劵列表第N个优惠劵物流公司编码</item>
+	</module-list>		
+	<!-- 模块URL明细-->	
+</xml>

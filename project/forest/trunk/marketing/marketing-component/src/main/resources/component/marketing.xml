@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 根节点的名字必须是xml -->
+<xml>
+	<module-list code="marketing-merchant-coupon-multiple-config">
+		<item config="false">默认每个商家优惠券活动只能添加一张优惠券</item>
+	</module-list>
+
+	<module-list code="marketing-mall-coupon-multiple-config">
+		<item config="false">默认每个商城优惠券活动只能添加一张优惠券</item>
+	</module-list>
+</xml>

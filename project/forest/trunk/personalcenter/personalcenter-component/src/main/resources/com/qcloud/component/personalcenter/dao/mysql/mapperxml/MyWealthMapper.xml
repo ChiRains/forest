@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.personalcenter.dao.mysql.mapper.MyWealthMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="MyWealth">  
+        select * from `personalcenter_my_wealth`
+        where 1=1
+        <if test="userId !=0">
+        	and `userId`=#{userId}
+        </if>
+        limit #{start},#{count}
+    </select>  
+    
+     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `personalcenter_my_wealth`
+        where 1=1
+        <if test="userId !=0">
+        	and `userId`=#{userId}
+        </if>
+    </select> 
+    
+    <select id="getByUserId" parameterType="long" resultType="MyWealth">
+		select * from `personalcenter_my_wealth` where `userId`=#{userId}
+	</select> 
+	
+	<update id="updateLock" parameterType="java.util.HashMap">  
+	   update `personalcenter_my_wealth` set `integral`=#{integral},`commission`=#{commission},`consumptionCurrency`=#{consumptionCurrency},`integralSummation`=#{integralSummation},`commissionSummation`=#{commissionSummation},`consumptionCurrencySummation`=#{consumptionCurrencySummation},`time`=#{time},`version`=`version` + 1 where `id`=#{id} and `version`=#{version}
+    </update>  	
+    
+    <select id="listTop" parameterType="java.util.HashMap" resultType="MyWealth">  
+        select * from `personalcenter_my_wealth` order by ${orderField} desc limit 0,#{number}
+    </select>      
+</mapper>

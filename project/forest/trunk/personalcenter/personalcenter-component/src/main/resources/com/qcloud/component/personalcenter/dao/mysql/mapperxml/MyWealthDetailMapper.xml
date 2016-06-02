@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.personalcenter.dao.mysql.mapper.MyWealthDetailMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="MyWealthDetail">  
+        select * from `personalcenter_my_wealth_detail` limit #{start},#{count}
+    </select>  
+    
+     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `personalcenter_my_wealth_detail` 
+    </select> 
+    
+    <select id="getDetailsList" parameterType="java.util.HashMap" resultType="MyWealthDetail">
+    	select * from ${table_name} where wealthId=#{wealthId} and userId=#{userId} and type=#{type} limit #{start},#{count}
+    </select>
+    
+    <select id="getDetailsCount" parameterType="java.util.HashMap" resultType="Integer">
+    	select count(*) from ${table_name} where wealthId=#{wealthId} and userId=#{userId} and type=#{type}
+    </select>
+    
+    <select id="listByUser" parameterType="java.util.HashMap" resultType="MyWealthDetail">
+    	select * from ${table_name} where wealthId=#{wealthId} and userId=#{userId} and type=#{type} ${pointSqlFragment}
+    	<if test="checkTime">
+    		and time like concat('%',#{checkTime},'%')
+    	</if> 
+    	order by `time` desc limit #{start},#{count}
+    </select>
+    
+     <select id="getByIdandUserId" parameterType="java.util.HashMap" resultType="MyWealthDetail">
+    	select * from ${table_name} where id=#{id} and userId=#{userId} 
+ 
+    </select>
+       
+    <select id="listByTime" parameterType="java.util.HashMap" resultType="MyWealthDetail">
+    	 <![CDATA[select * from ${table_name} where wealthId=#{wealthId} and userId=#{userId} and type=#{type} and #{begin} <= `time` and `time` <= #{end}  order by `time` desc]]>
+    </select>    
+    
+    <select id="listByUserAndTime" parameterType="java.util.HashMap" resultType="MyWealthDetail">
+    	<![CDATA[select * from ${table_name} where wealthId=#{wealthId} and userId=#{userId} and type=#{type} ${pointSqlFragment}]]>
+    	<if test="beginTime != null">
+    		<![CDATA[and time >= #{beginTime}]]>
+    	</if> 
+    	<if test="endTime != null">
+    		<![CDATA[and time < #{endTime}]]>
+    	</if> 
+    	<![CDATA[order by `time` desc limit #{start},#{count}]]>
+    </select>
+    
+     <select id="sumByUserAndTime" parameterType="java.util.HashMap" resultType="Double">
+    	<![CDATA[select sum(point) from ${table_name} where wealthId=#{wealthId} and userId=#{userId} and type=#{type} ${pointSqlFragment}]]>
+    	<if test="beginTime != null">
+    		<![CDATA[and time >= #{beginTime}]]>
+    	</if> 
+    	<if test="endTime != null">
+    		<![CDATA[and time < #{endTime}]]>
+    	</if> 
+    	<![CDATA[limit #{start},#{count}]]>
+    </select>
+    
+</mapper>

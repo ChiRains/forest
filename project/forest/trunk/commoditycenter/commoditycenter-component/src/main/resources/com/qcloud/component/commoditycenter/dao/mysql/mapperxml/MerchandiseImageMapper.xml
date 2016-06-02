@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.commoditycenter.dao.mysql.mapper.MerchandiseImageMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="MerchandiseImage">  
+        select * from `commoditycenter_merchandise_image` limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `commoditycenter_merchandise_image`
+    </select> 
+    
+    <select id="listByMerchandise" parameterType="Long" resultType="MerchandiseImage">  
+        select * from `commoditycenter_merchandise_image` where `merchandiseId`=#{merchandiseId}
+    </select>  
+    
+    <select id="listByMerchandiseAndAttribute" parameterType="java.util.HashMap" resultType="MerchandiseImage">  
+        select * from `commoditycenter_merchandise_image` where `merchandiseId`=#{merchandiseId} and `attributeId`=#{attributeId} and `value`=#{value}
+    </select>  
+</mapper>

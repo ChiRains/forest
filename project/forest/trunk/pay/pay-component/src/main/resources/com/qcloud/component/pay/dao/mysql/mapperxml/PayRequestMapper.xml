@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.pay.dao.mysql.mapper.PayRequestMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="PayRequest">  
+        select * from `pay_pay_request` limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `pay_pay_request`
+    </select> 
+    
+    <select id="getByObj" parameterType="java.util.HashMap" resultType="PayRequest">  
+        select * from `pay_pay_request` where objectId = #{objectId} and module = #{module} and type = #{type} and client = #{client} limit 0,1
+    </select>  
+    
+    <select id="getByAttach" parameterType="java.util.HashMap" resultType="PayRequest">  
+        select * from `pay_pay_request` where attach = #{attach} and module = #{module} and type = #{type} and client = #{client} limit 0,1
+    </select>
+</mapper>

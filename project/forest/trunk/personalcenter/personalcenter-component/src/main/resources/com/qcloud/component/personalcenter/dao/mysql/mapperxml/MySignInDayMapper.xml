@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.personalcenter.dao.mysql.mapper.MySignInDayMapper">
+    <select id="list4query" parameterType="java.util.HashMap" resultType="MySignInDay">
+        select * from `personalcenter_my_sign_in_day` limit #{start},#{count}
+    </select>
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">
+        select count(*) from `personalcenter_my_sign_in_day`
+    </select>
+    
+    <select id="getByDate" parameterType="java.util.HashMap" resultType="MySignInDay">
+        select * from `personalcenter_my_sign_in_day` where userId=#{userId} and year=#{year} and month=#{month} and day=#{day}
+    </select>
+    
+    <select id="listByYearAndMonth" parameterType="java.util.HashMap" resultType="MySignInDay">
+        select * from `personalcenter_my_sign_in_day` where userId=#{userId} and year=#{year} and month=#{month}
+    </select>    
+</mapper>

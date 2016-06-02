@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.sellercenter.dao.mysql.mapper.StoreDeliveryTimeMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="StoreDeliveryTime">  
+        select * from `sellercenter_store_delivery_time` limit #{start},#{count}
+    </select>  
+    
+     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `sellercenter_store_delivery_time`
+    </select> 
+    
+    <select id="getByStore" parameterType="Long" resultType="StoreDeliveryTime">  
+        select * from `sellercenter_store_delivery_time` where `storeId`=#{storeId}
+    </select> 
+</mapper>

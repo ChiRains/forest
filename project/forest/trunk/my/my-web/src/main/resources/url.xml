@@ -1,0 +1,2237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml>
+	<!-- 模块URL列表 标签-->
+	<module-list code="my-pirates-url-list">
+	
+		
+	<item module="my" name="购物车-添加" url="/app/myshoppingcart/add.do" parameterCode="my_add">
+	<![CDATA[{
+			"status" : 200,
+			  "message" : "添加购物车成功.",
+			  "data" : {
+			  }
+	}]]></item>
+	<item module="my" name="购物车-清空" url="/app/myshoppingcart/clear.do" parameterCode="my_clear">
+	<![CDATA[{
+			"status" : 200,
+			  "message" : "清空购物车成功.",
+			  "data" : {
+			  }
+	}]]></item>
+	
+	<item module="my" name="购物车-减少" url="/app/myShoppingCart/reduce.do" parameterCode="my_reduce">
+	<![CDATA[{
+			
+			  "status" : 200,
+			  "message" : "减少购物车成功.",
+			  "data" : {
+			  }
+	}]]></item>
+	<item module="my" name="购物车-删除" url="/app/myShoppingCart/remove.do" parameterCode="my_remove">
+	<![CDATA[{
+			  "status" : 200,
+				  "message" : "移除购物车成功.",
+				  "data" : {
+				  }
+	}]]></item>
+	
+	<item module="my" name="购物车-删除(多个)" url="/app/myShoppingCart/removeList.do" parameterCode="my_myShoppingCart_removeList">
+	<![CDATA[{
+			  "status" : 200,
+				  "message" : "移除购物车成功.",
+				  "data" : {
+				  }
+	}]]></item>
+	
+	
+	
+	<item module="my" name="购物车-查询-列表1" url="/app/myShoppingCart/list.do" parameterCode="my_list" returnFieldCode="my_returnList">
+	<![CDATA[{
+			  "status" : 200,
+				  "message" : "获取购物车商品成功.",
+				  "data" : {
+				    "data" : [ {
+				      "merchantId" : 1010006000001001,
+				      "merchantClassifyId" : 1010006000001008,
+				      "unifiedMerchandiseId" : 1010006000001803,
+				      "timeStr" : "2015-09-30 12:28:49",
+				      "number" : 3,
+				      "name" : "地中海美式乡村餐桌椅组合",
+				      "image" : "http://file-dev.qi-cloud.net地中海美式乡村餐桌椅组合",
+				      "specifications" : "",
+				      "discount" : 528.0,
+				      "price" : 588.0,
+				      "stock" : 128,
+				      "collect" : false,
+				      "merchandiseType" : 1
+				    }, {
+				      "merchantId" : 1010006000001001,
+				      "merchantClassifyId" : 1010006000001008,
+				      "unifiedMerchandiseId" : 1010006000001812,
+				      "timeStr" : "2015-09-30 10:05:59",
+				      "number" : 1,
+				      "name" : "芝华仕头等舱沙发 布艺沙发 客厅沙发 时",
+				      "image" : "http://file-dev.qi-cloud.net芝华仕头等舱沙发 布艺沙发 客厅沙发 时",
+				      "specifications" : "",
+				      "discount" : 338.0,
+				      "price" : 428.0,
+				      "stock" : 147,
+				      "collect" : false,
+				      "merchandiseType" : 1
+				    }, {
+				      "merchantId" : 1010006000001001,
+				      "merchantClassifyId" : 1010006000001010,
+				      "unifiedMerchandiseId" : 1010006000001819,
+				      "timeStr" : "2015-09-30 10:05:41",
+				      "number" : 1,
+				      "name" : "库图 美式乡村 书桌 铝木结合 窈窕绅士",
+				      "image" : "http://file-dev.qi-cloud.net库图 美式乡村 书桌 铝木结合 窈窕绅士",
+				      "specifications" : "",
+				      "discount" : 528.0,
+				      "price" : 588.0,
+				      "stock" : 150,
+				      "collect" : false,
+				      "merchandiseType" : 1
+				    }, {
+				      "merchantId" : 1010006000001001,
+				      "merchantClassifyId" : 1010006000001014,
+				      "unifiedMerchandiseId" : 1010006000003417,
+				      "timeStr" : "2015-09-30 10:00:11",
+				      "number" : 2,
+				      "name" : "左耳特卖，同款茶杯",
+				      "image" : "http://file-dev.qi-cloud.net左耳特卖，同款茶杯",
+				      "specifications" : " 红色  16寸 ",
+				      "discount" : 13.0,
+				      "price" : 13.0,
+				      "stock" : 0,
+				      "collect" : false,
+				      "merchandiseType" : 2
+				    } ]
+				  }
+	}]]></item>
+	<item module="my" name="购物车-查询 -按商家列表2  " url="/app/myShoppingCart/list4Merchant.do" parameterCode="my_list4Merchant" returnFieldCode="my_returnList4Merchant">
+	<![CDATA[
+	{
+	  "status" : 200,
+	  "message" : "获取购物车商品成功.",
+	  "data" : {
+	    "total" : 1,
+	    "data" : [ {
+	      "merchantId" : 1010006000001003,
+	      "name" : "中山市心源食品科技有限公司",
+	      "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=FE0C890411104E32B87F61A5EA0F1622.png",
+	      "merchandiseList" : [ {
+	        "merchantId" : 1010006000001003,
+	        "merchantClassifyId" : 1010006000002137,
+	        "unifiedMerchandiseId" : 1010006000003467,
+	        "timeStr" : "2015-12-05 10:07:28",
+	        "number" : 1,
+	        "name" : "亿心源特级无芯通心白莲子",
+	        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=697C5606BAA9453A93D6C2C30B337392.jpg",
+	        "specifications" : "",
+	        "discount" : 32.0,
+	        "price" : 32.0,
+	        "stock" : 10000000,
+	        "collect" : false,
+	        "merchandiseType" : 1
+	      } ],
+	      "coupon" : false
+	    } ]
+	  }
+	}
+	]]></item>
+	<item module="my" name="购物车-查询-按商家商品分类列表3 " url="/app/myShoppingCart/list4Classify.do" parameterCode="my_list4Classify" returnFieldCode="my_returnList4Classify">
+	<![CDATA[{
+			  "status" : 200,
+			  "message" : "获取购物车商品成功.",
+			  "data" : {
+			    "data" : [ {
+			      "classifyId" : 1010006000001008,
+			      "name" : "客厅家具",
+			      "image" : null,
+			      "merchandiseList" : [ {
+			        "merchantId" : 1010006000001001,
+			        "merchantClassifyId" : 1010006000001008,
+			        "unifiedMerchandiseId" : 1010006000001803,
+			        "timeStr" : "2015-09-30 12:28:49",
+			        "number" : 3,
+			        "name" : "地中海美式乡村餐桌椅组合",
+			        "image" : "http://file-dev.qi-cloud.net地中海美式乡村餐桌椅组合",
+			        "specifications" : "",
+			        "discount" : 528.0,
+			        "price" : 588.0,
+			        "stock" : 128,
+			        "collect" : false,
+			        "merchandiseType" : 1
+			      }, {
+			        "merchantId" : 1010006000001001,
+			        "merchantClassifyId" : 1010006000001008,
+			        "unifiedMerchandiseId" : 1010006000001812,
+			        "timeStr" : "2015-09-30 10:05:59",
+			        "number" : 1,
+			        "name" : "芝华仕头等舱沙发 布艺沙发 客厅沙发 时",
+			        "image" : "http://file-dev.qi-cloud.net芝华仕头等舱沙发 布艺沙发 客厅沙发 时",
+			        "specifications" : "",
+			        "discount" : 338.0,
+			        "price" : 428.0,
+			        "stock" : 147,
+			        "collect" : false,
+			        "merchandiseType" : 1
+			      } ]
+			    }, {
+			      "classifyId" : 1010006000001010,
+			      "name" : "书房家具",
+			      "image" : null,
+			      "merchandiseList" : [ {
+			        "merchantId" : 1010006000001001,
+			        "merchantClassifyId" : 1010006000001010,
+			        "unifiedMerchandiseId" : 1010006000001819,
+			        "timeStr" : "2015-09-30 10:05:41",
+			        "number" : 1,
+			        "name" : "库图 美式乡村 书桌 铝木结合 窈窕绅士",
+			        "image" : "http://file-dev.qi-cloud.net库图 美式乡村 书桌 铝木结合 窈窕绅士",
+			        "specifications" : "",
+			        "discount" : 528.0,
+			        "price" : 588.0,
+			        "stock" : 150,
+			        "collect" : false,
+			        "merchandiseType" : 1
+			      } ]
+			    }, {
+			      "classifyId" : 1010006000001014,
+			      "name" : "陶瓷器品",
+			      "image" : null,
+			      "merchandiseList" : [ {
+			        "merchantId" : 1010006000001001,
+			        "merchantClassifyId" : 1010006000001014,
+			        "unifiedMerchandiseId" : 1010006000003417,
+			        "timeStr" : "2015-09-30 10:00:11",
+			        "number" : 2,
+			        "name" : "左耳特卖，同款茶杯",
+			        "image" : "http://file-dev.qi-cloud.net左耳特卖，同款茶杯",
+			        "specifications" : " 红色  16寸 ",
+			        "discount" : 13.0,
+			        "price" : 13.0,
+			        "stock" : 0,
+			        "collect" : false,
+			        "merchandiseType" : 2
+			      } ]
+			    } ]
+			  }
+	}]]></item>
+	<item module="my" name="我的商品收藏 -要求登录-添加" url="/app/myMerchandiseCollection/collect.do" parameterCode="my_collect">
+	<![CDATA[{
+			  "status" : 200,
+			  "message" : "收藏成功.",
+			  "data" : {
+			  }
+	}]]></item>
+	<item module="my" name="我的商品收藏 -要求登录-取消" url="/app/myMerchandiseCollection/remove.do" parameterCode="my_removeCollection">
+	<![CDATA[{
+			  "status" : 200,
+			  "message" : "取消收藏成功.",
+			  "data" : {
+			  }
+	}]]></item>
+	<item module="my" name="我的商品收藏 -要求登录-批量取消收藏" url="/app/myMerchandiseCollection/removeList.do" parameterCode="my_removeList">
+	<![CDATA[{
+			  "status" : 200,
+			  "message" : "取消收藏成功.",
+			  "data" : {
+			  }
+	}]]></item>
+	<item module="my" name="我的商品收藏 -要求登录-批量取消收藏" url="/app/myMerchandiseCollection/removeByUnifiedMerchandiseList.do" parameterCode="my_removeByUnifiedMerchandiseList">
+	<![CDATA[{
+			  "status" : 200,
+			  "message" : "取消收藏成功.",
+			  "data" : {
+			  }
+	}]]></item>
+	<item module="my" name="我的商品收藏 -要求登录-取消收藏" url="/app/myMerchandiseCollection/removeByUnifiedMerchandise.do" parameterCode="my_removeByUnifiedMerchandise">
+	<![CDATA[{
+			  "status" : 200,
+			  "message" : "取消收藏成功.",
+			  "data" : {
+			  }
+	}]]></item>
+	<item module="my" name="我的商品收藏 -要求登录-是否收藏" url="/app/myMerchandiseCollection/isCollect.do" parameterCode="my_isCollect" returnFieldCode="my_returnIsCollect">
+	<![CDATA[
+	{
+	   "status" : 200,
+		  "message" : "收藏成功.",
+		  "data" : {
+		    "collect" : "false"
+		  }
+	}
+	]]></item>
+	<item module="my" name="我的商品收藏 -要求登录-查询" url="/app/myMerchandiseCollection/list.do" parameterCode="my_listCollection" returnFieldCode="my_returnListCollection">
+	<![CDATA[
+	{
+      "status" : 200,
+	  "message" : "获取我的收藏成功.",
+	  "data" : {
+	    "data" : [ {
+	      "id" : 1010005000000004,
+	      "unifiedMerchandiseId" : 1010005000000601,
+	      "time" : 1437717984000
+	    }, {
+	      "id" : 1010005000000005,
+	      "unifiedMerchandiseId" : 1010005000000801,
+	      "time" : 1437717989000
+	    } ]
+	  }
+	}
+	]]></item>
+	<item module="my" name="我的商品收藏 -要求登录-商品收藏分类" url="/app/myCollectionStatistics/listMerchandiseCollectClassify.do" parameterCode="my_listMerchandiseCollectClassify" returnFieldCode="my_returnListMerchandiseCollectClassify">
+	<![CDATA[
+	{
+      "status" : 200,
+	  "message" : "获取收藏统计成功.",
+	  "data" : {
+	    "classifyList" : [ {
+	      "classifyId" : -1,
+	      "classifyName" : "所有分类",
+	      "number" : 1
+	    }, {
+	      "classifyId" : 1010006000001412,
+	      "classifyName" : "家具艺术品",
+	      "number" : 1
+	    } ]
+	  }
+	}
+	]]></item>
+	<item module="my" name="收货人地址-添加" url="/app/consignee/add.do" parameterCode="my_addReceiverAddress">
+	<![CDATA[
+	{
+	  "status" : 200,
+	  "message" : "添加收货人信息成功.",
+	  "data" : {
+	  }
+	}
+	]]></item>
+	<item module="my" name="收货人地址-更新" url="/app/consignee/update.do" parameterCode="my_updateReceiverAddress">
+	<![CDATA[
+	{
+	  "status" : 200,
+	  "message" : "修改收货人信息成功.",
+	  "data" : {
+	  }
+	}
+	]]></item>
+	<item module="my" name="收货人地址-删除" url="/app/consignee/delete.do" parameterCode="my_deleteReceiverAddress">
+	<![CDATA[
+	{
+	  "status" : 200,
+	  "message" : "删除收货人信息成功.",
+	  "data" : {
+	  }
+	}
+	.
+	]]></item>
+	<item module="my" name="收货人地址-查询" url="/app/consignee/list.do" parameterCode="my_listReceiverAddress" return="my_returnListReceiverAddress">
+	<![CDATA[
+		{
+	  "status" : 200,
+	  "message" : "查询收货人信息成功.",
+	  "data" : {
+	    "list" : [ {
+	      "id" : 1010016000010201,
+	      "name" : "艾斯",
+	      "province" : "广东省",
+	      "city" : "中山市",
+	      "district" : "undefined",
+	      "address" : "东城艺墅",
+	      "mobile" : "13763392114",
+	      "acquiesce" : 1,
+	      "zipCode" : null
+	    }, {
+	      "id" : 1010016000010401,
+	      "name" : "而",
+	      "province" : "北京市",
+	      "city" : "北京市",
+	      "district" : "东城区",
+	      "address" : "偶官方",
+	      "mobile" : "1111",
+	      "acquiesce" : 2,
+	      "zipCode" : null
+	    }, {
+	      "id" : 1010016000010402,
+	      "name" : "而",
+	      "province" : "北京市",
+	      "city" : "北京市",
+	      "district" : "东城区",
+	      "address" : "偶官方",
+	      "mobile" : "1111",
+	      "acquiesce" : 2,
+	      "zipCode" : null
+	    } ]
+	  }
+	}
+	]]></item>
+	<item module="my" name="收货人地址-设置默认" url="/app/consignee/setDefault.do" parameterCode="my_setDefault">
+	<![CDATA[
+	
+	]]></item>
+	<item module="my" name="收货人地址-获取默认" url="/app/consignee/getDefault.do" parameterCode="my_getDefault" returnFieldCode="my_returnGetDefault">
+	<![CDATA[
+		{
+	  "status" : 200,
+	  "message" : "获取收货人信息成功.",
+	  "data" : {
+	    "consignee" : {
+	      "id" : 1010016000010201,
+	      "name" : "艾斯",
+	      "province" : "广东省",
+	      "city" : "中山市",
+	      "district" : "undefined",
+	      "address" : "东城艺墅",
+	      "mobile" : "13763392114",
+	      "acquiesce" : 1,
+	      "zipCode" : null
+	    }
+	  }
+	}
+	]]></item>
+	<item module="my" name="我的配送信息-添加" url="/app/deliveryMode/add.do" parameterCode="my_addDelivery">
+	<![CDATA[{
+			      "status" : 200,
+				  "message" : "添加配送信息成功.",
+				  "data" : {
+				    "id" : 1010005000000001
+				  }
+	}]]></item>
+	<item module="my" name="我的配送信息-获取" url="/app/deliveryMode/get.do" parameterCode="my_getDelivery" returnFieldCode="my_returnGetDelivery">
+	<![CDATA[{
+			      "status" : 200,
+				  "message" : "获取配送信息成功.",
+				  "data" : {
+				    "delivery" : {
+				      "id" : 1010005000000001,
+				      "type" : 2,
+				      "desc" : "中午十二点到两点不营业",
+				      "storeId" : 11,
+				      "time" : "日期 2015-07-26 时间 09:00"
+				    }
+				  }
+	}]]></item>
+	<item module="my" name="我的发票信息-记录" url="/app/invoiceMode/add.do" parameterCode="my_addInvoice">
+	<![CDATA[{
+			      
+			  "status" : 200,
+			  "message" : "添加发票信息成功.",
+			  "data" : {
+			    "id" : 1010005000000001
+			  }   
+	}]]></item>
+	<item module="my" name="我的发票信息-获取" url="/app/invoiceMode/get.do" parameterCode="my_getInvoice" returnFieldCode="my_returnGetInvoice">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "获取发票信息成功.",
+				  "data" : {
+				    "invoice" : {
+				      "id" : 1010005000000001,
+				      "mode" : 1,
+				      "type" : 1,
+				      "head" : "旗云",
+				      "content" : "办公用品"
+				    }
+				  }
+	}]]></item>
+	<item module="my" name="我的订单" url="/app/myOrderForm/query.do" parameterCode="my_query" returnFieldCode="my_returnQuery">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "查询我的订单成功.",
+				  "data" : {
+				    "data" : [ {
+				      "orderId" : 1010006000004425,
+				      "timeStr" : "2015-10-01 11:18:25",
+				      "state" : 1,
+				      "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A31169A0A97F4BFA88BB798B0B3194AC.png",
+				      "orderNumber" : "YWGP201510011145",
+				      "sum" : 15136.0,
+				      "expectedArrivalDateStr" : "2015-10-01 11:20:28",
+				      "arrivalDateStr" : "2015-10-01 11:20:28"
+				    }, {
+				      "orderId" : 1010006000004423,
+				      "timeStr" : "2015-10-01 11:18:25",
+				      "state" : 1,
+				      "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A31169A0A97F4BFA88BB798B0B3194AC.png",
+				      "orderNumber" : "CAFJ201510011109",
+				      "sum" : 15136.0,
+				      "expectedArrivalDateStr" : "2015-10-01 11:20:28",
+				      "arrivalDateStr" : "2015-10-01 11:20:28"
+				    } ]
+				  }
+	}]]></item>
+	<item module="my" name="我的订单" url="/app/myOrderForm/query4Merchandise.do" parameterCode="my_query4Merchandise" returnFieldCode="my_returnQuery4Merchandise">
+	<![CDATA[{
+		  "status" : 200,
+		  "message" : "查询我的订单成功.",
+		  "data" : {
+		    "data" : [ {
+		      "orderId" : 1010006000013201,
+		      "timeStr" : "2015-12-30 16:03:05",
+		      "state" : 2,
+		      "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A32EA73257094D6A9CC356EB5B3CB0B9.jpg",
+		      "orderNumber" : "BYIB201512301683",
+		      "sum" : 10236.0,
+		      "cash" : 10236.0,
+		      "postage" : 36.0,
+		      "afterSaleStateName" : "",
+		      "surplus" : 2550.0,
+		      "evaluation" : true,
+		      "afterSale" : true,
+		      "merchantId" : -1,
+		      "merchantName" : "億心源",
+		      "merchantImage" : "",
+		      "number" : 10,
+		      "orderItemList" : [ {
+		        "unifiedMerchandiseId" : 1010006000001601,
+		        "discount" : 33.6,
+		        "number" : 5,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A32EA73257094D6A9CC356EB5B3CB0B9.jpg",
+		        "name" : "亿心源非洲花梨木+黑檀木笔搁复古文房摆件",
+		        "specifications" : "",
+		        "merchantId" : 1010006000001005,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      }, {
+		        "unifiedMerchandiseId" : 1010006000002435,
+		        "discount" : 0.0,
+		        "number" : 3,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=507A3002B25B424394B416A1BC6A8CCD.jpg",
+		        "name" : "亿心源金丝楠木时尚多功能茶桌",
+		        "specifications" : "1200*2000 ",
+		        "merchantId" : 1010006000001002,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      }, {
+		        "unifiedMerchandiseId" : 1010006000002403,
+		        "discount" : 5016.0,
+		        "number" : 2,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=4623C5F964E14C99BF4DA2A86A103786.jpg",
+		        "name" : "亿心源金丝楠木中式架子",
+		        "specifications" : "",
+		        "merchantId" : 1010006000001002,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      } ]
+		    }, {
+		      "orderId" : 1010006000012401,
+		      "timeStr" : "2015-12-30 10:26:24",
+		      "state" : 2,
+		      "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A32EA73257094D6A9CC356EB5B3CB0B9.jpg",
+		      "orderNumber" : "GCJN201512301037",
+		      "sum" : 10236.0,
+		      "cash" : 10236.0,
+		      "postage" : 36.0,
+		      "afterSaleStateName" : "",
+		      "surplus" : 2550.0,
+		      "evaluation" : true,
+		      "afterSale" : true,
+		      "merchantId" : -1,
+		      "merchantName" : "億心源",
+		      "merchantImage" : "",
+		      "number" : 10,
+		      "orderItemList" : [ {
+		        "unifiedMerchandiseId" : 1010006000001601,
+		        "discount" : 33.6,
+		        "number" : 5,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A32EA73257094D6A9CC356EB5B3CB0B9.jpg",
+		        "name" : "亿心源非洲花梨木+黑檀木笔搁复古文房摆件",
+		        "specifications" : "",
+		        "merchantId" : 1010006000001005,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      }, {
+		        "unifiedMerchandiseId" : 1010006000002435,
+		        "discount" : 0.0,
+		        "number" : 3,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=507A3002B25B424394B416A1BC6A8CCD.jpg",
+		        "name" : "亿心源金丝楠木时尚多功能茶桌",
+		        "specifications" : "1200*2000 ",
+		        "merchantId" : 1010006000001002,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      }, {
+		        "unifiedMerchandiseId" : 1010006000002403,
+		        "discount" : 5016.0,
+		        "number" : 2,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=4623C5F964E14C99BF4DA2A86A103786.jpg",
+		        "name" : "亿心源金丝楠木中式架子",
+		        "specifications" : "",
+		        "merchantId" : 1010006000001002,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      } ]
+		    }, {
+		      "orderId" : 1010006000012203,
+		      "timeStr" : "2015-12-30 10:15:23",
+		      "state" : 2,
+		      "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A32EA73257094D6A9CC356EB5B3CB0B9.jpg",
+		      "orderNumber" : "IDWF201512301094",
+		      "sum" : 10236.0,
+		      "cash" : 10236.0,
+		      "postage" : 36.0,
+		      "afterSaleStateName" : "",
+		      "surplus" : 2550.0,
+		      "evaluation" : true,
+		      "afterSale" : true,
+		      "merchantId" : -1,
+		      "merchantName" : "億心源",
+		      "merchantImage" : "",
+		      "number" : 10,
+		      "orderItemList" : [ {
+		        "unifiedMerchandiseId" : 1010006000001601,
+		        "discount" : 33.6,
+		        "number" : 5,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A32EA73257094D6A9CC356EB5B3CB0B9.jpg",
+		        "name" : "亿心源非洲花梨木+黑檀木笔搁复古文房摆件",
+		        "specifications" : "",
+		        "merchantId" : 1010006000001005,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      }, {
+		        "unifiedMerchandiseId" : 1010006000002435,
+		        "discount" : 0.0,
+		        "number" : 3,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=507A3002B25B424394B416A1BC6A8CCD.jpg",
+		        "name" : "亿心源金丝楠木时尚多功能茶桌",
+		        "specifications" : "1200*2000 ",
+		        "merchantId" : 1010006000001002,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      }, {
+		        "unifiedMerchandiseId" : 1010006000002403,
+		        "discount" : 5016.0,
+		        "number" : 2,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=4623C5F964E14C99BF4DA2A86A103786.jpg",
+		        "name" : "亿心源金丝楠木中式架子",
+		        "specifications" : "",
+		        "merchantId" : 1010006000001002,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      } ]
+		    }, {
+		      "orderId" : 1010006000012202,
+		      "timeStr" : "2015-12-30 10:12:23",
+		      "state" : 2,
+		      "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A32EA73257094D6A9CC356EB5B3CB0B9.jpg",
+		      "orderNumber" : "HQUG201512301016",
+		      "sum" : 10236.0,
+		      "cash" : 10236.0,
+		      "postage" : 36.0,
+		      "afterSaleStateName" : "",
+		      "surplus" : 2550.0,
+		      "evaluation" : true,
+		      "afterSale" : true,
+		      "merchantId" : -1,
+		      "merchantName" : "億心源",
+		      "merchantImage" : "",
+		      "number" : 10,
+		      "orderItemList" : [ {
+		        "unifiedMerchandiseId" : 1010006000001601,
+		        "discount" : 33.6,
+		        "number" : 5,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A32EA73257094D6A9CC356EB5B3CB0B9.jpg",
+		        "name" : "亿心源非洲花梨木+黑檀木笔搁复古文房摆件",
+		        "specifications" : "",
+		        "merchantId" : 1010006000001005,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      }, {
+		        "unifiedMerchandiseId" : 1010006000002435,
+		        "discount" : 0.0,
+		        "number" : 3,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=507A3002B25B424394B416A1BC6A8CCD.jpg",
+		        "name" : "亿心源金丝楠木时尚多功能茶桌",
+		        "specifications" : "1200*2000 ",
+		        "merchantId" : 1010006000001002,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      }, {
+		        "unifiedMerchandiseId" : 1010006000002403,
+		        "discount" : 5016.0,
+		        "number" : 2,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=4623C5F964E14C99BF4DA2A86A103786.jpg",
+		        "name" : "亿心源金丝楠木中式架子",
+		        "specifications" : "",
+		        "merchantId" : 1010006000001002,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      } ]
+		    }, {
+		      "orderId" : 1010006000012201,
+		      "timeStr" : "2015-12-30 10:11:34",
+		      "state" : 2,
+		      "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A32EA73257094D6A9CC356EB5B3CB0B9.jpg",
+		      "orderNumber" : "GQMV201512301047",
+		      "sum" : 10236.0,
+		      "cash" : 10236.0,
+		      "postage" : 36.0,
+		      "afterSaleStateName" : "",
+		      "surplus" : 2550.0,
+		      "evaluation" : true,
+		      "afterSale" : true,
+		      "merchantId" : -1,
+		      "merchantName" : "億心源",
+		      "merchantImage" : "",
+		      "number" : 10,
+		      "orderItemList" : [ {
+		        "unifiedMerchandiseId" : 1010006000001601,
+		        "discount" : 33.6,
+		        "number" : 5,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A32EA73257094D6A9CC356EB5B3CB0B9.jpg",
+		        "name" : "亿心源非洲花梨木+黑檀木笔搁复古文房摆件",
+		        "specifications" : "",
+		        "merchantId" : 1010006000001005,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      }, {
+		        "unifiedMerchandiseId" : 1010006000002435,
+		        "discount" : 0.0,
+		        "number" : 3,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=507A3002B25B424394B416A1BC6A8CCD.jpg",
+		        "name" : "亿心源金丝楠木时尚多功能茶桌",
+		        "specifications" : "1200*2000 ",
+		        "merchantId" : 1010006000001002,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      }, {
+		        "unifiedMerchandiseId" : 1010006000002403,
+		        "discount" : 5016.0,
+		        "number" : 2,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=4623C5F964E14C99BF4DA2A86A103786.jpg",
+		        "name" : "亿心源金丝楠木中式架子",
+		        "specifications" : "",
+		        "merchantId" : 1010006000001002,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      } ]
+		    }, {
+		      "orderId" : 1010006000010802,
+		      "timeStr" : "2015-12-27 23:45:31",
+		      "state" : 2,
+		      "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A32EA73257094D6A9CC356EB5B3CB0B9.jpg",
+		      "orderNumber" : "OKTV201512272396",
+		      "sum" : 10236.0,
+		      "cash" : 10236.0,
+		      "postage" : 36.0,
+		      "afterSaleStateName" : "",
+		      "surplus" : 2550.0,
+		      "evaluation" : true,
+		      "afterSale" : true,
+		      "merchantId" : -1,
+		      "merchantName" : "億心源",
+		      "merchantImage" : "",
+		      "number" : 10,
+		      "orderItemList" : [ {
+		        "unifiedMerchandiseId" : 1010006000001601,
+		        "discount" : 33.6,
+		        "number" : 5,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A32EA73257094D6A9CC356EB5B3CB0B9.jpg",
+		        "name" : "亿心源非洲花梨木+黑檀木笔搁复古文房摆件",
+		        "specifications" : "",
+		        "merchantId" : 1010006000001005,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      }, {
+		        "unifiedMerchandiseId" : 1010006000002435,
+		        "discount" : 0.0,
+		        "number" : 3,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=507A3002B25B424394B416A1BC6A8CCD.jpg",
+		        "name" : "亿心源金丝楠木时尚多功能茶桌",
+		        "specifications" : "1200*2000 ",
+		        "merchantId" : 1010006000001002,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      }, {
+		        "unifiedMerchandiseId" : 1010006000002403,
+		        "discount" : 5016.0,
+		        "number" : 2,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=4623C5F964E14C99BF4DA2A86A103786.jpg",
+		        "name" : "亿心源金丝楠木中式架子",
+		        "specifications" : "",
+		        "merchantId" : 1010006000001002,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      } ]
+		    }, {
+		      "orderId" : 1010006000010602,
+		      "timeStr" : "2015-12-27 23:37:21",
+		      "state" : 2,
+		      "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A32EA73257094D6A9CC356EB5B3CB0B9.jpg",
+		      "orderNumber" : "TKGZ201512272344",
+		      "sum" : 10236.0,
+		      "cash" : 10176.0,
+		      "postage" : 36.0,
+		      "afterSaleStateName" : "",
+		      "surplus" : 2610.0,
+		      "evaluation" : true,
+		      "afterSale" : true,
+		      "merchantId" : -1,
+		      "merchantName" : "億心源",
+		      "merchantImage" : "",
+		      "number" : 10,
+		      "orderItemList" : [ {
+		        "unifiedMerchandiseId" : 1010006000001601,
+		        "discount" : 33.6,
+		        "number" : 5,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A32EA73257094D6A9CC356EB5B3CB0B9.jpg",
+		        "name" : "亿心源非洲花梨木+黑檀木笔搁复古文房摆件",
+		        "specifications" : "",
+		        "merchantId" : 1010006000001005,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      }, {
+		        "unifiedMerchandiseId" : 1010006000002435,
+		        "discount" : 0.0,
+		        "number" : 3,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=507A3002B25B424394B416A1BC6A8CCD.jpg",
+		        "name" : "亿心源金丝楠木时尚多功能茶桌",
+		        "specifications" : "1200*2000 ",
+		        "merchantId" : 1010006000001002,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      }, {
+		        "unifiedMerchandiseId" : 1010006000002403,
+		        "discount" : 5016.0,
+		        "number" : 2,
+		        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=4623C5F964E14C99BF4DA2A86A103786.jpg",
+		        "name" : "亿心源金丝楠木中式架子",
+		        "specifications" : "",
+		        "merchantId" : 1010006000001002,
+		        "merchantName" : "中山市宝艺实业工艺品有限公司"
+		      } ]
+		    } ]
+		  }
+		}
+	]]></item>
+	<item module="my" name="我的订单" url="/app/myOrderForm/query.do" parameterCode="my_query" returnFieldCode="my_returnQueryOrderForm">
+	<![CDATA[{
+				 "status" : 200,
+				  "message" : "查询我的订单成功.",
+				  "data" : {
+				    "data" : [ {
+				      "orderId" : 1010006000004425,
+				      "timeStr" : "2015-10-01 11:18:25",
+				      "state" : 1,
+				      "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A31169A0A97F4BFA88BB798B0B3194AC.png",
+				      "orderNumber" : "YWGP201510011145",
+				      "sum" : 15136.0,
+				      "expectedArrivalDateStr" : "2015-10-01 11:21:11",
+				      "arrivalDateStr" : "2015-10-01 11:21:11",
+				      "orderItemList" : [ {
+				        "unifiedMerchandiseId" : 1010006000001002,
+				        "discount" : 688.0,
+				        "number" : 20,
+				        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A31169A0A97F4BFA88BB798B0B3194AC.png",
+				        "name" : "内蒙豪华正宗鸡翅木沙发",
+				        "specifications" : "",
+				        "merchantId" : 1010006000001001,
+				        "merchantName" : "文艺一店"
+				      }, {
+				        "unifiedMerchandiseId" : 1010006000001202,
+				        "discount" : 688.0,
+				        "number" : 2,
+				        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=CA7DC39C4ACE49FFB5F9EE74357C82A0.jpg",
+				        "name" : "茶杯",
+				        "specifications" : "黄色  14寸 ",
+				        "merchantId" : 1010006000001001,
+				        "merchantName" : "文艺一店"
+				      } ]
+				    }, {
+				      "orderId" : 1010006000004423,
+				      "timeStr" : "2015-10-01 11:18:25",
+				      "state" : 1,
+				      "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A31169A0A97F4BFA88BB798B0B3194AC.png",
+				      "orderNumber" : "CAFJ201510011109",
+				      "sum" : 15136.0,
+				      "expectedArrivalDateStr" : "2015-10-01 11:21:11",
+				      "arrivalDateStr" : "2015-10-01 11:21:11",
+				      "orderItemList" : [ {
+				        "unifiedMerchandiseId" : 1010006000001002,
+				        "discount" : 688.0,
+				        "number" : 20,
+				        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A31169A0A97F4BFA88BB798B0B3194AC.png",
+				        "name" : "内蒙豪华正宗鸡翅木沙发",
+				        "specifications" : "",
+				        "merchantId" : 1010006000001001,
+				        "merchantName" : "文艺一店"
+				      }, {
+				        "unifiedMerchandiseId" : 1010006000001202,
+				        "discount" : 688.0,
+				        "number" : 2,
+				        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=CA7DC39C4ACE49FFB5F9EE74357C82A0.jpg",
+				        "name" : "茶杯",
+				        "specifications" : "黄色  14寸 ",
+				        "merchantId" : 1010006000001001,
+				        "merchantName" : "文艺一店"
+				      } ]
+				    } ]
+				  }
+	}]]></item>
+	<item module="my" name="我的一个订单" url="/app/orderForm/get.do" parameterCode="my_getOrderForm" returnFieldCode="my_returnGetOrderForm">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "获取订单成功",
+				  "data" : {
+				    "order" : {
+				      "id" : 1010006000003602,
+				      "orderNumber" : "TCAQ201509281198",
+				      "orderDate" : 1443409395000,
+				      "orderDateStr" : "2015-09-28 11:03:15",
+				      "sum" : 15136.0,
+				      "number" : 0,
+				      "consignee" : "张光磊",
+				      "address" : "安徽省安庆市枞阳县南方软件园A1栋四楼",
+				      "mobile" : "15989774462",
+				      "stateStr" : "待评价",
+				      "surplus" : 880.0,
+				      "afterSaleList" : [ {
+				        "itemList" : [ {
+				          "name" : "内蒙豪华正宗鸡翅木沙发",
+				          "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A31169A0A97F4BFA88BB798B0B3194AC.png",
+				          "specifications" : "",
+				          "code" : "sdfsfsdfsfs",
+				          "number" : 20,
+				          "explain" : "快点退钱",
+				          "reason" : "质量太差"
+				        }, {
+				          "name" : "茶杯",
+				          "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=CA7DC39C4ACE49FFB5F9EE74357C82A0.jpg",
+				          "specifications" : "黄色  14寸 ",
+				          "code" : "sdfsdfsdfsdf",
+				          "number" : 2,
+				          "explain" : "快点退钱",
+				          "reason" : "质量太差"
+				        } ],
+				        "merchantName" : "文艺一店",
+				        "state" : 370,
+				        "timeStr" : "2015-09-28 15:49:22",
+				        "afterSaleOrderNumber" : "FWIV201509281540",
+				        "explain" : "快点退钱",
+				        "reason" : "质量太差",
+				        "sum" : 32.0,
+				        "type" : 2
+				      } ],
+				      "orderItemList" : [ {
+				        "unifiedMerchandiseId" : 1010006000001002,
+				        "discount" : 688.0,
+				        "price" : 728.0,
+				        "number" : 20,
+				        "name" : "内蒙豪华正宗鸡翅木沙发",
+				        "specifications" : "",
+				        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A31169A0A97F4BFA88BB798B0B3194AC.png",
+				        "code" : "AE564632121",
+				        "logisticsCompany" : null,
+				        "logisticsNumber" : ""
+				      }, {
+				        "unifiedMerchandiseId" : 1010006000001202,
+				        "discount" : 688.0,
+				        "price" : 728.0,
+				        "number" : 2,
+				        "name" : "茶杯",
+				        "specifications" : "黄色  14寸 ",
+				        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=CA7DC39C4ACE49FFB5F9EE74357C82A0.jpg",
+				        "code" : "A005",
+				        "logisticsCompany" : null,
+				        "logisticsNumber" : ""
+				      } ]
+				    }
+				  }
+	}]]></item>
+	<item module="my" name="我的一个订单" url="/app/orderForm/get4Classify.do" parameterCode="my_get4Classify" returnFieldCode="my_returnGet4Classify">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "获取订单成功",
+				  "data" : {
+				    "order" : {
+				      "id" : 1010006000003602,
+				      "orderNumber" : "TCAQ201509281198",
+				      "orderDate" : 1443409395000,
+				      "orderDateStr" : "2015-09-28 11:03:15",
+				      "sum" : 15136.0,
+				      "number" : 0,
+				      "consignee" : "张光磊",
+				      "address" : "安徽省安庆市枞阳县南方软件园A1栋四楼",
+				      "mobile" : "15989774462",
+				      "stateStr" : "待评价",
+				      "surplus" : 880.0,
+				      "afterSaleList" : [ {
+				        "itemList" : [ {
+				          "name" : "内蒙豪华正宗鸡翅木沙发",
+				          "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A31169A0A97F4BFA88BB798B0B3194AC.png",
+				          "specifications" : "",
+				          "code" : "sdfsfsdfsfs",
+				          "number" : 20,
+				          "explain" : "快点退钱",
+				          "reason" : "质量太差"
+				        }, {
+				          "name" : "茶杯",
+				          "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=CA7DC39C4ACE49FFB5F9EE74357C82A0.jpg",
+				          "specifications" : "黄色  14寸 ",
+				          "code" : "sdfsdfsdfsdf",
+				          "number" : 2,
+				          "explain" : "快点退钱",
+				          "reason" : "质量太差"
+				        } ],
+				        "merchantName" : "文艺一店",
+				        "state" : 370,
+				        "timeStr" : "2015-09-28 15:49:22",
+				        "afterSaleOrderNumber" : "FWIV201509281540",
+				        "explain" : "快点退钱",
+				        "reason" : "质量太差",
+				        "sum" : 32.0,
+				        "type" : 2
+				      } ],
+				      "classifyList" : [ {
+				        "classifyId" : 1010006000001009,
+				        "classifyName" : "卧室家具",
+				        "image" : "http://file-dev.qi-cloud.net",
+				        "orderItemList" : [ {
+				          "unifiedMerchandiseId" : 1010006000001002,
+				          "discount" : 688.0,
+				          "price" : 728.0,
+				          "number" : 20,
+				          "name" : "内蒙豪华正宗鸡翅木沙发",
+				          "specifications" : "",
+				          "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A31169A0A97F4BFA88BB798B0B3194AC.png",
+				          "code" : "AE564632121",
+				          "logisticsCompany" : null,
+				          "logisticsNumber" : ""
+				        } ]
+				      }, {
+				        "classifyId" : 1010006000001014,
+				        "classifyName" : "陶瓷器品",
+				        "image" : "http://file-dev.qi-cloud.net",
+				        "orderItemList" : [ {
+				          "unifiedMerchandiseId" : 1010006000001202,
+				          "discount" : 688.0,
+				          "price" : 728.0,
+				          "number" : 2,
+				          "name" : "茶杯",
+				          "specifications" : "黄色  14寸 ",
+				          "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=CA7DC39C4ACE49FFB5F9EE74357C82A0.jpg",
+				          "code" : "A005",
+				          "logisticsCompany" : null,
+				          "logisticsNumber" : ""
+				        } ]
+				      } ]
+				    }
+				  }
+	}]]></item>
+	<item module="my" name="我的一个订单" url="/app/orderForm/get4Merchant.do" parameterCode="my_get4Merchant" returnFieldCode="my_returnGet4Classify">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "获取订单成功",
+				  "data" : {
+				    "order" : {
+				      "id" : 1010006000003602,
+				      "orderNumber" : "TCAQ201509281198",
+				      "orderDate" : 1443409395000,
+				      "orderDateStr" : "2015-09-28 11:03:15",
+				      "sum" : 15136.0,
+				      "number" : 0,
+				      "consignee" : "张光磊",
+				      "address" : "安徽省安庆市枞阳县南方软件园A1栋四楼",
+				      "mobile" : "15989774462",
+				      "stateStr" : "待评价",
+				      "surplus" : 880.0,
+				      "afterSaleList" : [ {
+				        "itemList" : [ {
+				          "name" : "内蒙豪华正宗鸡翅木沙发",
+				          "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A31169A0A97F4BFA88BB798B0B3194AC.png",
+				          "specifications" : "",
+				          "code" : "sdfsfsdfsfs",
+				          "number" : 20,
+				          "explain" : "快点退钱",
+				          "reason" : "质量太差"
+				        }, {
+				          "name" : "茶杯",
+				          "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=CA7DC39C4ACE49FFB5F9EE74357C82A0.jpg",
+				          "specifications" : "黄色  14寸 ",
+				          "code" : "sdfsdfsdfsdf",
+				          "number" : 2,
+				          "explain" : "快点退钱",
+				          "reason" : "质量太差"
+				        } ],
+				        "merchantName" : "文艺一店",
+				        "state" : 370,
+				        "timeStr" : "2015-09-28 15:49:22",
+				        "afterSaleOrderNumber" : "FWIV201509281540",
+				        "explain" : "快点退钱",
+				        "reason" : "质量太差",
+				        "sum" : 32.0,
+				        "type" : 2
+				      } ],
+				      "classifyList" : [ {
+				        "classifyId" : 1010006000001009,
+				        "classifyName" : "卧室家具",
+				        "image" : "http://file-dev.qi-cloud.net",
+				        "orderItemList" : [ {
+				          "unifiedMerchandiseId" : 1010006000001002,
+				          "discount" : 688.0,
+				          "price" : 728.0,
+				          "number" : 20,
+				          "name" : "内蒙豪华正宗鸡翅木沙发",
+				          "specifications" : "",
+				          "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=A31169A0A97F4BFA88BB798B0B3194AC.png",
+				          "code" : "AE564632121",
+				          "logisticsCompany" : null,
+				          "logisticsNumber" : ""
+				        } ]
+				      }, {
+				        "classifyId" : 1010006000001014,
+				        "classifyName" : "陶瓷器品",
+				        "image" : "http://file-dev.qi-cloud.net",
+				        "orderItemList" : [ {
+				          "unifiedMerchandiseId" : 1010006000001202,
+				          "discount" : 688.0,
+				          "price" : 728.0,
+				          "number" : 2,
+				          "name" : "茶杯",
+				          "specifications" : "黄色  14寸 ",
+				          "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=CA7DC39C4ACE49FFB5F9EE74357C82A0.jpg",
+				          "code" : "A005",
+				          "logisticsCompany" : null,
+				          "logisticsNumber" : ""
+				        } ]
+				      } ]
+				    }
+				  }
+	}]]></item>
+	
+	
+	<item module="my" name="我的订单按钮功能-取消订单" url=" /app/orderState/cancelOrder.do" parameterCode="my_cancelOrder">
+	<![CDATA[{
+				 "status" : 200,
+				  "message" : "取消订单成功",
+				  "data" : {
+				  }
+	}]]></item>
+	<item module="my" name="我的订单按钮功能-签收订单" url="  /app/orderState/signOrder.do" parameterCode="my_signOrder">
+	<![CDATA[{
+				 "status" : 200,
+				  "message" : "签收成功",
+				  "data" : {
+				  }
+	}]]></item>
+	<item module="my" name="我的订单按钮功能-提醒发货" url="/app/orderState/remindDeliverGoods.do" parameterCode="my_remindDeliverGoods">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "提醒发货成功.",
+				  "data" : {
+				  }
+	}]]></item>
+	<item module="my" name="我的订单按钮功能-评价" url="/app/orderEvaluation/evaluate.do" parameterCode="my_evaluate">
+	<![CDATA[{
+					  "status" : 200,
+					  "message" : "评价成功!",
+					  "data" : {
+					  }
+	}]]></item>
+	<item module="my" name="退换货-申请退货" url="/app/afterSale/returnOrder.do" parameterCode="my_returnOrde">
+	<![CDATA[{
+					  "status" : 200,
+					  "message" : "申请退货成功",
+					  "data" : {
+					  }
+	}]]></item>
+	<item module="my" name="退换货-卖家确认" url="/app/afterSaleState/confirmReturn.do" parameterCode="my_confirmReturn">
+	<![CDATA[{
+					  "status" : 200,
+					  "message" : "确认退货单成功.",
+					  "data" : {
+					  }
+	}]]></item>
+	<item module="my" name="退换货-卖家拒绝" url="/app/afterSaleState/refuseReturn.do" parameterCode="my_refuseReturn">
+	<![CDATA[{
+					  "status" : 200,
+					  "message" : "拒绝退货单成功",
+					  "data" : {
+					  }
+	}]]></item>
+	<item module="my" name="退换货-买家发货" url="/app/afterSaleState/shippedReturn.do" parameterCode="my_shippedReturn">
+	<![CDATA[{
+					  "status" : 200,
+					  "message" : "买家发货成功",
+					  "data" : {
+					  }
+	}]]></item>
+	<item module="my" name="退换货-卖家签收" url="/app/afterSaleState/signReturn.do" parameterCode="my_signReturn">
+	<![CDATA[{
+				  status" : 200,
+				  "message" : "卖家签收成功",
+				  "data" : {
+				  }
+	}]]></item>
+	<item module="my" name="退换货-卖家退款" url="/app/afterSaleState/payReturn.do" parameterCode="my_payReturn">
+	<![CDATA[{
+				 "status" : 200,
+				  "message" : "卖家退款成功",
+				  "data" : {
+				  }
+	}]]></item>
+	<item module="my" name="退换货-申请换货" url="/app/afterSale/exchangeOrder.do" parameterCode="my_exchangeOrder">
+	<![CDATA[{
+				"status" : 200,
+				  "message" : "申请退货成功",
+				  "data" : {
+				  }
+	}]]></item>
+	<item module="my" name="退换货-卖家确认换货单" url="/app/afterSaleState/confirmExchange.do" parameterCode="my_confirmExchange">
+	<![CDATA[{
+			  "status" : 200,
+			  "message" : "确认换货单成功",
+			  "data" : {
+			  }
+	}]]></item>
+	<item module="my" name="退换货-卖家拒绝换货单" url="/app/afterSaleState/refuseExchange.do" parameterCode="my_refuseExchange">
+	<![CDATA[{
+			  "status" : 200,
+			  "message" : "拒绝换货单成功",
+			  "data" : {
+			  }
+	}]]></item>
+	<item module="my" name="退换货-买家发货（换货）" url="/app/afterSaleState/shippedExchange.do" parameterCode="my_shippedExchange">
+	<![CDATA[{
+			  "status" : 200,
+			  "message" : "换货单发货成功",
+			  "data" : {
+			  }
+	}]]></item>
+	<item module="my" name="退换货-卖家签收（换货）" url="/app/afterSaleState/signExchange.do" parameterCode="my_signExchange">
+	<![CDATA[{
+			  "status" : 200,
+			  "message" : "换货单签收成功",
+			  "data" : {
+  }
+	}]]></item>
+	<item module="my" name="退换货-卖家发货（换货）" url="/app/afterSaleState/shippedAgainExchange.do" parameterCode="my_shippedAgainExchange">
+	<![CDATA[{
+			  "status" : 200,
+			  "message" : "换货单再次发货成功",
+			  "data" : {
+			  }
+	}]]></item>
+	<item module="my" name="退换货-卖家发货（换货）" url="/app/afterSaleState/signAgainExchange.do" parameterCode="my_signAgainExchange">
+	<![CDATA[{
+			  "status" : 200,
+			  "message" : "换货单再次发货成功",
+			  "data" : {
+			  }
+	}]]></item>
+	<item module="my" name="退换货-申请退款" url="/app/afterSale/refundOrder.do" parameterCode="my_refundOrder">
+	<![CDATA[{
+			  "status" : 200,
+			  "message" : "申请退款成功",
+			  "data" : {
+			  }
+	}]]></item>
+	<item module="my" name="退换货-卖家同意退款" url="/app/afterSaleState/confirmRefund.do" parameterCode="my_confirmRefund">
+	<![CDATA[{
+			  "status" : 200,
+			  "message" : "确认退款单成功.",
+			  "data" : {
+			  }
+	}]]></item>
+	<item module="my" name="退换货-卖家退款" url="/app/afterSaleState/payRefund.do" parameterCode="my_payRefund">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "确认退款单成功.",
+				  "data" : {
+				  }
+	}]]></item>
+	<item module="my" name="退换货-拒绝退款单" url="/app/afterSaleState/refuseRefund.do" parameterCode="my_refuseRefund">
+	<![CDATA[{
+				"status" : 200,
+				"message" : "拒绝退款单成功.",
+				"data" : {
+				}
+	}]]></item>
+	<item module="my" name="退换货-买家确认退款" url="/app/afterSaleState/confirmPayRefund.do" parameterCode="my_confirmPayRefund">
+	<![CDATA[{
+				"status" : 200,
+  				"message" : "确认退款单成功.",
+  				"data" : {
+  					}
+	}]]></item>
+	<item module="my" name="退换货-重新申请退款" url="/app/afterSale/refundId.do" parameterCode="my_refundId">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "重新申请退货成功",
+				  "data" : {
+				  }
+	}]]></item>
+	<item module="my" name="退换货-重新申请退货" url="/app/afterSale/reApplyReturnOrder.do" parameterCode="my_reApplyReturnOrder">
+	<![CDATA[{
+					"status" : 200,
+					"message" : "重新申请退货成功",
+					"data" : {
+					}
+	}]]></item>
+	<item module="my" name="退换货-重新申请换货" url="/app/afterSale/reApplyExchangeOrder.do" parameterCode="my_reApplyExchangeOrder">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "重新申请换货成功",
+				  "data" : {
+				  }
+	}]]></item>
+	<item module="my" name="我的消息-站内信列表" url="/app/myMessage/list.do" parameterCode="my_listMyMessage"  returnFieldCode="my_returnListMyMessage">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "查询我的消息成功.",
+				  "data" : {
+				    "list" : [ {
+				      "id" : 1010006000011108,
+				      "title" : "这是一条测试的消息",
+				      "content" : null,
+				      "time" : 1440812760000,
+				      "timeStr" : "2015-08-29 09:46:00"
+				    }, {
+				      "id" : 1010006000011109,
+				      "title" : "这是一条测试的消息",
+				      "content" : null,
+				      "time" : 1440812760000,
+				      "timeStr" : "2015-08-29 09:46:00"
+				    }, {
+				      "id" : 1010006000011111,
+				      "title" : "这是一条测试的消息",
+				      "content" : null,
+				      "time" : 1440812760000,
+				      "timeStr" : "2015-08-29 09:46:00"
+				    } ]
+				  }
+	}]]></item>
+	<item module="my" name="我的消息-获取单个站内信" url="/app/myMessage/get.do" parameterCode="my_getMyMessage" returnFieldCode="my_returnGetMyMessage">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "获取我的一条消息成功.",
+				  "data" : {
+				    "message" : {
+				      "id" : 1010006000011108,
+				      "title" : "这是一条测试的消息",
+				      "content" : "测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息测试消息",
+				      "time" : 1440812760000,
+				      "timeStr" : "2015-08-29 09:46:00"
+				    }
+				  }
+	}]]></item>
+	<item module="my" name="我的消息-设置某个站内信为已读" url="/app/myMessage/read.do" parameterCode="my_read">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "设置一条消息为已读成功.",
+				  "data" : {
+				  }
+	}]]></item>
+	<item module="my" name="我的消息-删除某个站内消息" url="/app/myMessage/delete.do" parameterCode="my_deleteMessages">
+	<![CDATA[{
+					  "status" : 200,
+					  "message" : "删除一条消息成功.",
+					  "data" : {
+					  }
+	}]]></item>
+	<item module="my" name="我的消息-删除多个站内消息" url="/app/myMessage/deleteList.do" parameterCode="my_deleteList">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "删除消息成功.",
+				  "data" : {
+				  }
+	}]]></item>
+	<item module="my" name="我的消息-所有消息总数" url="/app/myMessage/countAll.do" parameterCode="my_countAll" returnFieldCode="my_returnCountAll">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "查询我的消息条数成功.",
+				  "data" : {
+				    "total" : 5956
+				  }
+	}]]></item>
+	<item module="my" name="我的消息-未读消息数" url="/app/myMessage/countUnread.do" parameterCode="my_returnCountUnread">
+	<![CDATA[{
+			  "status" : 200,
+			  "message" : "查询我的消息未读条数成功.",
+			  "data" : {
+			    "unreadTotal" : 5944
+			  }
+	}]]></item>	
+	<item module="my" name="我的消息-获取新消息条数" url="/app/myMessage/getNewMsgNumber.do" parameterCode="" returnFieldCode="my_returnGetNewMsgNumber">
+	<![CDATA[{
+			  "status" : 200,
+			  "message" : "获取新短消息成功.",
+			  "data" : {
+			    "result" : 5
+			  }
+			}]]>
+	</item>			
+	<item module="my" name="我的消息-重置新消息条数" url="/app/myMessage/resetNewMsgNumber.do" parameterCode="">
+	<![CDATA[{
+			  "status" : 200,
+			  "message" : "重置新消息条数为0成功.",
+			  "data" : {
+			  }
+			}]]>
+	</item>		
+	<item module="my" name="我的团队-获取登录人分销token" url="/app/userShareToken/getUserShareToken.do" parameterCode="my_getUserShareToken">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "获取成功",
+				  "data" : {
+				    "result" : "true",
+				    "token" : "4A41EA0A0CBF42EAB556DDF59983CD8E"
+				  }
+	}]]></item>
+	<item module="my" name="我的团队-建立推荐关系" url="/app/userRelationship/build.do" parameterCode="my_buildRelationship">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "建立推荐关系成功",
+				  "data" : {
+				    "result" : "true"
+				  }
+	}]]></item>
+	<item module="my" name="我的团队-建立部门关系" url="/app/userTeam/build.do" parameterCode="my_buildUserTeam">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "设置组织成功.",
+				  "data" : {
+				    "result" : "true"
+				  }
+	}]]></item>
+	<item module="my" name="我的团队-获取指定用户的层级" url="/app/userRelationship/list.do" parameterCode="my_listuserRelationShip" returnFieldCode="my_returnListuserRelationShip">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "查询我的推荐人成功.",
+				  "data" : {
+				    "list" : [ {
+				      "recommedToken" : "4A41EA0A0CBF42EAB556DDF59983CD8E",
+				      "userShareToken" : "8F098961AC2D4194B50A89CC992ECC13",
+				      "name" : "张三",
+				      "entryDateStr" : "2015-09-25",
+				      "commission" : 0.0,
+				      "image" : ""
+				    } ]
+				  }
+	}]]></item>
+	<item module="my" name="我的团队-获取指定用户的未分配推荐人" url="/app/userRelationship/listNotAllocation.do" parameterCode="my_listuserRelationShip" returnFieldCode="my_returnListuserRelationShip">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "查询我的推荐人成功.",
+				  "data" : {
+				    "list" : [ {
+				      "recommedToken" : "4A41EA0A0CBF42EAB556DDF59983CD8E",
+				      "userShareToken" : "8F098961AC2D4194B50A89CC992ECC13",
+				      "name" : "张三",
+				      "entryDateStr" : "2015-09-25",
+				      "commission" : 0.0,
+				      "image" : ""
+				    } ]
+				  }
+	}]]></item>
+	<item module="my" name="我的团队-获取指定用户的部门" url="/app/userTeam/list.do" parameterCode="my_listuserTeam" returnFieldCode="my_returnListuserRelationShip">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "查询我的部门成功.",
+				  "data" : {
+				    "list" : [ {
+				      "recommedToken" : "4A41EA0A0CBF42EAB556DDF59983CD8E",
+				      "userShareToken" : "8F098961AC2D4194B50A89CC992ECC13",
+				      "name" : "张三",
+				      "entryDateStr" : "2015-09-25",
+				      "commission" : 0.0,
+				      "image" : ""
+				    } ]
+				  }
+	}]]></item>
+	<item module="my" name="我的银行卡-列表" url="/app/myBankCard/list.do" parameterCode="my_listmyBankCard" returnFieldCode="my_returnListmyBankCard">
+	<![CDATA[{
+					  "status" : 200,
+					  "message" : "获取 我的银行卡成功.",
+					  "data" : {
+					    "list" : [ {
+					      "id" : 1010006000001006,
+					      "bank" : "华润银行",
+					      "card" : "6225022002001276216"
+					    }, {
+					      "id" : 1010006000001005,
+					      "bank" : "招商银行",
+					      "card" : "6225022002001276216"
+					    }, {
+					      "id" : 1010006000001004,
+					      "bank" : "中国银行",
+					      "card" : "6225022002001276216"
+					    }, {
+					      "id" : 1010006000001003,
+					      "bank" : "农业银行",
+					      "card" : "6227022002001276216"
+					    }, {
+					      "id" : 1010006000001002,
+					      "bank" : "建设银行",
+					      "card" : "6227022002001276216"
+					    }, {
+					      "id" : 1010006000001001,
+					      "bank" : "工商银行",
+					      "card" : "6222022002001276216"
+					    } ]
+					  }
+	}]]></item>
+	<item module="my" name="我的团队-添加银行卡" url="/app/myBankCard/add.do" parameterCode="my_addMyBankCard">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "添加我的银行卡成功.",
+				  "data" : {
+				  }
+	}]]></item>
+	<item module="my" name="我的团队-删除银行卡" url="/app/myBankCard/delete.do" parameterCode="my_deleteMyBankCard">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "删除我的银行卡成功.",
+				  "data" : {
+				  }
+	}]]></item>
+	<item module="my" name="我的佣金-提现" url="/app/myWealth/withdrawCommission.do" parameterCode="my_withdrawCommission">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "申请提现成功.",
+				  "data" : {
+				  }
+	}]]></item>
+	<item module="my" name="我的佣金-提现明细" url="/app/myWealth/listWithdrawCommission.do" parameterCode="my_listWithdrawCommission" returnFieldCode="my_returnListWithdrawCommission">
+	<![CDATA[{
+				  "status" : 200,
+				  "message" : "获取提现明细列表成功.",
+				  "data" : {
+				    "list" : [ {
+				      "commissionCash" : 5.0,
+				      "bank" : "建设银行",
+				      "card" : "6227022002001276216",
+				      "time" : 1443963531000,
+				      "timeStr" : "2015-10-04 20:58:51",
+				      "completeTime" : 1443963336000,
+				      "completeTimeStr" : "2015-10-04 20:55:36",
+				      "state" : 1
+				    }, {
+				      "commissionCash" : 5.0,
+				      "bank" : "建设银行",
+				      "card" : "6227022002001276216",
+				      "time" : 1443963359000,
+				      "timeStr" : "2015-10-04 20:55:59",
+				      "completeTime" : 1443963164000,
+				      "completeTimeStr" : "2015-10-04 20:52:44",
+				      "state" : 1
+				    } ]
+				  }
+	}]]></item>
+	
+	<item module="my" name="我的优惠券" url="/app/coupon/list.do" parameterCode="my_couponlist" returnFieldCode="my_returncouponlist">
+	<![CDATA[{
+			  "status" : 200,
+			  "message" : "获取我的优惠劵成功.",
+			  "data" : {
+			    "list" : [ {
+			      "id" : 1010006000001001,
+			      "userId" : 1010006000001401,
+			      "couponId" : 1010006000001801,
+			      "couponItemId" : 1010006000010801,
+			      "validDate" : 1451553582000,
+			      "name" : "优惠券1",
+			      "price" : 20.0,
+			      "state" : 1,
+			      "orderId" : 0,
+			      "orderDate" : null,
+			      "validDateStr" : "2015-12-31",
+			      "description" : null,
+			      "limitPrice" : 100.0,
+			      "code" : null
+			    }, {
+			      "id" : 1010006000001004,
+			      "userId" : 1010006000001401,
+			      "couponId" : 1010006000001801,
+			      "couponItemId" : 1010006000010801,
+			      "validDate" : 1451553584000,
+			      "name" : "优惠券1",
+			      "price" : 20.0,
+			      "state" : 1,
+			      "orderId" : 0,
+			      "orderDate" : null,
+			      "validDateStr" : "2015-12-31",
+			      "description" : null,
+			      "limitPrice" : 100.0,
+			      "code" : null
+			    }, {
+			      "id" : 1010006000001005,
+			      "userId" : 1010006000001401,
+			      "couponId" : 1010006000001801,
+			      "couponItemId" : 1010006000010801,
+			      "validDate" : 1451553586000,
+			      "name" : "优惠券1",
+			      "price" : 20.0,
+			      "state" : 1,
+			      "orderId" : 0,
+			      "orderDate" : null,
+			      "validDateStr" : "2015-12-31",
+			      "description" : null,
+			      "limitPrice" : 100.0,
+			      "code" : ""
+			    } ]
+			  }
+			}
+		]]></item>
+	
+		<item module="my" name="我的优惠券" url="/myCoupon/list.do" parameterCode="myCoupon_couponlist" returnFieldCode="my_returnCouponlist">
+	<![CDATA[{
+			  "status" : 200,
+			  "message" : "获取我的优惠劵成功.",
+			  "data" : {
+			    "list" : [ {
+			      "id" : 1010006000001001,
+			      "userId" : 1010006000001401,
+			      "couponId" : 1010006000001801,
+			      "couponItemId" : 1010006000010801,
+			      "validDate" : 1451553582000,
+			      "name" : "优惠券1",
+			      "price" : 20.0,
+			      "state" : 1,
+			      "orderId" : 0,
+			      "orderDate" : null,
+			      "validDateStr" : "2015-12-31",
+			      "description" : null,
+			      "limitPrice" : 100.0,
+			      "code" : null
+			    }, {
+			      "id" : 1010006000001004,
+			      "userId" : 1010006000001401,
+			      "couponId" : 1010006000001801,
+			      "couponItemId" : 1010006000010801,
+			      "validDate" : 1451553584000,
+			      "name" : "优惠券1",
+			      "price" : 20.0,
+			      "state" : 1,
+			      "orderId" : 0,
+			      "orderDate" : null,
+			      "validDateStr" : "2015-12-31",
+			      "description" : null,
+			      "limitPrice" : 100.0,
+			      "code" : null
+			    }, {
+			      "id" : 1010006000001005,
+			      "userId" : 1010006000001401,
+			      "couponId" : 1010006000001801,
+			      "couponItemId" : 1010006000010801,
+			      "validDate" : 1451553586000,
+			      "name" : "优惠券1",
+			      "price" : 20.0,
+			      "state" : 1,
+			      "orderId" : 0,
+			      "orderDate" : null,
+			      "validDateStr" : "2015-12-31",
+			      "description" : null,
+			      "limitPrice" : 100.0,
+			      "code" : ""
+			    } ]
+			  }
+			}
+		]]></item>
+		
+	<item module="my" name="提交问卷回答" url="/questionnaireAnswers/answer.do" parameterCode="my_questionnaireAnswers_answer">
+	<![CDATA[
+	{
+	  "status" : 200,
+	  "message" : "问卷回答提交成功.",
+	  "data" : {
+	  }
+	}
+	]]></item>
+		
+		
+	
+	</module-list>
+	<!-- 模块URL列表 标签-->
+	<!-- 模块URL明细-->
+	
+	<module-list code="my_questionnaireAnswers_answer">
+		<item key="questionnaireId">问卷id</item>
+		<item key="list[i].questionId">问题id</item>
+		<item key="list[i].answer">回答内容</item>
+	</module-list>
+	
+	<module-list code="my_returnCountAll">
+	<item key="total">总数</item>
+	</module-list>
+	
+	<module-list code="my_returnCountUnread">
+	<item key="unreadTotal">未读消息总数</item>
+	</module-list>
+	
+	<module-list code="my_returnGetNewMsgNumber">
+	<item key="result">获取新消息条数</item>
+	</module-list>
+	
+	<module-list code="my_returnListmyBankCard">
+	<item key="list[i].id">ID</item>
+	<item key="list[i].bank">银行</item>
+	<item key="list[i].card">卡号</item>
+	</module-list>
+	
+	<module-list code="my_returnListWithdrawCommission">
+	<item key="list[i].commissionCash">当次提现值</item>
+	<item key="list[i].bank">银行</item>
+	<item key="list[i].card">卡号</item>
+	<item key="list[i].time">发生时间</item>
+	<item key="list[i].timeStr">发生时间</item>
+	<item key="list[i].completeTime">完成时间</item>
+	<item key="list[i].completeTimeStr">完成时间</item>
+	<item key="list[i].state">类型1. 申请 2.审核  3.成功</item>
+	</module-list>
+	
+	<module-list code="my_returnListMerchandiseCollectClassify">
+	<item key="classifyList[i].classifyId">分类ID</item>
+	<item key="classifyList[i].classifyName">分类名称</item>
+	<item key="classifyList[i].number">数量</item>
+	</module-list>
+	
+	<module-list code="my_returnListReceiverAddress">
+	<item key="list[i].id">ID</item>
+	<item key="list[i].name">姓名</item>
+	<item key="list[i].province">省</item>
+	<item key="list[i].city">市</item>
+	<item key="list[i].district">区</item>
+	<item key="list[i].address">地址</item>
+	<item key="list[i].mobile">手机号码</item>
+	<item key="list[i].acquiesce">默认</item>
+	<item key="list[i].zipCode">邮编</item>
+	</module-list>
+	
+	<module-list code="my_returnGetDefault">
+	<item key="id">ID</item>
+	<item key="name">姓名</item>
+	<item key="province">省</item>
+	<item key="city">市</item>
+	<item key="district">区</item>
+	<item key="address">地址</item>
+	<item key="mobile">手机号码</item>
+	<item key="acquiesce">默认</item>
+	<item key="zipCode">邮编</item>
+	</module-list>
+	
+	<module-list code="my_returnGetDelivery">
+	<item key="id">ID</item>
+	<item key="type">类型 1物流 2门店自提 3送货上门</item>
+	<item key="desc">描述</item>
+	<item key="storeId">门店</item>
+	<item key="time">时间 门店自提时间或送货上门时间</item>
+	</module-list>
+	
+	<module-list code="my_returnGetInvoice">
+	<item key="id">ID</item>
+	<item key="mode">模式 1开发票 1不开发票</item>
+	<item key="type">类型 1普通 2增值税</item>
+	<item key="head">抬头</item>
+	<item key="content">内容</item>
+	</module-list>
+	
+	
+	<module-list code="my_add">
+	<item key="unifiedMerchandiseId">统一商品ID</item>
+	<item key="number">商品数量</item>
+	</module-list>	
+	<module-list code="my_clear">
+	<item key="unifiedMerchandiseId">统一商品ID</item>
+	</module-list>	
+	<module-list code="my_reduce">
+	<item key="unifiedMerchandiseId">统一商品ID</item>
+	<item key="number">商品数量</item>
+	</module-list>		
+	<module-list code="my_remove">
+	<item key="unifiedMerchandiseId">统一商品ID</item>
+	</module-list>		
+	<module-list code="my_myShoppingCart_removeList">
+		<item key="longList[i]">统一商品ID</item>
+	</module-list>			
+	<module-list code="my_list">
+	<item key="pageNum">页码</item>
+	<item key="pageSize">当前页条数(不传则取10条)</item>
+	</module-list>		
+	
+	<module-list code="my_returnList">
+	<item key="merchantId">商家ID</item>
+	<item key="merchantClassifyId">商家分类ID</item>
+	<item key="unifiedMerchandiseId">统一商品ID</item>
+	<item key="timeStr">收藏时间</item>
+	<item key="number">数量</item>
+	<item key="name">商品名称</item>
+	<item key="image">商品图片</item>
+	<item key="specifications">规格</item>
+	<item key="discount">折扣</item>
+	<item key="price">价格</item>
+	<item key="stock">库存</item>
+	<item key="collect">收藏商品</item>
+	<item key="merchandiseType">1单品，2组合</item>
+	</module-list>	
+	
+	<module-list code="my_list4Merchant">
+	<item key="pageNum">页码</item>
+	<item key="pageSize">当前页条数(不传则取10条)</item>
+	</module-list>		
+	
+	<module-list code="my_returnList4Merchant">
+	<item key="total">总数</item>
+	<item key="merchantId">商家ID</item>
+	<item key="name">名称</item>
+	<item key="image">图片</item>
+	<item key="merchandiseList[i].merchantId">商家分类ID</item>
+	<item key="merchandiseList[i].merchantClassifyId">商家分类ID</item>
+	<item key="merchandiseList[i].unifiedMerchandiseId">统一商品ID</item>
+	<item key="merchandiseList[i].timeStr">收藏时间</item>
+	<item key="merchandiseList[i].number">数量</item>
+	<item key="merchandiseList[i].name">商品名称</item>
+	<item key="merchandiseList[i].image">商品图片</item>
+	<item key="merchandiseList[i].specifications">规格</item>
+	<item key="merchandiseList[i].discount">折扣</item>
+	<item key="merchandiseList[i].price">价格</item>
+	<item key="merchandiseList[i].stock">库存</item>
+	<item key="merchandiseList[i].collect">收藏商品</item>
+	<item key="merchandiseList[i].merchandiseType">1单品，2组合</item>
+	<item key="coupon">购物车优惠券</item>
+	</module-list>	
+	
+	<module-list code="my_list4Classify">
+	<item key="pageNum">页码</item>
+	<item key="pageSize">当前页条数(不传则取10条)</item>
+	</module-list>	
+	
+	<module-list code="	my_returnList4Classify">
+	<item key="classifyId">分类ID</item>
+	<item key="name">名称</item>
+	<item key="image">图片</item>
+	<item key="merchandiseList[i].merchantId">商家分类ID</item>
+	<item key="merchandiseList[i].merchantClassifyId">商家分类ID</item>
+	<item key="merchandiseList[i].unifiedMerchandiseId">统一商品ID</item>
+	<item key="merchandiseList[i].timeStr">收藏时间</item>
+	<item key="merchandiseList[i].number">数量</item>
+	<item key="merchandiseList[i].name">商品名称</item>
+	<item key="merchandiseList[i].image">商品图片</item>
+	<item key="merchandiseList[i].specifications">规格</item>
+	<item key="merchandiseList[i].discount">折扣</item>
+	<item key="merchandiseList[i].price">价格</item>
+	<item key="merchandiseList[i].stock">库存</item>
+	<item key="merchandiseList[i].collect">收藏商品</item>
+	<item key="merchandiseList[i].merchandiseType">1单品，2组合</item>
+	</module-list>
+	
+	<module-list code="my_removeCollection">
+	<item key="unifiedMerchandiseId">统一商品ID</item>
+	</module-list>	
+	<module-list code="my_removeCollection">
+	<item key="longList[0] ">收藏条目ID 1</item>
+	<item key="longList[1] ">收藏条目ID 2</item>
+	</module-list>	
+	<module-list code="my_removeByUnifiedMerchandiseList">
+	<item key="longList[0] ">收藏条目ID 1</item>
+	<item key="longList[1] ">收藏条目ID 2</item>
+	</module-list>	
+	<module-list code="my_removeByUnifiedMerchandise">
+	<item key="unifiedMerchandiseId ">统一商品ID</item>
+	</module-list>	
+	<module-list code="my_isCollect">
+	<item key="unifiedMerchandiseId ">统一商品ID</item>
+	</module-list>	
+	
+	<module-list code="my_returnIsCollect">
+	<item key="collect">是否收藏，true是，flase否</item>
+	</module-list>	
+	
+	<module-list code="my_listCollection">
+	<item key="pageNum ">页码</item>
+	<item key="pageSize ">当前页条数(不传则取10条)</item>
+	<item key="classifyId ">分类ID</item>
+	</module-list>	
+	
+	<module-list code="my_returnListCollection">
+	<item key="id">收藏ID</item>
+	<item key="unifiedMerchandiseId">统一商品ID</item>
+	<item key="time">收藏时间</item>
+	</module-list>
+	
+	<module-list code="my_addReceiverAddress">
+	<item key="name ">名字</item>
+	<item key="address ">地址</item>
+	<item key="mobile ">电话</item>
+	</module-list>	
+	<module-list code="my_updateReceiverAddress">
+	<item key="name ">名字</item>
+	<item key="address ">地址</item>
+	<item key="mobile ">电话</item>
+	</module-list>	
+	<module-list code="my_setDefault">
+	<item key="consigneeId ">收货人id</item>
+	</module-list>	
+	<module-list code="my_deleteReceiverAddress">
+	<item key="consigneeId ">收货人id</item>
+	</module-list>	
+	<module-list code="my_addDelivery">
+	<item key="type ">1物流  2门店自提 3送货上门</item>
+	<item key="time">当type=2 自提到店时间 type=3送货上门时间  字符串 可自行拼接</item>
+	<item key="storeId">当送货上门 选择的门店</item>
+	<item key="desc">描述 暂时忽略</item>
+	</module-list>	
+	<module-list code="my_addInvoice">
+	<item key="mode ">1需要  2不需要</item>
+	<item key="type">1普通发票  2增值税</item>
+	<item key="head">发票抬头</item>
+	<item key="content">发票内容</item>
+	</module-list>	
+	<module-list code="my_query">
+	<item key="state ">订单状态 1待付款 4待发货 5待收货 6待评价 7已评价 8退货 9换货</item>
+	<item key="dateType">日期类型 1本周   2本月   3本季度 4半年内 5今年内 6去年 7前年以前</item>
+	</module-list>	
+	
+	<module-list code="my_returnQuery">
+	<item key="orderId">总单ID</item>
+	<item key="timeStr">下单时间</item>
+	<item key="state">状态,待付款,已付款,待发货,发货中,已签收</item>
+	<item key="image">图片</item>
+	<item key="orderNumber">订单号</item>
+	<item key="sum">总价</item>
+	<item key="expectedArrivalDateStr">预计到达时间</item>
+	<item key="arrivalDateStr">到达时间</item>
+	</module-list>	
+	
+	<module-list code="my_returnQueryOrderForm">
+	<item key="orderId">总单ID</item>
+	<item key="timeStr">下单时间</item>
+	<item key="state">状态,待付款,已付款,待发货,发货中,已签收</item>
+	<item key="image">图片</item>
+	<item key="orderNumber">订单号</item>
+	<item key="sum">总价</item>
+	<item key="expectedArrivalDateStr">预计到达时间</item>
+	<item key="arrivalDateStr">到达时间</item>
+	<item key="orderItemList[i].unifiedMerchandiseId">统一商品ID</item>
+	<item key="orderItemList[i].discount">折扣</item>
+	<item key="orderItemList[i].number">数量</item>
+	<item key="orderItemList[i].image">图片图片</item>
+	<item key="orderItemList[i].name">商品名称</item>
+	<item key="orderItemList[i].specifications">规格</item>
+	<item key="orderItemList[i].merchantId">商家ID</item>
+	<item key="orderItemList[i].merchantName">商家名称</item>
+	</module-list>	
+	
+	<module-list code="my_query4Merchandise">
+	<item key="state ">订单状态 1待付款 4待发货 5待收货 6待评价 7已评价 8退货 9换货</item>
+	<item key="dateType">日期类型 1本周   2本月   3本季度 4半年内 5今年内 6去年 7前年以前</item>
+	</module-list>	
+	
+	<module-list code="my_returnQuery4Merchandise">
+	<item key="orderId">总单ID</item>
+	<item key="timeStr">下单时间</item>
+	<item key="state">状态,待付款,已付款,待发货,发货中,已签收</item>
+	<item key="image">图片</item>
+	<item key="orderNumber">订单号</item>
+	<item key="sum">总价</item>
+	<item key="postage">邮费</item>
+	<item key="afterSaleStateName">售后状态名称</item>
+	<item key="surplus">节省多少钱</item>
+	<item key="evaluation">能否评论1可以  2不行</item>
+	<item key="afterSale">能否售后1可以  2不行</item>
+	<item key="merchantId">商家ID</item>
+	<item key="merchantName">商家名称</item>
+	<item key="merchantImage">商家图片</item>
+	<item key="number">数量</item>
+	<item key="orderItemList[i].unifiedMerchandiseId">统一商品ID</item>
+	<item key="orderItemList[i].discount">折扣</item>
+	<item key="orderItemList[i].number">数量</item>
+	<item key="orderItemList[i].image">图片图片</item>
+	<item key="orderItemList[i].name">商品名称</item>
+	<item key="orderItemList[i].specifications">规格</item>
+	<item key="orderItemList[i].merchantId">商家ID</item>
+	<item key="orderItemList[i].merchantName">商家名称</item>
+	</module-list>	
+	
+	<module-list code="my_getOrderForm">
+	<item key="orderDate ">订单日期</item>
+	<item key="orderId">订单号</item>
+	</module-list>	
+	
+	<module-list code="my_returnGetOrderForm">
+	<item key="id">订单ID</item>
+	<item key="orderNumber">总单号</item>
+	<item key="orderDate">下单时间</item>
+	<item key="orderDateStr">下单时间</item>
+	<item key="orderNumber">订单号</item>
+	<item key="sum">总价</item>
+	<item key="number">数量</item>
+	<item key="consignee">收货人</item>
+	<item key="address">收货地址</item>
+	<item key="mobile">手机号</item>
+	<item key="stateStr">订单状态</item>
+	<item key="surplus">节省多少钱</item>
+	<item key="afterSaleList[i].name">商品名称</item>
+	<item key="afterSaleList[i].image">图片图片</item>
+	<item key="afterSaleList[i].specifications">规格</item>
+	<item key="afterSaleList[i].code">商品编号</item>
+	<item key="afterSaleList[i].number">数量</item>
+	<item key="afterSaleList[i].explain">解析</item>
+	<item key="afterSaleList[i].reason">原因</item>
+	<item key="orderItemList[i].unifiedMerchandiseId">统一商品ID</item>
+	<item key="orderItemList[i].discount">折扣</item>
+	<item key="orderItemList[i].price">价格</item>
+	<item key="orderItemList[i].number">数量</item>
+	<item key="orderItemList[i].name">商品名称</item>
+	<item key="orderItemList[i].specifications">规格</item>
+	<item key="orderItemList[i].image">图片图片</item>
+	<item key="orderItemList[i].code">商品编号</item>
+	<item key="orderItemList[i].logisticsCompany">物流公司</item>
+	<item key="orderItemList[i].logisticsNumber">物流查询号</item>
+	</module-list>
+	
+	<module-list code="my_get4Classify">
+	<item key="orderDate ">订单日期</item>
+	<item key="orderId">订单号</item>
+	</module-list>	
+	
+	<module-list code="my_returnGet4Classify">
+	<item key="id">订单ID</item>
+	<item key="orderNumber">总单号</item>
+	<item key="orderDate">下单时间</item>
+	<item key="orderDateStr">下单时间</item>
+	<item key="orderNumber">订单号</item>
+	<item key="sum">总价</item>
+	<item key="number">数量</item>
+	<item key="consignee">收货人</item>
+	<item key="address">收货地址</item>
+	<item key="mobile">手机号</item>
+	<item key="stateStr">订单状态</item>
+	<item key="surplus">节省多少钱</item>
+	<item key="afterSaleList[i].name">商品名称</item>
+	<item key="afterSaleList[i].image">图片图片</item>
+	<item key="afterSaleList[i].specifications">规格</item>
+	<item key="afterSaleList[i].code">商品编号</item>
+	<item key="afterSaleList[i].number">数量</item>
+	<item key="afterSaleList[i].explain">解析</item>
+	<item key="afterSaleList[i].reason">原因</item>
+	<item key="merchantName">名称</item>
+	<item key="state">状态</item>
+	<item key="timeStr">时间</item>
+	<item key="afterSaleOrderNumber">售后订单号</item>
+	<item key="explain">解析</item>
+	<item key="reason">原因</item>
+	<item key="sum">总金额</item>
+	<item key="type">类型</item>
+	<item key="classifyList[i].classifyId">分类ID</item>
+	<item key="classifyList[i].classifyName">分类名称</item>
+	<item key="classifyList[i].image">分类图片</item>
+	<item key="classifyList[i].orderItemList[j].unifiedMerchandiseId">统一商品ID</item>
+	<item key="classifyList[i].orderItemList[j].discount">折扣</item>
+	<item key="classifyList[i].orderItemList[j].price">价格</item>
+	<item key="classifyList[i].orderItemList[j].number">数量</item>
+	<item key="classifyList[i].orderItemList[j].name">商品名称</item>
+	<item key="classifyList[i].orderItemList[j].specifications">规格</item>
+	<item key="classifyList[i].orderItemList[j].image">图片图片</item>
+	<item key="classifyList[i].orderItemList[j].code">商品编号</item>
+	<item key="classifyList[i].orderItemList[j].logisticsCompany">物流公司</item>
+	<item key="classifyList[i].orderItemList[j].logisticsNumber">物流查询号</item>
+	</module-list>
+	
+	<module-list code="my_get4Merchant">
+	<item key="orderDate ">订单日期</item>
+	<item key="orderId">订单号</item>
+	</module-list>	
+	<module-list code="my_cancelOrder">
+	<item key="orderDate ">订单日期</item>
+	<item key="orderId">订单号</item>
+	</module-list>	
+	<module-list code="my_signOrder">
+	<item key="orderDate ">订单日期</item>
+	<item key="orderId">订单号</item>
+	<item key="subOrderId ">子订单ID</item>
+	<item key="orderItemId">订单项ID</item>
+	<item key="orderItemDetailId">订单明细ID</item>
+	<item key="备注">参数使用顺序 orderId subOrderId orderItemId orderItemDetailId</item>
+	</module-list>	
+	<module-list code="my_remindDeliverGoods">
+	<item key="orderId ">总单ID</item>
+	<item key="subOrderId">子单ID</item>
+	<item key="orderDate">下订单时间</item>
+	</module-list>	
+	<module-list code="my_evaluate">
+	<item key="orderId ">总单ID</item>
+	<item key="orderDate">下订单时间</item>
+	<item key="merchandiseEvaluations[0].orderItemId">订单项</item>
+	<item key="merchandiseEvaluations[0].content">订单内容</item>
+	<item key="merchandiseEvaluations[0].star">订单星级</item>
+	</module-list>
+	<module-list code="my_returnOrde">
+	<item key="explain ">说明</item>
+	<item key="reason">原因</item>
+	<item key="orderId">订单号</item>
+	<item key="orderDate ">下单日期</item>
+	<item key="type">1订单全退	2按子单列表退（subOrderList）	3按商品列表退（itemList）</item>
+	<item key="subOrderList[0]	">子单1</item>
+	<item key="subOrderList[1] ">子单2</item>
+	<item key="itemList[0].orderItemId">优先订单项</item>
+	<item key="itemList[0].orderItemDetailId"></item>
+	<item key="itemList[0].number"></item>
+	<item key="itemList[0].explain">单独的说明</item>
+	<item key="itemList[0].reason">单独的原因</item>
+	</module-list>		
+	<module-list code="my_refuseReturn">
+	<item key="returnId ">退货单ID</item>
+	</module-list>	
+	<module-list code="my_shippedReturn">
+	<item key="returnId ">退货单ID</item>
+	<item key="logisticsCompany">物流公司</item>
+	<item key="logisticsNumber">物流号</item>
+	</module-list>	
+	<module-list code="my_signReturn">
+	<item key="returnId ">退货单ID</item>
+	</module-list>	
+	<module-list code="my_confirmReturn">
+	<item key="returnId ">退货单ID</item>
+	<item key="sum ">退款金额</item>
+	</module-list>	
+	<module-list code="my_payReturn">
+	<item key="returnId ">退货单ID</item>
+	</module-list>	
+	<module-list code="my_confirmPayReturn">
+	<item key="returnId ">退货单ID</item>
+	</module-list>	
+	<module-list code="my_exchangeOrder">
+	<item key="explain ">说明</item>
+	<item key="reason ">原因</item>
+	<item key="orderId ">退货单ID</item>
+	<item key="orderDate ">退货日期</item>
+	<item key="type ">1订单全退	2按子单列表退（subOrderList）	3按商品列表退（itemList）</item>
+	<item key="subOrderList[0] ">子单1</item>
+	<item key="subOrderList[1 ">子单2</item>
+	<item key="itemList[0].orderItemId ">优先订单项</item>
+	<item key="itemList[0].orderItemDetailId ">订单详情ID</item>
+	<item key="itemList[0].number ">订单数量</item>
+	<item key="itemList[0].explain">单独的说明</item>
+	<item key="itemList[0].reason ">单独的原因</item>
+	</module-list>
+	<module-list code="my_confirmExchange">
+	<item key="exchangeId ">换货单ID</item>
+	</module-list>		
+	<module-list code="my_refuseExchange">
+	<item key="exchangeId ">换货单ID</item>
+	</module-list>		
+	<module-list code="my_shippedExchange">
+	<item key="exchangeId ">换货单ID</item>
+	<item key="logisticsCompany ">物流公司</item>
+	<item key="logisticsNumber ">物流号</item>
+	</module-list>		
+	<module-list code="my_signExchange">
+	<item key="exchangeId ">换货单ID</item>
+	</module-list>		
+	<module-list code="my_shippedAgainExchange">
+	<item key="exchangeId ">换货单ID</item>
+	<item key="logisticsCompany ">物流公司</item>
+	<item key="logisticsNumber ">物流号</item>
+	</module-list>		
+	<module-list code="my_refundOrder">
+	<item key="explain ">说明</item>
+	<item key="reason ">原因</item>
+	<item key="orderId ">订单号</item>
+	<item key="explain ">订单日期</item>
+	<item key="orderDate ">物流公司</item>
+	<item key="type ">1订单全退	2按子单列表退（subOrderList）	3按商品列表退（itemList）</item>
+	<item key="subOrderList[0] ">子单1</item>
+	<item key="subOrderList[1]">子单2</item>
+	</module-list>
+	<module-list code="my_confirmRefund">
+	<item key="refundId ">退款单ID</item>
+	<item key="sum ">退款金额</item>
+	</module-list>				
+	<module-list code="my_payRefund">
+	<item key="refundId ">退款单ID</item>
+	</module-list>				
+	<module-list code="my_refuseRefund">
+	<item key="refundId ">退款单ID</item>
+	</module-list>				
+	<module-list code="my_confirmPayRefund">
+	<item key="refundId ">退款单ID</item>
+	</module-list>				
+	<module-list code="my_refundId">
+	<item key="refundId ">退款单ID</item>
+	</module-list>				
+	<module-list code="my_reApplyReturnOrder">
+	<item key="returnId ">退货单ID</item>
+	</module-list>				
+	<module-list code="my_reApplyExchangeOrder">
+	<item key="exchangeId ">换货单ID</item>
+	</module-list>				
+	<module-list code="my_getMessage">
+	<item key="pageNum"></item>
+	<item key="pageSize"></item>
+	</module-list>				
+	<module-list code="my_listMyMessage">
+	<item key="id ">站内信id</item>
+	</module-list>	
+	<module-list code="my_returnListMyMessage">
+		<item key="id">站内信id</item>
+		<item key="title">消息标题</item>
+		<item key="content">消息内容</item>
+		<item key="time">发送时间</item>
+		<item key="timeStr">发送时间</item>
+		<item key="read">true已读</item>
+	</module-list>	
+	
+	<module-list code="my_getMyMessage">
+	<item key="id ">站内信id</item>
+	</module-list>	
+		
+	<module-list code="my_returnGetMyMessage">
+		<item key="id">站内信id</item>
+		<item key="title">消息标题</item>
+		<item key="content">消息内容</item>
+		<item key="time">发送时间</item>
+		<item key="timeStr">发送时间</item>
+	</module-list>				
+	<module-list code="my_read">
+	<item key="id ">站内信id</item>
+	</module-list>				
+	<module-list code="my_deleteMessages">
+	<item key="id ">站内信id</item>
+	</module-list>				
+	<module-list code="my_deleteList">
+	<item key="longList[0] ">站内信id 1</item>
+	<item key="longList[1] ">站内信id 2</item>
+	</module-list>				
+	<module-list code="my_buildRelationship">
+	<item key="recommedMobile ">推荐人手机号</item>
+	</module-list>				
+	<module-list code="my_buildUserTeam">
+	<item key="leaderToken ">组织上级</item>
+	<item key="recommedToken ">推荐人,只有推荐人可以设置</item>
+	<item key="userToken ">加入组织成员</item>
+	</module-list>	
+	<module-list code="my_listuserRelationShip">
+	<item key="recommedToken ">token来源   1获取登录人的token   2从列表返回值获取</item>
+	</module-list>			
+	
+	<module-list code="my_returnListuserRelationShip">
+	<item key="list[i].recommedToken">推荐人token</item>
+	<item key="list[i].userShareToken">分享token</item>
+	<item key="list[i].name">姓名</item>
+	<item key="list[i].entryDateStr">注册时间</item>
+	<item key="list[i].image">图片</item>
+	</module-list>	
+		
+	<module-list code="my_listuserTeam">
+	<item key="recommedToken ">token来源   1获取登录人的token   2从列表返回值获取</item>
+	</module-list>				
+	<module-list code="my_addMyBankCard">
+	<item key="bank ">银行</item>
+	<item key="card ">卡号</item>
+	</module-list>				
+	<module-list code="my_deleteMyBankCard">
+	<item key="id "></item>
+	</module-list>				
+	<module-list code="my_withdrawCommission">
+	<item key="bankCardId">银行卡</item>
+	<item key="cash">提现金额</item>
+	</module-list>		
+	<module-list code="my_couponlist">
+	<item key="type">1未使用 ,2已使用 , 3已过期</item>
+	<item key="pageNum">页码</item>
+	<item key="pageSize">每页显示数量</item>
+	</module-list>	
+	
+	<module-list code="my_returnCouponlist">
+	<item key="list[i].id">ID</item>
+	<item key="list[i].userId">用户ID</item>
+	<item key="list[i].couponId">优惠劵活动</item>
+	<item key="list[i].couponItemId">优惠劵项</item>
+	<item key="list[i].validDate">有效时间</item>
+	<item key="list[i].name">优惠券名称</item>
+	<item key="list[i].price">面额</item>
+	<item key="list[i].state">状态 ,0所有 ,1未使用 ,2已使用 , 3已过期</item>
+	<item key="list[i].orderId">使用订单ID</item>
+	<item key="list[i].orderDate">下订单时间</item>
+	<item key="list[i].validDateStr">下订单时间</item>
+	<item key="list[i].description">描述</item>
+	<item key="list[i].limitPrice">最低使用价格</item>
+	<item key="list[i].code">编号</item>
+	</module-list>
+	
+	<!-- 模块URL明细-->	
+</xml>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.orderform.dao.mysql.mapper.RemindRecordMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="RemindRecord">  
+        select * from `orderform_remind_record` limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `orderform_remind_record`
+    </select> 
+    
+    <select id="hasRemind" parameterType="java.util.HashMap" resultType="Integer">  
+        <![CDATA[ select count(*) from `orderform_remind_record` where subOrderId = #{subOrderId} and `time` >= #{time}]]>
+    </select> 
+</mapper>
