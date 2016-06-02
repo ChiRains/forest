@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml>
+	
+	<module-list code="forest-pirates-url-list">
+		 <item module="forest" name="BMI计算" url="/analysisresult/BMICalculation.do" parameterCode="BMICalculation_parameter" rerutnFieldCode="">
+			<![CDATA[
+				{
+				  "status" : 200,
+				  "message" : "BMI计算成功！",
+				  "data" : {
+				    "result" : [ {
+				      "id" : 1010008000001401,
+				      "name" : "正常",
+				      "description" : "<p>成功，恭喜</p>",
+				      "bmi" : 0.05,
+				      "rangeData" : [ {
+				        "previousData" : 0.04,
+				        "afterData" : 0.05
+				      }, {
+				        "previousData" : 120.0,
+				        "afterData" : 130.0
+				      } ]
+				    } ]
+				  }
+				}
+			]]>
+		</item>
+		
+		<item module="forest" name="文章列表" url="/article/list.do" parameterCode="article_list_parameter" rerutnFieldCode="">
+			<![CDATA[
+				{
+				  "status" : 200,
+				  "message" : "",
+				  "data" : {
+				    "result" : [ {
+				      "id" : 1010008000001801,
+				      "name" : "企鹅",
+				      "iconList" : [ "/file/get.do?uid=EC344198A2F4418FBE22CFA9D4186E80.jpg" ],
+				      "keywords" : "企鹅",
+				      "label" : "企鹅",
+				      "brief" : "企鹅是一种鸟类动物,企鹅（学名：Spheniscidae）：有“海洋之舟”美称的企鹅是一种最古老的游禽，它们很可能在地球穿上冰甲之前，就已经在南极安家落户。全世界的企鹅共有17种，大多数都分布在南半球。主要生活在南半球，属于企鹅目，企鹅科。特征为不能飞翔；脚生于身体最下部，故呈直立姿势；趾间有蹼；跖行性（其他鸟类以趾着地）；前肢成鳍状；羽毛短，以减少摩擦和湍流；羽毛间存留一层空气.",
+				      "detail" : "<p><br/>企鹅</p> 外型特征\r\n编辑\r\n企鹅共有18个独立物种，体型最大的的物种是帝企鹅，平均约1.1米高，体重35千克以上。最小的企鹅物种是小蓝企鹅（又称神仙企鹅），体高40厘米，重1千克。本身有其独特的结构， 企鹅羽毛密度比同一体型的鸟类大三至四倍，这些羽毛的作用是调节体温。 虽然企鹅双脚基本上与其它飞行鸟类差不多，但它们的骨骼坚硬，并且脚比较短且平。这种特征配合有如二只桨的短翼，使企鹅可以在水底“飞行”。南极虽然酷寒难当，但企鹅经过数千万年暴风雪的磨炼，全身的羽毛已变成重叠、密接的鳞片状。这种特殊的羽衣，不但海水难以浸透，就是气温在零下近百摄氏度，也休想攻破它保温的防线。南极陆地多，海面宽，丰富的海洋浮游生物成了企鹅充沛的食物来源。[1] \r\n企鹅是一种最古老的游禽，它很可能穿上冰甲之前，就已经在南极安家落户。南极陆地多，海面宽，丰富的海洋浮游盐腺可以排泄多余的盐份。 企鹅双眼由于有平坦的眼角膜，所以可在水底及水面看东西。双眼可以把影像传至脑部作作望远集成使之产生望远作用。企鹅是一种鸟类，因此企鹅没有牙齿。企鹅的舌头以及上颚有倒刺，以适应吞食鱼虾等食物，但是这并不是他们的牙齿。[3] \r\n企鹅身体的大部分区域都受到温暖的防水羽毛保护，处于一种舒适安逸的状态。皮肤下的脂肪则构成了一个隔热层。脂肪和羽毛的保温性能极高，可能会让企鹅在阳 光明媚的日子里体温过高。庆幸的是，赤裸的喙和脚消除了这种担忧，允许热量散发出去，帮助企鹅保持稳定的体温。\r\n企鹅是人见人爱的动物，给人的感觉是，它们就好像穿了一件男士无尾夜礼服。如果也为企鹅准备一双路夫鞋，那一定是特大号的。但对于这些温血鸟类动物来说，鞋子并不在它们的着装要求之列，因为赤露的脚能够防止这些庄严的冰上皇帝因温暖的“外套”出现体温过高的情况",
+				      "date" : "2015-10-21 00:00:00",
+				      "sort" : 1,
+				      "enable" : 1,
+				      "classifyId" : 1010008000001001,
+				      "viewCount" : 33,
+				      "likeCount" : 44,
+				      "comment" : 0,
+				      "previousId" : 0,
+				      "nextId" : 0
+				    } ]
+				  }
+				}
+			]]>
+		</item> 
+		
+		<item module="forest" name="文章详情" url="/article/get.do" parameterCode="article_get_parameter" rerutnFieldCode="">
+			<![CDATA[
+				{
+				  "status" : 200,
+				  "message" : "",
+				  "data" : {
+				    "result" : {
+				      "id" : 1010008000002201,
+				      "name" : "时政要闻",
+				      "iconList" : null,
+				      "keywords" : "要闻要闻要闻要闻要闻要闻要闻要闻要闻要闻",
+				      "label" : "CFDA对11个药品注册申请不予批准CF",
+				      "brief" : "研究发现与宿主对抗流感病毒感染的重要蛋白\r\n 11-12研究发现降低胆固醇的饮食同时也可以降低血压\r\n 11-12一氧化碳呼出量水平高与卒中及短暂性脑缺血发作风险相关\r\n 11-12研究发现基因图谱展示生物钟调节胰岛素\r\n 11-12放屁能够有效地预防癌症？\r\n 1",
+				      "detail" : "<ul><li class=\"catlist_li\"><a href=\"http://www.chemdrug.com/news/230/9/44234.html\" target=\"_blank\" title=\"CFDA对11个药品注册申请不予批准\">CFDA对11个药品注册申请不予批准</a></li><li class=\"catlist_li\"><span class=\"f_r px11 f_gray\">2015-11-12 08:29</span><a href=\"http://www.chemdrug.com/news/230/9/44229.html\" target=\"_blank\" title=\"CFDA首次以临床试验数据存在弄虚作假为由取消药品申报\">CFDA首次以临床试验数据存在弄虚作假为由取消药品申报</a></li><li class=\"catlist_li\"><span class=\"f_r px11 f_gray\">2015-11-11 09:06</span><a href=\"http://www.chemdrug.com/news/230/9/44216.html\" target=\"_blank\" title=\"CFDA制定《药物临床试验数据现场核查要点》\">CFDA制定《药物临床试验数据现场核查要点》</a></li><li class=\"catlist_li\"><span class=\"f_r px11 f_gray\">2015-11-10 09:18</span><a href=\"http://www.chemdrug.com/news/230/9/44204.html\" target=\"_blank\" title=\"美国药典正式公布了自己的项目：颁布GMP审计认证程序\">美国药典正式公布了自己的项目：颁布GMP审计认证程序</a></li><li class=\"catlist_li\"><span class=\"f_r px11 f_gray\">2015-11-06 09:15</span><a href=\"http://www.chemdrug.com/news/230/9/44166.html\" target=\"_blank\" title=\"CFDA执行医疗器械和体外诊断试剂注册管理办法有关问题\">CFDA执行医疗器械和体外诊断试剂注册管理办法有关问题</a></li><li class=\"catlist_sp\">&nbsp;</li><li class=\"catlist_li\"><span class=\"f_r px11 f_gray\">2015-11-05 09:23</span><a href=\"http://www.chemdrug.com/news/230/9/44154.html\" target=\"_blank\" title=\"全国人大授权国务院在10省市开展药品上市许可人持有制度试点\">全国人大授权国务院在10省市开展药品上市许可人持有制度试点</a></li><li class=\"catlist_li\"><span class=\"f_r px11 f_gray\">2015-11-04 09:05</span><a href=\"http://www.chemdrug.com/news/230/9/44137.html\" target=\"_blank\" title=\"湖北省全面取消药品加成，实行新的医疗服务价格\">湖北省全面取消药品加成，实行新的医疗服务价格</a></li><li class=\"catlist_li\"><span class=\"f_r px11 f_gray\">2015-11-03 11:00</span><a href=\"http://www.chemdrug.com/news/230/9/44128.html\" target=\"_blank\" title=\"我国将实施统一的中药、中药方剂、中药供应链编码体系\">我国将实施统一的中药、中药方剂、中药供应链编码体系</a></li><li class=\"catlist_li\"><span class=\"f_r px11 f_gray\">2015-11-03 10:53</span><a href=\"http://www.chemdrug.com/news/230/9/44126.html\" target=\"_blank\" title=\"NIH表示要加大力度开展对慢性疲劳综合症的研究\">NIH表示要加大力度开展对慢性疲劳综合症的研究</a></li><li class=\"catlist_li\"><span class=\"f_r px11 f_gray\">2015-11-02 11:21</span><a href=\"http://www.chemdrug.com/news/230/9/44110.html\" target=\"_blank\" title=\"全国将实施统一的中药、中药方剂、中药供应链编码体系\">全国将实施统一的中药、中药方剂、中药供应链编码体系</a></li><li class=\"catlist_sp\">&nbsp;</li><li class=\"catlist_li\"><span class=\"f_r px11 f_gray\">2015-10-30 09:19</span><a href=\"http://www.chemdrug.com/news/230/9/44097.html\" target=\"_blank\" title=\"中医药编码系列国家标准发布 12月1日起实施\">中医药编码系列国家标准发布 12月1日起实施</a></li><li class=\"catlist_li\"><span class=\"f_r px11 f_gray\">2015-10-29 09:19</span><a href=\"http://www.chemdrug.com/news/230/9/44084.html\" target=\"_blank\" title=\"CFDA对中药材、中药饮片抽验出9批不合格\">CFDA对中药材、中药饮片抽验出9批不合格</a></li><li class=\"catlist_li\"><span class=\"f_r px11 f_gray\">2015-10-26 10:19</span><a href=\"http://www.chemdrug.com/news/230/9/44004.html\" target=\"_blank\" title=\"四川、浙江、陕西三省医用耗材集采降价梳理\">四川、浙江、陕西三省医用耗材集采降价梳理</a></li><li class=\"catlist_li\"><span class=\"f_r px11 f_gray\">2015-10-24 08:57</span><a href=\"http://www.chemdrug.com/news/230/9/43995.html\" target=\"_blank\" title=\"食药监总局发布医疗器械使用质量监督管理办法\">食药监总局发布医疗器械使用质量监督管理办法</a></li><li class=\"catlist_li\"><span class=\"f_r px11 f_gray\">2015-10-23 08:08</span><a href=\"http://www.chemdrug.com/news/230/9/43980.html\" target=\"_blank\" title=\"NICE指南推荐在英国及威尔士地区使用默沙东胆固醇药物Ezetrol\">NICE指南推荐在英国及威尔士地区使用默沙东胆固醇药物Ezetrol</a></li></ul><p><br/></p>",
+				      "date" : "2015-11-12 00:00:00",
+				      "sort" : 1,
+				      "enable" : 1,
+				      "classifyId" : 1010008000001601,
+				      "viewCount" : 0,
+				      "likeCount" : 0,
+				      "comment" : 0,
+				      "previousId" : 0,
+				      "nextId" : 1010008000002202
+				    }
+				  }
+				}
+			]]>
+		</item> 
+
+		<item module="forest" name="文章分类" url="/article/articleClassify.do" parameterCode="" rerutnFieldCode="">
+			<![CDATA[
+			{
+			  "status" : 200,
+			  "message" : "",
+			  "data" : {
+			    "result" : [ {
+			      "id" : 1010008000001601,
+			      "parentId" : -1,
+			      "name" : "热门（NOJIKO）",
+			      "bsid" : "6000001",
+			      "type" : 60,
+			      "image" : "",
+			      "remark" : " 集中和会员个人相关的内容，包括用户个人",
+			      "enable" : 0,
+			      "sort" : 0
+			    }]
+			  }
+			}
+			]]>
+		</item>
+		
+		<item module="forest" name="文章评论列表" url="/articleEvaluation/list.do" parameterCode="articleEvaluation_list_parameter" rerutnFieldCode="">
+			<![CDATA[
+			{
+			  "status" : 200,
+			  "message" : "查询成功",
+			  "data" : {
+			    "total" : 1,
+			    "result" : [ {
+			      "id" : 1010008000002201,
+			      "articleId" : 1010008000002203,
+			      "content" : "很棒！！！",
+			      "state" : 1,
+			      "userId" : 1010008000002202,
+			      "userName" : "蕾贝卡",
+			      "headImage" : "/file/get.do?uid=CD645ED9FBD441D593012DD3E5C6FBF6.jpg",
+			      "time" : "2016-03-03 11:49:44"
+			    } ],
+			    "next" : false,
+			    "pageSize" : 10,
+			    "pageNum" : 1
+			  }
+			}
+			]]>
+		</item> 
+		
+		<item module="forest" name="文章评论" url="/articleEvaluation/add.do" parameterCode="articleEvaluation_add_parameter" rerutnFieldCode="">
+			<![CDATA[
+			{
+			  "status" : 200,
+			  "message" : "评论成功",
+			  "data" : {
+			    
+			  }
+			}
+			]]>
+		</item> 
+		
+		
+		<item module="forest" name="首页模块" url="/forestModular/indexModularlist.do" parameterCode="" rerutnFieldCode="">
+			<![CDATA[
+			{
+			  "status" : 200,
+			  "message" : "app首页模块",
+			  "data" : {
+			    "list" : [ {
+			      "code" : "forest-discount",
+			      "name" : "折扣专区",
+			      "value" : "http://file-dev.qi-cloud.net/file/get.do?uid=6F75E0BE44A0474AAE1E8318D8E845DF.png",
+			      "type" : "1",
+			      "tips" : "天天特价 爽不停"
+			    }, {
+			      "code" : "forest-brand",
+			      "name" : "品牌特卖",
+			      "value" : "http://file-dev.qi-cloud.net/file/get.do?uid=5A34D6A80D41417DA01973816DFF941C.png",
+			      "type" : "1",
+			      "tips" : "抢大牌、不封顶"
+			    }, {
+			      "code" : "forest-new-person",
+			      "name" : "新人尊享",
+			      "value" : "http://file-dev.qi-cloud.net/file/get.do?uid=99C2115D19B04B8986BD1F87D9A65B75.png",
+			      "type" : "1",
+			      "tips" : "50元红包"
+			    }, {
+			      "code" : "forest-member",
+			      "name" : "会员特卖",
+			      "value" : "http://file-dev.qi-cloud.net/file/get.do?uid=4F8BF29EC25747479EBBF11C14A38B4B.png",
+			      "type" : "1",
+			      "tips" : "不是买药 是买健康"
+			    } ]
+			  }
+			}
+			]]>
+		</item>
+		
+		<item module="forest" name="文章点赞/取消点赞" url="/article/articlePraise.do" parameterCode="articlePraise_praise_parameter" rerutnFieldCode="">
+			<![CDATA[
+			{"status":200,"message":"取消点赞.","data":{}}
+			{"status":200,"message":"点赞成功.","data":{}}
+			]]>
+		</item>  
+		 
+	</module-list>
+
+
+
+
+    <module-list code="BMICalculation_parameter">
+		<item key="height">身高</item>
+		<item key="weight">体重</item>
+	</module-list>
+	
+	<module-list code="article_list_parameter">
+		<item key="classifyId">文章分类id</item>
+	</module-list>
+	
+	<module-list code="article_get_parameter">
+		<item key="id">文章id</item>
+	</module-list>
+	
+	<module-list code="articleEvaluation_list_parameter">
+		<item key="articleId">文章id</item>
+	</module-list>
+	
+	<module-list code="articleEvaluation_add_parameter">
+		<item key="articleId">文章id</item>
+		<item key="content">评论内容</item>
+	</module-list>
+	
+	<module-list code="articlePraise_praise_parameter">
+		<item key="articleId">文章id</item>
+	</module-list>
+	
+</xml>

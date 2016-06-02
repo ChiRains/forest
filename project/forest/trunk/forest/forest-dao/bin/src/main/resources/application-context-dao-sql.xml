@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:cache="http://www.springframework.org/schema/cache" xmlns:pirates="http://www.qi-cloud.com/schema/pirates"
+	xsi:schemaLocation="  
+    http://www.springframework.org/schema/context  
+    http://www.springframework.org/schema/context/spring-context.xsd  
+    http://www.springframework.org/schema/beans  
+    http://www.springframework.org/schema/beans/spring-beans.xsd  
+    http://www.springframework.org/schema/tx  
+    http://www.springframework.org/schema/tx/spring-tx.xsd  
+    http://www.springframework.org/schema/jdbc  
+    http://www.springframework.org/schema/jdbc/spring-jdbc-3.1.xsd  
+    http://www.springframework.org/schema/cache  
+    http://www.springframework.org/schema/cache/spring-cache-3.1.xsd  
+    http://www.springframework.org/schema/aop  
+    http://www.springframework.org/schema/aop/spring-aop.xsd  
+    http://www.springframework.org/schema/util  
+    http://www.springframework.org/schema/util/spring-util.xsd
+    http://www.qi-cloud.com/schema/pirates 
+    http://www.qi-cloud.com/schema/pirates-0.1.xsd">
+
+	<pirates:sql-z id="sqlOperator-forest" name="forest" type="mybatis" mybatisMapper="com.qcloud.project.forest.dao.mysql.mapper" modelPackage="com.qcloud.project.forest.model" tx="true"></pirates:sql-z>
+	
+	 <pirates:sql-z id="sqlOperator-pirates-autoId" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.autoid.dao.mysql.mapper" tx="true"></pirates:sql-z>
+
+    <pirates:sql-z id="sqlOperator-parameter" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.parameter.dao.mysql.mapper" tx="true"></pirates:sql-z>
+
+    <pirates:sql-z id="sqlOperator-permission" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.permission.dao.mysql.mapper" tx="true"></pirates:sql-z>
+
+    <pirates:sql-z id="sqlOperator-pirates-admin" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.admin.dao.mysql.mapper" tx="true"></pirates:sql-z>
+
+	<pirates:sql-z id="sqlOperator-publicservice" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.publicservice.dao.mysql.mapper" modelPackage="com.qcloud.component.publicservice.model" tx="true"></pirates:sql-z>
+
+    <pirates:sql-z id="sqlOperator-publicdata" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.publicdata.dao.mysql.mapper" modelPackage="com.qcloud.component.publicdata.model" tx="true"></pirates:sql-z>
+	
+	<pirates:sql-z id="sqlOperator-personalcenter" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.personalcenter.dao.mysql.mapper" modelPackage="com.qcloud.component.personalcenter.model" tx="true"></pirates:sql-z>
+		
+	<pirates:sql-z id="sqlOperator-sellercenter" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.sellercenter.dao.mysql.mapper" modelPackage="com.qcloud.component.sellercenter.model" tx="true"></pirates:sql-z>
+			
+	<pirates:sql-z id="sqlOperator-commoditycenter" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.commoditycenter.dao.mysql.mapper" modelPackage="com.qcloud.component.commoditycenter.model" tx="true"></pirates:sql-z>
+			
+	<pirates:sql-z id="sqlOperator-distribution" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.distribution.dao.mysql.mapper" modelPackage="com.qcloud.component.distribution.model" tx="true"></pirates:sql-z>
+	
+	<pirates:sql-z id="sqlOperator-orderform" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.orderform.dao.mysql.mapper" modelPackage="com.qcloud.component.orderform.model" tx="true"></pirates:sql-z>
+
+	<pirates:sql-z id="sqlOperator-marketing" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.marketing.dao.mysql.mapper" modelPackage="com.qcloud.component.marketing.model" tx="true"></pirates:sql-z>
+	
+	<pirates:sql-z id="sqlOperator-evaluationcenter" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.evaluationcenter.dao.mysql.mapper" modelPackage="com.qcloud.component.evaluationcenter.model" tx="true"></pirates:sql-z>
+
+	<pirates:sql-z id="sqlOperator-warehouse" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.warehouse.dao.mysql.mapper" modelPackage="com.qcloud.component.warehouse.model" tx="true"></pirates:sql-z>
+	
+</beans>
