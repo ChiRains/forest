@@ -67,4 +67,9 @@
 	
 	<pirates:sql-z id="sqlOperator-brokerage" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.brokerage.dao.mysql.mapper" modelPackage="com.qcloud.component.brokerage.model" tx="true"></pirates:sql-z>
 	
+	<pirates:sql-z id="sqlOperator-pay" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.pay.dao.mysql.mapper" modelPackage="com.qcloud.component.pay.model" tx="true"></pirates:sql-z>
+	
+	<pirates:sql-z id="sqlOperator-filestorage" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.filestorage.dao.mysql.mapper" modelPackage="com.qcloud.component.filestorage.model" tx="false"></pirates:sql-z>
+	
+	
 </beans>

@@ -12,6 +12,11 @@
 	<module-list code="personalcenter_user_account_type">
 		<item key="mobile" enable="true">手机作账号</item>		
 	</module-list>
+	
+	<module-list code="pirates-file-service-mode">
+		<item>sdk</item>	
+	</module-list> 
+	
 
 	<!--begin of 唯一编码设置  -->
 	<module-list code="qi-cloud-UniqueCodeGeneratorConfig">
