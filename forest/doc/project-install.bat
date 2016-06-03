@@ -1,88 +1,101 @@
-set "home=G:/qcloud/java"
+cd ..
+cd ..
+set "home=%cd%"
 
 cd %home%
-cd component/personalcenter/trunk/personalcenter-api
+cd personalcenter/personalcenter-api
 call mvn install
 
 cd %home%
-cd component/sellercenter/trunk/sellercenter-api
+cd pay/pay-api
 call mvn install
 
 cd %home%
-cd mall/commoditycenter/trunk/commoditycenter-api
+cd my/my-api
 call mvn install
 
 cd %home%
-cd mall/marketing/trunk/marketing-api
+cd sellercenter/sellercenter-api
 call mvn install
 
 cd %home%
-cd component/brokerage/trunk/brokerage-api
+cd commoditycenter/commoditycenter-api
 call mvn install
 
 cd %home%
-cd mall/orderform/trunk/orderform-api
+cd marketing/marketing-api
 call mvn install
 
 cd %home%
-cd mall/groupbuys/trunk/groupbuys-api
+cd brokerage/brokerage-api
 call mvn install
 
 cd %home%
-cd mall/seckill/trunk/seckill-api
+cd orderform/orderform-api
 call mvn install
 
 cd %home%
-cd mall/my/trunk/my-api
-call mvn install
-
-
-cd %home%
-cd component/analysis/trunk
+cd seckill/seckill-api
 call mvn install
 
 cd %home%
-cd component/personalcenter/trunk
+cd my/my-api
 call mvn install
 
 cd %home%
-cd component/sellercenter/trunk
+cd publicdata
 call mvn install
 
 cd %home%
-cd mall/commoditycenter/trunk
+cd publicservice
 call mvn install
 
 cd %home%
-cd component/brokerage/trunk
+cd personalcenter
 call mvn install
 
 cd %home%
-cd mall/warehouse/trunk
+cd pay
 call mvn install
 
 cd %home%
-cd mall/marketing/trunk
+cd my
 call mvn install
 
 cd %home%
-cd mall/orderform/trunk
+cd sellercenter
 call mvn install
 
 cd %home%
-cd mall/groupbuys/trunk
+cd commoditycenter
 call mvn install
 
 cd %home%
-cd mall/seckill/trunk
+cd brokerage
 call mvn install
 
 cd %home%
-cd mall/mall/trunk
+cd warehouse
 call mvn install
 
 cd %home%
-cd project/forest/trunk
+cd marketing
+call mvn install
+
+cd %home%
+cd orderform
+call mvn install
+
+cd %home%
+cd seckill
+call mvn install
+
+cd %home%
+cd mall
+call mvn install
+
+cd %home%
+cd forest
 call mvn package
 
 pause
