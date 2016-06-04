@@ -4,14 +4,10 @@ package cn.com.flaginfo.ws;
 
 
 import java.security.Key;
-import java.security.SecureRandom;
 import java.security.spec.KeySpec;
-
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.DESKeySpec;
-
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
