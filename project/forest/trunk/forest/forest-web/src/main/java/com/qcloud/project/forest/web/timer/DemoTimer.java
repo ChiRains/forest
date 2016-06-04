@@ -1,15 +1,11 @@
 package com.qcloud.project.forest.web.timer;
 
 import java.util.Date;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import com.qcloud.pirates.core.timer.AbstractTimer;
 import com.qcloud.pirates.core.timer.Period;
-import com.qcloud.pirates.core.timer.MinutePeriod;
 import com.qcloud.pirates.core.timer.SecondPeriod;
 import com.qcloud.pirates.util.DateUtil;
 
