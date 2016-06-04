@@ -117,28 +117,29 @@
     </select>
 
     <select id="count4Front" parameterType="java.util.HashMap" resultType="Integer">
-        select count(*) from `commoditycenter_merchandise_item` where 1=1 AND state = 4
-       	<if test="merchantId != null and merchantId > 0">
+        select count(*) from (select * from `commoditycenter_merchandise_item` where 1=1 AND state = 4
+       <if test="merchantId != null and merchantId > 0">
             AND merchantId = #{merchantId}
         </if>
         <if test="merchantClassifyId != null and merchantClassifyId > 0">
-            AND merchantClassifyId = #{merchantClassifyId}
-        </if>        
+            AND (merchantClassifyId = #{merchantClassifyId} OR merchantClassifyBsid like CONCAT(#{merchantClassifyBsid},'%'))
+        </if>       
+        
         <if test="mallClassifyId != null and mallClassifyId > 0">
-            AND mallClassifyId = #{mallClassifyId}
-        </if>         
+            AND (mallClassifyId = #{mallClassifyId} OR mallClassifyBsid like CONCAT(#{mallClassifyBsid},'%'))
+        </if>          
         <if test="brandId != null and brandId > 0">
             AND brandId = #{brandId}
         </if>
         <if test="name != null">
             AND (name LIKE CONCAT('%',#{name},'%') OR keywords LIKE CONCAT('%',#{name},'%'))
-        </if>
+        </if>           
         <if test="queryType == 1">
-            AND merchandiseSpecificationsId = -1
-        </if>   
+            group by merchandiseId
+        </if> 
         <!--  <if test="queryType == 2">
             AND merchandiseSpecificationsId != -1
-        </if> -->           
+        </if> -->) A    
     </select>
     
     
