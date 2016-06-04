@@ -228,7 +228,7 @@ public class MerchandiseController {
             voList.add(merchandiseVO);
         }
         FrontPagingView view = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), page.getCount());
-        view.setData(voList);
+        view.setList(voList);
         view.setMessage("查询商品成功.");
         return view;
     }
