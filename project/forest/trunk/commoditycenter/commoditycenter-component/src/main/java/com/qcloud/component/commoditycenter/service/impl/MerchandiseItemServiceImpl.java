@@ -221,7 +221,7 @@ public class MerchandiseItemServiceImpl implements MerchandiseItemService {
         if (merchantClassify != null) {
             query.setMerchantClassifyBsid(merchantClassify.getBsid());
         } else {
-            query.setMallClassifyBsid("");
+            query.setMerchantClassifyBsid("");
         }
         return merchandiseItemDao.query(query, start, count);
     }
