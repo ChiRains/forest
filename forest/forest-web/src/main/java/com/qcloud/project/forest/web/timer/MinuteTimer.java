@@ -2,14 +2,14 @@ package com.qcloud.project.forest.web.timer;
 
 import java.util.Date;
 import java.util.List;
-import junit.framework.Assert;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.qcloud.component.publicservice.MessageClient;
 import com.qcloud.pirates.core.timer.AbstractTimer;
-import com.qcloud.pirates.core.timer.Period;
 import com.qcloud.pirates.core.timer.MinutePeriod;
+import com.qcloud.pirates.core.timer.Period;
 import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.DateUtil;
 import com.qcloud.project.forest.model.Medication;
@@ -18,7 +18,6 @@ import com.qcloud.project.forest.model.key.TypeEnum.MessageType;
 import com.qcloud.project.forest.model.key.TypeEnum.PeriodType;
 import com.qcloud.project.forest.service.MedicationService;
 import com.qcloud.project.forest.service.MedicationTimeService;
-import com.qcloud.component.publicservice.MessageClient;
 
 @Component
 public class MinuteTimer extends AbstractTimer {
