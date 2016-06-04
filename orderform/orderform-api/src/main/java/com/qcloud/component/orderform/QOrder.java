@@ -26,10 +26,8 @@ public interface QOrder {
 
     int getState();
 
-    // 需要开发票
     int getNeedInvoiceType();
 
-    // 发票类型
     int getInvoiceType();
 
     double getTotalPrice();
