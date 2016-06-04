@@ -2,7 +2,6 @@ package com.qcloud.component.marketing.web.controller.admin;
 
 import java.util.Date;
 import java.util.List;
-import org.eclipse.jetty.io.View;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,10 +10,8 @@ import com.qcloud.component.commoditycenter.CommoditycenterClient;
 import com.qcloud.component.commoditycenter.OutdatedCommoditycenterClient;
 import com.qcloud.component.commoditycenter.QUnifiedMerchandise;
 import com.qcloud.component.commoditycenter.model.Merchandise;
-import com.qcloud.component.commoditycenter.model.MerchandiseItem;
 import com.qcloud.component.commoditycenter.model.MerchandiseMarketing;
 import com.qcloud.component.commoditycenter.model.UnifiedMerchandise;
-import com.qcloud.component.commoditycenter.model.query.MerchandiseItemQuery;
 import com.qcloud.component.commoditycenter.model.query.MerchandiseMarketingQuery;
 import com.qcloud.component.commoditycenter.service.MerchandiseMarketingService;
 import com.qcloud.component.marketing.model.key.TypeEnum;
@@ -27,8 +24,6 @@ import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.mvc.AceAjaxView;
 import com.qcloud.pirates.mvc.AcePagingView;
 import com.qcloud.pirates.util.AssertUtil;
-import com.qcloud.pirates.util.NumberUtil;
-import com.qcloud.pirates.util.RequestUtil;
 import com.qcloud.pirates.util.StringUtil;
 import com.qcloud.pirates.web.page.PPage;
 
