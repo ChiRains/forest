@@ -3,6 +3,18 @@ cd ..
 set "home=%cd%"
 
 cd %home%
+cd publicdata
+call mvn clean
+
+cd %home%
+cd publicservice
+call mvn clean
+
+cd %home%
+cd file
+call mvn clean
+
+cd %home%
 cd personalcenter/personalcenter-api
 call mvn clean
 

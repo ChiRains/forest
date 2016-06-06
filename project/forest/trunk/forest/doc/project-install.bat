@@ -3,6 +3,18 @@ cd ..
 set "home=%cd%"
 
 cd %home%
+cd publicdata
+call mvn install
+
+cd %home%
+cd publicservice
+call mvn install
+
+cd %home%
+cd file
+call mvn install
+
+cd %home%
 cd personalcenter/personalcenter-api
 call mvn install
 
@@ -40,14 +52,6 @@ call mvn install
 
 cd %home%
 cd my/my-api
-call mvn install
-
-cd %home%
-cd publicdata
-call mvn install
-
-cd %home%
-cd publicservice
 call mvn install
 
 cd %home%
