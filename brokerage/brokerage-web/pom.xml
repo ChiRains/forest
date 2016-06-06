@@ -29,6 +29,12 @@
 			<version>${pirates.version}</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.qcloud.component</groupId>
+			<artifactId>publicdata-web</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
 
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
