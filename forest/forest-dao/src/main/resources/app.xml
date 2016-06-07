@@ -3,7 +3,14 @@
 	<module-list code="loginIndex">
 		<item name="loginLogo">/qcloud-admin/assets/images/logo.png</item>
 		<item name="loginMessage">©旗云科技</item>
+		<item name="width">180</item>
+		<item name="height">42</item>
 	</module-list>
+	
+	
+	<module-list code="pirates-file-service-mode">
+		<item>sdk</item>	
+	</module-list> 
 	<!-- 
 	<module-list code="loginIndex"> <item name="loginLogo">/qcloud-admin/assets/img/exy.jpg</item> 
 		<item name="loginMessage">商家后台</item> 
@@ -13,9 +20,6 @@
 		<item key="mobile" enable="true">手机作账号</item>		
 	</module-list>
 	
-	<module-list code="pirates-file-service-mode">
-		<item>sdk</item>	
-	</module-list> 
 	
 
 	<!--begin of 唯一编码设置  -->
@@ -46,18 +50,7 @@
 	<module-list code="publicservice-sms-template">
 		<item code="personalcenter-user-sms-template" 						name="用户注册短信验证码模板" >用户注册短信验证码模板</item>
 		<item code="personalcenter-user-sms-fPswTemplate" 					name="用户找回密码短信模板">用户找回密码短信模板</item>
-		<item code="personalcenter-user-sms-pay-notifyTemplate" 			name="用户支付通知短信模板">用户支付通知短信模板</item>
-		<item code="personalcenter-user-activate-exist-sms-template" 		name="会员卡绑定短信模板">会员卡绑定短信模板</item>
-		<item code="personalcenter-activate-not-exist-user-sms-template" 	name="会员卡激活短信模板">会员卡激活短信模板</item>
-		<item code="personalcenter-user-sms-refund-notifyTemplate" 			name="申请退款短信模板">申请退款短信模板</item>
-		<item code="personalcenter-user-sms-return-notifyTemplate" 			name="申请退货短信模板">申请退货短信模板</item>
-		<item code="personalcenter-user-sms-exchange-notifyTemplate" 		name="申请换货短信模板">申请换货短信模板</item>
-		<item code="personalcenter-user-sms-pay-refund-notifyTemplate" 		name="卖家退款通知短信模板">卖家退款通知短信模板</item>
-		<item code="personalcenter-user-sms-refund-agree-notifyTemplate" 	name="门店同意退款通知短信模板">门店同意退款通知短信模板</item>
-		<item code="personalcenter-user-sms-return-receive-notifyTemplate" 	name="门店退货签收通知短信模板">门店退货签收通知短信模板</item>
-		<item code="personalcenter-user-sms-houseperty-purchase-notifyTemplate" 	name="房产商城我要发布验证码短信模板">房产商城我要发布验证码短信模板</item>		
-		<item code="merchant-distribute-ready-card-sms-template" 	name="商家代发卡短信确认验证码">商家代发卡短信确认验证码</item>		
-		<item code="merchant-distribute-success-card-sms-template" 	name="商家代发卡成功短信提示">商家代发卡成功短信提示</item>		
+		<item code="personalcenter-user-safety-sms-template" 				name="用户安全登录短信模板">用户安全登录短信模板</item>	
 	</module-list>
 	
 	<module-list code="commoditycenter-pointexchange-message">
@@ -92,5 +85,9 @@
 		<item name="妮可"></item>
 		<item name="雷利"></item>
 		<item name="小八"></item>
+	</module-list>
+	
+	<module-list code="forest-merchant">
+		<item merchant="1010008000011601">大参林商家id</item>
 	</module-list>
 </xml>
