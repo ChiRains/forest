@@ -46,6 +46,9 @@
 
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestUserUriHandlerImpl"></pirates:uriHandler>
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestUriHandlerImpl"></pirates:uriHandler>
+   
+   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.GiftCouponUriHandlerImpl"></pirates:uriHandler>
+   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.GiftCouponUserUriHandlerImpl"></pirates:uriHandler>
 
 
 </beans>
