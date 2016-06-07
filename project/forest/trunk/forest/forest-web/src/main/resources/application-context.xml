@@ -45,5 +45,7 @@
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestModularUriHandlerImpl"></pirates:uriHandler>
 
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestUserUriHandlerImpl"></pirates:uriHandler>
+   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestUriHandlerImpl"></pirates:uriHandler>
+
 
 </beans>

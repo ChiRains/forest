@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.sellercenter.QMerchant;
+import com.qcloud.component.sellercenter.QStore;
 import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.component.sellercenter.exception.SellerCenterException;
 import com.qcloud.component.sellercenter.model.DistributeMembershipCard;
@@ -25,6 +26,7 @@ import com.qcloud.pirates.mvc.AcePagingView;
 import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.NumberUtil;
 import com.qcloud.pirates.util.RequestUtil;
+import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.pirates.web.security.annotation.NoReferer;
 
 @Controller
