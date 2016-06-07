@@ -38,14 +38,15 @@
 	<pirates:component-scan base-package="com.qcloud.project.forest.web.eximpl"></pirates:component-scan>
 	<pirates:timer-scan base-package="com.qcloud.project.forest.web.timer"></pirates:timer-scan>
 	
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.AnalysisresultUriHandlerImpl"></pirates:uriHandler>
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ArticleUriHandlerImpl"></pirates:uriHandler>
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ArticleEvaluationUriHandlerImpl"></pirates:uriHandler>
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.MedicationUriHandlerImpl"></pirates:uriHandler>
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestModularUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.AnalysisresultUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ArticleUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ArticleEvaluationUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.MedicationUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestModularUriHandlerImpl"></pirates:uriHandler>
 
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestUserUriHandlerImpl"></pirates:uriHandler>
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestUserUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestOrderUriHandlerImpl"></pirates:uriHandler>
    
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.GiftCouponUriHandlerImpl"></pirates:uriHandler>
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.GiftCouponUserUriHandlerImpl"></pirates:uriHandler>
