@@ -22,4 +22,6 @@ public interface GiftCouponUserService {
     public List<GiftCouponUser> listAll();
 
     public List<GiftCouponUser> listCanUse(long userId);
+
+    public boolean judgeCanUse(long userId, long id);
 }

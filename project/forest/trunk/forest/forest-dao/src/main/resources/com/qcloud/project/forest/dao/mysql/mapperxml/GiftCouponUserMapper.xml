@@ -28,4 +28,13 @@
 			<![CDATA[ and #{now} >=validDate  and #{now} <=inValidDate ]]>
 			and `state`=1
 	</select>
+	
+	<select id="judgeCanUse" parameterType="java.util.HashMap" resultType="Integer" >
+		select count(*) from `forest_gift_coupon_user` 
+		where 1=1
+			and	userId=#{userId}
+			<![CDATA[ and #{now} >=validDate  and #{now} <=inValidDate ]]>
+			and `state`=1
+			and `id`=#{id}
+	</select>
 </mapper>

@@ -84,6 +84,7 @@ public class ForestOrderServiceImpl implements ForestOrderService {
         if (giftCouponUser != -1) {
             GiftCouponUser coupon = couponUserService.get(giftCouponUser);
             AssertUtil.assertNotNull(coupon, "赠品券不存在.");
+            AssertUtil.assertTrue(couponUserService.judgeCanUse(user.getId(), giftCouponUser), "该赠品券已经使用过了,不能重复使用.");
             giftCouponId = coupon.getGiftCouponId();
             coupon.setState(GifeCouponStateType.Used.getKey());
             coupon.setOrderDate(order.getOrderDate());

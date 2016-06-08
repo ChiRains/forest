@@ -30,4 +30,6 @@ public interface GiftCouponUserDao extends ISimpleDao<GiftCouponUser, Long> {
     public List<GiftCouponUser> listByUserId(Long userId);
 
     public List<GiftCouponUser> listCanUse(long userId);
+
+    public boolean judgeCanUse(long userId, long id);
 }
