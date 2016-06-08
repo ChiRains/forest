@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>新增管理员</title>
+<title>新增赠品券</title>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/colorbox.css"/>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/chosen.css" />
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
-        管理里管理
+       赠品券管理
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             新增
@@ -22,12 +22,12 @@
         <form id="model-form" class="form-horizontal"  role="form" action="/admin/giftCoupon/add.do">
             <!-- #section:elements.form -->
 
-			      		<div class="space-4"></div>
+                  		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="id">  </label>
+                <label class="col-sm-3 control-label no-padding-right" for="name"> 赠品券名称 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="id" name="id" placeholder="" value=""/>
+						<input type="text" class="width-100" maxlength="10" id="name" name="name" placeholder="赠品券名称" value=""/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
@@ -36,20 +36,12 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="image"> 图片 </label>
                 <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="image" name="image" placeholder="图片" value=""/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
-                  		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="name"> 赠品券名称 </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="name" name="name" placeholder="赠品券名称" value=""/>
-						<i class="ace-icon fa"></i>
-					</span>
+					<input type="hidden"  id="image" name="image" value="" onchange="fileChange(this);"/>
+					<button type="button" mult="false" sid="image" vid="pic-pic-view2" class="btn btn-sm btn-purple btn-upload-pic"  upfrom="0"  ><i class="ace-icon fa fa-upload">
+					</i> 上 传</button>
+                    <ul sid="image" id="pic-pic-view2" class="ace-thumbnails clearfix">
+
+                    </ul>
                 </div>
             </div>
                   		<div class="space-4"></div>
@@ -74,20 +66,10 @@
             </div>
                   		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="enable"> 是否启用（0，不启用；1，启用） </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="enable" name="enable" placeholder="是否启用（0，不启用；1，启用）" value=""/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
-                  		<div class="space-4"></div>
-            <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="desc"> 赠品券描述 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="desc" name="desc" placeholder="赠品券描述" value=""/>
+ 					<textarea   class="width-100" maxlength="30" row ="2" id="desc" name="desc"   placeholder="赠品券描述 ">	</textarea>				
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
@@ -110,8 +92,11 @@
 </div><!-- /.row -->
 
 <script type="text/javascript">
-    var scripts = [null, "/qcloud-admin/assets/js/jquery.colorbox-min.js","/qcloud-admin/assets/js/upload-img.js","/qcloud-admin/assets/js/chosen.jquery.min.js", null];
-    ace.load_ajax_scripts(scripts, function () {
+var scripts = [null,"/qcloud-admin/assets/js/moment.min.js","/qcloud-admin/assets/js/bootstrap-datetimepicker.js", 
+               "/qcloud-admin/assets/js/jquery.colorbox-min.js","/qcloud-admin/assets/js/upload-img.js",
+               "/qcloud-admin/assets/js/chosen.jquery.min.js",
+               "/qcloud-admin/assets/js/date-time/bootstrap-datetimepicker.min.js", null];   
+        ace.load_ajax_scripts(scripts, function () {
         //inline scripts related to this page
         jQuery(function ($) {
             $(window)
@@ -122,6 +107,51 @@
                      $this.next().css({'width': $this.parent().width()});
                 })
             }).trigger('resize.chosen');
+            // 图片上传 
+          	 $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
+             $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange'></i>");
+             var btnUpload = $(".btn-upload-pic");
+             delEvent(getButtonSetting(btnUpload));
+             btnUpload.on('click', function () {
+                 var bs = getButtonSetting($(this));
+                 uploadDialog(bs);
+             });
+				
+             //获取当前时间
+ 		    var date = new Date();
+ 		    var seperator1 = "-";
+ 		    var seperator2 = ":";
+ 		    var month = date.getMonth() + 1;
+ 		    var strDate = date.getDate();
+ 		    if (month >= 1 && month <= 9) {
+ 		        month = "0" + month;
+ 		    }
+ 		    if (strDate >= 0 && strDate <= 9) {
+ 		        strDate = "0" + strDate;
+ 		    }
+ 		    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+ 		            + " " + date.getHours() + seperator2 + date.getMinutes()
+ 		            + seperator2 + date.getSeconds();  
+
+            //生效日期按钮
+           $('#validDate').datetimepicker({
+           
+ 	    			language: 'zh-cn',
+ 	    			//format: 'MM/DD/YYYY'
+ 	    			format: 'YYYY-MM-DD',
+ 	    		}).next().on(ace.click_event, function(){
+ 					$(this).prev().focus();
+ 				});
+ 	            
+ 			//失效日期按钮
+ 			$('#inValidDate').datetimepicker({
+ 	    			language: 'zh-cn',
+ 	    			//format: 'MM/DD/YYYY'
+ 	    			format: 'YYYY-MM-DD',
+ 	    			minDate:currentdate
+ 	    		}).next().on(ace.click_event, function(){
+ 					$(this).prev().focus();
+ 				});
                    
             //表单验证
             $("#model-form").validate({
