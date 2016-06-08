@@ -1,7 +1,6 @@
 package com.qcloud.project.forest.web.vo.admin;
 
 import java.util.Date;
-import java.math.BigDecimal;
 
 public class AdminForestOrderVO {
 
@@ -25,7 +24,7 @@ public class AdminForestOrderVO {
 
     private Date   deliveryDate;
 
-    private Date   pickUpDate;
+    private int    deliveryMode;
 
     public AdminForestOrderVO() {
 
@@ -121,27 +120,23 @@ public class AdminForestOrderVO {
         this.giftCouponId = giftCouponId;
     }
 
-    
     public Date getDeliveryDate() {
-    
+
         return deliveryDate;
     }
 
-    
     public void setDeliveryDate(Date deliveryDate) {
-    
+
         this.deliveryDate = deliveryDate;
     }
 
-    
-    public Date getPickUpDate() {
-    
-        return pickUpDate;
+    public int getDeliveryMode() {
+
+        return deliveryMode;
     }
 
-    
-    public void setPickUpDate(Date pickUpDate) {
-    
-        this.pickUpDate = pickUpDate;
+    public void setDeliveryMode(int deliveryMode) {
+
+        this.deliveryMode = deliveryMode;
     }
 }

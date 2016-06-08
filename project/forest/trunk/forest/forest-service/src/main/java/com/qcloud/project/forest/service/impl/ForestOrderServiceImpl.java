@@ -1,5 +1,6 @@
 package com.qcloud.project.forest.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import com.qcloud.component.orderform.OrderformClient;
 import com.qcloud.component.orderform.QOrder;
 import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.pirates.data.Page;
+import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.project.forest.dao.ForestOrderDao;
 import com.qcloud.project.forest.model.ForestOrder;
 import com.qcloud.project.forest.model.GiftCouponUser;
@@ -74,23 +76,33 @@ public class ForestOrderServiceImpl implements ForestOrderService {
 
     @Transactional
     @Override
-    public QOrder order(OrderContext context, Long giftCouponUser, QUser user) {
+    public QOrder order(OrderContext context, Long giftCouponUser, QUser user, Date deliveryDate) {
 
         QOrder order = orderformClient.orderNormal(context);
         // 赠品券
-        GiftCouponUser coupon = couponUserService.get(giftCouponUser);
-        coupon.setState(GifeCouponStateType.Used.getKey());
-        coupon.setOrderDate(order.getOrderDate());
-        coupon.setOrderId(order.getId());
-        couponUserService.update(coupon);
+        long giftCouponId = -1;
+        if (giftCouponUser != -1) {
+            GiftCouponUser coupon = couponUserService.get(giftCouponUser);
+            AssertUtil.assertNotNull(coupon, "赠品券不存在.");
+            giftCouponId = coupon.getGiftCouponId();
+            coupon.setState(GifeCouponStateType.Used.getKey());
+            coupon.setOrderDate(order.getOrderDate());
+            coupon.setOrderId(order.getId());
+            couponUserService.update(coupon);
+        }
+        //
         ForestOrder forestOrder = new ForestOrder();
         forestOrder.setMerchantId(order.getMerchantOrderList().get(0).getMerchantId());
         forestOrder.setOrderDate(order.getOrderDate());
         forestOrder.setOrderId(order.getId());
         forestOrder.setOrderNumber(order.getOrderNumber());
-        forestOrder.setGiftCouponId(coupon.getGiftCouponId());
+        forestOrder.setGiftCouponId(giftCouponId);
+        forestOrder.setUserId(user.getId());
+        forestOrder.setDeliveryDate(deliveryDate);
+        forestOrder.setDeliveryMode(order.getMerchantOrderList().get(0).getDeliveryMode());
         forestOrder.setStoreId(order.getMerchantOrderList().get(0).getStoreId());
         forestOrder.setState(orderformClient.getNormalMerchantOrderState(order.getState()));
+        add(forestOrder);
         return order;
     }
 }

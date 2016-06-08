@@ -1,5 +1,6 @@
 package com.qcloud.project.forest.service;
 
+import java.util.Date;
 import java.util.List;
 import com.qcloud.component.orderform.OrderContext;
 import com.qcloud.component.orderform.QOrder;
@@ -22,5 +23,5 @@ public interface ForestOrderService {
 
     public List<ForestOrder> listAll();
 
-    public QOrder order(OrderContext context, Long giftCouponUser, QUser user);
+    public QOrder order(OrderContext context, Long giftCouponUser, QUser user, Date deliveryDate);
 }

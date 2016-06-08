@@ -13,23 +13,32 @@ import com.qcloud.pirates.core.xml.XmlFactory;
 import com.qcloud.pirates.core.xml.XmlItem;
 import com.qcloud.pirates.mvc.FrontAjaxView;
 import com.qcloud.pirates.util.AssertUtil;
+import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.project.forest.exception.ForestException;
 
 @Controller
 @RequestMapping(value = ForestController.DIR)
 public class ForestController {
 
-    public static final String    DIR = "/forest";
-
-
-    @Autowired
-    private PublicdataClient      publicdataClient;
+    public static final String DIR = "/forest";
 
     @Autowired
-    private FileSDKClient         fileSDKClient;
+    private PublicdataClient   publicdataClient;
 
+    @Autowired
+    private FileSDKClient      fileSDKClient;
 
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView getMerchant() {
 
+        Long merchantId = getMerchantClassify();
+        FrontAjaxView view = new FrontAjaxView();
+        view.addObject("merchant", merchantId);
+        return view;
+    }
+
+    @PiratesApp
     @RequestMapping
     public FrontAjaxView classifyList() {
 
@@ -67,6 +76,4 @@ public class ForestController {
             fillFileServerUrlBeforeImage(c);
         }
     }
-
-  
 }

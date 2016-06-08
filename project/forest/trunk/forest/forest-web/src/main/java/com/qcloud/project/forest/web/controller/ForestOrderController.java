@@ -46,6 +46,7 @@ import com.qcloud.component.piratesship.web.form.ListForm;
 import com.qcloud.component.publicdata.KeyValueVO;
 import com.qcloud.component.publicservice.PayClient;
 import com.qcloud.component.sellercenter.QMerchant;
+import com.qcloud.component.sellercenter.QStore;
 import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.component.sellercenter.model.key.TypeEnum.MerchantIsIncludePost;
 import com.qcloud.pirates.mvc.FrontAjaxView;
@@ -176,7 +177,8 @@ public class ForestOrderController {
         preOrderMVO.setPreferential(NumberUtil.scale(orderEntity.getPreferential(), 2));
         preOrderMVO.setTotalNumber(orderEntity.getNumber());
         // 赠品券
-        List<OrderGiftCouponVO> giftCouponList = calculateGiftCoupon(user.getId());
+        // List<OrderGiftCouponVO> giftCouponList = calculateGiftCoupon(user.getId());
+        List<OrderGiftCouponVO> giftCouponList = new ArrayList<OrderGiftCouponVO>();
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取下单数据成功");
         view.addObject("preOrder", preOrderMVO);
@@ -191,7 +193,7 @@ public class ForestOrderController {
     @PiratesApp
     @RequestMapping
     @NoReferer
-    public FrontAjaxView order(HttpServletRequest request, OrderForm orderForm, Long giftCouponUser, Date deliveryDate) {
+    public FrontAjaxView order(HttpServletRequest request, OrderForm orderForm, Long giftCouponUser, Date deliveryDate, Long storeId) {
 
         AssertUtil.assertNotNull(orderForm.getConsigneeId(), "收货人信息数据不能为空.");
         AssertUtil.assertNotNull(orderForm.getDeliveryId(), "配送信息数据不能为空.");
@@ -200,9 +202,9 @@ public class ForestOrderController {
         QMyConsignee consignee = myClient.getConsignee(orderForm.getConsigneeId());
         AssertUtil.assertNotNull(consignee, "收货人信息不存在." + orderForm.getConsigneeId());
         AssertUtil.assertNotEmpty(orderForm.getMerchandiseList(), "下订单,商品列表不能为空.");
-        OrderContext orderContext = formToContext(user, orderForm, deliveryDate);
+        OrderContext orderContext = formToContext(user, orderForm, deliveryDate, storeId);
         // OrderEntity orderEntity = orderService.orderNormal(orderContext);
-        QOrder orderEntity = forestOrderService.order(orderContext, giftCouponUser, user);
+        QOrder orderEntity = forestOrderService.order(orderContext, giftCouponUser, user, deliveryDate);
         FrontAjaxView view = new FrontAjaxView();
         myClient.setDefaultInvoice(user.getId());
         view.setMessage("下订单成功");
@@ -311,10 +313,12 @@ public class ForestOrderController {
         return voList;
     }
 
-    private OrderContext formToContext(QUser user, OrderForm orderForm, Date deliveryDate) {
+    private OrderContext formToContext(QUser user, OrderForm orderForm, Date deliveryDate, Long storeId) {
 
+        // TODO
         AssertUtil.assertNotNull(orderForm.getConsigneeId(), "收货人信息数据不能为空.");
         AssertUtil.assertNotNull(orderForm.getInvoiceId(), "发票信息数据不能为空.");
+        AssertUtil.assertNotNull(deliveryDate, "配送时间/自提时间不能为空.");
         QMyConsignee consignee = myClient.getConsignee(orderForm.getConsigneeId());
         AssertUtil.assertNotNull(consignee, "收货人信息不存在." + orderForm.getConsigneeId());
         AssertUtil.assertNotEmpty(orderForm.getMerchandiseList(), "下订单,商品列表不能为空.");
@@ -368,9 +372,17 @@ public class ForestOrderController {
             deliveryMode = new DeliveryMode();
             deliveryMode.setUserId(user.getId());
             deliveryMode.setTime(DateUtil.date2String(deliveryDate, DateUtil.DATE_FORMAT_STRING));
+            //
             deliveryMode.setType(DeliveryModeType.DELIVERY.getKey());
             deliveryMode.setStoreId(-1L);
             deliveryMode.setDesc("配送上门");
+            if (storeId != -1) {
+                QStore store = sellercenterClient.getStore(storeId);
+                AssertUtil.assertNotNull(store, "自提门店不存在.");
+                deliveryMode.setType(DeliveryModeType.PICKUP.getKey());
+                deliveryMode.setStoreId(storeId);
+                deliveryMode.setDesc("门店自提");
+            }
             deliveryModeService.add(deliveryMode);
         } else {
             deliveryMode.setUserId(user.getId());
@@ -378,8 +390,22 @@ public class ForestOrderController {
             deliveryMode.setType(DeliveryModeType.DELIVERY.getKey());
             deliveryMode.setStoreId(-1L);
             deliveryMode.setDesc("配送上门");
+            if (storeId != -1) {
+                QStore store = sellercenterClient.getStore(storeId);
+                AssertUtil.assertNotNull(store, "自提门店不存在.");
+                deliveryMode.setType(DeliveryModeType.PICKUP.getKey());
+                deliveryMode.setStoreId(storeId);
+                deliveryMode.setDesc("门店自提");
+            }
             deliveryModeService.update(deliveryMode);
         }
+        orderForm.setDeliveryId(deliveryMode.getId());
+        QMyDelivery delivery = myClient.getDelivery(orderForm.getDeliveryId());
+        AssertUtil.assertNotNull(delivery, "配送信息不存在." + orderForm.getDeliveryId());
+        OrderDelivery orderDelivery = new OrderDelivery();
+        orderDelivery.setDelivery(delivery);
+        orderDelivery.setSexpressCode(orderForm.getExpressCode());
+        deliveryMap.put(merchant, orderDelivery);
         context.setDeliveryMap(deliveryMap);
         // 说明
         Map<QMerchant, String> explainMap = new HashMap<QMerchant, String>();
