@@ -27,4 +27,21 @@ public class ForestUserUriHandlerImpl extends AbstractUriHandler {
         list.add("/forestUser/editUser.do");
         return list;
     }
+
+    @Override
+    public List<String> whiteNameUris() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("/forestUser/safetyLogin.do");
+        list.add("/forestUser/sendSafetyCode.do");
+        return list;
+    }
+
+    @Override
+    public List<String> appUris() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("/app/forestUser/safetyLogin.do");
+        return list;
+    }
 }

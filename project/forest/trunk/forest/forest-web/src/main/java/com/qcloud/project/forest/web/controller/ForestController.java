@@ -19,13 +19,16 @@ import com.qcloud.project.forest.exception.ForestException;
 @RequestMapping(value = ForestController.DIR)
 public class ForestController {
 
-    public static final String DIR = "/forest";
+    public static final String    DIR = "/forest";
+
 
     @Autowired
-    private PublicdataClient   publicdataClient;
+    private PublicdataClient      publicdataClient;
 
     @Autowired
-    private FileSDKClient      fileSDKClient;
+    private FileSDKClient         fileSDKClient;
+
+
 
     @RequestMapping
     public FrontAjaxView classifyList() {
@@ -35,7 +38,7 @@ public class ForestController {
             fillFileServerUrlBeforeImage(qClassify);
         }
         FrontAjaxView view = new FrontAjaxView();
-        view.addObject("list",classifyList);
+        view.addObject("list", classifyList);
         return view;
     }
 
@@ -64,4 +67,6 @@ public class ForestController {
             fillFileServerUrlBeforeImage(c);
         }
     }
+
+  
 }
