@@ -53,6 +53,10 @@ public class GiftCouponHandlerImpl implements GiftCouponHandler {
     public AdminGiftCouponVO toVO4Admin(GiftCoupon giftCoupon) {
 
         String json = Json.toJson(giftCoupon);
-        return Json.toObject(json, AdminGiftCouponVO.class, true);
+        AdminGiftCouponVO adminGiftCouponVO = Json.toObject(json, AdminGiftCouponVO.class, true);
+        adminGiftCouponVO.setImage(fileSDKClient.getFileServerUrl() + adminGiftCouponVO.getImage());
+        String uid = fileSDKClient.urlToUid(giftCoupon.getImage());
+        adminGiftCouponVO.setUid(uid);
+        return adminGiftCouponVO;
     }
 }
