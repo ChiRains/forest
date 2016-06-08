@@ -1,5 +1,6 @@
 package com.qcloud.project.forest.dao.mysql;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +10,7 @@ import org.apache.commons.lang.NotImplementedException;
 import org.springframework.stereotype.Repository;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.data.sql.mybatis.SqlOperator;
+import com.qcloud.pirates.util.DateUtil;
 import com.qcloud.project.forest.dao.GiftCouponUserDao;
 import com.qcloud.project.forest.model.GiftCouponUser;
 import com.qcloud.project.forest.model.query.GiftCouponUserQuery;
@@ -92,6 +94,16 @@ public class GiftCouponUserDaoMysqlImpl implements GiftCouponUserDao {
     @Override
     public List<GiftCouponUser> listAll() {
 
+        List<GiftCouponUser> list = sqlOperator.selectList("com.qcloud.project.forest.dao.mysql.mapper.GiftCouponUserMapper.listAll");
+        return list;
+    }
+
+    @Override
+    public List<GiftCouponUser> listCanUse(long userId) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("userId", userId);
+        param.put("now", DateUtil.date2String(new Date(), "yyyy-MM-dd HH:mm:ss"));
         List<GiftCouponUser> list = sqlOperator.selectList("com.qcloud.project.forest.dao.mysql.mapper.GiftCouponUserMapper.listAll");
         return list;
     }
