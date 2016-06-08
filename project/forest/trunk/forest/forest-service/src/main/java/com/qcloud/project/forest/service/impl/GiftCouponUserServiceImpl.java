@@ -48,9 +48,9 @@ public class GiftCouponUserServiceImpl implements GiftCouponUserService {
         return giftCouponUserDao.update(giftCouponUser);
     }
 
-    public List<GiftCouponUser> listByUserId(Long userId) {
+    public List<GiftCouponUser> listByUser(GiftCouponUserQuery query, int start, int size) {
 
-        return giftCouponUserDao.listByUserId(userId);
+        return giftCouponUserDao.listByUser(query, start, size);
     }
 
     @Override
