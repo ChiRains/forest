@@ -17,6 +17,8 @@ public class SalesPromotionUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/salesPromotion/toAddClassifyForMallCustom.do");
         list.add("/admin/salesPromotion/addClassifyForMallCustom.do");
         list.add("/admin/salesPromotion/deleteMall.do");
+        list.add("/admin/salesPromotion/toEditSalesPromotionClassify.do");
+        list.add("/admin/salesPromotion/editSalesPromotionClassify.do");
         return list;
     }
 
@@ -25,6 +27,7 @@ public class SalesPromotionUriHandlerImpl extends AbstractUriHandler {
 
         List<String> list = new ArrayList<String>();
         list.add("/analysisresult/BMICalculation.do");
+        list.add("/salesPromotion/getSalesPromotionClassify.do");
         return list;
     }
 }
