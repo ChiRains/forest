@@ -78,11 +78,13 @@ public class ForestUserController {
 
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView safetyLogin(HttpServletRequest request, String mobile, String pwd) {
+    public FrontAjaxView safetyLogin(HttpServletRequest request, String username, String pwd, String code) {
 
-        AssertUtil.assertNotEmpty(mobile, "账号不能为空.");
+        AssertUtil.assertNotEmpty(username, "账号不能为空.");
         AssertUtil.assertNotEmpty(pwd, "密码不能为空.");
-        MembershipCardWarehouse membershipCardWarehouse = membershipCardWarehouseService.getByCardNumber(mobile);
+        boolean verification = verificationCodeClient.verification(username, code);
+        AssertUtil.assertTrue(verification, "验证码不正确,请重新获取.");
+        MembershipCardWarehouse membershipCardWarehouse = membershipCardWarehouseService.getByCardNumber(username);
         CardNumberConfig cardNumberConfig = membershipCardWarehouseService.getConfig();
         if (membershipCardWarehouse != null && membershipCardWarehouse.getState() == MembershipCardWarehouseStateType.NEW.getKey() && pwd.equals(cardNumberConfig.getDefaultPwd())) {
             FrontAjaxView view = new FrontAjaxView();
@@ -91,8 +93,8 @@ public class ForestUserController {
             return view;
         }
         String identificationKey = null;
-        if (userService.isUser(mobile, pwd)) {
-            User user = userService.getByAccount(mobile);
+        if (userService.isUser(username, pwd)) {
+            User user = userService.getByAccount(username);
             if (user.getState() == UserStateType.NEW.getKey()) {
                 FrontAjaxView view = new FrontAjaxView();
                 view.setMessage("登录失败");
@@ -110,6 +112,7 @@ public class ForestUserController {
         }
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("登录成功");
+        view.addObject("token", tokenId);
         return view;
     }
 
