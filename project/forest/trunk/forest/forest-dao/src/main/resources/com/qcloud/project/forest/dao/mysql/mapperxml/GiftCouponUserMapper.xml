@@ -4,8 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper
 	namespace="com.qcloud.project.forest.dao.mysql.mapper.GiftCouponUserMapper">
-	<select id="list4query" parameterType="java.util.HashMap"
-		resultType="GiftCouponUser">
+	<select id="list4query" parameterType="java.util.HashMap" resultType="GiftCouponUser">
 		select * from `forest_gift_coupon_user` where 1=1
 		<if test="userId!=0 ">
 		and	userId=#{userId}
@@ -14,11 +13,19 @@
 		limit #{start},#{count}
 	</select>
 
-	<select id="count4query" parameterType="java.util.HashMap"
-		resultType="Integer">
+	<select id="count4query" parameterType="java.util.HashMap" resultType="Integer">
 		select count(*) from `forest_gift_coupon_user` where 1=1
 		<if test="userId!=0 ">
 		and	userId=#{userId}
 		</if>
+	</select>
+	
+	
+	<select id="listCanUse" parameterType="java.util.HashMap" resultType="GiftCouponUser" >
+		select count(*) from `forest_gift_coupon_user` 
+		where 1=1
+			and	userId=#{userId}
+			<![CDATA[ and #{now} >=validDate  and #{now} <=inValidDate ]]>
+			and `state`=1
 	</select>
 </mapper>

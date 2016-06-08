@@ -77,4 +77,10 @@ public class GiftCouponUserDaoCacheImpl implements GiftCouponUserDao {
 
         return giftCouponUserDaoMysqlImpl.listAll();
     }
+
+    @Override
+    public List<GiftCouponUser> listCanUse(long userId) {
+
+        return giftCouponUserDaoMysqlImpl.listCanUse(userId);
+    }
 }

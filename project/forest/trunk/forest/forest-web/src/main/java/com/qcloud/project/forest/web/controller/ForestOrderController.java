@@ -177,8 +177,8 @@ public class ForestOrderController {
         preOrderMVO.setPreferential(NumberUtil.scale(orderEntity.getPreferential(), 2));
         preOrderMVO.setTotalNumber(orderEntity.getNumber());
         // 赠品券
-        // List<OrderGiftCouponVO> giftCouponList = calculateGiftCoupon(user.getId());
-        List<OrderGiftCouponVO> giftCouponList = new ArrayList<OrderGiftCouponVO>();
+        List<OrderGiftCouponVO> giftCouponList = calculateGiftCoupon(user.getId());
+        // List<OrderGiftCouponVO> giftCouponList = new ArrayList<OrderGiftCouponVO>();
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取下单数据成功");
         view.addObject("preOrder", preOrderMVO);
@@ -280,7 +280,7 @@ public class ForestOrderController {
 
     private List<OrderGiftCouponVO> calculateGiftCoupon(long userId) {
 
-        List<GiftCouponUser> list = giftCouponUserService.listByUserId(userId);
+        List<GiftCouponUser> list = giftCouponUserService.listCanUse(userId);
         List<OrderGiftCouponVO> voList = new ArrayList<OrderGiftCouponVO>();
         for (GiftCouponUser coupon : list) {
             OrderGiftCouponVO vo = new OrderGiftCouponVO();
