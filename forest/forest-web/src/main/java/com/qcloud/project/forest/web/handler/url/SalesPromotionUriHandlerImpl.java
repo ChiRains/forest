@@ -26,7 +26,6 @@ public class SalesPromotionUriHandlerImpl extends AbstractUriHandler {
     public List<String> whiteNameUris() {
 
         List<String> list = new ArrayList<String>();
-        list.add("/analysisresult/BMICalculation.do");
         list.add("/salesPromotion/getSalesPromotionClassify.do");
         return list;
     }

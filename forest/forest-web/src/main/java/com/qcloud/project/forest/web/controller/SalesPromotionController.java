@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.qcloud.component.commoditycenter.CommoditycenterClient;
 import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.publicdata.PublicdataClient;
 import com.qcloud.component.publicdata.model.Classify;
@@ -14,7 +15,7 @@ import com.qcloud.project.forest.model.key.TypeEnum;
 @RequestMapping(value = SalesPromotionController.DIR)
 public class SalesPromotionController {
 
-    public static final String DIR = "/ salesPromotion";
+    public static final String DIR = "/salesPromotion";
 
     @Autowired
     private PublicdataClient   publicdataClient;
