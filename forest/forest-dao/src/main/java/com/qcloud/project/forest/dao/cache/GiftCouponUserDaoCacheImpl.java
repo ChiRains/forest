@@ -56,9 +56,9 @@ public class GiftCouponUserDaoCacheImpl implements GiftCouponUserDao {
         return CacheLoader.map(giftCouponUserDaoRedisImpl, giftCouponUserDaoMysqlImpl, idSet);
     }
 
-    public List<GiftCouponUser> listByUserId(Long userId) {
+    public List<GiftCouponUser> listByUser(GiftCouponUserQuery query, int start, int size) {
 
-        return giftCouponUserDaoMysqlImpl.listByUserId(userId);
+        return giftCouponUserDaoMysqlImpl.listByUser(query, start, size);
     }
 
     @Override

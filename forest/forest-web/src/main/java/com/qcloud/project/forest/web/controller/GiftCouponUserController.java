@@ -11,6 +11,8 @@ import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.mvc.FrontAjaxView;
 import com.qcloud.pirates.mvc.FrontPagingView;
+import com.qcloud.pirates.util.AssertUtil;
+import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.pirates.web.page.PPage;
 import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.project.forest.model.GiftCoupon;
@@ -47,27 +49,28 @@ public class GiftCouponUserController {
      * @param pPage
      * @return
      */
+    @PiratesApp
     @RequestMapping
-    public FrontPagingView myGiftCoupon(HttpServletRequest request, PPage pPage) {
+    public FrontAjaxView myGiftCoupon(HttpServletRequest request, PPage pPage) {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         GiftCouponUserQuery giftCouponUserQuery = new GiftCouponUserQuery();
         giftCouponUserQuery.setUserId(user.getId());
-        Page<GiftCouponUser> page = giftCouponUserService.page(giftCouponUserQuery, pPage.getPageStart(), pPage.getPageSize());
-        List<GiftCouponUserVO> list = giftCouponUserHandler.toVOList(page.getData());
-        GiftCoupon giftCoupon = null;
-        GiftCouponUserVO giftCouponUserVO = null;
-        Iterator<GiftCouponUserVO> iter = list.iterator();
-        while (iter.hasNext()) {
-            giftCouponUserVO = iter.next();
-            giftCoupon = giftCouponService.get(giftCouponUserVO.getId());
-            if (giftCoupon.getEnable() == 0) {
-                iter.remove();
-            }
-        }
-        FrontPagingView frontPagingView = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), page.getCount());
-        frontPagingView.setList(list);
-        return frontPagingView;
+        List<GiftCouponUser> list = giftCouponUserService.listByUser(giftCouponUserQuery, pPage.getPageStart(), pPage.getPageSize());
+        List<GiftCouponUserVO> voList = giftCouponUserHandler.toVOList(list);
+        // GiftCoupon giftCoupon = null;
+        // GiftCouponUserVO giftCouponUserVO = null;
+        // Iterator<GiftCouponUserVO> iter = list.iterator();
+        // while (iter.hasNext()) {
+        // giftCouponUserVO = iter.next();
+        // giftCoupon = giftCouponService.get(giftCouponUserVO.getId());
+        // if (giftCoupon.getEnable() == 0) {
+        // iter.remove();
+        // }
+        // }
+        FrontAjaxView view = new FrontAjaxView();
+        view.addObject("list", voList);
+        return view;
     }
 
     /**
@@ -75,13 +78,15 @@ public class GiftCouponUserController {
      * @param giftCouponId
      * @return
      */
+    @PiratesApp
     @RequestMapping
     public FrontAjaxView get(Long giftCouponId) {
 
         GiftCoupon giftCoupon = giftCouponService.get(giftCouponId);
+        AssertUtil.assertNotNull(giftCoupon, "赠品券不存在.");
         GiftCouponVO giftCouponVO = giftCouponHandler.toVO(giftCoupon);
-        FrontAjaxView frontAjaxView = new FrontAjaxView();
-        frontAjaxView.addObject("result", giftCouponVO);
-        return frontAjaxView;
+        FrontAjaxView view = new FrontAjaxView();
+        view.addObject("result", giftCouponVO);
+        return view;
     }
 }

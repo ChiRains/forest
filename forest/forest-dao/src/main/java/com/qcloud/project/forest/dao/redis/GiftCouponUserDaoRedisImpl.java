@@ -54,7 +54,7 @@ public class GiftCouponUserDaoRedisImpl implements GiftCouponUserDao {
         throw new NotImplementedException();
     }
 
-    public List<GiftCouponUser> listByUserId(Long userId) {
+    public List<GiftCouponUser> listByUser(GiftCouponUserQuery query, int start, int size) {
 
         throw new NotImplementedException();
     }

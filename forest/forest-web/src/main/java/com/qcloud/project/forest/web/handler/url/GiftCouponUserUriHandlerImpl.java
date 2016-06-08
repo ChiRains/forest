@@ -34,4 +34,22 @@ public class GiftCouponUserUriHandlerImpl extends AbstractUriHandler {
         list.add("/giftCouponUser/get.do");
         return list;
     }
+
+    @Override
+    public List<String> appUris() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("/app/giftCouponUser/myGiftCoupon.do");
+        list.add("/app/giftCouponUser/get.do");
+        return list;
+    }
+
+    @Override
+    public List<String> userUris() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("/app/giftCouponUser/myGiftCoupon.do");
+        list.add("/app/giftCouponUser/get.do");
+        return list;
+    }
 }
