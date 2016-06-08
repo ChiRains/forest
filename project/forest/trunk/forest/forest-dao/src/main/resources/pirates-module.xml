@@ -3,6 +3,7 @@
 <xml>
 	<module-list code="pirates-module">
 		<item name="orderform">订单</item>
+		<item name="my">我的</item>
 		<item name="marketing">营销</item>
 		<item name="seckill">秒杀</item>	
 		<item name="lisence">许可协议</item>

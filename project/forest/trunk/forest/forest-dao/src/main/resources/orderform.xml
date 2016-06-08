@@ -27,8 +27,8 @@
 		<item state="70" type="2" observer="orderSuccessDistributionMerchantObserver" variable="">交易成功,商家交易额分佣</item>	
 		<item state="70" type="3" observer="orderSuccessDistributionMerchandiseObserver" variable="">交易成功,商品分佣</item>	
 		
-		<item state="10" type="2" observer="addUserOrderFormObserver" variable="">用户订单</item>
-		<item state="-1" type="2" observer="updateUserOrderFormObserver" variable="">用户订单状态</item>
+		<!-- <item state="10" type="2" observer="addUserOrderFormObserver" variable="">用户订单</item>
+		<item state="-1" type="2" observer="updateUserOrderFormObserver" variable="">用户订单状态</item> -->
 		<!-- 用户订单 结束 -->
 		<!-- 商家订单 开始 -->
 		<item state="10" type="2" observer="addMerchantOrderFormObserver" variable="">商家订单</item>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 根节点的名字必须是xml -->
+<xml>
+	
+	<module-list code="my-myOrderForm-SqlWherePart">
+		<item><![CDATA[ (((`state` = 1 or `state` = 3) and subOrderId = -1) or (`state` <> 1 and `state` <> 3 and subOrderId > -1)) and `state` <> 2 and `state` <> 8 ]]></item>
+	</module-list>
+	
+	<module-list code="my-myOrderForm-View-Order-State">
+		<item state="1"></item>
+		<item state="3"></item>
+	</module-list>
+</xml>
