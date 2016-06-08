@@ -42,6 +42,8 @@
                     <tr role="row">     
         
                                                 <th>活动类别</th>           
+                                                <th>图片</th>           
+                                                <th>描述</th>           
                                                 <th class="sorting_disabled">操作</th>
                     </tr>
                     </thead>
@@ -49,12 +51,26 @@
                     <tbody>
                            <c:forEach items="${result}" var="item" varStatus="current"> 
                             <tr>            
-                                                        <td>${item.name}</td>                         
+                                                        <td>${item.name}</td>   
+														<td><img style="max-height: 150px;max-width: 150px;" src="${item.image}" /></td>
+														<td>
+														<label class="showcontent"     content="${item.remark}">
+					                                <c:choose>
+					                               <c:when test="${fn:length(item.remark)>20}">
+					                               ${fn:substring(item.desc,0,20)} .....
+					                                </c:when>
+					                              <c:otherwise> ${item.remark}</c:otherwise>
+					                                 </c:choose> 
+					                                </label></td>                                                                              
                                                         <td>
                                 <div class="hidden-sm hidden-xs action-buttons">
                                     <a title="查看商品" class="green" 
                                        href="#admin/salesPromotion/mallList?classifyId=${item.id}&merchantId=1">
                                         查看商品
+                                    </a>							                                 
+                                    <a title="查看商品" class="green" 
+                                       href="#admin/salesPromotion/toEditSalesPromotionClassify?classifyId=${item.id}">
+                                      修改类别
                                     </a>							                                 
 					                                 
                                 </div>

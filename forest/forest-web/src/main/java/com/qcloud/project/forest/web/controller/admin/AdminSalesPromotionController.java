@@ -18,6 +18,7 @@ import com.qcloud.component.commoditycenter.CommoditycenterClient;
 import com.qcloud.component.commoditycenter.OutdatedCommoditycenterClient;
 import com.qcloud.component.commoditycenter.QUnifiedMerchandise;
 import com.qcloud.component.commoditycenter.model.Merchandise;
+import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.marketing.exception.MarketingException;
 import com.qcloud.component.marketing.model.MerchandiseCustomClassification;
 import com.qcloud.component.marketing.model.query.MerchandiseCustomClassificationQuery;
@@ -29,6 +30,7 @@ import com.qcloud.component.marketing.web.vo.admin.AdminMerchandiseCustomClassif
 import com.qcloud.component.publicdata.ClassifyType;
 import com.qcloud.component.publicdata.PublicdataClient;
 import com.qcloud.component.publicdata.model.Classify;
+import com.qcloud.component.publicdata.service.ClassifyService;
 import com.qcloud.component.publicdata.util.ClassifyUtils;
 import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.SellercenterClient;
@@ -64,6 +66,12 @@ public class AdminSalesPromotionController {
 
     @Autowired
     private CommoditycenterClient                  commoditycenterClient;
+
+    @Autowired
+    private FileSDKClient                          fileSDKClient;
+
+    @Autowired
+    private ClassifyService                        classifyService;
 
     /**
      * 展示活动商品的类别
@@ -105,10 +113,44 @@ public class AdminSalesPromotionController {
     @RequestMapping
     public AceAjaxView addSalesPromotionClassify(Classify classify) {
 
+        String url = fileSDKClient.uidToUrl(classify.getImage());
+        classify.setImage(url);
         publicdataClient.addClassify(classify);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("添加成功");
         aceAjaxView.setUrl(DIR + "/listClassify");
+        return aceAjaxView;
+    }
+
+    @RequestMapping
+    public ModelAndView toEditSalesPromotionClassify(Long classifyId, String queryStr) {
+
+        AssertUtil.assertNotNull(classifyId, "ID不能为空");
+        Classify classify = classifyService.get(classifyId);
+        String uid = null;
+        if (classify.getImage() != null) {
+            uid = fileSDKClient.urlToUid(classify.getImage());
+        }
+        ModelAndView model = new ModelAndView("/admin/forest-salesPromotion-classifyEdit");
+        model.addObject("classify", classify);
+        model.addObject("uid", uid);
+        return model;
+    }
+
+    @RequestMapping
+    public AceAjaxView editSalesPromotionClassify(Classify classify, String queryStr) {
+
+        Classify classify2 = classifyService.get(classify.getId());
+        if (classify2.getImage() != null) {
+            if (!classify2.getImage().equals(fileSDKClient.getFileServerUrl() + classify2.getImage())) {
+                String url = fileSDKClient.uidToUrl(classify.getImage());
+                classify.setImage(url);
+            }
+        }
+        classifyService.update(classify);
+        AceAjaxView aceAjaxView = new AceAjaxView();
+        aceAjaxView.setMessage("编辑成功");
+        aceAjaxView.setUrl(DIR + "/listClassify?" + StringUtil.nullToEmpty(queryStr));
         return aceAjaxView;
     }
 
