@@ -25,6 +25,19 @@ public class ForestUriHandlerImpl extends AbstractUriHandler {
 
         List<String> list = new ArrayList<String>();
         list.add("/forest/classifyList.do");
+        list.add("/forest/getMerchant.do");
+        //
+        list.add("/app/forest/classifyList.do");
+        list.add("/app/forest/getMerchant.do");
+        return list;
+    }
+
+    @Override
+    public List<String> appUris() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("/app/forest/classifyList.do");
+        list.add("/app/forest/getMerchant.do");
         return list;
     }
 }

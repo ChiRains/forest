@@ -13,14 +13,14 @@ import com.qcloud.project.forest.model.query.ForestOrderQuery;
 
 public interface ForestOrderMapper {
 
-	@Insert("insert into `forest_forest_order`(`id`,`orderId`,`orderDate`,`orderNumber`,`merchantId`,`storeId`,`userId`,`giftCouponId`,`state`,`deliveryDate`,`pickUpDate`)"
-			+ " values(#{id},#{orderId},#{orderDate},#{orderNumber},#{merchantId},#{storeId},#{userId},#{giftCouponId},#{state},#{deliveryDate},#{pickUpDate})")
+	@Insert("insert into `forest_forest_order`(`id`,`orderId`,`orderDate`,`orderNumber`,`merchantId`,`storeId`,`userId`,`giftCouponId`,`state`,`deliveryDate`,`deliveryMode`)"
+			+ " values(#{id},#{orderId},#{orderDate},#{orderNumber},#{merchantId},#{storeId},#{userId},#{giftCouponId},#{state},#{deliveryDate},#{deliveryMode})")
 	public void insert(ForestOrder forestOrder);
 
 	@Select("select * from `forest_forest_order` where `id`=#{id}")
 	public ForestOrder get(Long id);
 
-	@Update("update `forest_forest_order` set `orderId`=#{orderId},`orderDate`=#{orderDate},`orderNumber`=#{orderNumber},`merchantId`=#{merchantId},`storeId`=#{storeId},`userId`=#{userId},`giftCouponId`=#{giftCouponId},`state`=#{state},`deliveryDate`=#{deliveryDate},`pickUpDate`=#{pickUpDate} where `id`=#{id}")
+	@Update("update `forest_forest_order` set `orderId`=#{orderId},`orderDate`=#{orderDate},`orderNumber`=#{orderNumber},`merchantId`=#{merchantId},`storeId`=#{storeId},`userId`=#{userId},`giftCouponId`=#{giftCouponId},`state`=#{state},`deliveryDate`=#{deliveryDate},`deliveryMode`=#{deliveryMode} where `id`=#{id}")
 	public void update(ForestOrder forestOrder);
 
 	@Delete("delete from `forest_forest_order` where `id`=#{id}")

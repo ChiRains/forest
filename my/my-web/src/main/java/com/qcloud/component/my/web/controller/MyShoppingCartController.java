@@ -103,6 +103,7 @@ public class MyShoppingCartController {
         return view;
     }
 
+    @PiratesApp
     @RequestMapping
     public FrontAjaxView addList(HttpServletRequest request, ListForm list) {
 

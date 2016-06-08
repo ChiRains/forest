@@ -11,13 +11,18 @@
 	<module-list code="pirates-file-service-mode">
 		<item>sdk</item>	
 	</module-list> 
-	<!-- 
-	<module-list code="loginIndex"> <item name="loginLogo">/qcloud-admin/assets/img/exy.jpg</item> 
-		<item name="loginMessage">商家后台</item> 
-	</module-list> 
-	-->
+
 	<module-list code="personalcenter_user_account_type">
 		<item key="mobile" enable="true">手机作账号</item>		
+	</module-list>
+	
+	<module-list code="seckill-config-setting">
+		<item name="screeningsMinSize">4</item>
+		<item name="payMinutes">30</item>
+		<item name="toKillString">即将开抢</item>
+		<item name="killingString">抢购进行中</item>
+		<item name="killedString">已结束</item>
+		<item name="killName">超级秒杀</item>
 	</module-list>
 	
 	

@@ -24,7 +24,7 @@ public class ForestOrder {
 
     private Date   deliveryDate;
 
-    private Date   pickUpDate;
+    private int    deliveryMode;
 
     public ForestOrder() {
 
@@ -120,27 +120,23 @@ public class ForestOrder {
         this.giftCouponId = giftCouponId;
     }
 
-    
     public Date getDeliveryDate() {
-    
+
         return deliveryDate;
     }
 
-    
     public void setDeliveryDate(Date deliveryDate) {
-    
+
         this.deliveryDate = deliveryDate;
     }
 
-    
-    public Date getPickUpDate() {
-    
-        return pickUpDate;
+    public int getDeliveryMode() {
+
+        return deliveryMode;
     }
 
-    
-    public void setPickUpDate(Date pickUpDate) {
-    
-        this.pickUpDate = pickUpDate;
+    public void setDeliveryMode(int deliveryMode) {
+
+        this.deliveryMode = deliveryMode;
     }
 }
