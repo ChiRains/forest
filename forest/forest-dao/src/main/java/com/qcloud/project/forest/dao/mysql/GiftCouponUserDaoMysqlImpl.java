@@ -107,4 +107,15 @@ public class GiftCouponUserDaoMysqlImpl implements GiftCouponUserDao {
         List<GiftCouponUser> list = sqlOperator.selectList("com.qcloud.project.forest.dao.mysql.mapper.GiftCouponUserMapper.listAll");
         return list;
     }
+
+    @Override
+    public boolean judgeCanUse(long userId, long id) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("userId", userId);
+        param.put("now", DateUtil.date2String(new Date(), "yyyy-MM-dd HH:mm:ss"));
+        param.put("id", id);
+        int count= sqlOperator.selectOne("com.qcloud.project.forest.dao.mysql.mapper.GiftCouponUserMapper.judgeCanUse", param);
+        return count> 0;
+    }
 }

@@ -82,4 +82,10 @@ public class GiftCouponUserDaoRedisImpl implements GiftCouponUserDao {
 
         throw new NotImplementedException();
     }
+
+    @Override
+    public boolean judgeCanUse(long userId, long id) {
+
+        throw new NotImplementedException();
+    }
 }

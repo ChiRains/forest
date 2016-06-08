@@ -69,4 +69,10 @@ public class GiftCouponUserServiceImpl implements GiftCouponUserService {
 
         return giftCouponUserDao.listCanUse(userId);
     }
+
+    @Override
+    public boolean judgeCanUse(long userId, long id) {
+
+        return giftCouponUserDao.judgeCanUse(userId, id);
+    }
 }

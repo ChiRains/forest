@@ -83,4 +83,10 @@ public class GiftCouponUserDaoCacheImpl implements GiftCouponUserDao {
 
         return giftCouponUserDaoMysqlImpl.listCanUse(userId);
     }
+
+    @Override
+    public boolean judgeCanUse(long userId, long id) {
+
+        return giftCouponUserDaoMysqlImpl.judgeCanUse(userId, id);
+    }
 }
