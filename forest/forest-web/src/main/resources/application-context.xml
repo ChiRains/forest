@@ -50,6 +50,7 @@
    
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.GiftCouponUriHandlerImpl"></pirates:uriHandler>
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.GiftCouponUserUriHandlerImpl"></pirates:uriHandler>
+   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.SalesPromotionUriHandlerImpl"></pirates:uriHandler>
 
 
 </beans>

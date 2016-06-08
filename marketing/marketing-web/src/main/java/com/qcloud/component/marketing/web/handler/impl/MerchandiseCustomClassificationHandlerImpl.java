@@ -19,13 +19,13 @@ import com.qcloud.pirates.core.json.Json;
 public class MerchandiseCustomClassificationHandlerImpl implements MerchandiseCustomClassificationHandler {
 
     @Autowired
-    private CommoditycenterClient commoditycenterClient;
-        
+    private CommoditycenterClient         commoditycenterClient;
+
     @Autowired
     private OutdatedCommoditycenterClient outdatedCommoditycenterClient;
 
     @Autowired
-    private FileSDKClient         fileSDKClient;
+    private FileSDKClient                 fileSDKClient;
 
     @Override
     public List<MerchandiseCustomClassificationVO> toVOList(List<MerchandiseCustomClassification> list) {
@@ -74,7 +74,7 @@ public class MerchandiseCustomClassificationHandlerImpl implements MerchandiseCu
                 vo.setImage(merchandise.getImage() == null ? "" : merchandise.getImage());
                 // vo.setName(merchandise.getName());
             }
-//            vo.setName(qmerchandise.getList().get(0).getName());
+            // vo.setName(qmerchandise.getList().get(0).getName());
             vo.setStock(qmerchandise.getStock());
             vo.setId(mc.getId());
             vo.setMerchantId(mc.getMerchantId());
@@ -84,6 +84,7 @@ public class MerchandiseCustomClassificationHandlerImpl implements MerchandiseCu
             vo.setSpecifications(qmerchandise.getList().get(0).getSpecifications());
             vo.setName(mc.getName());
             vo.setSysCode(mc.getSysCode());
+            vo.setqUnifiedMerchandise(qmerchandise);
             voList.add(vo);
             // voList.add(toVO4Admin(mc));
         }

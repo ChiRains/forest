@@ -141,7 +141,7 @@ public class TypeEnum {
         }
     }
     public enum ClassifyType {
-        ARTICLE(60, "资讯分类");
+        ARTICLE(60, "资讯分类"), SALESPROMOTION(70, "活动商品");
 
         private final int    key;
 
