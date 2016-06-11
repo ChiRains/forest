@@ -158,17 +158,6 @@ public class AdminSalesPromotionController {
     @NoReferer
     public ModelAndView list(HttpServletRequest request, Integer pageNum, MerchandiseCustomClassificationQuery query) {
 
-        // String tokenId = adminFilterService.getTokenId(request);
-        // AssertUtil.assertNotEmpty(tokenId, "获取用户登录信息失败.");
-        // String idStr = tokenClient.get(tokenId);
-        // AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
-        // long memberId = Long.parseLong(idStr);
-        // List<QMerchant> merchantList = outdatedSellercenterClient.listMerchant(memberId);
-        // Long merchantId = null;
-        // if (!CollectionUtils.isEmpty(merchantList) && merchantList.size() == 1) {
-        // merchantId = merchantList.get(0).getId();
-        // }
-        // AssertUtil.assertNotNull(merchantId, "没有商家可管理");
         QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
         int pageSize = 10;
         pageNum = RequestUtil.getPageid(pageNum);
@@ -199,7 +188,7 @@ public class AdminSalesPromotionController {
             page.setCount(list.size());
         }
         String param = "classifyId=" + query.getClassifyId();
-        AcePagingView pagingView = new AcePagingView("/admin/forst-marketing-MerchandiseCustomClassification-list", DIR + "/list?" + param, pageNum, pageSize, page.getCount());
+        AcePagingView pagingView = new AcePagingView("/admin/forest-SalesPromotion-MerchandiseCustomClassification-list", DIR + "/list?" + param, pageNum, pageSize, page.getCount());
         pagingView.addObject("classifyMap", classifyMap);
         pagingView.addObject("query", query);
         pagingView.addObject("result", list);
@@ -230,7 +219,7 @@ public class AdminSalesPromotionController {
             classifyMap.put(classify.getId(), ClassifyUtils.calculationPath(cList, classify));
         }
         String param = "classifyId=" + query.getClassifyId();
-        AcePagingView pagingView = new AcePagingView("/admin/forst-marketing-MallCustomClassification-list", DIR + "/mallList?" + param, pageNum, PAGE_SIZE, page.getCount());
+        AcePagingView pagingView = new AcePagingView("/admin/forest-SalesPromotion-MallCustomClassification-list", DIR + "/mallList?" + param, pageNum, PAGE_SIZE, page.getCount());
         pagingView.addObject("classifyMap", classifyMap);
         pagingView.addObject("result", list);
         pagingView.addObject("query", query);
@@ -245,18 +234,7 @@ public class AdminSalesPromotionController {
     @RequestMapping
     public ModelAndView toAddClassifyForMerchantCustom(HttpServletRequest request, MerchandiseCustomClassificationQuery query) {
 
-        ModelAndView modelAndView = new ModelAndView("/admin/forst-marketing-MerchandiseCustomClassification-add");
-        // String tokenId = adminFilterService.getTokenId(request);
-        // AssertUtil.assertNotEmpty(tokenId, "获取用户登录信息失败.");
-        // String idStr = tokenClient.get(tokenId);
-        // AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
-        // long memberId = Long.parseLong(idStr);
-        // List<QMerchant> merchantList = outdatedSellercenterClient.listMerchant(memberId);
-        // Long merchantId = null;
-        // if (!CollectionUtils.isEmpty(merchantList) && merchantList.size() == 1) {
-        // merchantId = merchantList.get(0).getId();
-        // }
-        // AssertUtil.assertNotNull(merchantId, "没有商家可管理");
+        ModelAndView modelAndView = new ModelAndView("/admin/forest-SalesPromotion-MerchandiseCustomClassification-add");
         QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
         Map<String, Object> map = new HashMap<String, Object>();
         if (query.getClassifyId() > 0) {
@@ -282,24 +260,10 @@ public class AdminSalesPromotionController {
      * @param request
      * @return
      */
-    @Transactional
     @RequestMapping
     public AceAjaxView addClassifyForMerchantCustom(MerchandiseCustomClassificationForm merchandiseCustomClassificationForm, HttpServletRequest request) {
 
-        if (merchandiseCustomClassificationForm.getClassifyId() == 0) {
-            throw new MarketingException("请选择分类.");
-        }
-        // String tokenId = adminFilterService.getTokenId(request);
-        // AssertUtil.assertNotEmpty(tokenId, "获取用户登录信息失败.");
-        // String idStr = tokenClient.get(tokenId);
-        // AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
-        // long memberId = Long.parseLong(idStr);
-        // List<QMerchant> merchantList = outdatedSellercenterClient.listMerchant(memberId);
-        // Long merchantId = null;
-        // if (!CollectionUtils.isEmpty(merchantList) && merchantList.size() == 1) {
-        // merchantId = merchantList.get(0).getId();
-        // }
-        // AssertUtil.assertNotNull(merchantId, "没有商家可管理");
+        AssertUtil.greatZero(merchandiseCustomClassificationForm.getClassifyId(), "请选择分类.");
         QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
         AceAjaxView aceAjaxView = new AceAjaxView();
         MerchandiseCustomClassification mc = new MerchandiseCustomClassification();
@@ -330,35 +294,22 @@ public class AdminSalesPromotionController {
     @RequestMapping
     public ModelAndView toAddClassifyForMallCustom(HttpServletRequest request, MerchandiseCustomClassificationQuery query) {
 
-        ModelAndView modelAndView = new ModelAndView("/admin/forst-marketing-MallCustomClassification-add");
-        // String tokenId = adminFilterService.getTokenId(request);
-        // AssertUtil.assertNotEmpty(tokenId, "获取用户登录信息失败.");
-        // String idStr = tokenClient.get(tokenId);
-        // AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
-        // long memberId = Long.parseLong(idStr);
-        // List<QMerchant> merchantList = outdatedSellercenterClient.listMerchant(memberId);
-        // Long merchantId = null;
-        // if (!CollectionUtils.isEmpty(merchantList) && merchantList.size() == 1) {
-        // merchantId = merchantList.get(0).getId();
-        // }
-        // AssertUtil.assertNotNull(merchantId, "没有商家可管理");
         // 默认商城为1
         Long merchantId = Long.valueOf(1);
         Map<String, Object> map = new HashMap<String, Object>();
-        if (query.getClassifyId() > 0) {
-            map.put("merchantId", merchantId);
-            map.put("customClassifyId", query.getClassifyId());
-            List<MerchandiseCustomClassification> mcList = merchandiseCustomClassificationService.listAll(map);
-            List<AdminMerchandiseCustomClassificationVO> voList = merchandiseCustomClassificationHandler.toVOList4Admin(mcList);
-            modelAndView.addObject("voList", voList);
-        }
+        map.put("merchantId", merchantId);
+        map.put("customClassifyId", query.getClassifyId());
+        List<MerchandiseCustomClassification> mcList = merchandiseCustomClassificationService.listAll(map);
+        List<AdminMerchandiseCustomClassificationVO> voList = merchandiseCustomClassificationHandler.toVOList4Admin(mcList);
         List<Classify> cList = publicdataClient.listClassify((long) com.qcloud.project.forest.model.key.TypeEnum.ClassifyType.SALESPROMOTION.getKey());
         Map<Long, String> classifyMap = new LinkedHashMap<Long, String>();
         for (Classify classify : cList) {
             classifyMap.put(classify.getId(), ClassifyUtils.calculationPath(cList, classify));
         }
+        ModelAndView modelAndView = new ModelAndView("/admin/forest-SalesPromotion-MallCustomClassification-add");
         modelAndView.addObject("classifyMap", classifyMap);
         modelAndView.addObject("query", query);
+        modelAndView.addObject("voList", voList);
         return modelAndView;
     }
 
@@ -433,7 +384,7 @@ public class AdminSalesPromotionController {
         int start = NumberUtil.getPageStart(pageNum, PAGE_SIZE);
         Page<MerchandiseCustomClassification> merchandiseCustomClassification = merchandiseCustomClassificationService.page(query, start, PAGE_SIZE);
         List<AdminMerchandiseCustomClassificationVO> voList = merchandiseCustomClassificationHandler.toVOList4Admin(merchandiseCustomClassification.getData());
-        AcePagingView view = new AcePagingView("/admin/forst-marketing-CustomMall-list", DIR + "/customMallList?merchantId=" + merchantId + "&classifyId=" + classifyId + "&name=" + StringUtil.nullToEmpty(query.getName()), pageNum, PAGE_SIZE, merchandiseCustomClassification.getCount());
+        AcePagingView view = new AcePagingView("/admin/forest-SalesPromotion-CustomMall-list", DIR + "/customMallList?merchantId=" + merchantId + "&classifyId=" + classifyId + "&name=" + StringUtil.nullToEmpty(query.getName()), pageNum, PAGE_SIZE, merchandiseCustomClassification.getCount());
         view.addObject("list", voList);
         view.addObject("classifyId", classifyId);
         view.addObject("merchantId", merchantId);
@@ -445,7 +396,7 @@ public class AdminSalesPromotionController {
     public ModelAndView toAddCustomMall(Long merchantId, Long classifyId) {
 
         ModelAndView view = new ModelAndView();
-        view.setViewName("/admin/forst-marketing-CustomMall-add");
+        view.setViewName("/admin/forest-SalesPromotion-CustomMall-add");
         // 自定义分类全部列表
         List<Classify> cList = publicdataClient.listClassify(ClassifyType.MALLCUSTOM);
         cList.addAll(publicdataClient.listClassify(ClassifyType.MERCHANTCUSTOM));
