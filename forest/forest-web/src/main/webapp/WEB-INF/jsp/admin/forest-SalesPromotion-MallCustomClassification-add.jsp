@@ -49,7 +49,7 @@
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
 						<select class="chosen-select" id="classifyId" name="classifyId" data-placeholder="请选择分类" onchange="change();">
-	                	<option value="">请选择分类</option>
+	                		<option value="0">请选择分类</option>
 		                 	<c:forEach items="${classifyMap}" var="classifyMap" varStatus="current">
 		                   		 <option value="${classifyMap.key}"
 		                   		 <c:if test="${classifyMap.key eq query.classifyId}">
