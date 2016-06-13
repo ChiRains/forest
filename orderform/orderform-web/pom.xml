@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.qcloud.component</groupId>
 		<artifactId>orderform</artifactId>
-		<version>2.0.0-SNAPSHOT</version>
+		<version>2.0.0.08-SNAPSHOT</version>
 	</parent>
 	<artifactId>orderform-web</artifactId>
 
@@ -29,7 +29,7 @@
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>brokerage-api</artifactId>
-			<version>2.0.0-SNAPSHOT</version>
+			<version>2.0.0.08-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>

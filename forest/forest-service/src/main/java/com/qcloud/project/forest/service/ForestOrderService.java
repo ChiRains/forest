@@ -23,5 +23,5 @@ public interface ForestOrderService {
 
     public List<ForestOrder> listAll();
 
-    public QOrder order(OrderContext context, Long giftCouponUser, QUser user, Date deliveryDate);
+    public QOrder order(OrderContext context, Long giftCouponUser, QUser user, Date deliveryDate, String prove);
 }

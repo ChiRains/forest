@@ -28,6 +28,10 @@ public class ForestController {
     @Autowired
     private FileSDKClient      fileSDKClient;
 
+    /**
+     * 商家id
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView getMerchant() {
@@ -38,6 +42,10 @@ public class ForestController {
         return view;
     }
 
+    /**
+     * 商品分类
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView classifyList() {

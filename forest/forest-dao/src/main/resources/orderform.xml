@@ -14,8 +14,6 @@
 			timeLimit="autoSignRefundOrderLimit" condition="">退款单自动签收</item>
 		<item source="50" dest="60" type="3" timeSplit="1440"
 			timeLimit="autoSignReturnOrderLimit" condition="">退货单自动签收</item>
-		<item source="50" dest="60" type="4" timeSplit="1440"
-			timeLimit="autoSignExchangeOrderLimit" condition="">换货单自动签收</item>
 	</module-list>
 
 	<module-list code="orderform-observer">
@@ -150,55 +148,46 @@
 			merchantOrderState="1" merchantOrderStateDesc="待付款" userOrderState="1"
 			userOrderStateDesc="待付款" finish="false">待付款:待付款：待付款
 		</item>
-		<item init="false" orderState="20" orderStateDesc="已付款"
-			merchantOrderState="4" merchantOrderStateDesc="待确认" userOrderState="4"
-			userOrderStateDesc="待发货" finish="false">已付款:待确认:待发货
+		
+		<item init="false" orderState="20" orderStateDesc="待发货"
+			merchantOrderState="2" merchantOrderStateDesc="待发货" userOrderState="2"
+			userOrderStateDesc="待发货" finish="false">待发货:待发货:待发货
 		</item>
-		<item init="false" orderState="30" orderStateDesc="商家确认"
-			merchantOrderState="5" merchantOrderStateDesc="待发货" userOrderState="4"
-			userOrderStateDesc="待发货" finish="false">商家确认:待发货:待发货
+		
+		<item init="false" orderState="30" orderStateDesc="已发货"
+			merchantOrderState="3" merchantOrderStateDesc="已发货" userOrderState="3"
+			userOrderStateDesc="待签收" finish="false">已发货:已发货:已发货
 		</item>
-		<item init="false" orderState="40" orderStateDesc="商家发货"
-			merchantOrderState="6" merchantOrderStateDesc="待签收" userOrderState="5"
-			userOrderStateDesc="待签收" finish="false">商家发货:待签收:待签收
+		
+		<item init="false" orderState="40" orderStateDesc="交易成功"
+			merchantOrderState="4" merchantOrderStateDesc="交易成功" userOrderState="4"
+			userOrderStateDesc="交易成功" finish="true">交易成功:交易成功：交易成功
 		</item>
-		<item init="false" orderState="50" orderStateDesc="买家签收"
-			merchantOrderState="7" merchantOrderStateDesc="已签收" userOrderState="6"
-			userOrderStateDesc="待评价" finish="false">买家签收:已签收：待评价
+		
+		<item init="false" orderState="50" orderStateDesc="退款中"
+			merchantOrderState="5" merchantOrderStateDesc="退款中" userOrderState="5"
+			userOrderStateDesc="退款中" finish="true">退款中：退款中：退款中
 		</item>
-		<item init="false" orderState="60" orderStateDesc="售后"
-			merchantOrderState="8" merchantOrderStateDesc="售后" userOrderState="8"
-			userOrderStateDesc="售后" finish="false">售后：售后：售后
+		
+		<item init="false" orderState="60" orderStateDesc="退货中"
+			merchantOrderState="6" merchantOrderStateDesc="退货中" userOrderState="6"
+			userOrderStateDesc="退货中" finish="true">退货中：退货中：退货中
 		</item>
-		<item init="false" orderState="70" orderStateDesc="交易成功"
-			merchantOrderState="9" merchantOrderStateDesc="已完成" userOrderState="9"
-			userOrderStateDesc="已完成" finish="true">交易成功:已完成：已完成
-		</item>
-		<item init="false" orderState="80" orderStateDesc="交易失败"
-			merchantOrderState="8" merchantOrderStateDesc="售后" userOrderState="8"
-			userOrderStateDesc="售后" finish="true">交易失败：售后：售后
-		</item>
-		<item init="false" orderState="90" orderStateDesc="已失效"
-			merchantOrderState="2" merchantOrderStateDesc="失效" userOrderState="2"
-			userOrderStateDesc="失效" finish="true">已失效：失效：失效
-		</item>
-		<item init="false" orderState="100" orderStateDesc="取消订单"
-			merchantOrderState="3" merchantOrderStateDesc="取消订单" userOrderState="3"
-			userOrderStateDesc="取消订单" finish="true">取消订单：取消：取消
+		
+		<item init="false" orderState="70" orderStateDesc="关闭订单"
+			merchantOrderState="7" merchantOrderStateDesc="关闭订单" userOrderState="7"
+			userOrderStateDesc="关闭订单" finish="true">关闭订单：关闭：关闭
 		</item>
 	</module-list>
 
 	<module-list code="orderform-normal-state-to-after-sale">
 		<item orderState="10" refund="false" return="false" exchange="false"></item>
 		<item orderState="20" refund="true" return="false" exchange="false"></item>
-		<item orderState="30" refund="true" return="false" exchange="false"></item>
-		<item orderState="40" refund="true" return="false" exchange="false"></item>
-		<item orderState="50" refund="false" return="true" exchange="true"></item>
-		<item orderState="60" refund="false" return="true" exchange="true"></item>
+		<item orderState="30" refund="false" return="false" exchange="false"></item>
+		<item orderState="40" refund="true" return="true" exchange="false"></item>
+		<item orderState="50" refund="false" return="false" exchange="false"></item>
+		<item orderState="60" refund="false" return="false" exchange="false"></item>
 		<item orderState="70" refund="false" return="false" exchange="false"></item>
-		<item orderState="80" refund="false" return="false" exchange="false"></item>
-		<item orderState="90" refund="false" return="false" exchange="false"></item>
-		<item orderState="90" refund="false" return="false" exchange="false"></item>
 	</module-list>
 
 	<module-list code="orderform-normal-state-chain">
@@ -207,31 +196,25 @@
 		<item chain="orderform-normal-state-chain-3"></item>
 		<item chain="orderform-normal-state-chain-4"></item>
 		<item chain="orderform-normal-state-chain-5"></item>
-		<item chain="orderform-normal-state-chain-6"></item>
-		<item chain="orderform-normal-state-chain-7"></item>
 	</module-list>
 
 	<module-list code="orderform-normal-state-chain-1">
 		<item orderState="10"></item>
-		<item orderState="90"></item>
+		<item orderState="70"></item>
 	</module-list>
 
 	<module-list code="orderform-normal-state-chain-2">
 		<item orderState="10"></item>
-		<item orderState="100"></item>
-	</module-list>
-
-	<module-list code="orderform-normal-state-chain-3">
-		<item orderState="10"></item>
 		<item orderState="20"></item>
-		<item orderState="60"></item>
+		<item orderState="50"></item>
 	</module-list>
 
 	<module-list code="orderform-normal-state-chain-4">
 		<item orderState="10"></item>
 		<item orderState="20"></item>
 		<item orderState="30"></item>
-		<item orderState="60"></item>
+		<item orderState="40"></item>
+		<item orderState="50"></item>
 	</module-list>
 
 	<module-list code="orderform-normal-state-chain-5">
@@ -240,25 +223,6 @@
 		<item orderState="30"></item>
 		<item orderState="40"></item>
 		<item orderState="60"></item>
-	</module-list>
-
-	<module-list code="orderform-normal-state-chain-6">
-		<item orderState="10"></item>
-		<item orderState="20"></item>
-		<item orderState="30"></item>
-		<item orderState="40"></item>
-		<item orderState="50"></item>
-		<item orderState="70"></item>
-	</module-list>
-
-	<module-list code="orderform-normal-state-chain-7">
-		<item orderState="10"></item>
-		<item orderState="20"></item>
-		<item orderState="30"></item>
-		<item orderState="40"></item>
-		<item orderState="50"></item>
-		<item orderState="60"></item>
-		<item orderState="80"></item>
 	</module-list>
 
 	<module-list code="orderform-refund-state">
@@ -274,13 +238,9 @@
 			merchantOrderState="-1" merchantOrderStateDesc="商家退款" userOrderState="3"
 			userOrderStateDesc="商家退款" finish="false">商家退款:商家退款:商家退款
 		</item>
-		<item init="false" orderState="40" orderStateDesc="确认收款"
-			merchantOrderState="-1" merchantOrderStateDesc="退款成功" userOrderState="4"
-			userOrderStateDesc="退款成功" finish="true">确认收款:退款成功:退款成功
-		</item>
-		<item init="false" orderState="50" orderStateDesc="不同意退款"
+		<item init="false" orderState="40" orderStateDesc="不同意退款"
 			merchantOrderState="-1" merchantOrderStateDesc="不同意退款"
-			userOrderState="5" userOrderStateDesc="不同意退款" finish="true">
+			userOrderState="4" userOrderStateDesc="不同意退款" finish="true">
 			不同意退款:不同意退款：不同意退款
 		</item>
 	</module-list>
@@ -292,14 +252,13 @@
 
 	<module-list code="orderform-refund-state-chain-1">
 		<item orderState="10"></item>
-		<item orderState="50"></item>
+		<item orderState="40"></item>
 	</module-list>
 
 	<module-list code="orderform-refund-state-chain-2">
 		<item orderState="10"></item>
 		<item orderState="20"></item>
 		<item orderState="30"></item>
-		<item orderState="40"></item>
 	</module-list>
 
 	<module-list code="orderform-return-state">
