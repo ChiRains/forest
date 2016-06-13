@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.qcloud.component.filesdk.FileSDKClient;
+import com.qcloud.component.parameter.ParameterClient;
 import com.qcloud.component.publicdata.PublicdataClient;
 import com.qcloud.component.publicdata.QClassify;
 import com.qcloud.pirates.core.xml.Xml;
@@ -24,6 +25,9 @@ public class ForestController {
 
     @Autowired
     private PublicdataClient   publicdataClient;
+
+    @Autowired
+    private ParameterClient    parameterClient;
 
     @Autowired
     private FileSDKClient      fileSDKClient;
@@ -56,6 +60,20 @@ public class ForestController {
         }
         FrontAjaxView view = new FrontAjaxView();
         view.addObject("list", classifyList);
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView indexsModular() {
+
+        String seckillImage = String.valueOf(parameterClient.get("forest-seckill-ind-image"));
+        String couponImage = String.valueOf(parameterClient.get("forest-coupon-ind-image"));
+        String summerText = String.valueOf(parameterClient.get("forest-summer-ind-text"));
+        FrontAjaxView view = new FrontAjaxView();
+        view.addObject("seckillImage", seckillImage);
+        view.addObject("couponImage", couponImage);
+        view.addObject("summerText", summerText);
         return view;
     }
 

@@ -30,6 +30,7 @@ public class MyMerchandiseCollectionController {
 
     @Autowired
     private CommoditycenterClient  commoditycenterClient;
+
     @PiratesApp
     @RequestMapping
     public FrontAjaxView collect(HttpServletRequest request, Long unifiedMerchandiseId) {
@@ -37,18 +38,21 @@ public class MyMerchandiseCollectionController {
         QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(unifiedMerchandiseId);
         return myCollectionController.collect(request, unifiedMerchandiseId, unifiedMerchandise.getList().get(0).getMallClassifyId(), CollectionType.MERCHANDISE);
     }
+
     @PiratesApp
     @RequestMapping
     public FrontAjaxView isCollect(HttpServletRequest request, Long unifiedMerchandiseId) {
 
         return myCollectionController.isCollect(request, unifiedMerchandiseId, CollectionType.MERCHANDISE);
     }
+
     @PiratesApp
     @RequestMapping
     public FrontAjaxView remove(HttpServletRequest request, Long id) {
 
         return myCollectionController.remove(request, id);
     }
+
     @PiratesApp
     @RequestMapping
     public FrontAjaxView removeList(HttpServletRequest request, ListForm form) {
@@ -56,12 +60,14 @@ public class MyMerchandiseCollectionController {
         List<Long> idList = form.getLongList();
         return myCollectionController.removeList(request, idList);
     }
+
     @PiratesApp
     @RequestMapping
     public FrontAjaxView removeByUnifiedMerchandise(HttpServletRequest request, Long unifiedMerchandiseId) {
 
         return myCollectionController.removeByObject(request, unifiedMerchandiseId, CollectionType.MERCHANDISE);
     }
+
     @PiratesApp
     @RequestMapping
     public FrontAjaxView removeByUnifiedMerchandiseList(HttpServletRequest request, ListForm form) {
@@ -69,6 +75,7 @@ public class MyMerchandiseCollectionController {
         List<Long> unifiedMerchandiseIdList = form.getLongList();
         return myCollectionController.removeByObjectList(request, unifiedMerchandiseIdList, CollectionType.MERCHANDISE);
     }
+
     @PiratesApp
     @RequestMapping
     public FrontAjaxView list(HttpServletRequest request, PPage pPage, Long classifyId) {
@@ -78,6 +85,21 @@ public class MyMerchandiseCollectionController {
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取我的商品收藏成功.");
         view.addObject("data", voList);
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView clearMyCollect(HttpServletRequest request, PPage pPage) {
+
+        pPage.setPageNum(1);
+        pPage.setPageSize(Integer.MAX_VALUE);
+        List<MyCollection> list = myCollectionController.list(request, pPage, CollectionType.MERCHANDISE, 0L);
+        for (MyCollection myCollection : list) {
+            myCollectionController.remove(request, myCollection.getId());
+        }
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("清空我的商品收藏成功.");
         return view;
     }
 }

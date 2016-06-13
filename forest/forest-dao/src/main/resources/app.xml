@@ -58,6 +58,8 @@
 		<item code="personalcenter-user-safety-sms-template" 				name="用户安全登录短信模板">用户安全登录短信模板</item>	
 	</module-list>
 	
+	
+	
 	<module-list code="commoditycenter-pointexchange-message">
 		<item name="title">积分兑好礼</item>
 		<item name="message">每周一更新</item>
@@ -68,31 +70,37 @@
 		<item account="admin">所有商家管理员账号</item>
 	</module-list>
 	
-	<!-- app首页4个模块 -->
+	<!-- app首页8个模块 -->
 	<module-list code="forest-app-index-module">
-		<item code="forest-discount" tips="天天特价 爽不停">折扣专区</item>
-		<item code="forest-brand" tips="抢大牌、不封顶">品牌特卖</item>
-		<item code="forest-new-person" tips="50元红包">新人尊享</item>
-		<item code="forest-member" tips="不是买药 是买健康">会员特卖</item>
+		<item code="forest-discount"    tips="天天特价 爽不停">折扣专区</item>
+		<item code="forest-brand"       tips="抢大牌、不封顶">品牌特卖</item>
+		<item code="forest-new-person"  tips="50元红包">新人尊享</item>
+		<item code="forest-member" 		tips="不是买药 是买健康">会员特卖</item>
 	</module-list>
 	
 	
-	<module-list code="pirates-@-member">
-		<item name="索隆"></item>
-		<item name="龙马"></item>
-		<item name="艾斯"></item>
-		<item name="蕾贝卡"></item>
-		<item name="伊万"></item>
-		<item name="蒂奇"></item>
-		<item name="白星"></item>
-		<item name="玛琪诺"></item>
-		<item name="奥卡"></item>
-		<item name="妮可"></item>
-		<item name="雷利"></item>
-		<item name="小八"></item>
-	</module-list>
 	
 	<module-list code="forest-merchant">
 		<item merchant="1010008000011601">大参林商家id</item>
 	</module-list>
+	
+	<!-- begin of 后台配置项 -->
+	<module-list code="parameter_config_modular_list">
+		<item code="forest-user-protocol-config" name="会员协议">会员协议</item>
+		<item code="forest-index-modular-config" name="首页广告图和文字配置">首页广告图和文字配置</item>
+	</module-list>
+	
+	<module-list code="forest-user-protocol-config">
+		<item code="forest-user-protocol"  name="会员协议" type="1" inputType="3">会员协议</item>
+	</module-list>
+	
+	<module-list code="forest-index-modular-config">
+		<item code="forest-seckill-ind-image"  name="秒杀广告图" type="1" inputType="4">秒杀广告图</item>
+		<item code="forest-coupon-ind-image"  name="优惠券广告图" type="1" inputType="4">优惠券广告图</item>
+		<item code="forest-summer-ind-text"  name="促销信息" type="1" inputType="1">促销信息</item>
+	</module-list>
+	
+	<!--  end  of 后台配置项 -->
+	
+	
 </xml>
