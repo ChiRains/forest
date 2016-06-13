@@ -54,11 +54,12 @@
                             <tr>            
                                                         <td>${item.name}</td>                         
                                                         <td><img style="max-height: 150px;max-width: 150px;" src="${item.image}" /></td>
-                                                        <td><fmt:formatDate value="${item.validDate}" pattern="yyyy年MM月dd日" /> 
+                                                        <td><fmt:formatDate  value="${item.validDate}" pattern="yyyy年MM月dd日" /> 
                                                         </td>                         
-                                                        <td><fmt:formatDate value="${item.inValidDate}" pattern="yyyy年MM月dd日" /></td>                         
+                                                        <td><fmt:formatDate  value="${item.inValidDate}" pattern="yyyy年MM月dd日" />
+                                                        </td>                         
                                                        <td>                                                        
-                                                        <input value="${item.id}" type="checkbox" data-id="${item.id}" class="ace ace-switch ace-switch-5 ajax_switch"
+                                                        <input value="${item.id}" type="checkbox" data-id="${item.id}" 	class="ace ace-switch ace-switch-5 ajax_switch"
                                                         <c:if test="${item.enable > 0}">
                                                         checked
                                                         </c:if>>
@@ -93,6 +94,7 @@
 <!-- page specific plugin scripts -->
 <script type="text/javascript">
     var scripts = [null, null];
+	
     ace.load_ajax_scripts(scripts, function () {
         //inline scripts related to this page
         //启用按钮
@@ -102,24 +104,24 @@
                 id:el.attr('data-id'),
                 enable:el[0].checked?'1':'0'
             };
-            $.ajax({
-                url:'/admin/giftCoupon/enable.do',
-                type:'POST',
-                data:data,
-                dataType: 'json',
-                cache: false,
-                async: false,
-                error: function(){
-                    BootstrapDialog.alert({
-                        title: '错误',
-                        message:'网络错误，请稍后再尝试！',
-                        type: BootstrapDialog.TYPE_DANGER,
-                        callback: function(){setTimeout(function(){el[0].checked = !el[0].checked;},500)}
-                    });
-                }
-
-            })
-        });  
+	            $.ajax({
+	                url:'/admin/giftCoupon/enable.do',
+	                type:'POST',
+	                data:data,
+	                dataType: 'json',
+	                cache: false,
+	                async: false,
+	                error: function(){
+	                    BootstrapDialog.alert({
+	                        title: '错误',
+	                        message:'网络错误，请稍后再尝试！',
+	                        type: BootstrapDialog.TYPE_DANGER,
+	                        callback: function(){setTimeout(function(){el[0].checked = !el[0].checked;},500)}
+	                    });
+	                }
+	
+	            })
+         });  
         //删除按钮
 	    $('.red').on('click',
 			    function() {

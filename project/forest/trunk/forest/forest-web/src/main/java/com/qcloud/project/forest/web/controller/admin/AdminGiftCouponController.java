@@ -38,6 +38,13 @@ public class AdminGiftCouponController {
     @Autowired
     private FileSDKClient      fileSDKClient;
 
+    /**
+     * 赠品券列表
+     * @param request
+     * @param pPage
+     * @param query
+     * @return
+     */
     @RequestMapping
     @NoReferer
     public ModelAndView list(HttpServletRequest request, PPage pPage, GiftCouponQuery query) {
@@ -52,6 +59,10 @@ public class AdminGiftCouponController {
         return pagingView;
     }
 
+    /**
+     * 跳转到添加赠品券界面
+     * @return
+     */
     @RequestMapping
     public ModelAndView toAdd() {
 
@@ -59,6 +70,11 @@ public class AdminGiftCouponController {
         return model;
     }
 
+    /**
+     * 提交添加赠品券
+     * @param giftCoupon
+     * @return
+     */
     @RequestMapping
     public AceAjaxView add(GiftCoupon giftCoupon) {
 
@@ -71,6 +87,12 @@ public class AdminGiftCouponController {
         return aceAjaxView;
     }
 
+    /**
+     * 跳转到编辑赠品券页面
+     * @param id
+     * @param queryStr
+     * @return
+     */
     @RequestMapping
     public ModelAndView toEdit(Long id, String queryStr) {
 
@@ -83,6 +105,12 @@ public class AdminGiftCouponController {
         return model;
     }
 
+    /**
+     * 编辑赠品券
+     * @param giftCoupon
+     * @param queryStr
+     * @return
+     */
     @RequestMapping
     public AceAjaxView edit(GiftCoupon giftCoupon, String queryStr) {
 
@@ -98,6 +126,11 @@ public class AdminGiftCouponController {
         return aceAjaxView;
     }
 
+    /**
+     * 删除赠品券
+     * @param id
+     * @return
+     */
     @RequestMapping
     public AceAjaxView delete(Long id) {
 
@@ -109,14 +142,20 @@ public class AdminGiftCouponController {
         return aceAjaxView;
     }
 
+    /**
+     * 是否启用赠品券
+     * @param id
+     * @param enable
+     * @return
+     */
     @RequestMapping
     public AceAjaxView enable(Long id, int enable) {
 
         AssertUtil.assertNotNull(id, "ID不能为空");
+        AceAjaxView aceAjaxView = new AceAjaxView();
         GiftCoupon giftCoupon = giftCouponService.get(id);
         giftCoupon.setEnable(enable);
         giftCouponService.update(giftCoupon);
-        AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("启用成功");
         aceAjaxView.setUrl(DIR + "/list");
         return aceAjaxView;
