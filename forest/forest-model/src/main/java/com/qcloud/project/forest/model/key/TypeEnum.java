@@ -118,7 +118,7 @@ public class TypeEnum {
         }
     }
     public enum MessageType {
-        STATION("station", "站内消息"), LOGISTICS("logistics", "物流消息"), COUPONS("coupons", "优惠券消息"), PAYMENT("payment", "付款提醒"), MEDICATION("medication", "用药提醒");
+        STATION("station", "站内消息"), LOGISTICS("logistics", "物流消息"), COUPONS("coupons", "优惠券消息"), PAYMENT("payment", "付款提醒"), MEDICATIONREMINDERS("medicationReminders", "用药提醒");
 
         private final String key;
 
@@ -131,6 +131,29 @@ public class TypeEnum {
         }
 
         public String getKey() {
+
+            return key;
+        }
+
+        public String getName() {
+
+            return name;
+        }
+    }
+    public enum MessageClassify {
+        MEDICATIONREMINDERS(6, "药物提醒");
+
+        private final int    key;
+
+        private final String name;
+
+        private MessageClassify(int key, String name) {
+
+            this.key = key;
+            this.name = name;
+        }
+
+        public int getKey() {
 
             return key;
         }
