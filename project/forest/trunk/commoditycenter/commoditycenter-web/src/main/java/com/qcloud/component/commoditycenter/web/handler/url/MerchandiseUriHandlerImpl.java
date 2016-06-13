@@ -131,6 +131,8 @@ public class MerchandiseUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/merchandise/listMySearch.do");
         list.add("/merchandise/clearMySearch.do");
         list.add("/app/merchandise/clearMySearch.do");
+        list.add("/merchandise/listMySearchAndTags.do");
+        list.add("/app/merchandise/listMySearchAndTags.do");
         return list;
     }
 
@@ -141,6 +143,7 @@ public class MerchandiseUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/merchandise/listMySearch.do");
         list.add("/app/merchandise/clearMySearch.do");
         list.add("/app/merchandise/listShopRecommend.do");
+        list.add("/app/merchandise/listMySearchAndTags.do");
         return list;
     }
 }

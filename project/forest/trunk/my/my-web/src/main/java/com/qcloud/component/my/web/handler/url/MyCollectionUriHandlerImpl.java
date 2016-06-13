@@ -38,6 +38,8 @@ public class MyCollectionUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/myMerchantCollection/list.do");
         list.add("/app/myMerchantCollection/isCollect.do");
         // ############################################################
+        list.add("/myMerchandiseCollection/clearMyCollect.do");
+        list.add("/app/myMerchandiseCollection/clearMyCollect.do");
         return list;
     }
 
@@ -57,6 +59,8 @@ public class MyCollectionUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/myMerchantCollection/removeByMerchant.do");
         list.add("/app/myMerchantCollection/list.do");
         list.add("/app/myMerchantCollection/isCollect.do");
+        // ############################################################
+        list.add("/app/myMerchandiseCollection/clearMyCollect.do");
         return list;
     }
 }

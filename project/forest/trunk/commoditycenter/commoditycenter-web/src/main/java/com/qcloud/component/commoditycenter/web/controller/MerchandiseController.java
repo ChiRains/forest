@@ -598,19 +598,6 @@ public class MerchandiseController {
 
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView listMySearch(HttpServletRequest request, Integer number) {
-
-        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
-        number = number == null || number <= 0 || number > 100 ? 20 : number;
-        List<String> list = myClient.listMySearchHistory(user.getId(), CommoditycenterClient.SEARCH_TYPE, number);
-        FrontAjaxView view = new FrontAjaxView();
-        view.setMessage("获取我的商品搜索历史成功.");
-        view.addObject("list", list);
-        return view;
-    }
-
-    @PiratesApp
-    @RequestMapping
     public FrontAjaxView clearMySearch(HttpServletRequest request) {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
@@ -632,6 +619,43 @@ public class MerchandiseController {
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取店铺推荐成功.");
         view.addObject("list", voList);
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView listMySearch(HttpServletRequest request, Integer number) {
+
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        number = number == null || number <= 0 || number > 100 ? 20 : number;
+        List<String> list = myClient.listMySearchHistory(user.getId(), CommoditycenterClient.SEARCH_TYPE, number);
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("获取我的商品搜索历史成功.");
+        view.addObject("list", list);
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView listMySearchAndTags(HttpServletRequest request, Integer number) {
+
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        number = number == null || number <= 0 || number > 100 ? 20 : number;
+        List<String> list = myClient.listMySearchHistory(user.getId(), CommoditycenterClient.SEARCH_TYPE, number);
+        List<Map<String, Object>> listMap = new ArrayList<Map<String, Object>>();
+        for (String string : list) {
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("name", string);
+            List<String> labels = new ArrayList<String>();
+            labels.add("大保健");
+            labels.add("保健用品");
+            labels.add("肥皂");
+            map.put("labels", labels);
+            listMap.add(map);
+        }
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("获取我的商品搜索历史成功.");
+        view.addObject("list", listMap);
         return view;
     }
 }
