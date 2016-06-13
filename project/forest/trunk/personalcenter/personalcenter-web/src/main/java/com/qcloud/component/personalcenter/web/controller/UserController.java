@@ -186,7 +186,8 @@ public class UserController {
         boolean result = smsClient.send(USER_REGIST_SMS_TEMPLATE_KEY, mobile, map);
         if (result) {
             FrontAjaxView view = new FrontAjaxView();
-            view.setMessage("发送短信成功");
+            // TODO
+            view.setMessage("发送短信成功" + code);
             return view;
         } else {
             throw new PersonalCenterException("发送短信失败." + mobile);
@@ -608,9 +609,9 @@ public class UserController {
                 AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
                 user = userService.get(Long.parseLong(idStr));
                 AssertUtil.assertNotNull(user, "用户不存在.");
-                UserThird ut =  userThirdService.getByUser(user.getId());
-                if(ut != null){
-                    if(ut.getThirdId() != openId){
+                UserThird ut = userThirdService.getByUser(user.getId());
+                if (ut != null) {
+                    if (ut.getThirdId() != openId) {
                         logout(request);
                     }
                     AssertUtil.assertTrue(ut.getThirdId() == openId, "账号已经绑定微信.");
