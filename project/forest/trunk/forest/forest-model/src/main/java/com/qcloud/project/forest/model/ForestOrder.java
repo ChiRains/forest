@@ -26,6 +26,8 @@ public class ForestOrder {
 
     private int    deliveryMode;
 
+    private String prove;
+
     public ForestOrder() {
 
     }
@@ -138,5 +140,15 @@ public class ForestOrder {
     public void setDeliveryMode(int deliveryMode) {
 
         this.deliveryMode = deliveryMode;
+    }
+
+    public String getProve() {
+
+        return prove;
+    }
+
+    public void setProve(String prove) {
+
+        this.prove = prove;
     }
 }

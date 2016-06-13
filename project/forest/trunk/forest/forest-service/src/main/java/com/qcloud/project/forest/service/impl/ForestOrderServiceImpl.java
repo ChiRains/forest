@@ -2,10 +2,12 @@ package com.qcloud.project.forest.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.qcloud.component.autoid.AutoIdGenerator;
+import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.orderform.OrderContext;
 import com.qcloud.component.orderform.OrderformClient;
 import com.qcloud.component.orderform.QOrder;
@@ -34,6 +36,9 @@ public class ForestOrderServiceImpl implements ForestOrderService {
 
     @Autowired
     private GiftCouponUserService couponUserService;
+
+    @Autowired
+    private FileSDKClient         fileSDKClient;
 
     private static final String   ID_KEY = "forest_forest_order";
 
@@ -76,7 +81,7 @@ public class ForestOrderServiceImpl implements ForestOrderService {
 
     @Transactional
     @Override
-    public QOrder order(OrderContext context, Long giftCouponUser, QUser user, Date deliveryDate) {
+    public QOrder order(OrderContext context, Long giftCouponUser, QUser user, Date deliveryDate, String prove) {
 
         QOrder order = orderformClient.orderNormal(context);
         // 赠品券
@@ -93,6 +98,9 @@ public class ForestOrderServiceImpl implements ForestOrderService {
         }
         //
         ForestOrder forestOrder = new ForestOrder();
+        if (StringUtils.isNotEmpty(prove)) {
+            forestOrder.setProve(fileSDKClient.uidToUrl(prove));
+        }
         forestOrder.setMerchantId(order.getMerchantOrderList().get(0).getMerchantId());
         forestOrder.setOrderDate(order.getOrderDate());
         forestOrder.setOrderId(order.getId());

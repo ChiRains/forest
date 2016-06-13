@@ -193,7 +193,7 @@ public class ForestOrderController {
     @PiratesApp
     @RequestMapping
     @NoReferer
-    public FrontAjaxView order(HttpServletRequest request, OrderForm orderForm, Long giftCouponUser, Date deliveryDate, Long storeId) {
+    public FrontAjaxView order(HttpServletRequest request, OrderForm orderForm, Long giftCouponUser, Date deliveryDate, Long storeId,String prove) {
 
         AssertUtil.assertNotNull(orderForm.getConsigneeId(), "收货人信息数据不能为空.");
         AssertUtil.assertNotNull(orderForm.getDeliveryId(), "配送信息数据不能为空.");
@@ -204,7 +204,7 @@ public class ForestOrderController {
         AssertUtil.assertNotEmpty(orderForm.getMerchandiseList(), "下订单,商品列表不能为空.");
         OrderContext orderContext = formToContext(user, orderForm, deliveryDate, storeId);
         // OrderEntity orderEntity = orderService.orderNormal(orderContext);
-        QOrder orderEntity = forestOrderService.order(orderContext, giftCouponUser, user, deliveryDate);
+        QOrder orderEntity = forestOrderService.order(orderContext, giftCouponUser, user, deliveryDate,prove);
         FrontAjaxView view = new FrontAjaxView();
         myClient.setDefaultInvoice(user.getId());
         view.setMessage("下订单成功");
