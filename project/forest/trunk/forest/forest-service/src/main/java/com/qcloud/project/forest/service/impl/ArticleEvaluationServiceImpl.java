@@ -45,6 +45,14 @@ public class ArticleEvaluationServiceImpl implements ArticleEvaluationService{
 	public boolean update(ArticleEvaluation articleEvaluation) {
 		return articleEvaluationDao.update(articleEvaluation);
 	}
+			
+	public List<ArticleEvaluation> listByArticleId(Long articleId){
+		return articleEvaluationDao.listByArticleId(articleId);
+	}
+			
+	public List<ArticleEvaluation> listByUserId(Long userId){
+		return articleEvaluationDao.listByUserId(userId);
+	}
 	
 	@Override
 	public Page<ArticleEvaluation> page(ArticleEvaluationQuery query, int start, int count) {
@@ -54,11 +62,5 @@ public class ArticleEvaluationServiceImpl implements ArticleEvaluationService{
 	public List<ArticleEvaluation> listAll(){
 		return articleEvaluationDao.listAll();
 	}
-
-    @Override
-    public int getCommentCount(long id) {
-
-        return articleEvaluationDao.getCommentCount(id);
-    }
 }
 

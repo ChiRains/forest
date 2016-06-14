@@ -10,9 +10,7 @@
     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
         select count(*) from `forest_article_praise`
     </select> 
-    
-    <select id="getByUser" parameterType="java.util.HashMap" resultType="ArticlePraise">  
-        select * from `forest_article_praise` 
-        where `userId`=#{userId} and `articleId`=#{articleId} limit 1
-    </select>
+        <select id="getByArticleIdAndUserId" parameterType="java.util.HashMap" resultType="ArticlePraise">  
+        select * from `forest_article_praise`where  articleId=#{articleId} and userId=#{userId} 
+    </select>  
 </mapper>

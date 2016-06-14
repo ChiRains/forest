@@ -1,61 +1,60 @@
 package com.qcloud.project.forest.web.vo;
 
-import java.util.List;
+import java.util.Date;
 
 public class ArticleVO {
 
-    // ID
-    private long         id;
+    private long   id;
 
     // 标题
-    private String       name;
+    private String title;
 
-    // 图标
-    private List<String> iconList;
-
-    // 关键词
-    private String       keywords;
-
-    // 标签
-    private String       label;
+    // 图片
+    private String image;
 
     // 简介
-    private String       brief;
+    private String brief;
 
-    // 详情
-    private String       detail;
+    // 内容
+    private String content;
 
-    // 日期
-    private String       date;
+    private String date;
 
-    // 排序号
-    private int          sort;
+    // 是否启用（1，启用；0，不启用）
+    private int    enable;
 
-    // 是否启用
-    private int          enable;
+    // 是否下架（0，没下架；1，下架）
+    private int    isOffshelves;
 
-    // 分类类型
-    private long         classifyId;
+    // 类别Id
+    private long   classifyId;
 
-    // 查看次数
-    private int          viewCount;
+    // 浏览数
+    private int    viewCount;
 
-    // 点赞次数
-    private int          likeCount;
+    // 点赞数
+    private int    likeCount;
 
-    // 评价次数
-    private int          comment;
-
-    // 上一条咨询id
-    private long         previousId;
-
-    // 下一条咨询id
-    private long         nextId;
-
-    private boolean      isPraise = false;
+    // 评论数
+    private int    evaluationCount;
 
     public ArticleVO() {
 
+    }
+
+    public ArticleVO(long id, String title, String image, String brief, String content, Date date, int enable, int isOffshelves, long classifyId, int viewCount, int likeCount, int evaluationCount) {
+
+        this.id = id;
+        this.title = title;
+        this.image = image;
+        this.brief = brief;
+        this.content = content;
+        this.enable = enable;
+        this.isOffshelves = isOffshelves;
+        this.classifyId = classifyId;
+        this.viewCount = viewCount;
+        this.likeCount = likeCount;
+        this.evaluationCount = evaluationCount;
     }
 
     public void setId(long id) {
@@ -68,44 +67,24 @@ public class ArticleVO {
         return id;
     }
 
-    public void setName(String name) {
+    public void setTitle(String title) {
 
-        this.name = name;
+        this.title = title;
     }
 
-    public String getName() {
+    public String getTitle() {
 
-        return name;
+        return title;
     }
 
-    public List<String> getIconList() {
+    public void setImage(String image) {
 
-        return iconList;
+        this.image = image;
     }
 
-    public void setIconList(List<String> iconList) {
+    public String getImage() {
 
-        this.iconList = iconList;
-    }
-
-    public void setKeywords(String keywords) {
-
-        this.keywords = keywords;
-    }
-
-    public String getKeywords() {
-
-        return keywords;
-    }
-
-    public void setLabel(String label) {
-
-        this.label = label;
-    }
-
-    public String getLabel() {
-
-        return label;
+        return image;
     }
 
     public void setBrief(String brief) {
@@ -118,19 +97,14 @@ public class ArticleVO {
         return brief;
     }
 
-    public void setDetail(String detail) {
+    public void setContent(String content) {
 
-        this.detail = detail;
+        this.content = content;
     }
 
-    public String getDetail() {
+    public String getContent() {
 
-        return detail;
-    }
-
-    public void setDate(String date) {
-
-        this.date = date;
+        return content;
     }
 
     public String getDate() {
@@ -138,14 +112,9 @@ public class ArticleVO {
         return date;
     }
 
-    public void setSort(int sort) {
+    public void setDate(String date) {
 
-        this.sort = sort;
-    }
-
-    public int getSort() {
-
-        return sort;
+        this.date = date;
     }
 
     public void setEnable(int enable) {
@@ -156,6 +125,16 @@ public class ArticleVO {
     public int getEnable() {
 
         return enable;
+    }
+
+    public void setIsOffshelves(int isOffshelves) {
+
+        this.isOffshelves = isOffshelves;
+    }
+
+    public int getIsOffshelves() {
+
+        return isOffshelves;
     }
 
     public void setClassifyId(long classifyId) {
@@ -188,45 +167,13 @@ public class ArticleVO {
         return likeCount;
     }
 
-    public int getComment() {
+    public void setEvaluationCount(int evaluationCount) {
 
-        return comment;
+        this.evaluationCount = evaluationCount;
     }
 
-    public void setComment(int comment) {
+    public int getEvaluationCount() {
 
-        this.comment = comment;
-    }
-
-    public long getPreviousId() {
-
-        return previousId;
-    }
-
-    public void setPreviousId(long previousId) {
-
-        this.previousId = previousId;
-    }
-
-    public long getNextId() {
-
-        return nextId;
-    }
-
-    public void setNextId(long nextId) {
-
-        this.nextId = nextId;
-    }
-
-    
-    public boolean getIsPraise() {
-    
-        return isPraise;
-    }
-
-    
-    public void setIsPraise(boolean isPraise) {
-    
-        this.isPraise = isPraise;
+        return evaluationCount;
     }
 }

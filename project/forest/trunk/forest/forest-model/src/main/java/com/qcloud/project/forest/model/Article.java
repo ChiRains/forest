@@ -5,63 +5,57 @@ import java.math.BigDecimal;
 
 public class Article {
 	
-	//ID
 	private long id;		
 	
 	//标题
-	private String name;		
+	private String title;		
 	
-	//图标
-	private String icon;		
-	
-	//关键词
-	private String keywords;		
-	
-	//标签
-	private String label;		
+	//图片
+	private String image;		
 	
 	//简介
 	private String brief;		
 	
-	//详情
-	private String detail;		
+	//内容
+	private String content;		
 	
-	//日期
 	private Date date;		
 	
-	//排序号
-	private int sort;		
-	
-	//是否启用
+	//是否启用（1，启用；0，不启用）
 	private int enable;		
 	
-	//分类类型
+	//是否下架（0，没下架；1，下架）
+	private int isOffshelves;		
+	
+	//类别Id
 	private long classifyId;		
 	
-	//查看次数
+	//浏览数
 	private int viewCount;		
 	
-	//点赞次数
+	//点赞数
 	private int likeCount;		
+	
+	//评论数
+	private int evaluationCount;		
 
 	public Article(){
 	
 	}
 
-	public Article(long id,String name,String icon,String keywords,String label,String brief,String detail,Date date,int sort,int enable,long classifyId,int viewCount,int likeCount){
+	public Article(long id,String title,String image,String brief,String content,Date date,int enable,int isOffshelves,long classifyId,int viewCount,int likeCount,int evaluationCount){
 		this.id = id;		
-		this.name = name;		
-		this.icon = icon;		
-		this.keywords = keywords;		
-		this.label = label;		
+		this.title = title;		
+		this.image = image;		
 		this.brief = brief;		
-		this.detail = detail;		
+		this.content = content;		
 		this.date = date;		
-		this.sort = sort;		
 		this.enable = enable;		
+		this.isOffshelves = isOffshelves;		
 		this.classifyId = classifyId;		
 		this.viewCount = viewCount;		
 		this.likeCount = likeCount;		
+		this.evaluationCount = evaluationCount;		
 	}
 	
 	public void setId(long id) {
@@ -72,36 +66,20 @@ public class Article {
 		return id;
 	}	
 		
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}	
 		
-	public void setIcon(String icon) {
-		this.icon = icon;
+	public void setImage(String image) {
+		this.image = image;
 	}
 
-	public String getIcon() {
-		return icon;
-	}	
-		
-	public void setKeywords(String keywords) {
-		this.keywords = keywords;
-	}
-
-	public String getKeywords() {
-		return keywords;
-	}	
-		
-	public void setLabel(String label) {
-		this.label = label;
-	}
-
-	public String getLabel() {
-		return label;
+	public String getImage() {
+		return image;
 	}	
 		
 	public void setBrief(String brief) {
@@ -112,12 +90,12 @@ public class Article {
 		return brief;
 	}	
 		
-	public void setDetail(String detail) {
-		this.detail = detail;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
-	public String getDetail() {
-		return detail;
+	public String getContent() {
+		return content;
 	}	
 		
 	public void setDate(Date date) {
@@ -128,20 +106,20 @@ public class Article {
 		return date;
 	}	
 		
-	public void setSort(int sort) {
-		this.sort = sort;
-	}
-
-	public int getSort() {
-		return sort;
-	}	
-		
 	public void setEnable(int enable) {
 		this.enable = enable;
 	}
 
 	public int getEnable() {
 		return enable;
+	}	
+		
+	public void setIsOffshelves(int isOffshelves) {
+		this.isOffshelves = isOffshelves;
+	}
+
+	public int getIsOffshelves() {
+		return isOffshelves;
 	}	
 		
 	public void setClassifyId(long classifyId) {
@@ -166,6 +144,14 @@ public class Article {
 
 	public int getLikeCount() {
 		return likeCount;
+	}	
+		
+	public void setEvaluationCount(int evaluationCount) {
+		this.evaluationCount = evaluationCount;
+	}
+
+	public int getEvaluationCount() {
+		return evaluationCount;
 	}	
 		
 }

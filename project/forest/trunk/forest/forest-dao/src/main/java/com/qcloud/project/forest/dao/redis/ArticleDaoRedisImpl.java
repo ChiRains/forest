@@ -51,7 +51,12 @@ public class ArticleDaoRedisImpl implements ArticleDao {
 	public Map<Long, Article> map(Set<Long> idSet){
 		throw new NotImplementedException();
 	}
-		
+			
+																					public List<Article> listByClassifyId(Long classifyId){
+					throw new NotImplementedException();
+				}
+
+					
 	@Override
 	public Page<Article> page(int start, int count){
 		throw new NotImplementedException();
@@ -64,16 +69,6 @@ public class ArticleDaoRedisImpl implements ArticleDao {
 	
 	@Override
 	public List<Article> listAll(){	
-		throw new NotImplementedException();
-	}
-
-	@Override
-	public Page<Article> page(Long classifyId) {
-		throw new NotImplementedException();
-	}
-
-	@Override
-	public Long getBySort(long classifyId, int sort, int i) {
 		throw new NotImplementedException();
 	}
 }

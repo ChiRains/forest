@@ -4,11 +4,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.annotation.Resource;
 
 import org.apache.commons.lang.NotImplementedException;
 import org.springframework.stereotype.Repository;
 
+import com.qcloud.pirates.core.json.Json;
 import com.qcloud.pirates.data.Page;
+import com.qcloud.pirates.data.redis.Redis;
 import com.qcloud.project.forest.dao.ArticleEvaluationDao;
 import com.qcloud.project.forest.model.ArticleEvaluation;
 import com.qcloud.project.forest.model.query.ArticleEvaluationQuery;
@@ -48,7 +51,17 @@ public class ArticleEvaluationDaoRedisImpl implements ArticleEvaluationDao {
 	public Map<Long, ArticleEvaluation> map(Set<Long> idSet){
 		throw new NotImplementedException();
 	}
-		
+			
+																					public List<ArticleEvaluation> listByArticleId(Long articleId){
+					throw new NotImplementedException();
+				}
+
+						
+																					public List<ArticleEvaluation> listByUserId(Long userId){
+					throw new NotImplementedException();
+				}
+
+					
 	@Override
 	public Page<ArticleEvaluation> page(int start, int count){
 		throw new NotImplementedException();
@@ -63,10 +76,5 @@ public class ArticleEvaluationDaoRedisImpl implements ArticleEvaluationDao {
 	public List<ArticleEvaluation> listAll(){	
 		throw new NotImplementedException();
 	}
-
-    @Override
-    public int getCommentCount(long id) {
-        throw new NotImplementedException();
-    }
 }
 

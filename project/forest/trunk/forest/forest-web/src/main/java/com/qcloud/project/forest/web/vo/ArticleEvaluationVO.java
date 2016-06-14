@@ -1,110 +1,144 @@
 package com.qcloud.project.forest.web.vo;
 
+import java.util.Date;
 
 public class ArticleEvaluationVO {
-	
-	//ID
-	private long id;		
-	
-	//资讯id
-	private long articleId;		
-	
-	//内容
-	private String content;		
-	
-	//审核状态
-	private int state;		
-	
-	//用户id
-	private long userId;
-	
-	//用户名称
-	private String userName;
-	
-	private String headImage;
-	//评价时间
-	private String time;		
 
-	public ArticleEvaluationVO(){
-	
-	}
+    private long   id;
 
-	public ArticleEvaluationVO(long id,long articleId,String content,int state,long userId,String userName,String headImage,String time){
-		this.id = id;		
-		this.articleId = articleId;		
-		this.content = content;		
-		this.state = state;		
-		this.userId = userId;
-		this.userName = userName;
-		this.headImage=headImage;
-		this.time = time;		
-	}
-	
-	public void setId(long id) {
-		this.id = id;
-	}
+    // 文章Id
+    private long   articleId;
 
-	public long getId() {
-		return id;
-	}	
-		
-	public void setArticleId(long articleId) {
-		this.articleId = articleId;
-	}
+    // 评论内容
+    private String content;
 
-	public long getArticleId() {
-		return articleId;
-	}	
-		
-	public void setContent(String content) {
-		this.content = content;
-	}
+    // 状态
+    private int    state;
 
-	public String getContent() {
-		return content;
-	}	
-		
-	public void setState(int state) {
-		this.state = state;
-	}
+    // 用户Id
+    private long   userId;
 
-	public int getState() {
-		return state;
-	}	
-		
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
+    private String num;
 
-	public long getUserId() {
-		return userId;
-	}	
-		
-	public String getUserName() {
-		return userName;
-	}
+    private String time;
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-	
-    public String getHeadImage() {
-    
-        return headImage;
+    // 评论时间
+    private String userName;
+
+    private String gradeIcon;
+
+    private String headImage;
+
+    public ArticleEvaluationVO() {
+
     }
 
-    
-    public void setHeadImage(String headImage) {
-    
-        this.headImage = headImage;
+    public ArticleEvaluationVO(long id, long articleId, String content, int state, long userId, Date time) {
+
+        this.id = id;
+        this.articleId = articleId;
+        this.content = content;
+        this.state = state;
+        this.userId = userId;
+    }
+
+    public void setId(long id) {
+
+        this.id = id;
+    }
+
+    public long getId() {
+
+        return id;
+    }
+
+    public void setArticleId(long articleId) {
+
+        this.articleId = articleId;
+    }
+
+    public long getArticleId() {
+
+        return articleId;
+    }
+
+    public void setContent(String content) {
+
+        this.content = content;
+    }
+
+    public String getContent() {
+
+        return content;
+    }
+
+    public void setState(int state) {
+
+        this.state = state;
+    }
+
+    public int getState() {
+
+        return state;
+    }
+
+    public void setUserId(long userId) {
+
+        this.userId = userId;
+    }
+
+    public long getUserId() {
+
+        return userId;
+    }
+
+    public String getNum() {
+
+        return num;
+    }
+
+    public void setNum(String num) {
+
+        this.num = num;
+    }
+
+    public String getTime() {
+
+        return time;
     }
 
     public void setTime(String time) {
-		this.time = time;
-	}
 
-	public String getTime() {
-		return time;
-	}	
-		
+        this.time = time;
+    }
+
+    public String getGradeIcon() {
+
+        return gradeIcon;
+    }
+
+    public void setGradeIcon(String gradeIcon) {
+
+        this.gradeIcon = gradeIcon;
+    }
+
+    public String getHeadImage() {
+
+        return headImage;
+    }
+
+    public void setHeadImage(String headImage) {
+
+        this.headImage = headImage;
+    }
+
+    public String getUserName() {
+
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+
+        this.userName = userName;
+    }
 }

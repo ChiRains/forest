@@ -1,5 +1,6 @@
 package com.qcloud.project.forest.web.controller;
 
+import java.util.Date;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,11 +52,10 @@ public class ArticleEvaluationController {
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         articleEvaluation.setState(0);// 默认状态为未处理
         articleEvaluation.setUserId(user.getId());// 用户id
-        articleEvaluation.setTime(new java.sql.Timestamp(System.currentTimeMillis()));// 当前时间
+        articleEvaluation.setTime(new Date());// 当前时间
         articleEvaluationService.add(articleEvaluation);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("添加成功");
-        view.addObject("id", articleEvaluation.getId());
         return view;
     }
 }

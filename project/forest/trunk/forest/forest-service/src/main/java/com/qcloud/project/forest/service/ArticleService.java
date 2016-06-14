@@ -16,12 +16,10 @@ public interface ArticleService {
 	
 	public	boolean update(Article article);
 
+	public List<Article> listByClassifyId(Long classifyId);
+
 	public Page<Article> page(ArticleQuery query, int start, int count);
 	
 	public List<Article> listAll();
-
-	public Page<Article> page(Long classifyId);
-
-	public Long getBySort(long classifyId, int sort, int i);
 }
 

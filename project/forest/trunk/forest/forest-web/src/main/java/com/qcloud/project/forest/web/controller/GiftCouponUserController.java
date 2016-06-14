@@ -51,26 +51,27 @@ public class GiftCouponUserController {
      */
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView myGiftCoupon(HttpServletRequest request, PPage pPage) {
+    public FrontPagingView myGiftCoupon(HttpServletRequest request, PPage pPage) {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         GiftCouponUserQuery giftCouponUserQuery = new GiftCouponUserQuery();
         giftCouponUserQuery.setUserId(user.getId());
-        List<GiftCouponUser> list = giftCouponUserService.listByUser(giftCouponUserQuery, pPage.getPageStart(), pPage.getPageSize());
-        List<GiftCouponUserVO> voList = giftCouponUserHandler.toVOList(list);
-        // GiftCoupon giftCoupon = null;
-        // GiftCouponUserVO giftCouponUserVO = null;
-        // Iterator<GiftCouponUserVO> iter = list.iterator();
-        // while (iter.hasNext()) {
-        // giftCouponUserVO = iter.next();
-        // giftCoupon = giftCouponService.get(giftCouponUserVO.getId());
-        // if (giftCoupon.getEnable() == 0) {
-        // iter.remove();
-        // }
-        // }
-        FrontAjaxView view = new FrontAjaxView();
-        view.addObject("list", voList);
-        return view;
+        Page<GiftCouponUser> page = giftCouponUserService.page(giftCouponUserQuery, pPage.getPageStart(), pPage.getPageSize());
+        List<GiftCouponUserVO> voList = giftCouponUserHandler.toVOList(page.getData());
+        // 不显示不启用的赠品券
+        GiftCoupon giftCoupon = null;
+        GiftCouponUserVO giftCouponUserVO = null;
+        Iterator<GiftCouponUserVO> iter = voList.iterator();
+        while (iter.hasNext()) {
+            giftCouponUserVO = iter.next();
+            giftCoupon = giftCouponService.get(giftCouponUserVO.getId());
+            if (giftCoupon.getEnable() == 0) {
+                iter.remove();
+            }
+        }
+        FrontPagingView frontPagingView = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), page.getCount());
+        frontPagingView.setList(voList);
+        return frontPagingView;
     }
 
     /**

@@ -45,6 +45,10 @@ public class ArticleServiceImpl implements ArticleService{
 	public boolean update(Article article) {
 		return articleDao.update(article);
 	}
+			
+	public List<Article> listByClassifyId(Long classifyId){
+		return articleDao.listByClassifyId(classifyId);
+	}
 	
 	@Override
 	public Page<Article> page(ArticleQuery query, int start, int count) {
@@ -53,17 +57,6 @@ public class ArticleServiceImpl implements ArticleService{
 	
 	public List<Article> listAll(){
 		return articleDao.listAll();
-	}
-
-	@Override
-	public Page<Article> page(Long classifyId) {
-		
-		return articleDao.page(classifyId);
-	}
-
-	@Override
-	public Long getBySort(long classifyId, int sort, int i) {
-		return articleDao.getBySort(classifyId,sort,i);
 	}
 }
 

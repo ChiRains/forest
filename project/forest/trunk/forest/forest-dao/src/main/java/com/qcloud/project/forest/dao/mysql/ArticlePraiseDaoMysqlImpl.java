@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.Resource;
-import org.springframework.stereotype.Repository;
 import org.apache.commons.lang.NotImplementedException;
+import org.springframework.stereotype.Repository;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.data.sql.mybatis.SqlOperator;
 import com.qcloud.project.forest.dao.ArticlePraiseDao;
@@ -55,6 +55,11 @@ public class ArticlePraiseDaoMysqlImpl implements ArticlePraiseDao {
         throw new NotImplementedException();
     }
 
+    public List<ArticlePraise> listByArticleId(Long articleId) {
+
+        throw new NotImplementedException();
+    }
+
     @Override
     public Page<ArticlePraise> page(int start, int count) {
 
@@ -91,12 +96,11 @@ public class ArticlePraiseDaoMysqlImpl implements ArticlePraiseDao {
     }
 
     @Override
-    public ArticlePraise getByUser(Long userId, Long articleId) {
+    public ArticlePraise getByArticleIdAndUserId(Long articleId, Long userId) {
 
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("articleId", articleId);
         param.put("userId", userId);
-        ArticlePraise articlePraise = sqlOperator.selectOne("com.qcloud.project.forest.dao.mysql.mapper.ArticlePraiseMapper.getByUser", param);
-        return articlePraise;
+        return sqlOperator.selectOne("com.qcloud.project.forest.dao.mysql.mapper.ArticlePraiseMapper.getByArticleIdAndUserId", param);
     }
 }

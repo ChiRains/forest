@@ -4,14 +4,24 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.qcloud.project.forest.dao.mysql.mapper.ArticleEvaluationMapper">          
     <select id="list4query" parameterType="java.util.HashMap" resultType="ArticleEvaluation">  
-        select * from `forest_article_evaluation` where 1=1 and state=1
-       <if test="articleId != 0">and articleId = #{articleId}</if>
+        select * from `forest_article_evaluation`  where 1=1
+        <if test="articleId!=0">
+        and articleId=#{articleId}
+        </if>
+        <if test="keyWord!='%null%'">
+        and content like #{keyWord}
+        </if>
+        order by time desc
         limit #{start},#{count}
     </select>  
     
-    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
-        select count(*) from `forest_article_evaluation` where 1=1 and state=1
-       <if test="articleId != 0">and articleId = #{articleId}</if>
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">
+	select count(*) from `forest_article_evaluation` where 1=1
+	<if test="articleId!=0">
+		and articleId=#{articleId}
+        </if>
+        <if test="keyWord!='%null%'">
+        and content like #{keyWord}
+        </if>
     </select> 
-    
 </mapper>

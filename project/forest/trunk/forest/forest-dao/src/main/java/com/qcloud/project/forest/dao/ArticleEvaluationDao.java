@@ -26,7 +26,9 @@ public interface ArticleEvaluationDao extends ISimpleDao<ArticleEvaluation, Long
 	public Page<ArticleEvaluation> page(ArticleEvaluationQuery query, int start, int size);
 
 	public List<ArticleEvaluation> listAll();
-
-    public int getCommentCount(long id);
 	
+	public List<ArticleEvaluation> listByArticleId(Long articleId);
+
+	public List<ArticleEvaluation> listByUserId(Long userId);
+
 }
