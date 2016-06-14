@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>编辑资讯</title>
+<title>新增活动商品类别</title>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/colorbox.css"/>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/chosen.css" />
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
-        资讯管理
+        活动商品类别管理
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
-            编辑
+            新增
         </small>
     </h1>
 </div><!-- /.page-header -->
@@ -19,81 +19,54 @@
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
-        <form id="model-form" class="form-horizontal"  role="form" action="/admin/article/edit.do">
+        <form id="model-form" class="form-horizontal"  role="form" action="/admin/salesPromotion/editSalesPromotionClassify.do">
             <!-- #section:elements.form -->
-			<input type="hidden" name="id" value="${article.id}">
-			<input type="hidden" name="queryStr" value="${queryStr}">
-			
+			<input type="hidden" id="parentId" name="parentId" value="-1">
+			<input type="hidden" id="type" name="type" value="${classify.type}">
+			<input type="hidden" id="id" name="id" value="${classify.id}">
 
                   		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="title"> 标题 </label>
+                <label class="col-sm-3 control-label no-padding-right" for="medicationId"> 名称 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="title" name="title" placeholder="标题" value="${article.title}"/>
+						<input type="text" class="width-100" maxlength="20" id="name" name="name" placeholder="名称" value="${classify.name}"/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
             </div>
-            
-                              		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="classifyId"> 类别 </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<select class="form-control" id="classifyId" name="classifyId" >
-										<option value="0" >请选择资讯类别</option>
-										<c:forEach items="${classifyList}" var="item" varStatus="current">
-			                                <option value="${item.id}" <c:if test="${item.id eq article.classifyId}">selected</c:if>>
-												${item.name}</option>
-			                            </c:forEach>
-			                        </select>							<i class="ace-icon fa"></i>
-					</span>
-                </div>
-                </div>
-            
                   		<div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="image"> 图片 </label>
                 <div class="col-sm-9">
-					<input type="hidden"  id="image" name="image" value="${article.uid}" onchange="fileChange(this);"/>
+					<input type="hidden"  id="image" name="image" value="${uid}" onchange="fileChange(this);"/>
 					<button type="button" mult="false" sid="image" vid="pic-pic-view2" class="btn btn-sm btn-purple btn-upload-pic"  upfrom="0"  ><i class="ace-icon fa fa-upload">
 					</i> 上 传</button>
                     <ul sid="image" id="pic-pic-view2" class="ace-thumbnails clearfix">
                         <li pic-id="">
                             <a style="line-height: 150px;text-align: center;width:150px;height: 150px;" href="" data-rel="colorbox" class="cboxElement">
-                                <img style="max-height: 150px;max-width: 150px;" alt="" src="${article.image}">
+                                <img style="max-height: 150px;max-width: 150px;" alt="" src="${classify.image}">
                             </a>
                             <div class="tools tools-bottom"><a onclick="imgDel(this);" href="javascript:;" title="删除"><i class="ace-icon fa fa-times red"></i></a></div>
                         </li>
                     </ul>
                 </div>
             </div>
-                  		<div class="space-4"></div>
+            
+                              		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="brief"> 简介 </label>
+                <label class="col-sm-3 control-label no-padding-right" for="remark"> 描述 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-	 					<textarea   class="width-100" maxlength="50" row ="2" id="brief" name="brief"  placeholder="文章介绍">${article.brief}</textarea>					
+						<input type="text" class="width-100" maxlength="20" id="remark" name="remark" placeholder="描述" value="${classify.remark}"/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
             </div>
-                  		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="content"> 内容 </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-					<textarea style="height:600px!important;width:600px!important;" 
-						class="col-xs-10 no-float" id="content" name="content">${article.content}</textarea>					
-					<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
 
+					
+                     
 
-
-            
             <div class="space-4"></div>
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
@@ -112,29 +85,7 @@
 <script type="text/javascript">
     var scripts = [null, "/qcloud-admin/assets/js/jquery.colorbox-min.js","/qcloud-admin/assets/js/upload-img.js","/qcloud-admin/assets/js/chosen.jquery.min.js", null];
     ace.load_ajax_scripts(scripts, function () {
-         //富文本编辑器
-            window.UMEDITOR_HOME_URL = "/qcloud-admin/umeditor/";
-            var serverPath = '/admin/file/';
-            var um = UM.getEditor('content', {
-                imageUrl: serverPath + "addUMEditorFile.do",
-                imagePath: "/file/",
-                lang: /^zh/.test(navigator.language || navigator.browserLanguage || navigator.userLanguage) ? 'zh-cn' : 'en',
-                langPath: UMEDITOR_CONFIG.UMEDITOR_HOME_URL + "lang/",
-                autoHeightEnabled:false ,
-                focus: true
-            });
-            UM.clearCache('content');
-            
-            
-          //图片浏览
-            $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
-            $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange'></i>");
-            var btnUpload = $(".btn-upload-pic");
-            delEvent(getButtonSetting(btnUpload));
-            btnUpload.on('click', function () {
-                var bs = getButtonSetting($(this));
-                uploadDialog(bs);
-            });
+        //inline scripts related to this page
         jQuery(function ($) {
             $(window)
             .off('resize.chosen')
@@ -144,6 +95,15 @@
                      $this.next().css({'width': $this.parent().width()});
                 })
             }).trigger('resize.chosen');
+        	 $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
+             $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange'></i>");
+             var btnUpload = $(".btn-upload-pic");
+             delEvent(getButtonSetting(btnUpload));
+             btnUpload.on('click', function () {
+                 var bs = getButtonSetting($(this));
+                 uploadDialog(bs);
+             });
+ 				
                    
             //表单验证
             $("#model-form").validate({

@@ -7,8 +7,8 @@ import com.qcloud.component.autoid.AutoIdGenerator;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.project.forest.dao.ArticlePraiseDao;
 import com.qcloud.project.forest.model.ArticlePraise;
-import com.qcloud.project.forest.service.ArticlePraiseService;
 import com.qcloud.project.forest.model.query.ArticlePraiseQuery;
+import com.qcloud.project.forest.service.ArticlePraiseService;
 
 @Service
 public class ArticlePraiseServiceImpl implements ArticlePraiseService {
@@ -47,6 +47,11 @@ public class ArticlePraiseServiceImpl implements ArticlePraiseService {
         return articlePraiseDao.update(articlePraise);
     }
 
+    public List<ArticlePraise> listByArticleId(Long articleId) {
+
+        return articlePraiseDao.listByArticleId(articleId);
+    }
+
     @Override
     public Page<ArticlePraise> page(ArticlePraiseQuery query, int start, int count) {
 
@@ -59,8 +64,8 @@ public class ArticlePraiseServiceImpl implements ArticlePraiseService {
     }
 
     @Override
-    public ArticlePraise getByUser(Long userId, Long articleId) {
+    public ArticlePraise getByArticleIdAndUserId(Long articleId, Long userId) {
 
-        return articlePraiseDao.getByUser(userId, articleId);
+        return articlePraiseDao.getByArticleIdAndUserId(articleId, userId);
     }
 }

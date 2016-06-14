@@ -51,6 +51,16 @@ public class ArticlePraiseDaoRedisImpl implements ArticlePraiseDao {
         throw new NotImplementedException();
     }
 
+    public List<ArticlePraise> listByArticleId(Long articleId) {
+
+        throw new NotImplementedException();
+    }
+
+    public List<ArticlePraise> listByUserId(Long userId) {
+
+        throw new NotImplementedException();
+    }
+
     @Override
     public Page<ArticlePraise> page(int start, int count) {
 
@@ -70,7 +80,7 @@ public class ArticlePraiseDaoRedisImpl implements ArticlePraiseDao {
     }
 
     @Override
-    public ArticlePraise getByUser(Long userId, Long articleId) {
+    public ArticlePraise getByArticleIdAndUserId(Long articleId, Long userId) {
 
         throw new NotImplementedException();
     }

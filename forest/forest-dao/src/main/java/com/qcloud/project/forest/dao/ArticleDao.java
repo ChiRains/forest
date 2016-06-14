@@ -26,9 +26,7 @@ public interface ArticleDao extends ISimpleDao<Article, Long> {
 	public Page<Article> page(ArticleQuery query, int start, int size);
 
 	public List<Article> listAll();
-
-	public Page<Article> page(Long classifyId);
-
-	public Long getBySort(long classifyId, int sort, int i);
 	
+	public List<Article> listByClassifyId(Long classifyId);
+
 }

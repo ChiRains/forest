@@ -26,5 +26,7 @@ public interface ArticlePraiseDao extends ISimpleDao<ArticlePraise, Long> {
 
     public List<ArticlePraise> listAll();
 
-    public ArticlePraise getByUser(Long userId, Long articleId);
+    public List<ArticlePraise> listByArticleId(Long articleId);
+
+    public ArticlePraise getByArticleIdAndUserId(Long articleId, Long userId);
 }

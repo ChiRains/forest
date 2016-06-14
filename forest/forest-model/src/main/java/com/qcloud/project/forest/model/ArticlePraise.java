@@ -5,16 +5,15 @@ import java.math.BigDecimal;
 
 public class ArticlePraise {
 	
-	//ID
 	private long id;		
 	
-	//资讯id
+	//文章Id
 	private long articleId;		
 	
-	//用户id
+	//用户Id
 	private long userId;		
 	
-	//评价时间
+	//评论时间
 	private Date time;		
 
 	public ArticlePraise(){

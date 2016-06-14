@@ -5,22 +5,21 @@ import java.math.BigDecimal;
 
 public class ArticleEvaluation {
 	
-	//ID
 	private long id;		
 	
-	//资讯id
+	//文章Id
 	private long articleId;		
 	
-	//内容
+	//评论内容
 	private String content;		
 	
-	//审核状态
+	//状态
 	private int state;		
 	
-	//用户id
+	//用户Id
 	private long userId;		
 	
-	//评价时间
+	//评论时间
 	private Date time;		
 
 	public ArticleEvaluation(){

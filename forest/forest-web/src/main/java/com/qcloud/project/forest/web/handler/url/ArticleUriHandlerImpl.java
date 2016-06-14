@@ -23,6 +23,7 @@ public class ArticleUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/article/deleteClassify.do");
         list.add("/admin/article/toEditClassify.do");
         list.add("/admin/article/editClassify.do");
+        list.add("/admin/article/offshelves.do");
         return list;
     }
 
@@ -40,6 +41,7 @@ public class ArticleUriHandlerImpl extends AbstractUriHandler {
         List<String> list = new ArrayList<String>();
         list.add("/article/list.do");
         list.add("/article/get.do");
+        list.add("/article/getHtmlView.do");
         list.add("/article/articleClassify.do");
         return list;
     }

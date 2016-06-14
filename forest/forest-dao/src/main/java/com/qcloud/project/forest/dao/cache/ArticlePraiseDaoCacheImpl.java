@@ -1,7 +1,7 @@
 package com.qcloud.project.forest.dao.cache;
 
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -29,7 +29,7 @@ public class ArticlePraiseDaoCacheImpl implements ArticlePraiseDao {
     @Override
     public ArticlePraise get(Long id) {
 
-        return CacheLoader.get(articlePraiseDaoRedisImpl, articlePraiseDaoMysqlImpl, id);
+        return articlePraiseDaoMysqlImpl.get(id);
     }
 
     @Override
@@ -56,6 +56,11 @@ public class ArticlePraiseDaoCacheImpl implements ArticlePraiseDao {
         return CacheLoader.map(articlePraiseDaoRedisImpl, articlePraiseDaoMysqlImpl, idSet);
     }
 
+    public List<ArticlePraise> listByArticleId(Long articleId) {
+
+        return articlePraiseDaoMysqlImpl.listByArticleId(articleId);
+    }
+
     @Override
     public Page<ArticlePraise> page(int start, int count) {
 
@@ -74,8 +79,8 @@ public class ArticlePraiseDaoCacheImpl implements ArticlePraiseDao {
     }
 
     @Override
-    public ArticlePraise getByUser(Long userId, Long articleId) {
+    public ArticlePraise getByArticleIdAndUserId(Long articleId, Long userId) {
 
-        return articlePraiseDaoMysqlImpl.getByUser(userId, articleId);
+        return articlePraiseDaoMysqlImpl.getByArticleIdAndUserId(articleId, userId);
     }
 }

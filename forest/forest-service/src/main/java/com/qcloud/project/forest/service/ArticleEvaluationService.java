@@ -16,10 +16,12 @@ public interface ArticleEvaluationService {
 	
 	public	boolean update(ArticleEvaluation articleEvaluation);
 
+	public List<ArticleEvaluation> listByArticleId(Long articleId);
+
+	public List<ArticleEvaluation> listByUserId(Long userId);
+
 	public Page<ArticleEvaluation> page(ArticleEvaluationQuery query, int start, int count);
 	
 	public List<ArticleEvaluation> listAll();
-
-    public int getCommentCount(long articleId);
 }
 

@@ -1,119 +1,105 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@include file="../taglib.inc.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@include file="../taglib.inc.jsp"%>
 
-<title>大参林资讯管理</title>
+<title>资讯管理</title>
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
-    <h1>
-       管理员管理
-        <small>
-            <i class="ace-icon fa fa-angle-double-right"></i>
-            列表
-        </small>
-    </h1>
-</div><!-- /.page-header -->
+	<h1>资讯管理<small> <i
+			class="ace-icon fa fa-angle-double-right"></i> 列表
+	</small>
+</h1>
+</div>
+<!-- /.page-header -->
 
 <div class="row">
-    <div class="col-xs-12">
+	<div class="col-xs-12">
 
-        <div class="table-header">
-           大参林资讯列表
-        </div>
+		<div class="table-header">资讯列表</div> <!-- <div class="table-responsive"> -->
 
-        <!-- <div class="table-responsive"> -->
-
-        <!-- <div class="dataTables_borderWrap"> -->
-        <div>
-            <div class="dataTables_wrapper form-inline no-footer">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <div class="dataTables_length">
-                            <a title="新增" class="btn btn-sm btn-info"
-                               href="#admin/article/toAdd">
-                                <i class="ace-icon fa fa-plus align-bottom bigger-125"></i>
-                                新&nbsp;增
-                            </a> 
-                             <a title="客户评价审核" class="btn btn-sm btn-info"
-                               href="#admin/articleEvaluation/list">
-                              </i>
-                               客户评价审核
-                            </a>  
-                             </div>
-                           </div> 
-                             <div class="col-xs-6" style="text-align: right;">
-                                  <div class="dataTables_length">
-                             <a href="#admin/article/classifyList" class="btn btn-sm btn-info"  >&ensp;返&emsp;回&ensp;</a>                         
-                       </div>
-                    </div>                     
+		<!-- <div class="dataTables_borderWrap"> -->
+		<div>
+			<div class="dataTables_wrapper form-inline no-footer">
+				<div class="row">
+					<div class="col-xs-6">
+						<div class="dataTables_length"><a title="新增"
+							class="btn btn-sm btn-info" href="#admin/article/toAdd"> <i
+								class="ace-icon fa fa-plus align-bottom bigger-125"></i>
+								新&nbsp;增
+						</a></div>
+				</div>
+				          <div class="col-xs-6" style="text-align: right;">
+            <label>
+              <form action="#admin/article/list" onsubmit="listFormSearch(this); return false">
+                <div class="dataTables_length">
+  				<select class="form-control" id="classifyId" name="classifyId" >
+				<option value="0" >请选择资讯类别</option>
+				<c:forEach items="${classifyList}" var="item" varStatus="current">
+                             <option value="${item.id}" <c:if test="${item.id eq query.classifyId}">selected</c:if>>
+						${item.name}</option>
+                         </c:forEach>
+                 </select>	
+                  <input type="search" maxlength="11" class="form-control search-query" name="keyWord" value="${query.keyWord}" placeholder="主题/活动内容">
+                  <button id="search-button" type="submit" class="btn btn-purple btn-sm">
+                    <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>搜索</button>
                 </div>
-                <table class="table table-striped table-bordered table-hover dataTable no-footer">
-                    <thead>
-                    <tr role="row">     
-                                                <th>标题</th>           
-                                                <th>图标</th>           
-                                                <th>关键词</th>           
-                                                <th>标签</th>           
-                                                <th>日期</th>           
-                                                <th>排序号</th>           
-                                                <th>是否启用</th>  
-                                                <th>分类</th>         
-                                                <th>查看次数</th>           
-                                                <th>点赞次数</th>   
-                                                <th>客户评价</th>        
-                                                <th class="sorting_disabled">操作</th>
-                    </tr>
-                    </thead>
+              </form>
+            </label>
+          </div>
+			</div>
+				<table
+				class="table table-striped table-bordered table-hover dataTable no-footer">
+					<thead>
+						<tr role="row">
+							<th>标题</th>
+							<th>图片</th>
+							<th>简介</th>
+							<th>类别</th>
+							<th>是否发布</th>
+							<th class="sorting_disabled">操作</th>
+					</tr>
+				</thead>
 
-                    <tbody>
-                           <c:forEach items="${result}" var="item" varStatus="current"> 
-                            <tr>            
-                                                        <td>${item.name}</td>                         
-                                                        <td><img width="50" height="50" src="${item.icon}"/></td>                         
-                                                        <td>${item.keywords}</td>                         
-                                                        <td>${item.label}</td>                         
-                                                        <td><fmt:formatDate value="${item.date}" pattern="yyyy-MM-dd"/></td>                         
-                                                        <td>${item.sort}</td>                         
-                                                        <td>	
-                                                             <input value="${item.id}" type="checkbox" data-id="${item.id}" class="ace ace-switch ace-switch-5 ajax_switch"
-                                	                         <c:if test="${item.enable > 0}">
-                                	                    	         checked
-                                                             </c:if>/>
-                                                        	<span class="lbl middle"></span>
-                                	                    </td>
-                                	                    <td>${item.classifyName}</td>                      
-                                                        <td>${item.viewCount}</td>                         
-                                                        <td>${item.likeCount}</td>
-                                                        <td>
-                                                         <div>
-                                                           <a title="客户评价" class="blue" href="#admin/articleEvaluation/list?articleId=${item.id}">
-	                                                           <i class="ace-icon fa fa-cog bigger-130"></i>
-	                                                         </a> </div>
-                                                          </td>                         
-                                                        <td>
-                                <div class="hidden-sm hidden-xs action-buttons">
-                                    <a title="修改基本信息" class="green" 
-                                       href="#admin/article/toEdit?id=${item.id}">
-                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                    </a>
-                                    	 <a class="del-item-new red" api-path="/admin/article/delete.do?id=${item.id}" href="javascript:;">
-	                                 <i class="ace-icon fa fa-trash-o bigger-130"></i>
-	                                    </a>
-	                                 
-                                </div>
-                            </td>
-                        </tr>
+					<tbody>
+						<c:forEach items="${result}" var="item" varStatus="current">
+							<tr>
+								<td>${item.title}</td>
+								<td><img style="max-height: 150px; max-width: 150px;"
+									src="${item.image}" /></td>
+								</td>
+								<td><label class="showbrief" content="${item.brief}">
+										<c:choose>
+											<c:when test="${fn:length(item.brief)>20}">${fn:substring(item.brief,0,20)} .....</c:when>
+											<c:otherwise>${item.brief}</c:otherwise>
+										</c:choose>
+								</label></td>
+								<td>${item.classifyName}</td>
+								<td><c:if test="${item.enable eq 1}">是</c:if> <c:if
+										test="${item.enable eq 0}">否</c:if></td>
+								<td>
+									<div class="hidden-sm hidden-xs action-buttons">
+									<c:if test="${item.isOffshelves eq 1}">
+									<a title="发布" class="blue enable" api-path="/admin/article/enable.do?id=${item.id}">发布</a>
+									<a title="修改基本信息" class="green" href="#admin/article/toEdit?id=${item.id}&queryStr=${queryStr}">修改</a>
+				                    <a title="删除" class="hidden-sm hidden-xs action-buttons red delete" api-path="/admin/article/delete.do?id=${item.id}">删除</a>
+				                    </c:if>
+				                    <c:if test="${item.isOffshelves eq 0}">
+                                     <a title="下架" class="hidden-sm hidden-xs action-buttons red offshelves  " api-path="/admin/article/offshelves.do?id=${item.id}">下架</a>
+				                    </c:if>
+										</div>
+							</td>
+							</tr>
 						</c:forEach>
-                    </tbody>
-                </table>    
-                <div class="row">
-                    <div class="col-xs-12">                  
-                       	<%@include file="../page.inc.jsp" %>
-                    </div>
-                </div>          
-            </div>
-        </div>
-    </div>
+				</tbody>
+			</table>
+				<div class="row">
+					<div class="col-xs-12"><%@include file="../page.inc.jsp"%>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 </div>
 
 <!-- page specific plugin scripts -->
@@ -121,82 +107,154 @@
     var scripts = [null, null];
     ace.load_ajax_scripts(scripts, function () {
         //inline scripts related to this page
-        
-         
+        //删除
+         $('.delete').on('click',
+			    function() {
+			        var delUrl = $(this).attr('api-path');
+			        BootstrapDialog.show({
+			            title: '确认删除信息？',
+			            message: '删除信息将不能恢复！',
+			            buttons: [{
+			                id: 'btn-1',
+			                label: '确定',
+			                cssClass: 'btn btn-primary',
+			                action: function(dialogItself) {
+			                    $.get(delUrl, {},
+			                    function(data) {
+			                        data = JSON.parse(data);
+			                        if (parseInt(data["status"]) === 0) {
+			                            dialogItself.setTitle('删除信息失败');
+			                            dialogItself.setMessage(data["message"]);
+			                            dialogItself.setType(BootstrapDialog.TYPE_DANGER);
+			                            dialogItself.getButton('btn-1').remove();
+			                        } else {
+			                            dialogItself.setTitle('成功');
+			                            dialogItself.setMessage("删除信息成功！");
+			                            dialogItself.setType(BootstrapDialog.TYPE_SUCCESS);
+			                            setTimeout(function() {
+			                                dialogItself.close();
+			                            },
+			                            1000);
+			                            setTimeout(function() {
+			                                location.reload(true);
+			                            },
+			                            1500);
+			                        }
+			                    });
+			                }
+			            },
+			            {
+			                label: '取消',
+			                action: function(dialogItself) {
+			                    dialogItself.close();
+			                }
+			            }]
+			        });
+			    });
+				//下架
+			    $('.offshelves').on('click',
+			    function() {
+			        var delUrl = $(this).attr('api-path');
+			        BootstrapDialog.show({
+			            title: '确认下架？',
+			            message: '确认下架该咨讯？！',
+			            buttons: [{
+			                id: 'btn-1',
+			                label: '确定',
+			                cssClass: 'btn btn-primary',
+			                action: function(dialogItself) {
+			                    $.get(delUrl, {},
+			                    function(data) {
+			                        data = JSON.parse(data);
+			                        if (parseInt(data["status"]) === 0) {
+			                            dialogItself.setTitle('下架失败');
+			                            dialogItself.setMessage(data["message"]);
+			                            dialogItself.setType(BootstrapDialog.TYPE_DANGER);
+			                            dialogItself.getButton('btn-1').remove();
+			                        } else {
+			                            dialogItself.setTitle('成功');
+			                            dialogItself.setMessage("下架成功！");
+			                            dialogItself.setType(BootstrapDialog.TYPE_SUCCESS);
+			                            setTimeout(function() {
+			                                dialogItself.close();
+			                            },
+			                            1000);
+			                            setTimeout(function() {
+			                                location.reload(true);
+			                            },
+			                            1500);
+			                        }
+			                    });
+			                }
+			            },
+			            {
+			                label: '取消',
+			                action: function(dialogItself) {
+			                    dialogItself.close();
+			                }
+			            }]
+			        });
+			    });
+			    //下架
+			    $('.enable').on('click',
+			    function() {
+			        var delUrl = $(this).attr('api-path');
+			        BootstrapDialog.show({
+			            title: '确认发布？',
+			            message: '发布后不能撤回！',
+			            buttons: [{
+			                id: 'btn-1',
+			                label: '确定',
+			                cssClass: 'btn btn-primary',
+			                action: function(dialogItself) {
+			                    $.get(delUrl, {},
+			                    function(data) {
+			                        data = JSON.parse(data);
+			                        if (parseInt(data["status"]) === 0) {
+			                            dialogItself.setTitle('发布活动失败');
+			                            dialogItself.setMessage(data["message"]);
+			                            dialogItself.setType(BootstrapDialog.TYPE_DANGER);
+			                            dialogItself.getButton('btn-1').remove();
+			                        } else {
+			                            dialogItself.setTitle('成功');
+			                            dialogItself.setMessage("发布活动成功！");
+			                            dialogItself.setType(BootstrapDialog.TYPE_SUCCESS);
+			                            setTimeout(function() {
+			                                dialogItself.close();
+			                            },
+			                            1000);
+			                            setTimeout(function() {
+			                                location.reload(true);
+			                            },
+			                            1500);
+			                        }
+			                    });
+			                }
+			            },
+			            {
+			                label: '取消',
+			                action: function(dialogItself) {
+			                    dialogItself.close();
+			                }
+			            }]
+			        });
+			    });
+        //展示简介
+	    $('.showbrief').on('click',
+			    function() {
+			        var content = $(this).attr('content');
+			        BootstrapDialog.show({
+			            title: '簡介',
+			            message: content,
+			            buttons: [{
+			                id: 'btn-1',
+			                label: '确定',
+			                cssClass: 'btn btn-primary',
+			                action: function(dialogItself) {
+			                    dialogItself.close();
+			                }
+			            }]
+			        });
+			    });
     });
-   
-     
-             $('.del-item-new').on('click', function () {
-            var delUrl = $(this).attr('api-path');
-            BootstrapDialog.show({
-                title: '确认删除？',
-                message: '删除后将无法恢复！',
-                buttons: [{
-                    label: '确定',
-                    cssClass: 'btn btn-primary',
-                    action: function (dialogItself) {
-                        $.get(delUrl, {},
-                                function (data) {
-                                    data = JSON.parse(data);
-                                    if(parseInt(data["status"]) === 0){
-                                        dialogItself.setTitle('删除失败');
-                                        dialogItself.setMessage(data["message"]);
-                                        dialogItself.setType(BootstrapDialog.TYPE_WARNING);
-                                    }else{
-                                        dialogItself.setTitle('成功');
-                                        dialogItself.setMessage("删除成功！");
-                                        dialogItself.setType(BootstrapDialog.TYPE_SUCCESS);
-                                        setTimeout(function(){
-                                            dialogItself.close();
-                                        }, 1000);
-                                        setTimeout(function(){
-                                            location.reload();
-                                        }, 1500);
-                                    }
-                                });
-                    }
-                }, {
-                    label: '取消',
-                    action: function (dialogItself) {
-                        dialogItself.close();
-                    }
-                }]
-            });
-        });
-         $(".ajax_switch").on('change',function(){
-            var el = $(this);
-            var data = {
-                id:el.attr('data-id'),
-                value:el[0].checked?'1':'0'
-            };
-            
-            $.ajax({
-                url:'/admin/article/enable.do',
-                type:'POST',
-                data:data,
-                dataType: 'json',
-                cache: false,
-                async: false,
-                error: function(){
-                    BootstrapDialog.alert({
-                        title: '错误',
-                        message:'网络错误，请稍后再尝试！',
-                        type: BootstrapDialog.TYPE_DANGER,
-                        callback: function(){setTimeout(function(){el[0].checked = !el[0].checked;},500)}
-                    });
-                },
-                success:function(rd){
-                    if(rd['status'] != 200){
-                        BootstrapDialog.alert({
-                            title: '错误',
-                            message:rd.message,
-                            type: BootstrapDialog.TYPE_DANGER,
-                            callback: function(){setTimeout(function(){el[0].checked = !el[0].checked;},500)}
-                        });
-                    }
-                }
-            })
-        });
-        
-           
 </script>

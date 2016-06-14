@@ -15,9 +15,11 @@ public interface ArticlePraiseService {
 
     public boolean update(ArticlePraise articlePraise);
 
+    public List<ArticlePraise> listByArticleId(Long articleId);
+
     public Page<ArticlePraise> page(ArticlePraiseQuery query, int start, int count);
 
     public List<ArticlePraise> listAll();
 
-    public ArticlePraise getByUser(Long userId, Long articleId);
+    public ArticlePraise getByArticleIdAndUserId(Long articleId, Long userId);
 }
