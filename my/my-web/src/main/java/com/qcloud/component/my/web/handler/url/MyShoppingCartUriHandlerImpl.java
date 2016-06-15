@@ -22,6 +22,8 @@ public class MyShoppingCartUriHandlerImpl extends AbstractUriHandler {
         list.add("/myShoppingCart/listAll.do");
         list.add("/myShoppingCart/listAll4Classify.do");
         list.add("/myShoppingCart/listAll4Merchant.do");
+        list.add("/myShoppingCart/syncList.do");
+        list.add("/myShoppingCart/list4Combination.do");
         // ###############################################
         list.add("/app/myShoppingCart/clear.do");
         list.add("/app/myShoppingCart/reduce.do");
@@ -35,6 +37,8 @@ public class MyShoppingCartUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/myShoppingCart/listAll.do");
         list.add("/app/myShoppingCart/listAll4Classify.do");
         list.add("/app/myShoppingCart/listAll4Merchant.do");
+        list.add("/app/myShoppingCart/syncList.do");
+        list.add("/app/myShoppingCart/list4Combination.do");
         return list;
     }
 
@@ -56,6 +60,9 @@ public class MyShoppingCartUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/myShoppingCart/listAll.do");
         list.add("/app/myShoppingCart/listAll4Classify.do");
         list.add("/app/myShoppingCart/listAll4Merchant.do");
+        //
+        list.add("/app/myShoppingCart/syncList.do");
+        list.add("/app/myShoppingCart/list4Combination.do");
         return list;
     }
 }

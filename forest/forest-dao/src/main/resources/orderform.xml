@@ -1,29 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- 根节点的名字必须是xml -->
 <xml>
 	<module-list code="orderform-auto-change">
-		<item source="10" dest="90" type="1" timeSplit="15"
+		<item source="10" dest="50" type="1" timeSplit="15"
 			timeLimit="normalOrderInvalidLimit" condition="">失效</item>
-		<item source="40" dest="50" type="1" timeSplit="1440"
+			
+		<item source="20" dest="30" type="1" timeSplit="1440"
 			timeLimit="autoSignNormalOrderLimit" condition="">自动签收</item>
-		<item source="50" dest="70" type="1" timeSplit="1440"
-			timeLimit="tradeSuccessLimit" condition="">订单售后过期，自动成功</item>
-		<item source="60" dest="80" type="1" timeSplit="1440" timeLimit="tradeFailLimit"
-			condition="">订单售后完成，自动失败</item>
-		<item source="30" dest="40" type="2" timeSplit="1440"
-			timeLimit="autoSignRefundOrderLimit" condition="">退款单自动签收</item>
-		<item source="50" dest="60" type="3" timeSplit="1440"
-			timeLimit="autoSignReturnOrderLimit" condition="">退货单自动签收</item>
+			
 	</module-list>
 
 	<module-list code="orderform-observer">
 		<!-- 用户订单 开始 -->
 		<item state="10" type="1" observer="addUserOrderFormObserver" variable="">用户订单</item>
 		<item state="-1" type="1" observer="updateUserOrderFormObserver" variable="">用户订单状态</item>
-		<item state="70" type="1" observer="orderSuccessDispatchIntegralObserver" variable="">交易成功,赠送积分</item>	
-		<item state="70" type="2" observer="orderSuccessDispatchComsumptionObserver" variable="">交易成功,赠送兑兑券</item>	
-		<item state="70" type="2" observer="orderSuccessDistributionMerchantObserver" variable="">交易成功,商家交易额分佣</item>	
-		<item state="70" type="3" observer="orderSuccessDistributionMerchandiseObserver" variable="">交易成功,商品分佣</item>	
+		<item state="40" type="1" observer="orderSuccessDispatchIntegralObserver" variable="">交易成功,赠送积分</item>	
+		<item state="40" type="2" observer="orderSuccessDispatchComsumptionObserver" variable="">交易成功,赠送兑兑券</item>	
+		<item state="40" type="2" observer="orderSuccessDistributionMerchantObserver" variable="">交易成功,商家交易额分佣</item>	
+		<item state="40" type="3" observer="orderSuccessDistributionMerchandiseObserver" variable="">交易成功,商品分佣</item>	
 		
 		<!-- 商家订单 开始 -->
 		<item state="10" type="2" observer="addMerchantOrderFormObserver" variable="">商家订单</item>
@@ -42,36 +35,25 @@
 		<!-- 站内信 开始 -->
 		<item state="10" type="1" observer="sendMessageToUserObserver" variable="orderform-normal-user-message-order">下订单：发站内信</item>
 		<item state="20" type="1" observer="sendMessageToUserObserver" variable="orderform-normal-user-message-pay">支付：发站内信</item>
-		<item state="40" type="2" observer="sendMessageToUserObserver" variable="orderform-normal-user-message-shipped">发货：发站内信</item>
-		<item state="50" type="2" observer="sendMessageToUserObserver" variable="orderform-normal-user-message-sign">签收：发站内信</item>		
-		<item state="20" type="2" observer="sendMessageToMerchantObserver" variable="orderform-normal-merchant-message-pay">支付：发站内信</item>
-		<item state="50" type="2" observer="sendMessageToMerchantObserver" variable="orderform-normal-merchant-message-sign">签收：发站内信</item>				
+		<item state="30" type="2" observer="sendMessageToUserObserver" variable="orderform-normal-user-message-shipped">发货：发站内信</item>
+		<item state="40" type="2" observer="sendMessageToUserObserver" variable="orderform-normal-user-message-sign">签收：发站内信</item>		
+		<item state="30" type="2" observer="sendMessageToMerchantObserver" variable="orderform-normal-merchant-message-pay">支付：发站内信</item>
+		<item state="40" type="2" observer="sendMessageToMerchantObserver" variable="orderform-normal-merchant-message-sign">签收：发站内信</item>				
 				
 		<item state="10" type="5" observer="sendMessageToUserObserver" variable="orderform-refund-user-message-apply">申请退款：发站内信</item>
 		<item state="20" type="5" observer="sendMessageToUserObserver" variable="orderform-refund-user-message-agree">同意退款：发站内信</item>
 		<item state="30" type="5" observer="sendMessageToUserObserver" variable="orderform-refund-user-message-refund">商家退款：发站内信</item>
-		<item state="40" type="5" observer="sendMessageToUserObserver" variable="orderform-refund-user-message-confirm">确认退款：发站内信</item>
-		<item state="50" type="5" observer="sendMessageToUserObserver" variable="orderform-refund-user-message-refuse">不同意退款：发站内信</item>		
+		<item state="40" type="5" observer="sendMessageToUserObserver" variable="orderform-refund-user-message-refuse">不同意退款：发站内信</item>		
 		<item state="10" type="5" observer="sendMessageToMerchantObserver" variable="orderform-refund-merchant-message-apply">申请退款：发站内信</item>
-		<item state="40" type="5" observer="sendMessageToMerchantObserver" variable="orderform-refund-merchant-message-confirm">确认退款：发站内信</item>		
 		
 		<item state="10" type="6" observer="sendMessageToUserObserver" variable="orderform-return-user-message-apply">申请退货：发站内信</item>
 		<item state="20" type="6" observer="sendMessageToUserObserver" variable="orderform-return-user-message-agree">同意退货：发站内信</item>
 		<item state="40" type="6" observer="sendMessageToUserObserver" variable="orderform-return-user-message-sign">商家签收：发站内信</item>
 		<item state="50" type="6" observer="sendMessageToUserObserver" variable="orderform-return-user-message-refund">商家退款：发站内信</item>
-		<item state="70" type="6" observer="sendMessageToUserObserver" variable="orderform-return-user-message-refuse">不同意退货：发站内信</item>		
+		<item state="60" type="6" observer="sendMessageToUserObserver" variable="orderform-return-user-message-refuse">不同意退货：发站内信</item>		
 		<item state="10" type="6" observer="sendMessageToMerchantObserver" variable="orderform-return-merchant-message-apply">申请退货：发站内信</item>
 		<item state="30" type="6" observer="sendMessageToMerchantObserver" variable="orderform-return-merchant-message-shipped">用户发货：发站内信</item>
-		<item state="60" type="6" observer="sendMessageToMerchantObserver" variable="orderform-return-merchant-message-confirm">确认退款：发站内信</item>
 							
-		<item state="10" type="7" observer="sendMessageToUserObserver" variable="orderform-exchange-user-message-apply">申请换货：发站内信</item>		
-		<item state="20" type="7" observer="sendMessageToUserObserver" variable="orderform-exchange-user-message-agree">同意换货：发站内信</item>		
-		<item state="40" type="7" observer="sendMessageToUserObserver" variable="orderform-exchange-user-message-sign">商家签收：发站内信</item>		
-		<item state="50" type="7" observer="sendMessageToUserObserver" variable="orderform-exchange-user-message-shipped">商家发货：发站内信</item>		
-		<item state="70" type="7" observer="sendMessageToUserObserver" variable="orderform-exchange-user-message-refuse">不同意换货：发站内信</item>	
-		<item state="10" type="7" observer="sendMessageToMerchantObserver" variable="orderform-exchange-merchant-message-apply">申请退货：发站内信</item>
-		<item state="30" type="7" observer="sendMessageToMerchantObserver" variable="orderform-exchange-merchant-message-shipped">用户发货：发站内信</item>
-		<item state="60" type="7" observer="sendMessageToMerchantObserver" variable="orderform-exchange-merchant-message-confirm">确认收货：发站内信</item>							
 		<!-- 站内信  结束 -->			
 				
 		<!-- 短信 开始 -->
@@ -97,7 +79,7 @@
 		<item state="20" type="4" observer="merchandiseSalesVolumeObserver" variable="">销量</item>
 		<!-- 商品销量 结束 -->
 		<!-- 商品待评价 开始 -->
-		<item state="50" type="3" observer="merchandiseToEvaluationObserver" variable="">商品待评价</item>
+		<item state="40" type="3" observer="merchandiseToEvaluationObserver" variable="">商品待评价</item>
 		<!-- 商品待评价 结束 -->
 		<!-- 商品库存 开始 -->
 		<item state="10" type="3" observer="lockMerchandiseOnLineStockObserver" variable="">锁定库存</item>
@@ -105,30 +87,25 @@
 		<item state="90" type="3" observer="releaseMerchandiseOnLineStockObserver" variable="">订单失效,释放库存</item>
 		<item state="100" type="3" observer="releaseMerchandiseOnLineStockObserver" variable="">订单取消,释放库存</item>
 		<!-- 商品库存 结束 -->
-					
+		
+		<!-- 退款 -->			
 		<item state="10" type="5" observer="addMyAfterSaleAlterOrderObserver" variable="">申请售后--退款,订单状态改变</item>
-		<item state="10" type="6" observer="addMyAfterSaleAlterOrderObserver" variable="">申请售后--退货,订单状态改变</item>
-		<item state="10" type="7" observer="addMyAfterSaleAlterOrderObserver" variable="">申请售后--换货,订单状态改变</item>
-					
-		<item state="10" type="5" observer="alterAfterSaleChangeOrderStateObserver" variable="60">申请售后--退款,订单状态改变</item>
-		<item state="10" type="6" observer="alterAfterSaleChangeOrderStateObserver" variable="60">申请售后--退货,订单状态改变</item>
-		<item state="10" type="7" observer="alterAfterSaleChangeOrderStateObserver" variable="60">申请售后--换货,订单状态改变</item>
-			
-		<item state="50" type="5" observer="alterAfterSaleReturnOrderStateObserver" variables="orderform-observer-alterAfterSaleChangeOrderStateObserver-50-5">申请售后--退款,订单状态改变</item>
-		<item state="70" type="6" observer="alterAfterSaleReturnOrderStateObserver" variables="orderform-observer-alterAfterSaleChangeOrderStateObserver-70-6">申请售后--退货,订单状态改变</item>
-		<item state="70" type="7" observer="alterAfterSaleReturnOrderStateObserver" variables="orderform-observer-alterAfterSaleChangeOrderStateObserver-70-7">申请售后--换货,订单状态改变</item>  
-			
+		
+		<item state="10" type="5" observer="alterAfterSaleChangeOrderStateObserver" variable="60">申请退款--申请退款,总单状态改变成60退款申请中</item>
+		<item state="30" type="5" observer="alterAfterSaleChangeOrderStateObserver" variable="70">申请退款--商家退款,总单状态改变70已关闭</item>
+		<item state="40" type="5" observer="alterAfterSaleChangeOrderStateObserver" variable="60">申请退款--不同意退款,总单状态改变60退款申请中</item>
+		<item state="50" type="5" observer="alterAfterSaleChangeOrderStateObserver" variable="60">申请退款--用户关闭,总单状态改变60退款申请中</item>
+		
 		<item state="20" type="5" observer="releaseRefundOnLineStockObserver" variable="">同意退款,释放库存</item>
 		<item state="20" type="5" observer="orderRefundReturnCouponObserver" variable="">同意退款,返还优惠劵</item>		
-		<item state="40" type="6" observer="releaseReturnOnLineStockObserver" variable="">签收退货,补上库存</item>
+		
+		<!-- 退货 -->
+		<item state="10" type="6" observer="addMyAfterSaleAlterOrderObserver" variable="">申请售后--退货,订单状态改变</item>
+		<item state="70" type="6" observer="alterAfterSaleReturnOrderStateObserver" variables="">申请售后--退货,订单状态改变</item>
+		
+		
 		<item state="40" type="6" observer="releaseReturnOffLineStockObserver" variable="">签收退货,补上库存</item>
 	</module-list>
-	
-
-	
-	<module-list code="orderform-observer-alterAfterSaleChangeOrderStateObserver-50-5">		
-		<item variable="50">非正在退款状态</item>
-	</module-list>	
 	
 	<module-list code="orderform-observer-alterAfterSaleChangeOrderStateObserver-70-6">		
 		<item variable="70">非正在退货状态</item>
@@ -151,9 +128,9 @@
 			userOrderStateDesc="待发货" finish="false">待发货:待发货:待发货
 		</item>
 		
-		<item init="false" orderState="30" orderStateDesc="已发货"
-			merchantOrderState="3" merchantOrderStateDesc="已发货" userOrderState="3"
-			userOrderStateDesc="待签收" finish="false">已发货:已发货:已发货
+		<item init="false" orderState="30" orderStateDesc="待签收"
+			merchantOrderState="3" merchantOrderStateDesc="待签收" userOrderState="3"
+			userOrderStateDesc="待签收" finish="false">待签收:待签收:待签收
 		</item>
 		
 		<item init="false" orderState="40" orderStateDesc="交易成功"
@@ -161,27 +138,27 @@
 			userOrderStateDesc="交易成功" finish="true">交易成功:交易成功：交易成功
 		</item>
 		
-		<item init="false" orderState="50" orderStateDesc="退款中"
-			merchantOrderState="5" merchantOrderStateDesc="退款中" userOrderState="5"
-			userOrderStateDesc="退款中" finish="true">退款中：退款中：退款中
+		<item init="false" orderState="50" orderStateDesc="取消订单"
+			merchantOrderState="5" merchantOrderStateDesc="取消订单" userOrderState="5"
+			userOrderStateDesc="取消订单" finish="true">取消订单：取消：取消
 		</item>
 		
-		<item init="false" orderState="60" orderStateDesc="退货中"
-			merchantOrderState="6" merchantOrderStateDesc="退货中" userOrderState="6"
-			userOrderStateDesc="退货中" finish="true">退货中：退货中：退货中
+		<item init="false" orderState="60" orderStateDesc="退款中"
+			merchantOrderState="6" merchantOrderStateDesc="退款中" userOrderState="2"
+			userOrderStateDesc="退款中" finish="false">退款中：退款中：待发货
 		</item>
 		
-		<item init="false" orderState="70" orderStateDesc="关闭订单"
-			merchantOrderState="7" merchantOrderStateDesc="关闭订单" userOrderState="7"
-			userOrderStateDesc="关闭订单" finish="true">关闭订单：关闭：关闭
+		<item init="false" orderState="70" orderStateDesc="已关闭"
+			merchantOrderState="7" merchantOrderStateDesc="已关闭" userOrderState="7"
+			userOrderStateDesc="已关闭" finish="true">已关闭：已关闭：已关闭
 		</item>
 	</module-list>
 
 	<module-list code="orderform-normal-state-to-after-sale">
 		<item orderState="10" refund="false" return="false" exchange="false"></item>
-		<item orderState="20" refund="true"  return="false"  exchange="false"></item>
+		<item orderState="20" refund="true"  return="false" exchange="false"></item>
 		<item orderState="30" refund="false" return="false" exchange="false"></item>
-		<item orderState="40" refund="true"  return="true"   exchange="false"></item>
+		<item orderState="40" refund="true"  return="true"  exchange="false"></item>
 		<item orderState="50" refund="false" return="false" exchange="false"></item>
 		<item orderState="60" refund="false" return="false" exchange="false"></item>
 		<item orderState="70" refund="false" return="false" exchange="false"></item>
@@ -191,35 +168,26 @@
 		<item chain="orderform-normal-state-chain-1"></item>
 		<item chain="orderform-normal-state-chain-2"></item>
 		<item chain="orderform-normal-state-chain-3"></item>
-		<item chain="orderform-normal-state-chain-4"></item>
-		<item chain="orderform-normal-state-chain-5"></item>
 	</module-list>
 
 	<module-list code="orderform-normal-state-chain-1">
 		<item orderState="10"></item>
-		<item orderState="70"></item>
+		<item orderState="50"></item>
 	</module-list>
 
 	<module-list code="orderform-normal-state-chain-2">
 		<item orderState="10"></item>
 		<item orderState="20"></item>
-		<item orderState="50"></item>
-	</module-list>
-
-	<module-list code="orderform-normal-state-chain-4">
-		<item orderState="10"></item>
-		<item orderState="20"></item>
-		<item orderState="30"></item>
-		<item orderState="40"></item>
-		<item orderState="50"></item>
-	</module-list>
-
-	<module-list code="orderform-normal-state-chain-5">
-		<item orderState="10"></item>
-		<item orderState="20"></item>
-		<item orderState="30"></item>
-		<item orderState="40"></item>
 		<item orderState="60"></item>
+		<item orderState="70"></item>
+	</module-list>
+
+	<module-list code="orderform-normal-state-chain-3">
+		<item orderState="10"></item>
+		<item orderState="20"></item>
+		<item orderState="30"></item>
+		<item orderState="40"></item>
+		<item orderState="70"></item>
 	</module-list>
 
 	<module-list code="orderform-refund-state">
@@ -233,29 +201,39 @@
 		</item>
 		<item init="false" orderState="30" orderStateDesc="商家退款"
 			merchantOrderState="-1" merchantOrderStateDesc="商家退款" userOrderState="3"
-			userOrderStateDesc="商家退款" finish="false">商家退款:商家退款:商家退款
+			userOrderStateDesc="商家退款" finish="true">商家退款:商家退款:商家退款
 		</item>
 		<item init="false" orderState="40" orderStateDesc="不同意退款"
 			merchantOrderState="-1" merchantOrderStateDesc="不同意退款"
 			userOrderState="4" userOrderStateDesc="不同意退款" finish="true">
 			不同意退款:不同意退款：不同意退款
 		</item>
+		<item init="false" orderState="50" orderStateDesc="用户关闭"
+			merchantOrderState="-1" merchantOrderStateDesc="用户关闭" userOrderState="4"
+			userOrderStateDesc="用户关闭" finish="true">用户关闭:用户关闭:用户关闭
+		</item>
 	</module-list>
 
 	<module-list code="orderform-refund-state-chain">
 		<item chain="orderform-refund-state-chain-1"></item>
 		<item chain="orderform-refund-state-chain-2"></item>
+		<item chain="orderform-refund-state-chain-3"></item>
 	</module-list>
 
 	<module-list code="orderform-refund-state-chain-1">
 		<item orderState="10"></item>
-		<item orderState="40"></item>
+		<item orderState="20"></item>
+		<item orderState="30"></item>
 	</module-list>
 
 	<module-list code="orderform-refund-state-chain-2">
 		<item orderState="10"></item>
-		<item orderState="20"></item>
-		<item orderState="30"></item>
+		<item orderState="40"></item>
+	</module-list>
+	
+	<module-list code="orderform-refund-state-chain-3">
+		<item orderState="10"></item>
+		<item orderState="50"></item>
 	</module-list>
 
 	<module-list code="orderform-return-state">
@@ -281,37 +259,37 @@
 		</item>
 		<item init="false" orderState="50" orderStateDesc="商家退款"
 			merchantOrderState="-1" merchantOrderStateDesc="商家退款" userOrderState="15"
-			userOrderStateDesc="商家退款" finish="false">
+			userOrderStateDesc="商家退款" finish="true">
 			商家退款:商家退款：商家退款
 		</item>
-		<item init="false" orderState="60" orderStateDesc="确认收款"
-			merchantOrderState="-1" merchantOrderStateDesc="退货成功" userOrderState="16"
-			userOrderStateDesc="退货成功" finish="true">
-			确认收款:退货成功：退货成功
-		</item>
-		<item init="false" orderState="70" orderStateDesc="不同意退款"
-			merchantOrderState="-1" merchantOrderStateDesc="退款失败" userOrderState="17"
+		<item init="false" orderState="60" orderStateDesc="不同意退款"
+			merchantOrderState="-1" merchantOrderStateDesc="退款失败" userOrderState="16"
 			userOrderStateDesc="退货失败" finish="true">
 			不同意退款:退款失败：退款失败
 		</item>
-		<item init="false" orderState="80" orderStateDesc="重新申请退货"
-			merchantOrderState="-1" merchantOrderStateDesc="重新申请退货"
-			userOrderState="18" userOrderStateDesc="重新申请退货" finish="true">重新申请退货：：
-		</item>
+		<item init="false" orderState="70" orderStateDesc="用户关闭"
+			merchantOrderState="-1" merchantOrderStateDesc="用户关闭" userOrderState="17"
+			userOrderStateDesc="用户关闭" finish="true">用户关闭:用户关闭:用户关闭
+		</item>	
 	</module-list>
 
 	<module-list code="orderform-return-state-chain">
 		<item chain="orderform-return-state-chain-1"></item>
 		<item chain="orderform-return-state-chain-2"></item>
+		<item chain="orderform-return-state-chain-3"></item>
 	</module-list>
 
 	<module-list code="orderform-return-state-chain-1">
 		<item orderState="10"></item>
+		<item orderState="60"></item>
+	</module-list>
+	
+	<module-list code="orderform-return-state-chain-2">
+		<item orderState="10"></item>
 		<item orderState="70"></item>
-		<item orderState="80"></item>
 	</module-list>
 
-	<module-list code="orderform-return-state-chain-2">
+	<module-list code="orderform-return-state-chain-3">
 		<item orderState="10"></item>
 		<item orderState="20"></item>
 		<item orderState="30"></item>
@@ -320,6 +298,7 @@
 		<item orderState="60"></item>
 	</module-list>
 
+	<!-- 无换货 -->
 	<module-list code="orderform-exchange-state">
 		<item init="true" orderState="10" orderStateDesc="申请换货"
 			merchantOrderState="-1" merchantOrderStateDesc="申请换货" userOrderState="21"

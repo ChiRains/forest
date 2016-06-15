@@ -17,6 +17,8 @@ import com.qcloud.component.commoditycenter.entity.MerchandiseEvaluationEntity;
 import com.qcloud.component.commoditycenter.entity.MerchandiseItemEntity;
 import com.qcloud.component.commoditycenter.entity.UnifiedMerchandiseEntity;
 import com.qcloud.component.commoditycenter.exception.CommoditycenterException;
+import com.qcloud.component.commoditycenter.model.CombinationMerchandise;
+import com.qcloud.component.commoditycenter.model.CombinationMerchandiseItem;
 import com.qcloud.component.commoditycenter.model.Merchandise;
 import com.qcloud.component.commoditycenter.model.MerchandiseDealRecord;
 import com.qcloud.component.commoditycenter.model.MerchandiseEvaluation;

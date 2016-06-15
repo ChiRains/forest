@@ -77,6 +77,7 @@ public class CollectOrderServiceImpl implements CollectOrderService {
 
         CollectOrder collectOrder = get(order.getId(), order.getOrderDate());
         if (collectOrder.getState() != state) {
+            collectOrder.setPrestate(collectOrder.getState());
             orderObserverService.doNotify(order, state);
         }
         // 正式线上按交易完成处理

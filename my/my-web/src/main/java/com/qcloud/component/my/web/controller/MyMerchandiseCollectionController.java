@@ -84,7 +84,7 @@ public class MyMerchandiseCollectionController {
         List<MyMerchandiseCollectionVO> voList = myCollectionHandler.toMerchandiseMyCollectionVOList(list);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取我的商品收藏成功.");
-        view.addObject("data", voList);
+        view.addObject("list", voList);
         return view;
     }
 

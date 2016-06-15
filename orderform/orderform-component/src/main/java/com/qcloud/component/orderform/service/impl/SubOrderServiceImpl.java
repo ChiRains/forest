@@ -125,6 +125,7 @@ public class SubOrderServiceImpl implements SubOrderService {
 
         SubOrder subOrder = get(merchantOrder.getId(), merchantOrder.getOrder().getOrderDate());
         if (subOrder.getState() != state) {
+            subOrder.setPrestate(subOrder.getState());
             orderObserverService.doNotify(merchantOrder, state);
         }
         subOrder.setState(state);

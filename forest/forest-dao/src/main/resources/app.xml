@@ -78,7 +78,51 @@
 		<item code="forest-member" 		tips="不是买药 是买健康">会员特卖</item>
 	</module-list>
 	
-	
+	<module-list code="personalcenter-sign-in-rule">
+		<item name="rule">
+			<![CDATA[
+			<p>
+			    <strong>签到规格</strong><br/>
+			</p>			
+			<ol class=" list-paddingleft-2" style="list-style-type: decimal;">
+			    <li>
+			        <p>
+			            用户首次签到可获得5积分
+			        </p>
+			    </li>
+			    <li>
+			        <p>
+			            连续10天签到奖励10积分
+			        </p>
+			    </li>
+			    <li>
+			        <p>
+			            连续30天签到奖励40积分
+			        </p>
+			    </li>
+			    <li>
+			        <p>
+			            连续90天签到奖励135积分
+			        </p>
+			    </li>
+			    <li>
+			        <p>
+			            连续180天签到奖励300积分<br/>
+			        </p>
+			    </li>
+			</ol>					
+			]]>
+		</item>
+		<item name="firstIntegral">5</item>
+		<item name="signIntegralRule">personalcenter-sign-in-integral-rule</item>
+	</module-list>
+
+	<module-list code="personalcenter-sign-in-integral-rule">
+		<item sign="10" integral="10"></item>
+		<item sign="30" integral="40"></item>
+		<item sign="90" integral="135"></item>
+		<item sign="180" integral="300"></item>
+	</module-list>
 	
 	<module-list code="forest-merchant">
 		<item merchant="1010008000011601">大参林商家id</item>

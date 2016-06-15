@@ -295,10 +295,10 @@ public class OrderServiceImpl implements OrderService {
             for (OrderItemEntity orderItemEntity : orderItemList) {
                 orderItemEntity.getOrderItem().setDiscount(orderItemEntity.getDiscount() * discount / 100);
                 // VIP价格
-                Double vipDiscount = commoditycenterClient.getVipDiscount(context.getUser().getId(), orderItemEntity.getOrderItem().getUnifiedMerchandiseId());
-                if (vipDiscount != null && new Double(vipDiscount * 100).longValue() > 0 && vipDiscount < orderItemEntity.getOrderItem().getDiscount()) {
-                    orderItemEntity.getOrderItem().setDiscount(vipDiscount);
-                }
+//                Double vipDiscount = commoditycenterClient.getVipDiscount(context.getUser().getId(), orderItemEntity.getOrderItem().getUnifiedMerchandiseId());
+//                if (vipDiscount != null && new Double(vipDiscount * 100).longValue() > 0 && vipDiscount < orderItemEntity.getOrderItem().getDiscount()) {
+//                    orderItemEntity.getOrderItem().setDiscount(vipDiscount);
+//                }
                 double sum = orderItemEntity.getOrderItem().getDiscount() * orderItemEntity.getNumber();
                 orderItemEntity.getOrderItem().setSum(sum);
                 orderItemEntity.getOrderItem().setCash(sum);

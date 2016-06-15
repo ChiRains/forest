@@ -40,6 +40,17 @@ public class BrandUriHandlerImpl extends AbstractUriHandler {
 
         List<String> list = new ArrayList<String>();
         list.add("/brand/list.do");
+        //
+        list.add("/app/brand/list.do");
+        return list;
+    }
+
+    @Override
+    public List<String> appUris() {
+
+        List<String> list = new ArrayList<String>();
+        //
+        list.add("/app/brand/list.do");
         return list;
     }
 }
