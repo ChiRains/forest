@@ -2,6 +2,7 @@ package com.qcloud.component.publicdata.service.impl;
 
 import java.util.Collections;
 import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,9 +11,9 @@ import com.qcloud.component.autoid.AutoIdGenerator;
 import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.publicdata.EnableType;
 import com.qcloud.component.publicdata.dao.ClassifyDao;
-import com.qcloud.component.publicdata.exception.PublicdataException;
 import com.qcloud.component.publicdata.model.Classify;
 import com.qcloud.component.publicdata.model.query.ClassifyQuery;
+import com.qcloud.component.publicdata.service.ClassifyBsidMaxNumberService;
 import com.qcloud.component.publicdata.service.ClassifyService;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.util.AssertUtil;
@@ -21,31 +22,35 @@ import com.qcloud.pirates.util.AssertUtil;
 public class ClassifyServiceImpl implements ClassifyService {
 
     @Autowired
-    private ClassifyDao         classifyDao;
+    private ClassifyDao                  classifyDao;
 
     @Autowired
-    private AutoIdGenerator     autoIdGenerator;
+    private AutoIdGenerator              autoIdGenerator;
 
-    private static final String ID_KEY = "publicdata_classify";
+    private static final String          ID_KEY = "publicdata_classify";
 
     @Autowired
-    private FileSDKClient       fileSDKClient;
+    private FileSDKClient                fileSDKClient;
+
+    @Autowired
+    private ClassifyBsidMaxNumberService classifyBsidMaxNumberService;
 
     @Override
     public boolean add(Classify classify) {
 
-        Classify c = classifyDao.getByName(classify.getType(), classify.getName());
-        if (c != null) {
-//            throw new PublicdataException("分类名称已经使用." + classify.getName());
-        }
+        // Classify c = classifyDao.getByName(classify.getType(), classify.getName());
+        // if (c != null) {
+        // // throw new PublicdataException("分类名称已经使用." + classify.getName());
+        // }
         List<Classify> list = classifyDao.listChildren(classify.getType(), classify.getParentId());
-        String bsid = calculateBsid(list);
         Classify p = classifyDao.get(classify.getParentId());
         if (p == null) {
+            String bsid = calculateBsid(classify, null);
             classify.setParentId(-1);
             String typeStr = StringUtils.leftPad(String.valueOf(classify.getType()), 2, "0");
             classify.setBsid(typeStr + bsid);
         } else {
+            String bsid = calculateBsid(classify, list);
             classify.setBsid(p.getBsid() + bsid);
         }
         long id = autoIdGenerator.get(ID_KEY);
@@ -57,15 +62,23 @@ public class ClassifyServiceImpl implements ClassifyService {
         return classifyDao.add(classify);
     }
 
-    private String calculateBsid(List<Classify> list) {
+    private String calculateBsid(Classify classify, List<Classify> list) {
 
         int bsid = 0;
-        for (Classify classify : list) {
-            String bsidStr = classify.getBsid();
-            bsidStr = bsidStr.substring(bsidStr.length() - 5, bsidStr.length());
-            int brother = Integer.valueOf(bsidStr);
-            if (brother > bsid) {
-                bsid = brother;
+        while (true) {
+            bsid = classifyBsidMaxNumberService.calculateNextBsid(classify.getParentId(), classify.getType());
+            if (CollectionUtils.isEmpty(list)) {
+                break;
+            }
+            boolean exist = false;
+            for (Classify c : list) {
+                if (c.getBsid().endsWith(String.valueOf(bsid))) {
+                    exist = true;
+                    break;
+                }
+            }
+            if (!exist) {
+                break;
             }
         }
         return StringUtils.leftPad(String.valueOf(bsid + 1), 5, "0");
@@ -85,15 +98,16 @@ public class ClassifyServiceImpl implements ClassifyService {
 
     @Override
     public boolean update(Classify classify) {
-//        Classify temp = classifyDao.getByName(classify.getType(), classify.getName());
-//        if (temp != null&&temp.getId()!=classify.getId()) {
-//            throw new PublicdataException("分类名称已经使用." + classify.getName());
-//        }
+
+        // Classify temp = classifyDao.getByName(classify.getType(), classify.getName());
+        // if (temp != null&&temp.getId()!=classify.getId()) {
+        // throw new PublicdataException("分类名称已经使用." + classify.getName());
+        // }
         Classify c = classifyDao.get(classify.getId());
         if (c.getParentId() != classify.getParentId()) {
             List<Classify> list = classifyDao.listChildren(classify.getType(), classify.getParentId());
             Classify p = classifyDao.get(classify.getParentId());
-            String bsid = calculateBsid(list);
+            String bsid = calculateBsid(classify, list);
             if (p == null) {
                 classify.setParentId(-1);
                 String typeStr = StringUtils.leftPad(String.valueOf(classify.getType()), 2, "0");
