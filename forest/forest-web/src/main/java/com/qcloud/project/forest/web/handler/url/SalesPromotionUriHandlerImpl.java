@@ -30,4 +30,13 @@ public class SalesPromotionUriHandlerImpl extends AbstractUriHandler {
         list.add("/salesPromotion/mallList.do");
         return list;
     }
+
+    @Override
+    public List<String> appUris() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("/app/salesPromotion/getSalesPromotionClassify.do");
+        list.add("/app/salesPromotion/mallList.do");
+        return list;
+    }
 }

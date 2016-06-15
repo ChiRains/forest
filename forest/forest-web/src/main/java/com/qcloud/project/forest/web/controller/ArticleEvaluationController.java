@@ -12,9 +12,9 @@ import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.mvc.FrontAjaxView;
 import com.qcloud.pirates.mvc.FrontPagingView;
 import com.qcloud.pirates.util.AssertUtil;
+import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.pirates.web.page.PPage;
 import com.qcloud.pirates.web.page.PageParameterUtil;
-import com.qcloud.pirates.web.security.annotation.NoReferer;
 import com.qcloud.project.forest.model.ArticleEvaluation;
 import com.qcloud.project.forest.model.query.ArticleEvaluationQuery;
 import com.qcloud.project.forest.service.ArticleEvaluationService;
@@ -33,8 +33,8 @@ public class ArticleEvaluationController {
     @Autowired
     private ArticleEvaluationHandler articleEvaluationHandler;
 
+    @PiratesApp
     @RequestMapping
-    @NoReferer
     public FrontPagingView list(ArticleEvaluationQuery query, PPage pPage) {
 
         AssertUtil.assertNotNull(query.getArticleId(), "资讯ID不能为空");
@@ -46,6 +46,7 @@ public class ArticleEvaluationController {
         return view;
     }
 
+    @PiratesApp
     @RequestMapping
     public FrontAjaxView add(HttpServletRequest request, ArticleEvaluation articleEvaluation) {
 

@@ -32,6 +32,24 @@ public class ArticleEvaluationUriHandlerImpl extends AbstractUriHandler {
 
         List<String> list = new ArrayList<String>();
         list.add("/articleEvaluation/list.do");
+        return list;
+    }
+
+    @Override
+    public List<String> appUris() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("/app/articleEvaluation/list.do");
+        list.add("/app/articleEvaluation/add.do");
+        return list;
+    }
+
+    @Override
+    public List<String> userUris() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("/app/articleEvaluation/add.do");
+        //
         list.add("/articleEvaluation/add.do");
         return list;
     }
