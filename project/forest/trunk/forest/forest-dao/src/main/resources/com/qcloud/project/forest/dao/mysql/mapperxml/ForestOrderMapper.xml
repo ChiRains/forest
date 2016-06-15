@@ -10,4 +10,11 @@
     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
         select count(*) from `forest_forest_order`
     </select> 
+    
+    <select id="getByOrder" parameterType="java.util.HashMap" resultType="ForestOrder">  
+        select * from `forest_forest_order` 
+        where 1=1
+        and `orderId`=#{orderId}
+        
+    </select>  
 </mapper>

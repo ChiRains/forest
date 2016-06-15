@@ -72,4 +72,10 @@ public class ForestOrderDaoCacheImpl implements ForestOrderDao {
 
         return forestOrderDaoMysqlImpl.listAll();
     }
+
+    @Override
+    public ForestOrder getByOrder(long orderId) {
+
+        return forestOrderDaoMysqlImpl.getByOrder(orderId);
+    }
 }

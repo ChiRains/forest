@@ -26,6 +26,7 @@ import com.qcloud.component.my.model.DeliveryMode;
 import com.qcloud.component.my.service.DeliveryModeService;
 import com.qcloud.component.orderform.OrderContext;
 import com.qcloud.component.orderform.OrderContext.OrderDelivery;
+import com.qcloud.component.orderform.OrderformClient;
 import com.qcloud.component.orderform.QOrder;
 import com.qcloud.component.orderform.engine.OrderService;
 import com.qcloud.component.orderform.entity.MerchantOrderEntity;
@@ -36,6 +37,8 @@ import com.qcloud.component.orderform.web.form.OrderForm;
 import com.qcloud.component.orderform.web.form.PrepareOrderForm;
 import com.qcloud.component.orderform.web.vo.OrderCouponVO;
 import com.qcloud.component.orderform.web.vo.OrderExpressVO;
+import com.qcloud.component.orderform.web.vo.personal.OrderCVO;
+import com.qcloud.component.orderform.web.vo.personal.OrderVO;
 import com.qcloud.component.orderform.web.vo.pre.PreMerchantVO;
 import com.qcloud.component.orderform.web.vo.pre.PreOrderItemVO;
 import com.qcloud.component.orderform.web.vo.pre.PreOrderMVO;
@@ -57,9 +60,12 @@ import com.qcloud.pirates.util.StringUtil;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.pirates.web.security.annotation.NoReferer;
+import com.qcloud.project.forest.model.ForestOrder;
 import com.qcloud.project.forest.model.GiftCouponUser;
 import com.qcloud.project.forest.service.ForestOrderService;
 import com.qcloud.project.forest.service.GiftCouponUserService;
+import com.qcloud.project.forest.web.handler.ForestOrderHandler;
+import com.qcloud.project.forest.web.vo.ForestOrderVO;
 import com.qcloud.project.forest.web.vo.OrderGiftCouponVO;
 
 @Controller
@@ -70,6 +76,9 @@ public class ForestOrderController {
 
     @Autowired
     private ForestOrderService    forestOrderService;
+
+    @Autowired
+    private ForestOrderHandler    forestOrderHandler;
 
     @Autowired
     private CommoditycenterClient commoditycenterClient;
@@ -94,6 +103,9 @@ public class ForestOrderController {
 
     @Autowired
     private GiftCouponUserService giftCouponUserService;
+
+    @Autowired
+    private OrderformClient       orderformClient;
 
     @PiratesApp
     @RequestMapping
@@ -193,7 +205,7 @@ public class ForestOrderController {
     @PiratesApp
     @RequestMapping
     @NoReferer
-    public FrontAjaxView order(HttpServletRequest request, OrderForm orderForm, Long giftCouponUser, Date deliveryDate, Long storeId,String prove) {
+    public FrontAjaxView order(HttpServletRequest request, OrderForm orderForm, Long giftCouponUser, Date deliveryDate, Long storeId, String prove) {
 
         AssertUtil.assertNotNull(orderForm.getConsigneeId(), "收货人信息数据不能为空.");
         AssertUtil.assertNotNull(orderForm.getDeliveryId(), "配送信息数据不能为空.");
@@ -204,7 +216,7 @@ public class ForestOrderController {
         AssertUtil.assertNotEmpty(orderForm.getMerchandiseList(), "下订单,商品列表不能为空.");
         OrderContext orderContext = formToContext(user, orderForm, deliveryDate, storeId);
         // OrderEntity orderEntity = orderService.orderNormal(orderContext);
-        QOrder orderEntity = forestOrderService.order(orderContext, giftCouponUser, user, deliveryDate,prove);
+        QOrder orderEntity = forestOrderService.order(orderContext, giftCouponUser, user, deliveryDate, prove);
         FrontAjaxView view = new FrontAjaxView();
         myClient.setDefaultInvoice(user.getId());
         view.setMessage("下订单成功");
@@ -427,5 +439,20 @@ public class ForestOrderController {
         }
         context.setMyCouponMap(myCouponMap);
         return context;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView get(HttpServletRequest request, Long orderId, Date orderDate) {
+
+        AssertUtil.assertNotNull(orderId, "订单ID不能为空.");
+        AssertUtil.assertNotNull(orderDate, "订单日期不能为空.");
+        QOrder order = orderformClient.getOrder(orderId, orderDate);
+        ForestOrder forestOrder = forestOrderService.getByOrder(orderId);
+        ForestOrderVO orderVO = forestOrderHandler.toOrderVO(forestOrder, order);
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("获取订单成功");
+        view.addObject("order", orderVO);
+        return view;
     }
 }

@@ -29,10 +29,10 @@ public interface CommoditycenterClient {
     boolean setVipDiscount(long userId, long unifiedMerchandiseId, double discount);
 
     Double getVipDiscount(long userId, long unifiedMerchandiseId);
-    
+
     Double statMinVipDiscount(Long unifiedMerchandiseId);
 
     Double statMaxVipDiscount(Long unifiedMerchandiseId);
-    
+
     boolean clearUserVipDiscount(long userId);
 }

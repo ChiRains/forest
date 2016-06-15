@@ -1,45 +1,76 @@
 package com.qcloud.project.forest.web.vo;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import com.qcloud.component.marketing.model.CouponItems;
+import com.qcloud.component.orderform.web.vo.personal.OrderItemVO;
+import com.qcloud.project.forest.model.GiftCoupon;
 
 public class ForestOrderVO {
 
-    private long   id;
+    private String                  explain;
 
-    private long   orderId;
+    private List<CombinationItemVO> combinationItemList = new ArrayList<CombinationItemVO>();
 
-    private Date   orderDate;
+    private List<OrderItemVO>       orderItemList       = new ArrayList<OrderItemVO>();
 
-    private String orderNumber;
+    private long                    orderId;
 
-    private long   merchantId;
+    private Date                    orderDate;
 
-    private long   storeId;
+    private String                  orderNumber;
 
-    private long   userId;
+    private long                    merchantId;
 
-    private long   giftCouponId;
+    private long                    storeId;
 
-    private int    state;
+    private GiftCoupon              giftCoupon;
 
-    private Date   deliveryDate;
+    private CouponItems             couponItems;
 
-    private int    deliveryMode;
+    private String                  deliveryDateStr;
 
-    private String prove;
+    private int                     deliveryMode;
+
+    private String                  prove;
+
+    private String                  payDateStr;
+
+    private int                     invoiceType;
+
+    private int                     paymentMode;
+
+    private String                  merchantName;
+
+    private String                  merchantImage;
+
+    // 优惠券面额
+    private double                  counpon;
+
+    // 邮费
+    private double                  postage;
+
+    // 订单金额
+    private double                  sum;
+
+    // 现金
+    private double                  cash;
+
+    // 节省了多少
+    private double                  preferential;
+
+    // 收货人
+    private String                  consignee;
+
+    // 收货地址
+    private String                  address;
+
+    // 收货电话
+    private String                  mobile;
 
     public ForestOrderVO() {
 
-    }
-
-    public void setId(long id) {
-
-        this.id = id;
-    }
-
-    public long getId() {
-
-        return id;
     }
 
     public void setOrderId(long orderId) {
@@ -92,46 +123,6 @@ public class ForestOrderVO {
         return storeId;
     }
 
-    public void setUserId(long userId) {
-
-        this.userId = userId;
-    }
-
-    public long getUserId() {
-
-        return userId;
-    }
-
-    public void setState(int state) {
-
-        this.state = state;
-    }
-
-    public int getState() {
-
-        return state;
-    }
-
-    public long getGiftCouponId() {
-
-        return giftCouponId;
-    }
-
-    public void setGiftCouponId(long giftCouponId) {
-
-        this.giftCouponId = giftCouponId;
-    }
-
-    public Date getDeliveryDate() {
-
-        return deliveryDate;
-    }
-
-    public void setDeliveryDate(Date deliveryDate) {
-
-        this.deliveryDate = deliveryDate;
-    }
-
     public int getDeliveryMode() {
 
         return deliveryMode;
@@ -142,15 +133,203 @@ public class ForestOrderVO {
         this.deliveryMode = deliveryMode;
     }
 
-    
     public String getProve() {
-    
+
         return prove;
     }
 
-    
     public void setProve(String prove) {
-    
+
         this.prove = prove;
+    }
+
+    public String getExplain() {
+
+        return explain;
+    }
+
+    public void setExplain(String explain) {
+
+        this.explain = explain;
+    }
+
+    public List<OrderItemVO> getOrderItemList() {
+
+        return orderItemList;
+    }
+
+    public void setOrderItemList(List<OrderItemVO> orderItemList) {
+
+        this.orderItemList = orderItemList;
+    }
+
+    public List<CombinationItemVO> getCombinationItemList() {
+
+        return combinationItemList;
+    }
+
+    public void setCombinationItemList(List<CombinationItemVO> combinationItemList) {
+
+        this.combinationItemList = combinationItemList;
+    }
+
+    public GiftCoupon getGiftCoupon() {
+
+        return giftCoupon;
+    }
+
+    public void setGiftCoupon(GiftCoupon giftCoupon) {
+
+        this.giftCoupon = giftCoupon;
+    }
+
+    public CouponItems getCouponItems() {
+
+        return couponItems;
+    }
+
+    public void setCouponItems(CouponItems couponItems) {
+
+        this.couponItems = couponItems;
+    }
+
+    public String getDeliveryDateStr() {
+
+        return deliveryDateStr;
+    }
+
+    public void setDeliveryDateStr(String deliveryDateStr) {
+
+        this.deliveryDateStr = deliveryDateStr;
+    }
+
+    public String getPayDateStr() {
+
+        return payDateStr;
+    }
+
+    public void setPayDateStr(String payDateStr) {
+
+        this.payDateStr = payDateStr;
+    }
+
+    public int getInvoiceType() {
+
+        return invoiceType;
+    }
+
+    public void setInvoiceType(int invoiceType) {
+
+        this.invoiceType = invoiceType;
+    }
+
+    public int getPaymentMode() {
+
+        return paymentMode;
+    }
+
+    public void setPaymentMode(int paymentMode) {
+
+        this.paymentMode = paymentMode;
+    }
+
+    public String getMerchantName() {
+
+        return merchantName;
+    }
+
+    public void setMerchantName(String merchantName) {
+
+        this.merchantName = merchantName;
+    }
+
+    public String getMerchantImage() {
+
+        return merchantImage;
+    }
+
+    public void setMerchantImage(String merchantImage) {
+
+        this.merchantImage = merchantImage;
+    }
+
+    public double getCounpon() {
+
+        return counpon;
+    }
+
+    public void setCounpon(double counpon) {
+
+        this.counpon = counpon;
+    }
+
+    public double getPostage() {
+
+        return postage;
+    }
+
+    public void setPostage(double postage) {
+
+        this.postage = postage;
+    }
+
+    public double getSum() {
+
+        return sum;
+    }
+
+    public void setSum(double sum) {
+
+        this.sum = sum;
+    }
+
+    public double getCash() {
+
+        return cash;
+    }
+
+    public void setCash(double cash) {
+
+        this.cash = cash;
+    }
+
+    public double getPreferential() {
+
+        return preferential;
+    }
+
+    public void setPreferential(double preferential) {
+
+        this.preferential = preferential;
+    }
+
+    public String getConsignee() {
+
+        return consignee;
+    }
+
+    public void setConsignee(String consignee) {
+
+        this.consignee = consignee;
+    }
+
+    public String getAddress() {
+
+        return address;
+    }
+
+    public void setAddress(String address) {
+
+        this.address = address;
+    }
+
+    public String getMobile() {
+
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+
+        this.mobile = mobile;
     }
 }

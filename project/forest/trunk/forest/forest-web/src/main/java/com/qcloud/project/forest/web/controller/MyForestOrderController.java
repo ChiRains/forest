@@ -1,4 +1,4 @@
-package com.qcloud.component.my.web.controller;
+package com.qcloud.project.forest.web.controller;
 
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -19,12 +19,16 @@ import com.qcloud.pirates.mvc.FrontAjaxView;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.pirates.web.page.PPage;
 import com.qcloud.pirates.web.page.PageParameterUtil;
+import com.qcloud.project.forest.service.ForestOrderService;
 
 @Controller
-@RequestMapping(value = MyOrderFormController.DIR)
-public class MyOrderFormController {
+@RequestMapping(value = MyForestOrderController.DIR)
+public class MyForestOrderController {
 
-    public static final String DIR = "/myOrderForm";
+    public static final String DIR = "/myForestOrder";
+
+    @Autowired
+    private ForestOrderService forestOrderService;
 
     @Autowired
     private MyOrderFormService myOrderFormService;
@@ -113,5 +117,5 @@ public class MyOrderFormController {
 
     private int[] statOrderStates         = new int[] { 1};
 
-    private int[] statMerchantOrderStates = new int[] { 2, 3, 4};
+    private int[] statMerchantOrderStates = new int[] { 4, 5, 6};
 }

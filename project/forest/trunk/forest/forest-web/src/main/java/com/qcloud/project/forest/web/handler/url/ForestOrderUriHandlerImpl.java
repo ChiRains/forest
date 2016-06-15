@@ -32,6 +32,7 @@ public class ForestOrderUriHandlerImpl extends AbstractUriHandler {
         List<String> list = new ArrayList<String>();
         list.add("/app/forestOrder/prepareOrder.do");
         list.add("/app/forestOrder/order.do");
+        list.add("/app/forestOrder/get.do");
         return list;
     }
 
@@ -41,9 +42,11 @@ public class ForestOrderUriHandlerImpl extends AbstractUriHandler {
         List<String> list = new ArrayList<String>();
         list.add("/forestOrder/prepareOrder.do");
         list.add("/forestOrder/order.do");
+        list.add("/forestOrder/get.do");
         //
         list.add("/app/forestOrder/prepareOrder.do");
         list.add("/app/forestOrder/order.do");
+        list.add("/app/forestOrder/get.do");
         return list;
     }
 }

@@ -3,7 +3,7 @@
 <xml>
 	
 	<module-list code="my-myOrderForm-SqlWherePart">
-		<item><![CDATA[`state` <> 3 and subOrderId = -1 and `state` <> 2 and `state` <> 8 ]]></item>
+		<item><![CDATA[`state` <> 5 and subOrderId = -1 and `state` <> 7  ]]></item>
 	</module-list>
 	
 	<module-list code="my-myOrderForm-View-Order-State">

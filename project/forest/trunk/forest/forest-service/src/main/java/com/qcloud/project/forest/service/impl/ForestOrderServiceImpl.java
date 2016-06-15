@@ -114,4 +114,10 @@ public class ForestOrderServiceImpl implements ForestOrderService {
         add(forestOrder);
         return order;
     }
+
+    @Override
+    public ForestOrder getByOrder(long orderId) {
+
+        return forestOrderDao.getByOrder(orderId);
+    }
 }

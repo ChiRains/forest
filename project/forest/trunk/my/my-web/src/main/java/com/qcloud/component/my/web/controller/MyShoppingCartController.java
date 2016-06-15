@@ -13,6 +13,7 @@ import com.qcloud.component.my.model.MyShoppingCart;
 import com.qcloud.component.my.service.MyShoppingCartService;
 import com.qcloud.component.my.web.handler.MyShoppingCartHandler;
 import com.qcloud.component.my.web.vo.MyShoppingCartClassifyVO;
+import com.qcloud.component.my.web.vo.MyShoppingCartCombinationVO;
 import com.qcloud.component.my.web.vo.MyShoppingCartMerchantVO;
 import com.qcloud.component.my.web.vo.MyShoppingCartVO;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
@@ -252,6 +253,57 @@ public class MyShoppingCartController {
         view.addObject("data", voList);
         view.addObject("total", total);
         view.addObject("sum", sum);
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView syncList(HttpServletRequest request, ListForm idList, ListForm numList) {
+
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        synchronized (String.valueOf(user.getId())) {
+            for (int i = 0; i < idList.getLongList().size(); i++) {
+                long unifiedMerchandiseId = idList.getLongList().get(i);
+                int number = numList.getIntList().get(i);
+                QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(unifiedMerchandiseId);
+                AssertUtil.assertNotNull(unifiedMerchandise, "获取商品信息失败.");
+                MyShoppingCart myShoppingCart = myShoppingCartService.getByUnifiedMerchandise(unifiedMerchandiseId, user.getId());
+                if (myShoppingCart == null) {
+                    myShoppingCart = new MyShoppingCart();
+                    myShoppingCart.setTime(new Date());
+                    myShoppingCart.setNumber(number);
+                    myShoppingCart.setUnifiedMerchandiseId(unifiedMerchandiseId);
+                    myShoppingCart.setMerchantId(unifiedMerchandise.getMerchantId());
+                    myShoppingCart.setMerchantClassifyId(unifiedMerchandise.getList().get(0).getMerchantClassifyId());
+                    myShoppingCart.setUserId(user.getId());
+                    myShoppingCartService.add(myShoppingCart);
+                }
+            }
+        }
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("添加购物车成功.");
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView list4Combination(HttpServletRequest request, PPage pPage) {
+
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        List<MyShoppingCart> list = myShoppingCartService.list(user.getId(), pPage.getPageStart(), pPage.getPageSize());
+        List<MyShoppingCartCombinationVO> voList = myShoppingCartHandler.toVOList4Combination(list);
+        // double sum = 0.0;
+        // for (MyShoppingCartMerchantVO myShoppingCartMerchantVO : voList) {
+        // for (MyShoppingCartVO myShoppingCartVO : myShoppingCartMerchantVO.getMerchandiseList()) {
+        // sum += myShoppingCartVO.getNumber() * myShoppingCartVO.getDiscount();
+        // }
+        // }
+        int total = myShoppingCartService.count(user.getId());
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("获取购物车商品成功.");
+        view.addObject("data", voList);
+        view.addObject("total", total);
+        // view.addObject("sum", sum);
         return view;
     }
 }

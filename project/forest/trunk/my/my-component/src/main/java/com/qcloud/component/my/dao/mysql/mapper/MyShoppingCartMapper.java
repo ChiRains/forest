@@ -11,7 +11,7 @@ import com.qcloud.component.my.model.MyShoppingCart;
 public interface MyShoppingCartMapper {
 
 	@Insert("insert into `${table_name}`(`id`,`userId`,`merchantId`,`merchantClassifyId`,`unifiedMerchandiseId`,`time`,`number`)"
-			+ " values(#{id},#{userId},#{merchantId},#{merchantClassifyId},#{unifiedMerchandiseId},#{time},#{number})")
+			+ " values(#{id},#{userId},#{merchantId},#{merchantClassifyId},#{unifiedMerchandiseId},#{time},#{number}) on DUPLICATE key update number = number + #{number}")
 	public void insert(MyShoppingCart myShoppingCart);
 
 	@Select("select * from `${table_name}` where `id`=#{id}")

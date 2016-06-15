@@ -140,6 +140,7 @@ public class AutoChangeServiceImpl implements AutoChangeService {
                     break;
                 }
             }
+            executeTimeMap.put(autoChangeDefination, new Date());
         }
     }
 

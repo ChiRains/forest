@@ -2,13 +2,10 @@ package com.qcloud.component.personalcenter.web.controller;
 
 import java.util.Date;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.component.personalcenter.model.MySignInDay;
@@ -50,9 +47,9 @@ public class MySignInController {
 
     @Autowired
     private MySignInStatisticsService mySignInStatisticsService;
-    
+
     @Autowired
-    private MySignInRecordService mySignInRecordService;
+    private MySignInRecordService     mySignInRecordService;
 
     @PiratesApp
     @RequestMapping
@@ -91,7 +88,7 @@ public class MySignInController {
             voList = mySignInDayHandler.toVOList(mySignInMonth);
         }
         FrontAjaxView view = new FrontAjaxView();
-        view.setMessage("签到成功.");
+        view.setMessage("查询签到历史成功.");
         view.addObject("voList", voList);
         return view;
     }
@@ -123,11 +120,22 @@ public class MySignInController {
         return view;
     }
 
+    @PiratesApp
     @RequestMapping
     public HtmlView getHtmlRule() {
 
         MySignInRuleConfig mySignInRuleConfig = mySignInRuleConfigService.get();
         HtmlView view = new HtmlView("<style>img{width:100%;} </style>" + mySignInRuleConfig.getRule());
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView getRule() {
+
+        MySignInRuleConfig mySignInRuleConfig = mySignInRuleConfigService.get();
+        FrontAjaxView view = new FrontAjaxView();
+        view.addObject("rule", mySignInRuleConfig.getRule());
         return view;
     }
 }

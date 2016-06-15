@@ -34,7 +34,8 @@ public class ConsigneeController {
     @PiratesApp
     @RequestMapping
     public FrontAjaxView add(HttpServletRequest request, ConsigneeForm consigneeForm, Integer acquiesce) {
-        acquiesce = acquiesce == null || acquiesce < 1 || acquiesce > 2 ? 2 : acquiesce; 
+
+        acquiesce = acquiesce == null || acquiesce < 1 || acquiesce > 2 ? 2 : acquiesce;
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         Consignee consignee = new Consignee();
         consignee.setProvince(consigneeForm.getProvince());
@@ -106,6 +107,11 @@ public class ConsigneeController {
         }
         boolean result = consigneeService.delete(consigneeId);
         AssertUtil.assertTrue(result, "删除收货人信息失败.");
+        List<Consignee> list = consigneeService.listByUser(user.getId());
+        for (Consignee consignee : list) {
+            consigneeService.setDefault(consignee.getId());
+            break;
+        }
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("删除收货人信息成功.");
         return view;
