@@ -300,11 +300,11 @@ public class OrderStateController {
     }
 
     @RequestMapping
-    public FrontAjaxView testExchagneOrderState(OrderStateForm orderStateForm) {
+    public FrontAjaxView testExchagneOrderState(OrderStateForm orderStateForm, Integer state) {
 
-        orderStateService.exchangeOrderState(orderStateForm.getOrderId(), orderStateForm.getOrderDate(), OrderStateType.NORMAL_PAID.getKey(), -1L);
+        orderStateService.exchangeOrderState(orderStateForm.getOrderId(), orderStateForm.getOrderDate(), state, -1L);
         FrontAjaxView view = new FrontAjaxView();
-        view.setMessage("申请换货成功");
+        view.setMessage("成功");
         return view;
     }
 }

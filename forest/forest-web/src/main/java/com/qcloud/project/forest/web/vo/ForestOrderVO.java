@@ -69,6 +69,21 @@ public class ForestOrderVO {
     // 收货电话
     private String                  mobile;
 
+    //
+    private String                  stateStr;
+
+    private int                     state;
+
+    private String                  deliveryModeStr;
+
+    private String                  invoiceTypeStr;
+
+    private String                  paymentModeStr;
+
+    private int                     merchandiseNumber;
+
+    private String                  residualTime;
+
     public ForestOrderVO() {
 
     }
@@ -331,5 +346,75 @@ public class ForestOrderVO {
     public void setMobile(String mobile) {
 
         this.mobile = mobile;
+    }
+
+    public String getDeliveryModeStr() {
+
+        return deliveryModeStr;
+    }
+
+    public void setDeliveryModeStr(String deliveryModeStr) {
+
+        this.deliveryModeStr = deliveryModeStr;
+    }
+
+    public String getInvoiceTypeStr() {
+
+        return invoiceTypeStr;
+    }
+
+    public void setInvoiceTypeStr(String invoiceTypeStr) {
+
+        this.invoiceTypeStr = invoiceTypeStr;
+    }
+
+    public String getPaymentModeStr() {
+
+        return paymentModeStr;
+    }
+
+    public void setPaymentModeStr(String paymentModeStr) {
+
+        this.paymentModeStr = paymentModeStr;
+    }
+
+    public String getStateStr() {
+
+        return stateStr;
+    }
+
+    public void setStateStr(String stateStr) {
+
+        this.stateStr = stateStr;
+    }
+
+    public int getState() {
+
+        return state;
+    }
+
+    public void setState(int state) {
+
+        this.state = state;
+    }
+
+    public int getMerchandiseNumber() {
+
+        return merchandiseNumber;
+    }
+
+    public void setMerchandiseNumber(int merchandiseNumber) {
+
+        this.merchandiseNumber = merchandiseNumber;
+    }
+
+    public String getResidualTime() {
+
+        return residualTime;
+    }
+
+    public void setResidualTime(String residualTime) {
+
+        this.residualTime = residualTime;
     }
 }

@@ -13,6 +13,9 @@ import com.qcloud.component.commoditycenter.QUnifiedMerchandise.MerchandiseType;
 import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.marketing.model.CouponItems;
 import com.qcloud.component.marketing.service.CouponItemsService;
+import com.qcloud.component.my.DeliveryModeType;
+import com.qcloud.component.my.InvoiceType;
+import com.qcloud.component.orderform.PaymentModeType;
 import com.qcloud.component.orderform.QMerchantOrder;
 import com.qcloud.component.orderform.QOrder;
 import com.qcloud.component.orderform.QOrderItem;
@@ -27,6 +30,7 @@ import com.qcloud.project.forest.service.GiftCouponService;
 import com.qcloud.project.forest.web.handler.ForestOrderHandler;
 import com.qcloud.project.forest.model.ForestOrder;
 import com.qcloud.project.forest.model.GiftCoupon;
+import com.qcloud.project.forest.model.key.TypeEnum.ForestOrderState;
 import com.qcloud.project.forest.web.vo.CombinationItemVO;
 import com.qcloud.project.forest.web.vo.ForestOrderVO;
 import com.qcloud.project.forest.web.vo.admin.AdminForestOrderVO;
@@ -90,6 +94,7 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
         ForestOrderVO orderVO = Json.toObject(json, ForestOrderVO.class, true);
         orderVO.setExplain(order.getMerchantOrderList().get(0).getExplain());
         List<QMerchantOrder> merchantOrderList = order.getMerchantOrderList();
+        int merchandiseNumber = 0;
         for (QMerchantOrder qMerchantOrder : merchantOrderList) {
             for (QOrderItem qOrderItem : qMerchantOrder.getOrderItemList()) {
                 List<CombinationItemVO> combinationItemList = new ArrayList<CombinationItemVO>();
@@ -102,6 +107,7 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
                 } else {
                     orderVO.getOrderItemList().add(toOrderItemVO(qOrderItem, unifiedMerchandise));
                 }
+                merchandiseNumber++;
             }
         }
         //
@@ -142,6 +148,14 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
         orderVO.setConsignee(order.getConsignee());
         orderVO.setMobile(order.getMobile());
         orderVO.setAddress(order.getAddress());
+        //
+        orderVO.setState(order.getState());
+        orderVO.setDeliveryModeStr(DeliveryModeType.get(order.getMerchantOrderList().get(0).getDeliveryMode()).getName());
+        orderVO.setPaymentModeStr(PaymentModeType.get(order.getPaymentMode()).getName());
+        orderVO.setResidualTime("23:59:99");
+        orderVO.setStateStr(ForestOrderState.get(order.getState()));
+        orderVO.setInvoiceTypeStr(InvoiceType.get(order.getInvoiceType()).getName());
+        orderVO.setMerchandiseNumber(merchandiseNumber);
         return orderVO;
     }
 

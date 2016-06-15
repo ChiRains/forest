@@ -13,6 +13,10 @@ public class CombinationListVO {
 
     private double                 sum;
 
+    private int                    number;
+
+    private int                    stock;
+
     private List<MyShoppingCartVO> merchandiseList = new ArrayList<MyShoppingCartVO>();
 
     public String getName() {
@@ -63,5 +67,25 @@ public class CombinationListVO {
     public void setUnifiedMerchandiseId(long unifiedMerchandiseId) {
 
         this.unifiedMerchandiseId = unifiedMerchandiseId;
+    }
+
+    public int getNumber() {
+
+        return number;
+    }
+
+    public void setNumber(int number) {
+
+        this.number = number;
+    }
+
+    public int getStock() {
+
+        return stock;
+    }
+
+    public void setStock(int stock) {
+
+        this.stock = stock;
     }
 }
