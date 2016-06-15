@@ -41,7 +41,7 @@ public class ArticleEvaluationController {
         Page<ArticleEvaluation> page = articleEvaluationService.page(query, pPage.getPageStart(), pPage.getPageSize());
         List<ArticleEvaluationVO> list = articleEvaluationHandler.toVOList(page.getData());
         FrontPagingView view = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), page.getCount());
-        view.addObject("result", list);
+        view.setList(list);
         view.setMessage("查询成功");
         return view;
     }
