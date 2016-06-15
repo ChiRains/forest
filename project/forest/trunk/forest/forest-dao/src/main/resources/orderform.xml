@@ -168,6 +168,7 @@
 		<item chain="orderform-normal-state-chain-1"></item>
 		<item chain="orderform-normal-state-chain-2"></item>
 		<item chain="orderform-normal-state-chain-3"></item>
+		<item chain="orderform-normal-state-chain-4"></item>
 	</module-list>
 
 	<module-list code="orderform-normal-state-chain-1">
@@ -188,6 +189,11 @@
 		<item orderState="30"></item>
 		<item orderState="40"></item>
 		<item orderState="70"></item>
+	</module-list>
+	
+	<module-list code="orderform-normal-state-chain-4">
+		<item orderState="60"></item>
+		<item orderState="20"></item>
 	</module-list>
 
 	<module-list code="orderform-refund-state">

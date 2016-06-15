@@ -84,6 +84,9 @@ public class OrderSelecterServiceImpl implements OrderSelecterService {
     private OrderEntity modelToEntity(CollectOrder collectOrder, List<SubOrder> subOrderList, List<OrderItem> orderItemList, List<OrderItemDetail> orderItemDetailList) {
 
         OrderEntity orderEntity = new OrderEntity(collectOrder);
+        orderEntity.setCanRefund(orderConfigService.canRefundInNormal(collectOrder.getState()));
+        orderEntity.setCanReturn(orderConfigService.canReturnInNormal(collectOrder.getState()));
+        orderEntity.setCanExchange(orderConfigService.canExchangeInNormal(collectOrder.getState()));
         // orderEntity.setAddress(collectOrder.getAddress());
         // orderEntity.setConsignee(collectOrder.getConsignee());
         // orderEntity.setDeliveryTimeStr(collectOrder.getDeliveryTimeStr());

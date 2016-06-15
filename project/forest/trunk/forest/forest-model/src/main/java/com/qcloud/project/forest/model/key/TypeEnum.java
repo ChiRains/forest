@@ -210,7 +210,7 @@ public class TypeEnum {
         }
     }
     public enum ForestOrderState {
-        Wait_Receive(1, "待接单"), Wait_Sort(2, "待分拣"), Wait_Send(3, "待配送"), Wait_Sign(4, "待签收"), /* Wait_User_Sure(5, "待用户确认"), */Finished(5, "已完成"), Cancel(6, "取消");
+        Normal_To_Pay(10, "待付款"), Normal_To_Send(20, "待发货"), Normal_To_Receive(30, "待签收"), Normal_Trade_Success(40, "已完成"), Cancel(50, "取消"), Closed(70, "关闭");
 
         private final int    key;
 
@@ -232,7 +232,7 @@ public class TypeEnum {
             return name;
         }
 
-        public static String getValue(int key) {
+        public static String get(int key) {
 
             ForestOrderState orderState[] = ForestOrderState.values();
             for (ForestOrderState type : orderState) {

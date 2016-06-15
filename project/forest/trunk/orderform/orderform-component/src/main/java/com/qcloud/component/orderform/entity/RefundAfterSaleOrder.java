@@ -101,7 +101,7 @@ public class RefundAfterSaleOrder extends AfterSaleOrder {
     @Override
     public AfterSaleType getAfterSaleType() {
 
-        return AfterSaleType.RETURN;
+        return AfterSaleType.REFUND;
     }
 
     @Override

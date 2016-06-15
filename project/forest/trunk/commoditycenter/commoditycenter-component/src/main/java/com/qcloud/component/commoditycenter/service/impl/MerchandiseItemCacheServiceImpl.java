@@ -98,7 +98,7 @@ public class MerchandiseItemCacheServiceImpl implements MerchandiseItemCacheServ
                     }, combinationMerchandiseItem.getMerchandiseItemId(), unifiedMerchandiseId);
                     //
                     merchandiseItemCache.setNumber(combinationMerchandiseItem.getNum());
-                    merchandiseItemCache.setUnifiedMerchandiseId(unifiedMerchandiseId);
+                    // merchandiseItemCache.setUnifiedMerchandiseId(unifiedMerchandiseId);
                     result.add(merchandiseItemCache);
                 }
             } else if (unifiedMerchandise.getType() == UnifiedMerchandiseType.MARKETING.getKey()) {// 促销商品

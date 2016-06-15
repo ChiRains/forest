@@ -221,6 +221,8 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
                 CombinationListVO combination = new CombinationListVO();
                 combination.setName(unifiedMerchandise.getName());
                 combination.setSum(unifiedMerchandise.getDiscount());
+                combination.setNumber(myShoppingCart.getNumber());
+                combination.setStock(unifiedMerchandise.getStock());
                 combination.setUnifiedMerchandiseId(unifiedMerchandise.getId());
                 String desc = unifiedMerchandise.getName();
                 //
