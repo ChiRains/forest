@@ -42,7 +42,6 @@
                     <tr role="row">     
                                                 <th>名称</th>           
                                                 <th>描述</th>
-                                                <th>添加资讯</th>           
                                                 <th class="sorting_disabled">操作</th>
                     </tr>
                     </thead>
@@ -52,19 +51,12 @@
                             <tr>            
                                                         <td>${item.name}</td>                         
                                                         <td>${item.remark}</td>
-                                                        <td> <a title="添加资讯" class="btn btn-sm btn-info"
-                                                            href="#admin/article/list?classifyId=${item.id}">
-                                                         添加资讯
-                                                            </a> </td>                         
                                                         <td>
                                 <div class="hidden-sm hidden-xs action-buttons">
                                     <a title="修改基本信息" class="green" 
                                        href="#admin/article/toEditClassify?id=${item.id}">
                                         <i class="ace-icon fa fa-pencil bigger-130"></i>
                                     </a>	
-                                    <a class="del-item-new red" api-path="/admin/article/deleteClassify.do?id=${item.id}" href="javascript:;">
-	                                 <i class="ace-icon fa fa-trash-o bigger-130"></i>
-	                                </a>						                                 
                                 </div>
                             </td>
                         </tr>

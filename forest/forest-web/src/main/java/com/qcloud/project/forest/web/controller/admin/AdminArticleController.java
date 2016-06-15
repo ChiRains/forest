@@ -195,6 +195,10 @@ public class AdminArticleController {
         return aceAjaxView;
     }
 
+    /**
+     * 资讯类别列表
+     * @return
+     */
     @RequestMapping
     public ModelAndView classifyList() {
 
@@ -204,6 +208,10 @@ public class AdminArticleController {
         return pagingView;
     }
 
+    /**
+     * 跳转到添加资讯类别
+     * @return
+     */
     @RequestMapping
     public ModelAndView toAddClassify() {
 
@@ -211,6 +219,11 @@ public class AdminArticleController {
         return model;
     }
 
+    /**
+     * 提交添加资讯类别
+     * @param classify
+     * @return
+     */
     @RequestMapping
     public ModelAndView addClassify(Classify classify) {
 
@@ -223,6 +236,11 @@ public class AdminArticleController {
         return aceAjaxView;
     }
 
+    /**
+     * 跳转到编辑资讯类别
+     * @param id
+     * @return
+     */
     @RequestMapping
     public ModelAndView toEditClassify(Long id) {
 
@@ -233,6 +251,11 @@ public class AdminArticleController {
         return model;
     }
 
+    /**
+     * 提交编辑资讯类别
+     * @param classify
+     * @return
+     */
     @RequestMapping
     public AceAjaxView editClassify(Classify classify) {
 
