@@ -98,6 +98,7 @@ public class ArticleController {
         return view;
     }
 
+    @PiratesApp
     @RequestMapping
     public FrontAjaxView articlePraise(HttpServletRequest request, Long articleId) {
 

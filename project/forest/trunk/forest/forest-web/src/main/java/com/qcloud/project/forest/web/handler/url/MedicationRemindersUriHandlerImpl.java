@@ -30,6 +30,35 @@ public class MedicationRemindersUriHandlerImpl extends AbstractUriHandler {
     public List<String> whiteNameUris() {
 
         List<String> list = new ArrayList<String>();
+        return list;
+    }
+
+    @Override
+    public List<String> appUris() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("/app/medicationReminders/outerList.do");
+        list.add("/app/medicationReminders/addMedicationReminders.do");
+        list.add("/app/medicationReminders/toEditMedicationReminders.do");
+        list.add("/app/medicationReminders/editMedicationReminders.do");
+        list.add("/app/medicationReminders/deleteMedicationRemindersTheme.do");
+        list.add("/app/medicationReminders/deleteMedicationReminders.do");
+        list.add("/app/medicationReminders/enableMedicationRemindersTheme.do");
+        return list;
+    }
+
+    @Override
+    public List<String> userUris() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("/app/medicationReminders/outerList.do");
+        list.add("/app/medicationReminders/addMedicationReminders.do");
+        list.add("/app/medicationReminders/toEditMedicationReminders.do");
+        list.add("/app/medicationReminders/editMedicationReminders.do");
+        list.add("/app/medicationReminders/deleteMedicationRemindersTheme.do");
+        list.add("/app/medicationReminders/deleteMedicationReminders.do");
+        list.add("/app/medicationReminders/enableMedicationRemindersTheme.do");
+        //
         list.add("/medicationReminders/outerList.do");
         list.add("/medicationReminders/addMedicationReminders.do");
         list.add("/medicationReminders/toEditMedicationReminders.do");

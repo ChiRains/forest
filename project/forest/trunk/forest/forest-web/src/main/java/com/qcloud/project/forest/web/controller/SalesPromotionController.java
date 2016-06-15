@@ -16,7 +16,7 @@ import com.qcloud.component.publicdata.model.Classify;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.mvc.FrontAjaxView;
 import com.qcloud.pirates.mvc.FrontPagingView;
-import com.qcloud.pirates.util.AssertUtil;
+import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.pirates.web.page.PPage;
 import com.qcloud.project.forest.model.key.TypeEnum;
 
@@ -38,6 +38,7 @@ public class SalesPromotionController {
     @Autowired
     private MerchandiseCustomClassificationHandler merchandiseCustomClassificationHandler;
 
+    @PiratesApp
     @RequestMapping
     public FrontAjaxView getSalesPromotionClassify() {
 
@@ -50,6 +51,7 @@ public class SalesPromotionController {
         return frontAjaxView;
     }
 
+    @PiratesApp
     @RequestMapping
     public FrontPagingView mallList(HttpServletRequest request, PPage pPage, MerchandiseCustomClassificationQuery query) {
 

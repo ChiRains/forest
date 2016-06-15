@@ -47,10 +47,24 @@ public class ArticleUriHandlerImpl extends AbstractUriHandler {
     }
 
     @Override
+    public List<String> appUris() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("/app/article/list.do");
+        list.add("/app/article/get.do");
+        list.add("/app/article/getHtmlView.do");
+        list.add("/app/article/articleClassify.do");
+        list.add("/app/article/articlePraise.do");
+        return list;
+    }
+
+    @Override
     public List<String> userUris() {
 
         List<String> list = new ArrayList<String>();
         list.add("/article/articlePraise.do");
+        //
+        list.add("/app/article/articlePraise.do");
         return list;
     }
 }
