@@ -146,8 +146,8 @@ public class AfterSaleStateServiceImpl implements AfterSaleStateService {
 
         boolean ok = check(orderConfigService.refundChain(), refundAfterSaleOrderItem.getState(), state);
         AssertUtil.assertTrue(ok, "退款单项状态跳转有误." + refundAfterSaleOrderItem.getState() + "==》" + state);
-        updateState(refundAfterSaleOrderItem, state, new ReturnStateUpdater());
-        updateParent(refundAfterSaleOrderItem.getAfterSaleOrder(), state, new ReturnStateUpdater());
+        updateState(refundAfterSaleOrderItem, state, new RefundStateUpdater());
+        updateParent(refundAfterSaleOrderItem.getAfterSaleOrder(), state, new RefundStateUpdater());
         return true;
     }
 
@@ -238,12 +238,12 @@ public class AfterSaleStateServiceImpl implements AfterSaleStateService {
         }
     }
     //
-    private class ReturnStateUpdater implements AfterSaleStateUpdater<RefundAfterSaleOrder> {
+    private class ReturnStateUpdater implements AfterSaleStateUpdater<ReturnAfterSaleOrder> {
 
         @Override
-        public boolean update(RefundAfterSaleOrder refundAfterSaleOrder, Long afterSaleId, int state) {
+        public boolean update(ReturnAfterSaleOrder returnAfterSaleOrder, Long afterSaleId, int state) {
 
-            orderObserverService.doNotify(refundAfterSaleOrder, state);
+            orderObserverService.doNotify(returnAfterSaleOrder, state);
             return returnOrderService.update(afterSaleId, state);
         }
 
@@ -254,12 +254,12 @@ public class AfterSaleStateServiceImpl implements AfterSaleStateService {
         }
     }
     //
-    private class RefundStateUpdater implements AfterSaleStateUpdater<ReturnAfterSaleOrder> {
+    private class RefundStateUpdater implements AfterSaleStateUpdater<RefundAfterSaleOrder> {
 
         @Override
-        public boolean update(ReturnAfterSaleOrder returnAfterSaleOrder, Long afterSaleId, int state) {
+        public boolean update(RefundAfterSaleOrder refundAfterSaleOrder, Long afterSaleId, int state) {
 
-            orderObserverService.doNotify(returnAfterSaleOrder, state);
+            orderObserverService.doNotify(refundAfterSaleOrder, state);
             return refundOrderService.update(afterSaleId, state);
         }
 
