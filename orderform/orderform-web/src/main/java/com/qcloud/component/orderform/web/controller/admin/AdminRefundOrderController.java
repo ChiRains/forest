@@ -61,27 +61,23 @@ public class AdminRefundOrderController {
     @Autowired
     private RefundOrderItemHandler refundOrderItemHandler;
 
-//    @Autowired
-//    private AdminFilterService     adminFilterService;
-//
-//    @Autowired
-//    private TokenClient            tokenClient;
-
-//    @Autowired
-//    private StoreMemberService     storeMemberService;
-
+    // @Autowired
+    // private AdminFilterService adminFilterService;
+    //
+    // @Autowired
+    // private TokenClient tokenClient;
+    // @Autowired
+    // private StoreMemberService storeMemberService;
     @Autowired
     private SubOrderService        subOrderService;
 
     @Autowired
     private StoreService           storeService;
 
-//    @Autowired
-//    private MerchantMemberService  merchantMemberService;
-
-//    @Autowired
-//    private CollectOrderService    collectOrderService;
-
+    // @Autowired
+    // private MerchantMemberService merchantMemberService;
+    // @Autowired
+    // private CollectOrderService collectOrderService;
     @Autowired
     private OrderItemService       orderItemService;
 
@@ -96,15 +92,8 @@ public class AdminRefundOrderController {
     public ModelAndView list(HttpServletRequest request, Integer pageNum, RefundOrderQuery query) {
 
         int state = query.getState();
-        query.setState(getChangeState(state));
-        
-//        long memberId = getMemberId(request);
-//        long storeId = getStoreId(memberId);
-        
         QStore store = PageParameterUtil.getParameterValues(request, SellercenterClient.STORE_LOGIN_PARAMETER_KEY);
-        
         query.setStoreId(store.getId());
-        
         final int PAGE_SIZE = 10;
         pageNum = RequestUtil.getPageid(pageNum);
         int start = NumberUtil.getPageStart(pageNum, PAGE_SIZE);
@@ -249,55 +238,12 @@ public class AdminRefundOrderController {
         return view;
     }
 
-//    private long getMemberId(HttpServletRequest request) {
-//
-//        String tokenId = adminFilterService.getTokenId(request);
-//        AssertUtil.assertNotEmpty(tokenId, "获取用户登录信息失败.");
-//        String idStr = tokenClient.get(tokenId);
-//        AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
-//        long memberId = Long.parseLong(idStr);
-//        return memberId;
-//    }
-//
-//    private long getMerchant(Long memberId) {
-//
-//        long merchantId = 0;
-//        HashMap where = new HashMap();
-//        where.put("memberId", memberId);
-//        List<MerchantMember> merchantMember = merchantMemberService.listByMember(memberId);
-//        if (merchantMember.size() > 0) {
-//            merchantId = merchantMember.get(0).getMerchantId();
-//        } else {
-//            AssertUtil.assertTrue(false, "当前登录用户不是商家!");
-//        }
-//        return merchantId;
-//    }
-//
-//    private long getStoreId(Long memberId) {
-//
-//        long storeId = 0;
-//        HashMap where = new HashMap();
-//        where.put("memberId", memberId);
-//        StoreMember storeMember = storeMemberService.get(where);
-//        if (storeMember != null) {
-//            storeId = storeMember.getStoreId();
-//        } else {
-//            AssertUtil.assertTrue(false, "当前登录用户不属于门店!");
-//        }
-//        return storeId;
-//    }
-
     @RequestMapping
     @NoReferer
     public ModelAndView list4Merchant(HttpServletRequest request, Integer pageNum, RefundOrderQuery query) {
 
         int state = query.getState();
-        query.setState(getChangeState(state));
-//        long memberId = getMemberId(request);
-//        long merchantId = getMerchant(memberId);
-        
         QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
-        
         query.setMerchantId(merchant.getId());
         final int PAGE_SIZE = 10;
         pageNum = RequestUtil.getPageid(pageNum);
@@ -311,39 +257,6 @@ public class AdminRefundOrderController {
         pagingView.addObject("state", query.getState());
         pagingView.addObject("query", query);
         return pagingView;
-    }
-
-    // TODO
-    private static int getChangeState(int Qstate) {
-
-        int state = 0;
-        switch (Qstate) {
-        case 1:
-            state = RefundOrderStateType.REFUND.getKey();
-            break;
-        case 2:
-            state = RefundOrderStateType.REFUND_REFUSE.getKey();
-            break;
-        case 3:
-            // state = RefundOrderStateType.REFUND_FAIL.getKey();
-            break;
-        case 4:
-            state = RefundOrderStateType.REFUND_CONFIRM.getKey();
-            break;
-        case 5:
-            state = RefundOrderStateType.REFUND_PAID.getKey();
-            break;
-        case 6:
-            state = RefundOrderStateType.REFUND_CONFIRM_PAID.getKey();
-            break;
-        case 7:
-            // state = RefundOrderStateType.REFUND_SUCCESS.getKey();
-            break;
-        default:
-            state = Qstate;
-            break;
-        }
-        return state;
     }
 
     @RequestMapping

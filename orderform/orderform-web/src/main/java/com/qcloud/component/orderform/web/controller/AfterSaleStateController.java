@@ -151,6 +151,21 @@ public class AfterSaleStateController {
         return view;
     }
 
+    // 买家取消申请
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView cancelRefund(HttpServletRequest request, Long refundId) {
+
+        RefundOrder refundOrder = refundOrderService.get(refundId);
+        AssertUtil.assertNotNull(refundOrder, "退款单不存在." + refundId);
+        MerchantOrderEntity merchantOrder = orderSelecterService.getMerchantOrder(refundOrder.getSubOrderId(), refundOrder.getOrderDate());
+        RefundAfterSaleOrder refundAfterSaleOrder = afterSaleSelecterService.getRefundOrder(merchantOrder, refundId);
+        afterSaleStateService.exchangeRefundOrderState(refundAfterSaleOrder, RefundOrderStateType.REFUND_CLOSE.getKey());
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("取消退款成功");
+        return view;
+    }
+
     // ******************************************************************
     // 卖家确认退货
     @PiratesApp
