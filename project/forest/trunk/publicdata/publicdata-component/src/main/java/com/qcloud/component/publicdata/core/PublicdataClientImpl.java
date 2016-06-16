@@ -257,7 +257,13 @@ public class PublicdataClientImpl implements PublicdataClient {
     @Override
     public List<QClassify> listClassifyForTree(ClassifyType type) {
 
-        List<Classify> list = listClassify(type);
+        return listClassifyForTree(type, false);
+    }
+
+    @Override
+    public List<QClassify> listClassifyForTree(ClassifyType type, boolean includeDisable) {
+
+        List<Classify> list = listClassify(type, includeDisable);
         List<QClassify> qList = new ArrayList<QClassify>();
         for (Classify classify : list) {
             Classify p = ClassifyUtils.getParent(list, classify.getParentId());
@@ -273,12 +279,6 @@ public class PublicdataClientImpl implements PublicdataClient {
             }
         }
         return qList;
-    }
-
-    @Override
-    public List<QClassify> listClassifyForTree(ClassifyType type, boolean includeDisable) {
-
-        return null;
     }
 
     private void fillTree(QClassify qc, List<Classify> list) {
@@ -631,7 +631,13 @@ public class PublicdataClientImpl implements PublicdataClient {
     @Override
     public List<QClassify> listLeafClassify(Long type) {
 
-        List<Classify> classifyList = listClassify(type);
+        return listLeafClassify(type, false);
+    }
+
+    @Override
+    public List<QClassify> listLeafClassify(Long type, boolean includeDisable) {
+
+        List<Classify> classifyList = listClassify(type, includeDisable);
         List<QClassify> qList = new ArrayList<QClassify>();
         for (Classify classify : classifyList) {
             boolean isLeaf = true;
@@ -652,11 +658,5 @@ public class PublicdataClientImpl implements PublicdataClient {
             }
         }
         return qList;
-    }
-
-    @Override
-    public List<QClassify> listLeafClassify(Long type, boolean includeDisable) {
-
-        return null;
     }
 }
