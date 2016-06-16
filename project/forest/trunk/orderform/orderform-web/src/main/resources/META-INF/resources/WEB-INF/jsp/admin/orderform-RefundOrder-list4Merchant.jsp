@@ -41,13 +41,9 @@
 		                                   	 状态
 		                                   	 <select class="form-control" id="state" name="state">
 	                                        	<option value="0">请选择</option>
-			                                   		 <option <c:if test="${state==710}"> selected </c:if> value="1">申请退款</option>			                                   		
-			                                   		 <option <c:if test="${state==720}"> selected </c:if> value="2">门店不同意退款</option>			                                   		
-			                                   		 <option <c:if test="${state==730}"> selected </c:if> value="3">退款失败</option>			                                   		
-			                                   		 <option <c:if test="${state==740}"> selected </c:if> value="4">门店同意退款</option>			                                   		
-			                                   		 <option <c:if test="${state==750}"> selected </c:if> value="5">公司退款</option>			                                   		
-			                                   		 <option <c:if test="${state==760}"> selected </c:if> value="6">买家确认退款</option>			                                   		
-			                                   		 <option <c:if test="${state==770}"> selected </c:if> value="7">退款成功</option>			                                   		
+	                                        	<c:forEach var="state" items="${orderStateType}" >
+	                                        		 <option <c:if test="${state.key==query.state}"> selected </c:if> value="${state.key}">${state.name}</option>			                         
+	                                        	</c:forEach>
 			                                </select>
 				                      		&nbsp;&nbsp;
 	                                   		<button type="submit" class="btn btn-purple btn-sm">
@@ -63,13 +59,13 @@
                 <table class="table table-striped table-bordered table-hover dataTable no-footer">
                     <thead>
                     <tr role="row">     
-                    							<th>总单ID</th>  
-                                                <th>子单ID</th>           
-                                                <th>用户</th>           
-                                                <th>退款单号</th>      
-                                                <th>申请退款时间</th>  
-                    							<th>状态</th>  
-                                                <th class="sorting_disabled">操作</th>
+    							<th>总单ID</th>  
+                                <th>子单ID</th>           
+                                <th>用户</th>           
+                                <th>退款单号</th>      
+                                <th>申请退款时间</th>  
+    							<th>状态</th>  
+                                <th class="sorting_disabled">操作</th>
                     </tr>
                     </thead>
 

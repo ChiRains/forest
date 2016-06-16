@@ -33,13 +33,13 @@
 						<td>订单状态：</td>
 						<td>
 							<span class="label
-	                        	<c:if test="${order.state eq 513}">
+	                        	<c:if test="${order.state eq 40}">
 	                        		label-success arrowed
 	                        	</c:if>
-	                        	<c:if test="${order.state eq 520}">
+	                        	<c:if test="${order.state eq 50}">
 	                        		label-info arrowed-in-right arrowed
 	                        	</c:if>
-	                        	<c:if test="${order.state eq 530}">
+	                        	<c:if test="${order.state eq 60}">
 	                        		label-inverse
 	                        	</c:if>">
 	                        	<c:forEach items="${orderStateType}" var="item" varStatus="current">
@@ -81,17 +81,6 @@
 						</tr>
 					</thead>
 					<tbody>
-				<%--		<c:forEach items="${orderItems}" var="item"  varStatus="current">
-							<tr>
-								<td class="center">${current.index}</td>
-								<td>${item.name}</td>
-								<td><img width="50" height="50" src="${item.image}"></td>
-								<td>${item.number}</td>
-								<td>
-									${item.specifications}
-								</td>
-							</tr>
-						</c:forEach>--%>
 						<%-- 2015年11月21日14:08:42 --%>
 						<c:forEach items="${orderItemsCombinationRecords}" var="item"  varStatus="current">
 							<c:if test="${fn:length(item.itemDetails)!=1}">
@@ -167,19 +156,19 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="dataTables_length" align="right">
-                         <%--   <c:if test="${order.state ==710}">
-                         	 <a title="同意退款" class="btn btn-sm btn-success agree" href="javascript:;"
-                             	api-path="/afterSaleState/confirmRefund.do?refundId=${order.id}">
-                            	<i class="ace-icon glyphicon glyphicon-send align-center bigger-125"></i>同意退款</a>
-                         
-                           	 <a title="拒绝退款" class="btn btn-sm btn-success disagree" href="javascript:;"
-                             	api-path="/afterSaleState/refuseRefund.do?refundId=${order.id}">
-                            	<i class="ace-icon glyphicon glyphicon-send align-center bigger-125"></i>拒绝退款</a>
-                             </c:if>  --%>
-                            <c:if test="${order.state ==740}"> 
-                             <a title="确认退款" class="btn btn-sm btn-success signed" href="javascript:;"
-                             	api-path="/afterSaleState/payRefund.do?refundId=${order.id}">
-                            	<i class="ace-icon glyphicon glyphicon-send align-center bigger-125"></i>确认退款</a>
+                        	 <c:if test="${order.state ==10}">
+	                             <a title="同意退款" class="btn btn-sm btn-success agree" href="javascript:;"
+	                             	api-path="/afterSaleState/confirmRefund.do?refundId=${order.id}">
+	                            	<i class="ace-icon glyphicon glyphicon-send align-center bigger-125"></i>同意退款</a>
+	                           	 
+	                           	 <a title="拒绝退款" class="btn btn-sm btn-success disagree" href="javascript:;"
+	                             	api-path="/afterSaleState/refuseRefund.do?refundId=${order.id}">
+	                            	<i class="ace-icon glyphicon glyphicon-send align-center bigger-125"></i>拒绝退款</a>
+                             </c:if>
+                            <c:if test="${order.state ==20}"> 
+	                             <a title="确认退款" class="btn btn-sm btn-success signed" href="javascript:;"
+	                             	api-path="/afterSaleState/payRefund.do?refundId=${order.id}">
+	                            	<i class="ace-icon glyphicon glyphicon-send align-center bigger-125"></i>确认退款</a>
                             </c:if>
                             
                              <a title="返回上一页" class="btn btn-sm send2" href="javascript:history.go(-1)">
@@ -262,13 +251,15 @@
             });
         });
         
+        
+        
          $(".agree").on("click", function () {
          	var url = $(this).attr('api-path');
          	var title=$(this).attr('title');
-         	var money=${subOrder.sum};
+         	var money=${returnCash};
             BootstrapDialog.show({
                 title: title,
-                message: $('<div></div>').load('/admin/returnOrder/addMoney.do?sum='+money),
+                message: $('<div></div>').load('/admin/returnOrder/addMoney.do?cash='+money),
                 cssClass: "select-product-dialog",
                 buttons: [{
                     label: '保存',

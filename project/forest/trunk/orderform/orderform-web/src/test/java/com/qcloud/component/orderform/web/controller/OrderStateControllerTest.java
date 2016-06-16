@@ -19,8 +19,8 @@ public class OrderStateControllerTest {
         Map<String, String> map = new HashMap<String, String>();
         // 付款
         map.put("orderDate", "2016-06-15");
-        map.put("state", "40");
-        map.put("orderId", "1010008000012604");
+        map.put("state", "20");
+        map.put("orderId", "1010008000012803");
         System.out.println(HttpUtils.doPost("http://127.0.0.1:8081/orderState/testExchagneOrderState.do?format=true", map));
         // map.put("orderId", "1010006000003602");
         // System.out.println(HttpUtils.doPost("http://127.0.0.1/orderState/testExchagneOrderState.do?format=true", map));

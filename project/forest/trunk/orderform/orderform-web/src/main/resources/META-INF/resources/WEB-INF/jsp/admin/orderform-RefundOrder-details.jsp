@@ -168,7 +168,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="dataTables_length" align="right">
-                            <c:if test="${order.state ==710}">
+                            <c:if test="${order.state ==10}">
                              <a title="同意退款" class="btn btn-sm btn-success agree" href="javascript:;"
                              	api-path="/afterSaleState/confirmRefund.do?refundId=${order.id}">
                             	<i class="ace-icon glyphicon glyphicon-send align-center bigger-125"></i>同意退款</a>

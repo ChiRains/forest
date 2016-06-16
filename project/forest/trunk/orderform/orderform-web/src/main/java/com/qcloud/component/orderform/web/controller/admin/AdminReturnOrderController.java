@@ -260,50 +260,13 @@ public class AdminReturnOrderController {
     }
 
     @RequestMapping
-    public ModelAndView addMoney(double cash) {
+    public ModelAndView addMoney(Double cash) {
 
         ModelAndView view = new ModelAndView("/admin/orderform-ReturnOrder-addMoney");
         view.addObject("cash", cash);
         return view;
     }
 
-//    private long getMemberId(HttpServletRequest request) {
-//
-//        String tokenId = adminFilterService.getTokenId(request);
-//        AssertUtil.assertNotEmpty(tokenId, "获取用户登录信息失败.");
-//        String idStr = tokenClient.get(tokenId);
-//        AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
-//        long memberId = Long.parseLong(idStr);
-//        return memberId;
-//    }
-//
-//    private long getStoreId(Long memberId) {
-//
-//        long storeId = 0;
-//        HashMap where = new HashMap();
-//        where.put("memberId", memberId);
-//        StoreMember storeMember = storeMemberService.get(where);
-//        if (storeMember != null) {
-//            storeId = storeMember.getStoreId();
-//        } else {
-//            AssertUtil.assertTrue(false, "当前登录用户不属于门店!");
-//        }
-//        return storeId;
-//    }
-//
-//    private long getMerchantId(Long memberId) {
-//
-//        long merchantId = 0;
-//        HashMap where = new HashMap();
-//        where.put("memberId", memberId);
-//        List<MerchantMember> merchantMembers = merchantMemberService.listByMember(memberId);
-//        if (merchantMembers.size() > 0) {
-//            merchantId = merchantMembers.get(0).getMerchantId();
-//        } else {
-//            AssertUtil.assertTrue(false, "当前登录用户不是商家!");
-//        }
-//        return merchantId;
-//    }
 
     @RequestMapping
     @NoReferer

@@ -44,6 +44,7 @@ public class AfterSaleStateUriHandlerImpl extends AbstractUriHandler {
         List<String> list = new ArrayList<String>();
         list.add("/afterSaleState/confirmRefund.do");
         list.add("/afterSaleState/confirmPayRefund.do");
+        list.add("/afterSaleState/cancelRefund.do");
         //
         list.add("/afterSaleState/shippedReturn.do");
         list.add("/afterSaleState/confirmPayReturn.do");
@@ -55,6 +56,7 @@ public class AfterSaleStateUriHandlerImpl extends AbstractUriHandler {
         //
         list.add("/app/afterSaleState/confirmRefund.do");
         list.add("/app/afterSaleState/confirmPayRefund.do");
+        list.add("/app/afterSaleState/cancelRefund.do");
         //
         list.add("/app/afterSaleState/shippedReturn.do");
         list.add("/app/afterSaleState/confirmPayReturn.do");
@@ -74,10 +76,12 @@ public class AfterSaleStateUriHandlerImpl extends AbstractUriHandler {
         list.add("/afterSaleState/confirmPayRefund.do");
         list.add("/afterSaleState/refuseRefund.do");
         list.add("/afterSaleState/payRefund.do");
+        list.add("/afterSaleState/cancelRefund.do");
         list.add("/app/afterSaleState/confirmRefund.do");
         list.add("/app/afterSaleState/confirmPayRefund.do");
         list.add("/app/afterSaleState/refuseRefund.do");
         list.add("/app/afterSaleState/payRefund.do");
+        list.add("/app/afterSaleState/cancelRefund.do");
         //
         list.add("/afterSaleState/confirmReturn.do");
         list.add("/afterSaleState/refuseReturn.do");
@@ -109,6 +113,7 @@ public class AfterSaleStateUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/afterSaleState/confirmPayRefund.do");
         list.add("/app/afterSaleState/refuseRefund.do");
         list.add("/app/afterSaleState/payRefund.do");
+        list.add("/app/afterSaleState/cancelRefund.do");
         //
         list.add("/app/afterSaleState/confirmReturn.do");
         list.add("/app/afterSaleState/refuseReturn.do");
