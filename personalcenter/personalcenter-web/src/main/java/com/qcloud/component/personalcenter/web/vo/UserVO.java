@@ -62,9 +62,9 @@ public class UserVO {
     // 会员卡号
     private String membershipCard;
 
-    private int    merchandiseCollectNumber;
-
-    private int    merchantCollectNumber;
+//    private int    merchandiseCollectNumber;
+//
+//    private int    merchantCollectNumber;
 
     public UserVO() {
 
@@ -270,23 +270,23 @@ public class UserVO {
         this.membershipCard = membershipCard;
     }
 
-    public int getMerchandiseCollectNumber() {
-
-        return merchandiseCollectNumber;
-    }
-
-    public void setMerchandiseCollectNumber(int merchandiseCollectNumber) {
-
-        this.merchandiseCollectNumber = merchandiseCollectNumber;
-    }
-
-    public int getMerchantCollectNumber() {
-
-        return merchantCollectNumber;
-    }
-
-    public void setMerchantCollectNumber(int merchantCollectNumber) {
-
-        this.merchantCollectNumber = merchantCollectNumber;
-    }
+//    public int getMerchandiseCollectNumber() {
+//
+//        return merchandiseCollectNumber;
+//    }
+//
+//    public void setMerchandiseCollectNumber(int merchandiseCollectNumber) {
+//
+//        this.merchandiseCollectNumber = merchandiseCollectNumber;
+//    }
+//
+//    public int getMerchantCollectNumber() {
+//
+//        return merchantCollectNumber;
+//    }
+//
+//    public void setMerchantCollectNumber(int merchantCollectNumber) {
+//
+//        this.merchantCollectNumber = merchantCollectNumber;
+//    }
 }

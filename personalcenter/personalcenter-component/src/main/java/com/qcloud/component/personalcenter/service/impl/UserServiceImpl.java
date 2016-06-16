@@ -13,14 +13,11 @@ import com.qcloud.component.account.UnifiedAccountClient;
 import com.qcloud.component.autoid.AutoIdGenerator;
 import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.parameter.ParameterClient;
-import com.qcloud.component.personalcenter.PersonalcenterClient;
-import com.qcloud.component.personalcenter.WealthType;
 import com.qcloud.component.personalcenter.dao.UserDao;
 import com.qcloud.component.personalcenter.exception.PersonalCenterException;
 import com.qcloud.component.personalcenter.model.Grade;
 import com.qcloud.component.personalcenter.model.MembershipCardWarehouse;
 import com.qcloud.component.personalcenter.model.MyWealth;
-import com.qcloud.component.personalcenter.model.RegistrationGiftConfig;
 import com.qcloud.component.personalcenter.model.User;
 import com.qcloud.component.personalcenter.model.key.TypeEnum;
 import com.qcloud.component.personalcenter.model.key.TypeEnum.MembershipCardWarehouseStateType;
@@ -29,7 +26,6 @@ import com.qcloud.component.personalcenter.model.query.UserQuery;
 import com.qcloud.component.personalcenter.service.GradeService;
 import com.qcloud.component.personalcenter.service.MembershipCardWarehouseService;
 import com.qcloud.component.personalcenter.service.MyWealthService;
-import com.qcloud.component.personalcenter.service.RegistrationGiftService;
 import com.qcloud.component.personalcenter.service.UserService;
 import com.qcloud.component.publicdata.SexType;
 import com.qcloud.pirates.core.xml.Xml;
@@ -42,49 +38,40 @@ import com.qcloud.pirates.util.AssertUtil;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private UserDao                           userDao;
+    private UserDao                        userDao;
 
     @Autowired
-    private AutoIdGenerator                   autoIdGenerator;
+    private AutoIdGenerator                autoIdGenerator;
 
-    private static final String               ID_KEY                   = "personalcenter_user";
-
-    @Autowired
-    private ParameterClient                   parameterClient;
-
-    private static final String               USER_PASSWORD_KEY        = "personalcenter-user-default-password";
+    private static final String            ID_KEY                   = "personalcenter_user";
 
     @Autowired
-    private FileSDKClient                     fileSDKClient;
+    private ParameterClient                parameterClient;
+
+    private static final String            USER_PASSWORD_KEY        = "personalcenter-user-default-password";
 
     @Autowired
-    private GradeService                      gradeService;
+    private FileSDKClient                  fileSDKClient;
 
     @Autowired
-    private MyWealthService                   myWealthService;
+    private GradeService                   gradeService;
 
     @Autowired
-    private PersonalcenterClient              personalcenterClient;
+    private MyWealthService                myWealthService;
 
     @Autowired
-    private RegistrationGiftConfigServiceImpl registrationGiftConfigServiceImpl;
+    private UnifiedAccountClient           unifiedAccountClient;
 
     @Autowired
-    private UnifiedAccountClient              unifiedAccountClient;
+    private MembershipCardWarehouseService membershipCardWarehouseService;
 
-    @Autowired
-    private MembershipCardWarehouseService    membershipCardWarehouseService;
+    private static final String            ACCOUNT_TYPE_CODE        = "personalcenter_user_account_type";
 
-    private static final String               ACCOUNT_TYPE_CODE        = "personalcenter_user_account_type";
+    private static final String            MOBILE_TYPE_CODE         = "mobile";
 
-    private static final String               MOBILE_TYPE_CODE         = "mobile";
+    private static final String            EMAIL_TYPE_CODE          = "email";
 
-    private static final String               EMAIL_TYPE_CODE          = "email";
-
-    private static final String               MEMBERSHIPCARD_TYPE_CODE = "membershipCard";
-
-    @Autowired
-    private RegistrationGiftService           registrationGiftService;
+    private static final String            MEMBERSHIPCARD_TYPE_CODE = "membershipCard";
 
     @PostConstruct
     public void init() {
@@ -193,18 +180,6 @@ public class UserServiceImpl implements UserService {
             myWealth.setUserId(user.getId());
             myWealth.setVersion(1L);
             myWealthService.add(myWealth);
-            // 注册赠送
-            RegistrationGiftConfig config = registrationGiftConfigServiceImpl.get();
-            if (config.getBrokerage() != 0) {
-                personalcenterClient.calculateMyWealth(id, WealthType.COMSUMPTION_CURRENCY, config.getBrokerage(), false, "注册送礼");
-            }
-            if (config.getCurrency() != 0) {
-                personalcenterClient.calculateMyWealth(id, WealthType.COMMISSION, config.getCurrency(), false, "注册送礼");
-            }
-            if (config.getPoint() != 0) {
-                personalcenterClient.calculateMyWealth(id, WealthType.INTEGRAL, config.getPoint(), false, "注册送礼");
-            }
-            registrationGiftService.sendGift(id);
         }
         calculateGrade(id);
         return result;
@@ -395,12 +370,12 @@ public class UserServiceImpl implements UserService {
         User user = get(id);
         AssertUtil.assertNotNull(id, "用户不存在." + id);
         // 2016-05-31 好太太-ryuma
-        if(StringUtils.isNotEmpty(email)){
-    		User u = getByEmail(email);
+        if (StringUtils.isNotEmpty(email)) {
+            User u = getByEmail(email);
             AssertUtil.assertTrue(u == null || user.getId() == u.getId(), "电子邮箱已经使用." + email);
-    	}
-        if(enableAccountType(EMAIL_TYPE_CODE)){
-        	AssertUtil.assertNotEmpty(email, "电子邮箱不能为空.");
+        }
+        if (enableAccountType(EMAIL_TYPE_CODE)) {
+            AssertUtil.assertNotEmpty(email, "电子邮箱不能为空.");
             AssertUtil.assertTrue(!unifiedAccountClient.exist(email), "电子邮箱已使用." + email);
             unifiedAccountClient.updateAccount(user.getEmail(), email);
         }

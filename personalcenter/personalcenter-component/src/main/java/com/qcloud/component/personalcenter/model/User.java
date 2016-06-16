@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import com.qcloud.component.personalcenter.UserNotifyModel;
 
-public class User implements Comparable<User> {
+public class User implements Comparable<User>, UserNotifyModel {
 
     // ID
     private long   id;
