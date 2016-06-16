@@ -171,6 +171,7 @@ public class AdminArticleController {
         Article article = articleService.get(id);
         article.setEnable(1);
         article.setIsOffshelves(0);
+        article.setDate(new Date());
         articleService.update(article);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setUrl(DIR + "/list");

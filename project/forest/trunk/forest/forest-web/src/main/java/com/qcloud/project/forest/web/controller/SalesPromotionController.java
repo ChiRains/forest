@@ -38,6 +38,10 @@ public class SalesPromotionController {
     @Autowired
     private MerchandiseCustomClassificationHandler merchandiseCustomClassificationHandler;
 
+    /**
+     * 获取商品类别
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView getSalesPromotionClassify() {
@@ -51,6 +55,13 @@ public class SalesPromotionController {
         return frontAjaxView;
     }
 
+    /**
+     * 获取商品列表
+     * @param request
+     * @param pPage
+     * @param query
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontPagingView mallList(HttpServletRequest request, PPage pPage, MerchandiseCustomClassificationQuery query) {

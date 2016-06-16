@@ -42,7 +42,6 @@
     <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ArticleUriHandlerImpl"></pirates:uriHandler>
     <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ArticleEvaluationUriHandlerImpl"></pirates:uriHandler>
     <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.MedicationUriHandlerImpl"></pirates:uriHandler>
-    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestModularUriHandlerImpl"></pirates:uriHandler>
 
     <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestUserUriHandlerImpl"></pirates:uriHandler>
     <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestUriHandlerImpl"></pirates:uriHandler>
@@ -52,6 +51,7 @@
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.GiftCouponUserUriHandlerImpl"></pirates:uriHandler>
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.SalesPromotionUriHandlerImpl"></pirates:uriHandler>
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.MedicationRemindersUriHandlerImpl"></pirates:uriHandler>
+   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ModularUriHandlerImpl"></pirates:uriHandler>
 
 
 </beans>

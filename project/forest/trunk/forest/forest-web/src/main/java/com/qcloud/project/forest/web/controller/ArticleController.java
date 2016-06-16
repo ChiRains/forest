@@ -45,6 +45,12 @@ public class ArticleController {
     @Autowired
     private PublicdataClient     publicdataClient;
 
+    /**
+     * 展示资讯列表
+     * @param articleQuery
+     * @param pPage
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontPagingView list(ArticleQuery articleQuery, PPage pPage) {
@@ -60,6 +66,12 @@ public class ArticleController {
         return frontPagingView;
     }
 
+    /**
+     * 获取资讯详情
+     * @param id
+     * @param request
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView get(Long id, HttpServletRequest request) {
@@ -79,6 +91,11 @@ public class ArticleController {
         return view;
     }
 
+    /**
+     * 获取资讯内容
+     * @param id
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public HtmlView getHtmlView(Long id) {
@@ -88,6 +105,10 @@ public class ArticleController {
         return htmlView;
     }
 
+    /**
+     * 资讯类别
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView articleClassify() {
@@ -98,6 +119,12 @@ public class ArticleController {
         return view;
     }
 
+    /**
+     * 资讯点赞
+     * @param request
+     * @param articleId
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView articlePraise(HttpServletRequest request, Long articleId) {

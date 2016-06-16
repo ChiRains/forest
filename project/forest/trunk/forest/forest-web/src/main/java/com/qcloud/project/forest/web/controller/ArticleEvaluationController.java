@@ -33,6 +33,12 @@ public class ArticleEvaluationController {
     @Autowired
     private ArticleEvaluationHandler articleEvaluationHandler;
 
+    /**
+     * 评论列表
+     * @param query
+     * @param pPage
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontPagingView list(ArticleEvaluationQuery query, PPage pPage) {
@@ -46,6 +52,12 @@ public class ArticleEvaluationController {
         return view;
     }
 
+    /**
+     * 添加评论
+     * @param request
+     * @param articleEvaluation
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView add(HttpServletRequest request, ArticleEvaluation articleEvaluation) {
