@@ -28,7 +28,7 @@ public class AdminBrandController {
     @RequestMapping
     public ModelAndView list() {
 
-        List<QClassify> classifyList = publicdataClient.listClassifyForTree((long) BrandType.Brand.getKey());
+        List<QClassify> classifyList = publicdataClient.listClassifyForTree((long) BrandType.Brand.getKey(), true);
         ModelAndView view = new ModelAndView("/admin/commoditycenter-Brand-list");
         view.addObject("list", classifyList);
         view.addObject("type", BrandType.Brand.getKey());

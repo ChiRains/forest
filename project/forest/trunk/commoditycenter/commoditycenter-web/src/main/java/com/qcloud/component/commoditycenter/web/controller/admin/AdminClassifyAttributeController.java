@@ -287,7 +287,7 @@ public class AdminClassifyAttributeController {
         AssertUtil.assertNotNull(id, "id不能为空");
         Classify classify = publicdataClient.getClassify(id);
         AssertUtil.assertNotNull(classify, "指定分类不存在");
-        List<Classify> classifies = publicdataClient.listClassify(classify.getType());
+        List<Classify> classifies = publicdataClient.listClassify(classify.getType(), true);
         List<Classify> listChildrenIncludeMe = new ArrayList<Classify>();
         for (Classify c : classifies) {
             if (c.getBsid().startsWith(classify.getBsid())) {
