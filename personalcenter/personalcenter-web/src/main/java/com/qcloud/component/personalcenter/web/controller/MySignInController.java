@@ -138,4 +138,21 @@ public class MySignInController {
         view.addObject("rule", mySignInRuleConfig.getRule());
         return view;
     }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView simpleSignIn(HttpServletRequest request) {
+
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        boolean result = mySignInDayService.signIn(user.getId());
+        MySignInStatistics mySignInStatistics = mySignInStatisticsService.getByUser(user.getId());
+        AssertUtil.assertNotNull(mySignInStatistics, "签到信息不存在.");
+        int signNumber = mySignInStatistics.getCurrentSignIn();
+        MySignInRecord mySignInRecord = mySignInRecordService.listByUserId(user.getId());
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage(result ? "签到成功" : "已经签到");
+        view.addObject("signNumber", signNumber);
+        view.addObject("giveIntegral", mySignInRecord.getIntegral());
+        return view;
+    }
 }
