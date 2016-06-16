@@ -29,7 +29,7 @@ public class RefundOrderItemDaoCacheImpl implements RefundOrderItemDao {
     @Override
     public RefundOrderItem get(Long id) {
 
-        return CacheLoader.get(refundOrderItemDaoRedisImpl, refundOrderItemDaoMysqlImpl, id);
+        return refundOrderItemDaoMysqlImpl.get( id);
     }
 
     @Override

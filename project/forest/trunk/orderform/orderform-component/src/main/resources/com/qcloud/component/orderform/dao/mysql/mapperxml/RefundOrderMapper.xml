@@ -40,7 +40,7 @@
     </select> 
     
     <select id="listBySubOrder" parameterType="Long" resultType="RefundOrder">  
-        select * from `orderform_refund_order` where `subOrderId`=#{subOrderId} and `state`!=800
+        select * from `orderform_refund_order` where `subOrderId`=#{subOrderId} and (`state`=10 or `state`=20)
     </select> 
     
     <select id="list4ExpireState" parameterType="java.util.HashMap" resultType="RefundOrder">  
