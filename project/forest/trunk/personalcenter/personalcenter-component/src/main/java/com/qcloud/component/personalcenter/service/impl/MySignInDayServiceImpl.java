@@ -43,9 +43,9 @@ public class MySignInDayServiceImpl implements MySignInDayService {
 
     @Autowired
     private MySignInRuleConfigService mySignInRuleConfigService;
-    
+
     @Autowired
-    private MySignInRecordService mySignInRecordService;
+    private MySignInRecordService     mySignInRecordService;
 
     @Override
     public boolean add(MySignInDay mySignInDay) {
@@ -90,9 +90,9 @@ public class MySignInDayServiceImpl implements MySignInDayService {
 
         Date now = new Date();
         MySignInDay mySignInDay = mySignInDayDao.getByDate(userId, now);
-        if(mySignInDay != null){
+        if (mySignInDay != null) {
             return false;
-        }       
+        }
         mySignInDay = new MySignInDay();
         Calendar c0 = Calendar.getInstance();
         c0.setTime(now);
@@ -114,11 +114,6 @@ public class MySignInDayServiceImpl implements MySignInDayService {
             if (mySignInRuleConfig.getFirstIntegral() > 0) {
                 mySignInStatistics.setFirstIntegral(mySignInRuleConfig.getFirstIntegral());
                 personalcenterClient.calculateMyWealth(userId, WealthType.INTEGRAL, mySignInRuleConfig.getFirstIntegral(), false, "首次签到送" + mySignInRuleConfig.getFirstIntegral() + "积分");
-                MySignInRecord mySignInRecord = new MySignInRecord();
-                mySignInRecord.setUserId(userId);
-                mySignInRecord.setIntegral(mySignInRuleConfig.getFirstIntegral());
-                mySignInRecord.setSigntime(now);
-                mySignInRecordService.add(mySignInRecord);
             }
             mySignInStatisticsService.add(mySignInStatistics);
             giveIntegral(mySignInStatistics);
@@ -149,14 +144,18 @@ public class MySignInDayServiceImpl implements MySignInDayService {
             integral = integral - last;
             if (integral > 0) {
                 personalcenterClient.calculateMyWealth(mySignInStatistics.getUserId(), WealthType.INTEGRAL, integral, false, "连续签到" + mySignInStatistics.getCurrentSignIn() + "天送" + integral + "积分");
-                MySignInRecord mySignInRecord = new MySignInRecord();
-                mySignInRecord.setUserId(mySignInStatistics.getUserId());
-                mySignInRecord.setIntegral(integral);
-                mySignInRecord.setSigntime(new Date());
-                mySignInRecordService.add(mySignInRecord);
             }
             resetCurrentSign(mySignInStatistics, mySignInRuleConfig.getList());
         }
+        MySignInRecord mySignInRecord = new MySignInRecord();
+        mySignInRecord.setUserId(mySignInStatistics.getUserId());
+        if (mySignInStatistics.getTotal() == 1) {// 第一次签到
+            mySignInRecord.setIntegral(mySignInRuleConfig.getFirstIntegral());
+        } else {
+            mySignInRecord.setIntegral(integral < 0 ? 0 : integral);
+        }
+        mySignInRecord.setSigntime(new Date());
+        mySignInRecordService.add(mySignInRecord);
         return true;
     }
 
