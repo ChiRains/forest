@@ -6,12 +6,10 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.qcloud.component.filesdk.FileSDKClient;
-import com.qcloud.component.my.MyClient;
 import com.qcloud.component.personalcenter.model.Grade;
 import com.qcloud.component.personalcenter.model.MyWealth;
 import com.qcloud.component.personalcenter.model.User;
 import com.qcloud.component.personalcenter.model.key.TypeEnum.AccountType;
-import com.qcloud.component.personalcenter.model.key.TypeEnum.CollectionType;
 import com.qcloud.component.personalcenter.model.key.TypeEnum.UserStateType;
 import com.qcloud.component.personalcenter.service.GradeService;
 import com.qcloud.component.personalcenter.service.MyCommissionWithdrawCashService;
@@ -40,8 +38,8 @@ public class UserHandlerImpl implements UserHandler {
     @Autowired
     private MyCommissionWithdrawCashService myCommissionWithdrawCashService;
 
-    @Autowired(required = false)
-    private MyClient                        myClient;
+//    @Autowired(required = false)
+//    private MyClient                        myClient;
 
     @Override
     public List<UserVO> toVOList(List<User> list) {
@@ -77,14 +75,14 @@ public class UserHandlerImpl implements UserHandler {
         double withdrawedCommission = myCommissionWithdrawCashService.statWithdrawedCommission(user.getId());
         vo.setWithdrawingCommission(withdrawingCommission);
         vo.setWithdrawedCommission(withdrawedCommission);
-        int merchandiseCollectNumber = 0;
-        int merchantCollectNumber = 0;
-        if (myClient != null) {
-            merchandiseCollectNumber = myClient.statCollection(user.getId(), CollectionType.MERCHANDISE.getKey());
-            merchantCollectNumber = myClient.statCollection(user.getId(), CollectionType.MERCHANT.getKey());
-        }
-        vo.setMerchantCollectNumber(merchantCollectNumber);
-        vo.setMerchandiseCollectNumber(merchandiseCollectNumber);
+//        int merchandiseCollectNumber = 0;
+//        int merchantCollectNumber = 0;
+//        if (myClient != null) {
+//            merchandiseCollectNumber = myClient.statCollection(user.getId(), CollectionType.MERCHANDISE.getKey());
+//            merchantCollectNumber = myClient.statCollection(user.getId(), CollectionType.MERCHANT.getKey());
+//        }
+//        vo.setMerchantCollectNumber(merchantCollectNumber);
+//        vo.setMerchandiseCollectNumber(merchandiseCollectNumber);
         if (StringUtils.isEmpty(user.getHeadImage())) {
             vo.setHeadImage(StringUtil.nullToEmpty(user.getHeadImage()));
         } else {
