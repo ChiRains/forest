@@ -104,24 +104,7 @@
                 })
             }).trigger('resize.chosen');
             
-          //value是当前的值 ,params是传入的参数值
-			 $.validator.addMethod("pD",function(value,element,params){
-				var afterData=$("#afterData").val();
-			   	if(value<afterData){
-			   		return true;
-			   	}else{
-			   	   	return false;
-			   	}
-			},"开始范围必须小于结束范围");
-              
-            $.validator.addMethod("aD",function(value,element,params){
-				var previousData=$("#previousData").val();
-			   	if(value>previousData){
-			   		return true;
-			   	}else{
-			   	   	return false;
-			   	}
-			},"结束范围必须大于开始范围");
+
 			
             //表单验证
             $("#model-form").validate({
@@ -132,12 +115,10 @@
                 previousData:{
                 		required: true,
                 		number:true,
-                		pD:true
                 	},
                 	afterData:{
                 		required: true,
                 		number:true,
-                		aD:true
                 	},
                     name: {
                         required: true
