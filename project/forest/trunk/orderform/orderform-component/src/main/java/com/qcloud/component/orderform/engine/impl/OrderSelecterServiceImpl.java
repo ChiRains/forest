@@ -87,6 +87,8 @@ public class OrderSelecterServiceImpl implements OrderSelecterService {
         orderEntity.setCanRefund(orderConfigService.canRefundInNormal(collectOrder.getState()));
         orderEntity.setCanReturn(orderConfigService.canReturnInNormal(collectOrder.getState()));
         orderEntity.setCanExchange(orderConfigService.canExchangeInNormal(collectOrder.getState()));
+        orderEntity.setUserState(orderConfigService.getNormalPersonalOrderState(collectOrder.getState()));
+        orderEntity.setUserStateStr(orderConfigService.getNormalPersonalOrderStateDesc(collectOrder.getState()));
         // orderEntity.setAddress(collectOrder.getAddress());
         // orderEntity.setConsignee(collectOrder.getConsignee());
         // orderEntity.setDeliveryTimeStr(collectOrder.getDeliveryTimeStr());
