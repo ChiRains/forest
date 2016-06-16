@@ -1,4 +1,4 @@
-package com.qcloud.component.marketing.web.controller;
+package com.qcloud.component.marketing.web.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
