@@ -1,7 +1,9 @@
 package com.qcloud.component.publicdata.service.impl;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -133,9 +135,32 @@ public class ClassifyServiceImpl implements ClassifyService {
         return classifyDao.page(query, start, count);
     }
 
-    public List<Classify> listAll(long type) {
+    public List<Classify> listAll(long type, boolean includeDisable) {
 
-        return classifyDao.listAll(type);
+        Set<String> disableBsidSet = new HashSet<String>();
+        List<Classify> list = classifyDao.listAll(type);
+        List<Classify> result = new ArrayList<Classify>();
+        for (Classify classify : list) {
+            if (!includeDisable && !canShow(classify, disableBsidSet)) {
+                disableBsidSet.add(classify.getBsid());
+                continue;
+            }
+            result.add(classify);
+        }
+        return result;
+    }
+
+    private boolean canShow(Classify classify, Set<String> disableBsidSet) {
+
+        if (classify.getEnable() == EnableType.DISABLE.getKey()) {
+            return false;
+        }
+        for (String str : disableBsidSet) {
+            if (classify.getBsid().indexOf(str) > -1) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Transactional

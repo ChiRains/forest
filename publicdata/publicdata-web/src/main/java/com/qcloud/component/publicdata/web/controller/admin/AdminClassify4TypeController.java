@@ -76,7 +76,7 @@ public class AdminClassify4TypeController {
             String fileSize = publicdataClient.getImageInformationByCode(TypeEnum.PictureType.get(classifyType.getKey()));
             model.addObject("fileSize", fileSize);
         }
-        List<Classify> list = classifyService.listAll(type);
+        List<Classify> list = classifyService.listAll(type, true);
         List<AdminClassifyVO> voList = classifyHandler.toVOList4Admin(list, null, type);
         model.addObject("classifyList", voList);
         return model;
@@ -109,7 +109,7 @@ public class AdminClassify4TypeController {
         AdminClassifyVO adminClassifyVO = classifyHandler.toVO4Admin(classify);
         ModelAndView model = new ModelAndView("/admin/publicdata-Classify4Type-edit");
         model.addObject("classify", adminClassifyVO);
-        List<Classify> list = classifyService.listAll(classify.getType());
+        List<Classify> list = classifyService.listAll(classify.getType(), true);
         List<AdminClassifyVO> voList = classifyHandler.toVOList4Admin(list, classify, classify.getType());
         model.addObject("classifyList", voList);
         ClassifyType classifyType = null;

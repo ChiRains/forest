@@ -93,12 +93,12 @@ public class AdminClassify4TypesController {
 
         ModelAndView model = new ModelAndView("/admin/publicdata-Classify4Types-add");
         model.addObject("type", type);
-        List<Classify> list = classifyService.listAll(type);
+        List<Classify> list = classifyService.listAll(type, true);
         List<AdminClassifyVO> voList = classifyHandler.toVOList4Admin(list, null, type);
         model.addObject("classifyList", voList);
         model.addObject("beanId", beanId);
-        String fileSize=publicdataClient.getImageInformationByCode("shangpinfenlei");
-        model.addObject("fileSize",fileSize);
+        String fileSize = publicdataClient.getImageInformationByCode("shangpinfenlei");
+        model.addObject("fileSize", fileSize);
         return model;
     }
 
@@ -120,7 +120,7 @@ public class AdminClassify4TypesController {
         AdminClassifyVO adminClassifyVO = classifyHandler.toVO4Admin(classify);
         ModelAndView model = new ModelAndView("/admin/publicdata-Classify4Types-edit");
         model.addObject("classify", adminClassifyVO);
-        List<Classify> list = classifyService.listAll(classify.getType());
+        List<Classify> list = classifyService.listAll(classify.getType(), true);
         List<AdminClassifyVO> voList = classifyHandler.toVOList4Admin(list, classify, classify.getType());
         model.addObject("classifyList", voList);
         ClassifyType classifyType = null;
@@ -134,8 +134,8 @@ public class AdminClassify4TypesController {
             model.addObject("typeStr", classifyType.getValue());
         }
         model.addObject("beanId", beanId);
-        String fileSize=publicdataClient.getImageInformationByCode("shangpinfenlei");
-        model.addObject("fileSize",fileSize);
+        String fileSize = publicdataClient.getImageInformationByCode("shangpinfenlei");
+        model.addObject("fileSize", fileSize);
         return model;
     }
 
