@@ -10,6 +10,7 @@ import com.qcloud.component.my.model.query.MyOrderFormQuery;
 import com.qcloud.component.my.service.MyAfterSaleService;
 import com.qcloud.component.my.service.MyOrderFormService;
 import com.qcloud.component.my.web.handler.MyOrderFormHandler;
+import com.qcloud.component.my.web.vo.MyOrderFormListVO;
 import com.qcloud.component.my.web.vo.MyOrderFormMerchandiseVO;
 import com.qcloud.component.my.web.vo.MyOrderFormMerchantVO;
 import com.qcloud.component.my.web.vo.MyOrderFormSimpleVO;
@@ -108,6 +109,21 @@ public class MyOrderFormController {
         int number = myAfterSaleService.stat(user.getId());
         view.addObject(String.valueOf(8), number);
         view.setMessage("查询我的订单数量成功.");
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView list(HttpServletRequest request, MyOrderFormQuery query, PPage pPage) {
+
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        List<MyOrderForm> list = myOrderFormService.list(query, user.getId(), pPage.getPageStart(), pPage.getPageSize());
+        int size = myOrderFormService.count(query, user.getId());
+        List<MyOrderFormListVO> voList = myOrderFormHandler.toVOList4List(list);
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("查询我的订单成功.");
+        view.addObject("data", voList);
+        view.addObject("size", size);
         return view;
     }
 

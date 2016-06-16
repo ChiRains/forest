@@ -2,6 +2,7 @@ package com.qcloud.component.my.web.handler;
 
 import java.util.List;
 import com.qcloud.component.my.model.MyOrderForm;
+import com.qcloud.component.my.web.vo.MyOrderFormListVO;
 import com.qcloud.component.my.web.vo.MyOrderFormMerchandiseVO;
 import com.qcloud.component.my.web.vo.MyOrderFormMerchantVO;
 import com.qcloud.component.my.web.vo.MyOrderFormSimpleVO;
@@ -20,6 +21,8 @@ public interface MyOrderFormHandler {
     List<MyOrderFormMerchantVO> toVOList4Merchant(List<MyOrderForm> list);
 
     List<MyOrderFormMerchandiseVO> toVOList4Merchandise(List<MyOrderForm> list);
+
+    List<MyOrderFormListVO> toVOList4List(List<MyOrderForm> list);
 
     // MyOrderFormMerchantVO toVO4Merchant(MyOrderForm myOrderForm);
     //

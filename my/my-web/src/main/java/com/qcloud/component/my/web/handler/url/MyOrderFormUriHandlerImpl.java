@@ -14,10 +14,12 @@ public class MyOrderFormUriHandlerImpl extends AbstractUriHandler {
         list.add("/myOrderForm/query4Merchandise.do");
         list.add("/myOrderForm/query4Merchant.do");
         list.add("/myOrderForm/statMyOrder.do");
+        list.add("/myOrderForm/list.do");
         list.add("/app/myOrderForm/query.do");
         list.add("/app/myOrderForm/query4Merchandise.do");
         list.add("/app/myOrderForm/query4Merchant.do");
         list.add("/app/myOrderForm/statMyOrder.do");
+        list.add("/app/myOrderForm/list.do");
         return list;
     }
 
@@ -30,6 +32,7 @@ public class MyOrderFormUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/myOrderForm/query4Merchant.do");
         list.add("/app/myOrderForm/statMyOrder.do");
         list.add("/app/myOrderForm/count.do");
+        list.add("/app/myOrderForm/list.do");
         return list;
     }
 }
