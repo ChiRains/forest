@@ -25,5 +25,7 @@
 	
 	<pirates:component-scan base-package="com.qcloud.component.marketing.dao"></pirates:component-scan>
 	<pirates:component-scan base-package="com.qcloud.component.marketing.service"></pirates:component-scan>
-	<pirates:component-scan base-package="com.qcloud.component.marketing.core"></pirates:component-scan>
+	<pirates:component-scan base-package="com.qcloud.component.marketing.core"></pirates:component-scan>	
+	<pirates:component-scan base-package="com.qcloud.component.marketing.notify"></pirates:component-scan>			
+	<pirates:service-notify service="com.qcloud.component.personalcenter.service.impl.UserServiceImpl.add" notify="com.qcloud.component.marketing.notify.RegistrationGiftNotify"></pirates:service-notify>
 </beans>
