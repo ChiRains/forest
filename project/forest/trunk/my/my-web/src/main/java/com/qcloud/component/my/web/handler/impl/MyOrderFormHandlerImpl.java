@@ -9,6 +9,7 @@ import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.my.model.MyOrderForm;
 import com.qcloud.component.my.web.handler.MyOrderFormHandler;
 import com.qcloud.component.my.web.vo.MyMerchantOrderItemVO;
+import com.qcloud.component.my.web.vo.MyOrderFormListVO;
 import com.qcloud.component.my.web.vo.MyOrderFormMerchandiseVO;
 import com.qcloud.component.my.web.vo.MyOrderFormMerchantVO;
 import com.qcloud.component.my.web.vo.MyOrderFormSimpleVO;
@@ -298,5 +299,47 @@ public class MyOrderFormHandlerImpl implements MyOrderFormHandler {
             vo.getMerchantOrderItemList().add(myMerchantOrderItemVO);
         }
         return vo;
+    }
+
+    @Override
+    public List<MyOrderFormListVO> toVOList4List(List<MyOrderForm> list) {
+
+        List<MyOrderFormListVO> voList = new ArrayList<MyOrderFormListVO>();
+        for (MyOrderForm myOrderForm : list) {
+            String json = Json.toJson(myOrderForm);
+            MyOrderFormListVO vo = Json.toObject(json, MyOrderFormListVO.class, true);
+            QOrder order = orderformClient.getOrder(myOrderForm.getOrderId(), myOrderForm.getTime());
+            List<String> imageList = new ArrayList<String>();
+            for (QMerchantOrder merchantOrder : order.getMerchantOrderList()) {
+                for (QOrderItem item : merchantOrder.getOrderItemList()) {
+                    imageList.add(fileSDKClient.getFileServerUrl() + item.getImage());
+                }
+            }
+            vo.setImage(imageList);
+            vo.setOrderNumber(order.getOrderNumber());
+            vo.setSum(NumberUtil.scale(order.getSum(), 2));
+            //
+            vo.setTimeStr(DateUtil.date2String(myOrderForm.getTime()));
+            vo.setState(myOrderForm.getState());
+            vo.setStateStr(order.getUserStateStr());
+            //
+            vo.setSubOrderId(myOrderForm.getSubOrderId());
+            vo.setRemind(false);
+            if (myOrderForm.getSubOrderId() == -1) {
+                QMerchantOrder merchantOrder = order.getMerchantOrderList().get(0);
+                vo.setRemind(!merchantOrder.canRemind());
+            } else {
+                for (QMerchantOrder merchantOrder : order.getMerchantOrderList()) {
+                    if (merchantOrder.getId() == myOrderForm.getSubOrderId()) {
+                        vo.setRemind(!merchantOrder.canRemind());
+                        break;
+                    }
+                }
+            }
+            vo.setAfterSale(order.canApplyAfterSale());
+            vo.setEvaluation(order.canEvaluation());
+            voList.add(vo);
+        }
+        return voList;
     }
 }
