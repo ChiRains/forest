@@ -97,7 +97,7 @@ public class AdminMerchantClassifyController {
     @NoReferer
     public ModelAndView list() {
 
-        List<QClassify> qClassify = publicdataClient.listClassifyForTree(ClassifyType.MERCHANT.getKey());
+        List<QClassify> qClassify = publicdataClient.listClassifyForTree(ClassifyType.MERCHANT.getKey(), true);
         ModelAndView view = new ModelAndView("/admin/sellercenter-MerchantClassify-list");
         view.addObject("qclassify", qClassify);
         view.addObject("classType", ClassifyType.MERCHANT.getKey());
@@ -125,7 +125,7 @@ public class AdminMerchantClassifyController {
         } else {
             int count = 0;
             for (Classify c : listChildrenIncludeMe) {
-                count+=merchantService.count4DeleteByClassifyId(c.getId());
+                count += merchantService.count4DeleteByClassifyId(c.getId());
             }
             if (count > 0) {
                 aceAjaxView.setStatus(0);
