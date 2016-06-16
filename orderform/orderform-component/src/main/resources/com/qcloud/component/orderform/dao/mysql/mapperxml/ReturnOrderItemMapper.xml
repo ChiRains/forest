@@ -12,6 +12,6 @@
     </select>
     
     <select id="listByReturn" parameterType="Long" resultType="ReturnOrderItem">  
-        select * from `orderform_return_order_item` where `returnId`=#{returnId}
+        select * from `orderform_return_order_item` where `returnId`=#{returnId}  and (`state`=10 or `state`=20 or `state`=30 or `state`=40)
     </select>   
 </mapper>
