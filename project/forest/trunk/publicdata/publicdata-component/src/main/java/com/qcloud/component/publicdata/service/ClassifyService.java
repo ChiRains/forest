@@ -17,11 +17,11 @@ public interface ClassifyService {
 
     public Page<Classify> page(ClassifyQuery query, int start, int count);
 
-    public List<Classify> listAll(long type);
+    public List<Classify> listAll(long type, boolean includeDisable);
 
     public boolean sort(Long id, int sort);
 
     public boolean enable(Long id, int enable);
-    
-    public boolean withoutDelete(Long id );
+
+    public boolean withoutDelete(Long id);
 }

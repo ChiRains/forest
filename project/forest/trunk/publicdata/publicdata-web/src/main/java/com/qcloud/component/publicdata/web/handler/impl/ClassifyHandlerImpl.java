@@ -43,7 +43,7 @@ public class ClassifyHandlerImpl implements ClassifyHandler {
     @Override
     public List<AdminClassifyVO> toVOList4Admin(List<Classify> list, long type) {
 
-        List<Classify> allList = classifyService.listAll(type);
+        List<Classify> allList = classifyService.listAll(type, true);
         List<Classify> result = sort(list, list);
         List<AdminClassifyVO> voList = new ArrayList<AdminClassifyVO>();
         for (Classify adminClassify : result) {
@@ -59,7 +59,7 @@ public class ClassifyHandlerImpl implements ClassifyHandler {
     @Override
     public AdminClassifyVO toVO4Admin(Classify classify) {
 
-        List<Classify> allList = classifyService.listAll(classify.getType());
+        List<Classify> allList = classifyService.listAll(classify.getType(), true);
         return toVO4Admin(allList, classify);
     }
 
@@ -100,7 +100,7 @@ public class ClassifyHandlerImpl implements ClassifyHandler {
     @Override
     public List<AdminClassifyVO> toVOList4Admin(List<Classify> list, Classify c, long type) {
 
-        List<Classify> allList = classifyService.listAll(type);
+        List<Classify> allList = classifyService.listAll(type, true);
         // 过滤掉当前以及其下级
         List<Classify> filterList = new ArrayList<Classify>();
         for (Classify classify : list) {

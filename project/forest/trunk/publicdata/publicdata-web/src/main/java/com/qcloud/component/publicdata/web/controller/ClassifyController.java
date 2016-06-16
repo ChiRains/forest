@@ -41,7 +41,7 @@ public class ClassifyController {
         Classify classify = classifyService.get(classifyId);
         AssertUtil.assertNotNull(classify, "分类不存在." + classifyId);
         //
-        List<Classify> allList = classifyService.listAll(classify.getType());
+        List<Classify> allList = classifyService.listAll(classify.getType(), true);
         List<Classify> list = new ArrayList<Classify>();
         Set<Long> idSet = new HashSet<Long>();
         Classify p = classify;

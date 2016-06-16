@@ -35,17 +35,31 @@ public interface PublicdataClient {
 
     List<Classify> listClassify(ClassifyType type);
 
+    List<Classify> listClassify(ClassifyType type, boolean includeDisable);
+
     List<Classify> listClassify(Long type);
+
+    List<Classify> listClassify(Long type, boolean includeDisable);
 
     List<QClassify> listClassifyForTree(Long type);
 
+    List<QClassify> listClassifyForTree(Long type, boolean includeDisable);
+
     List<QClassify> listLeafClassify(Long type);
+
+    List<QClassify> listLeafClassify(Long type, boolean includeDisable);
 
     List<QClassify> listTopClassify(Long type);
 
+    List<QClassify> listTopClassify(Long type, boolean includeDisable);
+
     List<QClassify> listClassifyForTreeByParent(Long parentId, Long type);
 
+    List<QClassify> listClassifyForTreeByParent(Long parentId, Long type, boolean includeDisable);
+
     List<QClassify> listClassifyForTree(ClassifyType type);
+
+    List<QClassify> listClassifyForTree(ClassifyType type, boolean includeDisable);
 
     Classify getClassify(Long id);
 
