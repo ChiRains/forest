@@ -40,6 +40,18 @@ public class MyCollectionUriHandlerImpl extends AbstractUriHandler {
         // ############################################################
         list.add("/myMerchandiseCollection/clearMyCollect.do");
         list.add("/app/myMerchandiseCollection/clearMyCollect.do");
+        // ############################################################
+        // 店铺收藏
+        list.add("/myStoreCollection/list.do");
+        list.add("/app/myStoreCollection/list.do");
+        list.add("/myStoreCollection/collect.do");
+        list.add("/app/myStoreCollection/collect.do");
+        list.add("/myStoreCollection/isCollect.do");
+        list.add("/app/myStoreCollection/isCollect.do");
+        list.add("/myStoreCollection/remove.do");
+        list.add("/app/myStoreCollection/remove.do");
+        list.add("/myStoreCollection/get.do");
+        list.add("/app/myStoreCollection/get.do");
         return list;
     }
 
@@ -61,6 +73,12 @@ public class MyCollectionUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/myMerchantCollection/isCollect.do");
         // ############################################################
         list.add("/app/myMerchandiseCollection/clearMyCollect.do");
+        // 店铺收藏
+        list.add("/app/myStoreCollection/list.do");
+        list.add("/app/myStoreCollection/collect.do");
+        list.add("/app/myStoreCollection/isCollect.do");
+        list.add("/app/myStoreCollection/remove.do");
+        list.add("/app/myStoreCollection/get.do");
         return list;
     }
 }

@@ -99,6 +99,8 @@ public class SellercenterClientImpl implements SellercenterClient {
         storeEntity.setPhone(store.getPhone());
         storeEntity.setMerchantId(store.getMerchantId());
         storeEntity.setSmsMobile(store.getMobile());
+        storeEntity.setLatitude(store.getLatitude());
+        storeEntity.setLongitude(store.getLongitude());
         if (store.getParentId() == Integer.valueOf(-1)) {
             storeEntity.setRoot(true);
         } else {

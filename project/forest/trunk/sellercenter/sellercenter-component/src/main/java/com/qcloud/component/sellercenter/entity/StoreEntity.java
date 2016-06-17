@@ -18,6 +18,20 @@ public class StoreEntity implements QStore {
 
     private String  smsMobile;
 
+    private Double  latitude;
+
+    private Double  longitude;
+
+    public void setLatitude(Double latitude) {
+
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(Double longitude) {
+
+        this.longitude = longitude;
+    }
+
     public void setSmsMobile(String smsMobile) {
 
         this.smsMobile = smsMobile;
@@ -87,5 +101,17 @@ public class StoreEntity implements QStore {
     public String getSmsMobile() {
 
         return smsMobile;
+    }
+
+    @Override
+    public Double getLatitude() {
+
+        return latitude;
+    }
+
+    @Override
+    public Double getLongitude() {
+
+        return longitude;
     }
 }
