@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
+import com.qcloud.component.personalcenter.QGrade;
 import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.pirates.core.json.Json;
 import com.qcloud.pirates.util.DateUtil;
@@ -51,8 +52,10 @@ public class ArticleEvaluationHandlerImpl implements ArticleEvaluationHandler {
         if (articleEvaluation.getUserId() != 0) {
             QUser user = personalcenterClient.getUser(articleEvaluation.getUserId());
             if (user != null) {
+                QGrade grade = user.getGrade();
                 articleEvaluationVO.setUserName(user.getName());// userName
                 articleEvaluationVO.setHeadImage(user.getHeadImage());// 头像
+                articleEvaluationVO.setGradeIcon(grade.getImage());
             }
         }
         return articleEvaluationVO;
