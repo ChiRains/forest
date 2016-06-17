@@ -15,4 +15,8 @@ public interface QStore {
     Long getMerchantId();
 
     String getSmsMobile();
+
+    Double getLatitude();
+
+    Double getLongitude();
 }

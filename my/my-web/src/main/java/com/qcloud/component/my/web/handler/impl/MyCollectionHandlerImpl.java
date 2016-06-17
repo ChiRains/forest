@@ -11,11 +11,14 @@ import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.my.model.MyCollection;
 import com.qcloud.component.my.web.handler.MyCollectionHandler;
 import com.qcloud.component.my.web.vo.CollectionMerchant;
+import com.qcloud.component.my.web.vo.CollectionStore;
 import com.qcloud.component.my.web.vo.MerchantHotMerchandise;
 import com.qcloud.component.my.web.vo.MyMerchandiseCollectionVO;
 import com.qcloud.component.my.web.vo.MyMerchantCollectionVO;
+import com.qcloud.component.my.web.vo.MyStoreCollectionVO;
 import com.qcloud.component.my.web.vo.admin.AdminMyCollectionVO;
 import com.qcloud.component.sellercenter.QMerchant;
+import com.qcloud.component.sellercenter.QStore;
 import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.pirates.core.json.Json;
 import com.qcloud.pirates.util.DateUtil;
@@ -119,5 +122,34 @@ public class MyCollectionHandlerImpl implements MyCollectionHandler {
         vo.setTimeStr(DateUtil.date2String(myCollection.getTime()));
         vo.setCollectionMerchant(collectionMerchant);
         return vo;
+    }
+
+    @Override
+    public List<MyStoreCollectionVO> toStoreMyCollectionVOList(List<MyCollection> list) {
+
+        List<MyStoreCollectionVO> voList = new ArrayList<MyStoreCollectionVO>();
+        for (MyCollection myCollection : list) {
+            voList.add(toStoreMyCollectionVO(myCollection));
+        }
+        return voList;
+    }
+
+    @Override
+    public MyStoreCollectionVO toStoreMyCollectionVO(MyCollection myCollection) {
+
+        String json = Json.toJson(myCollection);
+        MyStoreCollectionVO myStoreCollectionVO = Json.toObject(json, MyStoreCollectionVO.class, true);
+        myStoreCollectionVO.setStoreId(myCollection.getObjId());
+        myStoreCollectionVO.setTimeStr(DateUtil.date2String(myCollection.getTime()));
+        QStore store = sellercenterClient.getStore(myCollection.getObjId());
+        CollectionStore collectionStore = new CollectionStore();
+        collectionStore.setAddress(store.getAddress());
+        collectionStore.setId(store.getId());
+        collectionStore.setName(store.getName());
+        collectionStore.setPhone(store.getPhone());
+        collectionStore.setLatitude(store.getLatitude());
+        collectionStore.setLongitude(store.getLongitude());
+        myStoreCollectionVO.setCollectionStore(collectionStore);
+        return myStoreCollectionVO;
     }
 }

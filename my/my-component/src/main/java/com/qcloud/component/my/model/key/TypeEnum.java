@@ -33,7 +33,9 @@ public class TypeEnum {
         //
         MERCHANDISE(1, "收藏商品"),
         //
-        MERCHANT(2, "收藏商家");
+        MERCHANT(2, "收藏商家"),
+        //
+        STORE(3, "收藏店铺");
 
         //
         private final int    key;
