@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 根节点的名字必须是xml -->
+<xml>
+	<module-list code="express">
+		<item name="包裹/平邮/挂号信">youzhengguonei</item>
+		<item name="澳大利亚邮政">auspost</item>
+		<item name="AAE">aae</item>
+		<item name="安信达">anxindakuaixi</item>
+	</module-list>		
+</xml>

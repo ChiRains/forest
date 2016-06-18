@@ -52,6 +52,7 @@
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.SalesPromotionUriHandlerImpl"></pirates:uriHandler>
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.MedicationRemindersUriHandlerImpl"></pirates:uriHandler>
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ModularUriHandlerImpl"></pirates:uriHandler>
+   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ExpressQueryUriHandlerImpl"></pirates:uriHandler>
 
 
 </beans>
