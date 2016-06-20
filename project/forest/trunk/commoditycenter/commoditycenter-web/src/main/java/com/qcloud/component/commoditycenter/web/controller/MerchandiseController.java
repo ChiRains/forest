@@ -3,8 +3,10 @@ package com.qcloud.component.commoditycenter.web.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -14,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.qcloud.component.commoditycenter.CommoditycenterClient;
 import com.qcloud.component.commoditycenter.QUnifiedMerchandise;
 import com.qcloud.component.commoditycenter.QUnifiedMerchandise.MerchandiseType;
+import com.qcloud.component.commoditycenter.model.CombinationMerchandise;
+import com.qcloud.component.commoditycenter.model.CombinationMerchandiseItem;
 import com.qcloud.component.commoditycenter.model.Merchandise;
 import com.qcloud.component.commoditycenter.model.MerchandiseAttribute;
 import com.qcloud.component.commoditycenter.model.MerchandiseBrowsingHistory;
@@ -30,6 +34,8 @@ import com.qcloud.component.commoditycenter.model.key.TypeEnum.QueryItemType;
 import com.qcloud.component.commoditycenter.model.key.TypeEnum.QueryType;
 import com.qcloud.component.commoditycenter.model.key.TypeEnum.StarLevelType;
 import com.qcloud.component.commoditycenter.model.query.MerchandiseItemQuery;
+import com.qcloud.component.commoditycenter.service.CombinationMerchandiseItemService;
+import com.qcloud.component.commoditycenter.service.CombinationMerchandiseService;
 import com.qcloud.component.commoditycenter.service.MerchandiseAttributeService;
 import com.qcloud.component.commoditycenter.service.MerchandiseBrowsingHistoryService;
 import com.qcloud.component.commoditycenter.service.MerchandiseEvaluationService;
@@ -43,10 +49,12 @@ import com.qcloud.component.commoditycenter.web.form.MerchandiseForm;
 import com.qcloud.component.commoditycenter.web.form.SpecificationsForm;
 import com.qcloud.component.commoditycenter.web.form.SpecificationsFormList;
 import com.qcloud.component.commoditycenter.web.handler.ClassifySpecificationsHandler;
+import com.qcloud.component.commoditycenter.web.handler.CombinationMerchandiseHandler;
 import com.qcloud.component.commoditycenter.web.handler.MerchandiseAttributeHandler;
 import com.qcloud.component.commoditycenter.web.handler.MerchandiseEvaluationHandler;
 import com.qcloud.component.commoditycenter.web.handler.MerchandiseHandler;
 import com.qcloud.component.commoditycenter.web.vo.AttributeSpecificationsVO;
+import com.qcloud.component.commoditycenter.web.vo.CombinationMerchandiseVO;
 import com.qcloud.component.commoditycenter.web.vo.MerchandiseAttributeVO;
 import com.qcloud.component.commoditycenter.web.vo.MerchandiseEvaluationVO;
 import com.qcloud.component.commoditycenter.web.vo.MerchandiseExtVO;
@@ -100,6 +108,12 @@ public class MerchandiseController {
     private MerchandiseImageService                  merchandiseImageService;
 
     @Autowired
+    private CombinationMerchandiseHandler            combinationMerchandiseHandler;
+
+    @Autowired
+    private CombinationMerchandiseItemService        combinationMerchandiseItemService;
+
+    @Autowired
     private MerchandiseSpecificationsRelationService merchandiseSpecificationsRelationService;
 
     @Autowired
@@ -139,6 +153,9 @@ public class MerchandiseController {
 
     @Autowired
     private MerchandiseAttributeHandler              merchandiseAttributeHandler;
+
+    @Autowired
+    private CombinationMerchandiseService            combinationMerchandiseService;
 
     // @Autowired
     // private EvaluationcenterClient evaluationcenterClient;
@@ -506,7 +523,21 @@ public class MerchandiseController {
         for (MerchandiseAttributeVO merchandiseAttributeVO : voList) {
             attrMap.put(merchandiseAttributeVO.getCode(), merchandiseAttributeVO);
         }
+        // 组合商品 TODO
+        List<CombinationMerchandiseVO> comVOList = new ArrayList<CombinationMerchandiseVO>();
+        Set<Long> combinationMerchandiseIdList = new HashSet<Long>();
+        List<CombinationMerchandiseItem> combinationItemList = combinationMerchandiseItemService.listByMerchandiseItem(unifiedMerchandise.getList().get(0).getId(), 0, 10);
+        for (CombinationMerchandiseItem combinationMerchandiseItem : combinationItemList) {
+            if (!combinationMerchandiseIdList.contains(combinationMerchandiseItem.getCombinationMerchandiseId())) {
+                CombinationMerchandise combinationMerchandise = combinationMerchandiseService.get(combinationMerchandiseItem.getCombinationMerchandiseId());
+                CombinationMerchandiseVO combinationMerchandiseVO = combinationMerchandiseHandler.toVO(combinationMerchandise);
+                combinationMerchandiseIdList.add(combinationMerchandiseItem.getCombinationMerchandiseId());
+                comVOList.add(combinationMerchandiseVO);
+            }
+        }
         FrontAjaxView view = new FrontAjaxView();
+        view.addObject("combinationList", comVOList);
+        //
         view.addObject("attrMap", attrMap);
         view.addObject("attrList", voList);
         //

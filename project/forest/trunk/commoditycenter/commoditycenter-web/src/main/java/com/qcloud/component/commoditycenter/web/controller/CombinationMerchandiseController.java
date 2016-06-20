@@ -104,7 +104,7 @@ public class CombinationMerchandiseController {
         AssertUtil.assertNotNull(unifiedMerchandise, "商品不存在." + unifiedMerchandiseId);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取商品组合套餐列表成功.");
-        if (MerchandiseType.SINGLE.equals(unifiedMerchandise.getType())) {
+        if (MerchandiseType.COMBINATION.equals(unifiedMerchandise.getType())) {
             List<CombinationMerchandiseItem> itemLlist = combinationMerchandiseItemService.listByMerchandiseItem(unifiedMerchandise.getList().get(0).getId(), 0, 10);
             List<CombinationMerchandise> list = new ArrayList<CombinationMerchandise>();
             for (CombinationMerchandiseItem combinationMerchandiseItem : itemLlist) {

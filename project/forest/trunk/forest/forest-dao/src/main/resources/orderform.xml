@@ -84,8 +84,8 @@
 		<!-- 商品库存 开始 -->
 		<item state="10" type="3" observer="lockMerchandiseOnLineStockObserver" variable="">锁定库存</item>
 		<item state="40" type="4" observer="lockMerchandiseOffLineStockObserver" variable="">锁定库存</item>
-		<item state="90" type="3" observer="releaseMerchandiseOnLineStockObserver" variable="">订单失效,释放库存</item>
-		<item state="100" type="3" observer="releaseMerchandiseOnLineStockObserver" variable="">订单取消,释放库存</item>
+		<item state="50" type="3" observer="releaseMerchandiseOnLineStockObserver" variable="">订单失效,释放库存</item>
+		<item state="70" type="3" observer="releaseMerchandiseOnLineStockObserver" variable="">订单取消,释放库存</item>
 		<!-- 商品库存 结束 -->
 		
 		<!-- 退款 -->			
@@ -93,8 +93,11 @@
 		
 		<item state="10" type="5" observer="alterAfterSaleChangeOrderStateObserver" variable="60">申请退款--申请退款,总单状态改变成60退款申请中</item>
 		<item state="30" type="5" observer="alterAfterSaleChangeOrderStateObserver" variable="70">申请退款--商家退款,总单状态改变70已关闭</item>
-		<item state="40" type="5" observer="alterAfterSaleChangeOrderStateObserver" variable="60">申请退款--不同意退款,总单状态改变60退款申请中</item>
-		<item state="50" type="5" observer="alterAfterSaleChangeOrderStateObserver" variable="60">申请退款--用户关闭,总单状态改变60退款申请中</item>
+		<!-- <item state="40" type="5" observer="alterAfterSaleReturnOrderStateObserver" variable="orderform-observer-alterAfterSaleChangeOrderStateObserver-40-5">申请退款__不同意退款,总单状态改变60退款申请中</item> -->
+		
+		<item state="40" type="5" observer="forestAlterAfterSaleReturnOrderStateObserver" variable="">申请退款--不同意退款,总单状态改变成上一个状态</item>
+		
+		<item state="50" type="5" observer="forestAlterAfterSaleReturnOrderStateObserver" variable="">申请退款--用户关闭,总单状态改变60退款申请中</item>
 		
 		<item state="20" type="5" observer="releaseRefundOnLineStockObserver" variable="">同意退款,释放库存</item>
 		<item state="20" type="5" observer="orderRefundReturnCouponObserver" variable="">同意退款,返还优惠劵</item>		
@@ -107,15 +110,11 @@
 		<item state="40" type="6" observer="releaseReturnOffLineStockObserver" variable="">签收退货,补上库存</item>
 	</module-list>
 	
-	<module-list code="orderform-observer-alterAfterSaleChangeOrderStateObserver-70-6">		
-		<item variable="70">非正在退货状态</item>
-		<item variable="80">非正在退货状态</item>
+	<module-list code="orderform-observer-alterAfterSaleChangeOrderStateObserver-20-40">		
+		<item variable="20">非正在退货状态</item>
+		<item variable="40">非正在退货状态</item>
 	</module-list>
 	
-	<module-list code="orderform-observer-alterAfterSaleChangeOrderStateObserver-70-7">		
-		<item variable="70">非正在换货状态</item>
-		<item variable="80">非正在换货状态</item>
-	</module-list>
 
 	<module-list code="orderform-normal-state">
 		<item init="true" orderState="10" orderStateDesc="待付款"
@@ -195,7 +194,7 @@
 		<item orderState="60"></item>
 		<item orderState="20"></item>
 	</module-list>
-
+	
 	<module-list code="orderform-refund-state">
 		<item init="true" orderState="10" orderStateDesc="申请退款"
 			merchantOrderState="-1" merchantOrderStateDesc="申请退款" userOrderState="1"

@@ -13,10 +13,12 @@ public class MySignInUriHandlerImpl extends AbstractUriHandler {
         list.add("/mySignIn/signIn.do");
         list.add("/mySignIn/getSignInMseeage.do");
         list.add("/mySignIn/listSignInMonth.do");
+        list.add("/mySignIn/simpleSignIn.do");
         //
         list.add("/app/mySignIn/signIn.do");
         list.add("/app/mySignIn/getSignInMseeage.do");
         list.add("/app/mySignIn/listSignInMonth.do");
+        list.add("/app/mySignIn/simpleSignIn.do");
         return list;
     }
 
@@ -29,6 +31,7 @@ public class MySignInUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/mySignIn/listSignInMonth.do");
         list.add("/app/mySignIn/getHtmlRule.do");
         list.add("/app/mySignIn/getRule.do");
+        list.add("/app/mySignIn/simpleSignIn.do");
         return list;
     }
 

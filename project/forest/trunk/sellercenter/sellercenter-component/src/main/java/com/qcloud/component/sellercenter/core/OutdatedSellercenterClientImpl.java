@@ -190,7 +190,7 @@ public class OutdatedSellercenterClientImpl implements OutdatedSellercenterClien
         AssertUtil.assertNotNull(merchant, "商家不存在");
         List<MerchantMerchandiseClassify> list = merchantMerchandiseClassifyService.listByMerchantId(merchantId);
         List<Classify> classifyList = new ArrayList<Classify>();
-        List<Classify> allList = publicdataClient.listClassify(ClassifyType.MERCHANDISE);
+        List<Classify> allList = publicdataClient.listClassify(ClassifyType.MERCHANDISE,true);
         for (MerchantMerchandiseClassify merchantMerchandiseClassify : list) {
             Classify classify = publicdataClient.getClassify(merchantMerchandiseClassify.getClassifyId());
             String path = ClassifyUtils.calculationPath(allList, classify);
@@ -209,7 +209,7 @@ public class OutdatedSellercenterClientImpl implements OutdatedSellercenterClien
         AssertUtil.assertNotNull(merchant, "商家不存在");
         List<MerchantSpecClassify> list = merchantSpecClassifyService.listByMerchant(merchantId);
         List<Classify> classifyList = new ArrayList<Classify>();
-        List<Classify> allList = publicdataClient.listClassify(ClassifyType.SPECIFICATIONS);
+        List<Classify> allList = publicdataClient.listClassify(ClassifyType.SPECIFICATIONS,true);
         //
         for (MerchantSpecClassify merchantSpecClassify : list) {
             Classify classify = publicdataClient.getClassify(merchantSpecClassify.getClassifyId());

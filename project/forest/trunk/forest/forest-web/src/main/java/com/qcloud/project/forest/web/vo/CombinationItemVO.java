@@ -27,6 +27,8 @@ public class CombinationItemVO {
 
     private boolean           isEvaluation;
 
+    private String            desc;
+
     private List<OrderItemVO> orderItemList = new ArrayList<OrderItemVO>();
 
     public long getUnifiedMerchandiseId() {
@@ -117,5 +119,15 @@ public class CombinationItemVO {
     public void setEvaluation(boolean isEvaluation) {
 
         this.isEvaluation = isEvaluation;
+    }
+
+    public String getDesc() {
+
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+
+        this.desc = desc;
     }
 }

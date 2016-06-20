@@ -79,7 +79,7 @@ public class AdminClassify4TypesController {
         AssertUtil.assertTrue(type > 0, "业务分类类别不能为空.");
         // List<Classify> classifies = classifyService.listAll(type);
         // List<AdminClassifyVO> list = classifyHandler.toVOList4Admin(classifies, type);
-        List<QClassify> classifyList = publicdataClient.listClassifyForTree(type);
+        List<QClassify> classifyList = publicdataClient.listClassifyForTree(type,true);
         ModelAndView modelAndView = new ModelAndView("/admin/publicdata-Classify4Types-tree-list");
         // modelAndView.addObject("result", Common.listToTree(list, "id", "parentId", "children", -1));
         modelAndView.addObject("beanId", beanId);

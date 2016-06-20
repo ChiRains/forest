@@ -219,7 +219,7 @@ public class AdminClassifyAttributeController {
     @NoReferer
     public ModelAndView classifyList() {
 
-        List<QClassify> qlist = publicdataClient.listClassifyForTree(ClassifyType.MERCHANDISE);
+        List<QClassify> qlist = publicdataClient.listClassifyForTree(ClassifyType.MERCHANDISE,true);
         ModelAndView model = new ModelAndView("/admin/commoditycenter-ClassifyAttribute-classifyList");
         model.addObject("classType", ClassifyType.MERCHANDISE.getKey());
         model.addObject("qlist", qlist);

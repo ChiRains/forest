@@ -210,7 +210,7 @@ public class TypeEnum {
         }
     }
     public enum ForestOrderState {
-        Normal_To_Pay(10, "待付款"), Normal_To_Send(20, "待发货"), Normal_To_Receive(30, "待签收"), Normal_Trade_Success(40, "已完成"), Cancel(50, "取消"), Closed(70, "关闭");
+        Normal_To_Pay(10, "待付款"), Normal_To_Send(20, "待发货"), Normal_To_Receive(30, "待签收"), Normal_Trade_Success(40, "已完成"), Cancel(50, "取消"), After_Sale(60, "售后"), Closed(70, "关闭");
 
         private final int    key;
 

@@ -189,7 +189,7 @@ public class AdminMerchandiseController {
             List<Classify> classifyList = outdatedSellercenterClient.listMerchantMerchandiseClassify(merchantId);
             mallCVOList = ClassifyUtils.exchangeObj(classifyList, -1, "");
         } else {
-            List<Classify> classifyList = publicdataClient.listClassify(ClassifyType.MERCHANDISE.getKey());
+            List<Classify> classifyList = publicdataClient.listClassify(ClassifyType.MERCHANDISE.getKey(),true);
             mallCVOList = ClassifyUtils.exchangeObj(classifyList, -1, "");
         }
         model.addObject("mallClassifyList", mallCVOList);
@@ -208,7 +208,7 @@ public class AdminMerchandiseController {
             List<Classify> specList = outdatedSellercenterClient.listMerchantSpecClassify(merchantId);
             specCVOList = ClassifyUtils.exchangeObj(specList, -1, "");
         } else {
-            List<Classify> specList = publicdataClient.listClassify(ClassifyType.SPECIFICATIONS.getKey());
+            List<Classify> specList = publicdataClient.listClassify(ClassifyType.SPECIFICATIONS.getKey(),true);
             specCVOList = ClassifyUtils.exchangeObj(specList, -1, "");
         }
         model.addObject("specClassifyId", specCVOList);

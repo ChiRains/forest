@@ -130,6 +130,17 @@ public class ForestController {
         return view;
     }
 
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView shareSignIn() {
+
+        FrontAjaxView view = new FrontAjaxView();
+        view.addObject("title", "标题");
+        view.addObject("image", "");
+        view.addObject("desc", "分享分享");
+        return view;
+    }
+
     long getMerchantClassify() {
 
         Xml xml = XmlFactory.get("forest-merchant");
