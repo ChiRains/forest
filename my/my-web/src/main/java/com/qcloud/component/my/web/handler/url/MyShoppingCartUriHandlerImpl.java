@@ -16,6 +16,7 @@ public class MyShoppingCartUriHandlerImpl extends AbstractUriHandler {
         list.add("/myShoppingCart/addList.do");
         list.add("/myShoppingCart/remove.do");
         list.add("/myShoppingCart/removeList.do");
+        list.add("/myShoppingCart/editor.do");
         list.add("/myShoppingCart/list.do");
         list.add("/myShoppingCart/list4Merchant.do");
         list.add("/myShoppingCart/list4Classify.do");
@@ -31,6 +32,8 @@ public class MyShoppingCartUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/myShoppingCart/addList.do");
         list.add("/app/myShoppingCart/remove.do");
         list.add("/app/myShoppingCart/removeList.do");
+        list.add("/app/myShoppingCart/editor.do");
+        //
         list.add("/app/myShoppingCart/list.do");
         list.add("/app/myShoppingCart/list4Merchant.do");
         list.add("/app/myShoppingCart/list4Classify.do");
@@ -52,6 +55,7 @@ public class MyShoppingCartUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/myShoppingCart/addList.do");
         list.add("/app/myShoppingCart/remove.do");
         list.add("/app/myShoppingCart/removeList.do");
+        list.add("/app/myShoppingCart/editor.do");
         //
         list.add("/app/myShoppingCart/list.do");
         list.add("/app/myShoppingCart/list4Merchant.do");

@@ -164,6 +164,36 @@ public class MyShoppingCartController {
 
     @PiratesApp
     @RequestMapping
+    public FrontAjaxView editor(HttpServletRequest request, Long unifiedMerchandiseId, Integer number) {
+
+        QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(unifiedMerchandiseId);
+        AssertUtil.assertNotNull(unifiedMerchandise, "获取商品信息失败.");
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        synchronized (String.valueOf(user.getId())) {
+            MyShoppingCart myShoppingCart = myShoppingCartService.getByUnifiedMerchandise(unifiedMerchandiseId, user.getId());
+            if (myShoppingCart == null) {
+                myShoppingCart = new MyShoppingCart();
+                myShoppingCart.setTime(new Date());
+                myShoppingCart.setNumber(number == null || number < 0 ? 1 : number);
+                myShoppingCart.setUnifiedMerchandiseId(unifiedMerchandiseId);
+                myShoppingCart.setMerchantId(unifiedMerchandise.getMerchantId());
+                myShoppingCart.setMerchantClassifyId(unifiedMerchandise.getList().get(0).getMerchantClassifyId());
+                myShoppingCart.setUserId(user.getId());
+                myShoppingCartService.add(myShoppingCart);
+            } else {
+                myShoppingCart.setTime(new Date());
+                // 数量累计
+                myShoppingCart.setNumber((number == null || number < 0 ? 1 : number));
+                myShoppingCartService.update(myShoppingCart);
+            }
+        }
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("获取购物车商品成功.");
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
     public FrontAjaxView listAll(HttpServletRequest request) {
 
         PPage pPage = new PPage();

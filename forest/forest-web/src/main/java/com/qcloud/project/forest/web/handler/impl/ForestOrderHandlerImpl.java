@@ -182,7 +182,9 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
             itemVO.setUnifiedMerchandiseId(item.getUnifiedMerchandiseId());
             itemVO.setPrice(merchandise.getPrice());
             orderItemList.add(itemVO);
+            combinationItemVO.setDesc(combinationItemVO.getDesc() + "+" + itemVO.getName());
         }
+        combinationItemVO.setDesc(combinationItemVO.getDesc().substring(1, combinationItemVO.getDesc().length() - 1));
         combinationItemVO.setOrderItemList(orderItemList);
         return combinationItemVO;
     }
