@@ -17,10 +17,7 @@ import com.qcloud.pirates.util.AssertUtil;
 public class ForestAlterAfterSaleReturnOrderStateObserver extends AbstractNotifyAllStateOrderObserver {
 
     @Autowired
-    private AfterSaleSelecterService afterSaleSelecterService;
-
-    @Autowired
-    private OrderStateService        orderStateService;
+    private OrderStateService orderStateService;
 
     @Override
     protected void doOrderNotify(QOrder t, int state, String[] variable) {
@@ -40,11 +37,6 @@ public class ForestAlterAfterSaleReturnOrderStateObserver extends AbstractNotify
         throw new NotImplementedException();
     }
 
-    // AssertUtil.assertTrue(variable != null, "发起售后订单跳转状态未定义.");
-    // QMerchantOrder merchantOrder = t.getMerchantOrder();
-    // if (!hasAfterSale(merchantOrder, calculateState(variable))) {
-    // orderStateService.returnSubOrderState(t.getMerchantOrder().getId(), t.getMerchantOrder().getOrder().getOrderDate(), -999L);
-    // }
     @Override
     protected void doDetailNotify(QOrderItemDetail t, int state, String[] variable) {
 
