@@ -319,6 +319,7 @@ public class MyOrderFormHandlerImpl implements MyOrderFormHandler {
             vo.setOrderNumber(order.getOrderNumber());
             vo.setSum(NumberUtil.scale(order.getSum(), 2));
             //
+            vo.setOrderDateStr(DateUtil.date2String(myOrderForm.getTime()));
             vo.setTimeStr(DateUtil.date2String(myOrderForm.getTime()));
             vo.setState(myOrderForm.getState());
             vo.setStateStr(order.getUserStateStr());

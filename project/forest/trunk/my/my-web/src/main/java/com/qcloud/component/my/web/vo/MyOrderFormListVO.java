@@ -14,6 +14,8 @@ public class MyOrderFormListVO {
     // 下单时间
     private String       timeStr;
 
+    private String       orderDateStr;
+
     // 状态,待付款,已付款,待发货,发货中,已签收
     private int          state;
 
@@ -141,5 +143,17 @@ public class MyOrderFormListVO {
     public void setRemind(boolean remind) {
 
         this.remind = remind;
+    }
+
+    
+    public String getOrderDateStr() {
+    
+        return orderDateStr;
+    }
+
+    
+    public void setOrderDateStr(String orderDateStr) {
+    
+        this.orderDateStr = orderDateStr;
     }
 }
