@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qcloud.component.goods.dao.mysql.mapper.CombinationMerchandiseItemMapper">
+    <select id="list4query" parameterType="java.util.HashMap" resultType="CombinationMerchandiseItem">
+        select * from `goods_combination_merchandise_item` limit #{start},#{count}
+    </select>
+
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">
+        select count(*) from `goods_combination_merchandise_item`
+    </select>
+
+    <select id="listByCombinationMerchandise" parameterType="Long" resultType="CombinationMerchandiseItem">
+        select * from `goods_combination_merchandise_item` where
+        `combinationMerchandiseId`=#{combinationMerchandiseId}
+    </select>
+    
+    <select id="listByMerchandiseItem" parameterType="java.util.HashMap" resultType="CombinationMerchandiseItem">
+        select * from `goods_combination_merchandise_item` where merchandiseItemId = #{merchandiseItemId} limit #{start},#{count}        
+    </select>    
+    
+    <select id="countByMerchandiseItem" parameterType="java.util.HashMap" resultType="Integer">
+        select count(*) from `goods_combination_merchandise_item` where merchandiseItemId = #{merchandiseItemId} 
+    </select>  
+
+    <select id="list" resultType="CombinationMerchandiseItem">
+        SELECT * FROM goods_combination_merchandise_item WHERE 1 = 1
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="combinationMerchandiseId != null">
+            AND combinationMerchandiseId = #{combinationMerchandiseId}
+        </if>
+        <if test="merchandiseItemId != null">
+            AND merchandiseItemId = #{merchandiseItemId}
+        </if>
+        <if test="merchantId != null">
+            AND merchantId = #{merchantId}
+        </if>
+        <if test="order != null">
+            ORDER BY ${order}
+        </if>
+        <if test="start != null and count != null">
+            LIMIT #{start},#{count}
+        </if>
+    </select>
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM goods_combination_merchandise_item WHERE 1 = 1
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="combinationMerchandiseId != null">
+            AND combinationMerchandiseId = #{combinationMerchandiseId}
+        </if>
+        <if test="merchandiseItemId != null">
+            AND merchandiseItemId = #{merchandiseItemId}
+        </if>
+        <if test="merchantId != null">
+            AND merchantId = #{merchantId}
+        </if>
+    </select>
+    <delete id="del">
+        delete FROM goods_combination_merchandise_item
+        <where>
+            <if test="id != null">
+                id = #{id}
+            </if>
+            <if test="combinationMerchandiseId != null">
+                AND combinationMerchandiseId = #{combinationMerchandiseId}
+            </if>
+            <if test="merchandiseItemId != null">
+                AND merchandiseItemId = #{merchandiseItemId}
+            </if>
+            <if test="merchantId != null">
+                AND merchantId = #{merchantId}
+            </if>
+            <if test="id == null and combinationMerchandiseId == null and merchandiseItemId == null and merchantId == null">
+                AND 1 = 0
+            </if>
+        </where>
+    </delete>
+</mapper>
