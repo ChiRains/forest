@@ -20,4 +20,10 @@ public interface InvoiceModeService {
     public Page<InvoiceMode> page(InvoiceModeQuery query, int start, int count);
 
     public List<InvoiceMode> listAll();
+
+    public List<InvoiceMode> listByUser(Long userId);
+
+    public boolean setDefault(Long invoiceId);
+
+    public InvoiceMode getDefault(Long userId);
 }

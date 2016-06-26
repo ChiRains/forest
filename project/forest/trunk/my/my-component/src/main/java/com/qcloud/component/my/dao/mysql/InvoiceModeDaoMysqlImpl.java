@@ -95,4 +95,13 @@ public class InvoiceModeDaoMysqlImpl implements InvoiceModeDao {
 
         return sqlOperator.selectOne("com.qcloud.component.my.dao.mysql.mapper.InvoiceModeMapper.getByUser", userId);
     }
+
+    @Override
+    public List<InvoiceMode> listByUser(Long userId) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("userId", userId);
+        List<InvoiceMode> list = sqlOperator.selectList("com.qcloud.component.my.dao.mysql.mapper.InvoiceModeMapper.listByUser", param);
+        return list;
+    }
 }

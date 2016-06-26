@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.model.key.TypeEnum.BrandType;
+import com.qcloud.component.marketing.model.Slide;
+import com.qcloud.component.marketing.service.SlideService;
 import com.qcloud.component.parameter.ParameterClient;
 import com.qcloud.component.publicdata.PublicdataClient;
 import com.qcloud.component.publicdata.QClassify;
@@ -34,6 +36,9 @@ public class ForestController {
 
     @Autowired
     private FileSDKClient      fileSDKClient;
+
+    @Autowired
+    private SlideService       slideService;
 
     /**
      * 商家id
@@ -66,6 +71,10 @@ public class ForestController {
         return view;
     }
 
+    /**
+     * 首页图片+文字描述
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView indexsModular() {
@@ -80,6 +89,10 @@ public class ForestController {
         return view;
     }
 
+    /**
+     * 首页模块入口
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView menuAccess() {
@@ -98,6 +111,11 @@ public class ForestController {
         return view;
     }
 
+    /**
+     * 健康精选
+     * 
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView goodHealthy() {
@@ -111,6 +129,10 @@ public class ForestController {
         return view;
     }
 
+    /**
+     * 首页资讯轮播
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView latestArticle() {
@@ -129,6 +151,10 @@ public class ForestController {
         return view;
     }
 
+    /**
+     * 签到分享
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView shareSignIn() {
@@ -140,7 +166,22 @@ public class ForestController {
         return view;
     }
 
-    long getMerchantClassify() {
+    /**
+     * 启动页
+     * @return
+     */
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView startPage() {
+
+        List<Slide> list = slideService.listBySence(2);
+        FrontAjaxView view = new FrontAjaxView();
+        view.addObject("exist", list.size() > 0);
+        view.addObject("slide", list.get(0));
+        return view;
+    }
+
+    private Long getMerchantClassify() {
 
         Xml xml = XmlFactory.get("forest-merchant");
         AssertUtil.assertNotNull(xml, "大参林商家未配置.forest-merchant");

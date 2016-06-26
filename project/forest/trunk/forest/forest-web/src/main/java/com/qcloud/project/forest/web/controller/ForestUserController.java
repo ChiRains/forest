@@ -3,9 +3,11 @@ package com.qcloud.project.forest.web.controller;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.qcloud.component.parameter.ParameterClient;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.personalcenter.exception.PersonalCenterException;
 import com.qcloud.component.personalcenter.model.CardNumberConfig;
@@ -52,7 +54,14 @@ public class ForestUserController {
     @Autowired
     private SmsClient                      smsClient;
 
+    @Autowired
+    private ParameterClient                parameterClient;
+
     public static final String             USER_SAFETY_SMS_TEMPLATE_KEY = "personalcenter-user-safety-sms-template";
+
+    public static final String             TIP_MESSAGE                  = "tip-message";
+
+    public static final String             CONTACTS_MOBILE              = "contacts-mobile";
 
     @PiratesApp
     @RequestMapping
@@ -88,7 +97,7 @@ public class ForestUserController {
         CardNumberConfig cardNumberConfig = membershipCardWarehouseService.getConfig();
         if (membershipCardWarehouse != null && membershipCardWarehouse.getState() == MembershipCardWarehouseStateType.NEW.getKey() && pwd.equals(cardNumberConfig.getDefaultPwd())) {
             FrontAjaxView view = new FrontAjaxView();
-            view.setMessage("登录失败");
+            view.setMessage("登录失败,会员卡尚未激活");
             view.addObject("loginState", 2);
             return view;
         }
@@ -97,8 +106,23 @@ public class ForestUserController {
             User user = userService.getByAccount(username);
             if (user.getState() == UserStateType.NEW.getKey()) {
                 FrontAjaxView view = new FrontAjaxView();
-                view.setMessage("登录失败");
+                view.setMessage("登录失败,账号尚未激活");
                 view.addObject("loginState", 3);
+                return view;
+            }
+            if (user.getState() == UserStateType.FROZEN.getKey()) {
+                FrontAjaxView view = new FrontAjaxView();
+                String tip_message = parameterClient.get(TIP_MESSAGE);
+                String contacts_mobile = parameterClient.get(CONTACTS_MOBILE);
+                view.addObject("loginState", 4);
+                view.setMessage("登录失败,账号已被冻结");
+                view.addObject("contactMobile", "13800138000");
+                if (StringUtils.isNotEmpty(tip_message)) {
+                    view.addObject("tipMessage", tip_message);
+                }
+                if (StringUtils.isNotEmpty(contacts_mobile)) {
+                    view.addObject("contactMobile", contacts_mobile);
+                }
                 return view;
             }
             identificationKey = String.valueOf(user.getId());

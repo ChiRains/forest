@@ -74,4 +74,10 @@ public class InvoiceModeDaoRedisImpl implements InvoiceModeDao {
 
         throw new NotImplementedException();
     }
+
+    @Override
+    public List<InvoiceMode> listByUser(Long userId) {
+
+        throw new NotImplementedException();
+    }
 }
