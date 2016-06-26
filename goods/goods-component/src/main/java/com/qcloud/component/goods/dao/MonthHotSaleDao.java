@@ -1,0 +1,30 @@
+package com.qcloud.component.goods.dao;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import com.qcloud.pirates.data.Page;
+import com.qcloud.pirates.data.api.ISimpleDao;
+import com.qcloud.component.goods.model.MonthHotSale;
+import com.qcloud.component.goods.model.query.MonthHotSaleQuery;
+		
+public interface MonthHotSaleDao extends ISimpleDao<MonthHotSale, Long> {
+
+	public boolean add(MonthHotSale monthHotSale);	
+	
+	public MonthHotSale get(Long id);
+
+	public boolean delete(Long id);
+	
+	public boolean update(MonthHotSale monthHotSale);
+	
+	public List<MonthHotSale> list(List<Long> idList);
+	
+	public Map<Long, MonthHotSale> map(Set<Long> idSet);
+	
+	public Page<MonthHotSale> page(MonthHotSaleQuery query, int start, int size);
+
+	public List<MonthHotSale> listAll();
+	
+}
