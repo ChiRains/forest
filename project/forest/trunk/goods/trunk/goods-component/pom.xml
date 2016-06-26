@@ -11,9 +11,8 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.qcloud.pirates</groupId>
-			<artifactId>pirates-test</artifactId>
-			<version>${pirates.version}</version>
-			<scope>test</scope>
+			<artifactId>pirates-data</artifactId>
+			<version>${pirates.version}</version>			
 		</dependency>
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
