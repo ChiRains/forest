@@ -6,8 +6,8 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.qcloud.component.commoditycenter.model.key.TypeEnum.BrandType;
 import com.qcloud.component.filesdk.FileSDKClient;
+import com.qcloud.component.goods.model.key.TypeEnum.BrandType;
 import com.qcloud.component.parameter.ParameterClient;
 import com.qcloud.component.publicdata.PublicdataClient;
 import com.qcloud.component.publicdata.QClassify;
@@ -19,7 +19,6 @@ import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.project.forest.exception.ForestException;
 import com.qcloud.project.forest.web.vo.ArticleIndexVO;
-import com.qcloud.project.forest.web.vo.ArticleVO;
 
 @Controller
 @RequestMapping(value = ForestController.DIR)

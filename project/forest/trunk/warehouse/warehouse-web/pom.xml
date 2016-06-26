@@ -27,5 +27,10 @@
 			<version>${pirates.version}</version>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.qcloud.component</groupId>
+			<artifactId>goods-web</artifactId>
+			<version>1.0.1.08-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

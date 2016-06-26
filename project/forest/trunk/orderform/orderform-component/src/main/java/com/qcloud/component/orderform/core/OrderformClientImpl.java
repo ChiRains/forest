@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.qcloud.component.commoditycenter.QUnifiedMerchandise;
+import com.qcloud.component.goods.QUnifiedMerchandise;
 import com.qcloud.component.my.AfterSaleType;
 import com.qcloud.component.orderform.OrderContext;
 import com.qcloud.component.orderform.OrderformClient;

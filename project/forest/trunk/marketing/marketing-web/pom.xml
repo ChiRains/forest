@@ -27,16 +27,23 @@
 			<version>${pirates.version}</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.qcloud.component</groupId>
-			<artifactId>commoditycenter-web</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
-		</dependency>
-		
+				
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>admin-web</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>		
+		
+		<dependency>
+			<groupId>com.qcloud.component</groupId>
+			<artifactId>sellercenter-api</artifactId>
+			<version>2.0.0.08-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.qcloud.component</groupId>
+			<artifactId>goods-web</artifactId>
+			<version>1.0.1.08-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 </project>

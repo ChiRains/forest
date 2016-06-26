@@ -2,8 +2,8 @@ package com.qcloud.component.sellercenter.web.handler.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.qcloud.component.commoditycenter.CommoditycenterClient;
-import com.qcloud.component.commoditycenter.QMerchandiseEvaluation;
+import com.qcloud.component.goods.CommoditycenterClient;
+import com.qcloud.component.goods.QMerchandiseEvaluation;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.component.sellercenter.model.MerchantEvaluation;

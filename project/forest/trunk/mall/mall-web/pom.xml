@@ -42,8 +42,8 @@
 
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
-			<artifactId>commoditycenter-web</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<artifactId>goods-web</artifactId>
+			<version>1.0.1.08-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>

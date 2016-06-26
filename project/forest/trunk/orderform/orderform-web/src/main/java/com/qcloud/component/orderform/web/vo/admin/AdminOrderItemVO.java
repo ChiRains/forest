@@ -1,8 +1,6 @@
 package com.qcloud.component.orderform.web.vo.admin;
 
-import java.util.Date;
-import java.math.BigDecimal;
-import com.qcloud.component.commoditycenter.model.MerchandiseItem;
+import com.qcloud.component.goods.model.MerchandiseItem;
 import com.qcloud.component.sellercenter.model.Merchant;
 
 public class AdminOrderItemVO {

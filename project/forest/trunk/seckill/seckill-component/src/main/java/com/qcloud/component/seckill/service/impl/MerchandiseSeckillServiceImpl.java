@@ -4,14 +4,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.qcloud.component.autoid.AutoIdGenerator;
-import com.qcloud.component.commoditycenter.CommoditycenterClient;
-import com.qcloud.component.commoditycenter.QUnifiedMerchandise;
-import com.qcloud.pirates.data.Page;
-import com.qcloud.pirates.util.AssertUtil;
+import com.qcloud.component.goods.CommoditycenterClient;
+import com.qcloud.component.goods.QUnifiedMerchandise;
 import com.qcloud.component.seckill.dao.MerchandiseSeckillDao;
 import com.qcloud.component.seckill.model.MerchandiseSeckill;
-import com.qcloud.component.seckill.service.MerchandiseSeckillService;
 import com.qcloud.component.seckill.model.query.MerchandiseSeckillQuery;
+import com.qcloud.component.seckill.service.MerchandiseSeckillService;
+import com.qcloud.pirates.data.Page;
+import com.qcloud.pirates.util.AssertUtil;
 
 @Service
 public class MerchandiseSeckillServiceImpl implements MerchandiseSeckillService {

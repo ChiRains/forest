@@ -1,9 +1,6 @@
 package com.qcloud.component.orderform.web.vo.admin;
 
 import java.util.Date;
-import java.util.List;
-import java.math.BigDecimal;
-import com.qcloud.component.commoditycenter.model.MerchandiseItem;
 
 public class AdminExchangeOrderVO {
 	

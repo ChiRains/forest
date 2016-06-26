@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.qcloud.component.commoditycenter.QUnifiedMerchandise;
+import com.qcloud.component.goods.QUnifiedMerchandise;
 import com.qcloud.component.my.QMyConsignee;
 import com.qcloud.component.my.QMyCoupon;
 import com.qcloud.component.my.QMyDelivery;

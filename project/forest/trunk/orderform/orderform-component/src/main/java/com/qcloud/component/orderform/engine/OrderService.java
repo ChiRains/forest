@@ -2,7 +2,7 @@ package com.qcloud.component.orderform.engine;
 
 import java.util.Date;
 import java.util.Map;
-import com.qcloud.component.commoditycenter.QUnifiedMerchandise;
+import com.qcloud.component.goods.QUnifiedMerchandise;
 import com.qcloud.component.my.QMyConsignee;
 import com.qcloud.component.orderform.OrderContext;
 import com.qcloud.component.orderform.entity.MerchantOrderEntity;
