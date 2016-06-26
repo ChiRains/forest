@@ -32,9 +32,14 @@ public class InvoiceModeUriHandlerImpl extends AbstractUriHandler {
         list.add("/invoiceMode/add.do");
         list.add("/invoiceMode/get.do");
         list.add("/invoiceMode/getDefault.do");
+        list.add("/invoiceMode/list.do");
+        list.add("/invoiceMode/delete.do");
+        //
         list.add("/app/invoiceMode/add.do");
         list.add("/app/invoiceMode/get.do");
         list.add("/app/invoiceMode/getDefault.do");
+        list.add("/app/invoiceMode/list.do");
+        list.add("/app/invoiceMode/delete.do");
         return list;
     }
 
@@ -45,6 +50,8 @@ public class InvoiceModeUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/invoiceMode/add.do");
         list.add("/app/invoiceMode/get.do");
         list.add("/app/invoiceMode/getDefault.do");
+        list.add("/app/invoiceMode/list.do");
+        list.add("/app/invoiceMode/delete.do");
         return list;
     }
 }

@@ -78,4 +78,10 @@ public class InvoiceModeDaoCacheImpl implements InvoiceModeDao {
 
         return invoiceModeDaoMysqlImpl.getByUser(userId);
     }
+
+    @Override
+    public List<InvoiceMode> listByUser(Long userId) {
+
+        return invoiceModeDaoMysqlImpl.listByUser(userId);
+    }
 }

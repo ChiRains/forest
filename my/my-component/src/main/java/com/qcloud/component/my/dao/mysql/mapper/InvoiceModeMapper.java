@@ -13,8 +13,8 @@ import com.qcloud.component.my.model.query.InvoiceModeQuery;
 
 public interface InvoiceModeMapper {
 
-	@Insert("insert into `my_invoice_mode`(`id`,`userId`,`mode`,`type`,`head`,`content`)"
-			+ " values(#{id},#{userId},#{mode},#{type},#{head},#{content})")
+	@Insert("insert into `my_invoice_mode`(`id`,`userId`,`mode`,`type`,`head`,`content`,`isDefault`)"
+			+ " values(#{id},#{userId},#{mode},#{type},#{head},#{content},#{isDefault})")
 	public void insert(InvoiceMode invoiceMode);
 
 	@Select("select * from `my_invoice_mode` where `id`=#{id}")

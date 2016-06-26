@@ -14,6 +14,8 @@ public class InvoiceForm {
     // 内容
     private String content;
 
+    private int    isDefault;
+
     public int getMode() {
 
         return mode;
@@ -52,5 +54,15 @@ public class InvoiceForm {
     public void setContent(String content) {
 
         this.content = content;
+    }
+
+    public int getIsDefault() {
+
+        return isDefault;
+    }
+
+    public void setIsDefault(int isDefault) {
+
+        this.isDefault = isDefault;
     }
 }

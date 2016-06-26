@@ -139,5 +139,28 @@ public class TypeEnum {
             return name;
         }
     }
+    public enum InvoiceModeDefault {
+        DEFAULT(1, "默认"), NOTDEFAULT(2, "非默认");
+
+        private final int    key;
+
+        private final String name;
+
+        private InvoiceModeDefault(int key, String name) {
+
+            this.key = key;
+            this.name = name;
+        }
+
+        public int getKey() {
+
+            return key;
+        }
+
+        public String getName() {
+
+            return name;
+        }
+    }
     // public final static String EXCEL_TEMPLATE_DIR = "/WEB-INF/excel";
 }

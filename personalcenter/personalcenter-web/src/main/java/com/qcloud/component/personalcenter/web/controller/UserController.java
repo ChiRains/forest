@@ -118,6 +118,10 @@ public class UserController {
     @Autowired
     private MembershipCardWarehouseService membershipCardWarehouseService;
 
+    public static final String             TIP_MESSAGE                              = "tip-message";
+
+    public static final String             CONTACTS_MOBILE                          = "contacts-mobile";
+
     @PostConstruct
     public void init() {
 
@@ -279,7 +283,7 @@ public class UserController {
         CardNumberConfig cardNumberConfig = membershipCardWarehouseService.getConfig();
         if (membershipCardWarehouse != null && membershipCardWarehouse.getState() == MembershipCardWarehouseStateType.NEW.getKey() && pwd.equals(cardNumberConfig.getDefaultPwd())) {
             FrontAjaxView view = new FrontAjaxView();
-            view.setMessage("登录失败");
+            view.setMessage("登录失败,会员卡尚未激活");
             view.addObject("loginState", 2);
             return view;
         }
@@ -289,8 +293,23 @@ public class UserController {
             User user = userService.getByAccount(username);
             if (user.getState() == UserStateType.NEW.getKey()) {
                 FrontAjaxView view = new FrontAjaxView();
-                view.setMessage("登录失败");
+                view.setMessage("登录失败,账号尚未激活");
                 view.addObject("loginState", 3);
+                return view;
+            }
+            if (user.getState() == UserStateType.FROZEN.getKey()) {
+                FrontAjaxView view = new FrontAjaxView();
+                String tip_message = parameterClient.get(TIP_MESSAGE);
+                String contacts_mobile = parameterClient.get(CONTACTS_MOBILE);
+                view.addObject("loginState", 4);
+                view.setMessage("登录失败,账号已被冻结");
+                view.addObject("contactMobile", "13800138000");
+                if (StringUtils.isNotEmpty(tip_message)) {
+                    view.addObject("tipMessage", tip_message);
+                }
+                if (StringUtils.isNotEmpty(contacts_mobile)) {
+                    view.addObject("contactMobile", contacts_mobile);
+                }
                 return view;
             }
             identificationKey = String.valueOf(user.getId());

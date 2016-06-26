@@ -132,6 +132,7 @@
 	<module-list code="parameter_config_modular_list">
 		<item code="forest-user-protocol-config" name="会员协议">会员协议</item>
 		<item code="forest-index-modular-config" name="首页广告图和文字配置">首页广告图和文字配置</item>
+		<item code="forest-user-login-tip-message-config" name="冻结用户登录提示配置">冻结用户登录提示配置</item>
 	</module-list>
 	
 	<module-list code="forest-user-protocol-config">
@@ -144,7 +145,12 @@
 		<item code="forest-summer-ind-text"  name="促销信息" type="1" inputType="1">促销信息</item>
 	</module-list>
 	
+	<module-list code="forest-user-login-tip-message-config">
+		<item code="tip-message"      name="提示内容" type="1" inputType="1">提示内容</item>
+		<item code="contacts-mobile"  name="客服电话" type="1" inputType="1">客服电话</item>
+	</module-list>
 	<!--  end  of 后台配置项 -->
+	
 	
 	
 </xml>

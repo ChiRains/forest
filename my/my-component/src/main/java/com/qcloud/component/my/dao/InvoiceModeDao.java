@@ -27,4 +27,6 @@ public interface InvoiceModeDao extends ISimpleDao<InvoiceMode, Long> {
     public List<InvoiceMode> listAll();
 
     InvoiceMode getByUser(Long userId);
+
+    public List<InvoiceMode> listByUser(Long userId);
 }

@@ -1,5 +1,6 @@
 package com.qcloud.component.my.web.controller;
 
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,6 +35,7 @@ public class InvoiceModeController {
     @RequestMapping
     public FrontAjaxView add(HttpServletRequest request, InvoiceForm invoiceForm) {
 
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         NeedInvoiceType needInvoiceType = null;
         NeedInvoiceType[] needInvoiceTypes = NeedInvoiceType.values();
         for (NeedInvoiceType nt : needInvoiceTypes) {
@@ -54,24 +56,33 @@ public class InvoiceModeController {
             }
             AssertUtil.assertNotNull(invoiceType, "发票类型数据不正确." + invoiceForm.getType());
         }
-        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
-        InvoiceMode invoiceMode = invoiceModeService.getByUser(user.getId());
+        // InvoiceMode invoiceMode = invoiceModeService.getByUser(user.getId());
         boolean result = false;
-        if (invoiceMode == null) {
-            invoiceMode = new InvoiceMode();
-            invoiceMode.setUserId(user.getId());
-            invoiceMode.setContent(invoiceForm.getContent());
-            invoiceMode.setHead(invoiceForm.getHead());
-            invoiceMode.setMode(invoiceForm.getMode());
-            invoiceMode.setType(invoiceForm.getType());
-            result = invoiceModeService.add(invoiceMode);
-        } else {
-            invoiceMode.setContent(invoiceForm.getContent());
-            invoiceMode.setHead(invoiceForm.getHead());
-            invoiceMode.setMode(invoiceForm.getMode());
-            invoiceMode.setType(invoiceForm.getType());
-            result = invoiceModeService.update(invoiceMode);
-        }
+        // if (invoiceMode == null) {
+        // invoiceMode = new InvoiceMode();
+        // invoiceMode.setUserId(user.getId());
+        // invoiceMode.setContent(invoiceForm.getContent());
+        // invoiceMode.setHead(invoiceForm.getHead());
+        // invoiceMode.setMode(invoiceForm.getMode());
+        // invoiceMode.setType(invoiceForm.getType());
+        // result = invoiceModeService.add(invoiceMode);
+        // } else {
+        // invoiceMode.setContent(invoiceForm.getContent());
+        // invoiceMode.setHead(invoiceForm.getHead());
+        // invoiceMode.setMode(invoiceForm.getMode());
+        // invoiceMode.setType(invoiceForm.getType());
+        // result = invoiceModeService.update(invoiceMode);
+        // }
+        int isDefault = invoiceForm.getIsDefault() < 1 || invoiceForm.getIsDefault() > 2 ? 2 : invoiceForm.getIsDefault();
+        InvoiceMode invoiceMode = new InvoiceMode();
+        invoiceMode.setUserId(user.getId());
+        invoiceMode.setIsDefault(isDefault);
+        invoiceMode.setContent(invoiceForm.getContent());
+        invoiceMode.setHead(invoiceForm.getHead());
+        invoiceMode.setMode(invoiceForm.getMode());
+        invoiceMode.setType(invoiceForm.getType());
+        result = invoiceModeService.add(invoiceMode);
+        //
         AssertUtil.assertTrue(result, "添加发票信息失败.");
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("添加发票信息成功.");
@@ -81,14 +92,56 @@ public class InvoiceModeController {
 
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView get(HttpServletRequest request) {
+    public FrontAjaxView get(HttpServletRequest request, Long invoiceId) {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
-        InvoiceMode invoiceMode = invoiceModeService.getByUser(user.getId());
+        InvoiceMode invoiceMode = invoiceModeService.get(invoiceId);
+        AssertUtil.assertNotNull(invoiceMode, "发票信息不存在.");
+        AssertUtil.assertTrue(invoiceMode.getUserId() == user.getId(), "不能获取他人的发票信息.");
+        InvoiceModeVO invoiceModeVO = invoiceModeHandler.toVO(invoiceMode);
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("获取发票信息成功.");
+        view.addObject("invoice", invoiceModeVO);
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView list(HttpServletRequest request) {
+
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        List<InvoiceMode> list = invoiceModeService.listByUser(user.getId());
+        List<InvoiceModeVO> voList = invoiceModeHandler.toVOList(list);
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("获取发票信息成功.");
+        view.addObject("invoiceList", voList);
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView setDefault(HttpServletRequest request, Long invoiceId) {
+
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        InvoiceMode invoiceMode = invoiceModeService.get(invoiceId);
+        AssertUtil.assertNotNull(invoiceMode, "发票信息不存在.");
+        AssertUtil.assertTrue(user.getId() == invoiceMode.getUserId(), "不允许修改别人的发票信息.");
+        invoiceModeService.setDefault(invoiceId);
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("设置默认发票信息成功.");
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView getDefault(HttpServletRequest request) {
+
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        InvoiceMode invoiceMode = invoiceModeService.getDefault(user.getId());
         if (invoiceMode == null) {
-            invoiceMode = new InvoiceMode();
-            invoiceMode.setType(NeedInvoiceType.NO.getKey());
-            invoiceMode.setMode(InvoiceType.COMMON.getKey());
+            FrontAjaxView view = new FrontAjaxView();
+            view.setMessage("获取发票信息成功.");
+            return view;
         }
         InvoiceModeVO invoiceModeVO = invoiceModeHandler.toVO(invoiceMode);
         FrontAjaxView view = new FrontAjaxView();
@@ -99,19 +152,15 @@ public class InvoiceModeController {
 
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView getDefault(HttpServletRequest request) {
+    public FrontAjaxView delete(HttpServletRequest request, Long invoiceId) {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
-        InvoiceMode invoiceMode = invoiceModeService.getByUser(user.getId());
-        if (invoiceMode == null) {
-            FrontAjaxView view = new FrontAjaxView();
-            view.setMessage("获取发票信息成功.");
-            return view;
-        }
-        InvoiceModeVO invoiceModeVO = invoiceModeHandler.toVO(invoiceMode);
+        InvoiceMode invoiceMode = invoiceModeService.getDefault(user.getId());
+        AssertUtil.assertNotNull(invoiceMode, "发票信息不存在.");
+        AssertUtil.assertTrue(user.getId() == invoiceMode.getUserId(), "不允许删除别人的发票信息.");
+        invoiceModeService.delete(invoiceId);
         FrontAjaxView view = new FrontAjaxView();
-        view.setMessage("获取发票信息成功.");
-        view.addObject("invoice", invoiceModeVO);
+        view.setMessage("删除发票信息成功.");
         return view;
     }
 }

@@ -54,6 +54,23 @@ public class CityUriHandlerImpl extends AbstractUriHandler {
         list.add("/city/queryByProvince.do");
         list.add("/city/listByProvince.do");
         list.add("/city/listCityByProvince.do");
+        list.add("/city/listAllCity.do");
+        //
+        list.add("/app/city/queryByProvince.do");
+        list.add("/app/city/listByProvince.do");
+        list.add("/app/city/listCityByProvince.do");
+        list.add("/app/city/listAllCity.do");
+        return list;
+    }
+
+    @Override
+    public List<String> appUris() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("/app/city/queryByProvince.do");
+        list.add("/app/city/listByProvince.do");
+        list.add("/app/city/listCityByProvince.do");
+        list.add("/app/city/listAllCity.do");
         return list;
     }
 }

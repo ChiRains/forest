@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.qcloud.component.marketing.exception.MarketingException;
 import com.qcloud.component.marketing.model.Coupon;
 import com.qcloud.component.marketing.model.CouponItems;
 import com.qcloud.component.marketing.service.CouponItemsService;
@@ -18,6 +19,9 @@ import com.qcloud.component.my.MyClient;
 import com.qcloud.component.my.QMyCoupon;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.personalcenter.QUser;
+import com.qcloud.pirates.core.xml.Xml;
+import com.qcloud.pirates.core.xml.XmlFactory;
+import com.qcloud.pirates.core.xml.XmlItem;
 import com.qcloud.pirates.mvc.FrontAjaxView;
 import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.DateUtil;
@@ -64,8 +68,9 @@ public class CouponController {
     @RequestMapping
     public FrontAjaxView existMerchantActivityCoupon(Long merchantId) {
 
-        AssertUtil.assertNotNull(merchantId, "商家ID不能为空");
-        AssertUtil.greatZero(merchantId, "商家ID必须大于0" + merchantId);
+        // AssertUtil.assertNotNull(merchantId, "商家ID不能为空");
+        // AssertUtil.greatZero(merchantId, "商家ID必须大于0" + merchantId);
+        merchantId = getMerchantClassify();
         boolean exist = couponService.existActivityCoupon(merchantId);
         FrontAjaxView ajaxView = new FrontAjaxView();
         ajaxView.setMessage("获取优惠劵活动成功.");
@@ -94,8 +99,9 @@ public class CouponController {
     @RequestMapping
     public FrontAjaxView getMerchantActivityCoupon(Long merchantId) {
 
-        AssertUtil.assertNotNull(merchantId, "商家ID不能为空");
-        AssertUtil.greatZero(merchantId, "商家ID必须大于0" + merchantId);
+        // AssertUtil.assertNotNull(merchantId, "商家ID不能为空");
+        // AssertUtil.greatZero(merchantId, "商家ID必须大于0" + merchantId);
+        merchantId = getMerchantClassify();
         Coupon coupon = couponService.getActivityCoupon(merchantId);
         AssertUtil.assertNotNull(coupon, "暂时无优惠劵活动");
         CouponVO vo = couponHandler.toVO(coupon);
@@ -201,8 +207,9 @@ public class CouponController {
     @RequestMapping
     public FrontAjaxView judgeMerchantExistAndCanExtract(HttpServletRequest request, Long merchantId) {
 
-        AssertUtil.assertNotNull(merchantId, "商家ID不能为空");
-        AssertUtil.greatZero(merchantId, "商家ID必须大于0" + merchantId);
+        // AssertUtil.assertNotNull(merchantId, "商家ID不能为空");
+        // AssertUtil.greatZero(merchantId, "商家ID必须大于0" + merchantId);
+        merchantId = getMerchantClassify();
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         List<Coupon> list = couponService.listActivityCoupon(merchantId);
         boolean result = false;
@@ -246,7 +253,8 @@ public class CouponController {
     @RequestMapping
     public FrontAjaxView listMerchantActivityCoupon(HttpServletRequest request, Long merchantId) {
 
-        AssertUtil.assertNotNull(merchantId, "商家ID不能为空");
+        // AssertUtil.assertNotNull(merchantId, "商家ID不能为空");
+        merchantId = getMerchantClassify();
         AssertUtil.greatZero(merchantId, "商家ID必须大于0" + merchantId);
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         List<Coupon> list = couponService.listActivityCoupon(merchantId);
@@ -266,5 +274,18 @@ public class CouponController {
         view.setMessage("优惠券可领列表.");
         view.addObject("list", voList);
         return view;
+    }
+
+    private Long getMerchantClassify() {
+
+        Xml xml = XmlFactory.get("forest-merchant");
+        AssertUtil.assertNotNull(xml, "大参林商家未配置.forest-merchant");
+        List<XmlItem> itemList = xml.getItemList();
+        for (XmlItem xmlItem : itemList) {
+            if (xmlItem.getAttrMap().get("merchant") != null) {
+                return Long.valueOf(String.valueOf(xmlItem.getAttrMap().get("merchant")));
+            }
+        }
+        throw new MarketingException("大参林商家未配置.forest-merchant");
     }
 }
