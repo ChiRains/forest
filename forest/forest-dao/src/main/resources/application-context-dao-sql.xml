@@ -43,16 +43,14 @@
 		
 	<pirates:sql-z id="sqlOperator-sellercenter" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.sellercenter.dao.mysql.mapper" modelPackage="com.qcloud.component.sellercenter.model" tx="true"></pirates:sql-z>
 			
-	<pirates:sql-z id="sqlOperator-commoditycenter" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.commoditycenter.dao.mysql.mapper" modelPackage="com.qcloud.component.commoditycenter.model" tx="true"></pirates:sql-z>
+	<pirates:sql-z id="sqlOperator-goods" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.goods.dao.mysql.mapper" modelPackage="com.qcloud.component.goods.model" tx="true"></pirates:sql-z>
 			
 	<pirates:sql-z id="sqlOperator-distribution" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.distribution.dao.mysql.mapper" modelPackage="com.qcloud.component.distribution.model" tx="true"></pirates:sql-z>
 	
 	<pirates:sql-z id="sqlOperator-orderform" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.orderform.dao.mysql.mapper" modelPackage="com.qcloud.component.orderform.model" tx="true"></pirates:sql-z>
  
 	<pirates:sql-z id="sqlOperator-marketing" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.marketing.dao.mysql.mapper" modelPackage="com.qcloud.component.marketing.model" tx="true"></pirates:sql-z>
-	
-	<pirates:sql-z id="sqlOperator-evaluationcenter" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.evaluationcenter.dao.mysql.mapper" modelPackage="com.qcloud.component.evaluationcenter.model" tx="true"></pirates:sql-z>
-
+		
 	<pirates:sql-z id="sqlOperator-warehouse" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.warehouse.dao.mysql.mapper" modelPackage="com.qcloud.component.warehouse.model" tx="true"></pirates:sql-z>
 	
 	<pirates:sql-z id="sqlOperator-file" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.file.dao.mysql.mapper" modelPackage="com.qcloud.component.file.model" tx="true"></pirates:sql-z>

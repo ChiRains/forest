@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.qcloud.pirates.core.json.Json;
-import com.qcloud.component.commoditycenter.CommoditycenterClient;
-import com.qcloud.component.commoditycenter.QMerchandiseItem;
-import com.qcloud.component.commoditycenter.QUnifiedMerchandise;
-import com.qcloud.component.warehouse.web.handler.MerchandiseStockHandler;
+import com.qcloud.component.goods.CommoditycenterClient;
+import com.qcloud.component.goods.QMerchandiseItem;
+import com.qcloud.component.goods.QUnifiedMerchandise;
 import com.qcloud.component.warehouse.model.MerchandiseStock;
+import com.qcloud.component.warehouse.web.handler.MerchandiseStockHandler;
 import com.qcloud.component.warehouse.web.vo.MerchandiseStockVO;
 import com.qcloud.component.warehouse.web.vo.admin.AdminMerchandiseStockVO;
+import com.qcloud.pirates.core.json.Json;
 
 @Component
 public class MerchandiseStockHandlerImpl implements MerchandiseStockHandler {

@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.qcloud.pirates.core.json.Json;
-import com.qcloud.component.commoditycenter.CommoditycenterClient;
-import com.qcloud.component.commoditycenter.service.MerchandiseEvaluationService;
 import com.qcloud.component.filesdk.FileSDKClient;
-import com.qcloud.component.marketing.web.handler.RecentDiscountHandler;
+import com.qcloud.component.goods.CommoditycenterClient;
+import com.qcloud.component.goods.service.MerchandiseEvaluationService;
 import com.qcloud.component.marketing.model.RecentDiscount;
+import com.qcloud.component.marketing.web.handler.RecentDiscountHandler;
 import com.qcloud.component.marketing.web.vo.RecentDiscountVO;
 import com.qcloud.component.marketing.web.vo.admin.AdminRecentDiscountVO;
+import com.qcloud.pirates.core.json.Json;
 
 @Component
 public class RecentDiscountHandlerImpl implements RecentDiscountHandler {

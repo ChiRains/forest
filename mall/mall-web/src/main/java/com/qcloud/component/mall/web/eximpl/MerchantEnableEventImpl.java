@@ -5,11 +5,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.qcloud.component.commoditycenter.CommoditycenterClient;
-import com.qcloud.component.commoditycenter.OutdatedCommoditycenterClient;
-import com.qcloud.component.commoditycenter.model.Merchandise;
-import com.qcloud.component.commoditycenter.model.MerchandiseItem;
-import com.qcloud.component.commoditycenter.model.key.TypeEnum;
+import com.qcloud.component.goods.CommoditycenterClient;
+import com.qcloud.component.goods.OutdatedCommoditycenterClient;
+import com.qcloud.component.goods.model.Merchandise;
+import com.qcloud.component.goods.model.key.TypeEnum;
 import com.qcloud.component.sellercenter.MerchantEnableEvent;
 import com.qcloud.component.sellercenter.QMerchant;
 

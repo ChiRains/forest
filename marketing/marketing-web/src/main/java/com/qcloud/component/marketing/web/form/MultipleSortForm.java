@@ -1,7 +1,7 @@
 package com.qcloud.component.marketing.web.form;
 
 import java.util.List;
-import com.qcloud.component.commoditycenter.model.MerchandiseMarketing;
+import com.qcloud.component.goods.model.MerchandiseMarketing;
 import com.qcloud.component.marketing.model.MerchandiseCustomClassification;
 
 public class MultipleSortForm {

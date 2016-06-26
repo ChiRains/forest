@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.qcloud.component.autoid.AutoIdGenerator;
-import com.qcloud.component.commoditycenter.CommoditycenterClient;
+import com.qcloud.component.goods.CommoditycenterClient;
 import com.qcloud.component.warehouse.dao.MerchandiseStockDao;
 import com.qcloud.component.warehouse.exception.WarehouseException;
 import com.qcloud.component.warehouse.model.MerchandiseStock;

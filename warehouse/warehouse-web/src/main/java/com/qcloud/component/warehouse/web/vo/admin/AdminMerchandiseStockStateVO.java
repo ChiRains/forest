@@ -3,7 +3,7 @@ package com.qcloud.component.warehouse.web.vo.admin;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import com.qcloud.component.commoditycenter.QUnifiedMerchandise;
+import com.qcloud.component.goods.QUnifiedMerchandise;
 
 public class AdminMerchandiseStockStateVO {
 

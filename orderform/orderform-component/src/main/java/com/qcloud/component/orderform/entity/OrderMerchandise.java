@@ -1,6 +1,6 @@
 package com.qcloud.component.orderform.entity;
 
-import com.qcloud.component.commoditycenter.QUnifiedMerchandise;
+import com.qcloud.component.goods.QUnifiedMerchandise;
 
 public class OrderMerchandise {
 

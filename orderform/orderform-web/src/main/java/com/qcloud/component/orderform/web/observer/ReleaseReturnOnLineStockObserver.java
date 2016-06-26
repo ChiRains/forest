@@ -5,7 +5,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.qcloud.component.commoditycenter.CommoditycenterClient;
+import com.qcloud.component.goods.CommoditycenterClient;
 import com.qcloud.component.orderform.OrderObserver;
 import com.qcloud.component.orderform.QAfterSaleItem;
 import com.qcloud.component.orderform.QAfterSaleOrder;

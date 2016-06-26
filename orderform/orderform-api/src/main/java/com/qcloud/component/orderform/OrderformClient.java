@@ -3,7 +3,7 @@ package com.qcloud.component.orderform;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import com.qcloud.component.commoditycenter.QUnifiedMerchandise;
+import com.qcloud.component.goods.QUnifiedMerchandise;
 import com.qcloud.component.my.AfterSaleType;
 import com.qcloud.component.personalcenter.QUser;
 
