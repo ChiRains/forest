@@ -7,32 +7,34 @@ import com.qcloud.component.orderform.web.vo.OrderExpressVO;
 
 public class PreMerchantVO {
 
-    private long                 merchantId;
+    private long                        merchantId;
 
-    private String               merchantName;
+    private String                      merchantName;
 
-    private String               image;
+    private String                      image;
 
-    private int                  number;
+    private int                         number;
 
-    private double               sum;
+    private double                      sum;
 
-    private double               cash;
+    private double                      cash;
 
     // 邮费
-    private double               postage;
+    private double                      postage;
 
     // 当前选中的
-    private OrderExpressVO       express;
+    private OrderExpressVO              express;
+
+    private List<PreOrderCombinationVO> combinationItemList = new ArrayList<PreOrderCombinationVO>();
 
     //
-    private List<PreOrderItemVO> preOrderItemList = new ArrayList<PreOrderItemVO>();
+    private List<PreOrderItemVO>        preOrderItemList    = new ArrayList<PreOrderItemVO>();
 
     //
-    private List<OrderExpressVO> expressList      = new ArrayList<OrderExpressVO>();
+    private List<OrderExpressVO>        expressList         = new ArrayList<OrderExpressVO>();
 
     //
-    private List<OrderCouponVO>  couponList       = new ArrayList<OrderCouponVO>();
+    private List<OrderCouponVO>         couponList          = new ArrayList<OrderCouponVO>();
 
     public long getMerchantId() {
 
@@ -142,5 +144,15 @@ public class PreMerchantVO {
     public void setExpress(OrderExpressVO express) {
 
         this.express = express;
+    }
+
+    public List<PreOrderCombinationVO> getCombinationItemList() {
+
+        return combinationItemList;
+    }
+
+    public void setCombinationItemList(List<PreOrderCombinationVO> combinationItemList) {
+
+        this.combinationItemList = combinationItemList;
     }
 }

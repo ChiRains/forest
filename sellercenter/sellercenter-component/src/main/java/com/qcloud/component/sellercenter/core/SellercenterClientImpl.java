@@ -24,14 +24,19 @@ import com.qcloud.component.sellercenter.model.Merchant;
 import com.qcloud.component.sellercenter.model.MerchantEvaluation;
 import com.qcloud.component.sellercenter.model.MerchantOrderForm;
 import com.qcloud.component.sellercenter.model.MerchantWealth;
+import com.qcloud.component.sellercenter.model.Sexpress;
+import com.qcloud.component.sellercenter.model.SexpressDistrict;
 import com.qcloud.component.sellercenter.model.Store;
 import com.qcloud.component.sellercenter.model.key.TypeEnum;
 import com.qcloud.component.sellercenter.model.key.TypeEnum.MerchantOrderStateType;
 import com.qcloud.component.sellercenter.model.key.TypeEnum.NotifyType;
+import com.qcloud.component.sellercenter.model.key.TypeEnum.SexpressType;
 import com.qcloud.component.sellercenter.service.MerchantEvaluationService;
 import com.qcloud.component.sellercenter.service.MerchantOrderFormService;
 import com.qcloud.component.sellercenter.service.MerchantService;
 import com.qcloud.component.sellercenter.service.MerchantWealthService;
+import com.qcloud.component.sellercenter.service.SexpressDistrictService;
+import com.qcloud.component.sellercenter.service.SexpressService;
 import com.qcloud.component.sellercenter.service.StoreService;
 import com.qcloud.pirates.util.AssertUtil;
 
@@ -58,6 +63,12 @@ public class SellercenterClientImpl implements SellercenterClient {
 
     @Autowired
     private MerchantEvaluationService  merchantEvaluationService;
+
+    @Autowired
+    private SexpressService            sexpressService;
+
+    @Autowired
+    private SexpressDistrictService    sexpressDistrictService;
 
     @Override
     public QMerchant getMerchant(long merchantId) {
@@ -147,7 +158,34 @@ public class SellercenterClientImpl implements SellercenterClient {
     @Override
     public double calculatePostage(String expressCode, long merchantId, double weight, String city) {
 
-        return 0;
+        Sexpress sexpress = sexpressService.getByCode(expressCode, merchantId);
+        AssertUtil.assertNotNull(sexpress, "商家不支持该快递公司.");
+        if (sexpress.getType() == SexpressType.Free.getKey()) {// 包邮
+            return 0;
+        } else if (sexpress.getType() == SexpressType.Fixed.getKey()) {// 固定邮费
+            return sexpress.getFixedPrice();
+        } else { // 区域收费
+            double totalSum = 0.0;
+            if (weight <= sexpress.getFirstWeight()) {
+                totalSum = sexpress.getFirstPrice();
+            } else {
+                totalSum = sexpress.getFirstPrice() + Math.ceil((weight - sexpress.getFirstWeight()) / sexpress.getContinuedWeight()) * sexpress.getContinuedPrice();
+            }
+            if (StringUtils.isNotEmpty(city)) {
+                List<SexpressDistrict> sexpressDistrictList = sexpressDistrictService.listByExpressId(sexpress.getId());
+                for (SexpressDistrict sexpressDistrict : sexpressDistrictList) {
+                    if (sexpressDistrict.getCity().equals(city)) {
+                        //
+                        if (weight <= sexpress.getFirstWeight()) {
+                            totalSum = sexpressDistrict.getFirstPrice();
+                        } else {
+                            totalSum = sexpressDistrict.getFirstPrice() + Math.ceil((weight - sexpress.getFirstWeight()) / sexpress.getContinuedWeight()) * sexpressDistrict.getContinuedPrice();
+                        }
+                    }
+                }
+            }
+            return totalSum;
+        }
         // return 18;
     }
 
@@ -155,6 +193,13 @@ public class SellercenterClientImpl implements SellercenterClient {
     public List<KeyValueVO> listExpress(QMerchant merchant) {
 
         List<KeyValueVO> list = new ArrayList<KeyValueVO>();
+        List<Sexpress> expressList = sexpressService.listByMerchant(merchant.getId());
+        for (Sexpress sexpress : expressList) {
+            KeyValueVO vo = new KeyValueVO();
+            vo.setKey(sexpress.getCode());
+            vo.setValue(sexpress.getName());
+            list.add(vo);
+        }
         // KeyValueVO keyValueVO1 = new KeyValueVO();
         // keyValueVO1.setKey("shunfeng");
         // keyValueVO1.setValue("顺丰");

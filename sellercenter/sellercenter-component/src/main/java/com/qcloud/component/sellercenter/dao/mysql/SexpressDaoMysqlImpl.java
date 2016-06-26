@@ -99,4 +99,14 @@ public class SexpressDaoMysqlImpl implements SexpressDao {
         List<Sexpress> list = sqlOperator.selectList("com.qcloud.component.sellercenter.dao.mysql.mapper.SexpressMapper.listByMerchant", param);
         return list;
     }
+
+    @Override
+    public Sexpress getByCode(String expressCode, long merchantId) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("merchandId", merchantId);
+        param.put("code", expressCode);
+        Sexpress sexpress = sqlOperator.selectOne("com.qcloud.component.sellercenter.dao.mysql.mapper.SexpressMapper.getByCode", param);
+        return sexpress;
+    }
 }

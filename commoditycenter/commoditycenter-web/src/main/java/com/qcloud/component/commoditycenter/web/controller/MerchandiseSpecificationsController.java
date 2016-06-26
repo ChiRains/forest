@@ -1,17 +1,13 @@
 package com.qcloud.component.commoditycenter.web.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.qcloud.component.commoditycenter.model.ClassifySpecifications;
 import com.qcloud.component.commoditycenter.model.Merchandise;
 import com.qcloud.component.commoditycenter.model.MerchandiseSpecificationsRelation;
-import com.qcloud.component.commoditycenter.service.ClassifySpecificationsService;
 import com.qcloud.component.commoditycenter.service.MerchandiseService;
 import com.qcloud.component.commoditycenter.service.MerchandiseSpecificationsRelationService;
-import com.qcloud.component.commoditycenter.web.form.SpecificationsForm;
 import com.qcloud.component.commoditycenter.web.handler.ClassifySpecificationsHandler;
 import com.qcloud.component.commoditycenter.web.vo.AttributeSpecificationsVO;
 import com.qcloud.pirates.mvc.FrontAjaxView;

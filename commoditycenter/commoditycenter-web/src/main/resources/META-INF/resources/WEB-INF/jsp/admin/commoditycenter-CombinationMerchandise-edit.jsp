@@ -232,7 +232,7 @@
             $(".add-row-trigger").on("click", function () {
                 BootstrapDialog.show({
                     title: "商品列表",
-                    message: $('<div></div>').load('/admin/merchandiseItem/selectProductList.do'),
+                    message: $('<div></div>').load('/admin/merchandiseItem/listForMerchant.do'),
                     cssClass: "select-product-dialog",
                     onshow: function (dialog) {
                         $(document).off("click", ".select-product-dialog a,.search-button");

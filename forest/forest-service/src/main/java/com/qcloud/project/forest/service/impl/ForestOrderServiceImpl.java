@@ -1,6 +1,5 @@
 package com.qcloud.project.forest.service.impl;
 
-import java.util.Date;
 import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +80,7 @@ public class ForestOrderServiceImpl implements ForestOrderService {
 
     @Transactional
     @Override
-    public QOrder order(OrderContext context, Long giftCouponUser, QUser user, Date deliveryDate, String prove) {
+    public QOrder order(OrderContext context, Long giftCouponUser, QUser user, String prove) {
 
         QOrder order = orderformClient.orderNormal(context);
         // 赠品券
@@ -107,7 +106,6 @@ public class ForestOrderServiceImpl implements ForestOrderService {
         forestOrder.setOrderNumber(order.getOrderNumber());
         forestOrder.setGiftCouponId(giftCouponId);
         forestOrder.setUserId(user.getId());
-        forestOrder.setDeliveryDate(deliveryDate);
         forestOrder.setDeliveryMode(order.getMerchantOrderList().get(0).getDeliveryMode());
         forestOrder.setStoreId(order.getMerchantOrderList().get(0).getStoreId());
         forestOrder.setState(orderformClient.getNormalMerchantOrderState(order.getState()));

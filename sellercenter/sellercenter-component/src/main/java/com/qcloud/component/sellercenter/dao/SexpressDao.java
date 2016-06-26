@@ -29,4 +29,6 @@ public interface SexpressDao extends ISimpleDao<Sexpress, Long> {
 	
 	public List<Sexpress> listByMerchant(Long merchantId);
 	
+	public Sexpress getByCode(String expressCode,long merchantId);
+	
 }

@@ -37,6 +37,7 @@ public class CouponHandlerImpl implements CouponHandler {
         vo.setStartDateStr(DateUtil.date2String(coupon.getStartDate(), DateUtil.DATE_FORMAT_STRING));
         vo.setEndDateStr(DateUtil.date2String(coupon.getEndDate(), DateUtil.DATE_FORMAT_STRING));
         vo.setValidDateStr(DateUtil.date2String(coupon.getValidDate(), DateUtil.DATE_FORMAT_STRING));
+        vo.setInvalidDateStr(DateUtil.date2String(coupon.getInvalidDate(), DateUtil.DATE_FORMAT_STRING));
         return vo;
     }
 

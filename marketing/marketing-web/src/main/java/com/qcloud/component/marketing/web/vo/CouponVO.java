@@ -15,6 +15,8 @@ public class CouponVO {
     // 有效时间
     private String validDateStr;
 
+    private String invalidDateStr;
+
     // 描述
     private String description;
 
@@ -82,5 +84,15 @@ public class CouponVO {
     public void setValidDateStr(String validDateStr) {
 
         this.validDateStr = validDateStr;
+    }
+
+    public String getInvalidDateStr() {
+
+        return invalidDateStr;
+    }
+
+    public void setInvalidDateStr(String invalidDateStr) {
+
+        this.invalidDateStr = invalidDateStr;
     }
 }

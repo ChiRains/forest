@@ -232,7 +232,6 @@ public class TypeEnum {
             this.name = name;
         }
     }
-    
     public enum CertifiedType {
         YES(1, "正品"), NO(2, "非正品");
 
@@ -256,7 +255,6 @@ public class TypeEnum {
             this.name = name;
         }
     }
-    
     public enum SpecialServiceType {
         SPECIAL(1, "特色服务"), NUSPECIAL(2, "无特色服务");
 
@@ -349,5 +347,27 @@ public class TypeEnum {
             this.name = name;
         }
     }
-    
+    public enum SexpressType {
+        Free(1, "包邮"), Fixed(2, "固定收费"), Region(3, "区域收费");
+
+        private final int    key;
+
+        private final String name;
+
+        public int getKey() {
+
+            return key;
+        }
+
+        public String getName() {
+
+            return name;
+        }
+
+        private SexpressType(int key, String name) {
+
+            this.key = key;
+            this.name = name;
+        }
+    }
 }
