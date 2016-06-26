@@ -27,4 +27,25 @@
 
 	<pirates:component-scan base-package="com.qcloud.component.goods.web.controller"></pirates:component-scan>
 	<pirates:component-scan base-package="com.qcloud.component.goods.web.handler.impl"></pirates:component-scan>
+	
+	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.AttributeDefinitionUriHandlerImpl"></pirates:uriHandler>	
+	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.MerchandiseAttributeUriHandlerImpl"></pirates:uriHandler>	
+    <pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.MerchandiseItemUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.MerchandiseUriHandlerImpl"></pirates:uriHandler>
+	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.ClassifySpecificationsUriHandlerImpl"></pirates:uriHandler>	
+	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.EnumerationUriHandlerImpl"></pirates:uriHandler>	
+	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.ClassifyAttributeUriHandlerImpl"></pirates:uriHandler>	
+	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.MerchandiseImageUriHandlerImpl"></pirates:uriHandler>	
+	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.MerchandiseClassifyUriHandlerImpl"></pirates:uriHandler>	
+	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.CombinationMerchandiseUriHandlerImpl"></pirates:uriHandler>	
+	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.MerchandiseSpecificationsUriHandlerImpl"></pirates:uriHandler>	
+	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.MerchandiseDealRecordUriHandlerImpl"></pirates:uriHandler>
+	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.MerchandiseSpecificationsRelationUriHandlerImpl"></pirates:uriHandler>
+	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.MerchandiseEvaluationUriHandlerImpl"></pirates:uriHandler>	
+	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.ExchangeMerchandiseUrlHandlerImpl"></pirates:uriHandler>	
+	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.BrandUriHandlerImpl"></pirates:uriHandler>	
+	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.MerchandiseBrowsingHistoryUriHandlerImpl"></pirates:uriHandler>			
+	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.MerchandiseVipDiscountUriHandlerImpl"></pirates:uriHandler>
+	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.MerchandiseVipDiscountHistoryUriHandlerImpl"></pirates:uriHandler>
+	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.MonthHotSaleUriHandlerImpl"></pirates:uriHandler>
 </beans>

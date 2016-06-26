@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.qcloud.component</groupId>
 		<artifactId>goods</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>1.0.1.08-SNAPSHOT</version>
 	</parent>
 	<artifactId>goods-web</artifactId>
 	
@@ -26,6 +26,11 @@
 			<artifactId>pirates-test</artifactId>
 			<version>${pirates.version}</version>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.qcloud.component</groupId>
+			<artifactId>publicdata-web</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 </project>
