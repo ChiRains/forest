@@ -3,18 +3,21 @@ package com.qcloud.component.marketing.model;
 import java.util.Date;
 import com.qcloud.component.marketing.QCoupon;
 
-public class Coupon implements QCoupon{
+public class Coupon implements QCoupon {
 
     private long   id;
 
-    // 开始时间
+    // 开始领取时间
     private Date   startDate;
 
-    // 结束时间
+    // 结束领取时间
     private Date   endDate;
 
-    // 有效时间
+    // 使用有效时间
     private Date   validDate;
+
+    // 使用截止时间
+    private Date   invalidDate;
 
     // 总共领取张数/人
     private int    totalOfPerson;
@@ -32,8 +35,8 @@ public class Coupon implements QCoupon{
     private int    interval;
 
     private Long   merchantId;
-    
-    private int type ;
+
+    private int    type;
 
     public Coupon() {
 
@@ -161,15 +164,23 @@ public class Coupon implements QCoupon{
         this.merchantId = merchantId;
     }
 
-    
     public int getType() {
-    
+
         return type;
     }
 
-    
     public void setType(int type) {
-    
+
         this.type = type;
+    }
+
+    public Date getInvalidDate() {
+
+        return invalidDate;
+    }
+
+    public void setInvalidDate(Date invalidDate) {
+
+        this.invalidDate = invalidDate;
     }
 }

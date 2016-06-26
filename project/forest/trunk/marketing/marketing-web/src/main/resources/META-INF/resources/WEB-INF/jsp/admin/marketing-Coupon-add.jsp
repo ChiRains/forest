@@ -44,10 +44,21 @@
             </div>
                   		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="validDate"> 有效时间 </label>
+                <label class="col-sm-3 control-label no-padding-right" for="validDate"> 使用开始时间 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
 						<input type="text" class="width-100" readonly maxlength="20" id="validDate" name="validDate" placeholder="有效时间" value=""/>
+						<i class="ace-icon fa"></i>
+					</span>
+                </div>
+            </div>
+            
+                   		<div class="space-4"></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="validDate"> 使用截止时间 </label>
+                <div class="col-sm-9">
+					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
+						<input type="text" class="width-100" readonly maxlength="20" id="invalidDate" name="invalidDate" placeholder="使用截止时间" value=""/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
@@ -289,6 +300,15 @@
                 autoclose:true,
                 startDate: '-1y'
             });
+            
+            $('#invalidDate').datepicker({
+                format:'yyyy-mm-dd',
+                autoclose:true,
+                startDate: '-1y'
+            });
+            
+            
+            
             
         });
         

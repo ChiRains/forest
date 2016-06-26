@@ -72,5 +72,11 @@ public class SexpressDaoCacheImpl implements SexpressDao {
 
         return sexpressDaoMysqlImpl.listByMerchant(merchantId);
     }
+
+    @Override
+    public Sexpress getByCode(String expressCode, long merchantId) {
+
+        return sexpressDaoMysqlImpl.getByCode(expressCode, merchantId);
+    }
 }
 

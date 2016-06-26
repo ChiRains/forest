@@ -13,14 +13,14 @@ import com.qcloud.component.marketing.model.query.CouponQuery;
 
 public interface CouponMapper {
 
-	@Insert("insert into `marketing_coupon`(`id`,`image`,`interval`,`startDate`,`endDate`,`validDate`,`totalOfPerson`,`priceOfPerson`,`description`,`enable`,`merchantId`,`type`)"
-			+ " values(#{id},#{image},#{interval},#{startDate},#{endDate},#{validDate},#{totalOfPerson},#{priceOfPerson},#{description},#{enable},#{merchantId},#{type})")
+	@Insert("insert into `marketing_coupon`(`id`,`image`,`interval`,`startDate`,`endDate`,`validDate`,`totalOfPerson`,`priceOfPerson`,`description`,`enable`,`merchantId`,`type`,`invalidDate`)"
+			+ " values(#{id},#{image},#{interval},#{startDate},#{endDate},#{validDate},#{totalOfPerson},#{priceOfPerson},#{description},#{enable},#{merchantId},#{type},#{invalidDate})")
 	public void insert(Coupon coupon);
 
 	@Select("select * from `marketing_coupon` where `id`=#{id}")
 	public Coupon get(Long id);
 
-	@Update("update `marketing_coupon` set `image`=#{image}, `interval`=#{interval}, `startDate`=#{startDate},`endDate`=#{endDate},`validDate`=#{validDate},`totalOfPerson`=#{totalOfPerson},`priceOfPerson`=#{priceOfPerson},`description`=#{description},`enable`=#{enable},`merchantId`=#{merchantId},`type`=#{type}  where `id`=#{id}")
+	@Update("update `marketing_coupon` set `image`=#{image}, `interval`=#{interval}, `startDate`=#{startDate},`endDate`=#{endDate},`validDate`=#{validDate},`totalOfPerson`=#{totalOfPerson},`priceOfPerson`=#{priceOfPerson},`description`=#{description},`enable`=#{enable},`merchantId`=#{merchantId},`type`=#{type} ,`invalidDate`=#{invalidDate}  where `id`=#{id}")
 	public void update(Coupon coupon);
 
 	@Delete("delete from `marketing_coupon` where `id`=#{id}")

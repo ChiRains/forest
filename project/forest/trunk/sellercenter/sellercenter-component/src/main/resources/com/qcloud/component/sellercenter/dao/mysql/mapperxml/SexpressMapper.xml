@@ -16,4 +16,12 @@
     	where  1=1
     	and  `merchandId`=#{merchandId} 
     </select>
+    
+    <select id="getByCode" parameterType="java.util.HashMap" resultType="Sexpress">
+    	select * from `sellercenter_sexpress` 
+    	where  1=1
+    	and  `merchandId`=#{merchandId} 
+    	and `code`=#{code}
+    	limit 1
+    </select>
 </mapper>

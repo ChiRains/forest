@@ -122,33 +122,38 @@
 			userOrderStateDesc="待付款" finish="false">待付款:待付款：待付款
 		</item>
 		
-		<item init="false" orderState="20" orderStateDesc="待发货"
-			merchantOrderState="2" merchantOrderStateDesc="待发货" userOrderState="2"
+		<item init="false" orderState="20" orderStateDesc="待配货"
+			merchantOrderState="2" merchantOrderStateDesc="待配货" userOrderState="2"
+			userOrderStateDesc="待配货" finish="false">待配货:待配货:待配货
+		</item>
+		
+		<item init="false" orderState="30" orderStateDesc="待发货"
+			merchantOrderState="3" merchantOrderStateDesc="待发货" userOrderState="3"
 			userOrderStateDesc="待发货" finish="false">待发货:待发货:待发货
 		</item>
 		
-		<item init="false" orderState="30" orderStateDesc="待签收"
-			merchantOrderState="3" merchantOrderStateDesc="待签收" userOrderState="3"
+		<item init="false" orderState="40" orderStateDesc="待签收"
+			merchantOrderState="4" merchantOrderStateDesc="待签收" userOrderState="4"
 			userOrderStateDesc="待签收" finish="false">待签收:待签收:待签收
 		</item>
 		
-		<item init="false" orderState="40" orderStateDesc="交易成功"
-			merchantOrderState="4" merchantOrderStateDesc="交易成功" userOrderState="4"
+		<item init="false" orderState="50" orderStateDesc="交易成功"
+			merchantOrderState="5" merchantOrderStateDesc="交易成功" userOrderState="5"
 			userOrderStateDesc="交易成功" finish="true">交易成功:交易成功：交易成功
 		</item>
 		
-		<item init="false" orderState="50" orderStateDesc="取消订单"
-			merchantOrderState="5" merchantOrderStateDesc="取消订单" userOrderState="5"
+		<item init="false" orderState="60" orderStateDesc="取消订单"
+			merchantOrderState="6" merchantOrderStateDesc="取消订单" userOrderState="6"
 			userOrderStateDesc="取消订单" finish="true">取消订单：取消：取消
 		</item>
 		
-		<item init="false" orderState="60" orderStateDesc="退款中"
-			merchantOrderState="6" merchantOrderStateDesc="退款中" userOrderState="2"
-			userOrderStateDesc="退款中" finish="false">退款中：退款中：待发货
+		<item init="false" orderState="70" orderStateDesc="退款中"
+			merchantOrderState="7" merchantOrderStateDesc="退款中" userOrderState="2"
+			userOrderStateDesc="退款中" finish="false">退款中：退款中：待配货
 		</item>
 		
-		<item init="false" orderState="70" orderStateDesc="已关闭"
-			merchantOrderState="7" merchantOrderStateDesc="已关闭" userOrderState="7"
+		<item init="false" orderState="80" orderStateDesc="已关闭"
+			merchantOrderState="8" merchantOrderStateDesc="已关闭" userOrderState="8"
 			userOrderStateDesc="已关闭" finish="true">已关闭：已关闭：已关闭
 		</item>
 	</module-list>
@@ -157,10 +162,11 @@
 		<item orderState="10" refund="false" return="false" exchange="false"></item>
 		<item orderState="20" refund="true"  return="false" exchange="false"></item>
 		<item orderState="30" refund="false" return="false" exchange="false"></item>
-		<item orderState="40" refund="true"  return="true"  exchange="false"></item>
-		<item orderState="50" refund="false" return="false" exchange="false"></item>
+		<item orderState="40" refund="false" return="false" exchange="false"></item>
+		<item orderState="50" refund="false" return="true"  exchange="false"></item>
 		<item orderState="60" refund="false" return="false" exchange="false"></item>
 		<item orderState="70" refund="false" return="false" exchange="false"></item>
+		<item orderState="80" refund="false" return="false" exchange="false"></item>
 	</module-list>
 
 	<module-list code="orderform-normal-state-chain">
@@ -172,14 +178,14 @@
 
 	<module-list code="orderform-normal-state-chain-1">
 		<item orderState="10"></item>
-		<item orderState="50"></item>
+		<item orderState="60"></item>
 	</module-list>
 
 	<module-list code="orderform-normal-state-chain-2">
 		<item orderState="10"></item>
 		<item orderState="20"></item>
-		<item orderState="60"></item>
 		<item orderState="70"></item>
+		<item orderState="80"></item>
 	</module-list>
 
 	<module-list code="orderform-normal-state-chain-3">
@@ -187,11 +193,12 @@
 		<item orderState="20"></item>
 		<item orderState="30"></item>
 		<item orderState="40"></item>
-		<item orderState="70"></item>
+		<item orderState="50"></item>
+		<item orderState="80"></item>
 	</module-list>
 	
 	<module-list code="orderform-normal-state-chain-4">
-		<item orderState="60"></item>
+		<item orderState="70"></item>
 		<item orderState="20"></item>
 	</module-list>
 	

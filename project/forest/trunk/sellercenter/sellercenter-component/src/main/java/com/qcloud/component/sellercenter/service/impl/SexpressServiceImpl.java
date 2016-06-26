@@ -28,8 +28,9 @@ public class SexpressServiceImpl implements SexpressService {
 
     @Override
     public Long add(Sexpress sexpress) {
-        if(ifExist(sexpress.getCode(),sexpress.getMerchandId())){
-            throw new SellerCenterException("物流公司."+sexpress.getCode()+"已经设置过,不能重复设置");
+
+        if (ifExist(sexpress.getCode(), sexpress.getMerchandId())) {
+            throw new SellerCenterException("物流公司." + sexpress.getCode() + "已经设置过,不能重复设置");
         }
         //
         long id = autoIdGenerator.get(ID_KEY);
@@ -77,15 +78,21 @@ public class SexpressServiceImpl implements SexpressService {
 
         return sexpressDao.listByMerchant(merchantId);
     }
-    
-    private boolean ifExist(String code,long merchandId){
-        List<Sexpress> list=listByMerchant(merchandId);
+
+    private boolean ifExist(String code, long merchandId) {
+
+        List<Sexpress> list = listByMerchant(merchandId);
         for (Sexpress sexpress : list) {
-            if(sexpress.getCode().equalsIgnoreCase(code)){
+            if (sexpress.getCode().equalsIgnoreCase(code)) {
                 return true;
             }
         }
         return false;
-        
+    }
+
+    @Override
+    public Sexpress getByCode(String expressCode, long merchantId) {
+
+        return sexpressDao.getByCode(expressCode, merchantId);
     }
 }

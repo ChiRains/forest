@@ -77,4 +77,10 @@ public class SexpressDaoRedisImpl implements SexpressDao {
 
         throw new NotImplementedException();
     }
+
+    @Override
+    public Sexpress getByCode(String expressCode, long merchantId) {
+
+        throw new NotImplementedException();
+    }
 }
