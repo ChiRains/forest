@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.goods.dao.mysql.mapper.CombinationMerchandiseItemMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="CombinationMerchandiseItem">  
+        select * from `goods_combination_merchandise_item` limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `goods_combination_merchandise_item`
+    </select> 
+</mapper>
