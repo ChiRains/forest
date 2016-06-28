@@ -4,23 +4,21 @@ public enum OrderStateType {
     //
     NORMAL_TOPAY(10, "待付款"),
     //
-    NORMAL_PAID(20, "已付款"),
+    NORMAL_TO_PACKING(20, "待配货"),
     //
-    NORMAL_CONFIRM_ORDER(30, "卖家确认"),
+    NORMAL_SHIPPED(30, "待发货"),
     //
-    NORMAL_SHIPPED(40, "卖家发货"),
+    NORMAL_SIGN(40, "待签收"),
     //
-    NORMAL_SIGN(50, "买家签收"),
+    NORMAL_FINISHED(50, "已完成"),
     //
-    NORMAL_AFTER_SALE(60, "售后"),
+    NORMAL_CANCEL_ORDER(60, "取消订单"),
     //
-    NORMAL_TRADE_SUCCESS(70, "交易成功"),
+    NORMAL_AFTER_SALE(70, "退款中"),
     //
-    NORMAL_TRADE_FAIL(80, "交易失败"),
+    NORMAL_INVALID(80, "已关闭"),
     //
-    NORMAL_INVALID(90, "已失效"),
-    //
-    NORMAL_CANCEL_ORDER(100, "取消订单");
+    NORMAL_TRADE_SUCCESS(90, "交易成功");
 
     //
     private final int    key;

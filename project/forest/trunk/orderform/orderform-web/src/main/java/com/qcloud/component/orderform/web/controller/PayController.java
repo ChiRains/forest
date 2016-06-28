@@ -150,8 +150,8 @@ public class PayController {
                         Date orderDate = DateUtil.str2Date(attachArray[1], "yyyyMMddHHmmss");
                         OrderEntity orderEntity = orderSelecterService.getOrder(orderId, orderDate);
                         AssertUtil.assertNotNull(orderEntity, "订单不存在." + attach);
-                        if (orderEntity.getState() < OrderStateType.NORMAL_PAID.getKey()) {
-                            orderStateService.exchangeOrderState(orderId, orderDate, OrderStateType.NORMAL_PAID.getKey(), -1L);
+                        if (orderEntity.getState() < OrderStateType.NORMAL_TO_PACKING.getKey()) {
+                            orderStateService.exchangeOrderState(orderId, orderDate, OrderStateType.NORMAL_TO_PACKING.getKey(), -1L);
                             collectOrderService.updatePaymentMode(orderId, orderDate, PaymentModeType.ONLINE_MICROCHANNELPAY);
                         } else {
                             throw new PublicServiceException("订单状态已经发生变化." + attach + " " + orderEntity.getState());
@@ -239,8 +239,8 @@ public class PayController {
                     Date orderDate = DateUtil.str2Date(attachArray[1], "yyyyMMddHHmmss");
                     OrderEntity orderEntity = orderSelecterService.getOrder(orderId, orderDate);
                     AssertUtil.assertNotNull(orderEntity, "订单不存在." + attach);
-                    if (orderEntity.getState() < OrderStateType.NORMAL_PAID.getKey()) {
-                        orderStateService.exchangeOrderState(orderId, orderDate, OrderStateType.NORMAL_PAID.getKey(), -1L);
+                    if (orderEntity.getState() < OrderStateType.NORMAL_TO_PACKING.getKey()) {
+                        orderStateService.exchangeOrderState(orderId, orderDate, OrderStateType.NORMAL_TO_PACKING.getKey(), -1L);
                         collectOrderService.updatePaymentMode(orderId, orderDate, PaymentModeType.ONLINE_ALIPAY);
                     } else {
                         throw new PublicServiceException("订单状态已经发生变化." + attach + " " + orderEntity.getState());

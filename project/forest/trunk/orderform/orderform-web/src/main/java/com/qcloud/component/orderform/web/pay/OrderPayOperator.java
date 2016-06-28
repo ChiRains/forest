@@ -66,6 +66,6 @@ public class OrderPayOperator implements PaymentOperate {
 
         final QOrder order = orderformClient.getOrder(objectId, occurTime);
         AssertUtil.assertNotNull(order, "订单不存在." + objectId + " " + DateUtil.date2String(occurTime));
-        return orderStateService.exchangeOrderState(objectId, occurTime, OrderStateType.NORMAL_PAID.getKey(), -1L);
+        return orderStateService.exchangeOrderState(objectId, occurTime, OrderStateType.NORMAL_TO_PACKING.getKey(), -1L);
     }
 }

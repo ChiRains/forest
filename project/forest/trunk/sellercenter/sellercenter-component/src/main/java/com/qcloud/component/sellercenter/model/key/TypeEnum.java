@@ -83,29 +83,20 @@ public class TypeEnum {
         //
         TOPAY(1, "待付款"),
         //
-        INVALID(2, "已失效"),
+        TO_PACKING(2, "待配货"),
         //
-        CANCEL_ORDER(3, "已取消"),
+        SHIP(3, "待发货"),
         //
-        CONFIRM(4, "待确认"),
+        SIGN(4, "待签收"),
         //
-        SHIP(5, "待发货"),
+        SUCCESS(5, "成功"),
         //
-        SIGN(6, "待签收"),
+        CANCEL_ORDER(6, "已取消"),
         //
-        SIGNED(7, "已签收"),
+        AFTER_SALE(7, "售后"),
         //
-        SUCCESS(8, "成功"),
-        //
-        AFTER_SALE(9, "售后"),
-        //
-        RETURN(10, "退货"),
-        //
-        EXCHANGE(11, "换货"),
-        //
-        REFUND(12, "退款");
+        INVALID(8, "已失效");
 
-        //
         private final int    key;
 
         //

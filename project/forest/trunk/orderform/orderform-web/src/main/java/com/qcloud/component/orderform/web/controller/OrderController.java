@@ -535,7 +535,6 @@ public class OrderController {
                 preOrderItemVO.setDiscount(orderItemEntity.getDiscount());
                 preOrderItemVO.setUnifiedMerchandiseId(orderItemEntity.getUnifiedMerchandiseId());
                 preOrderItemVO.setImage(fileSDKClient.getFileServerUrl() + orderItemEntity.getImage());
-            
                 preOrderItemVO.setPrice(orderItemEntity.getPrice());
                 preOrderItemVO.setName(orderItemEntity.getName());
                 preOrderItemVO.setNumber(orderItemEntity.getNumber());
@@ -965,7 +964,7 @@ public class OrderController {
         number = number == null || number <= 0 ? 1 : number;
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         QMyConsignee consignee = OrderMyConsignee.get(name, mobile, address);
-        return orderService.orderExchange(user, consignee, merchandise, number, OrderStateType.NORMAL_PAID.getKey());
+        return orderService.orderExchange(user, consignee, merchandise, number, OrderStateType.NORMAL_TO_PACKING.getKey());
     }
 
     @RequestMapping

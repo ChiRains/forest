@@ -44,12 +44,11 @@ public class UnionPayController {
     @Autowired
     PersonalcenterClient       personalcenterClient;
 
-//    @Autowired
-//    UserFilterService          userFilterService;
-//
-//    @Autowired
-//    TokenClient                tokenClient;
-
+    // @Autowired
+    // UserFilterService userFilterService;
+    //
+    // @Autowired
+    // TokenClient tokenClient;
     @Autowired
     OrderStateService          orderStateService;
 
@@ -94,8 +93,8 @@ public class UnionPayController {
         Date orderDate = DateUtil.str2Date(reqReservedArray[1], "yyyyMMddHHmmss");
         OrderEntity orderEntity = orderSelecterService.getOrder(orderId, orderDate);
         AssertUtil.assertNotNull(orderEntity, "订单不存在." + reqReserved);
-        if (orderEntity.getState() < OrderStateType.NORMAL_PAID.getKey()) {
-            orderStateService.exchangeOrderState(orderId, orderDate, OrderStateType.NORMAL_PAID.getKey(), -1L);
+        if (orderEntity.getState() < OrderStateType.NORMAL_TO_PACKING.getKey()) {
+            orderStateService.exchangeOrderState(orderId, orderDate, OrderStateType.NORMAL_TO_PACKING.getKey(), -1L);
         } else {
             throw new PublicServiceException("订单状态已经发生变化." + reqReserved + " " + orderEntity.getState());
         }
@@ -114,17 +113,16 @@ public class UnionPayController {
         return model;
     }
 
-//    private QUser getUser(HttpServletRequest request) {
-//
-//        String token = userFilterService.getTokenId(request);
-//        AssertUtil.assertNotEmpty(token, "获取用户登录信息失败.");
-//        String idStr = tokenClient.get(token);
-//        AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
-//        QUser user = personalcenterClient.getUser(Long.parseLong(idStr));
-//        AssertUtil.assertNotNull(user, "用户不存在.");
-//        return user;
-//    }
-
+    // private QUser getUser(HttpServletRequest request) {
+    //
+    // String token = userFilterService.getTokenId(request);
+    // AssertUtil.assertNotEmpty(token, "获取用户登录信息失败.");
+    // String idStr = tokenClient.get(token);
+    // AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
+    // QUser user = personalcenterClient.getUser(Long.parseLong(idStr));
+    // AssertUtil.assertNotNull(user, "用户不存在.");
+    // return user;
+    // }
     /**
      * 银联支付--(多商户，水漆项目的奇葩需求)
      * @return

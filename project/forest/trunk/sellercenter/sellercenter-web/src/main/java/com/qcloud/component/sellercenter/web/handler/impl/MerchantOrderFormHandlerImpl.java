@@ -55,9 +55,9 @@ public class MerchantOrderFormHandlerImpl implements MerchantOrderFormHandler {
         String stateStr = "";
         if (merchantOrderForm.getState() == MerchantOrderStateType.TOPAY.getKey()) {
             stateStr = "待付款";
-        } else if (merchantOrderForm.getState() == MerchantOrderStateType.CONFIRM.getKey()) {
-            stateStr = "待确认";
-        } else if (merchantOrderForm.getState() == MerchantOrderStateType.TOPAY.getKey()) {
+        } else if (merchantOrderForm.getState() == MerchantOrderStateType.TO_PACKING.getKey()) {
+            stateStr = "待配货";
+        } else if (merchantOrderForm.getState() == MerchantOrderStateType.SHIP.getKey()) {
             stateStr = "待发货";
         }
         vo.setStateStr(stateStr);

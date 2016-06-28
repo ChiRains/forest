@@ -4,23 +4,20 @@ public enum MyOrderStateType {
     //
     TOPAY(1, "待付款"),
     //
-    INVALID(2, "已失效"),
+    TO_PACKING(2, "待配货"),
     //
-    CANCEL_ORDER(3, "已取消"),
+    SHIP(3, "待发货"),
     //
-    SHIP(4, "待发货"),
+    SIGN(4, "待收货"), SUCCESS(5, "成功"),
     //
-    SIGN(5, "待收货"),
+    CANCEL_ORDER(6, "已取消"),
     //
-    EVALUATION(6, "待评价"),
+    AFTERSALES(7, "售后"),
     //
-    EVALUATED(7, "已评价"),
+    INVALID(8, "已关闭"),
     //
-    AFTERSALES(8, "售后"),
-    //
-    SUCCESS(9, "成功");
+    EVALUATED(9, "评价");
 
-    //
     private final int    key;
 
     //
