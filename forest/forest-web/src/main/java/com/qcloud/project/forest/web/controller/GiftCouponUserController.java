@@ -107,7 +107,10 @@ public class GiftCouponUserController {
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         GiftCouponUser giftCouponUser = giftCouponUserService.get(giftCouponUserId);
         AssertUtil.assertNotNull(giftCouponUser, "赠品券不存在.");
+        AssertUtil.assertTrue(giftCouponUser.getUserId() == user.getId(), "该赠品券不属于当前用户");
+        giftCouponUserService.delete(giftCouponUserId);
         FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("删除成功");
         return view;
     }
 }
