@@ -64,12 +64,16 @@ public class GiftCouponUserController {
         Iterator<GiftCouponUserVO> iter = voList.iterator();
         while (iter.hasNext()) {
             giftCouponUserVO = iter.next();
-            giftCoupon = giftCouponService.get(giftCouponUserVO.getId());
+            giftCoupon = giftCouponService.get(giftCouponUserVO.getGiftCouponId());
             if (giftCoupon.getEnable() == 0) {
                 iter.remove();
+            } else if (giftCoupon.getEnable() == 1) {
+                if (giftCouponUserVO.getState() == 2) {
+                    iter.remove();
+                }
             }
         }
-        FrontPagingView frontPagingView = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), page.getCount());
+        FrontPagingView frontPagingView = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), voList.size());
         frontPagingView.setList(voList);
         return frontPagingView;
     }
@@ -88,6 +92,22 @@ public class GiftCouponUserController {
         GiftCouponVO giftCouponVO = giftCouponHandler.toVO(giftCoupon);
         FrontAjaxView view = new FrontAjaxView();
         view.addObject("result", giftCouponVO);
+        return view;
+    }
+
+    /**
+     * 删除赠品券
+     * @param giftCouponId
+     * @return
+     */
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView delete(HttpServletRequest request, Long giftCouponUserId) {
+
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        GiftCouponUser giftCouponUser = giftCouponUserService.get(giftCouponUserId);
+        AssertUtil.assertNotNull(giftCouponUser, "赠品券不存在.");
+        FrontAjaxView view = new FrontAjaxView();
         return view;
     }
 }

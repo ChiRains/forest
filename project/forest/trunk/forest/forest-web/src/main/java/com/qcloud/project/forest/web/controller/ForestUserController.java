@@ -154,8 +154,8 @@ public class ForestUserController {
     }
 
     /**
-     * 修改绑定手机号 获取验证码
-     * @param mobile 原手机号
+     * 修改绑定手机号 获取验证码（原手机号）
+     * @param mobile 
      * @return
      */
     @PiratesApp
@@ -183,7 +183,7 @@ public class ForestUserController {
     }
 
     /**
-     * 判断验证码是否正确
+     * 判断验证码是否正确（原手机号）
      * @param request
      * @param mobile
      * @param code
@@ -210,8 +210,8 @@ public class ForestUserController {
     }
 
     /**
-     * 修改绑定手机号 获取验证码
-     * @param mobile 原手机号
+     * 修改绑定手机号 获取验证码（新手机号）
+     * @param mobile 
      * @return
      */
     @PiratesApp
@@ -233,7 +233,7 @@ public class ForestUserController {
     }
 
     /**
-     * 提交修改的新手机号和验证码
+     * 提交修改的新手机号和验证码（新手机号）
      * @param request
      * @param mobile
      * @param code
@@ -241,8 +241,20 @@ public class ForestUserController {
      */
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView editBingdingMobile(HttpServletRequest request, String mobile, String code) {
+    public FrontAjaxView editBingdingMobile(HttpServletRequest request, String mobile, String code, String oldMobile, String oldCode) {
 
+        // 原手机号码验证
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        AssertUtil.assertTrue(user.getMobile().equals(oldMobile), "您输入的原手机号不属于当前用户");
+        boolean oldVerification = verificationCodeClient.verification(oldMobile, oldCode);
+        // 上线时此处代码应该删掉
+        // ---------------------------------
+        if (oldCode.equals("666666")) {
+            oldVerification = true;
+        }
+        // ---------------------------------
+        AssertUtil.assertTrue(oldVerification, "原手机号验证码不正确,请重新获取.");
+        // 新手机号码验证
         boolean verification = verificationCodeClient.verification(mobile, code);
         // 上线时此处代码应该删掉
         // ---------------------------------
