@@ -262,9 +262,9 @@ public class SellercenterClientImpl implements SellercenterClient {
         MerchantOrderForm merchantOrderForm = merchantOrderFormService.getBySubOrder(merchantId, subOrderId);
         AssertUtil.assertNotNull(merchantOrderForm, "商家订单不存在." + subOrderId);
         merchantOrderForm.setStoreId(storeId);
-        if (merchantOrderForm.getState() != MerchantOrderStateType.CONFIRM.getKey()) {
-            throw new SellerCenterException("只允许确定订单时修改门店!");
-        }
+        // if (merchantOrderForm.getState() != MerchantOrderStateType.CONFIRM.getKey()) {
+        // throw new SellerCenterException("只允许确定订单时修改门店!");
+        // }
         return merchantOrderFormService.update(merchantOrderForm);
     }
 

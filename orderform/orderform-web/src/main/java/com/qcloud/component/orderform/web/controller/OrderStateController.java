@@ -85,7 +85,7 @@ public class OrderStateController {
         // AssertUtil.assertNotNull(storeMember, "您尚未属于一家门店.");
         QStore store = PageParameterUtil.getParameterValues(request, SellercenterClient.STORE_LOGIN_PARAMETER_KEY);
         long merchantId = store.getMerchantId();
-        orderStateService.exchangeSubOrderState(orderStateForm.getSubOrderId(), orderStateForm.getOrderDate(), OrderStateType.NORMAL_CONFIRM_ORDER.getKey(), merchantId);
+        // orderStateService.exchangeSubOrderState(orderStateForm.getSubOrderId(), orderStateForm.getOrderDate(), OrderStateType.NORMAL_CONFIRM_ORDER.getKey(), merchantId);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("确认订单成功");
         return view;
@@ -154,7 +154,7 @@ public class OrderStateController {
     }
 
     /**
-     * 买家取消订单
+     * 买家关闭订单 -- 付款前
      * @param orderStateForm
      * @return
      */
@@ -178,10 +178,10 @@ public class OrderStateController {
         // orderService.exchangeOrderState(orderStateForm.getOrderId(), orderStateForm.getOrderDate(), OrderStateType.NORMAL_CANCEL_PAID.getKey(), user.getId());
         // } else
         {
-            throw new OrderformException("取消订单失败.");
+            throw new OrderformException("关闭订单失败.");
         }
         FrontAjaxView view = new FrontAjaxView();
-        view.setMessage("取消订单成功");
+        view.setMessage("关闭订单成功");
         return view;
     }
 

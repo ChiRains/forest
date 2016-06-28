@@ -295,10 +295,10 @@ public class OrderServiceImpl implements OrderService {
             for (OrderItemEntity orderItemEntity : orderItemList) {
                 orderItemEntity.getOrderItem().setDiscount(orderItemEntity.getDiscount() * discount / 100);
                 // VIP价格
-//                Double vipDiscount = commoditycenterClient.getVipDiscount(context.getUser().getId(), orderItemEntity.getOrderItem().getUnifiedMerchandiseId());
-//                if (vipDiscount != null && new Double(vipDiscount * 100).longValue() > 0 && vipDiscount < orderItemEntity.getOrderItem().getDiscount()) {
-//                    orderItemEntity.getOrderItem().setDiscount(vipDiscount);
-//                }
+                // Double vipDiscount = commoditycenterClient.getVipDiscount(context.getUser().getId(), orderItemEntity.getOrderItem().getUnifiedMerchandiseId());
+                // if (vipDiscount != null && new Double(vipDiscount * 100).longValue() > 0 && vipDiscount < orderItemEntity.getOrderItem().getDiscount()) {
+                // orderItemEntity.getOrderItem().setDiscount(vipDiscount);
+                // }
                 double sum = orderItemEntity.getOrderItem().getDiscount() * orderItemEntity.getNumber();
                 orderItemEntity.getOrderItem().setSum(sum);
                 orderItemEntity.getOrderItem().setCash(sum);
@@ -359,25 +359,28 @@ public class OrderServiceImpl implements OrderService {
                 }
             }
             OrderDelivery orderDelivery = context.getDeliveryMap().get(context.getMerchant(merchantOrderEntity.getMerchantId()));
+            // TODO送货上门 门店自提
             // 物流邮费
-            if (orderDelivery != null && StringUtils.isNotEmpty(orderDelivery.getSexpressCode()) && (orderDelivery.getDelivery() == null || DeliveryModeType.LOGISTICS.equals(orderDelivery.getDelivery().getType()))) {
-                String expressCode = orderDelivery.getSexpressCode();
-                double postage = sellercenterClient.calculatePostage(expressCode, merchantOrderEntity.getMerchantId(), weight, context.getConsignee().getCity());
-                if (new Double(postage).longValue() > 0) {
-                    merchantOrderEntity.getSubOrder().setPostage(postage);
-                    merchantOrderEntity.getSubOrder().setCash(merchantOrderEntity.getCash() + postage);
-                    merchantOrderEntity.getSubOrder().setSum(merchantOrderEntity.getSum() + postage);
-                    //
-                    orderEntity.getCollectOrder().setPostage(orderEntity.getCollectOrder().getPostage() + postage);
-                    orderEntity.getCollectOrder().setCash(orderEntity.getCash() + postage);
-                    orderEntity.getCollectOrder().setSum(orderEntity.getSum() + postage);
-                    merchantOrderEntity.getSubOrder().setExpressCode(expressCode);
-                    merchantOrderEntity.getSubOrder().setExpressName(sellercenterClient.getExpressName(expressCode));
+            if (DeliveryModeType.LOGISTICS.equals(orderDelivery.getDelivery().getType())) {
+                if (orderDelivery != null && StringUtils.isNotEmpty(orderDelivery.getSexpressCode()) && (orderDelivery.getDelivery() == null)) {
+                    String expressCode = orderDelivery.getSexpressCode();
+                    double postage = sellercenterClient.calculatePostage(expressCode, merchantOrderEntity.getMerchantId(), weight, context.getConsignee().getCity());
+                    if (new Double(postage).longValue() > 0) {
+                        merchantOrderEntity.getSubOrder().setPostage(postage);
+                        merchantOrderEntity.getSubOrder().setCash(merchantOrderEntity.getCash() + postage);
+                        merchantOrderEntity.getSubOrder().setSum(merchantOrderEntity.getSum() + postage);
+                        //
+                        orderEntity.getCollectOrder().setPostage(orderEntity.getCollectOrder().getPostage() + postage);
+                        orderEntity.getCollectOrder().setCash(orderEntity.getCash() + postage);
+                        orderEntity.getCollectOrder().setSum(orderEntity.getSum() + postage);
+                        merchantOrderEntity.getSubOrder().setExpressCode(expressCode);
+                        merchantOrderEntity.getSubOrder().setExpressName(sellercenterClient.getExpressName(expressCode));
+                    }
+                } else {
+                    QMerchant merchant = context.getMerchant(merchantOrderEntity.getMerchantId());
+                    List<KeyValueVO> expressList = sellercenterClient.listExpress(merchant);
+                    AssertUtil.assertTrue(CollectionUtils.isEmpty(expressList), "购买商品商家[" + merchant.getName() + "]不包邮,请选择快递公司");
                 }
-            } else {
-                QMerchant merchant = context.getMerchant(merchantOrderEntity.getMerchantId());
-                List<KeyValueVO> expressList = sellercenterClient.listExpress(merchant);
-                AssertUtil.assertTrue(CollectionUtils.isEmpty(expressList), "购买商品商家[" + merchant.getName() + "]不包邮,请选择快递公司");
             }
         }
     }

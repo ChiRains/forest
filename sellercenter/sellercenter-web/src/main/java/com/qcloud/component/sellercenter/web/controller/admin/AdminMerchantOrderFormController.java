@@ -110,7 +110,7 @@ public class AdminMerchantOrderFormController {
         pagingView.addObject("result", list);
         pagingView.addObject("stateType", MerchantOrderStateType.values());
         pagingView.addObject("shipType", MerchantOrderStateType.SHIP.getKey());
-        pagingView.addObject("confirmType", MerchantOrderStateType.CONFIRM.getKey());
+        // pagingView.addObject("confirmType", MerchantOrderStateType.CONFIRM.getKey());
         pagingView.addObject("query", query);
         pagingView.addObject("needInvoiceType", NeedInvoiceType.values());
         pagingView.addObject("invoiceType", InvoiceType.values());
@@ -137,7 +137,7 @@ public class AdminMerchantOrderFormController {
         pagingView.addObject("result", list);
         pagingView.addObject("stateType", MerchantOrderStateType.values());
         pagingView.addObject("shipType", MerchantOrderStateType.SHIP.getKey());
-        pagingView.addObject("confirmType", MerchantOrderStateType.CONFIRM.getKey());
+        // pagingView.addObject("confirmType", MerchantOrderStateType.CONFIRM.getKey());
         pagingView.addObject("query", query);
         List<Store> storeList = storeService.listByMerchant(store.getMerchantId());
         List<TreeModel> treeModelList = new ArrayList<TreeModel>();

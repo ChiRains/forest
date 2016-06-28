@@ -20,6 +20,8 @@ public class InvoiceModeVO {
     // 内容
     private String content;
 
+    private int    isDefault;
+
     public InvoiceModeVO() {
 
     }
@@ -72,5 +74,15 @@ public class InvoiceModeVO {
     public String getContent() {
 
         return content;
+    }
+
+    public int getIsDefault() {
+
+        return isDefault;
+    }
+
+    public void setIsDefault(int isDefault) {
+
+        this.isDefault = isDefault;
     }
 }

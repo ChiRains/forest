@@ -102,13 +102,14 @@ public class AfterSaleStateController {
         MerchantOrderEntity merchantOrder = orderSelecterService.getMerchantOrder(refundOrder.getSubOrderId(), refundOrder.getOrderDate());
         RefundAfterSaleOrder refundAfterSaleOrder = afterSaleSelecterService.getRefundOrder(merchantOrder, refundId);
         afterSaleStateService.exchangeRefundOrderState(refundAfterSaleOrder, RefundOrderStateType.REFUND_REFUSE.getKey());
-        // 拒绝退款，订单状态还原到待发货
-        myClient.updateMyOrderFormState(refundOrder.getUserId(), refundOrder.getOrderId(), MyOrderStateType.SHIP.getKey());
-        if (OrderStateType.NORMAL_PAID.getKey() == merchantOrder.getState()) {
-            sellercenterClient.updateOrderFormState(refundOrder.getMerchantId(), refundOrder.getSubOrderId(), MerchantOrderStateType.CONFIRM.getKey());
-        } else if (OrderStateType.NORMAL_CONFIRM_ORDER.getKey() == merchantOrder.getState()) {
-            sellercenterClient.updateOrderFormState(refundOrder.getMerchantId(), refundOrder.getSubOrderId(), MerchantOrderStateType.SHIP.getKey());
+        // 拒绝退款，订单状态还原到待配货
+        myClient.updateMyOrderFormState(refundOrder.getUserId(), refundOrder.getOrderId(), MyOrderStateType.TO_PACKING.getKey());
+        if (OrderStateType.NORMAL_TO_PACKING.getKey() == merchantOrder.getState()) {
+            sellercenterClient.updateOrderFormState(refundOrder.getMerchantId(), refundOrder.getSubOrderId(), MerchantOrderStateType.TO_PACKING.getKey());
         }
+        // } else if (OrderStateType.NORMAL_CONFIRM_ORDER.getKey() == merchantOrder.getState()) {
+        // sellercenterClient.updateOrderFormState(refundOrder.getMerchantId(), refundOrder.getSubOrderId(), MerchantOrderStateType.SHIP.getKey());
+        // }
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("拒绝退款单成功.");
         return view;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xml>
 	<module-list code="orderform-auto-change">
-		<item source="10" dest="50" type="1" timeSplit="15"
+		<item source="10" dest="60" type="1" timeSplit="15"
 			timeLimit="normalOrderInvalidLimit" condition="">失效</item>
 			
 		<item source="20" dest="30" type="1" timeSplit="1440"
@@ -137,9 +137,9 @@
 			userOrderStateDesc="待签收" finish="false">待签收:待签收:待签收
 		</item>
 		
-		<item init="false" orderState="50" orderStateDesc="交易成功"
-			merchantOrderState="5" merchantOrderStateDesc="交易成功" userOrderState="5"
-			userOrderStateDesc="交易成功" finish="true">交易成功:交易成功：交易成功
+		<item init="false" orderState="50" orderStateDesc="已完成"
+			merchantOrderState="5" merchantOrderStateDesc="已完成" userOrderState="5"
+			userOrderStateDesc="已完成" finish="true">已完成:已完成：已完成
 		</item>
 		
 		<item init="false" orderState="60" orderStateDesc="取消订单"
@@ -156,6 +156,11 @@
 			merchantOrderState="8" merchantOrderStateDesc="已关闭" userOrderState="8"
 			userOrderStateDesc="已关闭" finish="true">已关闭：已关闭：已关闭
 		</item>
+		
+		<item init="false" orderState="90" orderStateDesc="交易成功"
+			merchantOrderState="9" merchantOrderStateDesc="交易成功" userOrderState="9"
+			userOrderStateDesc="交易成功" finish="true">交易成功:交易成功：交易成功
+		</item>
 	</module-list>
 
 	<module-list code="orderform-normal-state-to-after-sale">
@@ -167,6 +172,7 @@
 		<item orderState="60" refund="false" return="false" exchange="false"></item>
 		<item orderState="70" refund="false" return="false" exchange="false"></item>
 		<item orderState="80" refund="false" return="false" exchange="false"></item>
+		<item orderState="90" refund="false" return="false" exchange="false"></item>
 	</module-list>
 
 	<module-list code="orderform-normal-state-chain">
@@ -194,7 +200,7 @@
 		<item orderState="30"></item>
 		<item orderState="40"></item>
 		<item orderState="50"></item>
-		<item orderState="80"></item>
+		<item orderState="90"></item>
 	</module-list>
 	
 	<module-list code="orderform-normal-state-chain-4">
