@@ -128,6 +128,17 @@
 		<item merchant="1010008000011601">大参林商家id</item>
 	</module-list>
 	
+	<module-list code="mailSenderInfo">
+		<item key="mailServerHost">smtp.exmail.qq.com</item>
+		<item key="mailServerPort">25</item>
+		<item key="username">shiliew@qi-cloud.com</item>
+		<item key="password">YTg1OTUxOTdAcWktY2xvdWQuY29t</item>
+		<item key="fromAddress">shiliew@qi-cloud.com</item>
+		<item key="mailLocalhost">tgsp.hengqin.gov.cn</item>
+		<item key="mailDebug">false</item>
+	</module-list>
+	
+	
 	<!-- begin of 后台配置项 -->
 	<module-list code="parameter_config_modular_list">
 		<item code="forest-user-protocol-config" name="会员协议">会员协议</item>

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.qcloud.component.parameter.ParameterClient;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
+import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.component.personalcenter.exception.PersonalCenterException;
 import com.qcloud.component.personalcenter.model.CardNumberConfig;
 import com.qcloud.component.personalcenter.model.MembershipCardWarehouse;
@@ -150,5 +151,106 @@ public class ForestUserController {
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("修改个人资料成功");
         return view;
+    }
+
+    /**
+     * 修改绑定手机号 获取验证码
+     * @param mobile 原手机号
+     * @return
+     */
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView getCodeForChangeBingdingMobileByOldNumber(HttpServletRequest request, String mobile) {
+
+        User u = userService.getByAccount(mobile);
+        if (u == null) {
+            throw new PersonalCenterException("会员不存在." + mobile);
+        }
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        AssertUtil.assertTrue(user.getMobile().equals(mobile), "您所填的电话号码不属于当前 用户");
+        String code = verificationCodeClient.create(mobile, 30);
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("code", code);
+        map.put("minute", "30");
+        boolean result = smsClient.send(USER_SAFETY_SMS_TEMPLATE_KEY, mobile, map);
+        if (result) {
+            FrontAjaxView view = new FrontAjaxView();
+            view.setMessage("发送短信成功");
+            return view;
+        } else {
+            throw new PersonalCenterException("发送短信失败." + mobile);
+        }
+    }
+
+    /**
+     * 判断验证码是否正确
+     * @param request
+     * @param mobile
+     * @param code
+     * @return
+     */
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView verifyCodeForChangeBingdingMobileByOldNumber(HttpServletRequest request, String mobile, String code) {
+
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        AssertUtil.assertTrue(user.getMobile().equals(mobile), "您所填的电话号码不属于当前 用户");
+        boolean verification = verificationCodeClient.verification(mobile, code);
+        // 上线时此处代码应该删掉
+        // ---------------------------------
+        if (code.equals("666666")) {
+            verification = true;
+        }
+        // ---------------------------------
+        AssertUtil.assertTrue(verification, "验证码不正确,请重新获取.");
+        FrontAjaxView frontAjaxView = new FrontAjaxView();
+        frontAjaxView.setMessage("验证成功");
+        frontAjaxView.addObject("isVerify", 1);
+        return frontAjaxView;
+    }
+
+    /**
+     * 修改绑定手机号 获取验证码
+     * @param mobile 原手机号
+     * @return
+     */
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView getCodeForChangeBingdingMobileByNewNumber(String mobile) {
+
+        String code = verificationCodeClient.create(mobile, 30);
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("code", code);
+        map.put("minute", "30");
+        boolean result = smsClient.send(USER_SAFETY_SMS_TEMPLATE_KEY, mobile, map);
+        if (result) {
+            FrontAjaxView view = new FrontAjaxView();
+            view.setMessage("发送短信成功");
+            return view;
+        } else {
+            throw new PersonalCenterException("发送短信失败." + mobile);
+        }
+    }
+
+    /**
+     * 提交修改的新手机号和验证码
+     * @param request
+     * @param mobile
+     * @param code
+     * @return
+     */
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView editBingdingMobile(HttpServletRequest request, String mobile, String code) {
+
+        boolean verification = verificationCodeClient.verification(mobile, code);
+        // 上线时此处代码应该删掉
+        // ---------------------------------
+        if (code.equals("666666")) {
+            verification = true;
+        }
+        // ---------------------------------
+        AssertUtil.assertTrue(verification, "验证码不正确,请重新获取.");
+        return userController.editMobile(request, mobile);
     }
 }
