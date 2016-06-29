@@ -95,11 +95,11 @@
             AND merchantId = #{merchantId}
         </if>
         <if test="merchantClassifyId != null and merchantClassifyId > 0">
-            AND (merchantClassifyId = #{merchantClassifyId} OR merchantClassifyBsid like CONCAT(#{merchantClassifyBsid},'%'))
+            AND (merchantClassifyId = #{merchantClassifyId} OR merchantClassifyBsid like CONCAT('%',#{merchantClassifyBsid},'%'))
         </if>       
         
         <if test="mallClassifyId != null and mallClassifyId > 0">
-            AND (mallClassifyId = #{mallClassifyId} OR mallClassifyBsid like CONCAT(#{mallClassifyBsid},'%'))
+            AND (mallClassifyId = #{mallClassifyId} OR mallClassifyBsid like CONCAT('%',#{mallClassifyBsid},'%'))
         </if>          
         <if test="brandId != null and brandId > 0">
             AND brandId = #{brandId}
@@ -113,7 +113,8 @@
      	 <!--  <if test="queryType == 2">
             AND merchandiseSpecificationsId != -1 
         </if> -->               
-        order by ${orderField} ${orderType} limit #{start},#{count}
+        order by ${orderField} ${orderType} 
+        limit #{start},#{count}
     </select>
 
     <select id="count4Front" parameterType="java.util.HashMap" resultType="Integer">
@@ -122,7 +123,7 @@
             AND merchantId = #{merchantId}
         </if>
         <if test="merchantClassifyId != null and merchantClassifyId > 0">
-            AND (merchantClassifyId = #{merchantClassifyId} OR merchantClassifyBsid like CONCAT(#{merchantClassifyBsid},'%'))
+            AND (merchantClassifyId = #{merchantClassifyId} OR merchantClassifyBsid like CONCAT('%',#{merchantClassifyBsid},'%'))
         </if>       
         
         <if test="mallClassifyId != null and mallClassifyId > 0">
