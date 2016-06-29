@@ -44,6 +44,9 @@ public class ForestUserController {
     private UserFilterService              userFilterService;
 
     @Autowired
+    private ParameterClient                parameterClient;
+
+    @Autowired
     private UserController                 userController;
 
     @Autowired
@@ -55,14 +58,11 @@ public class ForestUserController {
     @Autowired
     private SmsClient                      smsClient;
 
-    @Autowired
-    private ParameterClient                parameterClient;
-
     public static final String             USER_SAFETY_SMS_TEMPLATE_KEY = "personalcenter-user-safety-sms-template";
 
-    public static final String             TIP_MESSAGE                  = "tip-message";
-
     public static final String             CONTACTS_MOBILE              = "contacts-mobile";
+
+    public static final String             TIP_MESSAGE                  = "tip-message";
 
     @PiratesApp
     @RequestMapping
@@ -264,5 +264,17 @@ public class ForestUserController {
         // ---------------------------------
         AssertUtil.assertTrue(verification, "验证码不正确,请重新获取.");
         return userController.editMobile(request, mobile);
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView extraInfo(HttpServletRequest request) {
+
+        FrontAjaxView view = new FrontAjaxView();
+        view.addObject("collectNums", 10);// 收藏数量，包括商品和门店
+        view.addObject("historyNums", 10);// 历史足迹数量
+        view.addObject("couponNums", 10);// 优惠券数量
+        view.addObject("integralNums", 10);// 可用积分
+        return view;
     }
 }
