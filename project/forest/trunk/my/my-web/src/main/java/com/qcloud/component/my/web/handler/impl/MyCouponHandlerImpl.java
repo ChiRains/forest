@@ -31,6 +31,7 @@ public class MyCouponHandlerImpl implements MyCouponHandler {
         MyCouponVO vo = Json.toObject(json, MyCouponVO.class, true);
         vo.setMerchant(myCoupon.getMerchantId() > 0);
         vo.setValidDateStr(DateUtil.date2String(vo.getValidDate(), DateUtil.DATE_FORMAT_STRING));
+        vo.setInvalidDateStr(DateUtil.date2String(vo.getInvalidDate(), DateUtil.DATE_FORMAT_STRING));
         vo.setExpire(DateUtil.before(myCoupon.getValidDate(), new Date()));
         vo.setOrderDateStr(DateUtil.date2String(myCoupon.getOrderDate(), DateUtil.DATE_FORMAT_STRING));
         return vo;

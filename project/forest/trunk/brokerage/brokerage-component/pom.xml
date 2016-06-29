@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.qcloud.component</groupId>
 		<artifactId>brokerage</artifactId>
-		<version>2.0.0.08-SNAPSHOT</version>
+		<version>2.0.1.08-SNAPSHOT</version>
 	</parent>
 	<artifactId>brokerage-component</artifactId>
 	
@@ -42,19 +42,19 @@
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>personalcenter-api</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<version>2.0.1.08-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>marketing-api</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<version>2.0.1.08-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>orderform-api</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<version>2.0.1.08-SNAPSHOT</version>
 		</dependency>
 	</dependencies>	
 </project>
