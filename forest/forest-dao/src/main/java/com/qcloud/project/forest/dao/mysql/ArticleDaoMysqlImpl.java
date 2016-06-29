@@ -82,6 +82,7 @@ public class ArticleDaoMysqlImpl implements ArticleDao {
         param.put("count", count);
         param.put("classifyId", query.getClassifyId());
         param.put("keyWord", "%" + query.getKeyWord() + "%");
+        param.put("enable", query.getEnable());
         List<Article> list = sqlOperator.selectList("com.qcloud.project.forest.dao.mysql.mapper.ArticleMapper.list4query", param);
         int total = sqlOperator.selectOne("com.qcloud.project.forest.dao.mysql.mapper.ArticleMapper.count4query", param);
         Page<Article> page = new Page<Article>();
