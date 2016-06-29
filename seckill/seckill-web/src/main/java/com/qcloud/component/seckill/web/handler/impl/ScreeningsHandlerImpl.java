@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,6 +24,7 @@ import com.qcloud.component.seckill.web.handler.ScreeningsHandler;
 import com.qcloud.component.seckill.web.vo.MerchandiseClassifyVO;
 import com.qcloud.component.seckill.web.vo.MerchandiseSeckillVO;
 import com.qcloud.component.seckill.web.vo.ScreeningsClassifyVO;
+import com.qcloud.component.seckill.web.vo.ScreeningsIndexVO;
 import com.qcloud.component.seckill.web.vo.ScreeningsListVO;
 import com.qcloud.component.seckill.web.vo.ScreeningsMerchandiseVO;
 import com.qcloud.component.seckill.web.vo.admin.AdminScreeningsVO;
@@ -157,5 +159,63 @@ public class ScreeningsHandlerImpl implements ScreeningsHandler {
     public ScreeningsMerchandiseVO toVO4Merchandise(Screenings screenings) {
 
         throw new NotImplementedException();
+    }
+
+    @Override
+    public ScreeningsIndexVO toVO4Index(Screenings screenings) {
+
+        Date now = new Date();
+        ScreeningsIndexVO screeningsVO = new ScreeningsIndexVO();
+        screeningsVO.setBeginTimeStr(DateUtil.date2String(screenings.getBeginTime()));
+        screeningsVO.setEndTimeStr(DateUtil.date2String(screenings.getEndTime()));
+        screeningsVO.setId(screenings.getId());
+        screeningsVO.setState(calculateState(screenings, now));
+        screeningsVO.setNowStr(DateUtil.date2String(now));
+        List<MerchandiseSeckill> list = merchandiseSeckillService.listByScreenings(screenings.getId());
+        Set<Long> classifyIdSet = new HashSet<Long>();
+        for (MerchandiseSeckill merchandiseSeckill : list) {
+            classifyIdSet.add(merchandiseSeckill.getMallClassifyId());
+        }
+        for (Long classifyId : classifyIdSet) {
+            List<MerchandiseSeckill> merchandiseList = new ArrayList<MerchandiseSeckill>();
+            for (MerchandiseSeckill merchandiseSeckill : list) {
+                if (merchandiseSeckill.getMallClassifyId() == classifyId) {
+                    merchandiseList.add(merchandiseSeckill);
+                }
+            }
+            List<MerchandiseSeckillVO> merchandiseVOList = merchandiseSeckillHandler.toVOList(merchandiseList);
+            if (CollectionUtils.isNotEmpty(merchandiseVOList)) {
+                screeningsVO.setMerchandiseSeckillVO(merchandiseVOList.get(0));
+            }
+        }
+        //
+        List<ScreeningsSlide> slideList = screeningsSlideService.listByScreenings(screenings.getId());
+        List<String> screeningsSlideList = new ArrayList<String>();
+        for (ScreeningsSlide screeningsSlide : slideList) {
+            screeningsSlideList.add(fileSDKClient.getFileServerUrl() + screeningsSlide.getImage());
+        }
+        screeningsVO.setScreeningsSlideList(screeningsSlideList);
+        // screeningsVO.setShareUrl(shareClient.getShareDomain() + "/seckillShare.html?screeningsId=" + screenings.getId());
+        Date last = screenings.getEndTime();
+        long diff = last.getTime() - now.getTime();
+        long hours = diff / 1000 / 60 / 60;
+        long minutes = diff / 1000 / 60 % 60;
+        long seconds = diff / 1000 % 60;
+        screeningsVO.setMillsMinutes(diff);
+        screeningsVO.setHours(hours);
+        screeningsVO.setMinutes(minutes);
+        screeningsVO.setSeconds(seconds);
+        return screeningsVO;
+    }
+
+    public static void main(String[] args) {
+
+        Date last = DateUtil.str2Date("2016-06-29 10:00:00", "yyyy-MM-dd HH:mm:ss");
+        Date now = new Date();
+        long diff = now.getTime() - last.getTime();
+        System.out.println(diff);
+        System.out.println(diff / 1000 / 60 / 60 + "时");
+        System.out.println(diff / 1000 / 60 % 60 + "分");
+        System.out.println(diff / 1000 % 60 + "秒");
     }
 }

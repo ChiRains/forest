@@ -302,6 +302,7 @@ public class OrderStateController {
     @RequestMapping
     public FrontAjaxView testExchagneOrderState(OrderStateForm orderStateForm, Integer state) {
 
+        // 正式环境必须注释以下代码
         orderStateService.exchangeOrderState(orderStateForm.getOrderId(), orderStateForm.getOrderDate(), state, -1L);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("成功");

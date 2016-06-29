@@ -27,7 +27,17 @@
     </select>    
     
      <select id="listByAddress" parameterType="java.util.HashMap" resultType="Store">  
-        select * from `sellercenter_store` where `province`=#{province} and `city`=#{city} and `district`=#{district} and `enable` = 1
+        select * from `sellercenter_store` where 1=1
+        <if test="province !=null">
+        	 and `province` like concat('%',#{province},'%')
+        </if>
+        <if test="city !=null">
+        	 and `city` like concat('%',#{city},'%')
+        </if>
+        <if test="district !=null">
+        	 and `district` like concat('%',#{district},'%')
+        </if>
+        and `enable` = 1
     </select>
     
     <select id="listByParentId" parameterType="java.util.HashMap" resultType="Store">  
