@@ -2,6 +2,7 @@ package com.qcloud.project.forest.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -98,14 +99,14 @@ public class ForestController {
     public FrontAjaxView menuAccess() {
 
         List<String> list = new ArrayList<String>();
-        list.add("relax_find");
-        list.add("medication_remind");
-        list.add("coupon_offers");
-        list.add("delivery_search");
-        list.add("custom_made");
-        list.add("intergral_send");
-        list.add("joint_merchant");
-        list.add("play_game");
+        list.add("relax_find");// 轻松找药
+        list.add("medication_remind");// 用药提醒
+        list.add("coupon_offers");// 促销优惠
+        list.add("delivery_search");// 物流查询
+        list.add("custom_made");// 私人定制
+        list.add("intergral_send");// 积分多多
+        list.add("joint_merchant");// 合作商家
+        list.add("play_game");// 互动游戏
         FrontAjaxView view = new FrontAjaxView();
         view.addObject("result", list);
         return view;
@@ -177,7 +178,12 @@ public class ForestController {
         List<Slide> list = slideService.listBySence(2);
         FrontAjaxView view = new FrontAjaxView();
         view.addObject("exist", list.size() > 0);
-        view.addObject("slide", list.get(0));
+        if (CollectionUtils.isNotEmpty(list)) {
+            view.addObject("slide", list.get(0));
+        }
+        if (CollectionUtils.isNotEmpty(list)) {
+            view.addObject("slide", "");
+        }
         return view;
     }
 
