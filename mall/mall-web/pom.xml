@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.qcloud.component</groupId>
 		<artifactId>mall</artifactId>
-		<version>2.0.0.08-SNAPSHOT</version>
+		<version>2.0.1.08-SNAPSHOT</version>
 	</parent>
 	<artifactId>mall-web</artifactId>
 
@@ -25,19 +25,19 @@
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>personalcenter-web</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<version>2.0.1.08-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>my-web</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<version>2.0.1.08-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>sellercenter-web</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<version>2.0.1.08-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -49,37 +49,37 @@
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>warehouse-web</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<version>2.0.1.08-SNAPSHOT</version>
 		</dependency>	
 
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>marketing-web</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<version>2.0.1.08-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>orderform-web</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<version>2.0.1.08-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>brokerage-web</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<version>2.0.1.08-SNAPSHOT</version>
 		</dependency>	
 								
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>seckill-web</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<version>2.0.1.08-SNAPSHOT</version>
 		</dependency>	
 		
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>pay-web</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<version>2.0.1.08-SNAPSHOT</version>
 		</dependency>				
 	</dependencies>
 </project>

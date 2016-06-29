@@ -251,7 +251,7 @@ public class MyClientImpl implements MyClient {
     }
 
     @Override
-    public Long extractCoupon(long userId, long couponId, long couponItemId, Date validDate, double limitPrice, String name, double price, long merchantId) {
+    public Long extractCoupon(long userId, long couponId, long couponItemId, Date validDate, Date invalidDate, double limitPrice, String name, double price, long merchantId) {
 
         MyCoupon myCoupon = new MyCoupon();
         myCoupon.setCouponId(couponId);
@@ -266,6 +266,7 @@ public class MyClientImpl implements MyClient {
         myCoupon.setState(CouponStateType.NOTUSE.getKey());
         myCoupon.setCode(uniqueCodeGenerator.generate("personalcenter-my-coupon-code", new HashMap<String, String>()));
         myCoupon.setMerchantId(merchantId);
+        myCoupon.setInvalidDate(invalidDate);
         myCouponService.add(myCoupon);
         return myCoupon.getId();
     }
@@ -348,18 +349,17 @@ public class MyClientImpl implements MyClient {
         return myCollectionService.count(unifiedMerchandiseId, CollectionType.MERCHANDISE);
     }
 
-//    @Override
-//    public KeyValueVO getMyOrderFormState(long userId, long orderId, long subOrderId, int state) {
-//
-//        MyOrderForm myOrderForm = myOrderFormService.getByOrder(userId, orderId, subOrderId);
-//        String value = orderformClient.getNormalPersonalOrderStateDesc(state);
-//        // String value = MyOrderStateType.getNameByState(myOrderForm.getState());
-//        KeyValueVO vo = new KeyValueVO();
-//        vo.setKey(String.valueOf(myOrderForm.getState()));
-//        vo.setValue(value);
-//        return vo;
-//    }
-
+    // @Override
+    // public KeyValueVO getMyOrderFormState(long userId, long orderId, long subOrderId, int state) {
+    //
+    // MyOrderForm myOrderForm = myOrderFormService.getByOrder(userId, orderId, subOrderId);
+    // String value = orderformClient.getNormalPersonalOrderStateDesc(state);
+    // // String value = MyOrderStateType.getNameByState(myOrderForm.getState());
+    // KeyValueVO vo = new KeyValueVO();
+    // vo.setKey(String.valueOf(myOrderForm.getState()));
+    // vo.setValue(value);
+    // return vo;
+    // }
     @Override
     public List<QMyCoupon> listMyCouponCanUse(long userId, Long merchantId, Double sum) {
 

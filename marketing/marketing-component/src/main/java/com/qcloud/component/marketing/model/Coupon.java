@@ -42,18 +42,6 @@ public class Coupon implements QCoupon {
 
     }
 
-    public Coupon(long id, Date startDate, Date endDate, Date validDate, int totalOfPerson, int priceOfPerson, String description, int enable) {
-
-        this.id = id;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.validDate = validDate;
-        this.totalOfPerson = totalOfPerson;
-        this.priceOfPerson = priceOfPerson;
-        this.description = description;
-        this.enable = enable;
-    }
-
     public void setId(long id) {
 
         this.id = id;

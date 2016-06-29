@@ -119,7 +119,7 @@ public class CouponItemsServiceImpl implements CouponItemsService {
 
     private Long extractCoupon(Long userId, Coupon coupon, CouponItems items) {
 
-        Long myCouponId = myClient.extractCoupon(userId, items.getCouponID(), items.getId(), coupon.getValidDate(), items.getLimitPrice(), items.getName(), items.getPrice(), coupon.getMerchantId());
+        Long myCouponId = myClient.extractCoupon(userId, items.getCouponID(), items.getId(), coupon.getValidDate(), coupon.getInvalidDate(), items.getLimitPrice(), items.getName(), items.getPrice(), coupon.getMerchantId());
         items.setSendNum(items.getSendNum() + 1);
         update(items);
         return myCouponId;

@@ -30,7 +30,7 @@ public interface MyClient {
 
     QMyDelivery getDelivery(long id);
 
-    Long extractCoupon(long userId, long couponId, long couponItemId, Date validDate, double limitPrice, String name, double price, long merchantId);
+    Long extractCoupon(long userId, long couponId, long couponItemId, Date validDate, Date invalidDate, double limitPrice, String name, double price, long merchantId);
 
     List<QMyCoupon> listExtractCouponByUser(long userId, long couponId);
 
@@ -69,8 +69,7 @@ public interface MyClient {
 
     int countMerchantCollectionNumber(long merchantId);
 
-//    KeyValueVO getMyOrderFormState(long userId, long orderId, long subOrderId, int state);
-
+    // KeyValueVO getMyOrderFormState(long userId, long orderId, long subOrderId, int state);
     int statCollection(long userId, int type);
 
     boolean addMySearchHistory(long userId, int type, String keywords);

@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.qcloud.component</groupId>
 		<artifactId>orderform</artifactId>
-		<version>2.0.0.08-SNAPSHOT</version>
+		<version>2.0.1.08-SNAPSHOT</version>
 	</parent>
 	<artifactId>orderform-component</artifactId>
 	
@@ -25,37 +25,37 @@
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>personalcenter-api</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<version>2.0.1.08-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>my-api</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<version>2.0.1.08-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>warehouse-component</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<version>2.0.1.08-SNAPSHOT</version>
 		</dependency>		
 		
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>marketing-api</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<version>2.0.1.08-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>orderform-api</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<version>2.0.1.08-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>pay-api</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<version>2.0.1.08-SNAPSHOT</version>
 		</dependency>
 		
 		<dependency>
@@ -67,7 +67,7 @@
 		<dependency>
 			<groupId>com.qcloud.component</groupId>
 			<artifactId>seckill-api</artifactId>
-			<version>2.0.0.08-SNAPSHOT</version>
+			<version>2.0.1.08-SNAPSHOT</version>
 		</dependency>
 	</dependencies>	
 </project>

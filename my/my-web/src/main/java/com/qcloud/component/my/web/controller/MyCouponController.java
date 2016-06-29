@@ -44,7 +44,7 @@ public class MyCouponController {
         int number = myCouponService.countByUser(user.getId(), type);
         FrontPagingView view = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), number);
         view.setMessage("获取我的优惠劵成功.");
-        view.addObject("list", voList);
+        view.setList(voList);
         return view;
     }
 

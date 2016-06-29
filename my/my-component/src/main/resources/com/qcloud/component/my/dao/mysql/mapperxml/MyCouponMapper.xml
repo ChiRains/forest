@@ -14,13 +14,13 @@
     <select id="listByUser" parameterType="java.util.HashMap" resultType="MyCoupon">  
          <![CDATA[ select * from `my_my_coupon` where userId=#{userId} and state <> 3]]>
 	        <if test="type == 1">
-	           <![CDATA[ and validDate >= #{nowtime} and state = 1]]>
+	           <![CDATA[ and validDate <= #{nowtime} and invalidDate >=#{nowtime} and state = 1]]>
 	        </if>
 	        <if test="type == 2">
 	           and state = 2
 	        </if>
 	        <if test="type == 3">
-	            <![CDATA[and validDate <= #{nowtime} and state = 1]]>
+	            <![CDATA[and invalidDate <= #{nowtime} and state = 1]]>
 	        </if>              
        <![CDATA[ limit #{start},#{count}]]>
     </select>  
@@ -28,13 +28,13 @@
     <select id="countByUser" parameterType="java.util.HashMap" resultType="Integer">  
          <![CDATA[ select count(*) from `my_my_coupon` where userId=#{userId} and state <> 3]]>
 	        <if test="type == 1">
-	           <![CDATA[ and validDate >= #{nowtime} and state = 1]]>
+	           <![CDATA[ and validDate <= #{nowtime} and invalidDate >=#{nowtime} and state = 1]]>
 	        </if>
 	        <if test="type == 2">
 	           and state = 2
 	        </if>
 	        <if test="type == 3">
-	            <![CDATA[and validDate <= #{nowtime} and state = 1]]>
+	            <![CDATA[and invalidDate <= #{nowtime} and state = 1]]>
 	        </if>                    
     </select> 
     
@@ -47,7 +47,9 @@
 	        select * from `my_my_coupon` 
 	        where (merchantId = #{merchantId} or merchantId = -1) 
 	        and userId=#{userId} and limitPrice <= #{sum} and state = 1 
-	        and #{now} < validDate limit #{start},#{count}
+	        and #{now} >= validDate 
+	        and #{now} <= invalidDate 
+	        limit #{start},#{count}
         ]]>
     </select>    
      
