@@ -31,7 +31,7 @@ cd sellercenter/sellercenter-api
 call mvn install
 
 cd %home%
-cd good/good-api
+cd goods/goods-api
 call mvn install
 
 cd %home%
@@ -71,7 +71,7 @@ cd sellercenter
 call mvn install
 
 cd %home%
-cd good
+cd goods
 call mvn install
 
 cd %home%
