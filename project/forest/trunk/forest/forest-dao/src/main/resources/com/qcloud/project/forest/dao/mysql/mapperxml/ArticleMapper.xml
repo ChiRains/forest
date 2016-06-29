@@ -9,6 +9,9 @@
 		<if test="classifyId != 0">
 			and classifyId=#{classifyId}
 		</if>
+		<if test="enable != 0">
+			and enable=#{enable}
+		</if>
 		<if test="keyWord != '%null%'">
 			and title like #{keyWord} or brief like #{keyWord}
 		</if>
@@ -21,6 +24,9 @@
 		select count(*) from `forest_article`where 1=1
 		<if test="classifyId != 0">
 			and classifyId=#{classifyId}
+		</if>
+		<if test="enable != 0">
+			and enable=#{enable}
 		</if>
 		<if test="keyWord != '%null%'">
 			and title like #{keyWord} or brief like #{keyWord}

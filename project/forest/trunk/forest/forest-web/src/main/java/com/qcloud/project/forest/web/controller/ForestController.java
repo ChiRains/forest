@@ -17,11 +17,16 @@ import com.qcloud.component.publicdata.QClassify;
 import com.qcloud.pirates.core.xml.Xml;
 import com.qcloud.pirates.core.xml.XmlFactory;
 import com.qcloud.pirates.core.xml.XmlItem;
+import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.mvc.FrontAjaxView;
 import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.project.forest.exception.ForestException;
-import com.qcloud.project.forest.web.vo.ArticleIndexVO;
+import com.qcloud.project.forest.model.Article;
+import com.qcloud.project.forest.model.query.ArticleQuery;
+import com.qcloud.project.forest.service.ArticleService;
+import com.qcloud.project.forest.web.handler.ArticleHandler;
+import com.qcloud.project.forest.web.vo.ArticleVO;
 
 @Controller
 @RequestMapping(value = ForestController.DIR)
@@ -40,6 +45,12 @@ public class ForestController {
 
     @Autowired
     private SlideService       slideService;
+
+    @Autowired
+    private ArticleService     articleService;
+
+    @Autowired
+    private ArticleHandler     articleHandler;
 
     /**
      * 商家id
@@ -138,15 +149,10 @@ public class ForestController {
     @RequestMapping
     public FrontAjaxView latestArticle() {
 
-        List<ArticleIndexVO> voList = new ArrayList<ArticleIndexVO>();
-        ArticleIndexVO vo1 = new ArticleIndexVO();
-        vo1.setId(00001);
-        vo1.setName("最新的一条");
-        voList.add(vo1);
-        ArticleIndexVO vo2 = new ArticleIndexVO();
-        vo2.setId(00002);
-        vo2.setName("最新的一条的下一条");
-        voList.add(vo2);
+        ArticleQuery articleQuery = new ArticleQuery();
+        articleQuery.setEnable(1);
+        Page<Article> page = articleService.page(articleQuery, 0, 5);
+        List<ArticleVO> voList = articleHandler.toVOList(page.getData());
         FrontAjaxView view = new FrontAjaxView();
         view.addObject("result", voList);
         return view;
