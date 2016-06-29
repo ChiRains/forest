@@ -31,7 +31,7 @@ cd sellercenter/sellercenter-api
 call mvn clean
 
 cd %home%
-cd commoditycenter/commoditycenter-api
+cd good/good-api
 call mvn clean
 
 cd %home%
@@ -79,7 +79,7 @@ cd sellercenter
 call mvn clean
 
 cd %home%
-cd commoditycenter
+cd good
 call mvn clean
 
 cd %home%
