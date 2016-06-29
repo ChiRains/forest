@@ -43,5 +43,6 @@
 	<pirates:uriHandler class="com.qcloud.component.publicservice.web.handler.url.MailSenderClientUriHandlerImpl"></pirates:uriHandler>	
 	<pirates:uriHandler class="com.qcloud.component.publicservice.web.handler.url.InsideMessageUriHandlerImpl"></pirates:uriHandler>
 	<pirates:uriHandler class="com.qcloud.component.publicservice.web.handler.url.CommonQuestionUriHandlerImpl"></pirates:uriHandler>	
-
+	<pirates:uriHandler class="com.qcloud.component.publicservice.web.handler.url.MessageSourceUriHandlerImpl"></pirates:uriHandler>	
+	
 </beans>

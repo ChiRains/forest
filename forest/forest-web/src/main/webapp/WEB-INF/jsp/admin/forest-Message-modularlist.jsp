@@ -41,7 +41,7 @@
                         	<td>1</td><td>站内信</td><td>主题活动、优惠信息</td>                         
                             <td>
 	                            <div class="hidden-sm hidden-xs action-buttons">
-	                                <a class="btn btn-xs btn-info" href="#">
+	                                <a class="btn btn-xs btn-info" href="#admin/messageSource/list">
 	                                	发送消息
 	                                </a>
 	                            </div>
