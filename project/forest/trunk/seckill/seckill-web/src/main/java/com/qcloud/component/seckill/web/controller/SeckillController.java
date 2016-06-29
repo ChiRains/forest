@@ -15,6 +15,7 @@ import com.qcloud.component.seckill.web.vo.ScreeningsVO;
 import com.qcloud.pirates.mvc.FrontAjaxView;
 import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.DateUtil;
+import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 
 @Controller
 @RequestMapping(value = SeckillController.DIR)
@@ -31,6 +32,7 @@ public class SeckillController {
     @Autowired
     private SeckillConfigService seckillConfigService;
 
+    @PiratesApp
     @RequestMapping
     public FrontAjaxView listByScreenings4Classify(Long screeningsId, Integer size) {
 
@@ -66,5 +68,19 @@ public class SeckillController {
     public FrontAjaxView listByScreenings4List(Long screeningsId, Integer size) {
 
         throw new NotImplementedException();
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView current() {
+
+        List<Screenings> list = screeningsService.listToday(4);
+        Screenings current = screeningsService.calculate(list);
+        ScreeningsVO screeningsVO = current == null ? null : screeningsHandler.toVO4Index(current);
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage(screeningsVO == null ? "今天暂无秒杀数据" : "获取秒杀数据成功.");
+        view.addObject("exist", !(screeningsVO == null));
+        view.addObject("current", screeningsVO);
+        return view;
     }
 }

@@ -97,12 +97,12 @@
 			    </li>
 			    <li>
 			        <p>
-			            连续30天签到奖励40积分
+			            连续30天签到奖励50积分
 			        </p>
 			    </li>
 			    <li>
 			        <p>
-			            连续90天签到奖励135积分
+			            连续90天签到奖励150积分
 			        </p>
 			    </li>
 			    <li>
@@ -119,8 +119,8 @@
 
 	<module-list code="personalcenter-sign-in-integral-rule">
 		<item sign="10" integral="10"></item>
-		<item sign="30" integral="40"></item>
-		<item sign="90" integral="135"></item>
+		<item sign="30" integral="50"></item>
+		<item sign="90" integral="150"></item>
 		<item sign="180" integral="300"></item>
 	</module-list>
 	

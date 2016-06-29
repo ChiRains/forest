@@ -39,13 +39,15 @@ public enum PaymentModeType {
 
         return name;
     }
-    
-    public static PaymentModeType get(int key){
-        PaymentModeType []types=PaymentModeType.values();
+
+    public static PaymentModeType get(int key) {
+
+        PaymentModeType[] types = PaymentModeType.values();
         for (PaymentModeType type : types) {
-            if(type.getKey()==key){
+            if (type.getKey() == key) {
                 return type;
             }
-        }return PaymentModeType.ONLINE_ALIPAY;
+        }
+        return PaymentModeType.ONLINE_ALIPAY;
     }
 }
