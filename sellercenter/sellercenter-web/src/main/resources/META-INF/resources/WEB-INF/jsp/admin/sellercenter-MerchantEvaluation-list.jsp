@@ -40,10 +40,9 @@
 													<option value="2"<c:if test="${query.status eq 2}">selected</c:if>>通过</option>
 											</select>	
 											                                    	 
-				                             日期
-		                                    <span class="input-daterange input-group date">	
-					                             <input type="text" id="time" name="time" maxlength="20" readonly class="input-sm form-control"
-					                             value='<fmt:formatDate value="${query.time}" pattern="yyyy-MM-dd"/>' style="width:100px;margin:0px;">
+		                                    <span class="input-daterange input-group ">	
+					                             <input type="text" id="content" name="content" maxlength="20"  class="input-sm form-control"
+					                             value="${query.content}">
 				                      		</span>
                                        		<button type="submit" class="btn btn-purple btn-sm">
                                                 <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
