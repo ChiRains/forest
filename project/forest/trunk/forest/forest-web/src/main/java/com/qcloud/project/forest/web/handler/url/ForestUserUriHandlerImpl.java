@@ -28,6 +28,12 @@ public class ForestUserUriHandlerImpl extends AbstractUriHandler {
         list.add("/forestUser/getCodeForChangeBingdingMobileByOldNumber.do");
         list.add("/forestUser/verifyCodeForChangeBingdingMobileByOldNumber.do");
         list.add("/forestUser/editBingdingMobile.do");
+        list.add("/forestUser/extraInfo.do");
+        // ========================================
+        list.add("/app/forestUser/getCodeForChangeBingdingMobileByOldNumber.do");
+        list.add("/app/forestUser/verifyCodeForChangeBingdingMobileByOldNumber.do");
+        list.add("/app/forestUser/editBingdingMobile.do");
+        list.add("/app/forestUser/extraInfo.do");
         return list;
     }
 
@@ -38,6 +44,8 @@ public class ForestUserUriHandlerImpl extends AbstractUriHandler {
         list.add("/forestUser/safetyLogin.do");
         list.add("/forestUser/sendSafetyCode.do");
         list.add("/forestUser/getCodeForChangeBingdingMobileByNewNumber.do");
+        // =========================================
+        list.add("/app/forestUser/getCodeForChangeBingdingMobileByNewNumber.do");
         return list;
     }
 
@@ -50,6 +58,7 @@ public class ForestUserUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/forestUser/verifyCodeForChangeBingdingMobileByOldNumber.do");
         list.add("/app/forestUser/editBingdingMobile.do");
         list.add("/app/forestUser/getCodeForChangeBingdingMobileByNewNumber.do");
+        list.add("/app/forestUser/extraInfo.do");
         return list;
     }
 }

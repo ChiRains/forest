@@ -97,4 +97,10 @@ public class MyCollectionDaoCacheImpl implements MyCollectionDao {
 
         return myCollectionDaoMysqlImpl.list(userId, type, classifyId, start, count);
     }
+
+    @Override
+    public int countByUserId(Long userId) {
+
+        return myCollectionDaoMysqlImpl.countByUserId(userId);
+    }
 }

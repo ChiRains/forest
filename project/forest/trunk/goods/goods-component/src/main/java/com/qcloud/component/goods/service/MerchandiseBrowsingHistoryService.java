@@ -1,9 +1,9 @@
 package com.qcloud.component.goods.service;
 
 import java.util.List;
-import com.qcloud.pirates.data.Page;
 import com.qcloud.component.goods.model.MerchandiseBrowsingHistory;
 import com.qcloud.component.goods.model.query.MerchandiseBrowsingHistoryQuery;
+import com.qcloud.pirates.data.Page;
 
 public interface MerchandiseBrowsingHistoryService {
 
@@ -20,4 +20,6 @@ public interface MerchandiseBrowsingHistoryService {
     public List<MerchandiseBrowsingHistory> listAll();
 
     List<MerchandiseBrowsingHistory> listByUser(long userId, int start, int count);
+
+    public int countByUserId(long userId);
 }

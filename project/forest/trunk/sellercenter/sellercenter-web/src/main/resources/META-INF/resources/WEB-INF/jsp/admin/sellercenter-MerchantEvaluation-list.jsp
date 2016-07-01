@@ -34,8 +34,14 @@
                             <label>
                                 <form id="query-form" action="#admin/merchantEvaluation/list" onsubmit="listFormSearch(this); return false">
                                     <div class="dataTables_length">
+		                                   	<select class="form-control" id="status" name="status">
+													<option value="0" <c:if test="${query.status eq 0}">selected</c:if>>全部</option>
+													<option value="1"<c:if test="${query.status eq 1}">selected</c:if>>未通过</option>
+													<option value="2"<c:if test="${query.status eq 2}">selected</c:if>>通过</option>
+											</select>	
+											                                    	 
 				                             日期
-		                                    <span class="input-daterange input-group date">		                                    	 
+		                                    <span class="input-daterange input-group date">	
 					                             <input type="text" id="time" name="time" maxlength="20" readonly class="input-sm form-control"
 					                             value='<fmt:formatDate value="${query.time}" pattern="yyyy-MM-dd"/>' style="width:100px;margin:0px;">
 				                      		</span>

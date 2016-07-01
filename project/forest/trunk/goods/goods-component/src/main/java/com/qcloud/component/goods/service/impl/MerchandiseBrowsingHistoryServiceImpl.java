@@ -4,11 +4,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.qcloud.component.autoid.AutoIdGenerator;
-import com.qcloud.pirates.data.Page;
 import com.qcloud.component.goods.dao.MerchandiseBrowsingHistoryDao;
 import com.qcloud.component.goods.model.MerchandiseBrowsingHistory;
-import com.qcloud.component.goods.service.MerchandiseBrowsingHistoryService;
 import com.qcloud.component.goods.model.query.MerchandiseBrowsingHistoryQuery;
+import com.qcloud.component.goods.service.MerchandiseBrowsingHistoryService;
+import com.qcloud.pirates.data.Page;
 
 @Service
 public class MerchandiseBrowsingHistoryServiceImpl implements MerchandiseBrowsingHistoryService {
@@ -62,5 +62,11 @@ public class MerchandiseBrowsingHistoryServiceImpl implements MerchandiseBrowsin
     public List<MerchandiseBrowsingHistory> listByUser(long userId, int start, int count) {
 
         return merchandiseBrowsingHistoryDao.listByUser(userId, start, count);
+    }
+
+    @Override
+    public int countByUserId(long userId) {
+
+        return merchandiseBrowsingHistoryDao.countByUserId(userId);
     }
 }
