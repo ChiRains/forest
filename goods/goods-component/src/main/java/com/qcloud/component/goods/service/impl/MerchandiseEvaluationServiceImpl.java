@@ -146,7 +146,7 @@ public class MerchandiseEvaluationServiceImpl implements MerchandiseEvaluationSe
         merchandiseEvaluation.setTime(new Date());
         merchandiseEvaluation.setUserId(userId);
         add(merchandiseEvaluation);
-        sellercenterClient.addMerchantEvaluation(merchandiseEvaluation.getId(), myToEvaluation.getMerchantId(), merchandiseEvaluation.getMerchandiseId());
+        sellercenterClient.addMerchantEvaluation(merchandiseEvaluation.getId(), myToEvaluation.getMerchantId(), merchandiseEvaluation.getMerchandiseId(), merchandiseEvaluation.getContent());
         myClient.addMyEvaluation(merchandiseEvaluation.getId(), merchandiseEvaluation.getUserId(), merchandiseEvaluation.getMerchandiseId(), toEvaluationId);
         return true;
     }
