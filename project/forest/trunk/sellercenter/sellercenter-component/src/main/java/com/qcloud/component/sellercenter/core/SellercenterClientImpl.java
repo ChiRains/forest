@@ -19,7 +19,6 @@ import com.qcloud.component.sellercenter.WealthType;
 import com.qcloud.component.sellercenter.entity.MerchantEntity;
 import com.qcloud.component.sellercenter.entity.MerchantWealthEntity;
 import com.qcloud.component.sellercenter.entity.StoreEntity;
-import com.qcloud.component.sellercenter.exception.SellerCenterException;
 import com.qcloud.component.sellercenter.model.Merchant;
 import com.qcloud.component.sellercenter.model.MerchantEvaluation;
 import com.qcloud.component.sellercenter.model.MerchantOrderForm;
@@ -28,7 +27,6 @@ import com.qcloud.component.sellercenter.model.Sexpress;
 import com.qcloud.component.sellercenter.model.SexpressDistrict;
 import com.qcloud.component.sellercenter.model.Store;
 import com.qcloud.component.sellercenter.model.key.TypeEnum;
-import com.qcloud.component.sellercenter.model.key.TypeEnum.MerchantOrderStateType;
 import com.qcloud.component.sellercenter.model.key.TypeEnum.NotifyType;
 import com.qcloud.component.sellercenter.model.key.TypeEnum.SexpressType;
 import com.qcloud.component.sellercenter.service.MerchantEvaluationService;
@@ -224,13 +222,15 @@ public class SellercenterClientImpl implements SellercenterClient {
     }
 
     @Override
-    public boolean addMerchantEvaluation(long evaluationId, long merchantId, long merchandiseId) {
+    public boolean addMerchantEvaluation(long evaluationId, long merchantId, long merchandiseId ,String content) {
 
         MerchantEvaluation merchantEvaluation = new MerchantEvaluation();
         merchantEvaluation.setEvaluationId(evaluationId);
         merchantEvaluation.setMerchandiseId(merchandiseId);
         merchantEvaluation.setMerchantId(merchantId);
         merchantEvaluation.setEvaluationTime(new Date());
+        merchantEvaluation
+        .setContent(content);
         return merchantEvaluationService.add(merchantEvaluation);
     }
 

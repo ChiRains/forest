@@ -24,7 +24,7 @@ public interface SellercenterClient {
 
     List<QStore> listStoreByMerchant(long merchantId);
 
-    boolean addMerchantEvaluation(long evaluationId, long merchantId, long merchandiseId);
+    boolean addMerchantEvaluation(long evaluationId, long merchantId, long merchandiseId, String content);
 
     boolean deleteMerchantEvaluation(long evaluationId, long merchantId);
 
@@ -51,6 +51,6 @@ public interface SellercenterClient {
     boolean calculateMyWealth(long userId, WealthType type, double cash, boolean needProportion, String desc);
 
     QMerchantWealth getMyWealth(long userId);
-    
+
     QMerchant getMerchant(String code);
 }

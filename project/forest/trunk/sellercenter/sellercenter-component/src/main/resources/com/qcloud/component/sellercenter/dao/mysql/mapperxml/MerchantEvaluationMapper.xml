@@ -8,6 +8,9 @@
         <if test="evaluationTime != null">
             AND DATE_FORMAT(evaluationTime,'%Y-%m-%d')=#{evaluationTime}
         </if>
+        <if test="content != null">
+            AND content like concat('%',#{content},'%')
+        </if>
         ORDER BY evaluationTime DESC
         limit #{start},#{count}
     </select>

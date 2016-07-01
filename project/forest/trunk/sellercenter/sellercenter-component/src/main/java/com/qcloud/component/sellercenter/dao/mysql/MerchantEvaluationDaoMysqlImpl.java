@@ -83,6 +83,7 @@ public class MerchantEvaluationDaoMysqlImpl implements MerchantEvaluationDao {
         param.put("merchantId", query.getMerchantId());
         param.put("evaluationTime", DateUtil.date2String(query.getTime(), DateUtil.DATE_FORMAT_STRING));
         param.put("table_name", getTableName(query.getMerchantId()));
+        param.put("content", query.getContent());
         List<MerchantEvaluation> list = sqlOperator.selectList("com.qcloud.component.sellercenter.dao.mysql.mapper.MerchantEvaluationMapper.list4query", param);
         int total = sqlOperator.selectOne("com.qcloud.component.sellercenter.dao.mysql.mapper.MerchantEvaluationMapper.count4query", param);
         Page<MerchantEvaluation> page = new Page<MerchantEvaluation>();
