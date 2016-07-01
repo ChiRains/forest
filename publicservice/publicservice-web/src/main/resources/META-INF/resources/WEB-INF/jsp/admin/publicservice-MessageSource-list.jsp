@@ -40,13 +40,11 @@
                 <table class="table table-striped table-bordered table-hover dataTable no-footer">
                     <thead>
                     <tr role="row">     
-                                                <th></th>           
                                                 <th>消息标题</th>           
                                                 <th>消息内容</th>           
-                                                <th>1活动</th>           
-                                                <th>平台-1</th>           
-                                                <th></th>           
-                                                <th>对应了message_type的code</th>           
+                                                <th>活动</th>           
+                                                <th>平台</th>           
+                                                <th>发布时间</th>           
                                                 <th class="sorting_disabled">操作</th>
                     </tr>
                     </thead>
@@ -54,13 +52,11 @@
                     <tbody>
                            <c:forEach items="${result}" var="item" varStatus="current"> 
                             <tr>            
-                                                        <td>${id}</td>                         
                                                         <td>${title}</td>                         
                                                         <td>${content}</td>                         
                                                         <td>${classifyId}</td>                         
                                                         <td>${merchantId}</td>                         
                                                         <td>${time}</td>                         
-                                                        <td>${type}</td>                         
                                                         <td>
                                 <div class="hidden-sm hidden-xs action-buttons">
                                     <a title="修改基本信息" class="green" 

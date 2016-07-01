@@ -74,4 +74,10 @@ public class MerchandiseBrowsingHistoryDaoRedisImpl implements MerchandiseBrowsi
 
         throw new NotImplementedException();
     }
+
+    @Override
+    public int countByUserId(long userId) {
+
+        throw new NotImplementedException();
+    }
 }

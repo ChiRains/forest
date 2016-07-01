@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>新增管理员</title>
+<title>新增消息通知</title>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/colorbox.css"/>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/chosen.css" />
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
-        管理里管理
+      消息通知管理
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             新增
@@ -22,16 +22,6 @@
         <form id="model-form" class="form-horizontal"  role="form" action="/admin/messageSource/add.do">
             <!-- #section:elements.form -->
 
-			      		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="id">  </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="id" name="id" placeholder="" value=""/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
                   		<div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="title"> 消息标题 </label>
@@ -47,47 +37,7 @@
                 <label class="col-sm-3 control-label no-padding-right" for="content"> 消息内容 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="content" name="content" placeholder="消息内容" value=""/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
-                  		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="classifyId"> 1活动 </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="classifyId" name="classifyId" placeholder="1活动" value=""/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
-                  		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="merchantId"> 平台-1 </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="merchantId" name="merchantId" placeholder="平台-1" value=""/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
-                  		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="time">  </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="time" name="time" placeholder="" value=""/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
-                  		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="type"> 对应了message_type的code </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="type" name="type" placeholder="对应了message_type的code" value=""/>
+						<textarea class="width-100" row="5" id="content" name="content" placeholder="消息内容"></textarea>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>

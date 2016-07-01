@@ -16,7 +16,6 @@ public class MyCollectionDaoRedisImpl implements MyCollectionDao {
 
     // @Resource(name = "redis-my")
     // private Redis redis;
-
     @Override
     public boolean add(MyCollection myCollection) {
 
@@ -91,6 +90,12 @@ public class MyCollectionDaoRedisImpl implements MyCollectionDao {
 
     @Override
     public List<MyCollection> list(Long userId, CollectionType type, Long classifyId, int start, int count) {
+
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public int countByUserId(Long userId) {
 
         throw new NotImplementedException();
     }

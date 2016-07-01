@@ -130,4 +130,13 @@ public class MyCollectionDaoMysqlImpl implements MyCollectionDao {
 
         return TableSplitUtil.getTableSplitName(userId, "my_my_collection", 100);
     }
+
+    @Override
+    public int countByUserId(Long userId) {
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("table_name", getTableName(userId));
+        map.put("userId", userId);
+        return sqlOperator.selectOne("com.qcloud.component.my.dao.mysql.mapper.MyCollectionMapper.countByUserId", map);
+    }
 }

@@ -29,4 +29,6 @@ public interface MyCollectionService {
     public List<MyCollection> list(Long userId, CollectionType type, Long classifyId, int start, int count);
 
     public int count(Long objId, CollectionType type);
+
+    public int countByUserId(Long userId);
 }

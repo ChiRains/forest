@@ -1,15 +1,15 @@
 package com.qcloud.component.goods.dao.cache;
 
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import com.qcloud.pirates.data.CacheLoader;
-import com.qcloud.pirates.data.Page;
 import com.qcloud.component.goods.dao.MerchandiseBrowsingHistoryDao;
 import com.qcloud.component.goods.model.MerchandiseBrowsingHistory;
 import com.qcloud.component.goods.model.query.MerchandiseBrowsingHistoryQuery;
+import com.qcloud.pirates.data.CacheLoader;
+import com.qcloud.pirates.data.Page;
 
 @Repository
 public class MerchandiseBrowsingHistoryDaoCacheImpl implements MerchandiseBrowsingHistoryDao {
@@ -77,5 +77,11 @@ public class MerchandiseBrowsingHistoryDaoCacheImpl implements MerchandiseBrowsi
     public List<MerchandiseBrowsingHistory> listByUser(long userId, int start, int count) {
 
         return merchandiseBrowsingHistoryDaoMysqlImpl.listByUser(userId, start, count);
+    }
+
+    @Override
+    public int countByUserId(long userId) {
+
+        return merchandiseBrowsingHistoryDaoMysqlImpl.countByUserId(userId);
     }
 }

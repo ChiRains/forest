@@ -152,4 +152,10 @@ public class MyCollectionServiceImpl implements MyCollectionService {
             return myCollectionObjStatistics.getNumber();
         }
     }
+
+    @Override
+    public int countByUserId(Long userId) {
+
+        return myCollectionDao.countByUserId(userId);
+    }
 }

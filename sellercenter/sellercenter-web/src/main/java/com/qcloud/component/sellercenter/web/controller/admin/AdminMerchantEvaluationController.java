@@ -1,6 +1,7 @@
 package com.qcloud.component.sellercenter.web.controller.admin;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +28,13 @@ import com.qcloud.pirates.web.security.annotation.NoReferer;
 @RequestMapping(value = "/" + AdminMerchantEvaluationController.DIR)
 public class AdminMerchantEvaluationController {
 
-    public static final String         DIR = "admin/merchantEvaluation";
+    public static final String        DIR = "admin/merchantEvaluation";
 
     @Autowired
-    private MerchantEvaluationService  merchantEvaluationService;
+    private MerchantEvaluationService merchantEvaluationService;
 
     @Autowired
-    private MerchantEvaluationHandler  merchantEvaluationHandler;
+    private MerchantEvaluationHandler merchantEvaluationHandler;
 
     // @Autowired
     // private MerchandiseEvaluationService merchandiseEvaluationService;
@@ -43,31 +44,26 @@ public class AdminMerchantEvaluationController {
     //
     // @Autowired
     // private MerchandiseService merchandiseService;
-//    @Autowired
-//    private TokenClient                tokenClient;
-//
-//    @Autowired
-//    private AdminFilterService         adminFilterService;
-
-//    @Autowired
-//    private OutdatedSellercenterClient outdatedSellercenterClient;
-
+    // @Autowired
+    // private TokenClient tokenClient;
+    //
+    // @Autowired
+    // private AdminFilterService adminFilterService;
+    // @Autowired
+    // private OutdatedSellercenterClient outdatedSellercenterClient;
     @RequestMapping
     @NoReferer
     public ModelAndView list(HttpServletRequest request, Integer pageNum, MerchantEvaluationQuery query) {
 
         final int PAGE_SIZE = 10;
-//        String tokenId = adminFilterService.getTokenId(request);
-//        AssertUtil.assertNotEmpty(tokenId, "获取用户登录信息失败.");
-//        String idStr = tokenClient.get(tokenId);
-//        AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
-//        // 根据登录用户获取对应商家
-//        List<QMerchant> merchantMembers = outdatedSellercenterClient.listMerchant(Long.valueOf(idStr));
-//        // TODO 这里列表要是为空呢.
-        
-        QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);        
-        
-        
+        // String tokenId = adminFilterService.getTokenId(request);
+        // AssertUtil.assertNotEmpty(tokenId, "获取用户登录信息失败.");
+        // String idStr = tokenClient.get(tokenId);
+        // AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
+        // // 根据登录用户获取对应商家
+        // List<QMerchant> merchantMembers = outdatedSellercenterClient.listMerchant(Long.valueOf(idStr));
+        // // TODO 这里列表要是为空呢.
+        QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
         query.setMerchantId(merchant.getId());
         pageNum = RequestUtil.getPageid(pageNum);
         int start = NumberUtil.getPageStart(pageNum, PAGE_SIZE);
@@ -87,7 +83,16 @@ public class AdminMerchantEvaluationController {
         if (DateUtil.date2String(query.getTime(), DateUtil.DATE_FORMAT_STRING) != null) {
             time = "time=" + DateUtil.date2String(query.getTime(), DateUtil.DATE_FORMAT_STRING);
         }
-        AcePagingView pagingView = new AcePagingView("/admin/sellercenter-MerchantEvaluation-list", DIR + "/list?" + time, pageNum, PAGE_SIZE, page.getCount());
+        if (query.getStatus() != 0) {
+            Iterator<AdminMerchantEvaluationVO> iter = voList.iterator();
+            while (iter.hasNext()) {
+                AdminMerchantEvaluationVO s = iter.next();
+                if (s.getStatus() != query.getStatus()) {
+                    iter.remove();
+                }
+            }
+        }
+        AcePagingView pagingView = new AcePagingView("/admin/sellercenter-MerchantEvaluation-list", DIR + "/list?" + time, pageNum, PAGE_SIZE, voList.size());
         pagingView.addObject("result", voList);
         pagingView.addObject("query", query);
         pagingView.addObject("statusType", StatusType.values());

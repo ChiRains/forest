@@ -21,5 +21,9 @@
     
     <select id="getByObject" parameterType="java.util.HashMap" resultType="MyCollection">  
         select * from `${table_name}` where `userId`=#{userId} and `objId`=#{objId} and `type`=#{type}
+    </select>    
+    <!-- 通过UserId获取收藏数目 -->  
+    <select id="countByUserId" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `${table_name}` where `userId`=#{userId} 
     </select>      
 </mapper>

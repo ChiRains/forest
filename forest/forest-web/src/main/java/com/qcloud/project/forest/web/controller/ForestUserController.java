@@ -7,6 +7,9 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.qcloud.component.goods.service.MerchandiseBrowsingHistoryService;
+import com.qcloud.component.my.service.MyCollectionService;
+import com.qcloud.component.my.service.MyCouponService;
 import com.qcloud.component.parameter.ParameterClient;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.personalcenter.QUser;
@@ -32,37 +35,49 @@ import com.qcloud.pirates.web.page.PageParameterUtil;
 @RequestMapping(value = ForestUserController.DIR)
 public class ForestUserController {
 
-    public static final String             DIR                          = "/forestUser";
+    public static final String                DIR                          = "/forestUser";
 
     @Autowired
-    private MembershipCardWarehouseService membershipCardWarehouseService;
+    private MembershipCardWarehouseService    membershipCardWarehouseService;
 
     @Autowired
-    private VerificationCodeClient         verificationCodeClient;
+    private VerificationCodeClient            verificationCodeClient;
 
     @Autowired
-    private UserFilterService              userFilterService;
+    private UserFilterService                 userFilterService;
 
     @Autowired
-    private ParameterClient                parameterClient;
+    private ParameterClient                   parameterClient;
 
     @Autowired
-    private UserController                 userController;
+    private UserController                    userController;
 
     @Autowired
-    private UserService                    userService;
+    private UserService                       userService;
 
     @Autowired
-    private TokenClient                    tokenClient;
+    private TokenClient                       tokenClient;
 
     @Autowired
-    private SmsClient                      smsClient;
+    private SmsClient                         smsClient;
 
-    public static final String             USER_SAFETY_SMS_TEMPLATE_KEY = "personalcenter-user-safety-sms-template";
+    @Autowired
+    private MyCollectionService               myCollectionService;
 
-    public static final String             CONTACTS_MOBILE              = "contacts-mobile";
+    @Autowired
+    private MerchandiseBrowsingHistoryService merchandiseBrowsingHistoryService;
 
-    public static final String             TIP_MESSAGE                  = "tip-message";
+    @Autowired
+    private PersonalcenterClient              personalcenterClient;
+
+    @Autowired
+    private MyCouponService                   myCouponService;
+
+    public static final String                USER_SAFETY_SMS_TEMPLATE_KEY = "personalcenter-user-safety-sms-template";
+
+    public static final String                CONTACTS_MOBILE              = "contacts-mobile";
+
+    public static final String                TIP_MESSAGE                  = "tip-message";
 
     @PiratesApp
     @RequestMapping
@@ -266,15 +281,29 @@ public class ForestUserController {
         return userController.editMobile(request, mobile);
     }
 
+    /**
+     * 我的收藏数、历史足迹数、优惠券数、积分数等
+     * @param request
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView extraInfo(HttpServletRequest request) {
 
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_IS_LOGIN_PARAMETER_KEY);
+        // 收藏数量
+        int collectionNum = myCollectionService.countByUserId(user.getId());
+        // 历史足迹数量
+        int historyNums = merchandiseBrowsingHistoryService.countByUserId(user.getId());
+        // 优惠券数量
+        int couponNum = myCouponService.countByUser(user.getId(), 1);
+        // 可用积分
+        long integralNum = personalcenterClient.getMyWealth(user.getId()).getIntegral();
         FrontAjaxView view = new FrontAjaxView();
-        view.addObject("collectNums", 10);// 收藏数量，包括商品和门店
-        view.addObject("historyNums", 10);// 历史足迹数量
-        view.addObject("couponNums", 10);// 优惠券数量
-        view.addObject("integralNums", 10);// 可用积分
+        view.addObject("collectNums", collectionNum);// 收藏数量，包括商品和门店
+        view.addObject("historyNums", historyNums);// 历史足迹数量
+        view.addObject("couponNums", couponNum);// 优惠券数量
+        view.addObject("integralNums", integralNum);// 可用积分
         return view;
     }
 }

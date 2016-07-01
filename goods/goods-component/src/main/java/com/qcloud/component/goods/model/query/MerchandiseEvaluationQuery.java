@@ -5,19 +5,19 @@ import com.qcloud.component.goods.model.key.TypeEnum.StarLevelType;
 
 public class MerchandiseEvaluationQuery {
 
-    private Long    merchandiseId;
+    private long    merchandiseId;
 
     /**
      * 0,1,2,3:全部、好评、中评、差评
      */
     private Integer typeNum;
 
-    public Long getMerchandiseId() {
+    public long getMerchandiseId() {
 
         return merchandiseId;
     }
 
-    public void setMerchandiseId(Long merchandiseId) {
+    public void setMerchandiseId(long merchandiseId) {
 
         this.merchandiseId = merchandiseId;
     }

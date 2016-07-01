@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.Resource;
-import org.springframework.stereotype.Repository;
 import org.apache.commons.lang.NotImplementedException;
-import com.qcloud.pirates.data.Page;
-import com.qcloud.pirates.data.sql.mybatis.SqlOperator;
+import org.springframework.stereotype.Repository;
 import com.qcloud.component.goods.dao.MerchandiseBrowsingHistoryDao;
 import com.qcloud.component.goods.model.MerchandiseBrowsingHistory;
 import com.qcloud.component.goods.model.query.MerchandiseBrowsingHistoryQuery;
+import com.qcloud.pirates.data.Page;
+import com.qcloud.pirates.data.sql.mybatis.SqlOperator;
 
 @Repository
 public class MerchandiseBrowsingHistoryDaoMysqlImpl implements MerchandiseBrowsingHistoryDao {
@@ -99,5 +99,13 @@ public class MerchandiseBrowsingHistoryDaoMysqlImpl implements MerchandiseBrowsi
         param.put("userId", userId);
         List<MerchandiseBrowsingHistory> list = sqlOperator.selectList("com.qcloud.component.goods.dao.mysql.mapper.MerchandiseBrowsingHistoryMapper.listByUser", param);
         return list;
+    }
+
+    @Override
+    public int countByUserId(long userId) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("userId", userId);
+        return sqlOperator.selectOne("com.qcloud.component.goods.dao.mysql.mapper.MerchandiseBrowsingHistoryMapper.countByUserId", param);
     }
 }

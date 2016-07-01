@@ -3,10 +3,10 @@ package com.qcloud.component.goods.dao;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import com.qcloud.pirates.data.Page;
-import com.qcloud.pirates.data.api.ISimpleDao;
 import com.qcloud.component.goods.model.MerchandiseBrowsingHistory;
 import com.qcloud.component.goods.model.query.MerchandiseBrowsingHistoryQuery;
+import com.qcloud.pirates.data.Page;
+import com.qcloud.pirates.data.api.ISimpleDao;
 
 public interface MerchandiseBrowsingHistoryDao extends ISimpleDao<MerchandiseBrowsingHistory, Long> {
 
@@ -27,4 +27,6 @@ public interface MerchandiseBrowsingHistoryDao extends ISimpleDao<MerchandiseBro
     public List<MerchandiseBrowsingHistory> listAll();
 
     List<MerchandiseBrowsingHistory> listByUser(long userId, int start, int count);
+
+    public int countByUserId(long userId);
 }
