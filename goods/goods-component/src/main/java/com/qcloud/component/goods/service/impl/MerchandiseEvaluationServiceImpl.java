@@ -12,10 +12,9 @@ import com.qcloud.component.goods.model.MerchandiseEvaluation;
 import com.qcloud.component.goods.model.key.TypeEnum.StarLevelType;
 import com.qcloud.component.goods.model.query.MerchandiseEvaluationQuery;
 import com.qcloud.component.goods.service.MerchandiseEvaluationService;
-import com.qcloud.component.goods.service.MerchandiseItemService;
+import com.qcloud.component.goods.service.UnifiedMerchandiseService;
 import com.qcloud.component.my.MyClient;
 import com.qcloud.component.my.QMyToEvaluation;
-import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.publicdata.EnableType;
 import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.component.sellercenter.model.key.TypeEnum.StatusType;
@@ -26,27 +25,24 @@ import com.qcloud.pirates.util.AssertUtil;
 public class MerchandiseEvaluationServiceImpl implements MerchandiseEvaluationService {
 
     @Autowired
-    private MerchandiseEvaluationDao merchandiseEvaluationDao;
+    private MerchandiseEvaluationDao  merchandiseEvaluationDao;
 
     @Autowired
-    private AutoIdGenerator          autoIdGenerator;
+    private AutoIdGenerator           autoIdGenerator;
 
-    private static final String      ID_KEY = "goods_merchandise_evaluation";
-
-    @Autowired
-    private SellercenterClient       sellercenterClient;
+    private static final String       ID_KEY = "goods_merchandise_evaluation";
 
     @Autowired
-    private PersonalcenterClient     personalcenterClient;
+    private SellercenterClient        sellercenterClient;
 
     @Autowired
-    private MyClient                 myClient;
+    private MyClient                  myClient;
 
     @Autowired
-    private MerchandiseItemService   merchandiseItemService;
+    private UnifiedMerchandiseService unifiedMerchandiseService;
 
     @Autowired
-    private CommoditycenterClient    commoditycenterClient;
+    private CommoditycenterClient     commoditycenterClient;
 
     @Override
     public boolean add(MerchandiseEvaluation merchandiseEvaluation) {
@@ -79,11 +75,11 @@ public class MerchandiseEvaluationServiceImpl implements MerchandiseEvaluationSe
         int star = merchandiseEvaluation.getStar();
         if (merchandiseEvaluation.getStatus() == StatusType.PASS.getKey()) {
             if (StarLevelType.CP.getKey() >= star) {
-                merchandiseItemService.increaseLowEvaluation(merchandiseEvaluation.getMerchandiseId());
+                unifiedMerchandiseService.increaseLowEvaluation(merchandiseEvaluation.getMerchandiseId());
             } else if (StarLevelType.ZP.getKey() >= star && star > StarLevelType.CP.getKey()) {
-                merchandiseItemService.increaseMiddleEvaluation(merchandiseEvaluation.getMerchandiseId());
+                unifiedMerchandiseService.increaseMiddleEvaluation(merchandiseEvaluation.getMerchandiseId());
             } else {
-                merchandiseItemService.increaseGoodEvaluation(merchandiseEvaluation.getMerchandiseId());
+                unifiedMerchandiseService.increaseGoodEvaluation(merchandiseEvaluation.getMerchandiseId());
             }
         }
         return merchandiseEvaluationDao.update(merchandiseEvaluation);

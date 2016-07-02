@@ -4,52 +4,37 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.qcloud.component.goods.CommoditycenterClient;
 import com.qcloud.component.goods.QMerchandiseEvaluation;
-import com.qcloud.component.goods.QMerchandiseItem;
 import com.qcloud.component.goods.QUnifiedMerchandise;
-import com.qcloud.component.goods.QUnifiedMerchandise.MerchandiseType;
+import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.goods.entity.MerchandiseEvaluationEntity;
-import com.qcloud.component.goods.entity.MerchandiseItemEntity;
 import com.qcloud.component.goods.entity.UnifiedMerchandiseEntity;
 import com.qcloud.component.goods.exception.CommoditycenterException;
-import com.qcloud.component.goods.model.CombinationMerchandise;
 import com.qcloud.component.goods.model.CombinationMerchandiseItem;
 import com.qcloud.component.goods.model.Merchandise;
 import com.qcloud.component.goods.model.MerchandiseDealRecord;
 import com.qcloud.component.goods.model.MerchandiseEvaluation;
-import com.qcloud.component.goods.model.MerchandiseImage;
-import com.qcloud.component.goods.model.MerchandiseItem;
 import com.qcloud.component.goods.model.MerchandiseSpecifications;
 import com.qcloud.component.goods.model.MerchandiseVipDiscount;
 import com.qcloud.component.goods.model.MonthHotSale;
-import com.qcloud.component.goods.model.cache.MerchandiseItemCache;
-import com.qcloud.component.goods.model.cache.UnifiedMerchandiseCache;
+import com.qcloud.component.goods.model.UnifiedMerchandise;
 import com.qcloud.component.goods.model.key.TypeEnum.OrderType;
 import com.qcloud.component.goods.model.key.TypeEnum.QueryItemType;
 import com.qcloud.component.goods.model.key.TypeEnum.QueryType;
-import com.qcloud.component.goods.model.key.TypeEnum.UnifiedMerchandiseType;
-import com.qcloud.component.goods.model.query.MerchandiseItemQuery;
-import com.qcloud.component.goods.service.CombinationMerchandiseService;
+import com.qcloud.component.goods.model.query.UnifiedMerchandiseQuery;
+import com.qcloud.component.goods.service.CombinationMerchandiseItemService;
 import com.qcloud.component.goods.service.MerchandiseDealRecordService;
 import com.qcloud.component.goods.service.MerchandiseEvaluationService;
-import com.qcloud.component.goods.service.MerchandiseImageService;
-import com.qcloud.component.goods.service.MerchandiseItemCacheService;
-import com.qcloud.component.goods.service.MerchandiseItemService;
-import com.qcloud.component.goods.service.MerchandiseMarketingService;
 import com.qcloud.component.goods.service.MerchandiseService;
 import com.qcloud.component.goods.service.MerchandiseSpecificationsService;
 import com.qcloud.component.goods.service.MerchandiseVipDiscountService;
 import com.qcloud.component.goods.service.MonthHotSaleService;
-import com.qcloud.component.goods.service.UnifiedMerchandiseCacheService;
-import com.qcloud.component.filesdk.FileSDKClient;
+import com.qcloud.component.goods.service.UnifiedMerchandiseService;
 import com.qcloud.component.publicdata.PublicdataClient;
 import com.qcloud.component.publicdata.model.Classify;
-import com.qcloud.pirates.core.reflect.BeanUtils;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.util.AssertUtil;
 
@@ -57,95 +42,78 @@ import com.qcloud.pirates.util.AssertUtil;
 public class CommoditycenterClientImpl implements CommoditycenterClient {
 
     @Autowired
-    private UnifiedMerchandiseCacheService   unifiedMerchandiseCacheService;
+    private UnifiedMerchandiseService         unifiedMerchandiseService;
 
     @Autowired
-    private MerchandiseItemCacheService      merchandiseItemCacheService;
+    private MerchandiseService                merchandiseService;
 
     @Autowired
-    private MerchandiseItemService           merchandiseItemService;
+    private MerchandiseSpecificationsService  merchandiseSpecificationsService;
 
     @Autowired
-    private MerchandiseMarketingService      merchandiseMarketingService;
+    private CombinationMerchandiseItemService combinationMerchandiseItemService;
 
     @Autowired
-    private CombinationMerchandiseService    combinationMerchandiseService;
+    private MerchandiseEvaluationService      merchandiseEvaluationService;
 
     @Autowired
-    private MerchandiseDealRecordService     merchandiseDealRecordService;
+    private MerchandiseVipDiscountService     merchandiseVipDiscountService;
 
     @Autowired
-    private MerchandiseSpecificationsService merchandiseSpecificationsService;
+    private PublicdataClient                  publicdataClient;
 
     @Autowired
-    private MerchandiseImageService          merchandiseImageService;
+    private MerchandiseDealRecordService      merchandiseDealRecordService;
 
     @Autowired
-    private MerchandiseEvaluationService     merchandiseEvaluationService;
-
-    @Autowired
-    private MerchandiseService               merchandiseService;
-
-    @Autowired
-    private MerchandiseVipDiscountService    merchandiseVipDiscountService;
-
-    @Autowired
-    private FileSDKClient                    fileSDKClient;
-
-    @Autowired
-    private MonthHotSaleService              monthHotSaleService;
-
-    @Autowired
-    private PublicdataClient                 publicdataClient;
+    private MonthHotSaleService               monthHotSaleService;
 
     @Override
-    public QUnifiedMerchandise getUnifiedMerchandise(long unifiedMerchandiseId) {
+    public UnifiedMerchandiseEntity getUnifiedMerchandise(long unifiedMerchandiseId) {
 
-        // 组装统一商品对象,供其他组件与前端接口使用
-        UnifiedMerchandiseCache unifiedMerchandiseCache = unifiedMerchandiseCacheService.get(unifiedMerchandiseId);
-        if (unifiedMerchandiseCache == null) {
+        UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(unifiedMerchandiseId);
+        if (unifiedMerchandise == null) {
             return null;
         }
-        UnifiedMerchandiseEntity um = new UnifiedMerchandiseEntity();
-        um.setMerchantId(unifiedMerchandiseCache.getMerchantId());
-        um.setDiscount(unifiedMerchandiseCache.getDiscount());
-        um.setId(unifiedMerchandiseCache.getId());
-        um.setPrice(unifiedMerchandiseCache.getPrice());
-        um.setPurchase(unifiedMerchandiseCache.getPurchase());
-        um.setStock(unifiedMerchandiseCache.getStock());
-        um.setName(unifiedMerchandiseCache.getName());
-        um.setImage(unifiedMerchandiseCache.getImage());
-        um.setType(getMerchandiseType(unifiedMerchandiseCache.getType()));
-        um.setSence(unifiedMerchandiseCache.getSence());
-        um.setIncludePost(unifiedMerchandiseCache.getIsIncludePost());
-        //
-        double weight = 0.0;
-        List<MerchandiseItemCache> list = merchandiseItemCacheService.list(unifiedMerchandiseId);
-        List<QMerchandiseItem> miList = new ArrayList<QMerchandiseItem>();
-        for (MerchandiseItemCache merchandiseItemCache : list) {
-            MerchandiseItemEntity mi = new MerchandiseItemEntity();
-            mi.setId(merchandiseItemCache.getId());
-            mi.setMerchandiseId(merchandiseItemCache.getMerchandiseId());
-            mi.setCode(merchandiseItemCache.getCode());
-            mi.setImage(merchandiseItemCache.getImage());
-            mi.setMerchantClassifyId(merchandiseItemCache.getMerchantClassifyId());
-            mi.setMerchantId(merchandiseItemCache.getMerchantId());
-            mi.setName(merchandiseItemCache.getName());
-            mi.setSpecifications(merchandiseItemCache.getSpecifications());
-            mi.setSalesVolume(merchandiseItemCache.getSalesVolume());
-            mi.setMallClassifyId(merchandiseItemCache.getMallClassifyId());
-            mi.setUnifiedMerchandiseId(merchandiseItemCache.getUnifiedMerchandiseId());
-            mi.setNumber(merchandiseItemCache.getNumber());
-            mi.setUnit(merchandiseItemCache.getUnit());
-            mi.setGoodEvaluation(merchandiseItemCache.getGoodEvaluation());
-            mi.setMiddleEvaluation(merchandiseItemCache.getMiddleEvaluation());
-            mi.setLowEvaluation(merchandiseItemCache.getLowEvaluation());
-            miList.add(mi);
-            weight += merchandiseItemCache.getWeight() * merchandiseItemCache.getNumber();
+        if (unifiedMerchandise.getType() == UnifiedMerchandiseType.COMBINATION.getKey()) {
+            List<CombinationMerchandiseItem> list = combinationMerchandiseItemService.listByCombinationMerchandise(unifiedMerchandise.getId());
+            UnifiedMerchandiseEntity unifiedMerchandiseEntity = new UnifiedMerchandiseEntity(unifiedMerchandise, null);
+            unifiedMerchandiseEntity.setNumber(1);
+            unifiedMerchandiseEntity.setSpecifications("组合套餐");
+            unifiedMerchandiseEntity.setType(UnifiedMerchandiseType.COMBINATION);
+            List<QUnifiedMerchandise> relaList = new ArrayList<QUnifiedMerchandise>();
+            for (CombinationMerchandiseItem combinationMerchandiseItem : list) {
+                UnifiedMerchandiseEntity item = getUnifiedMerchandise(combinationMerchandiseItem.getRelaUnifiedMerchandiseId());
+                AssertUtil.assertNotNull(item, "组合套餐关联商品记录不存在." + combinationMerchandiseItem.getRelaUnifiedMerchandiseId());
+                AssertUtil.assertTrue(UnifiedMerchandiseType.SINGLE.equals(item.getType()), "组合套餐商品项只能是单品." + combinationMerchandiseItem.getRelaUnifiedMerchandiseId());
+                item.setNumber(combinationMerchandiseItem.getNumber());
+                item.setDiscount(combinationMerchandiseItem.getDiscount());
+                relaList.add(item);
+            }
+            unifiedMerchandiseEntity.setList(relaList);
+            return unifiedMerchandiseEntity;
+        } else {
+            Merchandise merchandise = merchandiseService.get(unifiedMerchandise.getMerchandiseId());
+            UnifiedMerchandiseEntity unifiedMerchandiseEntity = new UnifiedMerchandiseEntity(unifiedMerchandise, merchandise);
+            unifiedMerchandiseEntity.setNumber(1);
+            unifiedMerchandiseEntity.setList(new ArrayList<QUnifiedMerchandise>());
+            List<MerchandiseSpecifications> spList = merchandiseSpecificationsService.listByUnifiedMerchandise(unifiedMerchandise.getRelaUnifiedMerchandiseId());
+            StringBuffer sb = new StringBuffer();
+            for (MerchandiseSpecifications merchandiseSpecifications : spList) {
+                sb.append(merchandiseSpecifications.getValue()).append(" ");
+            }
+            unifiedMerchandiseEntity.setSpecifications(sb.toString());
+            unifiedMerchandiseEntity.setType(UnifiedMerchandiseType.get(unifiedMerchandise.getType()));
+            return unifiedMerchandiseEntity;
         }
-        um.setList(miList);
-        um.setWeight(weight);
-        return um;
+    }
+
+    @Override
+    public QMerchandiseEvaluation getMerchandiseEvaluation(long evaluationId, long merchandiseId) {
+
+        MerchandiseEvaluation merchandiseEvaluation = merchandiseEvaluationService.get(evaluationId, merchandiseId);
+        Merchandise merchandise = merchandiseService.get(merchandiseId);
+        return new MerchandiseEvaluationEntity(merchandiseEvaluation, merchandise);
     }
 
     @Override
@@ -153,17 +121,12 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
 
         QUnifiedMerchandise unifiedMerchandise = getUnifiedMerchandise(unifiedMerchandiseId);
         // 更新库存,只能针对单一商品
-        if (MerchandiseType.SINGLE.equals(unifiedMerchandise.getType())) {
-            MerchandiseItem merchandiseItem = merchandiseItemService.get(unifiedMerchandise.getList().get(0).getId());
-            int totalStock = merchandiseItem.getStock() + stock;
+        if (UnifiedMerchandiseType.SINGLE.equals(unifiedMerchandise.getType())) {
+            int totalStock = unifiedMerchandise.getStock() + stock;
             if (totalStock < 0) {
                 throw new CommoditycenterException("调整库存后库存不大于等于零,调整失败." + unifiedMerchandiseId);
             }
-            merchandiseItem.setStock(totalStock);
-            // merchandiseItem.setDiscount(discount);
-            // merchandiseItem.setPurchase(purchase);
-            // merchandiseItem.setPrice(price);
-            return merchandiseItemService.update(merchandiseItem);
+            return lockOnlineStock(unifiedMerchandiseId, 0 - stock);
         }
         return false;
     }
@@ -176,63 +139,27 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
         if (totalStock < 0) {
             throw new CommoditycenterException("锁定库存失败,库存不足." + unifiedMerchandise.getId() + " " + unifiedMerchandise.getStock() + " " + stock);
         }
-        if (MerchandiseType.SINGLE.equals(unifiedMerchandise.getType())) {
-            Long itemId = unifiedMerchandise.getList().get(0).getId();
-            return merchandiseItemService.lockStock(itemId, stock);
-        } else if (MerchandiseType.COMBINATION.equals(unifiedMerchandise.getType())) {
-            return combinationMerchandiseService.lockStock(unifiedMerchandiseId, stock);
-        } else if (MerchandiseType.MARKETING.equals(unifiedMerchandise.getType())) {
-            return merchandiseMarketingService.lockStock(unifiedMerchandiseId, stock);
-        } else {
-            return false;
-        }
-    }
-
-    private MerchandiseType getMerchandiseType(int type) {
-
-        if (UnifiedMerchandiseType.SINGLE.getKey() == type) {
-            return MerchandiseType.SINGLE;
-        } else if (UnifiedMerchandiseType.COMBINAION.getKey() == type) {
-            return MerchandiseType.COMBINATION;
-        } else if (UnifiedMerchandiseType.MARKETING.getKey() == type) {
-            return MerchandiseType.MARKETING;
-        }
-        return null;
+        return unifiedMerchandiseService.lockStock(unifiedMerchandiseId, totalStock);
     }
 
     @Override
     public boolean addSalesVolume(long unifiedMerchandiseId, int number) {
 
-        QUnifiedMerchandise unifiedMerchandise = getUnifiedMerchandise(unifiedMerchandiseId);
-        if (MerchandiseType.SINGLE.equals(unifiedMerchandise.getType())) {
-            return merchandiseItemService.updateSalesVolume(unifiedMerchandise.getList().get(0).getId(), number);
-        }
-        // 其他暂不记录
-        return true;
+        UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(unifiedMerchandiseId);
+        AssertUtil.assertNotNull(unifiedMerchandise, "统一商品不存在." + unifiedMerchandiseId);
+        return unifiedMerchandiseService.updateSalesVolume(unifiedMerchandiseId, number);
     }
 
     @Override
-    public void incrementMerchandiseDealRecoed(Long userId, Long unifiedMerchandiseId, int number, String specifications, Long[] orderIds) {
+    public void incrementMerchandiseDealRecoed(long userId, long unifiedMerchandiseId, int number, String specifications, long[] orderIds) {
 
         AssertUtil.assertNotNull(orderIds, "订单ID不能为空.");
         AssertUtil.assertTrue(orderIds.length == 4, "订单ID数组长度不正确.");
         QUnifiedMerchandise unifiedMerchandise = getUnifiedMerchandise(unifiedMerchandiseId);
-        MerchandiseType merchandiseType = unifiedMerchandise.getType();
-        if (MerchandiseType.SINGLE.equals(merchandiseType) || MerchandiseType.MARKETING.equals(merchandiseType)) {
-            MerchandiseDealRecord merchandiseDealRecord = new MerchandiseDealRecord();
-            merchandiseDealRecord.setMerchandiseId(unifiedMerchandise.getList().get(0).getMerchandiseId());
-            merchandiseDealRecord.setSpecifications(specifications);
-            merchandiseDealRecord.setUserId(userId);
-            merchandiseDealRecord.setTime(new Date());
-            merchandiseDealRecord.setNumber(number);
-            merchandiseDealRecord.setOrderId(orderIds[0]);
-            merchandiseDealRecord.setSubOrderId(orderIds[1]);
-            merchandiseDealRecord.setOrderItemId(orderIds[2]);
-            merchandiseDealRecord.setOrderItemDetailId(orderIds[3]);
-            merchandiseDealRecordService.add(merchandiseDealRecord);
-        } else {
-            List<QMerchandiseItem> list = unifiedMerchandise.getList();
-            for (QMerchandiseItem merchandiseItem : list) {
+        UnifiedMerchandiseType merchandiseType = unifiedMerchandise.getType();
+        if (UnifiedMerchandiseType.COMBINATION.equals(merchandiseType)) {
+            List<QUnifiedMerchandise> list = unifiedMerchandise.getList();
+            for (QUnifiedMerchandise merchandiseItem : list) {
                 MerchandiseDealRecord merchandiseDealRecord = new MerchandiseDealRecord();
                 merchandiseDealRecord.setMerchandiseId(merchandiseItem.getMerchandiseId());
                 merchandiseDealRecord.setSpecifications(specifications);
@@ -245,8 +172,20 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
                 merchandiseDealRecord.setOrderItemDetailId(orderIds[3]);
                 merchandiseDealRecordService.add(merchandiseDealRecord);
             }
+        } else {
+            MerchandiseDealRecord merchandiseDealRecord = new MerchandiseDealRecord();
+            merchandiseDealRecord.setMerchandiseId(unifiedMerchandise.getList().get(0).getMerchandiseId());
+            merchandiseDealRecord.setSpecifications(specifications);
+            merchandiseDealRecord.setUserId(userId);
+            merchandiseDealRecord.setTime(new Date());
+            merchandiseDealRecord.setNumber(number);
+            merchandiseDealRecord.setOrderId(orderIds[0]);
+            merchandiseDealRecord.setSubOrderId(orderIds[1]);
+            merchandiseDealRecord.setOrderItemId(orderIds[2]);
+            merchandiseDealRecord.setOrderItemDetailId(orderIds[3]);
+            merchandiseDealRecordService.add(merchandiseDealRecord);
         }
-        if (MerchandiseType.SINGLE.equals(merchandiseType)) {
+        if (UnifiedMerchandiseType.SINGLE.equals(merchandiseType)) {
             Calendar calendar = Calendar.getInstance();
             MonthHotSale monthHotSale = monthHotSaleService.getByUnifiedMerchandise(unifiedMerchandiseId, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH));
             if (monthHotSale != null) {
@@ -276,118 +215,48 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
     }
 
     @Override
-    public List<String> listMerchandiseImage(long unifiedMerchandiseId) {
-
-        QUnifiedMerchandise unifiedMerchandise = getUnifiedMerchandise(unifiedMerchandiseId);
-        AssertUtil.assertTrue(!MerchandiseType.COMBINATION.equals(unifiedMerchandise.getType()), "组合商品图不在这个接口提供." + unifiedMerchandiseId);
-        MerchandiseItem merchandiseItem = merchandiseItemService.get(unifiedMerchandise.getList().get(0).getId());
-        AssertUtil.assertNotNull(merchandiseItem, "单一商品不存在." + unifiedMerchandiseId);
-        // 规格
-        MerchandiseSpecifications merchandiseSpecifications = merchandiseSpecificationsService.get(merchandiseItem.getMerchandiseSpecificationsId());
-        List<String> imageStrList = new ArrayList<String>();
-        if (merchandiseSpecifications != null) {
-            if (merchandiseSpecifications.getAttributeId0() > 0) {
-                List<MerchandiseImage> imageList = merchandiseImageService.listByMerchandiseAndAttribute(merchandiseItem.getMerchandiseId(), merchandiseSpecifications.getAttributeId0(), merchandiseSpecifications.getValue0());
-                for (MerchandiseImage merchandiseImage : imageList) {
-                    if (StringUtils.isNotEmpty(merchandiseImage.getImage())) {
-                        String[] strs = merchandiseImage.getImage().split(",");
-                        for (int index = 0; index < strs.length; index++) {
-                            imageStrList.add(fileSDKClient.uidToUrl(strs[index]));
-                        }
-                    }
-                }
-            }
-            if (merchandiseSpecifications.getAttributeId1() > 0) {
-                List<MerchandiseImage> imageList = merchandiseImageService.listByMerchandiseAndAttribute(merchandiseItem.getMerchandiseId(), merchandiseSpecifications.getAttributeId1(), merchandiseSpecifications.getValue1());
-                for (MerchandiseImage merchandiseImage : imageList) {
-                    if (StringUtils.isNotEmpty(merchandiseImage.getImage())) {
-                        String[] strs = merchandiseImage.getImage().split(",");
-                        for (int index = 0; index < strs.length; index++) {
-                            imageStrList.add(fileSDKClient.uidToUrl(strs[index]));
-                        }
-                    }
-                }
-            }
-            if (merchandiseSpecifications.getAttributeId2() > 0) {
-                List<MerchandiseImage> imageList = merchandiseImageService.listByMerchandiseAndAttribute(merchandiseItem.getMerchandiseId(), merchandiseSpecifications.getAttributeId2(), merchandiseSpecifications.getValue2());
-                for (MerchandiseImage merchandiseImage : imageList) {
-                    if (StringUtils.isNotEmpty(merchandiseImage.getImage())) {
-                        String[] strs = merchandiseImage.getImage().split(",");
-                        for (int index = 0; index < strs.length; index++) {
-                            imageStrList.add(fileSDKClient.getFileServerUrl() + fileSDKClient.uidToUrl(strs[index]));
-                        }
-                    }
-                }
-            }
-        }
-        // 为空则取默认图
-        if (CollectionUtils.isEmpty(imageStrList)) {
-            List<MerchandiseImage> imageList = merchandiseImageService.listByMerchandiseAndAttribute(merchandiseItem.getMerchandiseId(), -1L, "-1");
-            for (MerchandiseImage merchandiseImage : imageList) {
-                if (StringUtils.isNotEmpty(merchandiseImage.getImage())) {
-                    String[] strs = merchandiseImage.getImage().split(",");
-                    for (int index = 0; index < strs.length; index++) {
-                        imageStrList.add(fileSDKClient.uidToUrl(strs[index]));
-                    }
-                }
-            }
-        }
-        return imageStrList;
-    }
-
-    @Override
-    public QMerchandiseEvaluation getMerchandiseEvaluation(long evaluationId, long merchandiseId) {
-
-        MerchandiseEvaluation merchandiseEvaluation = merchandiseEvaluationService.get(evaluationId, merchandiseId);
-        Merchandise merchandise = merchandiseService.get(merchandiseId);
-        return new MerchandiseEvaluationEntity(merchandiseEvaluation, merchandise);
-    }
-
-    @Override
     public List<QUnifiedMerchandise> randomUnifiedMerchandise(long merchantId, int number) {
 
-        MerchandiseItemQuery merchandiseItemQuery = new MerchandiseItemQuery();
-        merchandiseItemQuery.setQueryType(QueryType.HOT);
-        merchandiseItemQuery.setOrderType(OrderType.DESC);
-        merchandiseItemQuery.setQueryItemType(QueryItemType.M);
+        UnifiedMerchandiseQuery unifiedMerchandiseQuery = new UnifiedMerchandiseQuery();
+        unifiedMerchandiseQuery.setQueryType(QueryType.HOT);
+        unifiedMerchandiseQuery.setOrderType(OrderType.DESC);
+        unifiedMerchandiseQuery.setQueryItemType(QueryItemType.M);
         if (merchantId != -1L) {
-            merchandiseItemQuery.setMerchantId(merchantId);
+            unifiedMerchandiseQuery.setMerchantId(merchantId);
         }
-        Page<MerchandiseItem> page = merchandiseItemService.page(BeanUtils.transBean2Map(merchandiseItemQuery), 0, number);
-        List<MerchandiseItem> merchandiseItemList = page.getData();
+        Page<UnifiedMerchandise> page = unifiedMerchandiseService.page(unifiedMerchandiseQuery, 0, number);
+        List<UnifiedMerchandise> merchandiseList = page.getData();
         List<QUnifiedMerchandise> list = new ArrayList<QUnifiedMerchandise>();
-        for (MerchandiseItem merchandiseItem : merchandiseItemList) {
-            list.add(getUnifiedMerchandise(merchandiseItem.getUnifiedMerchandiseId()));
+        for (UnifiedMerchandise unifiedMerchandise : merchandiseList) {
+            list.add(getUnifiedMerchandise(unifiedMerchandise.getId()));
         }
         return list;
     }
 
     @Override
-    public boolean setVipDiscount(long userId, long unifiedMerchandiseId, double price) {
+    public boolean setVipDiscount(long userId, long unifiedMerchandiseId, double discount) {
 
-        MerchandiseItem merchandiseItem = merchandiseItemService.getByUnifiedMerchandise(unifiedMerchandiseId);
-        AssertUtil.assertNotNull(merchandiseItem, "商品信息不存在." + unifiedMerchandiseId);
-        MerchandiseVipDiscount merchandiseVipDiscount = merchandiseVipDiscountService.get(userId, merchandiseItem.getId());
+        MerchandiseVipDiscount merchandiseVipDiscount = merchandiseVipDiscountService.get(userId, unifiedMerchandiseId);
         if (merchandiseVipDiscount == null) {
             merchandiseVipDiscount = new MerchandiseVipDiscount();
-            merchandiseVipDiscount.setPrice(price);
-            merchandiseVipDiscount.setMerchandiseItemId(merchandiseItem.getId());
+            merchandiseVipDiscount.setPrice(discount);
+            merchandiseVipDiscount.setMerchandiseItemId(unifiedMerchandiseId);
             merchandiseVipDiscount.setUserId(userId);
             return merchandiseVipDiscountService.add(merchandiseVipDiscount);
         } else {
-            merchandiseVipDiscount.setPrice(price);
+            merchandiseVipDiscount.setPrice(discount);
             return merchandiseVipDiscountService.update(merchandiseVipDiscount);
         }
     }
 
     @Override
-    public Double getVipDiscount(long userId, long unifiedMerchandiseId) {
+    public double getVipDiscount(long userId, long unifiedMerchandiseId) {
 
-        MerchandiseItem merchandiseItem = merchandiseItemService.getByUnifiedMerchandise(unifiedMerchandiseId);
-        AssertUtil.assertNotNull(merchandiseItem, "商品信息不存在." + unifiedMerchandiseId);
-        MerchandiseVipDiscount merchandiseVipDiscount = merchandiseVipDiscountService.get(userId, merchandiseItem.getId());
+        UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(unifiedMerchandiseId);
+        AssertUtil.assertNotNull(unifiedMerchandise, "统一商品信息不存在." + unifiedMerchandiseId);
+        MerchandiseVipDiscount merchandiseVipDiscount = merchandiseVipDiscountService.get(userId, unifiedMerchandiseId);
         if (merchandiseVipDiscount == null || merchandiseVipDiscount.getPrice() <= 0) {
-            return merchandiseItem.getDiscount();
+            return unifiedMerchandise.getDiscount();
             // return 0.0;
         } else {
             // 这里也是,暂时不处理折扣
@@ -396,20 +265,16 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
     }
 
     @Override
-    public Double statMinVipDiscount(Long unifiedMerchandiseId) {
+    public double statMinVipDiscount(long unifiedMerchandiseId) {
 
-        MerchandiseItem merchandiseItem = merchandiseItemService.getByUnifiedMerchandise(unifiedMerchandiseId);
-        AssertUtil.assertNotNull(merchandiseItem, "商品信息不存在." + unifiedMerchandiseId);
-        Double min = merchandiseVipDiscountService.statMin(merchandiseItem.getId());
+        Double min = merchandiseVipDiscountService.statMin(unifiedMerchandiseId);
         return min == null ? 0 : min;
     }
 
     @Override
-    public Double statMaxVipDiscount(Long unifiedMerchandiseId) {
+    public double statMaxVipDiscount(long unifiedMerchandiseId) {
 
-        MerchandiseItem merchandiseItem = merchandiseItemService.getByUnifiedMerchandise(unifiedMerchandiseId);
-        AssertUtil.assertNotNull(merchandiseItem, "商品信息不存在." + unifiedMerchandiseId);
-        Double max = merchandiseVipDiscountService.statMax(merchandiseItem.getId());
+        Double max = merchandiseVipDiscountService.statMax(unifiedMerchandiseId);
         return max == null ? 0 : max;
     }
 

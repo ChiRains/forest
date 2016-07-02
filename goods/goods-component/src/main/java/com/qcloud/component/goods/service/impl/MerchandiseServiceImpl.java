@@ -10,15 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.qcloud.component.autoid.AutoIdGenerator;
+import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.dao.MerchandiseDao;
 import com.qcloud.component.goods.exception.CommoditycenterException;
 import com.qcloud.component.goods.model.Merchandise;
-import com.qcloud.component.goods.model.MerchandiseItem;
+import com.qcloud.component.goods.model.UnifiedMerchandise;
 import com.qcloud.component.goods.model.key.TypeEnum.MerchandiseStateType;
 import com.qcloud.component.goods.model.query.MerchandiseQuery;
-import com.qcloud.component.goods.service.MerchandiseItemService;
 import com.qcloud.component.goods.service.MerchandiseService;
-import com.qcloud.component.filesdk.FileSDKClient;
+import com.qcloud.component.goods.service.UnifiedMerchandiseService;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.util.AssertUtil;
 
@@ -26,21 +26,21 @@ import com.qcloud.pirates.util.AssertUtil;
 public class MerchandiseServiceImpl implements MerchandiseService {
 
     @Autowired
-    private MerchandiseDao         merchandiseDao;
+    private MerchandiseDao            merchandiseDao;
 
     @Autowired
-    private AutoIdGenerator        autoIdGenerator;
+    private AutoIdGenerator           autoIdGenerator;
 
-    private static final String    ID_KEY = "goods_merchandise";
+    private static final String       ID_KEY = "goods_merchandise";
 
     @Autowired
-    private FileSDKClient          fileSDKClient;
+    private FileSDKClient             fileSDKClient;
+
+    @Autowired
+    private UnifiedMerchandiseService unifiedMerchandiseService;
 
     // @Autowired
-    // private UnifiedMerchandiseService unifiedMerchandiseService;
-    @Autowired
-    private MerchandiseItemService merchandiseItemService;
-
+    // private MerchandiseItemService merchandiseItemService;
     @Transactional
     @Override
     public boolean add(Merchandise merchandise) {
@@ -49,10 +49,6 @@ public class MerchandiseServiceImpl implements MerchandiseService {
         List<Merchandise> names = merchandiseDao.listByName(merchandise.getName());
         if (names.size() > 0) {
             throw new CommoditycenterException("商品名称不能重复!");
-        }
-        List<Merchandise> codes = merchandiseDao.listByCode(merchandise.getMerchantId(), merchandise.getCode());
-        if (codes.size() > 0) {
-            throw new CommoditycenterException("商品编号不能重复!");
         }
         // UnifiedMerchandise unifiedMerchandise = new UnifiedMerchandise();
         // unifiedMerchandise.setMerchantId(merchandise.getMerchantId());
@@ -138,14 +134,15 @@ public class MerchandiseServiceImpl implements MerchandiseService {
         }
         boolean result = merchandiseDao.update(merchandise);
         if (result) {
-            List<MerchandiseItem> itemList = merchandiseItemService.listByMerchandise(merchandise.getId());
-            for (MerchandiseItem merchandiseItem : itemList) {
-                merchandiseItem.setKeywords(merchandise.getKeywords());
-                merchandiseItem.setMallClassifyId(merchandise.getMallClassifyId());
-                merchandiseItem.setMerchantClassifyId(merchandise.getMerchantClassifyId());
-                merchandiseItem.setName(merchandise.getName());
-                merchandiseItem.setBrandId(merchandise.getBrandId());
-                merchandiseItemService.update(merchandiseItem);
+            List<UnifiedMerchandise> list = unifiedMerchandiseService.listByMerchandise(merchandise.getId());
+            for (UnifiedMerchandise unifiedMerchandise : list) {
+                unifiedMerchandise.setKeywords(merchandise.getKeywords());
+                unifiedMerchandise.setMallClassifyId(merchandise.getMallClassifyId());
+                unifiedMerchandise.setMerchantClassifyId(merchandise.getMerchantClassifyId());
+                unifiedMerchandise.setName(merchandise.getName());
+                unifiedMerchandise.setBrandId(merchandise.getBrandId());
+                unifiedMerchandise.setImage(merchandise.getImage());
+                unifiedMerchandiseService.update(unifiedMerchandise);
             }
         }
         return result;
@@ -190,11 +187,11 @@ public class MerchandiseServiceImpl implements MerchandiseService {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("state", state);
         param.put("id", id);
-        List<MerchandiseItem> list = merchandiseItemService.listByMerchandise(id);
-        for (MerchandiseItem merchandiseItem : list) {
-            if (merchandiseItem.getState() != MerchandiseStateType.INIT.getKey()) {
-                merchandiseItem.setState(state);
-                merchandiseItemService.update(merchandiseItem);
+        List<UnifiedMerchandise> list = unifiedMerchandiseService.listByMerchandise(id);
+        for (UnifiedMerchandise unifiedMerchandise : list) {
+            if (unifiedMerchandise.getState() != MerchandiseStateType.INIT.getKey()) {
+                unifiedMerchandise.setState(state);
+                unifiedMerchandiseService.update(unifiedMerchandise);
             }
         }
         return merchandiseDao.updateMerchandiseState(param);
@@ -267,20 +264,20 @@ public class MerchandiseServiceImpl implements MerchandiseService {
     @Override
     public long getSalesVolume(long merchandiseId) {
 
-        List<MerchandiseItem> list = merchandiseItemService.listByMerchandise(merchandiseId);
+        List<UnifiedMerchandise> list = unifiedMerchandiseService.listByMerchandise(merchandiseId);
         long salesVolume = 0;
-        for (MerchandiseItem merchandiseItem : list) {
+        for (UnifiedMerchandise merchandiseItem : list) {
             salesVolume += getSalesVolume(merchandiseItem);
         }
         return salesVolume;
     }
 
-    private long getSalesVolume(MerchandiseItem merchandiseItem) {
+    private long getSalesVolume(UnifiedMerchandise merchandiseItem) {
 
         if (merchandiseItem == null) {
             return 0;
         } else {
-            long salesVolume = merchandiseItem.getSalesVolume() > merchandiseItem.getVirtualSalesVolume() ? merchandiseItem.getSalesVolume() : merchandiseItem.getVirtualSalesVolume();
+            long salesVolume = merchandiseItem.getSalesVolume();
             return salesVolume;
         }
     }

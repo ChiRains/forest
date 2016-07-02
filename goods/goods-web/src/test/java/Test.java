@@ -11,17 +11,25 @@ public class Test {
      */
     public static void main(String[] args) {
 
+//        IntKeyValue[] as = new IntKeyValue[] { new KV(10, "1"), new KV(11, "2"), new KV(12, "3")};
+//        IntKeyValue[] bs = new IntKeyValue[] { new KV(20, "a"), new KV(21, "b"), new KV(22, "c"), new KV(23, "d"), new KV(24, "e")};
+//        IntKeyValue[] cs = new IntKeyValue[] { new KV(30, "x"), new KV(31, "y"), new KV(32, "z")};
+//        IntKeyValue[] ds = new IntKeyValue[] { new KV(40, "M"), new KV(41, "N")};
+//        IntKeyValue[] es = new IntKeyValue[] { new KV(50, "A"), new KV(51, "B"), new KV(52, "C")};
+     
         IntKeyValue[] as = new IntKeyValue[] { new KV(10, "1"), new KV(11, "2"), new KV(12, "3")};
         IntKeyValue[] bs = new IntKeyValue[] { new KV(20, "a"), new KV(21, "b"), new KV(22, "c"), new KV(23, "d"), new KV(24, "e")};
         IntKeyValue[] cs = new IntKeyValue[] { new KV(30, "x"), new KV(31, "y"), new KV(32, "z")};
-        IntKeyValue[] ds = new IntKeyValue[] { new KV(40, "M"), new KV(41, "M")};
+        IntKeyValue[] ds = new IntKeyValue[] { new KV(40, "M"), new KV(41, "N")};
         IntKeyValue[] es = new IntKeyValue[] { new KV(50, "A"), new KV(51, "B"), new KV(52, "C")};
+    
+        
         List<IntKeyValue[]> ls = new ArrayList();
         ls.add(as);
         ls.add(bs);
         ls.add(cs);
-        ls.add(ds);
-        ls.add(es);
+//        ls.add(ds);
+//        ls.add(es);
         com(ls);
     }
 
@@ -47,7 +55,7 @@ public class Test {
             }
             indexs[indexs.length - 1] = indexs[indexs.length - 1] + 1;
             add(indexs, ls);
-        }     
+        }
         List<IntKeyValue[]> result = new ArrayList<IntKeyValue[]>();
         for (IntKeyValue[] strings : strs) {
             result.add(strings);
@@ -68,10 +76,23 @@ public class Test {
         });
         for (IntKeyValue[] strings : result) {
             for (IntKeyValue str : strings) {
-                System.out.print(str.getKey() + ":" + str.getValue());
+                System.out.print(str.getValue());
                 System.out.print("--");
             }
             System.out.println();
+        }
+    }
+
+    private static void add(int[] indexs, List<IntKeyValue[]> ls) {
+
+        for (int i = indexs.length - 1; i >= 0; i--) {
+            if (indexs[i] == ls.get(i).length) {
+                indexs[i] = 0;
+                if (i > 0) {
+                    indexs[i - 1] = indexs[i - 1] + 1;
+                }
+                add(indexs, ls);
+            }
         }
     }
     static class KV implements IntKeyValue {
@@ -97,19 +118,6 @@ public class Test {
         public String getValue() {
 
             return v;
-        }
-    }
-
-    private static void add(int[] indexs, List<IntKeyValue[]> ls) {
-
-        for (int i = indexs.length - 1; i >= 0; i--) {
-            if (indexs[i] == ls.get(i).length) {
-                indexs[i] = 0;
-                if (i > 0) {
-                    indexs[i - 1] = indexs[i - 1] + 1;
-                }
-                add(indexs, ls);
-            }
         }
     }
 }

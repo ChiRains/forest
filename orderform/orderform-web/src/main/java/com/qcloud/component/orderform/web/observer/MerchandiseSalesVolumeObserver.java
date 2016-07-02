@@ -21,7 +21,7 @@ public class MerchandiseSalesVolumeObserver implements OrderObserver<QOrderItemD
 
         logger.info("处理销量和购买记录：" + t.getOrder().getOrderNumber() + " " + t.getName());
         commoditycenterClient.addSalesVolume(t.getUnifiedMerchandiseId(), t.getOrderItem().getNumber());
-        Long[] orderIds = new Long[] { t.getOrder().getId(), t.getMerchantOrder().getId(), t.getOrderItem().getId(), t.getId()};
+        long[] orderIds = new long[] { t.getOrder().getId(), t.getMerchantOrder().getId(), t.getOrderItem().getId(), t.getId()};
         commoditycenterClient.incrementMerchandiseDealRecoed(t.getOrder().getUserId(), t.getUnifiedMerchandiseId(), t.getOrderItem().getNumber(), t.getSpecifications(), orderIds);
     }
 }

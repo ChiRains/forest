@@ -1,114 +1,84 @@
 package com.qcloud.component.goods.model;
 
+import java.util.Date;
+import java.math.BigDecimal;
+
 public class MerchandiseSpecifications {
+	
+	private long id;		
+	
+	private long merchandiseId;		
+	
+	//relaUnifiedMerchandiseId
+	private long unifiedMerchandiseId;		
+	
+	private long attributeId;		
+	
+	//值
+	private String value;		
+	
+	//维数
+	private int dimensionNumber;		
 
-    private long id;
+	public MerchandiseSpecifications(){
+	
+	}
 
-    private long merchandiseId;
+	public MerchandiseSpecifications(long id,long merchandiseId,long unifiedMerchandiseId,long attributeId,String value,int dimensionNumber){
+		this.id = id;		
+		this.merchandiseId = merchandiseId;		
+		this.unifiedMerchandiseId = unifiedMerchandiseId;		
+		this.attributeId = attributeId;		
+		this.value = value;		
+		this.dimensionNumber = dimensionNumber;		
+	}
+	
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    private long attributeId0;
+	public long getId() {
+		return id;
+	}	
+		
+	public void setMerchandiseId(long merchandiseId) {
+		this.merchandiseId = merchandiseId;
+	}
 
-    //值
-    private String value0;
+	public long getMerchandiseId() {
+		return merchandiseId;
+	}	
+		
+	public void setUnifiedMerchandiseId(long unifiedMerchandiseId) {
+		this.unifiedMerchandiseId = unifiedMerchandiseId;
+	}
 
-    private long attributeId1;
+	public long getUnifiedMerchandiseId() {
+		return unifiedMerchandiseId;
+	}	
+		
+	public void setAttributeId(long attributeId) {
+		this.attributeId = attributeId;
+	}
 
-    //值
-    private String value1;
+	public long getAttributeId() {
+		return attributeId;
+	}	
+		
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    private long attributeId2;
+	public String getValue() {
+		return value;
+	}	
+		
+	public void setDimensionNumber(int dimensionNumber) {
+		this.dimensionNumber = dimensionNumber;
+	}
 
-    //值
-    private String value2;
-
-    //库存
-    private int state;
-
-    public MerchandiseSpecifications() {
-
-    }
-
-    public MerchandiseSpecifications(long id, long merchandiseId, long attributeId0, String value0, long attributeId1, String value1, long attributeId2, String value2, int state) {
-        this.id = id;
-        this.merchandiseId = merchandiseId;
-        this.attributeId0 = attributeId0;
-        this.value0 = value0;
-        this.attributeId1 = attributeId1;
-        this.value1 = value1;
-        this.attributeId2 = attributeId2;
-        this.value2 = value2;
-        this.state = state;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public long getMerchandiseId() {
-        return merchandiseId;
-    }
-
-    public void setMerchandiseId(long merchandiseId) {
-        this.merchandiseId = merchandiseId;
-    }
-
-    public long getAttributeId0() {
-        return attributeId0;
-    }
-
-    public void setAttributeId0(long attributeId0) {
-        this.attributeId0 = attributeId0;
-    }
-
-    public String getValue0() {
-        return value0;
-    }
-
-    public void setValue0(String value0) {
-        this.value0 = value0;
-    }
-
-    public long getAttributeId1() {
-        return attributeId1;
-    }
-
-    public void setAttributeId1(long attributeId1) {
-        this.attributeId1 = attributeId1;
-    }
-
-    public String getValue1() {
-        return value1;
-    }
-
-    public void setValue1(String value1) {
-        this.value1 = value1;
-    }
-
-    public long getAttributeId2() {
-        return attributeId2;
-    }
-
-    public void setAttributeId2(long attributeId2) {
-        this.attributeId2 = attributeId2;
-    }
-
-    public String getValue2() {
-        return value2;
-    }
-
-    public void setValue2(String value2) {
-        this.value2 = value2;
-    }
-
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
-    }
+	public int getDimensionNumber() {
+		return dimensionNumber;
+	}	
+		
 }

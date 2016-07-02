@@ -65,5 +65,50 @@ public class UnifiedMerchandiseDaoCacheImpl implements UnifiedMerchandiseDao {
 	public List<UnifiedMerchandise> listAll(){
 		return unifiedMerchandiseDaoMysqlImpl.listAll();
 	}
+
+    @Override
+    public List<UnifiedMerchandise> listByMerchandise(long merchandiseId) {
+        return unifiedMerchandiseDaoMysqlImpl.listByMerchandise(merchandiseId);
+    }
+
+    @Override
+    public List<UnifiedMerchandise> listByMerchandise(long merchandiseId, int type) {
+        return unifiedMerchandiseDaoMysqlImpl.listByMerchandise(merchandiseId, type);
+    }
+
+    @Override
+    public List<UnifiedMerchandise> listByMerchandise(long merchandiseId, int type, int state) {
+        return unifiedMerchandiseDaoMysqlImpl.listByMerchandise(merchandiseId, type, state);
+    }
+
+    @Override
+    public boolean increaseGoodEvaluation(long id) {      
+        return unifiedMerchandiseDaoMysqlImpl.increaseGoodEvaluation(id);
+    }
+
+    @Override
+    public boolean increaseMiddleEvaluation(long id) {
+        return unifiedMerchandiseDaoMysqlImpl.increaseMiddleEvaluation(id);
+    }
+
+    @Override
+    public boolean increaseLowEvaluation(long id) {
+        return unifiedMerchandiseDaoMysqlImpl.increaseLowEvaluation(id);
+    }
+
+    @Override
+    public boolean updateSalesVolume(long id, int number) {
+        return unifiedMerchandiseDaoMysqlImpl.updateSalesVolume(id, number);
+    }
+
+    @Override
+    public boolean lockStock(long id, int stock) {
+        return unifiedMerchandiseDaoMysqlImpl.lockStock(id, stock);
+    }
+
+    @Override
+    public Page<UnifiedMerchandise> select(UnifiedMerchandiseQuery query, int start, int size) {
+        return unifiedMerchandiseDaoMysqlImpl.select(query, start, size);
+    }
 }
 

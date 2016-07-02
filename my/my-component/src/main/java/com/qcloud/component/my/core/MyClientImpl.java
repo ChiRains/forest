@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 import com.qcloud.component.autoid.UniqueCodeGenerator;
 import com.qcloud.component.goods.CommoditycenterClient;
 import com.qcloud.component.goods.QUnifiedMerchandise;
-import com.qcloud.component.goods.QUnifiedMerchandise.MerchandiseType;
+import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.my.AfterSaleType;
 import com.qcloud.component.my.InvoiceType;
 import com.qcloud.component.my.MyClient;
@@ -397,7 +397,7 @@ public class MyClientImpl implements MyClient {
     public boolean addMyToEvaluation(long userId, long unifiedMerchandiseId, double discount, long subOrderId, long orderItemId, Date orderDate, String orderNumber) {
 
         QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(unifiedMerchandiseId);
-        if (MerchandiseType.SINGLE.equals(unifiedMerchandise.getType())) {
+        if (UnifiedMerchandiseType.SINGLE.equals(unifiedMerchandise.getType())) {
             QMerchantOrder merchantOrder = orderformClient.getMerchantOrder(subOrderId, orderDate);
             long orderItemDetailId = -1;
             List<QOrderItem> list = merchantOrder.getOrderItemList();

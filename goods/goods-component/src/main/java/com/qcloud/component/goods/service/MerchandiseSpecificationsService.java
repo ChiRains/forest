@@ -5,6 +5,7 @@ import java.util.List;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.component.goods.model.MerchandiseSpecifications;
 import com.qcloud.component.goods.model.query.MerchandiseSpecificationsQuery;
+import com.qcloud.component.publicdata.IntKeyValue;
 
 public interface MerchandiseSpecificationsService {
 
@@ -12,8 +13,7 @@ public interface MerchandiseSpecificationsService {
 
     public MerchandiseSpecifications get(Long id);
 
-    public MerchandiseSpecifications get(long merchandiseId, long attributeId0, String value0, long attributeId1, String value1, long attributeId2, String value2);
-
+    // public MerchandiseSpecifications get(long merchandiseId, long attributeId0, String value0, long attributeId1, String value1, long attributeId2, String value2);
     public boolean delete(Long id);
 
     public boolean update(MerchandiseSpecifications merchandiseSpecifications);
@@ -26,9 +26,13 @@ public interface MerchandiseSpecificationsService {
 
     public List<MerchandiseSpecifications> listByMerchandise(Long merchandiseId);
 
+    public List<MerchandiseSpecifications> listByUnifiedMerchandise(Long merchandiseId);
+
     public MerchandiseSpecifications get(HashMap where);
 
     public List<MerchandiseSpecifications> list(HashMap where);
 
     public Page<MerchandiseSpecifications> page(HashMap where, int start, int size);
+
+    List<MerchandiseSpecifications> getSpecifications(List<MerchandiseSpecifications> list, IntKeyValue[] intKeyValues);
 }

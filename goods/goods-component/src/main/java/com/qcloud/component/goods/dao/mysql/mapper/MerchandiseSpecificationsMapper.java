@@ -13,14 +13,14 @@ import com.qcloud.component.goods.model.query.MerchandiseSpecificationsQuery;
 
 public interface MerchandiseSpecificationsMapper {
 
-	@Insert("insert into `goods_merchandise_specifications`(`id`,`merchandiseId`,`attributeId0`,`value0`,`attributeId1`,`value1`,`attributeId2`,`value2`,`state`)"
-			+ " values(#{id},#{merchandiseId},#{attributeId0},#{value0},#{attributeId1},#{value1},#{attributeId2},#{value2},#{state})")
+	@Insert("insert into `goods_merchandise_specifications`(`id`,`merchandiseId`,`unifiedMerchandiseId`,`attributeId`,`value`,`dimensionNumber`)"
+			+ " values(#{id},#{merchandiseId},#{unifiedMerchandiseId},#{attributeId},#{value},#{dimensionNumber})")
 	public void insert(MerchandiseSpecifications merchandiseSpecifications);
 
 	@Select("select * from `goods_merchandise_specifications` where `id`=#{id}")
 	public MerchandiseSpecifications get(Long id);
 
-	@Update("update `goods_merchandise_specifications` set `merchandiseId`=#{merchandiseId},`attributeId0`=#{attributeId0},`value0`=#{value0},`attributeId1`=#{attributeId1},`value1`=#{value1},`attributeId2`=#{attributeId2},`value2`=#{value2},`state`=#{state} where `id`=#{id}")
+	@Update("update `goods_merchandise_specifications` set `merchandiseId`=#{merchandiseId},`unifiedMerchandiseId`=#{unifiedMerchandiseId},`attributeId`=#{attributeId},`value`=#{value},`dimensionNumber`=#{dimensionNumber} where `id`=#{id}")
 	public void update(MerchandiseSpecifications merchandiseSpecifications);
 
 	@Delete("delete from `goods_merchandise_specifications` where `id`=#{id}")

@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.goods.model.MerchandiseEvaluation;
-import com.qcloud.component.goods.model.MerchandiseItem;
-import com.qcloud.component.goods.service.MerchandiseItemService;
+import com.qcloud.component.goods.model.UnifiedMerchandise;
 import com.qcloud.component.goods.service.MerchandiseService;
+import com.qcloud.component.goods.service.UnifiedMerchandiseService;
 import com.qcloud.component.goods.web.handler.MerchandiseEvaluationHandler;
 import com.qcloud.component.goods.web.vo.MerchandiseEvaluationVO;
 import com.qcloud.component.goods.web.vo.admin.AdminMerchandiseEvaluationVO;
@@ -20,13 +21,13 @@ import com.qcloud.pirates.util.DateUtil;
 public class MerchandiseEvaluationHandlerImpl implements MerchandiseEvaluationHandler {
 
     @Autowired
-    private PersonalcenterClient   personalcenterClient;
+    private PersonalcenterClient      personalcenterClient;
 
     @Autowired
-    private MerchandiseItemService merchandiseItemService;
+    private MerchandiseService        merchandiseService;
 
     @Autowired
-    private MerchandiseService     merchandiseService;
+    private UnifiedMerchandiseService unifiedMerchandiseService;
 
     @Override
     public List<MerchandiseEvaluationVO> toVOList(List<MerchandiseEvaluation> list) {
@@ -47,15 +48,15 @@ public class MerchandiseEvaluationHandlerImpl implements MerchandiseEvaluationHa
                 vo.setUserName(user.getNickname());
                 vo.setHeadImage(user.getHeadImage());
             }
-            List<MerchandiseItem> merchandiseItemList = merchandiseItemService.listByMerchandise(me.getMerchandiseId());
-            if (merchandiseItemList.size() == 0) {
+            List<UnifiedMerchandise> merchandiseList = unifiedMerchandiseService.listByMerchandise(me.getMerchandiseId(), UnifiedMerchandiseType.SINGLE.getKey());
+            if (merchandiseList.size() == 0) {
                 vo.setGoodEvaluation(Integer.valueOf(0));
                 vo.setMiddleEvaluation(Integer.valueOf(0));
                 vo.setLowEvaluation(Integer.valueOf(0));
             } else {
-                vo.setGoodEvaluation(merchandiseItemList.get(0).getGoodEvaluation());
-                vo.setMiddleEvaluation(merchandiseItemList.get(0).getMiddleEvaluation());
-                vo.setLowEvaluation(merchandiseItemList.get(0).getLowEvaluation());
+                vo.setGoodEvaluation(merchandiseList.get(0).getGoodEvaluation());
+                vo.setMiddleEvaluation(merchandiseList.get(0).getMiddleEvaluation());
+                vo.setLowEvaluation(merchandiseList.get(0).getLowEvaluation());
             }
             voList.add(vo);
         }

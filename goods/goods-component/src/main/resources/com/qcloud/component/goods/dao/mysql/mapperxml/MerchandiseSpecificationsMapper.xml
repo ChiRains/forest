@@ -60,4 +60,8 @@
         	AND `value1` in #{value1}
         </if>
     </select>
+    
+    <select id="listByUnifiedMerchandise" parameterType="Long" resultType="MerchandiseSpecifications">
+        SELECT * FROM goods_merchandise_specifications WHERE 1 = 1 AND unifiedMerchandiseId = #{unifiedMerchandiseId}        
+    </select>        
 </mapper>

@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import com.qcloud.component.goods.OutdatedCommoditycenterClient;
 import com.qcloud.component.goods.model.AttributeDefinition;
 import com.qcloud.component.goods.model.ClassifyAttribute;
 import com.qcloud.component.goods.model.key.TypeEnum;
 import com.qcloud.component.goods.service.AttributeDefinitionService;
 import com.qcloud.component.goods.service.ClassifyAttributeService;
+import com.qcloud.component.goods.service.MerchandiseService;
 import com.qcloud.component.goods.web.handler.AttributeDefinitionHandler;
 import com.qcloud.component.goods.web.handler.ClassifyAttributeHandler;
 import com.qcloud.component.goods.web.vo.admin.AdminAttributeDefinitionVO;
@@ -29,25 +29,25 @@ import com.qcloud.pirates.web.security.annotation.NoReferer;
 @RequestMapping(value = "/" + AdminClassifyAttributeController.DIR)
 public class AdminClassifyAttributeController {
 
-    public static final String            DIR = "admin/classifyAttribute";
+    public static final String         DIR = "admin/classifyAttribute";
 
     @Autowired
-    private ClassifyAttributeService      classifyAttributeService;
+    private ClassifyAttributeService   classifyAttributeService;
 
     @Autowired
-    private ClassifyAttributeHandler      classifyAttributeHandler;
+    private ClassifyAttributeHandler   classifyAttributeHandler;
 
     @Autowired
-    private PublicdataClient              publicdataClient;
+    private PublicdataClient           publicdataClient;
 
     @Autowired
-    private OutdatedCommoditycenterClient outdatedCommoditycenterClient;
+    private MerchandiseService         merchandiseService;
 
     @Autowired
-    private AttributeDefinitionService    attributeDefinitionService;
+    private AttributeDefinitionService attributeDefinitionService;
 
     @Autowired
-    private AttributeDefinitionHandler    attributeDefinitionHandler;
+    private AttributeDefinitionHandler attributeDefinitionHandler;
 
     @RequestMapping
     @NoReferer
@@ -219,7 +219,7 @@ public class AdminClassifyAttributeController {
     @NoReferer
     public ModelAndView classifyList() {
 
-        List<QClassify> qlist = publicdataClient.listClassifyForTree(ClassifyType.MERCHANDISE,true);
+        List<QClassify> qlist = publicdataClient.listClassifyForTree(ClassifyType.MERCHANDISE, true);
         ModelAndView model = new ModelAndView("/admin/goods-ClassifyAttribute-classifyList");
         model.addObject("classType", ClassifyType.MERCHANDISE.getKey());
         model.addObject("qlist", qlist);
@@ -300,7 +300,7 @@ public class AdminClassifyAttributeController {
         } else {
             int count = 0;
             for (Classify c : listChildrenIncludeMe) {
-                count += outdatedCommoditycenterClient.count4DeleteClassify(c.getId());
+                count += merchandiseService.count4DeleteClassify(c.getId());
             }
             if (count > 0) {
                 aceAjaxView.setStatus(0);

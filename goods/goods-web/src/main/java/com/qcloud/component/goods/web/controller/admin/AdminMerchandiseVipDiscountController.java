@@ -2,29 +2,20 @@ package com.qcloud.component.goods.web.controller.admin;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import com.qcloud.component.admin.AdminClient;
-import com.qcloud.component.goods.exception.CommoditycenterException;
-import com.qcloud.component.goods.model.MerchandiseItem;
 import com.qcloud.component.goods.model.MerchandiseVipDiscount;
-import com.qcloud.component.goods.model.MerchandiseVipDiscountHistory;
-import com.qcloud.component.goods.model.key.TypeEnum.VipPaymentType;
+import com.qcloud.component.goods.model.UnifiedMerchandise;
 import com.qcloud.component.goods.model.query.MerchandiseVipDiscountQuery;
-import com.qcloud.component.goods.service.MerchandiseItemService;
-import com.qcloud.component.goods.service.MerchandiseVipDiscountHistoryService;
+import com.qcloud.component.goods.model.query.UnifiedMerchandiseQuery;
 import com.qcloud.component.goods.service.MerchandiseVipDiscountService;
+import com.qcloud.component.goods.service.UnifiedMerchandiseService;
 import com.qcloud.component.goods.web.form.MerchandiseVipDiscountForm;
-import com.qcloud.component.goods.web.handler.MerchandiseItemHandler;
 import com.qcloud.component.goods.web.handler.MerchandiseVipDiscountHandler;
-import com.qcloud.component.goods.web.handler.MerchandiseVipDiscountHistoryHandler;
 import com.qcloud.component.goods.web.vo.admin.AdminMerchandiseVipDiscountVO;
 import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.SellercenterClient;
@@ -51,7 +42,7 @@ public class AdminMerchandiseVipDiscountController {
     private MerchandiseVipDiscountHandler merchandiseVipDiscountHandler;
 
     @Autowired
-    private MerchandiseItemService        merchandiseItemService;
+    private UnifiedMerchandiseService     unifiedMerchandiseService;
 
     /**
      * 大客户商品折扣or价格列表
@@ -69,11 +60,11 @@ public class AdminMerchandiseVipDiscountController {
         // 获取当前登录用户的所属商家id
         QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
         // 查出商品列表
-        Map where = new HashMap();
-        where.put("merchantId", merchant.getId());
-        Page<MerchandiseItem> page = merchandiseItemService.page(where, pPage.getPageStart(), pPage.getPageSize());
-        List<MerchandiseItem> merchandiseList = page.getData();
-        for (MerchandiseItem merchandiseItem : merchandiseList) {
+        UnifiedMerchandiseQuery unifiedMerchandiseQuery = new UnifiedMerchandiseQuery();
+        unifiedMerchandiseQuery.setMerchantId(merchant.getId());
+        Page<UnifiedMerchandise> page = unifiedMerchandiseService.page(unifiedMerchandiseQuery, pPage.getPageStart(), pPage.getPageSize());
+        List<UnifiedMerchandise> merchandiseList = page.getData();
+        for (UnifiedMerchandise merchandiseItem : merchandiseList) {
             vo = new AdminMerchandiseVipDiscountVO();
             vo.setUserId(query.getUserId()); // 客户ID
             vo.setCompanyName(query.getCompanyName()); // 客户名

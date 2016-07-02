@@ -10,19 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.goods.exception.CommoditycenterException;
 import com.qcloud.component.goods.model.Merchandise;
 import com.qcloud.component.goods.model.MerchandiseEvaluation;
-import com.qcloud.component.goods.model.MerchandiseItem;
 import com.qcloud.component.goods.model.MerchandiseSpecifications;
+import com.qcloud.component.goods.model.UnifiedMerchandise;
 import com.qcloud.component.goods.model.query.MerchandiseEvaluationQuery;
-import com.qcloud.component.goods.service.AttributeDefinitionService;
-import com.qcloud.component.goods.service.ClassifySpecificationsService;
 import com.qcloud.component.goods.service.MerchandiseEvaluationService;
-import com.qcloud.component.goods.service.MerchandiseItemService;
 import com.qcloud.component.goods.service.MerchandiseService;
-import com.qcloud.component.goods.service.MerchandiseSpecificationsRelationService;
 import com.qcloud.component.goods.service.MerchandiseSpecificationsService;
+import com.qcloud.component.goods.service.UnifiedMerchandiseService;
 import com.qcloud.component.goods.web.form.MerchandiseEvaluationDetailForm;
 import com.qcloud.component.goods.web.form.MerchandiseEvaluationFormList;
 import com.qcloud.component.goods.web.handler.MerchandiseEvaluationHandler;
@@ -30,11 +28,8 @@ import com.qcloud.component.goods.web.vo.admin.AdminMerchandiseEvaluationVO;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.component.publicdata.EnableType;
-import com.qcloud.component.publicdata.PublicdataClient;
-import com.qcloud.component.sellercenter.OutdatedSellercenterClient;
 import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.SellercenterClient;
-import com.qcloud.component.sellercenter.model.MerchantEvaluation;
 import com.qcloud.component.sellercenter.model.key.TypeEnum.StatusType;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.mvc.AceAjaxView;
@@ -81,10 +76,10 @@ public class AdminMerchandiseEvaluationController {
     private SellercenterClient               sellercenterClient;
 
     @Autowired
-    private MerchandiseItemService           merchandiseItemService;
+    private MerchandiseSpecificationsService merchandiseSpecificationsService;
 
     @Autowired
-    private MerchandiseSpecificationsService merchandiseSpecificationsService;
+    private UnifiedMerchandiseService        unifiedMerchandiseService;
 
     @RequestMapping
     @NoReferer
@@ -106,11 +101,15 @@ public class AdminMerchandiseEvaluationController {
     public ModelAndView toAdd(Long merchandiseId) {
 
         ModelAndView model = new ModelAndView("/admin/goods-MerchandiseEvaluation-add");
-        List<MerchandiseItem> list = merchandiseItemService.listByMerchandise(merchandiseId);
+        List<UnifiedMerchandise> list = unifiedMerchandiseService.listByMerchandise(merchandiseId, UnifiedMerchandiseType.SINGLE.getKey());
         Map<Long, String> map = new LinkedHashMap<Long, String>();
-        for (MerchandiseItem merchandiseItem : list) {
-            MerchandiseSpecifications merchandiseSpecifications = merchandiseSpecificationsService.get(merchandiseItem.getMerchandiseSpecificationsId());
-            map.put(merchandiseItem.getId(), merchandiseSpecifications.getValue0());
+        for (UnifiedMerchandise unifiedMerchandise : list) {
+            List<MerchandiseSpecifications> merchandiseSpecificationss = merchandiseSpecificationsService.listByUnifiedMerchandise(unifiedMerchandise.getId());
+            StringBuffer sb = new StringBuffer();
+            for (MerchandiseSpecifications merchandiseSpecifications : merchandiseSpecificationss) {
+                sb.append(merchandiseSpecifications.getValue()).append(" - ");
+            }
+            map.put(unifiedMerchandise.getId(), sb.toString());
         }
         model.addObject("merchandiseItemMap", map);
         model.addObject("merchandiseId", merchandiseId);
@@ -135,23 +134,28 @@ public class AdminMerchandiseEvaluationController {
         merchandiseEvaluation.setStatus(StatusType.PASS.getKey());
         merchandiseEvaluation.setTime(DateUtils.setSeconds(merchandiseEvaluationDetailForm.getTime(), (new Date()).getSeconds()));
         //
-        MerchandiseItem merchandiseItem = merchandiseItemService.get(merchandiseEvaluationDetailForm.getMerchandiseItemId());
-        AssertUtil.assertNotNull(merchandiseItem, "单一商品不存在." + merchandiseEvaluationDetailForm.getMerchandiseItemId());
-        MerchandiseSpecifications merchandiseSpecifications = merchandiseSpecificationsService.get(merchandiseItem.getMerchandiseSpecificationsId());
-        AssertUtil.assertNotNull(merchandiseSpecifications, "规格不存在.");
-        merchandiseEvaluation.setSpecifications(merchandiseSpecifications.getValue0());
+        UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(merchandiseEvaluationDetailForm.getMerchandiseItemId());
+        // MerchandiseItem merchandiseItem = merchandiseItemService.get(merchandiseEvaluationDetailForm.getMerchandiseItemId());
+        AssertUtil.assertNotNull(unifiedMerchandise, "统一商品不存在." + merchandiseEvaluationDetailForm.getMerchandiseItemId());
+        List<MerchandiseSpecifications> merchandiseSpecificationss = merchandiseSpecificationsService.listByUnifiedMerchandise(unifiedMerchandise.getId());
+        StringBuffer sb = new StringBuffer();
+        for (MerchandiseSpecifications merchandiseSpecifications : merchandiseSpecificationss) {
+            sb.append(merchandiseSpecifications.getValue()).append(" - ");
+        }
+          //
+        merchandiseEvaluation.setSpecifications(sb.toString());
         merchandiseEvaluation.setAnonymous(EnableType.DISABLE.getKey());
         boolean flag = merchandiseEvaluationService.add(merchandiseEvaluation);
         AssertUtil.assertTrue(flag, "评价失败.");
         // 更新单一商品好中差评
         if (merchandiseEvaluationDetailForm.getStar() > 0 && merchandiseEvaluationDetailForm.getStar() <= 2) {
-            merchandiseItem.setLowEvaluation(merchandiseItem.getLowEvaluation() + 1);
+            unifiedMerchandise.setLowEvaluation(unifiedMerchandise.getLowEvaluation() + 1);
         } else if (merchandiseEvaluationDetailForm.getStar() == 3) {
-            merchandiseItem.setMiddleEvaluation(merchandiseItem.getMiddleEvaluation() + 1);
+            unifiedMerchandise.setMiddleEvaluation(unifiedMerchandise.getMiddleEvaluation() + 1);
         } else if (merchandiseEvaluationDetailForm.getStar() > 3) {
-            merchandiseItem.setGoodEvaluation(merchandiseItem.getGoodEvaluation() + 1);
+            unifiedMerchandise.setGoodEvaluation(unifiedMerchandise.getGoodEvaluation() + 1);
         }
-        merchandiseItemService.update(merchandiseItem);
+        unifiedMerchandiseService.update(unifiedMerchandise);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("添加成功");
         aceAjaxView.setUrl(DIR + "/list?merchandiseId=" + merchandiseEvaluation.getMerchandiseId());
@@ -180,10 +184,10 @@ public class AdminMerchandiseEvaluationController {
 
         AssertUtil.assertNotNull(id, "ID不能为空");
         QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
-//        MerchantEvaluation merchantEvaluation = outdatedSellercenterClient.getMerchantEvaluation(id, merchant.getId());
-//        if (merchantEvaluation != null) {
-//            outdatedSellercenterClient.deleteMerchantEvaluation(id, merchant.getId());
-//        }
+        // MerchantEvaluation merchantEvaluation = outdatedSellercenterClient.getMerchantEvaluation(id, merchant.getId());
+        // if (merchantEvaluation != null) {
+        // outdatedSellercenterClient.deleteMerchantEvaluation(id, merchant.getId());
+        // }
         sellercenterClient.deleteMerchantEvaluation(id, merchant.getId());
         merchandiseEvaluationService.delete(id, merchandiseId);
         AceAjaxView aceAjaxView = new AceAjaxView();

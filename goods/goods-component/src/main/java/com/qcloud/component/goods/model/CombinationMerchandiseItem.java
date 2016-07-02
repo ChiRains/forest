@@ -8,29 +8,32 @@ public class CombinationMerchandiseItem {
 	//ID
 	private long id;		
 	
-	//组合商品ID
-	private long combinationMerchandiseId;		
+	//组合统一商品ID
+	private long combinationUnifiedMerchandiseId;		
 	
-	//单一商品ID
-	private long merchandiseItemId;		
+	//关联单品统一商品ID
+	private long relaUnifiedMerchandiseId;		
 	
 	//商家ID
-	private long merchantId;	
+	private long merchantId;		
 	
 	//数量
-	private int num;
+	private int number;		
 	
+	//折扣价
+	private double discount;		
 
 	public CombinationMerchandiseItem(){
 	
 	}
 
-	public CombinationMerchandiseItem(long id,long combinationMerchandiseId,long merchandiseItemId,long merchantId,int num){
+	public CombinationMerchandiseItem(long id,long combinationUnifiedMerchandiseId,long relaUnifiedMerchandiseId,long merchantId,int number,double discount){
 		this.id = id;		
-		this.combinationMerchandiseId = combinationMerchandiseId;		
-		this.merchandiseItemId = merchandiseItemId;		
+		this.combinationUnifiedMerchandiseId = combinationUnifiedMerchandiseId;		
+		this.relaUnifiedMerchandiseId = relaUnifiedMerchandiseId;		
 		this.merchantId = merchantId;		
-		this.num = num;
+		this.number = number;		
+		this.discount = discount;		
 	}
 	
 	public void setId(long id) {
@@ -41,20 +44,20 @@ public class CombinationMerchandiseItem {
 		return id;
 	}	
 		
-	public void setCombinationMerchandiseId(long combinationMerchandiseId) {
-		this.combinationMerchandiseId = combinationMerchandiseId;
+	public void setCombinationUnifiedMerchandiseId(long combinationUnifiedMerchandiseId) {
+		this.combinationUnifiedMerchandiseId = combinationUnifiedMerchandiseId;
 	}
 
-	public long getCombinationMerchandiseId() {
-		return combinationMerchandiseId;
+	public long getCombinationUnifiedMerchandiseId() {
+		return combinationUnifiedMerchandiseId;
 	}	
 		
-	public void setMerchandiseItemId(long merchandiseItemId) {
-		this.merchandiseItemId = merchandiseItemId;
+	public void setRelaUnifiedMerchandiseId(long relaUnifiedMerchandiseId) {
+		this.relaUnifiedMerchandiseId = relaUnifiedMerchandiseId;
 	}
 
-	public long getMerchandiseItemId() {
-		return merchandiseItemId;
+	public long getRelaUnifiedMerchandiseId() {
+		return relaUnifiedMerchandiseId;
 	}	
 		
 	public void setMerchantId(long merchantId) {
@@ -63,18 +66,22 @@ public class CombinationMerchandiseItem {
 
 	public long getMerchantId() {
 		return merchantId;
+	}	
+		
+	public void setNumber(int number) {
+		this.number = number;
 	}
 
-    
-    public int getNum() {
-    
-        return num;
-    }
+	public int getNumber() {
+		return number;
+	}	
+		
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
 
-    
-    public void setNum(int num) {
-    
-        this.num = num;
-    }	
+	public double getDiscount() {
+		return discount;
+	}	
 		
 }

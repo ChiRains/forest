@@ -8,9 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.CommoditycenterClient;
-import com.qcloud.component.goods.QMerchandiseItem;
 import com.qcloud.component.goods.QUnifiedMerchandise;
-import com.qcloud.component.goods.QUnifiedMerchandise.MerchandiseType;
+import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.marketing.model.CouponItems;
 import com.qcloud.component.marketing.service.CouponItemsService;
 import com.qcloud.component.my.DeliveryModeType;
@@ -97,7 +96,7 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
             for (QOrderItem qOrderItem : qMerchantOrder.getOrderItemList()) {
                 List<CombinationItemVO> combinationItemList = new ArrayList<CombinationItemVO>();
                 QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(qOrderItem.getUnifiedMerchandiseId());
-                if (unifiedMerchandise.getType().equals(MerchandiseType.COMBINATION)) {
+                if (unifiedMerchandise.getType().equals(UnifiedMerchandiseType.COMBINATION)) {
                     //
                     CombinationItemVO combinationItemVO = toOrderItemVOList(qOrderItem, unifiedMerchandise);
                     combinationItemList.add(combinationItemVO);
@@ -169,15 +168,14 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
         combinationItemVO.setEvaluation(qOrderItem.isEvaluation());
         //
         List<OrderItemVO> orderItemList = new ArrayList<OrderItemVO>();
-        for (QMerchandiseItem item : unifiedMerchandise.getList()) {
-            QUnifiedMerchandise merchandise = commoditycenterClient.getUnifiedMerchandise(item.getUnifiedMerchandiseId());
+        for (QUnifiedMerchandise merchandise : unifiedMerchandise.getList()) {
             OrderItemVO itemVO = new OrderItemVO();
-            itemVO.setName(item.getName());
-            itemVO.setImage(item.getImage());
-            itemVO.setSpecifications(item.getSpecifications());
+            itemVO.setName(merchandise.getName());
+            itemVO.setImage(merchandise.getImage());
+            itemVO.setSpecifications(merchandise.getSpecifications());
             itemVO.setDiscount(merchandise.getDiscount());
-            itemVO.setNumber(item.getNumber());
-            itemVO.setUnifiedMerchandiseId(item.getUnifiedMerchandiseId());
+            itemVO.setNumber(merchandise.getNumber());
+            itemVO.setUnifiedMerchandiseId(merchandise.getId());
             itemVO.setPrice(merchandise.getPrice());
             orderItemList.add(itemVO);
             combinationItemVO.setDesc(combinationItemVO.getDesc() + "+" + itemVO.getName());

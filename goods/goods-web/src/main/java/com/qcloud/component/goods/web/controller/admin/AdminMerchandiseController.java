@@ -1,10 +1,14 @@
 package com.qcloud.component.goods.web.controller.admin;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
@@ -13,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.goods.exception.CommoditycenterException;
 import com.qcloud.component.goods.model.AttributeDefinition;
 import com.qcloud.component.goods.model.ClassifyAttribute;
@@ -21,14 +26,12 @@ import com.qcloud.component.goods.model.Enumeration;
 import com.qcloud.component.goods.model.Merchandise;
 import com.qcloud.component.goods.model.MerchandiseAttribute;
 import com.qcloud.component.goods.model.MerchandiseImage;
-import com.qcloud.component.goods.model.MerchandiseItem;
 import com.qcloud.component.goods.model.MerchandiseSpecifications;
 import com.qcloud.component.goods.model.MerchandiseSpecificationsRelation;
 import com.qcloud.component.goods.model.UnifiedMerchandise;
 import com.qcloud.component.goods.model.key.TypeEnum;
 import com.qcloud.component.goods.model.key.TypeEnum.BrandType;
 import com.qcloud.component.goods.model.key.TypeEnum.MerchandiseStateType;
-import com.qcloud.component.goods.model.key.TypeEnum.UnifiedMerchandiseType;
 import com.qcloud.component.goods.model.query.MerchandiseQuery;
 import com.qcloud.component.goods.service.AttributeDefinitionService;
 import com.qcloud.component.goods.service.ClassifyAttributeService;
@@ -36,7 +39,6 @@ import com.qcloud.component.goods.service.ClassifySpecificationsService;
 import com.qcloud.component.goods.service.EnumerationService;
 import com.qcloud.component.goods.service.MerchandiseAttributeService;
 import com.qcloud.component.goods.service.MerchandiseImageService;
-import com.qcloud.component.goods.service.MerchandiseItemService;
 import com.qcloud.component.goods.service.MerchandiseService;
 import com.qcloud.component.goods.service.MerchandiseSpecificationsRelationService;
 import com.qcloud.component.goods.service.MerchandiseSpecificationsService;
@@ -47,6 +49,7 @@ import com.qcloud.component.goods.web.form.MerchandiseSpecificationRelationForm;
 import com.qcloud.component.goods.web.form.MerchandiseSpecificationsForm;
 import com.qcloud.component.goods.web.form.MsForm;
 import com.qcloud.component.goods.web.form.RelationForm;
+import com.qcloud.component.goods.web.handler.KV;
 import com.qcloud.component.goods.web.handler.MerchandiseHandler;
 import com.qcloud.component.goods.web.handler.MerchandiseSpecificationsHandler;
 import com.qcloud.component.goods.web.vo.admin.AdminAttributeVO;
@@ -54,6 +57,7 @@ import com.qcloud.component.goods.web.vo.admin.AdminMerchandiseSpecificationsVO;
 import com.qcloud.component.goods.web.vo.admin.AdminMerchandiseVO;
 import com.qcloud.component.publicdata.ClassifyType;
 import com.qcloud.component.publicdata.EnableType;
+import com.qcloud.component.publicdata.IntKeyValue;
 import com.qcloud.component.publicdata.KeyValueVO;
 import com.qcloud.component.publicdata.PublicdataClient;
 import com.qcloud.component.publicdata.QClassify;
@@ -125,9 +129,6 @@ public class AdminMerchandiseController {
     private MerchandiseImageService                  merchandiseImageService;
 
     @Autowired
-    private MerchandiseItemService                   merchandiseItemService;
-
-    @Autowired
     private UnifiedMerchandiseService                unifiedMerchandiseService;
 
     @Autowired
@@ -189,7 +190,7 @@ public class AdminMerchandiseController {
             List<Classify> classifyList = outdatedSellercenterClient.listMerchantMerchandiseClassify(merchantId);
             mallCVOList = ClassifyUtils.exchangeObj(classifyList, -1, "");
         } else {
-            List<Classify> classifyList = publicdataClient.listClassify(ClassifyType.MERCHANDISE.getKey(),true);
+            List<Classify> classifyList = publicdataClient.listClassify(ClassifyType.MERCHANDISE.getKey(), true);
             mallCVOList = ClassifyUtils.exchangeObj(classifyList, -1, "");
         }
         model.addObject("mallClassifyList", mallCVOList);
@@ -208,7 +209,7 @@ public class AdminMerchandiseController {
             List<Classify> specList = outdatedSellercenterClient.listMerchantSpecClassify(merchantId);
             specCVOList = ClassifyUtils.exchangeObj(specList, -1, "");
         } else {
-            List<Classify> specList = publicdataClient.listClassify(ClassifyType.SPECIFICATIONS.getKey(),true);
+            List<Classify> specList = publicdataClient.listClassify(ClassifyType.SPECIFICATIONS.getKey(), true);
             specCVOList = ClassifyUtils.exchangeObj(specList, -1, "");
         }
         model.addObject("specClassifyId", specCVOList);
@@ -483,42 +484,13 @@ public class AdminMerchandiseController {
         return aceAjaxView;
     }
 
+    private void createSpecs(Merchandise merchandise, List<MerchandiseSpecificationsRelation> newRelation, List<MerchandiseSpecificationsRelation> extraRelation) {// 生成商品规格
 
-    private List<MerchandiseSpecifications> createSpecs(Merchandise merchandise, List<MerchandiseSpecificationsRelation> newRelation, List<MerchandiseSpecificationsRelation> extraRelation) {// 生成商品规格
-
+        List<MerchandiseSpecifications> list = merchandiseSpecificationsService.listByMerchandise(merchandise.getId());
         // 商品没有选择规格类目
         if (merchandise.getSpecClassifyId() == -1) {
-            List<MerchandiseSpecifications> merchandiseSpecificationses = new ArrayList<MerchandiseSpecifications>();
-            MerchandiseSpecifications ms = merchandiseSpecificationsService.get(merchandise.getId(), -1, "", -1, "", -1, "");
-            if (ms != null) {
-                merchandiseSpecificationses.add(ms);
-                return merchandiseSpecificationses;
-            }
-            ms = new MerchandiseSpecifications(0, merchandise.getId(), -1, "", -1, "", -1, "", 0);
-            merchandiseSpecificationsService.add(ms);
-            UnifiedMerchandise unifiedMerchandise = new UnifiedMerchandise();
-            unifiedMerchandise.setMerchantId(merchandise.getMerchantId());
-            unifiedMerchandise.setType(UnifiedMerchandiseType.SINGLE.getKey());
-            unifiedMerchandiseService.add(unifiedMerchandise);
-            MerchandiseItem merchandiseItem = new MerchandiseItem();
-            merchandiseItem.setBrandId(merchandise.getBrandId());
-            merchandiseItem.setKeywords(merchandise.getKeywords());
-            merchandiseItem.setMerchandiseId(merchandise.getId());
-            merchandiseItem.setMallClassifyId(merchandise.getMallClassifyId());
-            merchandiseItem.setMerchandiseSpecificationsId(ms.getId());
-            merchandiseItem.setMerchantClassifyId(merchandise.getMerchantClassifyId());
-            merchandiseItem.setMerchantId(merchandise.getMerchantId());
-            merchandiseItem.setName(merchandise.getName());
-            merchandiseItem.setStock(0);
-            merchandiseItem.setPurchase(0.0);
-            merchandiseItem.setDiscount(0.0);
-            merchandiseItem.setPrice(0.0);
-            merchandiseItem.setState(merchandise.getState());
-            merchandiseItem.setUnifiedMerchandiseId(unifiedMerchandise.getId());
-            merchandiseItemService.add(merchandiseItem);
-            return merchandiseSpecificationses;
+            createDefaultSpecs(merchandise, list);
         } else {
-            List<MerchandiseSpecifications> merchandiseSpecificationses = new ArrayList<MerchandiseSpecifications>();
             HashMap<String, Object> where = new HashMap<String, Object>();
             where.put("classifyId", merchandise.getSpecClassifyId());
             List<ClassifySpecifications> classifySpecificationses = classifySpecificationsService.list(where);
@@ -530,18 +502,17 @@ public class AdminMerchandiseController {
                 }
             }
             if (attributeDefinitions.size() > 0) {
-                // 在这里禁用默认规格
-                MerchandiseSpecifications ms = merchandiseSpecificationsService.get(merchandise.getId(), -1, "", -1, "", -1, "");
-                if (ms != null) {
-                    MerchandiseItem merchandiseItem = merchandiseItemService.getBySpecifications(merchandise.getId(), ms.getId());
-                    AssertUtil.assertNotNull(merchandiseItem, "找不到单一商品" + merchandise.getId() + " " + ms.getId());
-                    merchandiseItem.setState(MerchandiseStateType.INIT.getKey());
-                    merchandiseItemService.update(merchandiseItem);
+                Set<Long> unifiedMerchandiseIds = new HashSet<Long>();
+                for (MerchandiseSpecifications merchandiseSpecifications : list) {
+                    if (merchandiseSpecifications.getDimensionNumber() != attributeDefinitions.size()) {
+                        unifiedMerchandiseIds.add(merchandiseSpecifications.getUnifiedMerchandiseId());
+                    }
                 }
-                LinkedHashMap<Long, String[]> attrs = new LinkedHashMap<Long, String[]>();
-                for (AttributeDefinition attributeDefinition : attributeDefinitions) {
+                disable(merchandise.getId(), new ArrayList<Long>(unifiedMerchandiseIds));
+                List<IntKeyValue[]> ls = new ArrayList<IntKeyValue[]>();
+                for (final AttributeDefinition attributeDefinition : attributeDefinitions) {
                     List<Enumeration> enumerations = enumerationService.listByName(attributeDefinition.getEnumeration());
-                    List<String> strings = new ArrayList<String>();
+                    List<IntKeyValue> strings = new ArrayList<IntKeyValue>();
                     for (int i = 0; i < enumerations.size(); i++) {
                         String str = enumerations.get(i).getValue().trim();
                         List<MerchandiseSpecificationsRelation> relations = merchandiseSpecificationsRelationService.listByMap(merchandise.getId(), attributeDefinition.getId());
@@ -550,37 +521,21 @@ public class AdminMerchandiseController {
                                 str = ra.getAlias().trim();
                             }
                         }
-                        strings.add(str);
+                        IntKeyValue kv = new KV(attributeDefinition.getId(), str);
+                        strings.add(kv);
                     }
                     for (MerchandiseSpecificationsRelation ra : extraRelation) {
                         if (ra.getAttributeId() == attributeDefinition.getId()) {
-                            strings.add(ra.getAlias().trim());
+                            strings.add(new KV(attributeDefinition.getId(), ra.getAlias().trim()));
                         }
                     }
-                    String[] stringss = new String[strings.size()];
+                    IntKeyValue[] stringss = new IntKeyValue[strings.size()];
                     for (int i = 0; i < strings.size(); i++) {
                         stringss[i] = strings.get(i);
                     }
-                    attrs.put(attributeDefinition.getId(), stringss);
+                    ls.add(stringss);
                 }
-                long attr0 = attributeDefinitions.get(0).getId();
-                long attr1 = attributeDefinitions.size() > 1 ? attributeDefinitions.get(1).getId() : -1L;
-                long attr2 = attributeDefinitions.size() > 2 ? attributeDefinitions.get(2).getId() : -1L;
-                for (String string0 : attrs.get(attr0)) {// 生成
-                    if (attrs.containsKey(attr1)) {
-                        for (String string1 : attrs.get(attr1)) {
-                            if (attrs.containsKey(attr2)) {
-                                for (String string2 : attrs.get(attr2)) {
-                                    merchandiseSpecificationses.add(new MerchandiseSpecifications(0, merchandise.getId(), attr0, string0, attr1, string1, attr2, string2, 0));
-                                }
-                            } else {
-                                merchandiseSpecificationses.add(new MerchandiseSpecifications(0, merchandise.getId(), attr0, string0, attr1, string1, -1, "", 0));
-                            }
-                        }
-                    } else {
-                        merchandiseSpecificationses.add(new MerchandiseSpecifications(0, merchandise.getId(), attr0, string0, -1, "", -1, "", 0));
-                    }
-                }
+                List<IntKeyValue[]> kvs = calculateSpecifications(ls);
                 merchandiseSpecificationsRelationService.deleteByMerchandiseId(merchandise.getId());
                 for (MerchandiseSpecificationsRelation relation : newRelation) {
                     merchandiseSpecificationsRelationService.add(relation);
@@ -588,118 +543,241 @@ public class AdminMerchandiseController {
                 for (MerchandiseSpecificationsRelation relation : extraRelation) {
                     merchandiseSpecificationsRelationService.add(relation);
                 }
-                for (MerchandiseSpecifications merchandiseSpecifications : merchandiseSpecificationses) {
-                    MerchandiseSpecifications dms = merchandiseSpecificationsService.get(merchandise.getId(), merchandiseSpecifications.getAttributeId0(), merchandiseSpecifications.getValue0(), merchandiseSpecifications.getAttributeId1(), merchandiseSpecifications.getValue1(), merchandiseSpecifications.getAttributeId2(), merchandiseSpecifications.getValue2());
-                    List<MerchandiseSpecificationsRelation> relations = merchandiseSpecificationsRelationService.listByMap(merchandise.getId(), merchandiseSpecifications.getAttributeId0());
-                    for (MerchandiseSpecificationsRelation ra : relations) {
-                        if (ra.getOldAlias().equals(merchandiseSpecifications.getValue0()) && ra.getType() == 2) {
-                            merchandiseSpecifications.setValue0(ra.getAlias());
+                //
+                for (IntKeyValue[] intKeyValues : kvs) {
+                    List<MerchandiseSpecifications> es = merchandiseSpecificationsService.getSpecifications(list, intKeyValues);
+                    if (es != null) {
+                        for (MerchandiseSpecifications merchandiseSpecifications : es) {
+                            for (IntKeyValue intKeyValue : intKeyValues) {
+                                if (intKeyValue.getKey() == merchandiseSpecifications.getAttributeId()) {
+                                    merchandiseSpecifications.setValue(intKeyValue.getValue());
+                                    merchandiseSpecificationsService.update(merchandiseSpecifications);
+                                    break;
+                                }
+                            }
                         }
-                    }
-                    relations = merchandiseSpecificationsRelationService.listByMap(merchandise.getId(), merchandiseSpecifications.getAttributeId1());
-                    for (MerchandiseSpecificationsRelation ra : relations) {
-                        if (ra.getValue().equals(merchandiseSpecifications.getValue1()) && ra.getType() == 2) {
-                            merchandiseSpecifications.setValue1(ra.getAlias());
-                        }
-                    }
-                    //
-                    if (dms != null) {
-                        dms.setAttributeId0(merchandiseSpecifications.getAttributeId0());
-                        dms.setAttributeId1(merchandiseSpecifications.getAttributeId1());
-                        dms.setAttributeId2(merchandiseSpecifications.getAttributeId2());
-                        dms.setValue0(merchandiseSpecifications.getValue0());
-                        dms.setValue1(merchandiseSpecifications.getValue1());
-                        dms.setValue2(merchandiseSpecifications.getValue2());
-                        merchandiseSpecificationsService.update(dms);
                         continue;
                     }
-                    merchandiseSpecificationsService.add(merchandiseSpecifications);
                     UnifiedMerchandise unifiedMerchandise = new UnifiedMerchandise();
+                    unifiedMerchandise.setActivityId(-1L);
+                    unifiedMerchandise.setBrandId(merchandise.getBrandId());
+                    // TODO
+                    unifiedMerchandise.setCanUseCoupon(2);
+                    unifiedMerchandise.setClickRate(0);
+                    // TODO
+                    unifiedMerchandise.setCode("");
+                    unifiedMerchandise.setDiscount(0.0);
+                    unifiedMerchandise.setGoodEvaluation(0L);
+                    unifiedMerchandise.setImage(merchandise.getImage());
+                    unifiedMerchandise.setName(merchandise.getName());
+                    // TODO
+                    unifiedMerchandise.setIntegral(0);
                     unifiedMerchandise.setMerchantId(merchandise.getMerchantId());
+                    unifiedMerchandise.setKeywords(merchandise.getKeywords());
+                    unifiedMerchandise.setLowEvaluation(0);
+                    unifiedMerchandise.setMallClassifyId(merchandise.getMallClassifyId());
+                    unifiedMerchandise.setMerchandiseId(merchandise.getId());
+                    unifiedMerchandise.setMerchantClassifyId(merchandise.getMerchantClassifyId());
+                    unifiedMerchandise.setMiddleEvaluation(0);
+                    unifiedMerchandise.setRelaUnifiedMerchandiseId(-1L);
+                    unifiedMerchandise.setName(merchandise.getName());
+                    unifiedMerchandise.setOrder(0);
+                    unifiedMerchandise.setPrice(0.0);
+                    unifiedMerchandise.setPurchase(0.0);
+                    unifiedMerchandise.setRecordTime(new Date());
+                    unifiedMerchandise.setSalesVolume(0);
+                    // TODO
+                    unifiedMerchandise.setVirtualSalesVolume(0);
+                    unifiedMerchandise.setState(MerchandiseStateType.INIT.getKey());
                     unifiedMerchandise.setType(UnifiedMerchandiseType.SINGLE.getKey());
+                    unifiedMerchandise.setUpdateTime(new Date());
                     unifiedMerchandiseService.add(unifiedMerchandise);
-                    MerchandiseItem merchandiseItem = new MerchandiseItem();
-                    merchandiseItem.setBrandId(merchandise.getBrandId());
-                    merchandiseItem.setKeywords(merchandise.getKeywords());
-                    merchandiseItem.setMerchandiseId(merchandise.getId());
-                    merchandiseItem.setMerchandiseSpecificationsId(merchandiseSpecifications.getId());
-                    merchandiseItem.setMallClassifyId(merchandise.getMallClassifyId());
-                    merchandiseItem.setMerchantClassifyId(merchandise.getMerchantClassifyId());
-                    merchandiseItem.setMerchantId(merchandise.getMerchantId());
-                    merchandiseItem.setName(merchandise.getName());
-                    // 待初始化
-                    merchandiseItem.setState(merchandise.getState());
-                    merchandiseItem.setStock(0);
-                    merchandiseItem.setPurchase(0.0);
-                    merchandiseItem.setDiscount(0.0);
-                    merchandiseItem.setPrice(0.0);
-                    merchandiseItem.setUnifiedMerchandiseId(unifiedMerchandise.getId());
-                    merchandiseItemService.add(merchandiseItem);
+                    unifiedMerchandise.setRelaUnifiedMerchandiseId(unifiedMerchandise.getId());
+                    unifiedMerchandiseService.update(unifiedMerchandise);
+                    for (IntKeyValue intKeyValue : intKeyValues) {
+                        MerchandiseSpecifications merchandiseSpecifications = new MerchandiseSpecifications();
+                        merchandiseSpecifications.setAttributeId(intKeyValue.getKey());
+                        merchandiseSpecifications.setDimensionNumber(attributeDefinitions.size());
+                        merchandiseSpecifications.setMerchandiseId(merchandise.getId());
+                        merchandiseSpecifications.setUnifiedMerchandiseId(unifiedMerchandise.getId());
+                        merchandiseSpecifications.setValue(intKeyValue.getValue());
+                        List<MerchandiseSpecificationsRelation> relations = merchandiseSpecificationsRelationService.listByMap(merchandise.getId(), merchandiseSpecifications.getAttributeId());
+                        for (MerchandiseSpecificationsRelation ra : relations) {
+                            if (ra.getOldAlias().equals(merchandiseSpecifications.getValue()) && ra.getType() == 2) {
+                                merchandiseSpecifications.setValue(ra.getAlias());
+                            }
+                        }
+                        merchandiseSpecificationsService.add(merchandiseSpecifications);
+                    }
                 }
-                // ///////////////////////////////////////
-                // 获取生成的merchandiseItems,修改状态
-                Map<String, String> strMap = new HashMap<String, String>();
-                for (int i = 0; i < classifySpecificationses.size(); i++) {
-                    String str = "";
-                    List<MerchandiseSpecificationsRelation> rlist1 = merchandiseSpecificationsRelationService.listByMap(merchandise.getId(), classifySpecificationses.get(i).getAttributeId());
-                    for (MerchandiseSpecificationsRelation r : rlist1) {
-                        if (r.getType() == 2 && r.getIsCheck() == 1) {
-                            str += r.getAlias() + ",";
-                        } else if (r.getType() == 1) {
-                            str += r.getValue() + ",";
+                List<IntKeyValue[]> cls = new ArrayList<IntKeyValue[]>();
+                for (final AttributeDefinition attributeDefinition : attributeDefinitions) {
+                    List<MerchandiseSpecificationsRelation> relations = merchandiseSpecificationsRelationService.listByMap(merchandise.getId(), attributeDefinition.getId());
+                    List<IntKeyValue> ikvList = new ArrayList<IntKeyValue>();
+                    for (MerchandiseSpecificationsRelation merchandiseSpecificationsRelation : relations) {
+                        if (merchandiseSpecificationsRelation.getType() == 2 && merchandiseSpecificationsRelation.getIsCheck() == 1) {
+                            ikvList.add(new KV(attributeDefinition.getId(), merchandiseSpecificationsRelation.getAlias()));
+                        } else if (merchandiseSpecificationsRelation.getType() == 1) {
+                            ikvList.add(new KV(attributeDefinition.getId(), merchandiseSpecificationsRelation.getValue()));
                         }
                     }
-                    strMap.put("str" + (i + 1), str);
+                    cls.add(ikvList.toArray(new IntKeyValue[ikvList.size()]));
                 }
-                where.clear();
-                where.put("merchandiseId", merchandise.getId());
-                where.put("order", "attributeId0 asc");
-                List<MerchandiseSpecifications> mspecList = merchandiseSpecificationsService.list(where);
-                List<AdminMerchandiseSpecificationsVO> voList = merchandiseSpecificationsHandler.toVOList4Admin(mspecList);
-                List<AdminMerchandiseSpecificationsVO> mspecVoList = getListWithSpec(strMap, voList, classifySpecificationses.size());
-                if (mspecVoList != null) {
-                    for (AdminMerchandiseSpecificationsVO vo : mspecVoList) {
-                        MerchandiseItem mdi = merchandiseItemService.getBySpecifications(vo.getMerchandiseId(), vo.getId());
-                        vo.setDiscount(mdi.getDiscount());
-                        vo.setPurchase(mdi.getPurchase());
-                        vo.setPrice(mdi.getPrice());
-                        mdi.setState(merchandise.getState());
-                        mdi.setBrandId(merchandise.getBrandId());
-                        merchandiseItemService.update(mdi);
+                //
+                list = merchandiseSpecificationsService.listByMerchandise(merchandise.getId());
+                List<IntKeyValue[]> ckvs = calculateSpecifications(cls);
+                for (IntKeyValue[] intKeyValues : ckvs) {
+                    List<MerchandiseSpecifications> es = merchandiseSpecificationsService.getSpecifications(list, intKeyValues);
+                    if (es != null) {
+                        for (MerchandiseSpecifications merchandiseSpecifications : es) {
+                            UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(merchandiseSpecifications.getUnifiedMerchandiseId());
+                            unifiedMerchandise.setState(merchandise.getState());
+                            unifiedMerchandiseService.update(unifiedMerchandise);
+                        }
+                        continue;
                     }
                 }
-                // ///////////////////////////////////////
             } else {
-                MerchandiseSpecifications ms = merchandiseSpecificationsService.get(merchandise.getId(), -1, "", -1, "", -1, "");
-                if (ms != null) {
-                    merchandiseSpecificationses.add(ms);
-                    return merchandiseSpecificationses;
-                }
-                ms = new MerchandiseSpecifications(0, merchandise.getId(), -1, "", -1, "", -1, "", 0);
-                merchandiseSpecificationsService.add(ms);
-                UnifiedMerchandise unifiedMerchandise = new UnifiedMerchandise();
-                unifiedMerchandise.setMerchantId(merchandise.getMerchantId());
-                unifiedMerchandise.setType(UnifiedMerchandiseType.SINGLE.getKey());
-                unifiedMerchandiseService.add(unifiedMerchandise);
-                MerchandiseItem merchandiseItem = new MerchandiseItem();
-                merchandiseItem.setBrandId(merchandise.getBrandId());
-                merchandiseItem.setKeywords(merchandise.getKeywords());
-                merchandiseItem.setMerchandiseId(merchandise.getId());
-                merchandiseItem.setMallClassifyId(merchandise.getMallClassifyId());
-                merchandiseItem.setMerchandiseSpecificationsId(ms.getId());
-                merchandiseItem.setMerchantClassifyId(merchandise.getMerchantClassifyId());
-                merchandiseItem.setMerchantId(merchandise.getMerchantId());
-                merchandiseItem.setName(merchandise.getName());
-                merchandiseItem.setStock(0);
-                merchandiseItem.setPurchase(0.0);
-                merchandiseItem.setDiscount(0.0);
-                merchandiseItem.setPrice(0.0);
-                merchandiseItem.setState(merchandise.getState());
-                merchandiseItem.setUnifiedMerchandiseId(unifiedMerchandise.getId());
-                merchandiseItemService.add(merchandiseItem);
-                return merchandiseSpecificationses;
+                createDefaultSpecs(merchandise, list);
             }
-            return merchandiseSpecificationses;
+        }
+    }
+
+    private void createDefaultSpecs(Merchandise merchandise, List<MerchandiseSpecifications> list) {
+
+        MerchandiseSpecifications d = null;
+        Set<Long> unifiedMerchandiseIds = new HashSet<Long>();
+        for (MerchandiseSpecifications merchandiseSpecifications : list) {
+            if (merchandiseSpecifications.getDimensionNumber() != 0) {
+                unifiedMerchandiseIds.add(merchandiseSpecifications.getUnifiedMerchandiseId());
+            } else {
+                d = merchandiseSpecifications;
+            }
+        }
+        disable(merchandise.getId(), new ArrayList<Long>(unifiedMerchandiseIds));
+        if (d != null) {
+            UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(d.getUnifiedMerchandiseId());
+            unifiedMerchandise.setState(merchandise.getState());
+            unifiedMerchandiseService.update(unifiedMerchandise);
+        } else {
+            UnifiedMerchandise unifiedMerchandise = new UnifiedMerchandise();
+            unifiedMerchandise.setActivityId(-1L);
+            unifiedMerchandise.setBrandId(merchandise.getBrandId());
+            // TODO
+            unifiedMerchandise.setCanUseCoupon(2);
+            unifiedMerchandise.setClickRate(0);
+            // TODO
+            unifiedMerchandise.setCode("");
+            unifiedMerchandise.setDiscount(0.0);
+            unifiedMerchandise.setGoodEvaluation(0L);
+            unifiedMerchandise.setImage(merchandise.getImage());
+            unifiedMerchandise.setName(merchandise.getName());
+            // TODO
+            unifiedMerchandise.setIntegral(0);
+            unifiedMerchandise.setMerchantId(merchandise.getMerchantId());
+            unifiedMerchandise.setKeywords(merchandise.getKeywords());
+            unifiedMerchandise.setLowEvaluation(0);
+            unifiedMerchandise.setMallClassifyId(merchandise.getMallClassifyId());
+            unifiedMerchandise.setMerchandiseId(merchandise.getId());
+            unifiedMerchandise.setMerchantClassifyId(merchandise.getMerchantClassifyId());
+            unifiedMerchandise.setMiddleEvaluation(0);
+            unifiedMerchandise.setRelaUnifiedMerchandiseId(-1L);
+            unifiedMerchandise.setName(merchandise.getName());
+            unifiedMerchandise.setOrder(0);
+            unifiedMerchandise.setPrice(0.0);
+            unifiedMerchandise.setPurchase(0.0);
+            unifiedMerchandise.setRecordTime(new Date());
+            unifiedMerchandise.setSalesVolume(0);
+            // TODO
+            unifiedMerchandise.setVirtualSalesVolume(0);
+            unifiedMerchandise.setState(merchandise.getState());
+            unifiedMerchandise.setType(UnifiedMerchandiseType.SINGLE.getKey());
+            unifiedMerchandise.setUpdateTime(new Date());
+            unifiedMerchandiseService.add(unifiedMerchandise);
+            unifiedMerchandise.setRelaUnifiedMerchandiseId(unifiedMerchandise.getId());
+            unifiedMerchandiseService.update(unifiedMerchandise);
+            MerchandiseSpecifications ms = new MerchandiseSpecifications();
+            ms.setAttributeId(-1L);
+            ms.setValue("");
+            ms.setDimensionNumber(0);
+            ms.setMerchandiseId(merchandise.getId());
+            ms.setUnifiedMerchandiseId(unifiedMerchandise.getId());
+            merchandiseSpecificationsService.add(ms);
+        }
+    }
+
+    private void disable(long merchandiseId, List<Long> unifiedMerchandiseIds) {
+
+        List<UnifiedMerchandise> list = unifiedMerchandiseService.listByMerchandise(merchandiseId, UnifiedMerchandiseType.SINGLE.getKey());
+        for (UnifiedMerchandise unifiedMerchandise : list) {
+            boolean disable = false;
+            for (Long id : unifiedMerchandiseIds) {
+                if (id == unifiedMerchandise.getId()) {
+                    disable = true;
+                    break;
+                }
+            }
+            if (disable) {
+                unifiedMerchandise.setState(MerchandiseStateType.INIT.getKey());
+                unifiedMerchandiseService.update(unifiedMerchandise);
+            }
+        }
+    }
+
+    public static List<IntKeyValue[]> calculateSpecifications(List<IntKeyValue[]> ls) {
+
+        int size = 0;
+        for (IntKeyValue[] str : ls) {
+            size = size == 0 ? 1 : size;
+            size = size * str.length;
+        }
+        IntKeyValue[][] strs = new IntKeyValue[size][];
+        for (int index = 0; index < size; index++) {
+            strs[index] = new IntKeyValue[ls.size()];
+        }
+        int[] indexs = new int[ls.size()];
+        for (int i : indexs) {
+            indexs[i] = 0;
+        }
+        for (int index = 0; index < size; index++) {
+            IntKeyValue[] ss = strs[index];
+            for (int i = 0; i < ss.length; i++) {
+                ss[i] = ls.get(i)[indexs[i]];
+            }
+            indexs[indexs.length - 1] = indexs[indexs.length - 1] + 1;
+            increaseIndex(indexs, ls);
+        }
+        List<IntKeyValue[]> result = new ArrayList<IntKeyValue[]>();
+        for (IntKeyValue[] strings : strs) {
+            result.add(strings);
+        }
+        Collections.sort(result, new Comparator<IntKeyValue[]>() {
+
+            @Override
+            public int compare(IntKeyValue[] o1, IntKeyValue[] o2) {
+
+                for (int index = 0; index < o1.length; index++) {
+                    int r = o1[index].getValue().compareTo(o2[index].getValue());
+                    if (r != 0) {
+                        return r;
+                    }
+                }
+                return 0;
+            }
+        });
+        return result;
+    }
+
+    private static void increaseIndex(int[] indexs, List<IntKeyValue[]> ls) {
+
+        for (int i = indexs.length - 1; i >= 0; i--) {
+            if (indexs[i] == ls.get(i).length) {
+                indexs[i] = 0;
+                if (i > 0) {
+                    indexs[i - 1] = indexs[i - 1] + 1;
+                }
+                increaseIndex(indexs, ls);
+            }
         }
     }
 
@@ -793,7 +871,7 @@ public class AdminMerchandiseController {
         // 查询该商品规格列表
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("merchandiseId", merchandise.getId());
-        where.put("order", "attributeId0 asc");
+        where.put("order", "attributeId asc");
         List<MerchandiseSpecifications> list = merchandiseSpecificationsService.list(where);
         where.clear();
         // 查询该类目的规格列表
@@ -805,16 +883,16 @@ public class AdminMerchandiseController {
             if (list.size() == 0) {
                 modelAndView.addObject("isDefault", "");
                 modelAndView.addObject("defaultSpec", new AdminMerchandiseSpecificationsVO());
-            } else if (list.size() == 1 && list.get(0).getAttributeId0() == -1 && list.get(0).getAttributeId1() == -1 && list.get(0).getAttributeId2() == -1) {
+            } else if (list.size() == 1 && list.get(0).getDimensionNumber() == 0) {
                 AdminMerchandiseSpecificationsVO vo = merchandiseSpecificationsHandler.toVO4Admin(list.get(0));
-                MerchandiseItem mdi = merchandiseItemService.getBySpecifications(vo.getMerchandiseId(), vo.getId());
-                if (mdi.getState() == merchandise.getState()) {
+                UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(list.get(0).getUnifiedMerchandiseId());
+                if (unifiedMerchandise.getState() == merchandise.getState()) {
                     modelAndView.addObject("isDefault", "checked");
                 }
-                vo.setDiscount(mdi.getDiscount());
-                vo.setPurchase(mdi.getPurchase());
-                vo.setPrice(mdi.getPrice());
-                vo.setStock(mdi.getStock());
+                vo.setDiscount(unifiedMerchandise.getDiscount());
+                vo.setPurchase(unifiedMerchandise.getPurchase());
+                vo.setPrice(unifiedMerchandise.getPrice());
+                vo.setStock(unifiedMerchandise.getStock());
                 modelAndView.addObject("defaultSpec", vo);
             }
         } else {
@@ -903,20 +981,24 @@ public class AdminMerchandiseController {
             }
             strMap.put("str" + (i + 1), str);
         }
-        where.clear();
-        where.put("merchandiseId", merchandise.getId());
-        where.put("order", "attributeId0 asc");
-        List<MerchandiseSpecifications> mspecList = merchandiseSpecificationsService.list(where);
-        List<AdminMerchandiseSpecificationsVO> voList = merchandiseSpecificationsHandler.toVOList4Admin(mspecList);
-        List<AdminMerchandiseSpecificationsVO> mspecVoList = getListWithSpec(strMap, voList, classifySpecificationses.size());
-        if (mspecVoList != null) {
-            for (AdminMerchandiseSpecificationsVO vo : mspecVoList) {
-                MerchandiseItem mdi = merchandiseItemService.getBySpecifications(vo.getMerchandiseId(), vo.getId());
-                vo.setDiscount(mdi.getDiscount());
-                vo.setPurchase(mdi.getPurchase());
-                vo.setPrice(mdi.getPrice());
-                vo.setStock(mdi.getStock());
+        List<UnifiedMerchandise> merchandiseList = unifiedMerchandiseService.listByMerchandise(merchandise.getId(), UnifiedMerchandiseType.SINGLE.getKey(), merchandise.getState());
+        List<AdminMerchandiseSpecificationsVO> mspecVoList = new ArrayList<AdminMerchandiseSpecificationsVO>();
+        for (UnifiedMerchandise unifiedMerchandise : merchandiseList) {
+            AdminMerchandiseSpecificationsVO vo = new AdminMerchandiseSpecificationsVO();
+            vo.setId(unifiedMerchandise.getId());
+            vo.setPurchase(unifiedMerchandise.getPurchase());
+            vo.setDiscount(unifiedMerchandise.getDiscount());
+            vo.setPrice(unifiedMerchandise.getPrice());
+            vo.setMerchandiseId(unifiedMerchandise.getMerchandiseId());
+            vo.setState(unifiedMerchandise.getState());
+            vo.setStock(unifiedMerchandise.getStock());
+            List<MerchandiseSpecifications> msList = merchandiseSpecificationsService.listByUnifiedMerchandise(unifiedMerchandise.getId());
+            StringBuffer sb = new StringBuffer();
+            for (MerchandiseSpecifications merchandiseSpecifications : msList) {
+                sb.append(merchandiseSpecifications.getValue()).append(" ");
             }
+            vo.setValue0(sb.toString());
+            mspecVoList.add(vo);
         }
         modelAndView.addObject("mspecVoList", mspecVoList);
         modelAndView.addObject("enumerations", enumerations);
@@ -943,21 +1025,15 @@ public class AdminMerchandiseController {
         AssertUtil.assertNotNull(forms, "规格列表不能为空");
         // 规格商品状态
         for (MerchandiseSpecifications merchandiseSpecifications : list) {
-            MerchandiseItem merchandiseItem = merchandiseItemService.getBySpecifications(id, merchandiseSpecifications.getId());
-            AssertUtil.assertNotNull(merchandiseItem, "找不到单一商品" + id + " " + merchandiseSpecifications.getId());
+            UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(merchandiseSpecifications.getId());
+            AssertUtil.assertNotNull(unifiedMerchandise, "找不到统一商品" + id + " " + merchandiseSpecifications.getId());
             for (MsForm msForm : forms) {
                 if (msForm.getId() == merchandiseSpecifications.getId()) {
-                    merchandiseSpecifications.setState(msForm.getState());
-                    merchandiseSpecificationsService.update(merchandiseSpecifications);
-                    if (msForm.getState() == 1) {
-                        merchandiseItem.setDiscount(msForm.getDiscount());
-                        merchandiseItem.setPurchase(msForm.getPurchase());
-                        merchandiseItem.setPrice(msForm.getPrice());
-                        merchandiseItem.setState(merchandise.getState());
-                    } else {
-                        merchandiseItem.setState(MerchandiseStateType.INIT.getKey());
-                    }
-                    merchandiseItemService.update(merchandiseItem);
+                    unifiedMerchandise.setDiscount(msForm.getDiscount());
+                    unifiedMerchandise.setPurchase(msForm.getPurchase());
+                    unifiedMerchandise.setPrice(msForm.getPrice());
+                    unifiedMerchandise.setState(merchandise.getState());
+                    unifiedMerchandiseService.update(unifiedMerchandise);
                 }
             }
         }
@@ -1061,11 +1137,11 @@ public class AdminMerchandiseController {
         AssertUtil.assertNotNull(merchandise, "找不到商品");
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("merchandiseId", merchandise.getId());
-        where.put("order", "attributeId0 asc");
-        List<MerchandiseItem> merchandiseItems = merchandiseItemService.listByMerchandise(merchandise.getId());
-        for (MerchandiseItem item : merchandiseItems) {
-            item.setState(TypeEnum.MerchandiseStateType.INIT.getKey());
-            merchandiseItemService.update(item);
+        where.put("order", "attributeId asc");
+        List<UnifiedMerchandise> merchandises = unifiedMerchandiseService.listByMerchandise(merchandise.getId(), UnifiedMerchandiseType.SINGLE.getKey());
+        for (UnifiedMerchandise unifiedMerchandise : merchandises) {
+            unifiedMerchandise.setState(MerchandiseStateType.INIT.getKey());
+            unifiedMerchandiseService.update(unifiedMerchandise);
         }
         //
         List<MerchandiseSpecificationsRelation> newRelation = new ArrayList<MerchandiseSpecificationsRelation>();
@@ -1093,23 +1169,17 @@ public class AdminMerchandiseController {
                 newRelation.add(relation);
             } else if (relationForm.getAttributeId() != null && relationForm.getAttributeId() == -1 && relationForm.getValue() != null && relationForm.getValue().equals("1")) {
                 List<MerchandiseSpecifications> specList = merchandiseSpecificationsService.list(where);
-                List<AdminMerchandiseSpecificationsVO> tempList = merchandiseSpecificationsHandler.toVOList4Admin(specList);
-                for (AdminMerchandiseSpecificationsVO vo : tempList) {
-                    MerchandiseItem mdi = merchandiseItemService.getBySpecifications(vo.getMerchandiseId(), vo.getId());
-                    vo.setValue0("默认规格");
-                    vo.setDiscount(mdi.getDiscount());
-                    vo.setPurchase(mdi.getPurchase());
-                    vo.setPrice(mdi.getPrice());
-                    mdi.setState(merchandise.getState());
-                    merchandiseItemService.update(mdi);
+                for (MerchandiseSpecifications merchandiseSpecifications : specList) {
+                    UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(merchandiseSpecifications.getUnifiedMerchandiseId());
+                    unifiedMerchandise.setState(merchandise.getState());
+                    unifiedMerchandiseService.update(unifiedMerchandise);
                 }
             } else if (relationForm.getAttributeId() != null && relationForm.getAttributeId() == -1 && relationForm.getValue() == null) {
                 List<MerchandiseSpecifications> specList = merchandiseSpecificationsService.list(where);
-                List<AdminMerchandiseSpecificationsVO> tempList = merchandiseSpecificationsHandler.toVOList4Admin(specList);
-                for (AdminMerchandiseSpecificationsVO vo : tempList) {
-                    MerchandiseItem mdi = merchandiseItemService.getBySpecifications(vo.getMerchandiseId(), vo.getId());
-                    mdi.setState(MerchandiseStateType.INIT.getKey());
-                    merchandiseItemService.update(mdi);
+                for (MerchandiseSpecifications merchandiseSpecifications : specList) {
+                    UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(merchandiseSpecifications.getUnifiedMerchandiseId());
+                    unifiedMerchandise.setState(MerchandiseStateType.INIT.getKey());
+                    unifiedMerchandiseService.update(unifiedMerchandise);
                 }
             }
         }

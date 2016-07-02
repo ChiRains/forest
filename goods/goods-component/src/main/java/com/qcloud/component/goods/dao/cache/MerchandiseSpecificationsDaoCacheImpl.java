@@ -96,4 +96,9 @@ public class MerchandiseSpecificationsDaoCacheImpl implements MerchandiseSpecifi
 
         return merchandiseSpecificationsDaoMysqlImpl.page(where, start, size);
     }
+
+    @Override
+    public List<MerchandiseSpecifications> listByUnifiedMerchandise(Long unifiedMerchandiseId) {
+        return merchandiseSpecificationsDaoMysqlImpl.listByUnifiedMerchandise(unifiedMerchandiseId);
+    }
 }

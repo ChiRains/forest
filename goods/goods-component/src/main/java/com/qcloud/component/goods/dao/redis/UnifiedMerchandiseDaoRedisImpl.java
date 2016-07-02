@@ -66,5 +66,51 @@ public class UnifiedMerchandiseDaoRedisImpl implements UnifiedMerchandiseDao {
 	public List<UnifiedMerchandise> listAll(){	
 		throw new NotImplementedException();
 	}
+
+    @Override
+    public List<UnifiedMerchandise> listByMerchandise(long merchandiseId) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public List<UnifiedMerchandise> listByMerchandise(long merchandiseId, int type) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public List<UnifiedMerchandise> listByMerchandise(long merchandiseId, int type, int state) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public boolean increaseGoodEvaluation(long id) {
+
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public boolean increaseMiddleEvaluation(long id) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public boolean increaseLowEvaluation(long id) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public boolean updateSalesVolume(long id, int number) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public boolean lockStock(long id, int stock) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public Page<UnifiedMerchandise> select(UnifiedMerchandiseQuery query, int start, int size) {
+        throw new NotImplementedException();
+    }
 }
 

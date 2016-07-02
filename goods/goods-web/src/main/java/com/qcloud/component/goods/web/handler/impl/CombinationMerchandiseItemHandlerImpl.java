@@ -5,15 +5,15 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.qcloud.component.goods.CommoditycenterClient;
-import com.qcloud.component.goods.QUnifiedMerchandise;
+import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.model.CombinationMerchandiseItem;
-import com.qcloud.component.goods.model.MerchandiseItem;
-import com.qcloud.component.goods.service.MerchandiseItemService;
+import com.qcloud.component.goods.model.MerchandiseSpecifications;
+import com.qcloud.component.goods.model.UnifiedMerchandise;
+import com.qcloud.component.goods.service.MerchandiseSpecificationsService;
+import com.qcloud.component.goods.service.UnifiedMerchandiseService;
 import com.qcloud.component.goods.web.handler.CombinationMerchandiseItemHandler;
 import com.qcloud.component.goods.web.vo.CombinationMerchandiseItemVO;
 import com.qcloud.component.goods.web.vo.admin.AdminCombinationMerchandiseItemVO;
-import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.pirates.core.json.Json;
 import com.qcloud.pirates.util.StringUtil;
 
@@ -21,13 +21,13 @@ import com.qcloud.pirates.util.StringUtil;
 public class CombinationMerchandiseItemHandlerImpl implements CombinationMerchandiseItemHandler {
 
     @Autowired
-    private MerchandiseItemService merchandiseItemService;
+    private UnifiedMerchandiseService        unifiedMerchandiseService;
 
     @Autowired
-    private CommoditycenterClient  commoditycenterClient;
+    private FileSDKClient                    fileSDKClient;
 
     @Autowired
-    private FileSDKClient          fileSDKClient;
+    private MerchandiseSpecificationsService merchandiseSpecificationsService;
 
     @Override
     public List<CombinationMerchandiseItemVO> toVOList(List<CombinationMerchandiseItem> list) {
@@ -43,20 +43,24 @@ public class CombinationMerchandiseItemHandlerImpl implements CombinationMerchan
     public CombinationMerchandiseItemVO toVO(CombinationMerchandiseItem combinationMerchandiseItem) {
 
         CombinationMerchandiseItemVO combinationMerchandiseItemVO = new CombinationMerchandiseItemVO();
-        MerchandiseItem merchandiseItem = merchandiseItemService.get(combinationMerchandiseItem.getMerchandiseItemId());
+        UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(combinationMerchandiseItem.getRelaUnifiedMerchandiseId());
         //
-        QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(merchandiseItem.getUnifiedMerchandiseId());
-        //
-        combinationMerchandiseItemVO.setDiscount(merchandiseItem.getDiscount());
-        combinationMerchandiseItemVO.setMerchantId(merchandiseItem.getMerchantId());
-        combinationMerchandiseItemVO.setName(merchandiseItem.getName());
-        if (StringUtils.isNotEmpty(unifiedMerchandise.getList().get(0).getImage())) {
-            combinationMerchandiseItemVO.setImage(fileSDKClient.getFileServerUrl() + unifiedMerchandise.getList().get(0).getImage());
+        combinationMerchandiseItemVO.setDiscount(unifiedMerchandise.getDiscount());
+        combinationMerchandiseItemVO.setMerchantId(unifiedMerchandise.getMerchantId());
+        combinationMerchandiseItemVO.setName(unifiedMerchandise.getName());
+        if (StringUtils.isNotEmpty(unifiedMerchandise.getImage())) {
+            combinationMerchandiseItemVO.setImage(fileSDKClient.getFileServerUrl() + unifiedMerchandise.getImage());
         } else {
-            combinationMerchandiseItemVO.setImage(StringUtil.nullToEmpty(unifiedMerchandise.getList().get(0).getImage()));
+            combinationMerchandiseItemVO.setImage(StringUtil.nullToEmpty(unifiedMerchandise.getImage()));
         }
-        combinationMerchandiseItemVO.setNumber(combinationMerchandiseItem.getNum());
-        combinationMerchandiseItemVO.setSpecifications(unifiedMerchandise.getList().get(0).getSpecifications());
+        combinationMerchandiseItemVO.setNumber(combinationMerchandiseItem.getNumber());
+        //
+        List<MerchandiseSpecifications> msList = merchandiseSpecificationsService.listByUnifiedMerchandise(unifiedMerchandise.getId());
+        StringBuffer sb = new StringBuffer();
+        for (MerchandiseSpecifications merchandiseSpecifications : msList) {
+            sb.append(merchandiseSpecifications.getValue()).append(" ");
+        }
+        combinationMerchandiseItemVO.setSpecifications(sb.toString());
         return combinationMerchandiseItemVO;
     }
 

@@ -5,15 +5,15 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.qcloud.component.goods.model.CombinationMerchandise;
+import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.model.CombinationMerchandiseItem;
+import com.qcloud.component.goods.model.UnifiedMerchandise;
 import com.qcloud.component.goods.service.CombinationMerchandiseItemService;
 import com.qcloud.component.goods.web.handler.CombinationMerchandiseHandler;
 import com.qcloud.component.goods.web.handler.CombinationMerchandiseItemHandler;
 import com.qcloud.component.goods.web.vo.CombinationMerchandiseItemVO;
 import com.qcloud.component.goods.web.vo.CombinationMerchandiseVO;
 import com.qcloud.component.goods.web.vo.admin.AdminCombinationMerchandiseVO;
-import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.pirates.core.json.Json;
 import com.qcloud.pirates.util.StringUtil;
 
@@ -30,17 +30,17 @@ public class CombinationMerchandiseHandlerImpl implements CombinationMerchandise
     private CombinationMerchandiseItemHandler combinationMerchandiseItemHandler;
 
     @Override
-    public List<CombinationMerchandiseVO> toVOList(List<CombinationMerchandise> list) {
+    public List<CombinationMerchandiseVO> toVOList(List<UnifiedMerchandise> list) {
 
         List<CombinationMerchandiseVO> voList = new ArrayList<CombinationMerchandiseVO>();
-        for (CombinationMerchandise combinationMerchandise : list) {
+        for (UnifiedMerchandise combinationMerchandise : list) {
             voList.add(toVO(combinationMerchandise));
         }
         return voList;
     }
 
     @Override
-    public CombinationMerchandiseVO toVO(CombinationMerchandise combinationMerchandise) {
+    public CombinationMerchandiseVO toVO(UnifiedMerchandise combinationMerchandise) {
 
         CombinationMerchandiseVO vo = new CombinationMerchandiseVO();
         vo.setName(combinationMerchandise.getName());
@@ -53,7 +53,7 @@ public class CombinationMerchandiseHandlerImpl implements CombinationMerchandise
         vo.setDiscount(combinationMerchandise.getDiscount());
         vo.setMerchantId(combinationMerchandise.getMerchantId());
         vo.setSurplus(combinationMerchandise.getPrice() - combinationMerchandise.getDiscount());
-        vo.setUnifiedMerchandiseId(combinationMerchandise.getUnifiedMerchandiseId());
+        vo.setUnifiedMerchandiseId(combinationMerchandise.getId());
         vo.setStock(combinationMerchandise.getStock());
         List<CombinationMerchandiseItem> itemList = combinationMerchandiseItemService.listByCombinationMerchandise(combinationMerchandise.getId());
         List<CombinationMerchandiseItemVO> voList = combinationMerchandiseItemHandler.toVOList(itemList);
@@ -62,17 +62,17 @@ public class CombinationMerchandiseHandlerImpl implements CombinationMerchandise
     }
 
     @Override
-    public List<AdminCombinationMerchandiseVO> toVOList4Admin(List<CombinationMerchandise> list) {
+    public List<AdminCombinationMerchandiseVO> toVOList4Admin(List<UnifiedMerchandise> list) {
 
         List<AdminCombinationMerchandiseVO> voList = new ArrayList<AdminCombinationMerchandiseVO>();
-        for (CombinationMerchandise adminCombinationMerchandise : list) {
+        for (UnifiedMerchandise adminCombinationMerchandise : list) {
             voList.add(toVO4Admin(adminCombinationMerchandise));
         }
         return voList;
     }
 
     @Override
-    public AdminCombinationMerchandiseVO toVO4Admin(CombinationMerchandise combinationMerchandise) {
+    public AdminCombinationMerchandiseVO toVO4Admin(UnifiedMerchandise combinationMerchandise) {
 
         String json = Json.toJson(combinationMerchandise);
         AdminCombinationMerchandiseVO vo = Json.toObject(json, AdminCombinationMerchandiseVO.class, true);
