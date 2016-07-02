@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.my.dao.mysql.mapper.MyEvaluationMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="MyEvaluation">  
+        select * from `${table_name}` WHERE userId=#{userId}  
+        <if test="orderTime != null">
+            AND DATE_FORMAT(orderTime,'%Y-%m-%d')=#{orderTime}
+        </if>
+        ORDER BY orderTime DESC
+        limit #{start},#{count}
+    </select>  
+    
+     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `${table_name}` WHERE userId=#{userId}
+        <if test="orderTime != null">
+            AND DATE_FORMAT(orderTime,'%Y-%m-%d')=#{orderTime}
+        </if>
+    </select> 
+    
+     <select id="getByOrderItemDetailId" parameterType="java.util.HashMap" resultType="MyEvaluation">  
+        select * from `${table_name}` WHERE userId=#{userId} AND orderItemDetailId=#{orderItemDetailId} limit 0,1
+    </select>    
+</mapper>

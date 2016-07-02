@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.project.forest.dao.mysql.mapper.AnalysisresultMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="Analysisresult">  
+        select * from `forest_analysisresult` where 1=1
+        <if test="type !=0">and type = #{type}</if>
+        limit #{start},#{count}
+    </select>  
+    
+     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `forest_analysisresult`  where 1=1
+        <if test="type !=0">and type = #{type}</if>
+    </select> 
+       <select id="getBMI" parameterType="java.util.HashMap" resultType="Analysisresult">  
+        select * from `forest_analysisresult` where type = #{type} 
+        <![CDATA[
+       		 AND #{BMI} >= previousData and  #{BMI} <= afterData	
+        ]]>
+    </select>  
+</mapper>

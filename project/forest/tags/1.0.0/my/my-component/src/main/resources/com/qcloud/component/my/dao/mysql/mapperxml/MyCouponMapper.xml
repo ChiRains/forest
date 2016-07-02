@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.my.dao.mysql.mapper.MyCouponMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="MyCoupon">  
+        select * from `my_my_coupon` limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `my_my_coupon`
+    </select> 
+    
+    <select id="listByUser" parameterType="java.util.HashMap" resultType="MyCoupon">  
+         <![CDATA[ select * from `my_my_coupon` where userId=#{userId} and state <> 3]]>
+	        <if test="type == 1">
+	           <![CDATA[ and validDate <= #{nowtime} and invalidDate >=#{nowtime} and state = 1]]>
+	        </if>
+	        <if test="type == 2">
+	           and state = 2
+	        </if>
+	        <if test="type == 3">
+	            <![CDATA[and invalidDate <= #{nowtime} and state = 1]]>
+	        </if>              
+       <![CDATA[ limit #{start},#{count}]]>
+    </select>  
+    
+    <select id="countByUser" parameterType="java.util.HashMap" resultType="Integer">  
+         <![CDATA[ select count(*) from `my_my_coupon` where userId=#{userId} and state <> 3]]>
+	        <if test="type == 1">
+	           <![CDATA[ and validDate <= #{nowtime} and invalidDate >=#{nowtime} and state = 1]]>
+	        </if>
+	        <if test="type == 2">
+	           and state = 2
+	        </if>
+	        <if test="type == 3">
+	            <![CDATA[and invalidDate <= #{nowtime} and state = 1]]>
+	        </if>                    
+    </select> 
+    
+    <select id="listByUserAndCoupon" parameterType="java.util.HashMap" resultType="MyCoupon">  
+        select * from `my_my_coupon` where userId=#{userId} and couponId=#{couponId}
+    </select> 
+         
+    <select id="listCanUseByUser" parameterType="java.util.HashMap" resultType="MyCoupon">  
+        <![CDATA[ 
+	        select * from `my_my_coupon` 
+	        where (merchantId = #{merchantId} or merchantId = -1) 
+	        and userId=#{userId} and limitPrice <= #{sum} and state = 1 
+	        and #{now} >= validDate 
+	        and #{now} <= invalidDate 
+	        limit #{start},#{count}
+        ]]>
+    </select>    
+     
+    <select id="getByCode" parameterType="java.util.HashMap" resultType="MyCoupon">  
+        <![CDATA[ select * from `my_my_coupon` where code = #{code} and state <> 3]]>
+    </select>           
+</mapper>

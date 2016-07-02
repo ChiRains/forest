@@ -1,0 +1,70 @@
+package com.qcloud.component.brokerage.dao.redis;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.lang.NotImplementedException;
+import org.springframework.stereotype.Repository;
+
+import com.qcloud.pirates.core.json.Json;
+import com.qcloud.pirates.data.Page;
+import com.qcloud.pirates.data.redis.Redis;
+import com.qcloud.component.brokerage.dao.UpgradeOrderDao;
+import com.qcloud.component.brokerage.model.UpgradeOrder;
+import com.qcloud.component.brokerage.model.query.UpgradeOrderQuery;
+
+@Repository
+public class UpgradeOrderDaoRedisImpl implements UpgradeOrderDao {
+
+	//@Resource(name = "redis-brokerage")
+	//private Redis redis;
+
+	@Override
+	public boolean add(UpgradeOrder upgradeOrder) {			
+		throw new NotImplementedException();
+	}
+
+	@Override
+	public UpgradeOrder get(Long id) {		
+		throw new NotImplementedException();
+	}
+	
+	@Override
+	public boolean delete(Long id){
+		throw new NotImplementedException();
+	}
+	
+	@Override
+	public boolean update(UpgradeOrder upgradeOrder){
+		throw new NotImplementedException();
+	}
+	
+	@Override
+	public List<UpgradeOrder> list(List<Long> idList) {
+		throw new NotImplementedException();
+	}
+
+	@Override
+	public Map<Long, UpgradeOrder> map(Set<Long> idSet){
+		throw new NotImplementedException();
+	}
+		
+	@Override
+	public Page<UpgradeOrder> page(int start, int count){
+		throw new NotImplementedException();
+	}
+	
+	@Override
+	public Page<UpgradeOrder> page(UpgradeOrderQuery query, int start, int count){
+		throw new NotImplementedException();
+	}
+	
+	@Override
+	public List<UpgradeOrder> listAll(){	
+		throw new NotImplementedException();
+	}
+}
+

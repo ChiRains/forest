@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.seckill.dao.mysql.mapper.ScreeningsMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="Screenings">  
+        select * from `seckill_screenings` where `enable`=1
+        <if test="beginTime!='%null%' &amp;&amp; beginTime!='%%'">
+			and `beginTime`like CONCAT(#{beginTime},'%')
+		</if>
+        limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `seckill_screenings` where `enable`=1
+        <if test="beginTime!='%null%' &amp;&amp; beginTime!='%%'">
+			and `beginTime`like CONCAT(#{beginTime},'%')
+		</if>
+    </select> 
+    
+    <select id="listByDate" parameterType="java.util.HashMap" resultType="Screenings">  
+         <![CDATA[ select * from `seckill_screenings` where `enable`=1 and #{start} < `beginTime` and `endTime` < #{end} order by `beginTime`]]>
+    </select>
+    
+    <select id="getRepeatByTime" parameterType="java.util.HashMap" resultType="Screenings">  
+        <![CDATA[ select * from `seckill_screenings`
+         where `enable`=1 and ((`beginTime`<=#{beginTime} and #{beginTime}<`endTime`) or (`beginTime`<#{endTime} and #{endTime}<=`endTime`))
+         ]]>
+    </select>  
+    
+    <select id="listByToday" parameterType="java.util.HashMap" resultType="Screenings">
+    	select * from `seckill_screenings`
+    	where `enable`=1 and `beginTime` between #{beginTime} and #{endTime}
+    </select>
+</mapper>

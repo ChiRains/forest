@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.seckill.dao.mysql.mapper.MerchandiseSeckillMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="MerchandiseSeckill">  
+        select * from `seckill_merchandise_seckill` where `enable`=1
+        <if test="screeningsId != 0">
+        	 and `screeningsId`=#{screeningsId}
+        </if>
+        <if test="merchandiseName != null">
+        	 and `merchandiseName` LIKE CONCAT('%',#{merchandiseName},'%')
+        </if>
+       
+        limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `seckill_merchandise_seckill` where `enable`=1
+        <if test="screeningsId != 0">
+        	 and `screeningsId`=#{screeningsId}
+        </if>
+        <if test="merchandiseName != null">
+        	 and `merchandiseName`=#{merchandiseName}
+        </if>
+    </select> 
+    
+    <select id="listByScreenings" parameterType="Long" resultType="MerchandiseSeckill">  
+        select * from `seckill_merchandise_seckill` where `enable`=1 and `screeningsId` = #{screeningsId}
+    </select>  
+    
+    <select id="listByScreeningsAndQUnifiedMerchandiseId" parameterType="java.util.HashMap" resultType="MerchandiseSeckill">  
+        select * from `seckill_merchandise_seckill` where `enable`=1 and `screeningsId` = #{screeningsId} and `qUnifiedMerchandiseId` = #{qUnifiedMerchandiseId}
+    </select>
+    
+</mapper>

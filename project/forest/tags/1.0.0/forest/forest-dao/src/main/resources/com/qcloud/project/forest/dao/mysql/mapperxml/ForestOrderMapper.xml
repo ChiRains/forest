@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.project.forest.dao.mysql.mapper.ForestOrderMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="ForestOrder">  
+        select * from `forest_forest_order` limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `forest_forest_order`
+    </select> 
+    
+    <select id="getByOrder" parameterType="java.util.HashMap" resultType="ForestOrder">  
+        select * from `forest_forest_order` 
+        where 1=1
+        and `orderId`=#{orderId}
+        
+    </select>  
+</mapper>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qcloud.component.warehouse.dao.mysql.mapper.MerchandiseStockMapper">
+    <select id="list4query" parameterType="java.util.HashMap" resultType="MerchandiseStock">
+        select * from `warehouse_merchandise_stock` limit #{start},#{count}
+    </select>
+
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">
+        select count(*) from `warehouse_merchandise_stock`
+    </select>
+    <select id="list" resultType="MerchandiseStock">
+        SELECT * FROM warehouse_merchandise_stock WHERE 1 = 1
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="merchantId != null">
+            AND merchantId = #{merchantId}
+        </if>
+        <if test="storeId != null">
+            AND storeId = #{storeId}
+        </if>
+        <if test="unifiedMerchandiseId != null">
+            AND unifiedMerchandiseId = #{unifiedMerchandiseId}
+        </if>
+        <if test="merchandiseName != null">
+        	AND merchandiseName LIKE CONCAT('%',#{merchandiseName},'%')
+        </if>
+        <if test="stock != null">
+            AND stock = #{stock}
+        </if>
+        <if test="order != null">
+            ORDER BY ${order}
+        </if>
+        <if test="start != null and count != null">
+            LIMIT #{start},#{count}
+        </if>
+    </select>
+    <select id="count" resultType="int">
+        SELECT COUNT(*) FROM warehouse_merchandise_stock WHERE 1 = 1
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="merchantId != null">
+            AND merchantId = #{merchantId}
+        </if>
+        <if test="storeId != null">
+            AND storeId = #{storeId}
+        </if>
+        <if test="unifiedMerchandiseId != null">
+            AND unifiedMerchandiseId = #{unifiedMerchandiseId}
+        </if>
+        <if test="merchandiseName != null">
+            AND merchandiseName LIKE CONCAT('%',#{merchandiseName},'%')
+        </if>
+        <if test="stock != null">
+            AND stock = #{stock}
+        </if>
+    </select>
+</mapper>

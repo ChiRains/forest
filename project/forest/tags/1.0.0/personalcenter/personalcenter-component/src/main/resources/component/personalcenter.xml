@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 根节点的名字必须是xml -->
+<xml>
+	<module-list code="personalcenter_user_account_type">
+		<item key="mobile" enable="true">手机作账号</item>	
+	</module-list>
+	<module-list code="personalcenter-my-coupon-code">
+		<item type="string">QCloud</item>
+		<item type="time">yyyyMMdd</item>
+		<item type="random">000000</item>
+	</module-list>
+</xml>

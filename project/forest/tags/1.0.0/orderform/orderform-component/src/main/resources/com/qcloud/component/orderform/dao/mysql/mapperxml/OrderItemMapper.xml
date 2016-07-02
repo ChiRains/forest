@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.orderform.dao.mysql.mapper.OrderItemMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="OrderItem">  
+        select * from `${table_name}` limit #{start},#{count}
+    </select>  
+    
+     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `${table_name}`
+    </select> 
+    
+    <select id="listByCollectOrder" parameterType="java.util.HashMap" resultType="OrderItem">  
+        select * from `${table_name}` where `orderId`= #{collectOrderId}
+    </select>   
+    
+    <select id="listBySubOrder" parameterType="java.util.HashMap" resultType="OrderItem">  
+        select * from `${table_name}` where `subOrderId`= #{subOrderId}
+    </select>   
+</mapper>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.my.dao.mysql.mapper.MyOrderFormMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="MyOrderForm">  
+        select * from `${table_name}` limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `${table_name}`
+    </select>
+	  
+    <select id="list" parameterType="java.util.HashMap" resultType="MyOrderForm">  
+       <![CDATA[ select * from `${table_name}` where `userId`=#{userId} ]]>
+        <if test="state > 0">
+            and `state`=#{state}
+        </if>  
+        <![CDATA[ and ${sqlwhere} and #{startDate} <= `lastUpdateTime` and `lastUpdateTime` <= #{endDate} order by `lastUpdateTime` desc limit #{start},#{count} ]]>
+    </select> 
+    
+    <select id="count" parameterType="java.util.HashMap" resultType="Integer">  
+       <![CDATA[ select count(*) from `${table_name}` where `userId`=#{userId} ]]>
+        <if test="state > 0">
+            and `state`=#{state}
+        </if>  
+        <![CDATA[ and ${sqlwhere} and #{startDate} <= `lastUpdateTime` and `lastUpdateTime` <= #{endDate} ]]>
+    </select>
+        
+    <select id="listByOrder" parameterType="java.util.HashMap" resultType="MyOrderForm">  
+        select * from `${table_name}` where `userId` = #{userId} and orderId = #{orderId}
+    </select>
+    
+    <select id="getByOrder" parameterType="java.util.HashMap" resultType="MyOrderForm">  
+        select * from `${table_name}` where `userId`=#{userId} and `orderId`=#{orderId} and `subOrderId` = #{subOrderId}
+    </select>      
+    
+    <select id="statMyOrder" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `${table_name}` where userId = #{userId} and state = #{state} and subOrderId = -1
+    </select> 
+    
+    <select id="statMyMerchantOrder" parameterType="java.util.HashMap" resultType="Integer">  
+       <![CDATA[ select count(*) from `${table_name}` where userId = #{userId} and state = #{state} and subOrderId <> -1]]>
+    </select>             
+</mapper>

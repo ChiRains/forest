@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.commoditycenter.dao.mysql.mapper.AttributeDefinitionMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="AttributeDefinition">  
+        select * from `commoditycenter_attribute_definition` 
+        where 1=1
+        <if test="type !=null ">and `type` =#{type}</if>
+        limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `commoditycenter_attribute_definition`
+        where 1=1
+        <if test="type !=null ">and `type` =#{type}</if>
+    </select> 
+    
+    <select id="getByCode" parameterType="java.util.HashMap" resultType="AttributeDefinition">  
+        select * from `commoditycenter_attribute_definition` where `code` = #{code}
+    </select>      
+    
+    <select id="list4Select" parameterType="java.util.HashMap" resultType="AttributeDefinition">  
+        select * from `commoditycenter_attribute_definition` where 1=1
+        <if test="name!=null" > and name like CONCAT('%',#{name},'%') </if>
+        <if test="type!=null" > and type=#{type}</if>
+        limit #{start},#{count}
+    </select>  
+    
+     <select id="count4Select" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `commoditycenter_attribute_definition` where 1=1
+        <if test="name!=null" > and name like CONCAT('%',#{name},'%') </if>
+        <if test="type!=null" > and type=#{type}</if>
+    </select> 
+</mapper>

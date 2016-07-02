@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 根节点的名字必须是xml -->
+<xml>
+	<module-list code="publicservice-pay-operations">
+		<!-- module 模块名称 -->
+		<!-- operate   operate -->
+		<!--
+		<item module="order" type="weixin" client="web"
+			operate="operate">用户签收时间</item>
+		-->
+	</module-list>
+</xml>

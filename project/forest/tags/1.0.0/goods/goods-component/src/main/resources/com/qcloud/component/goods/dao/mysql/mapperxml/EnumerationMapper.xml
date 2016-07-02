@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.goods.dao.mysql.mapper.EnumerationMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="Enumeration">  
+        select DISTINCT(name) from `goods_enumeration` limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(DISTINCT(name)) from `goods_enumeration`
+    </select> 
+    
+    <select id="listByName" parameterType="String" resultType="Enumeration">  
+        select * from `goods_enumeration` where `name`=#{name}
+    </select> 
+    
+    <select id="countByName" parameterType="String" resultType="Integer">  
+        select count(*) from `goods_enumeration` where `name`=#{name}
+    </select>
+    
+    <delete id="deleteByName" parameterType="String">
+    	delete from `goods_enumeration` where `name`=#{name}
+    </delete>    
+    
+    <select id="listNames" parameterType="String" resultType="String">  
+        select DISTINCT(name) from `goods_enumeration`
+    </select> 
+</mapper>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.publicdata.dao.mysql.mapper.ClassifyBsidMaxNumberMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="ClassifyBsidMaxNumber">  
+        select * from `publicdata_classify_bsid_max_number` limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `publicdata_classify_bsid_max_number`
+    </select> 
+        
+    <select id="getByParentClassify" parameterType="java.util.HashMap" resultType="ClassifyBsidMaxNumber">  
+        select * from `publicdata_classify_bsid_max_number` where parentClassifyId = #{parentClassifyId} and type = #{type}
+    </select> 
+          
+    <insert id="lockNextBsid" parameterType="ClassifyBsidMaxNumber">
+    	insert into `publicdata_classify_bsid_max_number`(`id`,`parentClassifyId`,`type`,`maxNumber`) 
+     	values(#{id},#{parentClassifyId},#{type},#{maxNumber}) on DUPLICATE key update maxNumber = maxNumber + 1
+    </insert>           
+</mapper>

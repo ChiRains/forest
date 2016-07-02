@@ -1,0 +1,25 @@
+组件commoditycenter接口
+
+1.  获取广告区图片
+/slide/listSlides.do?sence=1&format=true
+
+参数:
+sence  场景,由各项目按具体需求自行定义,值必须是整数并且大于零
+
+返回值
+{
+  "status" : 200,
+  "message" : "获取广告区图片成功.",
+  "data" : {
+    "slideList" : [ {
+      "clickUrl" : "",
+      "image" : "/file/get.do?uid=AAF8A8E1944A4408A777C19DECC64B58.png"
+    }, {
+      "clickUrl" : "",
+      "image" : "/file/get.do?uid=61D84821412240269854535A1E99F6EE.jpg"
+    }, {
+      "clickUrl" : "",
+      "image" : "/file/get.do?uid=54565480AB5A4F12A38C0638123B5E41.png"
+    } ]
+  }
+}

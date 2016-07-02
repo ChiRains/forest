@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.my.dao.mysql.mapper.MyShoppingCartMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="MyShoppingCart">  
+        select * from`${table_name}` limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from`${table_name}`
+    </select> 
+    
+    <select id="list" parameterType="java.util.HashMap" resultType="MyShoppingCart">  
+        select * from `${table_name}` where `userId`=#{userId} order by `merchantId`,`merchantClassifyId` limit #{start},#{count}
+    </select>
+    
+    <select id="count" parameterType="java.util.HashMap" resultType="Integer">  
+        select sum(number) from `${table_name}` where `userId`=#{userId}
+    </select>
+    
+    <select id="getByUnifiedMerchandise" parameterType="java.util.HashMap" resultType="MyShoppingCart">  
+        select * from `${table_name}` where `userId`=#{userId} and `unifiedMerchandiseId`=#{unifiedMerchandiseId}
+    </select>    
+    
+    <delete id="clean" parameterType="java.util.HashMap">
+    	delete from `${table_name}` where `userId`=#{userId}
+    </delete>        
+</mapper>

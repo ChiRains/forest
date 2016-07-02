@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml>
+	<!-- 模块URL列表 标签-->
+	<module-list code="marketing-pirates-url-list">	
+	
+		<item module="marketing" name="获取平台优惠券" url="/coupon/getActivityCoupon.do?format=true" parameterCode="" returnFieldCode="marketing_coupon_returnGetActivityCoupon">
+		<![CDATA[
+			{
+			  "status" : 200,
+			  "message" : "获取优惠劵活动成功.",
+			  "data" : {
+			    "coupon" : {
+			      "id" : 1010006000001801,
+			      "startDateStr" : "2015-12-07",
+			      "endDateStr" : "2016-03-31",
+			      "validDateStr" : "2016-03-31",
+			      "description" : "",
+			      "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=912F8335FEE24FEF8C7C2854B6A89763.png"
+			    }
+			  }
+			}
+		]]>
+		</item>		
+		
+		<item module="marketing" name="获取商家优惠券" url="/coupon/getMerchantActivityCoupon.do?format=true" parameterCode="marketing_coupon_getMerchantActivityCoupon" returnFieldCode="marketing_coupon_returnGetActivityCoupon">
+		<![CDATA[
+			{
+			  "status" : 200,
+			  "message" : "获取优惠劵活动成功.",
+			  "data" : {
+			    "coupon" : {
+			      "id" : 1010006000001801,
+			      "startDateStr" : "2015-12-07",
+			      "endDateStr" : "2016-03-31",
+			      "validDateStr" : "2016-03-31",
+			      "description" : "",
+			      "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=912F8335FEE24FEF8C7C2854B6A89763.png"
+			    }
+			  }
+			}
+		]]>
+		</item>	
+		
+		<item module="marketing" name="获取优惠劵活动" url="/coupon/listActivityCouponItem.do?format=true" parameterCode="marketing_coupon_listActivityCouponItem" returnFieldCode="marketing_coupon_returnGetActivityCoupon">
+		<![CDATA[
+			{
+			  "status" : 200,
+			  "message" : "获取优惠劵活动成功.",
+			  "data" : {
+			    "coupon" : {
+			      "id" : 1010006000001801,
+			      "startDateStr" : "2015-12-07",
+			      "endDateStr" : "2016-03-31",
+			      "validDateStr" : "2016-03-31",
+			      "description" : "",
+			      "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=912F8335FEE24FEF8C7C2854B6A89763.png"
+			    }
+			  }
+			}
+		]]>
+		</item>	
+		
+		<item module="marketing" name="判断用户是否可用领取优惠劵（来自app请求的加app前缀,PC请求可以不带前缀）" url="/app/coupon/canExtract.do?format=true" parameterCode="marketing_coupon_canExtract" returnFieldCode="marketing_coupon_returnJudgeExistAndCanExtract">
+		<![CDATA[
+			{
+			  "status" : 200,
+			  "message" : "判断用户是否可用领取优惠劵.",
+			  "data" : {
+			    "result" : true
+			  }
+			}
+		]]>
+		</item>	
+		
+		<item module="marketing" name="领取优惠券（来自app请求的加app前缀,PC请求可以不带前缀）" url="/app/coupon/extractCoupon.do?format=ture" parameterCode="marketing_coupon_extractCoupon" returnFieldCode="marketing_coupon_returnExtractCoupon">
+		<![CDATA[
+			{
+				"status":200,
+				"message":"领取成功",
+				"data":{
+					"id":1010006000011801,
+					"price":10.0,
+					"date":"2015-12-11"
+				}
+			}
+			]]>
+		</item>
+		
+		<item module="marketing" name="领取优惠券子项（来自app请求的加app前缀,PC请求可以不带前缀）" url="/app/coupon/extractCouponItem.do?format=true" parameterCode="marketing_coupon_extractCouponItem" returnFieldCode="marketing_coupon_returnExtractCoupon">
+		<![CDATA[
+			{
+			  "status" : 200,
+			  "message" : "领取成功",
+			  "data" : {
+			    "id" : 1010006000011802,
+			    "price" : 20.0,
+			    "date" : "2015-12-11"
+			  }
+			}
+			]]>
+		</item>
+		<item module="marketing" name="判断商城是不是有可领取的优惠券（来自app请求的加app前缀,PC请求可以不带前缀）" url="/app/coupon/judgeExistAndCanExtract.do?format=true" parameterCode="marketing_coupon_judgeExistAndCanExtract" returnFieldCode="marketing_coupon_returnJudgeExistAndCanExtract">
+		<![CDATA[
+			{
+			  "status" : 200,
+			  "message" : "判断优惠券存在并且可领.",
+			  "data" : {
+			    "result" : true
+			  }
+			}
+			]]>
+		</item>
+		
+		<item module="marketing" name="获取商城可领的优惠券列表（来自app请求的加app前缀,PC请求可以不带前缀）" url="/app/coupon/listActivityCoupon.do?format=true" parameterCode="marketing_coupon_listActivityCoupon" returnFieldCode="marketing_coupon_returnListActivityCoupon">
+		<![CDATA[
+			{
+		  "status" : 200,
+		  "message" : "优惠券可领列表.",
+		  "data" : {
+		    "list" : [ {
+		      "id" : 1010016000010002,
+		      "couponID" : 1010016000010001,
+		      "name" : "购买商品满500立减80",
+		      "price" : 80.0,
+		      "totalNum" : 100,
+		      "sendNum" : 0,
+		      "usedNum" : 0,
+		      "limitPrice" : 100.0,
+		      "type" : 0
+		    } ]
+		  }
+		}
+			]]>
+		</item>
+		
+		<item module="marketing" name="判断商家是不是有可领取的优惠券（来自app请求的加app前缀,PC请求可以不带前缀）" url="/app/coupon/judgeMerchantExistAndCanExtract.do?format=true" parameterCode="marketing_coupon_judgeMerchantExistAndCanExtract" returnFieldCode="marketing_coupon_returnJudgeExistAndCanExtract">
+		<![CDATA[
+			{
+			  "status" : 200,
+			  "message" : "判断优惠券存在并且可领.",
+			  "data" : {
+			    "result" : true
+			  }
+			}
+			]]>
+		</item>
+		  
+		<item module="marketing" name="获取商家可领的优惠券列表（来自app请求的加app前缀,PC请求可以不带前缀）" url="/app/coupon/listMerchantActivityCoupon.do?format=true" parameterCode="marketing_coupon_listMerchantActivityCoupon" returnFieldCode="marketing_coupon_returnListActivityCoupon">
+		<![CDATA[
+			{
+		  "status" : 200,
+		  "message" : "优惠券可领列表.",
+		  "data" : {
+		    "list" : [ {
+		      "id" : 1010016000010002,
+		      "couponID" : 1010016000010001,
+		      "name" : "购买商品满500立减80",
+		      "price" : 80.0,
+		      "totalNum" : 100,
+		      "sendNum" : 0,
+		      "usedNum" : 0,
+		      "limitPrice" : 100.0,
+		      "type" : 0
+		    } ]
+		  }
+		}
+			]]>
+		</item>
+		  
+		
+	</module-list>
+	<!-- 模块URL列表 标签-->
+	<!-- 模块URL明细-->
+	
+	<module-list code="marketing_coupon_returnGetActivityCoupon">
+		<item key="id">ID</item>
+		<item key="startDateStr">开始时间</item>
+		<item key="endDateStr">结束时间</item>
+		<item key="validDateStr">有效时间</item>
+		<item key="description">描述</item>
+		<item key="image">图片</item>
+	</module-list>	
+	
+	<module-list code="marketing_coupon_returnExtractCoupon">
+		<item key="id">优惠券ID</item>
+		<item key="price">面额</item>
+		<item key="date">领取时间</item>
+	</module-list>	
+	
+	<module-list code="marketing_coupon_returnListActivityCoupon">
+		<item key="list[i].id">ID</item>
+		<item key="list[i].couponID">优惠券ID</item>
+		<item key="list[i].name">优惠券名称</item>
+		<item key="list[i].price">面额</item>
+		<item key="list[i].totalNum">总数量</item>
+		<item key="list[i].sendNum">发放数量</item>
+		<item key="list[i].usedNum">已使用数量</item>
+		<item key="list[i].limitPrice">最低使用面额</item>
+		<item key="list[i].type">1线上2线下3线上+线下</item>
+	</module-list>	
+	
+	<module-list code="marketing_coupon_getMerchantActivityCoupon">
+		<item key="merchantId">商家ID</item>
+	</module-list>		
+	
+	<module-list code="marketing_coupon_returnJudgeExistAndCanExtract">
+		<item key="result">true是，false否</item>
+	</module-list>	
+	
+	<module-list code="marketing_coupon_listActivityCouponItem">
+		<item key="couponId">优惠券活动ID</item>
+	</module-list>		
+		
+	<module-list code="marketing_coupon_canExtract">
+		<item key="couponId">优惠券活动ID</item>
+	</module-list>		
+	
+	
+	<module-list code="marketing_coupon_extractCoupon">
+		<item key="couponId">优惠券活动ID</item>
+	</module-list>		
+	
+	<module-list code="marketing_coupon_extractCouponItem">
+		<item key="couponItemId">优惠券活动子项 ID</item>
+	</module-list>	
+	<module-list code="marketing_coupon_judgeMerchantExistAndCanExtract">
+		<item key="merchantId">商家ID</item>
+	</module-list>
+	<module-list code="marketing_coupon_listMerchantActivityCoupon">
+		<item key="merchantId">商家ID</item>
+	</module-list>
+				
+	<!-- 模块URL明细-->	
+		
+	<module-list code="marketing_listSlide">
+		<item key="sence">场景</item>
+	</module-list>	
+	<!-- 模块URL明细-->	
+</xml>

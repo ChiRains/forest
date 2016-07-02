@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xml>
+	<!-- 模块URL列表 标签-->
+	<module-list code="seckill-pirates-url-list">		
+		<item module="seckill" name="秒杀页" url="/seckill/listByScreenings4Classify.do" parameterCode="seckill_listByScreenings" returnFieldCode="seckill_returnListByScreenings">
+		<![CDATA[		
+			{
+				  "status" : 200,
+				  "message" : "获取秒杀数据成功.",
+				  "data" : {
+				    "current" : {
+				      "id" : 1010006000000006,
+				      "beginTimeStr" : "2016-01-16 22:00:00",
+				      "endTimeStr" : "2016-01-16 23:00:00",
+				      "state" : 3,
+				      "nowStr" : "2016-01-16 21:09:02",
+				      "screeningsSlideList" : [ "http://file-dev.qi-cloud.net/file/get.do?uid=4BCA08AECF7C4E1997C2DF4555886D42.png", "http://file-dev.qi-cloud.net/file/get.do?uid=F1652F43245F4406B328A118CE442C6E.png" ],
+				      "classifyList" : [ {
+				        "name" : "茶几",
+				        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=96EFD5878D694E849239D037B9CCD7B3.jpg",
+				        "merchandiseList" : [ {
+				          "id" : 1010006000000001,
+				          "stock" : 1000000,
+				          "salesVolume" : 0,
+				          "name" : "床",
+				          "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=2F19057B76C04ED39351AA5C328E0972.jpg",
+				          "discount" : 4000.0,
+				          "seckillPrice" : 6600.0
+				        }, {
+				          "id" : 1010006000000002,
+				          "stock" : 4000000,
+				          "salesVolume" : 0,
+				          "name" : "黑枸杞",
+				          "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=6CAAFCB936714AF7B851824291932949.jpg",
+				          "discount" : 20.0,
+				          "seckillPrice" : 180.0
+				        } ]
+				      }, {
+				        "name" : "床2",
+				        "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=460F7AEE34D345ED9F936431639FEF99.jpg",
+				        "merchandiseList" : [ {
+				          "id" : 1010006000000003,
+				          "stock" : 1000998,
+				          "salesVolume" : 0,
+				          "name" : "亿心源特级纯天然野生红枸杞",
+				          "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=33F440E4A6E642A19C6EF58E630DF8F6.jpg",
+				          "discount" : 100.0,
+				          "seckillPrice" : 32.8
+				        } ]
+				      } ]
+				    },
+				    "list" : [ {
+				      "id" : 1010006000000005,
+				      "beginTimeStr" : "2016-01-16 16:00:00",
+				      "endTimeStr" : "2016-01-16 17:00:00",
+				      "state" : 1,
+				      "stateStr" : "已结束",
+				      "current" : false
+				    }, {
+				      "id" : 1010006000000002,
+				      "beginTimeStr" : "2016-01-16 17:00:00",
+				      "endTimeStr" : "2016-01-16 18:00:00",
+				      "state" : 1,
+				      "stateStr" : "已结束",
+				      "current" : false
+				    }, {
+				      "id" : 1010006000000008,
+				      "beginTimeStr" : "2016-01-16 20:00:00",
+				      "endTimeStr" : "2016-01-16 21:00:00",
+				      "state" : 1,
+				      "stateStr" : "已结束",
+				      "current" : false
+				    }, {
+				      "id" : 1010006000000006,
+				      "beginTimeStr" : "2016-01-16 22:00:00",
+				      "endTimeStr" : "2016-01-16 23:00:00",
+				      "state" : 3,
+				      "stateStr" : "即将开抢",
+				      "current" : true
+				    } ]
+				  }
+				}
+		]]>
+		</item>		
+		<item module="seckill" name="秒杀" url="/app/seckillOrder/order.do" parameterCode="seckill_seckillOrder_order" returnFieldCode="seckill_reutrnSeckillOrder_order">
+		<![CDATA[	
+		{
+			  "status" : 200,
+			  "message" : "秒杀成功.",
+			  "data" : {
+			    "payHourDesc" : "请您在30分钟内支付!",
+			    "price" : 6600.0,
+			    "seckillPrice" : 6600.0,
+			    "payMinutes" : 30,
+			    "orderDate" : "2016-01-17 22:08:33",
+			    "orderNumber" : "SSNP201601172265",
+			    "name" : "【秒】床",
+			    "cash" : 6600.0,
+			    "image" : "http://file-dev.qi-cloud.net/file/get.do?uid=2F19057B76C04ED39351AA5C328E0972.jpg",
+			    "orderId" : 6600.0
+			  }
+			}	
+		]]>
+		</item>									
+	</module-list>
+	<!-- 模块URL列表 标签-->
+	<!-- 模块URL明细-->	
+	<module-list code="seckill_listByScreenings">
+		<item key="screeningsId">场次ID,可传-1</item>
+		<item key="size">场次数量</item>
+	</module-list>	
+	
+	<module-list code="seckill_returnListByScreenings">
+		<item key="id"></item>
+		<item key="beginTimeStr">开始时间</item>
+		<item key="endTimeStr">结束时间</item>
+		<item key="state">1结束 2进行中 3即将开枪</item>
+		<item key="nowStr">当前时间</item>
+		<item key="screeningsSlideList">轮播图</item>
+		<item key="classifyList[i].name">商品分类名称</item>
+		<item key="classifyList[i].image">分类图片</item>
+		<item key="classifyList[i].merchandiseList[j].id">商品ID</item>
+		<item key="classifyList[i].merchandiseList[j].stock">库存</item>
+		<item key="classifyList[i].merchandiseList[j].salesVolume">已抢数量</item>
+		<item key="classifyList[i].merchandiseList[j].name">商品名称</item>
+		<item key="classifyList[i].merchandiseList[j].image">缩略图</item>
+		<item key="classifyList[i].merchandiseList[j].discount">折扣价,成交价</item>
+		<item key="classifyList[i].merchandiseList[j].seckillPrice">秒杀价</item>
+		<item key="list[i].id">场次ID</item>
+		<item key="list[i].beginTimeStr">开始时间</item>
+		<item key="list[i].endTimeStr">结束时间</item>
+		<item key="list[i].state">1结束 2进行中 3即将开枪</item>
+		<item key="list[i].stateStr">1结束 2进行中 3即将开枪</item>
+		<item key="list[i].current">是否当前 true是，false否</item>
+	</module-list>	
+		
+	<module-list code="seckill_seckillOrder_order">
+		<item key="seckillMerchandiseId">秒杀ID</item>		
+	</module-list>	
+	<module-list code="seckill_reutrnSeckillOrder_order">
+		<item key="payHourDesc">支付时间描述</item>		
+		<item key="price">原价</item>	
+		<item key="seckillPrice">秒杀价</item>	
+		<item key="payMinutes">支付时间</item>	
+		<item key="orderDate">下单时间</item>	
+		<item key="orderNumber">订单号</item>	
+		<item key="name">商品名称</item>	
+		<item key="cash">现金</item>	
+		<item key="image">缩略图</item>	
+		<item key="orderId">总单ID</item>	
+	</module-list>	
+									
+	<!-- 模块URL明细-->	
+</xml>

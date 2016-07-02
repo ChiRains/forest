@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.marketing.dao.mysql.mapper.RecentDiscountMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="RecentDiscount">  
+        select * from `marketing_recent_discount` 
+        where 1=1
+        <if test="merchantId!=null and merchantId!=0">
+        	and `merchantId`=#{merchantId}
+        </if>
+        <if test="name!=null ">
+        	and `name` like '%${name}%'
+        </if>
+        limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `marketing_recent_discount`
+         where 1=1
+        <if test="merchantId!=null and merchantId!=0">
+        	and `merchantId`=#{merchantId}
+        </if>
+        <if test="name!=null ">
+        	and `name` like '%${name}%'
+        </if>
+    </select> 
+    
+    <select id="list" parameterType="java.util.HashMap" resultType="RecentDiscount">  
+        select * from `marketing_recent_discount` 
+        where 1=1 and `enable`=1
+        <if test="merchantId!=null and merchantId!=0">
+        	and `merchantId`=#{merchantId}
+        </if>
+        <if test="name!=null ">
+        	and `name` like '%${name}%'
+        </if>
+        <if test="date !=null ">
+        	and #{date} between `startDate` and `endDate`
+        </if>
+        order by endDate desc
+        limit #{start},#{count}
+    </select>  
+    
+     <select id="count" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `marketing_recent_discount`
+         where 1=1 and `enable`=1
+        <if test="merchantId!=null and merchantId!=0">
+        	and `merchantId`=#{merchantId}
+        </if>
+        <if test="name!=null ">
+        	and `name` like '%${name}%'
+        </if>
+        <if test="date !=null ">
+        	and #{date} between `startDate` and `endDate`
+        </if>
+    </select> 
+</mapper>

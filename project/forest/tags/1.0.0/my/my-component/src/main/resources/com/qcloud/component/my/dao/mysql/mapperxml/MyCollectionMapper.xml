@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.my.dao.mysql.mapper.MyCollectionMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="MyCollection">  
+        select * from `${table_name}` limit #{start},#{count}
+    </select>  
+    
+     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `${table_name}`
+    </select> 
+    
+    <select id="list" parameterType="java.util.HashMap" resultType="MyCollection">  
+        select * from `${table_name}` where `userId`=#{userId} and `type`=#{type}
+        <if test="classifyId > 0">
+            AND classifyId = #{classifyId}
+        </if>
+        order by time desc limit #{start},#{count}
+    </select>
+    
+    <select id="getByObject" parameterType="java.util.HashMap" resultType="MyCollection">  
+        select * from `${table_name}` where `userId`=#{userId} and `objId`=#{objId} and `type`=#{type}
+    </select>    
+    <!-- 通过UserId获取收藏数目 -->  
+    <select id="countByUserId" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `${table_name}` where `userId`=#{userId} 
+    </select>      
+</mapper>

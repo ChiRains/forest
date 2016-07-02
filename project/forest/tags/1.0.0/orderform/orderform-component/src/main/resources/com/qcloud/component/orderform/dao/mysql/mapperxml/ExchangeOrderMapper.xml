@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.orderform.dao.mysql.mapper.ExchangeOrderMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="ExchangeOrder">  
+        select * from `orderform_exchange_order` 
+        where 1=1 and `state`!=600 
+        <if test="storeId !=null and storeId !=0">
+        	and storeId=#{storeId}
+        </if>
+        <if test="merchantId !=null and merchantId!=0">
+        	and merchantId=#{merchantId}
+        </if>
+        <if test="state !=0">
+        	and state=#{state}
+        </if>
+        <if test="exchangeNumber !=null">
+        	and exchangeNumber=#{exchangeNumber}
+        </if>
+        order by time desc
+        limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `orderform_exchange_order`
+        where 1=1 and `state`!=600
+        <if test="storeId !=null and storeId !=0">
+        	and storeId=#{storeId}
+        </if>
+        <if test="merchantId !=null and merchantId!=0">
+        	and merchantId=#{merchantId}
+        </if>
+         <if test="state !=0">
+        	and state=#{state}
+        </if>
+        <if test="exchangeNumber !=null">
+        	and exchangeNumber=#{exchangeNumber}
+        </if>
+    </select> 
+    
+    <select id="listBySubOrder" parameterType="Long" resultType="ExchangeOrder">
+        select * from `orderform_exchange_order` where `subOrderId`=#{subOrderId}   and `state`!=600 
+    </select>
+    
+    <select id="list4ExpireState" parameterType="java.util.HashMap" resultType="ExchangeOrder">   
+        <![CDATA[select * from `orderform_exchange_order` where `state`=#{state} and `stateValidTime` < #{now} limit #{start},#{count}]]>
+    </select> 
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.warehouse.dao.mysql.mapper.MerchandiseStockStateMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="MerchandiseStockState">
+        select * from `warehouse_merchandise_stock_state` where 1=1
+        <if test="stockStateId != null">
+            AND stockStateId = #{stockStateId}
+        </if>
+         limit #{start},#{count}
+    </select>
+    
+     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `warehouse_merchandise_stock_state` where 1=1
+        <if test="stockStateId != null">
+            AND stockStateId = #{stockStateId}
+        </if>
+    </select>
+    
+    <select id="listByMap" resultType="MerchandiseStockState">
+        select * from `warehouse_merchandise_stock_state` where 1=1
+        <if test="stockStateId != null">
+            AND stockStateId = #{stockStateId}
+        </if>
+        <if test="state > 0">
+            AND state = #{state}
+        </if>
+    </select>
+</mapper>

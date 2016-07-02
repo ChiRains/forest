@@ -1,0 +1,61 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.qcloud.component</groupId>
+		<artifactId>personalcenter</artifactId>
+		<version>2.0.1.08-SNAPSHOT</version>
+	</parent>
+	<artifactId>personalcenter-component</artifactId>
+	
+	<dependencies>	
+		<dependency>
+			<groupId>com.qcloud.component</groupId>
+			<artifactId>personalcenter-api</artifactId>
+			<version>2.0.1.08-SNAPSHOT</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>com.qcloud.pirates</groupId>
+			<artifactId>pirates-test</artifactId>
+			<version>${pirates.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.qcloud.component</groupId>
+			<artifactId>autoid-component</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>	
+		
+		<dependency>
+			<groupId>com.qcloud.component</groupId>
+			<artifactId>parameter-component</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.qcloud.component</groupId>
+			<artifactId>filesdk-component</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>	
+		
+		<dependency>
+			<groupId>com.qcloud.component</groupId>
+			<artifactId>publicdata-component</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>	
+		
+		<dependency>
+			<groupId>com.qcloud.component</groupId>
+			<artifactId>publicservice-component</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>	
+		
+		<dependency>
+			<groupId>com.qcloud.component</groupId>
+			<artifactId>account-api</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>			
+	</dependencies>	
+</project>

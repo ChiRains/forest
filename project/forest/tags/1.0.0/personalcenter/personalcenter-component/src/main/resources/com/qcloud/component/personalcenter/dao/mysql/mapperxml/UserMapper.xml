@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.qcloud.component.personalcenter.dao.mysql.mapper.UserMapper">
+ <select id="list4query" parameterType="java.util.HashMap" resultType="User">  
+        select * from `personalcenter_user` limit #{start},#{count}
+    </select>  
+    
+     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `personalcenter_user`
+    </select>
+
+	<select id="getByMobile" parameterType="String" resultType="User">
+		select * from `personalcenter_user` where `mobile`=#{mobile}
+	</select>
+	
+	<select id="getByEmail" parameterType="String" resultType="User">
+		select * from `personalcenter_user` where `email`=#{email}
+	</select>
+	
+	<select id="getByMembershipCard" parameterType="String" resultType="User">
+		select * from `personalcenter_user` where `membershipCard`=#{membershipCard}
+	</select>
+	
+	<select id="list4query2" parameterType="java.util.HashMap" resultType="User">  
+        select * from `personalcenter_user` where 1=1 
+        <if test="id > 0">
+        	and `id` = #{id}
+        </if>
+        <if test="name != null">
+            AND ( `name` LIKE CONCAT('%',#{name},'%')  or  `nickname` LIKE CONCAT('%',#{name},'%')
+            or `mobile` LIKE CONCAT('%',#{name},'%') or `email` LIKE CONCAT('%',#{name},'%') )
+        </if>
+        limit #{start},#{count}
+    </select>  
+    
+     <select id="count4query2" parameterType="java.util.HashMap" resultType="Integer">
+        select count(*) from `personalcenter_user` where 1=1  
+         <if test="id > 0">
+        	and `id` = #{id}
+        </if>
+        <if test="name != null">
+            AND ( `name` LIKE CONCAT('%',#{name},'%') or  `nickname` LIKE CONCAT('%',#{name},'%') 
+            or `mobile` LIKE CONCAT('%',#{name},'%') or `email` LIKE CONCAT('%',#{name},'%') )
+        </if>
+    </select>
+</mapper>

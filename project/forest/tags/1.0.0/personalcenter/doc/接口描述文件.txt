@@ -1,0 +1,77 @@
+组件personalcenter接口
+
+1.  登录
+
+URL：  
+/user/login.do?username=1111&pwd=123456
+
+参数：  
+username    账号
+pwd			密码
+返回值
+{"status":200,"message":"登录成功","data":{"token":"2_2B68FEC00CFC4943915002627C30281D"}}
+其中   
+token为用户在一定时间段的与系统交互唯一凭证
+
+2.  获取用户信息
+
+URL：	
+/user/getUser.do
+/user/getUserByToken.do?token=2_82CC8AFF11304C1BB233C4EA7F5AEDDB
+参数：
+token 为登录成功后返回的token串
+返回值：
+{
+  "status" : 200,
+  "message" : "个人信息获取成功.",
+  "data" : {
+    "user" : {
+      "account" : "13232282158",
+      "nickname" : "索隆",
+      "name" : "zoro",
+      "mobile" : "13232282158",
+      "email" : null,
+      "headImage" : null,
+      "sexStr" : "保密",
+      "grade" : "普通会员",
+      "integral" : 0,
+      "commission" : 0.0,
+      "consumptionCurrency" : 0.0,
+      "investment" : 0.0
+    }
+  }
+}其中
+account		账号
+nickname	昵称
+name		姓名
+mobile		手机号
+email		电子邮箱
+headImage	头像
+sexStr		性别
+grade		等级
+integral	积分
+commission	佣金
+consumptionCurrency	消费币
+investment	投资
+
+3. 修改用户密码
+/user/changePsw.do?oldPsw=123456&newPsw=654321
+/user/changePswByToken.do?token=2_82CC8AFF11304C1BB233C4EA7F5AEDDB&oldPsw=123456&newPsw=654321
+返回值：
+未登录   	 {"status":-599,"message":"您好，请登录。","data":null}
+新密码空	 {"status":-599,"message":"新密码不能为空.","data":null}
+旧密码空	 {"status":-599,"message":"旧密码不能为空.","data":null}
+原密码不正确  {"status":-599,"message":"原密码不正确","data":null}
+修改成功         {"status":200,"message":"修改密码成功.","data":{}}
+
+6.  登出系统
+/user/logout.do
+/user/logoutByToken.do?token=2_82CC8AFF11304C1BB233C4EA7F5AEDDB
+
+
+
+注册
+url:   http://shuiqi-dev.qi-cloud.net/user/sendMsgForRegister.do
+参数 :   mobile   手机号
+返回值：    {"status":200,"message":"发送短信成功","data":{}}
+

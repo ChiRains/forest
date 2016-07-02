@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.orderform.dao.mysql.mapper.CollectOrderMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="CollectOrder">  
+        select * from `${table_name}` where `time` between #{startDate} and #{endDate}
+        <if test="orderNumber!=null"> and `orderNumber` like concat('%',#{orderNumber},'%')</if>
+        limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `${table_name}` where `time` between #{startDate} and #{endDate}
+        <if test="orderNumber!=null"> and `orderNumber` like concat('%',#{orderNumber},'%')</if>
+    </select> 
+        
+    <select id="list4ExpireState" parameterType="java.util.HashMap" resultType="CollectOrder">  
+        <![CDATA[ select * from `${table_name}` where `state`=#{state} and `stateValidTime` < #{now} order by `time` limit #{start},#{count}]]>
+    </select>    
+    
+    <select id="getByOrderNumber" parameterType="java.util.HashMap" resultType="CollectOrder">  
+        select * from `${table_name}` where orderNumber = #{orderNumber}
+        limit #{start},#{count}
+    </select> 
+</mapper>

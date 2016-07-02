@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qcloud.project.forest.dao.mysql.mapper.GiftCouponUserMapper">
+	<select id="list4query" parameterType="java.util.HashMap" resultType="GiftCouponUser">
+		select * from `forest_gift_coupon_user` where 1=1
+		<if test="userId!=0 ">
+		and	userId=#{userId}
+		</if>
+		order by extractDate desc
+		limit #{start},#{count}
+	</select>
+
+	<select id="count4query" parameterType="java.util.HashMap" resultType="Integer">
+		select count(*) from `forest_gift_coupon_user` where 1=1
+		<if test="userId!=0 ">
+		and	userId=#{userId}
+		</if>
+	</select>
+	
+	<select id="listByUser" parameterType="java.util.HashMap" resultType="GiftCouponUser">
+		select * from `forest_gift_coupon_user`
+		where 1=1  and userId=#{userId}
+		order by inValidDate asc
+		limit #{start},#{count}
+	</select>
+	
+	<select id="listCanUse" parameterType="java.util.HashMap" resultType="GiftCouponUser" >
+		select count(*) from `forest_gift_coupon_user` 
+		where 1=1
+			and	userId=#{userId}
+			<![CDATA[ and #{now} >=validDate  and #{now} <=inValidDate ]]>
+			and `state`=1
+	</select>
+	
+	<select id="judgeCanUse" parameterType="java.util.HashMap" resultType="Integer" >
+		select count(*) from `forest_gift_coupon_user` 
+		where 1=1
+			and	userId=#{userId}
+			<![CDATA[ and #{now} >=validDate  and #{now} <=inValidDate ]]>
+			and `state`=1
+			and `id`=#{id}
+	</select>
+</mapper>

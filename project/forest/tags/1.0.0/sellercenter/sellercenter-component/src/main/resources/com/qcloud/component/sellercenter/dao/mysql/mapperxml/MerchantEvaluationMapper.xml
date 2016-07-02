@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.sellercenter.dao.mysql.mapper.MerchantEvaluationMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="MerchantEvaluation">  
+        select * from `${table_name}` WHERE merchantId=#{merchantId}
+        <if test="evaluationTime != null">
+            AND DATE_FORMAT(evaluationTime,'%Y-%m-%d')=#{evaluationTime}
+        </if>
+        <if test="content != null">
+            AND content like concat('%',#{content},'%')
+        </if>
+        ORDER BY evaluationTime DESC
+        limit #{start},#{count}
+    </select>
+    
+     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">
+        select count(*) from `${table_name}` WHERE merchantId=#{merchantId}
+        <if test="evaluationTime != null">
+            AND DATE_FORMAT(evaluationTime,'%Y-%m-%d')=#{evaluationTime}
+        </if>
+    </select>
+    
+    <select id="getByEvaluationId" parameterType="java.util.HashMap" resultType="MerchantEvaluation">  
+        select * from `${table_name}` WHERE evaluationId=#{evaluationId}
+        limit #{start},#{count}
+    </select>
+    
+     <delete id="deleteByEvaluationId">
+        delete FROM `${table_name}` where `evaluationId` = #{evaluationId}
+    </delete>
+</mapper>

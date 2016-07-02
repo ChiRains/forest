@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.sellercenter.dao.mysql.mapper.DistributeMembershipCardMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="DistributeMembershipCard">  
+        select * from `sellercenter_distribute_membership_card` limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `sellercenter_distribute_membership_card`
+    </select> 
+    
+    <select id="getByCardNumber" parameterType="String" resultType="DistributeMembershipCard">  
+        select * from `sellercenter_distribute_membership_card` where cardNumber = #{cardNumber}
+    </select>  
+    
+    <select id="list4stat" parameterType="java.util.HashMap" resultType="DistributeMembershipCardStat">          
+        select count(id) sendNum,c.merchantId, c.merchantCode, c.merchantName  from sellercenter_distribute_membership_card c  where 1 = 1 
+        <if test="merchantCode != null">
+        	and `merchantCode` like concat('%',#{merchantCode},'%')
+        </if>
+        <if test="merchantName != null">
+        	and `merchantName` like concat('%',#{merchantName},'%')
+        </if> 
+        group by merchantCode order by merchantCode limit #{start},#{count}
+    </select>  
+    
+    <select id="count4stat" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from (    select count(id) sendNum,c.merchantId, c.merchantCode, c.merchantName from `sellercenter_distribute_membership_card` c where 1 = 1
+        <if test="merchantCode != null">
+        	and `merchantCode` like concat('%',#{merchantCode},'%')
+        </if>
+        <if test="merchantName != null">
+        	and `merchantName` like concat('%',#{merchantName},'%')
+        </if> 
+        group by merchantCode order by merchantCode) a
+    </select> 
+    
+    <select id="list4merchant" parameterType="java.util.HashMap" resultType="DistributeMembershipCard">  
+        select * from `sellercenter_distribute_membership_card` where merchantId = #{merchantId} limit #{start},#{count}
+    </select>  
+    
+    <select id="count4merchant" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `sellercenter_distribute_membership_card` where merchantId = #{merchantId}
+    </select> 
+    
+    <select id="countMerchantSended" parameterType="Long" resultType="Integer">  
+        select count(*) from `sellercenter_distribute_membership_card` where merchantId = #{merchantId} and state = 2
+    </select>         
+</mapper>

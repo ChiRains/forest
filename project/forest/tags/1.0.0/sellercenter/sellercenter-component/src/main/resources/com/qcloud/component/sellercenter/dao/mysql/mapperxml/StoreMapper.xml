@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.component.sellercenter.dao.mysql.mapper.StoreMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="Store">  
+        select * from `sellercenter_store` where `merchantId`=#{merchantId}
+        <if test="name !=null">
+        	and `name` like concat('%',#{name},'%') 
+        </if>
+        limit #{start},#{count}
+    </select>  
+    
+     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `sellercenter_store` where `merchantId`=#{merchantId}
+        <if test="name !=null">
+        	and `name` like concat('%',#{name},'%') 
+        </if>
+    </select> 
+    
+    <select id="listChildren" parameterType="Long" resultType="Store">  
+        select * from `sellercenter_store` where `parentId`=#{parentId} and `enable` = 1
+    </select>      
+    
+    <select id="listByMerchant" parameterType="Long" resultType="Store">  
+        select * from `sellercenter_store` where `merchantId`=#{merchantId} and `enable` = 1
+    </select>    
+    
+     <select id="listByAddress" parameterType="java.util.HashMap" resultType="Store">  
+        select * from `sellercenter_store` where 1=1
+        <if test="province !=null">
+        	 and `province` like concat('%',#{province},'%')
+        </if>
+        <if test="city !=null">
+        	 and `city` like concat('%',#{city},'%')
+        </if>
+        <if test="district !=null">
+        	 and `district` like concat('%',#{district},'%')
+        </if>
+        and `enable` = 1
+    </select>
+    
+    <select id="listByParentId" parameterType="java.util.HashMap" resultType="Store">  
+        select * from `sellercenter_store` where `parentId`=#{parentId} and `enable` = 1
+    </select>   
+</mapper>
