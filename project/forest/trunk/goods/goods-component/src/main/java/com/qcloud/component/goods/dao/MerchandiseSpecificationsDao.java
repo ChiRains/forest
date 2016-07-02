@@ -39,4 +39,6 @@ public interface MerchandiseSpecificationsDao extends ISimpleDao<MerchandiseSpec
     public List<MerchandiseSpecifications> list(HashMap where);
 
     public Page<MerchandiseSpecifications> page(HashMap where, int start, int size);
+    
+    List<MerchandiseSpecifications> listByUnifiedMerchandise(Long unifiedMerchandiseId);
 }

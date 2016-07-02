@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.qcloud.component.goods.CommoditycenterClient;
-import com.qcloud.component.goods.QMerchandiseItem;
-import com.qcloud.component.goods.QUnifiedMerchandise;
+import com.qcloud.component.goods.model.MerchandiseSpecifications;
+import com.qcloud.component.goods.model.UnifiedMerchandise;
+import com.qcloud.component.goods.service.MerchandiseSpecificationsService;
+import com.qcloud.component.goods.service.UnifiedMerchandiseService;
 import com.qcloud.component.warehouse.model.MerchandiseStock;
 import com.qcloud.component.warehouse.web.handler.MerchandiseStockHandler;
 import com.qcloud.component.warehouse.web.vo.MerchandiseStockVO;
@@ -17,7 +18,10 @@ import com.qcloud.pirates.core.json.Json;
 public class MerchandiseStockHandlerImpl implements MerchandiseStockHandler {
 
     @Autowired
-    private CommoditycenterClient commoditycenterClient;
+    private UnifiedMerchandiseService        unifiedMerchandiseService;
+
+    @Autowired
+    private MerchandiseSpecificationsService merchandiseSpecificationsService;
 
     @Override
     public List<MerchandiseStockVO> toVOList(List<MerchandiseStock> list) {
@@ -42,12 +46,16 @@ public class MerchandiseStockHandlerImpl implements MerchandiseStockHandler {
         List<AdminMerchandiseStockVO> voList = new ArrayList<AdminMerchandiseStockVO>();
         for (MerchandiseStock adminMerchandiseStock : list) {
             AdminMerchandiseStockVO vo = toVO4Admin(adminMerchandiseStock);
-            QUnifiedMerchandise qUnifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(adminMerchandiseStock.getUnifiedMerchandiseId());
-            vo.setPrice(qUnifiedMerchandise.getPrice());
-            vo.setPurchase(qUnifiedMerchandise.getPurchase());
-            vo.setDiscount(qUnifiedMerchandise.getDiscount());
-            List<QMerchandiseItem> qMerchandiseItemList = qUnifiedMerchandise.getList();
-            vo.setSpecifications(qMerchandiseItemList != null ? qUnifiedMerchandise.getList().get(0).getSpecifications() : "");
+            UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(adminMerchandiseStock.getUnifiedMerchandiseId());
+            vo.setPrice(unifiedMerchandise.getPrice());
+            vo.setPurchase(unifiedMerchandise.getPurchase());
+            vo.setDiscount(unifiedMerchandise.getDiscount());
+            List<MerchandiseSpecifications> msList = merchandiseSpecificationsService.listByUnifiedMerchandise(unifiedMerchandise.getId());
+            StringBuffer sb = new StringBuffer();
+            for (MerchandiseSpecifications merchandiseSpecifications : msList) {
+                sb.append(merchandiseSpecifications.getValue()).append(" ");
+            }
+            vo.setSpecifications(sb.toString());
             voList.add(vo);
         }
         return voList;

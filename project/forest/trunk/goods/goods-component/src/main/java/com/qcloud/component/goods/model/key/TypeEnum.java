@@ -48,39 +48,6 @@ public class TypeEnum {
             return name;
         }
     }
-    public enum UnifiedMerchandiseType {
-        SINGLE(1, "单一商品"), COMBINAION(2, "组合商品"), MARKETING(3, "促销、活动商品");
-
-        private final int    key;
-
-        private final String name;
-
-        private UnifiedMerchandiseType(int key, String name) {
-
-            this.key = key;
-            this.name = name;
-        }
-
-        public int getKey() {
-
-            return key;
-        }
-
-        public String getName() {
-
-            return name;
-        }
-
-        public static String getName(int type) {
-
-            for (UnifiedMerchandiseType umt : UnifiedMerchandiseType.values()) {
-                if (umt.getKey() == type) {
-                    return umt.getName();
-                }
-            }
-            return null;
-        }
-    }
     public enum OrderType {
         ASE(1, "升序"), DESC(2, "降序");
 
@@ -331,6 +298,6 @@ public class TypeEnum {
             this.name = name;
         }
     }
-    
+
     public final static String EXCEL_TEMPLATE_DIR = "/WEB-INF/excel";
 }

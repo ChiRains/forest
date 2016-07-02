@@ -10,9 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.CommoditycenterClient;
-import com.qcloud.component.goods.QMerchandiseItem;
 import com.qcloud.component.goods.QUnifiedMerchandise;
-import com.qcloud.component.goods.QUnifiedMerchandise.MerchandiseType;
+import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.marketing.MarketingClient;
 import com.qcloud.component.marketing.QCoupon;
 import com.qcloud.component.my.model.MyCollection;
@@ -111,13 +110,13 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
         vo.setPrice(NumberUtil.scale(unifiedMerchandise.getPrice(), 2));
         vo.setSpecifications(unifiedMerchandise.getSpecifications());
         vo.setStock(unifiedMerchandise.getStock());
-        MerchandiseType merchandiseType = unifiedMerchandise.getType();
-        if (MerchandiseType.SINGLE.equals(merchandiseType)) {
+        UnifiedMerchandiseType merchandiseType = unifiedMerchandise.getType();
+        if (UnifiedMerchandiseType.SINGLE.equals(merchandiseType)) {
             vo.setMerchandiseType(1);
-        } else if (MerchandiseType.COMBINATION.equals(merchandiseType)) {
+        } else if (UnifiedMerchandiseType.COMBINATION.equals(merchandiseType)) {
             vo.setMerchandiseType(2);
-        } else if (MerchandiseType.MARKETING.equals(merchandiseType)) {
-            vo.setMerchandiseType(2);
+        } else if (UnifiedMerchandiseType.MARKETING.equals(merchandiseType)) {
+            vo.setMerchandiseType(1);
         }
         MyCollection myCollection = myCollectionService.getByObject(myShoppingCart.getUnifiedMerchandiseId(), myShoppingCart.getUserId(), CollectionType.MERCHANDISE);
         vo.setCollect(myCollection != null);
@@ -215,9 +214,9 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
             }
             QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(myShoppingCartVO.getUnifiedMerchandiseId());
             // 单品
-            if (unifiedMerchandise.getType().equals(MerchandiseType.SINGLE)) {
+            if (unifiedMerchandise.getType().equals(UnifiedMerchandiseType.SINGLE)) {
                 myShoppingCartMerchantVO.getMerchandiseList().add(myShoppingCartVO);
-            } else if (unifiedMerchandise.getType().equals(MerchandiseType.COMBINATION)) {// 组合商品
+            } else if (unifiedMerchandise.getType().equals(UnifiedMerchandiseType.COMBINATION)) {// 组合商品
                 CombinationListVO combination = new CombinationListVO();
                 combination.setName(unifiedMerchandise.getName());
                 combination.setSum(unifiedMerchandise.getDiscount());
@@ -227,21 +226,20 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
                 String desc = unifiedMerchandise.getName();
                 //
                 List<MyShoppingCartVO> comMerchandiseList = new ArrayList<MyShoppingCartVO>();
-                for (QMerchandiseItem item : unifiedMerchandise.getList()) {
-                    QUnifiedMerchandise merchandise = commoditycenterClient.getUnifiedMerchandise(item.getUnifiedMerchandiseId());
+                for (QUnifiedMerchandise merchandise : unifiedMerchandise.getList()) {
                     MyShoppingCartVO vo = new MyShoppingCartVO();
-                    vo.setSpecifications(item.getSpecifications());
+                    vo.setSpecifications(merchandise.getSpecifications());
                     vo.setDiscount(merchandise.getDiscount());
                     vo.setPrice(merchandise.getPrice());
                     vo.setUnifiedMerchandiseId(merchandise.getId());
                     vo.setImage(merchandise.getImage());
                     vo.setName(merchandise.getName());
                     vo.setUnit(merchandise.getUnit());
-                    vo.setNumber(item.getNumber());
+                    vo.setNumber(merchandise.getNumber());
                     vo.setStock(merchandise.getStock());
                     vo.setTimeStr(myShoppingCartVO.getTimeStr());
                     vo.setMerchantId(merchandise.getMerchantId());
-                    vo.setMerchantClassifyId(item.getMerchantClassifyId());
+                    vo.setMerchantClassifyId(merchandise.getMerchantClassifyId());
                     vo.setMerchandiseType(2);
                     desc += merchandise.getName();
                     comMerchandiseList.add(vo);

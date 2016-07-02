@@ -93,4 +93,9 @@ public class MerchandiseSpecificationsDaoRedisImpl implements MerchandiseSpecifi
 
         throw new NotImplementedException();
     }
+
+    @Override
+    public List<MerchandiseSpecifications> listByUnifiedMerchandise(Long unifiedMerchandiseId) {
+        throw new NotImplementedException();
+    }
 }

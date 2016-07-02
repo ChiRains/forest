@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.CommoditycenterClient;
-import com.qcloud.component.goods.OutdatedCommoditycenterClient;
 import com.qcloud.component.goods.QUnifiedMerchandise;
-import com.qcloud.component.goods.model.Merchandise;
 import com.qcloud.component.marketing.model.MerchandiseCustomClassification;
 import com.qcloud.component.marketing.web.handler.MerchandiseCustomClassificationHandler;
 import com.qcloud.component.marketing.web.vo.MerchandiseCustomClassificationVO;
@@ -19,13 +17,10 @@ import com.qcloud.pirates.core.json.Json;
 public class MerchandiseCustomClassificationHandlerImpl implements MerchandiseCustomClassificationHandler {
 
     @Autowired
-    private CommoditycenterClient         commoditycenterClient;
+    private CommoditycenterClient commoditycenterClient;
 
     @Autowired
-    private OutdatedCommoditycenterClient outdatedCommoditycenterClient;
-
-    @Autowired
-    private FileSDKClient                 fileSDKClient;
+    private FileSDKClient         fileSDKClient;
 
     @Override
     public List<MerchandiseCustomClassificationVO> toVOList(List<MerchandiseCustomClassification> list) {
@@ -69,9 +64,8 @@ public class MerchandiseCustomClassificationHandlerImpl implements MerchandiseCu
             // voList.add(vo);
             AdminMerchandiseCustomClassificationVO vo = new AdminMerchandiseCustomClassificationVO();
             QUnifiedMerchandise qmerchandise = commoditycenterClient.getUnifiedMerchandise(mc.getUnifiedMerchandiseId());
-            Merchandise merchandise = outdatedCommoditycenterClient.getMerchandise(qmerchandise.getList().get(0).getMerchandiseId());
-            if (merchandise != null) {
-                vo.setImage(merchandise.getImage() == null ? "" : merchandise.getImage());
+            if (qmerchandise != null) {
+                vo.setImage(qmerchandise.getImage() == null ? "" : qmerchandise.getImage());
                 // vo.setName(merchandise.getName());
             }
             // vo.setName(qmerchandise.getList().get(0).getName());

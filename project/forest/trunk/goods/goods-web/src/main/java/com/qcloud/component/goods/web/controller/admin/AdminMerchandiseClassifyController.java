@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import com.qcloud.component.goods.OutdatedCommoditycenterClient;
+import com.qcloud.component.goods.service.MerchandiseService;
 import com.qcloud.component.publicdata.ClassifyType;
 import com.qcloud.component.publicdata.PublicdataClient;
 import com.qcloud.component.publicdata.model.Classify;
@@ -20,13 +20,13 @@ import com.qcloud.pirates.web.security.annotation.NoReferer;
 public class AdminMerchandiseClassifyController {
 
     //
-    public static final String   DIR = "/admin/classifyMerchandise";
+    public static final String DIR = "/admin/classifyMerchandise";
 
     @Autowired
-    public PublicdataClient      publicdataClient;
+    public PublicdataClient    publicdataClient;
 
     @Autowired
-    public OutdatedCommoditycenterClient outdatedCommoditycenterClient;
+    public MerchandiseService  merchandiseService;
 
     // 只做一个入口,然后跳转,商城分类
     @RequestMapping
@@ -65,7 +65,7 @@ public class AdminMerchandiseClassifyController {
         } else {
             int count = 0;
             for (Classify c : listChildrenIncludeMe) {
-                count += outdatedCommoditycenterClient.count4DeleteClassify(c.getId());
+                count += merchandiseService.count4DeleteClassify(c.getId());
             }
             if (count > 0) {
                 aceAjaxView.setStatus(0);

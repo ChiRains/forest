@@ -123,4 +123,11 @@ public class MerchandiseSpecificationsDaoMysqlImpl implements MerchandiseSpecifi
         merchandiseSpecificationsPage.setData(list);
         return merchandiseSpecificationsPage;
     }
+
+    @Override
+    public List<MerchandiseSpecifications> listByUnifiedMerchandise(Long unifiedMerchandiseId) {
+
+        List<MerchandiseSpecifications> list = sqlOperator.selectList("com.qcloud.component.goods.dao.mysql.mapper.MerchandiseSpecificationsMapper.listByUnifiedMerchandise", unifiedMerchandiseId);
+        return list;
+    }
 }

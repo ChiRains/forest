@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.qcloud.component.goods.model.Merchandise;
-import com.qcloud.component.goods.model.MerchandiseItem;
 import com.qcloud.component.goods.model.MerchandiseVipDiscount;
-import com.qcloud.component.goods.service.MerchandiseItemService;
+import com.qcloud.component.goods.model.UnifiedMerchandise;
 import com.qcloud.component.goods.service.MerchandiseService;
+import com.qcloud.component.goods.service.UnifiedMerchandiseService;
 import com.qcloud.component.goods.web.handler.MerchandiseVipDiscountHandler;
 import com.qcloud.component.goods.web.vo.MerchandiseVipDiscountVO;
 import com.qcloud.component.goods.web.vo.admin.AdminMerchandiseVipDiscountVO;
@@ -20,10 +20,10 @@ import com.qcloud.pirates.util.NumberUtil;
 public class MerchandiseVipDiscountHandlerImpl implements MerchandiseVipDiscountHandler {
 
     @Autowired
-    private MerchandiseItemService merchandiseItemService;
+    private MerchandiseService        merchandiseService;
 
     @Autowired
-    private MerchandiseService     merchandiseService;
+    private UnifiedMerchandiseService unifiedMerchandiseService;
 
     @Override
     public List<MerchandiseVipDiscountVO> toVOList(List<MerchandiseVipDiscount> list) {
@@ -38,14 +38,13 @@ public class MerchandiseVipDiscountHandlerImpl implements MerchandiseVipDiscount
     @Override
     public MerchandiseVipDiscountVO toVO(MerchandiseVipDiscount merchandiseVipDiscount) {
 
-        MerchandiseItem merchandiseItem = merchandiseItemService.get(merchandiseVipDiscount.getMerchandiseItemId());
-        AssertUtil.assertNotNull(merchandiseItem, "商品单品不存在." + merchandiseVipDiscount.getMerchandiseItemId());
-        Merchandise merchandise = merchandiseService.get(merchandiseItem.getMerchandiseId());
-        merchandiseVipDiscount.getMerchandiseItemId();
+        UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(merchandiseVipDiscount.getMerchandiseItemId());
+        AssertUtil.assertNotNull(unifiedMerchandise, "商品不存在." + merchandiseVipDiscount.getMerchandiseItemId());
+        Merchandise merchandise = merchandiseService.get(unifiedMerchandise.getMerchandiseId());
         MerchandiseVipDiscountVO merchandiseVipDiscountVO = new MerchandiseVipDiscountVO();
-        merchandiseVipDiscountVO.setDiscount(merchandiseItem.getDiscount());
+        merchandiseVipDiscountVO.setDiscount(unifiedMerchandise.getDiscount());
         merchandiseVipDiscountVO.setVipDiscount(merchandiseVipDiscount.getPrice());
-        merchandiseVipDiscountVO.setName(merchandiseItem.getName());
+        merchandiseVipDiscountVO.setName(unifiedMerchandise.getName());
         merchandiseVipDiscountVO.setUnit(merchandise.getUnit());
         if (merchandiseVipDiscountVO.getDiscount() > 0) {
             merchandiseVipDiscountVO.setDiscountRate(NumberUtil.scale(merchandiseVipDiscountVO.getVipDiscount() / merchandiseVipDiscountVO.getDiscount(), 2));

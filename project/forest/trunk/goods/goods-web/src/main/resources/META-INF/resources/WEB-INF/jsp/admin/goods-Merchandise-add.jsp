@@ -105,18 +105,7 @@
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
-            </div>
-            <div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="code"> 编号 </label>
-
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="code" name="code" placeholder="编号" value=""/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
+            </div>          
             <div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="image"> 缩略图 </label>

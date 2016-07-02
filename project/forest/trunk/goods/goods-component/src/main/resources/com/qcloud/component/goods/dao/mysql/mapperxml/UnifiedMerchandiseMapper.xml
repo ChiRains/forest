@@ -10,4 +10,74 @@
      <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
         select count(*) from `goods_unified_merchandise`
     </select> 
+            
+    <select id="list4Select" parameterType="java.util.HashMap" resultType="UnifiedMerchandise">
+        SELECT * FROM goods_unified_merchandise WHERE 1 = 1 AND type = 1 and `state`!=1 AND `state`!=5
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="merchantId != null">
+            AND merchantId = #{merchantId}
+        </if>
+        <if test="unifiedMerchandiseId != null">
+            AND unifiedMerchandiseId = #{unifiedMerchandiseId}
+        </if>              
+        <if test="name != null">
+            AND name LIKE CONCAT('%',#{name},'%')
+        </if>
+        <if test="order != null">
+            ORDER BY ${order}
+        </if>
+        <if test="start != null and count != null">
+            LIMIT #{start},#{count}
+        </if>
+    </select>
+    
+    <select id="count4Select" parameterType="java.util.HashMap" resultType="int">
+        SELECT count(*) FROM goods_unified_merchandise WHERE 1 = 1 AND type = 1 and `state`!=1 AND `state`!=5
+        <if test="id != null">
+            AND id = #{id}
+        </if>
+        <if test="merchantId != null">
+            AND merchantId = #{merchantId}
+        </if>
+        <if test="unifiedMerchandiseId != null">
+            AND unifiedMerchandiseId = #{unifiedMerchandiseId}
+        </if>            
+        <if test="name != null">
+            AND name LIKE CONCAT('%',#{name},'%')
+        </if>
+    </select>
+                 
+    <select id="listByMerchandise" parameterType="Long" resultType="UnifiedMerchandise">  
+        select * from `goods_unified_merchandise` where merchandiseId = #{merchandiseId}
+    </select> 
+    
+    <select id="listByMerchandiseAndType" parameterType="java.util.HashMap" resultType="UnifiedMerchandise">  
+        select * from `goods_unified_merchandise` where merchandiseId = #{merchandiseId} and type = #{type}
+    </select> 
+    
+    <select id="listByMerchandiseAndTypeAndState" parameterType="java.util.HashMap" resultType="UnifiedMerchandise">  
+        select * from `goods_unified_merchandise` where merchandiseId = #{merchandiseId} and type = #{type} and state = #{state}
+    </select> 
+        
+    <update id="increaseGoodEvaluation" parameterType="java.util.HashMap">
+    	<![CDATA[update `goods_unified_merchandise` set goodEvaluation = goodEvaluation + 1,updateTime = #{updateTime} where id = #{id}]]>        
+    </update> 
+    
+    <update id="increaseMiddleEvaluation" parameterType="java.util.HashMap">
+    	<![CDATA[update `goods_unified_merchandise` set middleEvaluation = middleEvaluation + 1,updateTime = #{updateTime} where id = #{id}]]>        
+    </update> 
+    
+    <update id="increaseLowEvaluation" parameterType="java.util.HashMap">
+    	<![CDATA[update `goods_unified_merchandise` set lowEvaluation = lowEvaluation + 1,updateTime = #{updateTime} where id = #{id}]]>        
+    </update> 
+    
+    <update id="updateSalesVolume" parameterType="java.util.HashMap">
+    	<![CDATA[update `goods_unified_merchandise` set salesVolume = salesVolume + #{number},updateTime = #{updateTime} where id = #{id}]]>        
+    </update> 
+    
+    <update id="lockStock" parameterType="java.util.HashMap">
+    	<![CDATA[update `goods_unified_merchandise` set stock = stock - #{stock},updateTime = #{updateTime} where id = #{id} and stock >= #{stock}]]>        
+    </update> 
 </mapper>

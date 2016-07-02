@@ -30,5 +30,23 @@ public interface UnifiedMerchandiseDao extends ISimpleDao<UnifiedMerchandise, Lo
 
     public Page<UnifiedMerchandise> page(UnifiedMerchandiseQuery query, int start, int size);
 
+    public Page<UnifiedMerchandise> select(UnifiedMerchandiseQuery query, int start, int size);
+
     public List<UnifiedMerchandise> listAll();
+
+    List<UnifiedMerchandise> listByMerchandise(long merchandiseId);
+
+    List<UnifiedMerchandise> listByMerchandise(long merchandiseId, int type);
+
+    List<UnifiedMerchandise> listByMerchandise(long merchandiseId, int type, int state);
+
+    boolean increaseGoodEvaluation(long id);
+
+    boolean increaseMiddleEvaluation(long id);
+
+    boolean increaseLowEvaluation(long id);
+
+    boolean updateSalesVolume(long id, int number);
+
+    boolean lockStock(long id, int stock);
 }

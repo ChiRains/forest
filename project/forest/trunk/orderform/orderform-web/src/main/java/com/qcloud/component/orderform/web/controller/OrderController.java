@@ -917,55 +917,55 @@ public class OrderController {
     }
 
     // ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    @PiratesApp
-    @RequestMapping
-    @NoReferer
-    public FrontAjaxView exchangeConsumption(HttpServletRequest request, Long unifiedMerchandiseId, Integer number, String name, String mobile, String address) {
+//    @PiratesApp
+//    @RequestMapping
+//    @NoReferer
+//    public FrontAjaxView exchangeConsumption(HttpServletRequest request, Long unifiedMerchandiseId, Integer number, String name, String mobile, String address) {
+//
+//        QUnifiedMerchandise merchandise = commoditycenterClient.getUnifiedMerchandise(unifiedMerchandiseId);
+//        AssertUtil.assertNotNull(merchandise, "商品不存在" + unifiedMerchandiseId);
+//        AssertUtil.assertTrue(merchandise.getSence() == 7, "仅支持兑换兑兑劵商品");
+//        OrderEntity orderEntity = exchange(request, merchandise, number, name, mobile, address);
+//        FrontAjaxView view = new FrontAjaxView();
+//        view.setMessage("下订单成功");
+//        view.addObject("result", Boolean.TRUE.toString());
+//        view.addObject("orderId", orderEntity.getId());
+//        view.addObject("consumption", orderEntity.getConsumption());
+//        view.addObject("orderNumber", orderEntity.getOrderNumber());
+//        view.addObject("orderDate", DateUtil.date2String(orderEntity.getOrderDate(), DateUtil.FORMAT_STRING));
+//        return view;
+//    }
+//
+//    @PiratesApp
+//    @RequestMapping
+//    @NoReferer
+//    public FrontAjaxView exchangeIntegral(HttpServletRequest request, Long unifiedMerchandiseId, Integer number, String name, String mobile, String address) {
+//
+//        QUnifiedMerchandise merchandise = commoditycenterClient.getUnifiedMerchandise(unifiedMerchandiseId);
+//        AssertUtil.assertNotNull(merchandise, "商品不存在" + unifiedMerchandiseId);
+//        AssertUtil.assertTrue(merchandise.getSence() == 6, "仅支持兑换积分商品");
+//        OrderEntity orderEntity = exchange(request, merchandise, number, name, mobile, address);
+//        FrontAjaxView view = new FrontAjaxView();
+//        view.setMessage("下订单成功");
+//        view.addObject("result", Boolean.TRUE.toString());
+//        view.addObject("orderId", orderEntity.getId());
+//        // 花费积分
+//        view.addObject("integral", orderEntity.getIntegral());
+//        view.addObject("orderNumber", orderEntity.getOrderNumber());
+//        view.addObject("orderDate", DateUtil.date2String(orderEntity.getOrderDate(), DateUtil.FORMAT_STRING));
+//        return view;
+//    }
 
-        QUnifiedMerchandise merchandise = commoditycenterClient.getUnifiedMerchandise(unifiedMerchandiseId);
-        AssertUtil.assertNotNull(merchandise, "商品不存在" + unifiedMerchandiseId);
-        AssertUtil.assertTrue(merchandise.getSence() == 7, "仅支持兑换兑兑劵商品");
-        OrderEntity orderEntity = exchange(request, merchandise, number, name, mobile, address);
-        FrontAjaxView view = new FrontAjaxView();
-        view.setMessage("下订单成功");
-        view.addObject("result", Boolean.TRUE.toString());
-        view.addObject("orderId", orderEntity.getId());
-        view.addObject("consumption", orderEntity.getConsumption());
-        view.addObject("orderNumber", orderEntity.getOrderNumber());
-        view.addObject("orderDate", DateUtil.date2String(orderEntity.getOrderDate(), DateUtil.FORMAT_STRING));
-        return view;
-    }
-
-    @PiratesApp
-    @RequestMapping
-    @NoReferer
-    public FrontAjaxView exchangeIntegral(HttpServletRequest request, Long unifiedMerchandiseId, Integer number, String name, String mobile, String address) {
-
-        QUnifiedMerchandise merchandise = commoditycenterClient.getUnifiedMerchandise(unifiedMerchandiseId);
-        AssertUtil.assertNotNull(merchandise, "商品不存在" + unifiedMerchandiseId);
-        AssertUtil.assertTrue(merchandise.getSence() == 6, "仅支持兑换积分商品");
-        OrderEntity orderEntity = exchange(request, merchandise, number, name, mobile, address);
-        FrontAjaxView view = new FrontAjaxView();
-        view.setMessage("下订单成功");
-        view.addObject("result", Boolean.TRUE.toString());
-        view.addObject("orderId", orderEntity.getId());
-        // 花费积分
-        view.addObject("integral", orderEntity.getIntegral());
-        view.addObject("orderNumber", orderEntity.getOrderNumber());
-        view.addObject("orderDate", DateUtil.date2String(orderEntity.getOrderDate(), DateUtil.FORMAT_STRING));
-        return view;
-    }
-
-    private OrderEntity exchange(HttpServletRequest request, QUnifiedMerchandise merchandise, Integer number, final String name, final String mobile, final String address) {
-
-        AssertUtil.assertNotEmpty(name, "收货人姓名不能为空.");
-        AssertUtil.assertNotEmpty(mobile, "收货人手机不能为空.");
-        AssertUtil.assertNotEmpty(address, "收货人地址不能为空.");
-        number = number == null || number <= 0 ? 1 : number;
-        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
-        QMyConsignee consignee = OrderMyConsignee.get(name, mobile, address);
-        return orderService.orderExchange(user, consignee, merchandise, number, OrderStateType.NORMAL_TO_PACKING.getKey());
-    }
+//    private OrderEntity exchange(HttpServletRequest request, QUnifiedMerchandise merchandise, Integer number, final String name, final String mobile, final String address) {
+//
+//        AssertUtil.assertNotEmpty(name, "收货人姓名不能为空.");
+//        AssertUtil.assertNotEmpty(mobile, "收货人手机不能为空.");
+//        AssertUtil.assertNotEmpty(address, "收货人地址不能为空.");
+//        number = number == null || number <= 0 ? 1 : number;
+//        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+//        QMyConsignee consignee = OrderMyConsignee.get(name, mobile, address);
+//        return orderService.orderExchange(user, consignee, merchandise, number, OrderStateType.NORMAL_TO_PACKING.getKey());
+//    }
 
     @RequestMapping
     @NoReferer

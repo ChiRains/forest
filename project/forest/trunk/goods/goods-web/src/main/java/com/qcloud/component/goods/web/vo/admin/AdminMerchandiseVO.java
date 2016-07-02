@@ -25,9 +25,6 @@ public class AdminMerchandiseVO {
     // 名称
     private String name;
 
-    // 商品编号
-    private String code;
-
     // 图片,缩略图
     private String image;
 
@@ -161,16 +158,6 @@ public class AdminMerchandiseVO {
     public String getName() {
 
         return name;
-    }
-
-    public void setCode(String code) {
-
-        this.code = code;
-    }
-
-    public String getCode() {
-
-        return code;
     }
 
     public void setImage(String image) {

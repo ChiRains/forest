@@ -32,12 +32,12 @@ public interface OrderService {
      */
     OrderEntity orderSeckill(QUser user, QUnifiedMerchandise merchandise);
 
-    /**
-     * 兑换
-     * 
-     * @param context
-     */
-    OrderEntity orderExchange(QUser user, QMyConsignee consignee, QUnifiedMerchandise merchandise, int number, int state);
+//    /**
+//     * 兑换
+//     * 
+//     * @param context
+//     */
+//    OrderEntity orderExchange(QUser user, QMyConsignee consignee, QUnifiedMerchandise merchandise, int number, int state);
 
     // 团购
     OrderEntity orderGroupbuys(OrderContext context, String orderNumber, Date orderDate, int paymentMode, double cash, int state);

@@ -73,8 +73,7 @@
                 <table class="table table-striped table-bordered table-hover dataTable no-footer">
                     <thead>
                     <tr role="row">
-                    	<th>系统编码</th>
-                        <th>商品编号</th>
+                    	<th>系统编码</th>                      
                         <th>名称</th>
                         <th>缩略图</th>
                         <th>关键字</th>
@@ -92,17 +91,7 @@
                     <tbody>
                     <c:forEach items="${result}" var="item" varStatus="current">
                         <tr>
-                        	<td>${item.sysCode}</td>
-                            <td>
-                            <c:choose>
-                            	<c:when test="${fn:length(item.code) > 15}">
-                            		${fn:substring(item.code, 0, 15)}...
-                            	</c:when>
-                            	<c:otherwise>
-                            		${item.code}
-                            	</c:otherwise>
-                            </c:choose>
-                            </td>
+                        	<td>${item.sysCode}</td>                           
                             <td>${item.name}</td>
                             <td><img height="50" width="80" src="${item.image}"/></td>
                             <td>${item.keywords}</td>

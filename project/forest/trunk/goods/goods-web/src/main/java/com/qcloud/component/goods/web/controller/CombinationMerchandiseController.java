@@ -8,11 +8,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.qcloud.component.goods.CommoditycenterClient;
 import com.qcloud.component.goods.QUnifiedMerchandise;
-import com.qcloud.component.goods.QUnifiedMerchandise.MerchandiseType;
-import com.qcloud.component.goods.model.CombinationMerchandise;
+import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.goods.model.CombinationMerchandiseItem;
+import com.qcloud.component.goods.model.UnifiedMerchandise;
 import com.qcloud.component.goods.service.CombinationMerchandiseItemService;
-import com.qcloud.component.goods.service.CombinationMerchandiseService;
+import com.qcloud.component.goods.service.UnifiedMerchandiseService;
 import com.qcloud.component.goods.web.handler.CombinationMerchandiseHandler;
 import com.qcloud.component.goods.web.vo.CombinationMerchandiseVO;
 import com.qcloud.pirates.mvc.FrontAjaxView;
@@ -25,9 +25,6 @@ public class CombinationMerchandiseController {
     public static final String                DIR = "/combinationMerchandise";
 
     @Autowired
-    private CombinationMerchandiseService     combinationMerchandiseService;
-
-    @Autowired
     private CombinationMerchandiseHandler     combinationMerchandiseHandler;
 
     @Autowired
@@ -35,6 +32,9 @@ public class CombinationMerchandiseController {
 
     @Autowired
     private CommoditycenterClient             commoditycenterClient;
+
+    @Autowired
+    private UnifiedMerchandiseService         unifiedMerchandiseService;
 
     @RequestMapping
     public FrontAjaxView existByUnifiedMerchandise(Long unifiedMerchandiseId) {
@@ -44,7 +44,7 @@ public class CombinationMerchandiseController {
         AssertUtil.assertNotNull(unifiedMerchandise, "商品不存在." + unifiedMerchandiseId);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取商品组合套餐成功.");
-        if (MerchandiseType.SINGLE.equals(unifiedMerchandise.getType())) {
+        if (UnifiedMerchandiseType.SINGLE.equals(unifiedMerchandise.getType())) {
             int count = combinationMerchandiseItemService.countByMerchandiseItem(unifiedMerchandise.getList().get(0).getId());
             view.addObject("exist", count > 0);
         } else {
@@ -61,13 +61,13 @@ public class CombinationMerchandiseController {
         AssertUtil.assertNotNull(unifiedMerchandise, "商品不存在." + unifiedMerchandiseId);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取商品组合套餐成功.");
-        if (MerchandiseType.SINGLE.equals(unifiedMerchandise.getType())) {
-            List<CombinationMerchandiseItem> list = combinationMerchandiseItemService.listByMerchandiseItem(unifiedMerchandise.getList().get(0).getId(), 0, 10);
+        if (UnifiedMerchandiseType.SINGLE.equals(unifiedMerchandise.getType())) {
+            List<CombinationMerchandiseItem> list = combinationMerchandiseItemService.listByMerchandiseItem(unifiedMerchandise.getList().get(0).getId(), 0, Integer.MAX_VALUE);
             if (list.size() > 0) {
                 int index = new Random().nextInt(list.size());
                 CombinationMerchandiseItem combinationMerchandiseItem = list.get(index);
-                CombinationMerchandise combinationMerchandise = combinationMerchandiseService.get(combinationMerchandiseItem.getCombinationMerchandiseId());
-                CombinationMerchandiseVO combinationMerchandiseVO = combinationMerchandiseHandler.toVO(combinationMerchandise);
+                UnifiedMerchandise combinationUnifiedMerchandise = unifiedMerchandiseService.get(combinationMerchandiseItem.getCombinationUnifiedMerchandiseId());
+                CombinationMerchandiseVO combinationMerchandiseVO = combinationMerchandiseHandler.toVO(combinationUnifiedMerchandise);
                 view.addObject("combination", combinationMerchandiseVO);
             } else {
                 view.addObject("combination", "");
@@ -84,11 +84,11 @@ public class CombinationMerchandiseController {
     public FrontAjaxView getByUnifiedMerchandise(Long unifiedMerchandiseId) {
 
         AssertUtil.assertNotNull(unifiedMerchandiseId, "统一商品ID不能为空.");
-        CombinationMerchandise combinationMerchandise = combinationMerchandiseService.getByUnifiedMerchandise(unifiedMerchandiseId);
+        UnifiedMerchandise combinationMerchandise = unifiedMerchandiseService.get(unifiedMerchandiseId);
         AssertUtil.assertNotNull(combinationMerchandise, "组合商品不存在." + unifiedMerchandiseId);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取商品组合套餐列表成功.");
-        List<CombinationMerchandise> list = new ArrayList<CombinationMerchandise>();
+        List<UnifiedMerchandise> list = new ArrayList<UnifiedMerchandise>();
         list.add(combinationMerchandise);
         List<CombinationMerchandiseVO> voList = combinationMerchandiseHandler.toVOList(list);
         view.addObject("combinationList", voList);
@@ -104,11 +104,11 @@ public class CombinationMerchandiseController {
         AssertUtil.assertNotNull(unifiedMerchandise, "商品不存在." + unifiedMerchandiseId);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取商品组合套餐列表成功.");
-        if (MerchandiseType.COMBINATION.equals(unifiedMerchandise.getType())) {
+        if (UnifiedMerchandiseType.COMBINATION.equals(unifiedMerchandise.getType())) {
             List<CombinationMerchandiseItem> itemLlist = combinationMerchandiseItemService.listByMerchandiseItem(unifiedMerchandise.getList().get(0).getId(), 0, 10);
-            List<CombinationMerchandise> list = new ArrayList<CombinationMerchandise>();
+            List<UnifiedMerchandise> list = new ArrayList<UnifiedMerchandise>();
             for (CombinationMerchandiseItem combinationMerchandiseItem : itemLlist) {
-                CombinationMerchandise combinationMerchandise = combinationMerchandiseService.get(combinationMerchandiseItem.getCombinationMerchandiseId());
+                UnifiedMerchandise combinationMerchandise = unifiedMerchandiseService.get(combinationMerchandiseItem.getCombinationUnifiedMerchandiseId());
                 list.add(combinationMerchandise);
             }
             List<CombinationMerchandiseVO> voList = combinationMerchandiseHandler.toVOList(list);

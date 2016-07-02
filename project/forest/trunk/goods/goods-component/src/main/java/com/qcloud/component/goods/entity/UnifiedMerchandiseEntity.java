@@ -2,98 +2,117 @@ package com.qcloud.component.goods.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.qcloud.component.goods.QMerchandiseItem;
 import com.qcloud.component.goods.QUnifiedMerchandise;
-import com.qcloud.component.sellercenter.QMerchant;
+import com.qcloud.component.goods.UnifiedMerchandiseType;
+import com.qcloud.component.goods.model.Merchandise;
+import com.qcloud.component.goods.model.UnifiedMerchandise;
+import com.qcloud.component.goods.model.key.TypeEnum.MerchandiseIsIncludePost;
 
 public class UnifiedMerchandiseEntity implements QUnifiedMerchandise {
 
-    // 统一商品标识
-    private Long                   id;
+    private UnifiedMerchandise        unifiedMerchandise;
 
-    private String                 name;
+    private Merchandise               merchandise;
 
-    private String                 image;
+    private int                       number = 1;
 
-    private long                   merchantId;
+    private UnifiedMerchandiseType    type   = null;
 
-    // 商品类型
-    private MerchandiseType        type;
+    private String                    specifications;
 
-    private int                    sence;
+    private List<QUnifiedMerchandise> list   = new ArrayList<QUnifiedMerchandise>();
 
-    // 进货价
-    private double                 purchase;
+    private double                    discount;
 
-    // 折扣价
-    private double                 discount;
+    public UnifiedMerchandiseEntity(UnifiedMerchandise unifiedMerchandise, Merchandise merchandise) {
 
-    // 原价
-    private double                 price;
+        super();
+        this.unifiedMerchandise = unifiedMerchandise;
+        this.merchandise = merchandise;
+        this.discount = unifiedMerchandise.getDiscount();
+    }
 
-    // 库存
-    private int                    stock;
-
-    private double                 weight;
-
-    private boolean                isIncludePost;
-
-    // 商品明细:组合套餐,则可能是多个;单一商品则是一个,促销,热销,秒杀等等都是一个,必须是指定的某个具体型号规格的商品
-    private List<QMerchandiseItem> list = new ArrayList<QMerchandiseItem>();
-
+    @Override
     public Long getId() {
 
-        return id;
+        return unifiedMerchandise.getId();
     }
 
-    public void setId(Long id) {
-
-        this.id = id;
-    }
-
-    public MerchandiseType getType() {
-
-        return type;
-    }
-
-    public void setType(MerchandiseType type) {
-
-        this.type = type;
-    }
-
-    public double getPurchase() {
-
-        return purchase;
-    }
-
-    public void setPurchase(double purchase) {
-
-        this.purchase = purchase;
-    }
-
+    @Override
     public String getName() {
 
-        return name;
+        return unifiedMerchandise.getName();
     }
 
-    public void setName(String name) {
+    @Override
+    public long getMallClassifyId() {
 
-        this.name = name;
+        return unifiedMerchandise.getMallClassifyId();
     }
 
+    @Override
+    public long getMerchantClassifyId() {
+
+        return unifiedMerchandise.getMerchantClassifyId();
+    }
+
+    @Override
+    public long getMerchandiseId() {
+
+        return unifiedMerchandise.getMerchandiseId();
+    }
+
+    @Override
+    public String getCode() {
+
+        return unifiedMerchandise.getCode();
+    }
+
+    @Override
+    public long getSalesVolume() {
+
+        return unifiedMerchandise.getSalesVolume() + unifiedMerchandise.getVirtualSalesVolume();
+    }
+
+    public void setNumber(int number) {
+
+        this.number = number;
+    }
+
+    @Override
+    public int getNumber() {
+
+        return number;
+    }
+
+    @Override
+    public long getLowEvaluation() {
+
+        return unifiedMerchandise.getLowEvaluation();
+    }
+
+    @Override
+    public long getMiddleEvaluation() {
+
+        return unifiedMerchandise.getMiddleEvaluation();
+    }
+
+    @Override
+    public long getGoodEvaluation() {
+
+        return unifiedMerchandise.getGoodEvaluation();
+    }
+
+    @Override
     public String getImage() {
 
-        return image;
+        return unifiedMerchandise.getImage();
     }
 
-    public void setImage(String image) {
+    @Override
+    public double getPrice() {
 
-        this.image = image;
-    }
-
-    public double getDiscount() {
-
-        return discount;
+        return unifiedMerchandise.getPrice();
     }
 
     public void setDiscount(double discount) {
@@ -101,110 +120,87 @@ public class UnifiedMerchandiseEntity implements QUnifiedMerchandise {
         this.discount = discount;
     }
 
-    public double getPrice() {
+    @Override
+    public double getDiscount() {
 
-        return price;
+        return discount;
     }
 
-    public void setPrice(double price) {
+    @Override
+    public double getPurchase() {
 
-        this.price = price;
+        return unifiedMerchandise.getPurchase();
     }
 
+    @Override
     public int getStock() {
 
-        return stock;
+        return unifiedMerchandise.getStock();
     }
 
-    public void setStock(int stock) {
-
-        this.stock = stock;
-    }
-
-    public List<QMerchandiseItem> getList() {
-
-        return list;
-    }
-
-    public void setList(List<QMerchandiseItem> list) {
-
-        this.list = list;
-    }
-
+    @Override
     public long getMerchantId() {
 
-        return merchantId;
+        return unifiedMerchandise.getMerchantId();
     }
 
-    public void setMerchantId(long merchantId) {
+    @Override
+    public double getWeight() {
 
-        this.merchantId = merchantId;
+        if (merchandise == null) {
+            return 0;
+        }
+        return merchandise.getWeight();
     }
 
-    public int getSence() {
+    public void setSpecifications(String specifications) {
 
-        return sence;
-    }
-
-    public void setSence(int sence) {
-
-        this.sence = sence;
+        this.specifications = specifications;
     }
 
     @Override
     public String getSpecifications() {
 
-        MerchandiseType type = getType();
-        if (MerchandiseType.COMBINATION.equals(type)) {
-            return "组合套餐";
-        } else {
-            return getList().get(0).getSpecifications();
-        }
-    }
-
-    @Override
-    public int hashCode() {
-
-        return new Long(getId()).hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-
-        if (obj instanceof QMerchant) {
-            return ((QMerchant) obj).getId() == getId();
-        }
-        return false;
-    }
-
-    public double getWeight() {
-
-        return weight;
-    }
-
-    public void setWeight(double weight) {
-
-        this.weight = weight;
+        return specifications;
     }
 
     @Override
     public String getUnit() {
 
-        MerchandiseType type = getType();
-        if (MerchandiseType.COMBINATION.equals(type)) {
-            return "组合套餐";
-        } else {
-            return getList().get(0).getUnit();
-        }
+        return merchandise == null ? "" : merchandise.getUnit();
     }
 
+    public void setList(List<QUnifiedMerchandise> list) {
+
+        this.list = list;
+    }
+
+    @Override
+    public List<QUnifiedMerchandise> getList() {
+
+        return list;
+    }
+
+    public void setType(UnifiedMerchandiseType type) {
+
+        this.type = type;
+    }
+
+    @Override
+    public UnifiedMerchandiseType getType() {
+
+        return type;
+    }
+
+    @Override
     public boolean getIsIncludePost() {
 
-        return isIncludePost;
+        return merchandise == null ? true : merchandise.getIsIncludePost() == MerchandiseIsIncludePost.YES.getKey();
     }
 
-    public void setIncludePost(boolean isIncludePost) {
+    @Override
+    public String getSysCode() {
 
-        this.isIncludePost = isIncludePost;
+        return merchandise.getSysCode();
     }
 }

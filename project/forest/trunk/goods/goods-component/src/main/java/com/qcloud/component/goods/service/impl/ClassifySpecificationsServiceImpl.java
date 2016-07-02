@@ -43,8 +43,8 @@ public class ClassifySpecificationsServiceImpl implements ClassifySpecifications
         if (number == null) {
             throw new CommoditycenterException("请初始化参数：" + CLASSIFY_SPECIFICATIONS_NUMBER);
         }
-        if (number > 2 || number <= 0) {
-            throw new CommoditycenterException("初始化参数值只能为1或者2：" + CLASSIFY_SPECIFICATIONS_NUMBER);
+        if (number > 5 || number <= 0) {
+            throw new CommoditycenterException("初始化参数值只能为0,1或者2：" + CLASSIFY_SPECIFICATIONS_NUMBER);
         }
     }
 

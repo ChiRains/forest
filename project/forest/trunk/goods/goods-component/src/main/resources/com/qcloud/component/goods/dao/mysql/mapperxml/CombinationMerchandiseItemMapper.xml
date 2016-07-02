@@ -13,15 +13,15 @@
 
     <select id="listByCombinationMerchandise" parameterType="Long" resultType="CombinationMerchandiseItem">
         select * from `goods_combination_merchandise_item` where
-        `combinationMerchandiseId`=#{combinationMerchandiseId}
+        `combinationUnifiedMerchandiseId`=#{combinationUnifiedMerchandiseId}
     </select>
     
     <select id="listByMerchandiseItem" parameterType="java.util.HashMap" resultType="CombinationMerchandiseItem">
-        select * from `goods_combination_merchandise_item` where merchandiseItemId = #{merchandiseItemId} limit #{start},#{count}        
+        select * from `goods_combination_merchandise_item` where relaUnifiedMerchandiseId = #{relaUnifiedMerchandiseId} limit #{start},#{count}        
     </select>    
     
     <select id="countByMerchandiseItem" parameterType="java.util.HashMap" resultType="Integer">
-        select count(*) from `goods_combination_merchandise_item` where merchandiseItemId = #{merchandiseItemId} 
+        select count(*) from `goods_combination_merchandise_item` where relaUnifiedMerchandiseId = #{relaUnifiedMerchandiseId} 
     </select>  
 
     <select id="list" resultType="CombinationMerchandiseItem">
@@ -30,10 +30,10 @@
             AND id = #{id}
         </if>
         <if test="combinationMerchandiseId != null">
-            AND combinationMerchandiseId = #{combinationMerchandiseId}
+            AND combinationUnifiedMerchandiseId = #{combinationUnifiedMerchandiseId}
         </if>
         <if test="merchandiseItemId != null">
-            AND merchandiseItemId = #{merchandiseItemId}
+            AND relaUnifiedMerchandiseId = #{relaUnifiedMerchandiseId}
         </if>
         <if test="merchantId != null">
             AND merchantId = #{merchantId}
@@ -51,10 +51,10 @@
             AND id = #{id}
         </if>
         <if test="combinationMerchandiseId != null">
-            AND combinationMerchandiseId = #{combinationMerchandiseId}
+            AND combinationUnifiedMerchandiseId = #{combinationUnifiedMerchandiseId}
         </if>
         <if test="merchandiseItemId != null">
-            AND merchandiseItemId = #{merchandiseItemId}
+            AND relaUnifiedMerchandiseId = #{relaUnifiedMerchandiseId}
         </if>
         <if test="merchantId != null">
             AND merchantId = #{merchantId}
@@ -67,15 +67,15 @@
                 id = #{id}
             </if>
             <if test="combinationMerchandiseId != null">
-                AND combinationMerchandiseId = #{combinationMerchandiseId}
+                AND combinationUnifiedMerchandiseId = #{combinationUnifiedMerchandiseId}
             </if>
             <if test="merchandiseItemId != null">
-                AND merchandiseItemId = #{merchandiseItemId}
+                AND relaUnifiedMerchandiseId = #{relaUnifiedMerchandiseId}
             </if>
             <if test="merchantId != null">
                 AND merchantId = #{merchantId}
             </if>
-            <if test="id == null and combinationMerchandiseId == null and merchandiseItemId == null and merchantId == null">
+            <if test="id == null and combinationUnifiedMerchandiseId == null and relaUnifiedMerchandiseId == null and merchantId == null">
                 AND 1 = 0
             </if>
         </where>

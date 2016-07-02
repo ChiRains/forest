@@ -15,9 +15,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.CommoditycenterClient;
-import com.qcloud.component.goods.QMerchandiseItem;
 import com.qcloud.component.goods.QUnifiedMerchandise;
-import com.qcloud.component.goods.QUnifiedMerchandise.MerchandiseType;
+import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.my.MyClient;
 import com.qcloud.component.my.QMyConsignee;
 import com.qcloud.component.my.QMyCoupon;
@@ -148,7 +147,7 @@ public class ForestOrderController {
                 //
                 QUnifiedMerchandise merchandise = commoditycenterClient.getUnifiedMerchandise(orderItemEntity.getUnifiedMerchandiseId());
                 // 单品
-                if (merchandise.getType().equals(MerchandiseType.SINGLE)) {
+                if (merchandise.getType().equals(UnifiedMerchandiseType.SINGLE)) {
                     PreOrderItemVO preOrderItemVO = new PreOrderItemVO();
                     preOrderItemVO.setDiscount(orderItemEntity.getDiscount());
                     preOrderItemVO.setUnifiedMerchandiseId(orderItemEntity.getUnifiedMerchandiseId());
@@ -165,7 +164,7 @@ public class ForestOrderController {
                     }
                     preOrderItemVO.setSum(orderItemEntity.getSum());
                     preMerchantVO.getPreOrderItemList().add(preOrderItemVO);
-                } else if (merchandise.getType().equals(MerchandiseType.COMBINATION)) {
+                } else if (merchandise.getType().equals(UnifiedMerchandiseType.COMBINATION)) {
                     PreOrderCombinationVO preOrderCombinationVO = new PreOrderCombinationVO();
                     preOrderCombinationVO.setDiscount(orderItemEntity.getDiscount());
                     preOrderCombinationVO.setUnifiedMerchandiseId(orderItemEntity.getUnifiedMerchandiseId());
@@ -173,20 +172,19 @@ public class ForestOrderController {
                     preOrderCombinationVO.setPrice(orderItemEntity.getPrice());
                     preOrderCombinationVO.setName(orderItemEntity.getName());
                     preOrderCombinationVO.setNumber(orderItemEntity.getNumber());
-                    for (QMerchandiseItem qMerchandiseItem : merchandise.getList()) {
-                        QUnifiedMerchandise merchandiseItem = commoditycenterClient.getUnifiedMerchandise(qMerchandiseItem.getUnifiedMerchandiseId());
+                    for (QUnifiedMerchandise merchandiseItem : merchandise.getList()) {
                         OrderItemVO orderItem = new OrderItemVO();
-                        orderItem.setCode(qMerchandiseItem.getCode());
-                        orderItem.setName(qMerchandiseItem.getName());
+                        orderItem.setCode(merchandiseItem.getCode());
+                        orderItem.setName(merchandiseItem.getName());
                         orderItem.setDiscount(merchandiseItem.getDiscount());
                         orderItem.setPrice(merchandiseItem.getPrice());
-                        orderItem.setImage(fileSDKClient.getFileServerUrl() + qMerchandiseItem.getImage());
-                        orderItem.setUnifiedMerchandiseId(qMerchandiseItem.getUnifiedMerchandiseId());
+                        orderItem.setImage(fileSDKClient.getFileServerUrl() + merchandiseItem.getImage());
+                        orderItem.setUnifiedMerchandiseId(merchandiseItem.getId());
                         orderItem.setSpecifications(merchandiseItem.getSpecifications());
                         orderItem.setAfterSale(false);
-                        orderItem.setNumber(qMerchandiseItem.getNumber());
+                        orderItem.setNumber(merchandiseItem.getNumber());
                         orderItem.setEvaluation(false);
-                        orderItem.setUnit(qMerchandiseItem.getUnit());
+                        orderItem.setUnit(merchandiseItem.getUnit());
                         preOrderCombinationVO.getOrderItemList().add(orderItem);
                     }
                     //

@@ -1,68 +1,48 @@
 package com.qcloud.component.orderform.web.vo.admin;
 
-import com.qcloud.component.goods.model.MerchandiseItem;
+import com.qcloud.component.goods.model.UnifiedMerchandise;
 import com.qcloud.component.sellercenter.model.Merchant;
 
 public class AdminOrderItemVO {
 
     // ID
-    private long            id;
+    private long               id;
 
     // 总单ID
-    private long            orderId;
+    private long               orderId;
 
     // 子单ID
-    private long            subOrderId;
+    private long               subOrderId;
 
     // 商家ID
-    private long            merchantId;
+    private long               merchantId;
 
     // 统一商品ID
-    private long            unifiedMerchandiseId;
+    private long               unifiedMerchandiseId;
 
     // 单价
-    private double          price;
+    private double             price;
 
     // 数量
-    private int             number;
+    private int                number;
 
     // 小计金额
-    private double          sum;
+    private double             sum;
 
     // 成交价
-    private double          discount;
+    private double             discount;
 
     // 状态,待付款,已付款,待发货,已发货,已签收
-    private int             state;
+    private int                state;
 
-    private MerchandiseItem item;
-    //商家
-    private Merchant merchant;
+    private UnifiedMerchandise item;
+
+    // 商家
+    private Merchant           merchant;
 
     public AdminOrderItemVO() {
 
     }
-
-    
-
-    public AdminOrderItemVO(long id, long orderId, long subOrderId, long merchantId, long unifiedMerchandiseId, double price, int number, double sum, double discount, int state, MerchandiseItem item, Merchant merchant) {
-
-        super();
-        this.id = id;
-        this.orderId = orderId;
-        this.subOrderId = subOrderId;
-        this.merchantId = merchantId;
-        this.unifiedMerchandiseId = unifiedMerchandiseId;
-        this.price = price;
-        this.number = number;
-        this.sum = sum;
-        this.discount = discount;
-        this.state = state;
-        this.item = item;
-        this.merchant = merchant;
-    }
-
-
 
     public void setId(long id) {
 
@@ -154,12 +134,12 @@ public class AdminOrderItemVO {
         return state;
     }
 
-    public MerchandiseItem getItem() {
+    public UnifiedMerchandise getItem() {
 
         return item;
     }
 
-    public void setItem(MerchandiseItem item) {
+    public void setItem(UnifiedMerchandise item) {
 
         this.item = item;
     }
@@ -174,15 +154,13 @@ public class AdminOrderItemVO {
         this.discount = discount;
     }
 
-    
     public Merchant getMerchant() {
-    
+
         return merchant;
     }
 
-    
     public void setMerchant(Merchant merchant) {
-    
+
         this.merchant = merchant;
     }
 }

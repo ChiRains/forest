@@ -16,15 +16,12 @@ import com.qcloud.component.admin.AdminClient;
 import com.qcloud.component.admin.QAdmin;
 import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.CommoditycenterClient;
-import com.qcloud.component.goods.OutdatedCommoditycenterClient;
 import com.qcloud.component.goods.QUnifiedMerchandise;
-import com.qcloud.component.goods.model.Merchandise;
 import com.qcloud.component.marketing.exception.MarketingException;
 import com.qcloud.component.marketing.model.MerchandiseCustomClassification;
 import com.qcloud.component.marketing.model.query.MerchandiseCustomClassificationQuery;
 import com.qcloud.component.marketing.service.MerchandiseCustomClassificationService;
 import com.qcloud.component.marketing.web.form.MerchandiseCustomClassificationForm;
-import com.qcloud.component.marketing.web.form.MultipleSortForm;
 import com.qcloud.component.marketing.web.handler.MerchandiseCustomClassificationHandler;
 import com.qcloud.component.marketing.web.vo.admin.AdminMerchandiseCustomClassificationVO;
 import com.qcloud.component.publicdata.ClassifyType;
@@ -60,9 +57,6 @@ public class AdminSalesPromotionController {
 
     @Autowired
     private MerchandiseCustomClassificationHandler merchandiseCustomClassificationHandler;
-
-    @Autowired
-    private OutdatedCommoditycenterClient          outdatedCommoditycenterClient;
 
     @Autowired
     private CommoditycenterClient                  commoditycenterClient;
@@ -415,14 +409,13 @@ public class AdminSalesPromotionController {
             // 获取merchandise：取到sysCode 和 name
             QUnifiedMerchandise qUnifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(unifiedMerchandiseIds.get(i));
             Long merchandiseId = qUnifiedMerchandise.getList().get(0).getMerchandiseId();
-            Merchandise merchandise = outdatedCommoditycenterClient.getMerchandise(merchandiseId);
             MerchandiseCustomClassification mc = new MerchandiseCustomClassification();
             mc.setCustomClassifyId(classifyId);
             mc.setMerchantId(merchantId);
             mc.setUnifiedMerchandiseId(unifiedMerchandiseIds.get(i));
             mc.setOrderNum(orderNums.get(i));
-            mc.setName(merchandise.getName());
-            mc.setSysCode(merchandise.getSysCode());
+            mc.setName(qUnifiedMerchandise.getName());
+            mc.setSysCode(qUnifiedMerchandise.getSysCode());
             merchandiseCustomClassificationService.add(mc);
         }
         AceAjaxView view = new AceAjaxView();
@@ -453,19 +446,18 @@ public class AdminSalesPromotionController {
         aceAjaxView.setUrl(DIR + "/list");
         return aceAjaxView;
     }
-
-    @RequestMapping
-    public AceAjaxView multipleSort(MultipleSortForm form, Long merchantId, Long classifyId) {
-
-        List<MerchandiseCustomClassification> customList = form.getCustomList();
-        for (MerchandiseCustomClassification temp : customList) {
-            MerchandiseCustomClassification custom = merchandiseCustomClassificationService.get(temp.getId());
-            custom.setOrderNum(temp.getOrderNum());
-            merchandiseCustomClassificationService.update(custom);
-        }
-        AceAjaxView aceAjaxView = new AceAjaxView();
-        aceAjaxView.setMessage("修改成功");
-        aceAjaxView.setUrl(DIR + "/customMallList?merchantId=" + merchantId + "&classifyId=" + classifyId);
-        return aceAjaxView;
-    }
+    // @RequestMapping
+    // public AceAjaxView multipleSort(MultipleSortForm form, Long merchantId, Long classifyId) {
+    //
+    // List<MerchandiseCustomClassification> customList = form.getCustomList();
+    // for (MerchandiseCustomClassification temp : customList) {
+    // MerchandiseCustomClassification custom = merchandiseCustomClassificationService.get(temp.getId());
+    // custom.setOrderNum(temp.getOrderNum());
+    // merchandiseCustomClassificationService.update(custom);
+    // }
+    // AceAjaxView aceAjaxView = new AceAjaxView();
+    // aceAjaxView.setMessage("修改成功");
+    // aceAjaxView.setUrl(DIR + "/customMallList?merchantId=" + merchantId + "&classifyId=" + classifyId);
+    // return aceAjaxView;
+    // }
 }

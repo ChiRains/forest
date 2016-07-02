@@ -8,6 +8,6 @@ public class JettyTest {
 
     public static void main(String[] args) throws Exception {
 
-        JettyServer.start(8083);
+        JettyServer.start(8081);
     }
 }

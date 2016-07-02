@@ -6,7 +6,7 @@
     <select id="list4query" parameterType="java.util.HashMap" resultType="Merchandise">  
         select * from `goods_merchandise` where 1 = 1 
         <if test="name != null">
-        	and  (`name` like concat('%',#{name},'%') or `sysCode` like concat('%',#{name},'%') or `code` like concat('%',#{name},'%') )
+        	and  (`name` like concat('%',#{name},'%') or `sysCode` like concat('%',#{name},'%'))
         </if>
         <if test="merchantClassifyId > 0">
         	and `merchantClassifyId` = #{merchantClassifyId}
@@ -20,7 +20,7 @@
      <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
         select count(*) from `goods_merchandise` where 1 = 1 
         <if test="name != null">
-        	and  (`name` like concat('%',#{name},'%') or `sysCode` like concat('%',#{name},'%') or `code` like concat('%',#{name},'%'))
+        	and  (`name` like concat('%',#{name},'%') or `sysCode` like concat('%',#{name},'%'))
         </if>
         <if test="merchantClassifyId > 0">
         	and `merchantClassifyId` = #{merchantClassifyId}
@@ -117,12 +117,8 @@
 	</select>
 	
 	<select id="listBySysCode" resultType="Merchandise">
-		select * from `goods_merchandise` where `code`=#{code} 
+		select * from `goods_merchandise` where `sysCode`=#{code} 
 	</select>
-	
-	<select id="listByCode" resultType="Merchandise">
-		select * from `goods_merchandise` where `code`=#{code} and `merchantId`=#{merchantId} 
-	</select>	
 	
 	<select id="getMerchandiseList" parameterType="java.util.HashMap" resultType="Merchandise">
 		select * from `goods_merchandise` where `merchantId`=#{merchantId} 
@@ -136,7 +132,7 @@
 		select * from `goods_merchandise`
 		where 1=1
 		 <if test="name != null">
-        	and  (`name` like concat('%',#{name},'%') or `sysCode` like concat('%',#{name},'%') or `code` like concat('%',#{name},'%') )
+        	and  (`name` like concat('%',#{name},'%') or `sysCode` like concat('%',#{name},'%'))
         </if>
         <if test="merchantClassifyId > 0">
         	and `merchantClassifyId` = #{merchantClassifyId}
@@ -156,7 +152,7 @@
 		select count(*) from `goods_merchandise`
 		where 1=1
 		 <if test="name != null">
-        	and  (`name` like concat('%',#{name},'%') or `sysCode` like concat('%',#{name},'%') or `code` like concat('%',#{name},'%') )
+        	and  (`name` like concat('%',#{name},'%') or `sysCode` like concat('%',#{name},'%'))
         </if>
         <if test="merchantClassifyId > 0">
         	and `merchantClassifyId` = #{merchantClassifyId}

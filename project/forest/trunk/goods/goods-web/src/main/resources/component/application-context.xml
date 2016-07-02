@@ -30,7 +30,7 @@
 	
 	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.AttributeDefinitionUriHandlerImpl"></pirates:uriHandler>	
 	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.MerchandiseAttributeUriHandlerImpl"></pirates:uriHandler>	
-    <pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.MerchandiseItemUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.UnifiedMerchandiseUriHandlerImpl"></pirates:uriHandler>
     <pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.MerchandiseUriHandlerImpl"></pirates:uriHandler>
 	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.ClassifySpecificationsUriHandlerImpl"></pirates:uriHandler>	
 	<pirates:uriHandler class="com.qcloud.component.goods.web.handler.url.EnumerationUriHandlerImpl"></pirates:uriHandler>	

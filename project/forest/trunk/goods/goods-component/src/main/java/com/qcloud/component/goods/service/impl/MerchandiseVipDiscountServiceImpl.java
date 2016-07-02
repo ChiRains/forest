@@ -8,14 +8,14 @@ import org.springframework.stereotype.Service;
 import com.qcloud.component.autoid.AutoIdGenerator;
 import com.qcloud.component.goods.dao.MerchandiseVipDiscountDao;
 import com.qcloud.component.goods.dao.MerchandiseVipDiscountHistoryDao;
-import com.qcloud.component.goods.model.MerchandiseItem;
 import com.qcloud.component.goods.model.MerchandiseVipDiscount;
 import com.qcloud.component.goods.model.MerchandiseVipDiscountDate;
 import com.qcloud.component.goods.model.MerchandiseVipDiscountHistory;
+import com.qcloud.component.goods.model.UnifiedMerchandise;
 import com.qcloud.component.goods.model.query.MerchandiseVipDiscountQuery;
-import com.qcloud.component.goods.service.MerchandiseItemService;
 import com.qcloud.component.goods.service.MerchandiseVipDiscountDateService;
 import com.qcloud.component.goods.service.MerchandiseVipDiscountService;
+import com.qcloud.component.goods.service.UnifiedMerchandiseService;
 import com.qcloud.component.publicdata.PublicdataClient;
 import com.qcloud.component.publicdata.model.Classify;
 import com.qcloud.pirates.data.Page;
@@ -34,9 +34,6 @@ public class MerchandiseVipDiscountServiceImpl implements MerchandiseVipDiscount
     private AutoIdGenerator                   autoIdGenerator;
 
     @Autowired
-    private MerchandiseItemService            merchandiseItemService;
-
-    @Autowired
     private PublicdataClient                  publicdataClient;
 
     @Autowired
@@ -44,13 +41,16 @@ public class MerchandiseVipDiscountServiceImpl implements MerchandiseVipDiscount
 
     private static final String               ID_KEY = "goods_merchandise_vip_discount";
 
+    @Autowired
+    private UnifiedMerchandiseService         unifiedMerchandiseService;
+
     @Override
     public boolean add(MerchandiseVipDiscount merchandiseVipDiscount) {
 
-        MerchandiseItem merchandiseItem = merchandiseItemService.get(merchandiseVipDiscount.getMerchandiseItemId());
-        AssertUtil.assertNotNull(merchandiseItem, "商品不存在." + merchandiseVipDiscount.getMerchandiseItemId());
-        merchandiseVipDiscount.setClassifyId(merchandiseItem.getMerchantClassifyId());
-        merchandiseVipDiscount.setClassifyBSID(merchandiseItem.getMerchantClassifyBsid());
+        UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(merchandiseVipDiscount.getMerchandiseItemId());
+        AssertUtil.assertNotNull(unifiedMerchandise, "商品不存在." + merchandiseVipDiscount.getMerchandiseItemId());
+        merchandiseVipDiscount.setClassifyId(unifiedMerchandise.getMerchantClassifyId());
+        merchandiseVipDiscount.setClassifyBSID(unifiedMerchandise.getMerchantClassifyBsid());
         long id = autoIdGenerator.get(ID_KEY);
         merchandiseVipDiscount.setId(id);
         return merchandiseVipDiscountDao.add(merchandiseVipDiscount);
