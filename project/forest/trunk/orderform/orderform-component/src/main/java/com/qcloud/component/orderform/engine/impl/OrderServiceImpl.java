@@ -358,8 +358,8 @@ public class OrderServiceImpl implements OrderService {
             OrderDelivery orderDelivery = context.getDeliveryMap().get(context.getMerchant(merchantOrderEntity.getMerchantId()));
             // TODO送货上门 门店自提
             // 物流邮费
-            if (DeliveryModeType.LOGISTICS.equals(orderDelivery.getDelivery().getType())) {
-                if (orderDelivery != null && StringUtils.isNotEmpty(orderDelivery.getSexpressCode()) && (orderDelivery.getDelivery() == null)) {
+            if (orderDelivery != null && (orderDelivery.getDelivery() != null) && DeliveryModeType.LOGISTICS.equals(orderDelivery.getDelivery().getType())) {
+                if (StringUtils.isNotEmpty(orderDelivery.getSexpressCode())) {
                     String expressCode = orderDelivery.getSexpressCode();
                     double postage = sellercenterClient.calculatePostage(expressCode, merchantOrderEntity.getMerchantId(), weight, context.getConsignee().getCity());
                     if (new Double(postage).longValue() > 0) {
