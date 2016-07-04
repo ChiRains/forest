@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>商品管理</title>
+<title>单品上下架管理</title>
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
-        商品管理
+        单品上下架管理
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             列表
@@ -19,7 +19,7 @@
     <div class="col-xs-12">
 
         <div class="table-header">
-            商品列表
+            单品列表
         </div>
 
         <!-- <div class="table-responsive"> -->
@@ -28,39 +28,12 @@
         <div>
             <div class="dataTables_wrapper form-inline no-footer">
                 <div class="row">
-                    <div class="col-xs-6">
-                        <c:if test="${query.merchantId > 0}">
-                            <div class="dataTables_length">
-                                <a title="新增" class="btn btn-sm btn-info"
-                                   href="#admin/merchandise/toAdd?merchantId=${query.merchantId}">
-                                    <i class="ace-icon fa fa-plus align-bottom bigger-125"></i>
-                                    新&nbsp;增
-                                </a>
-                            </div>
-                        </c:if>
-                    </div>
-                    <div class="col-xs-6" style="text-align: right;">
+                    <div class="col-xs-6" >
                         <label>
-                            <form id="query-form" action="#admin/merchandise/list" onsubmit="listFormSearch(this); return false">
+                            <form id="query-form" action="#admin/merchandise/toEditItemState" onsubmit="listFormSearch(this); return false">
                             	<div class="dataTables_length">
                                			<input type="search" maxlength="40" class="form-control search-query"
-                                           placeholder="名称/系统编号/编号" name="name" value="${query.name}">
-                                        <select class="form-control" id="specClassifyId" name="specClassifyId" style="width:140px">
-				                            <option value="-1" selected>请选择规格</option>
-				                            <c:forEach items="${specClassifyId}" var="item" varStatus="current">
-				                                <option value="${item.key}" 
-				                                <c:if test="${item.key eq query.specClassifyId}">selected</c:if>>${item.value}</option>
-				                            </c:forEach>
-				                        </select>
-	                                    <select class="form-control" id="merchantClassifyId" name="merchantClassifyId" style="width:140px">
-				                            <option value="-1" selected>请选择分类</option>
-				                            <c:forEach items="${merchantClassifyList}" var="item" varStatus="current">
-				                                <option value="${item.key}"
-				                                <c:if test="${query.merchantClassifyId eq item.key}">
-					                                selected
-				                                </c:if>>${item.value}</option>
-				                            </c:forEach>
-				                        </select>
+                                           placeholder="编号" name="name" value="${query.name}">
                                    		<button type="submit" class="btn btn-purple btn-sm">
                                             <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
                                             查询
@@ -75,74 +48,46 @@
                     <tr role="row">
                     	<th>系统编码</th>                      
                         <th>名称</th>
-                        <th>缩略图</th>
-                        <th>关键字</th>
-                        <th width="120px">状态</th>
-                        <th width="60px">单位</th>
                         <th>规格</th>
-                        <th>商城分类</th>                        
-                        <th>分类</th>
-                        <th>规格设置</th>
-                        <th>属性设置</th>
-                        <th>单品上/下架管理</th>
+                        <th>商城商品分类</th>                        
+                        <th>商家商品分类</th>
+                         <th width="120px">当前状态</th>
                         <th class="sorting_disabled" width="100">操作</th>
                     </tr>
                     </thead>
 
                     <tbody>
-                    <c:forEach items="${result}" var="item" varStatus="current">
+                    <c:forEach items="${list}" var="item" varStatus="current">
                         <tr>
-                        	<td>${item.sysCode}</td>                           
+                        	<td>${item.code}</td>                           
                             <td>${item.name}</td>
-                            <td><img height="50" width="80" src="${item.image}"/></td>
-                            <td>${item.keywords}</td>
-                            <td>
-                            <c:if test="${item.state==2}">新增 &nbsp;<a class="btn btn-sm btn-info toAudit" api-path="/admin/merchandise/toAuditid.do?id=${item.id}">提交审核</a></c:if>
-                            <c:if test="${item.state==3}">待审核&nbsp;</c:if>
-                            <c:if test="${item.state==4}"><span class="label label-success arrowed">上线</span>&nbsp;<a class="btn btn-sm btn-danger offline" api-path="/admin/merchandise/offline.do?id=${item.id}">下线</a></c:if>
-                            <c:if test="${item.state==5}"><span class="label label-danger arrowed-in">下线</span>&nbsp;<a class="btn btn-sm btn-success online" api-path="/admin/merchandise/online.do?id=${item.id}">上线</a></c:if>
-                          
-                            </td>
-                            <td>${item.unit}</td>
-                            <td>${item.specClassifyStr}</td>
+                            <td>${item.specifications}</td>
                             <td>${item.mallClassifyStr}</td>
                             <td>${item.merchantClassifyStr}</td>
                             <td>
-                                <a class="btn btn-xs btn-info" href="#admin/merchandise/toEditSpec?id=${item.id}">
-                                    规格设置
-                                </a>
-                            </td>
-                            <td>
-                                 <a title="属性设置" class="btn btn-xs btn-info"
-                                       href="#admin/merchandise/toEditAttributes?id=${item.id}">
-                                       属性设置
-                                    </a>
-                            </td>
-                            <td>
-                            	 <div class="hidden-sm hidden-xs action-buttons">
-                                    <a title="单品上/下架" class="btn btn-xs btn-info "
-                                       href="#admin/merchandise/toEditItemState?merchandiseId=${item.id}">
-                                    单品上/下架
-                                    </a>
-                                </div>
+	                            <c:if test="${item.state==4}">
+	                            	<span class="label label-success arrowed">上线</span>&nbsp;
+	                            </c:if>
+	                            <c:if test="${item.state==5}">
+	                            	<span class="label label-danger arrowed-in">下线</span>&nbsp;
+	                            </c:if>
                             </td>
                             <td>
                                 <div class="hidden-sm hidden-xs action-buttons">
-                                    <a title="修改商品信息" class="btn btn-xs btn-info "
-                                       href="#admin/merchandise/toEdit?id=${item.id}&pageNum=${pageNum}">
-                                     修改商品信息
-                                    </a>
+                                	 <c:if test="${item.state==4}">
+		                            		<a class="btn btn-sm btn-danger offline" api-path="/admin/merchandise/offline.do?id=${item.id}">下线
+		                            		</a>
+		                             </c:if>
+		                             <c:if test="${item.state==5}">
+		                            		<a class="btn btn-sm btn-success online" api-path="/admin/merchandise/online.do?id=${item.id}">上线
+		                            		</a>
+		                            </c:if>
                                 </div>
                             </td>
                         </tr>
                     </c:forEach>
                     </tbody>
                 </table>
-                <div class="row">
-                    <div class="col-xs-12">
-                        <%@include file="../page.inc.jsp" %>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
