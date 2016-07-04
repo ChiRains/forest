@@ -85,7 +85,7 @@ public class MyMessageUriHandlerImpl extends AbstractUriHandler {
     public List<String> whiteNameUris() {
 
         List<String> list = new ArrayList<String>();
-//        list.add("/admin/myMessage/send.do");
+        // list.add("/admin/myMessage/send.do");
         return list;
     }
 }
