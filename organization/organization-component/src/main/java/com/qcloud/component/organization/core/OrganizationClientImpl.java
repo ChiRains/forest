@@ -256,40 +256,40 @@ public class OrganizationClientImpl implements OrganizationClient {
         return pe;
     }
 
-    @Override
-    public Map<Long, QClerk> mapClerkAll(ClerkQuery clerkQuery) {
-
-        Map<Long, QClerk> map = new HashMap<Long, QClerk>();
-        for (Clerk clerk : clerkService.listAll(BeanUtils.transBean2Map(clerkQuery))) {
-            ClerkEntity clerkEntity = new ClerkEntity();
-            clerkEntity.setMobile(clerk.getMobile());
-            clerkEntity.setName(clerk.getName());
-            clerkEntity.setId(clerk.getId());
-            DepartmentClerk departmentClerk = departmentClerkService.getBelongsDepartment(clerk.getId());
-            if (departmentClerk == null) {
-                throw new OrganizationException(clerk.getName() + "(" + clerk.getMobile() + ")" + ".未配置部门信息!");
-            }
-            clerkEntity.setDepartmentId(departmentClerk.getDepartmentId());
-            map.put(clerkEntity.getId(), clerkEntity);
-        }
-        return map;
-    }
-
-    @Override
-    public List<DepartmentClerk> listDepartmentClerkAll() {
-
-        return departmentClerkService.listAll();
-    }
-
-    @Override
-    public Map<Long, Department> mapDepartmentAll() {
-
-        Map<Long, Department> map = new HashMap<Long, Department>();
-        for (Department department : departmentService.listAll()) {
-            map.put(department.getId(), department);
-        }
-        return map;
-    }
+//    @Override
+//    public Map<Long, QClerk> mapClerkAll(ClerkQuery clerkQuery) {
+//
+//        Map<Long, QClerk> map = new HashMap<Long, QClerk>();
+//        for (Clerk clerk : clerkService.listAll(BeanUtils.transBean2Map(clerkQuery))) {
+//            ClerkEntity clerkEntity = new ClerkEntity();
+//            clerkEntity.setMobile(clerk.getMobile());
+//            clerkEntity.setName(clerk.getName());
+//            clerkEntity.setId(clerk.getId());
+//            DepartmentClerk departmentClerk = departmentClerkService.getBelongsDepartment(clerk.getId());
+//            if (departmentClerk == null) {
+//                throw new OrganizationException(clerk.getName() + "(" + clerk.getMobile() + ")" + ".未配置部门信息!");
+//            }
+//            clerkEntity.setDepartmentId(departmentClerk.getDepartmentId());
+//            map.put(clerkEntity.getId(), clerkEntity);
+//        }
+//        return map;
+//    }
+//
+//    @Override
+//    public List<DepartmentClerk> listDepartmentClerkAll() {
+//
+//        return departmentClerkService.listAll();
+//    }
+//
+//    @Override
+//    public Map<Long, Department> mapDepartmentAll() {
+//
+//        Map<Long, Department> map = new HashMap<Long, Department>();
+//        for (Department department : departmentService.listAll()) {
+//            map.put(department.getId(), department);
+//        }
+//        return map;
+//    }
 
     @Override
     public List<Long> listAllClerkIds() {

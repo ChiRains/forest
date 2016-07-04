@@ -1,10 +1,6 @@
 package com.qcloud.component.organization;
 
 import java.util.List;
-import java.util.Map;
-import com.qcloud.component.organization.model.Department;
-import com.qcloud.component.organization.model.DepartmentClerk;
-import com.qcloud.component.organization.model.query.ClerkQuery;
 import com.qcloud.pirates.data.Page;
 
 public interface OrganizationClient {
@@ -45,12 +41,6 @@ public interface OrganizationClient {
     QDepartment getParentDepartment(Long id);
 
     QPost getPost(Long id);
-
-    Map<Long, QClerk> mapClerkAll(ClerkQuery clerkQuery);
-
-    List<DepartmentClerk> listDepartmentClerkAll();
-
-    Map<Long, Department> mapDepartmentAll();
 
     List<Long> listAllClerkIds();
 
