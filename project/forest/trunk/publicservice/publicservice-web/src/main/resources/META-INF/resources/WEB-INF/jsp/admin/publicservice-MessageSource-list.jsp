@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>管理员管理</title>
+<title>消息通知管理</title>
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
-        管理员管理
+        消息通知管理
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             列表
@@ -18,7 +18,7 @@
     <div class="col-xs-12">
 
         <div class="table-header">
-            管理员列表
+            消息通知列表
         </div>
 
         <!-- <div class="table-responsive"> -->
@@ -42,29 +42,31 @@
                     <tr role="row">     
                                                 <th>消息标题</th>           
                                                 <th>消息内容</th>           
-                                                <th>活动</th>           
-                                                <th>平台</th>           
                                                 <th>发布时间</th>           
-                                                <th class="sorting_disabled">操作</th>
                     </tr>
                     </thead>
 
                     <tbody>
                            <c:forEach items="${result}" var="item" varStatus="current"> 
                             <tr>            
-                                                        <td>${title}</td>                         
-                                                        <td>${content}</td>                         
-                                                        <td>${classifyId}</td>                         
-                                                        <td>${merchantId}</td>                         
-                                                        <td>${time}</td>                         
-                                                        <td>
+                                                        <td>${item.title}</td>                         
+                                                        <td><label class="showcontent"     content="${item.content}">
+						                                <c:choose>
+						                               <c:when test="${fn:length(item.content)>20}">
+						                               ${fn:substring(item.content,0,20)} .....
+						                                </c:when>
+						                              <c:otherwise> ${item.content}</c:otherwise>
+						                                 </c:choose> 
+						                                </label>  </td>                         
+                                                        <td>  <fmt:formatDate value="${item.time}" pattern="yyyy-MM-dd HH:mm:ss" /> </td>                         
+<%--                                                         <td>
                                 <div class="hidden-sm hidden-xs action-buttons">
                                     <a title="修改基本信息" class="green" 
                                        href="#admin/messageSource/toEdit?id=${item.id}&queryStr=${queryStr}">
                                         <i class="ace-icon fa fa-pencil bigger-130"></i>
                                     </a>							                                 
                                 </div>
-                            </td>
+                            </td> --%>
                         </tr>
 						</c:forEach>
                     </tbody>
@@ -77,13 +79,29 @@
             </div>
         </div>
     </div>
-</div>
+</div> 
 
 <!-- page specific plugin scripts -->
 <script type="text/javascript">
     var scripts = [null, null];
     ace.load_ajax_scripts(scripts, function () {
         //inline scripts related to this page
-         
+        //点击显示详情
+        $('.showcontent').on('click', function () {
+        	var content=$(this).attr('content');
+        	var area=$(this).parent().next().html();
+        	var time=$(this).parent().next().next().html();
+            BootstrapDialog.show({
+                message:content,
+                buttons: [{
+                    id: 'btn-1',
+                    label: '确定',
+                    cssClass: 'btn btn-primary',
+                    action: function (dialogItself) {
+                        dialogItself.close();
+                    }
+                }]
+            });
+        });
     });
 </script>

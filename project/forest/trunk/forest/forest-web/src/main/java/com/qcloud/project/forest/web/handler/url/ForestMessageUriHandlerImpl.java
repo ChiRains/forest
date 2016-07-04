@@ -13,17 +13,18 @@ public class ForestMessageUriHandlerImpl extends AbstractUriHandler {
 
         List<String> list = new ArrayList<String>();
         list.add("/admin/forestMessage/modularList.do");
+        list.add("/admin/forestMessage/sendPrivateMessage.do");
         return list;
     }
 
-    @Override
-    public List<String> permissionUris() {
-
-        List<String> list = new ArrayList<String>();
-        list.add("/admin/forestMessage/modularList.do");
-        return list;
-    }
-
+    // @Override
+    // public List<String> permissionUris() {
+    //
+    // List<String> list = new ArrayList<String>();
+    // list.add("/admin/forestMessage/modularList.do");
+    // list.add("/admin/myMessage/sendPrivateMessage.do");
+    // return list;
+    // }
     @Override
     public Map<String, List<String>> permissionRelaMap() {
 
@@ -37,22 +38,5 @@ public class ForestMessageUriHandlerImpl extends AbstractUriHandler {
         // map.put("/admin/analysisresult/delete.do", list);
         // map.put("/admin/analysisresult/listPB.do", list);
         return map;
-    }
-
-    @Override
-    public List<String> whiteNameUris() {
-
-        List<String> list = new ArrayList<String>();
-        list.add("/analysisresult/bmiCalculation.do");
-        list.add("/app/analysisresult/bmiCalculation.do");
-        return list;
-    }
-
-    @Override
-    public List<String> appUris() {
-
-        List<String> list = new ArrayList<String>();
-        list.add("/app/analysisresult/bmiCalculation.do");
-        return list;
     }
 }

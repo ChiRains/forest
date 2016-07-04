@@ -19,8 +19,22 @@
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
-        <form id="model-form" class="form-horizontal"  role="form" action="/admin/messageSource/add.do">
+        <form id="model-form" class="form-horizontal"  role="form" action="/admin/forestMessage/sendPrivateMessage.do">
             <!-- #section:elements.form -->
+            
+                        <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="userId"> 接收用户 </label>
+                <div class=" col-md-9">
+					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
+		               <input type="hidden"  id="userId_send" name="userId_send" value="${userId}" data-id="${userId}"/>
+					   <input type="text" class="width-100" readonly  id="userName_send" name="userName_send" placeholder="null" value="${name}" onchange="check()"/>
+					</span>
+					  <a class="btn btn-primary select-user" >
+                        <i class="ace-icon fa fa-keyboard-o bigger-130"></i>选择接收用户</a>
+                       <a class="btn btn-primary select-all" >
+                        <i class="ace-icon fa fa-keyboard-o bigger-130"></i>选择全部用户</a>
+                </div>
+            </div>
 
                   		<div class="space-4"></div>
             <div class="form-group">
@@ -72,6 +86,139 @@
                      $this.next().css({'width': $this.parent().width()});
                 })
             }).trigger('resize.chosen');
+			
+			//选择用户
+            $(".select-user").on("click", function () {
+         		// 务必添加解绑事件，要不然会重复提交数据
+         		$(document).off('click',"#clerkbtn");
+         		var id=$(this).attr("data-id");
+         		var userId = document.getElementById("userId_send").value;
+                BootstrapDialog.show({
+                    title:"选择接收人",                          
+                    message: $('<div></div>').load('/admin/myMessage/toSelect.do?userId_send='+userId),
+                    cssClass: "select-product-dialog",
+                    onshow: function (dialog) { 
+                    //单选 
+                    $(document).on('click','input[name=userId]',function(){
+    			    		 var flag=0;
+    			    		 var id_array=new Array();
+    			    		 var name_array=new Array();
+    			    		 $("input[name=userId]").each(function(){
+    			    		 
+    			    			if($(this).is(":checked")){
+    			    			
+    			    			var id=$(this).attr("data-id");
+    			    			var name=$(this).attr("data-name");
+    			    			  id_array.push(id);
+    			    			  name_array.push(name);
+    			    			}else{
+    			    				flag++;
+    			    			}
+    			    		});
+    			    		var idstr=id_array.join(',');//将数组元素连接起来以构建一个字符串
+    			    		var namestr=name_array.join(',');
+        	    			  $('#userId_send').val(idstr);
+    	    	       		  $('#userName_send').val(namestr);
+    			    		if(flag>0){
+    			    			$("input[name=selectAll]").prop("checked",false);
+    			    		    $("input[name=initAll]").prop("checked",false);
+    			    			
+    			    		}else{
+    			    			$("input[name=selectAll]").prop("checked",true);
+    			            	$("input[name=initAll]").prop("checked",true);
+    			    		}
+    			    });
+                    //反选
+                   $(document).on('click','input[name=initAll]',function(){
+        	             var id_array=new Array();
+        		         var name_array=new Array();
+        		         var isCheck=0;
+        		         var count=$("input[name=userId]").length;
+        		       //  alert(count+":count");	
+        		   $("input[name=selectAll]").prop("checked",false);
+        		       $("input[name=userId]").each(function(){
+        			    var id=$(this).attr("data-id");
+    		    	   var name=$(this).attr("data-name");
+    		   		   if($(this).is(":checked")){
+        			     }else{
+        				    isCheck++;
+        				    if(id!=null){
+    		    			   id_array.push(id);
+        			           name_array.push(name);
+        			         }
+        		    	}
+        	     	$(this).prop("checked",!this.checked); 
+        			var idstr=id_array.join(',');//将数组元素连接起来以构建一个字符串
+        		    var namestr=name_array.join(',');
+        	    	$('#userId_send').val(idstr);
+    	    	    $('#userName_send').val(namestr);
+        	      if(isCheck==count){//全选按钮变成  选中状态			
+        	      	$("input[name=selectAll]").prop("checked",true);
+        	      }
+        	      if(isCheck==0){//全选按钮变成  取消选中状态
+    			 	 $("input[name=selectAll]").prop("checked",false);
+    		      }
+                    }); 
+                  });  
+                  
+                    //全选
+        	 $(document).on('click','input[name=selectAll]',function(){
+        	      $("input[name=initAll]").prop("checked",false);//当全选时反选取消
+        	            var id_array=new Array();
+        		        var name_array=new Array();
+        		      
+        		if($(this).is(":checked")){
+        			$("input[name=userId]").each(function(){
+        			       var id=$(this).attr("data-id");
+    		    		    var name=$(this).attr("data-name"); 
+    		    		    if(id!=null){
+    		    			 id_array.push(id);
+        			         name_array.push(name);
+    		    		    }
+    		   			if($(this).is(":checked")){
+    		    	    	
+    		    		}else{
+    		    			$(this).prop("checked",true);
+    		    		}
+    		    		
+        			});
+        		  var idstr=id_array.join(',');//将数组元素连接起来以构建一个字符串
+        		  var namestr=name_array.join(',');
+        	    			  $('#userId_send').val(idstr);
+    	    	       		  $('#userName_send').val(namestr);
+        		}else{
+        	       
+        		    $("input[name=userId]").each(function(){
+        		           // var id=$(this).attr("data-id");
+    		    		   // var name=$(this).attr("data-name"); 
+    		    	     
+    		   			if($(this).is(":checked")){
+    		   			
+    		    		}else{
+    		    			 $("input[name=userId]").prop("checked",false);
+        			          $('#userId_send').val(null);
+    	    	       		  $('#userName_send').val(null);
+    		    		}
+    		    		
+        			});
+        		
+        		}
+        	});
+                     $(document).on('click','#clerkbtn',function(){
+                      	
+        		        	dialog.close();
+        	             });
+                    	
+                    }
+                });
+            });
+
+            $(".select-all").on("click", function () { 
+                $("#userId_send").attr("value",-1);
+	       		$('#userName_send').attr("value","所有用户");
+                });
+			
+            
                    
             //表单验证
             $("#model-form").validate({
