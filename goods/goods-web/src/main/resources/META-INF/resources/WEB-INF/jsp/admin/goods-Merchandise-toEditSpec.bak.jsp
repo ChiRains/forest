@@ -27,34 +27,48 @@
         </small>
     </h1>
 </div>
-<form id="update-form" class="form-horizontal" role="form" action="/admin/merchandise/getSpecMerchandiseList.do"> 
+<form id="update-form" class="form-horizontal" role="form" action="/admin/merchandise/editRelation.do"> 
  <input type="hidden" id="id" name="id" value="${merchandise.id}">
  <input type="hidden" id="attrListSize" name="attrListSize" value="${fn:length(attrList)}">
 <div class="standard-box">
 	<label class="standard-title">基本参数:</label>
 	<div class="standard-details-box">
 		<c:if test="${defaultSpec!=null}">
-			<input type="checkbox" ${isDefault} value="-1" name="attrlist[0].value" /> 默认
+			<input type="hidden" value="-1" name="relationForms[0].attributeId" />
+			<input type="checkbox" ${isDefault} class="defaultSpecification" value="0" name="relationForms[0].value" /> 默认
 		</c:if>
 		<c:forEach items="${attrList}" var="item" varStatus="statusItem">
         	<h4 class="class-title">${item.name}：</h4>
         	<div class="standard-details">
-        	<c:forEach items="${item.list}" var="list" varStatus="status">
-    			
-    			<dl class="standard-details-item">
-				<dt>
-				<input type="hidden" value="${list.value}" name="initStr[${statusItem.index}].value" />
-				<input type="checkbox" value="${list.value}" name="attrlist[${statusItem.index}].value" /></dt>
-				<dt>${list.value}</dt>
-				</dl>
-    		
+        	<c:forEach items="${item.relationForms}" var="list" varStatus="status">
+    			<c:if test="${list.type==1}">
+	    			<dl class="standard-details-item">
+					<dt>
+					<input type="hidden" value="${list.oldAlias}" name="relationForms[${(statusItem.index+1)*20+status.index}].oldAlias" />
+					<input type="hidden" value="${item.id}" name="relationForms[${(statusItem.index+1)*20+status.index}].attributeId" />
+					<input type="hidden" value="${list.value}" name="relationForms[${(statusItem.index+1)*20+status.index}].value" />
+					<input type="checkbox" style="width:20px;height:20px;" value="0" data-value="${list.value}" name="relationForms[${(statusItem.index+1)*20+status.index}].isCheck" /></dt>
+					<dt><input type="text" name="relationForms[${(statusItem.index+1)*20+status.index}].alias" value="${list.alias}" /></dt>
+					</dl>
+				</c:if>
+    			<c:if test="${list.type==2}">
+	    			<dl class="standard-details-item">
+					<dt>
+					<input type="hidden" value="${list.oldAlias}" name="extraForms[${(statusItem.index+1)*20+status.index}].oldAlias" />
+					<input type="hidden" value="${item.id}" name="extraForms[${(statusItem.index+1)*20+status.index}].attributeId" />
+					<input type="hidden" value="${list.value}" name="extraForms[${(statusItem.index+1)*20+status.index}].value" />
+					<input type="checkbox"  style="width:20px;height:20px;" value="0"  data-value="${list.value}" name="extraForms[${(statusItem.index+1)*20+status.index}].isCheck" /></dt>
+					<dt><input type="text" name="extraForms[${(statusItem.index+1)*20+status.index}].alias" value="${list.alias}" /></dt>
+					</dl>
+				</c:if>
     		</c:forEach>
+    		<button class="btn btn-info add" type="button" data-attributeId="${item.id}" ><i class="ace-icon bigger-110"></i>&nbsp;添加&nbsp; </button>
         	</div>
     	</c:forEach>
 		<div class="space-4"></div>
-        <div class="clearfix form-actions">
-            <div class="col-md-offset-3 col-md-9">
-                <button class="btn btn-info refBtn" type="button"><i class="ace-icon fa fa-check bigger-110"></i>&nbsp;更新商品&nbsp;
+        <div class="clearfix form-actions" style="text-align:center;padding-left: 20%;">
+            <div class="col-md-9">
+                <button class="btn btn-info refBtn" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>&nbsp;更新商品&nbsp;
                 </button>
             </div>
         </div>
@@ -63,12 +77,13 @@
 </form>
 
 <form id="model-form" class="form-horizontal" role="form" action="/admin/merchandise/editSpec.do"> 
+ <input type="hidden" id="id" name="id" value="${merchandise.id}">
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
             <!-- #section:elements.form -->
             <div style="text-align: right;">
-            <a class="btn btn-sm btn-info" id="updateSpec" api-path="/admin/merchandise/createSpecs.do?id=${merchandise.id}">更新规格</a>
+           <%-- <a class="btn btn-sm btn-info" id="updateSpec" api-path="/admin/merchandise/createSpecs.do?id=${merchandise.id}">更新规格</a>  --%>
             </div>
             
             <!--
@@ -94,10 +109,10 @@
             
             <div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-1 control-label no-padding-right"> 规格 </label>
+                <label style="text-align:left;" class="col-sm-1 control-label no-padding-right"> 规格 :</label>
 
                 <div class="col-sm-9">
-                <span class="col-sm-9 no-padding block input-icon input-icon-right mr10">
+                <span class="col-sm-12 no-padding block input-icon input-icon-right mr10">
                         <table id="sample-table-1" class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr>
@@ -105,21 +120,35 @@
                                 <th class="center">进货价</th>
                                 <th class="center">折扣价</th>
                                 <th class="center">原价</th>
-                               
+                                <th class="center">库存</th>
                             </tr>
                             </thead>
                             <tbody id="merchandiseList">
-                          <!--  	<c:if test="${defaultVo!=null}">
+                                <c:if test="${defaultSpec!=null && isDefault == 'checked'}">
                             		<tr>
 									<td class='col-sm-3 center'> 默认规格
-									<input class='purchase' type='hidden' name='list[0].id' value="${defaultVo.id}">
+									<input class='purchase' type='hidden' name='list[0].id' value="${defaultSpec.id}">
 									<input class='purchase' type='hidden' name='list[0].state' value="1">
 									 </td>
-									<td class='col-sm-3 center'><input class='purchase' name='list[0].purchase' value="${defaultVo.purchase}" ></td>
-									<td class='col-sm-3 center'><input class='purchase' name='list[0].price' value="${defaultVo.price}" ></td>
-									<td class='col-sm-3 center'><input class='purchase' name='list[0].discount' value="${defaultVo.discount}" ></td>
+									<td class='col-sm-3 center'><input style='text-align: center;height:35px;' class='purchase' name='list[0].purchase' value="${defaultSpec.purchase}" ></td>
+									<td class='col-sm-3 center'><input style='text-align: center;height:35px;' class='purchase' name='list[0].discount' value="${defaultSpec.discount}" ></td>
+									<td class='col-sm-3 center'><input style='text-align: center;height:35px;' class='purchase' name='list[0].price' value="${defaultSpec.price}" ></td>
+									<td class='col-sm-3 center'><input style='text-align: center;height:35px;' readonly value="${defaultSpec.stock}" ></td>
 									</tr>
-                            	</c:if>  -->
+                            	</c:if>  
+                            	<c:if test="${mspecVoList !=null}"><tr>
+                            	<c:forEach items="${mspecVoList}" var="item" varStatus="statusItem">
+									<td class='col-sm-3 center'> ${item.value0} &nbsp;&nbsp;&nbsp;&nbsp;${item.value1}
+									<input class='purchase' type='hidden' name='list[${statusItem.index}].id' value="${item.id}">
+									<input class='purchase' type='hidden' name='list[${statusItem.index}].state' value="1">
+									 </td>
+									<td class='col-sm-3 center'><input style='text-align: center;height:35px;' class='purchase' name='list[${statusItem.index}].purchase' value="${item.purchase}" ></td>									
+									<td class='col-sm-3 center'><input style='text-align: center;height:35px;' class='purchase' name='list[${statusItem.index}].discount' value="${item.discount}" ></td>
+									<td class='col-sm-3 center'><input style='text-align: center;height:35px;' class='purchase' name='list[${statusItem.index}].price' value="${item.price}" ></td>
+									<td class='col-sm-3 center'><input style='text-align: center;height:35px;' readonly value="${item.stock}" ></td>
+									</tr>
+                            	</c:forEach>
+                            	</c:if>
                             </tbody>
                         </table>
 
@@ -231,18 +260,42 @@
 				success:function(data){
 					var attrlists=data.data.relations;
 					$.each(attrlists,function(i,obj){
-	    				$("input[name^='attrlist']").each(function(){
-	    					if($(this).val()==attrlists[i].value){
+	    				$("input[name$='isCheck']").each(function(){
+	    					if($(this).attr("data-value")==attrlists[i].value&&attrlists[i].isCheck==1){
 	    						$(this).prop("checked",true);
+	    						$(this).val("1");
 	    					}
 	            		});
 	            	});
-	            	$(".refBtn").click();
+	            	//$(".refBtn").click();
     			},
     			error:function(){
 						
 				}
-			});        
+			});       
+			//
+			$("input[name$='isCheck']").click(function(){
+				if($(this).is(":checked")){
+					$(this).val("1");
+				}else{
+					$(this).val("0");
+				}
+			
+			});
+			
+			//
+			if($(".defaultSpecification").is(":checked")){
+				$(".defaultSpecification").val(1);
+			}
+			
+			$(".defaultSpecification").click(function(){
+				if($(this).is(":checked")){
+					$(this).val(1);
+				}else{
+					$(this).val(0);
+				}
+			});
+			 
             $('#updateSpec').on('click', function () {
                 var delUrl = $(this).attr('api-path');
                 BootstrapDialog.show({
@@ -294,6 +347,8 @@
                 var bs = getButtonSetting($(this));
                 uploadDialog(bs);
             });
+            
+            
 
             $(window)
             .off('resize.chosen')
@@ -305,6 +360,47 @@
             }).trigger('resize.chosen');
 
             //表单验证
+            $("#update-form").validate({
+                errorElement: 'div',
+                errorClass: 'help-block col-xs-12 col-sm-reset inline',
+                focusInvalid: false,
+                rules: {
+                
+                },
+
+                messages: {},
+
+                highlight: function (e) {
+                    $(e).closest('.form-group').removeClass('has-success').addClass('has-error');
+                },
+
+                success: function (e) {
+                    $(e).closest('.form-group').removeClass('has-error').addClass('has-success');
+                    $(e).remove();
+                },
+
+                errorPlacement: function (error, element) {
+                    if (element.is('input[type=checkbox]') || element.is('input[type=radio]')) {
+                        var controls = element.closest('div[class*="col-"]');
+                        if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                        else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                    }
+                    else if (element.is('.select2')) {
+                        error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                    }
+                    else if (element.is('.chosen-select')) {
+                        error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                    }
+                    else error.insertAfter(element.parent());
+                },
+
+                submitHandler: function (form) {
+                    postForm('update-form');
+                },
+                invalidHandler: function (form) {
+                }
+            });
+            
             $("#model-form").validate({
                 errorElement: 'div',
                 errorClass: 'help-block col-xs-12 col-sm-reset inline',
@@ -346,69 +442,39 @@
                 }
             });
             
-           $(".refBtn").click(function(){
-            	var str1="";
-            	var str2="";
-            	var initStr1="";
-            	var initStr2="";
-            	var id=$("#id").val();
-            	var attrListSize=$("#attrListSize").val();
-            	if(attrListSize==0){
-            		if($("input[name^='attrlist[0]").is(":checked")){
-            			str1="-1";
-            		}else{
-            			str1="0";
-            		}
-            	}else{
-            		for(var i=0;i<attrListSize;i++){
-	            		$("input[name^='attrlist["+i+"]']").each(function(){
-	            			if($(this).is(":checked")){
-	            				if(i==1){
-	            					str2=str2+$(this).val()+",";
-	            					initStr2+=$(this).prev().val()+",";
-	            				}
-	            				if(i==0){
-	            					str1=str1+$(this).val()+",";
-	            					initStr1+=$(this).prev().val()+",";
-	            				}
-	            				
-	            			}
-	            		});
-            		}
-            	}
-            	//alert(initStr1);
-            	var url="/admin/merchandise/getSpecMerchandiseList.do?id="+id+"&str1="+str1+"&str2="+str2+"&initStr1="+initStr1+"&initStr2="+initStr2;
-            	if(str1==""&&str2==""){
-            		return ;
-            	}
-            	$.ajax({
-					type:"get",
-					url:url,
-					dataType:"json",
-					success:function(data){
-						var merchandiseList=data.data.merchandiseList;
-						var imageList=data.data.images;
-						var str="";
-						$.each(merchandiseList,function(i,obj){
-							str+="<tr>";
-							str+="<td class='col-sm-3 center'>"+merchandiseList[i].value0+"&nbsp;&nbsp;&nbsp;&nbsp;"+merchandiseList[i].value1
-							+"<input class='purchase' type='hidden' name='list["+i+"].id' value="+merchandiseList[i].id +">" 
-							+"<input class='purchase' type='hidden' name='list["+i+"].state' value='1'>" 
-							+" </td>";
-							str+="<td class='col-sm-3 center'><input class='purchase' name='list["+i+"].purchase' value="+merchandiseList[i].purchase+" ></td>";
-							str+="<td class='col-sm-3 center'><input class='purchase' name='list["+i+"].discount' value="+merchandiseList[i].discount+" ></td>";
-							str+="<td class='col-sm-3 center'><input class='purchase' name='list["+i+"].price' value="+merchandiseList[i].price+" ></td>";
-							str+="</tr>";
-						});
-						$("#merchandiseList").html(str);
-						
-					},
-					error:function(){
-						
+            var attrSize=0;
+            $(".add").on('click',function(){
+            	var attributeId=$(this).attr("data-attributeId");
+            	var str="";
+            	str="<dl class='standard-details-item'>"
+				+"<dt>"
+				+"<input type='hidden' class='appendOa' value=''  name='extraForms["+attrSize+"].oldAlias'/>"
+				+"<input type='hidden' value='"+attributeId+"' name='extraForms["+attrSize+"].attributeId' />"
+				+"<input type='hidden' class='appendVa' value='' name='extraForms["+attrSize+"].value' />"
+				+"<input type='checkbox'  style='width:20px;height:20px;' value='0' data-value='' name='extraForms["+attrSize+"].isCheck' /></dt>"
+				+"<dt><input type='text' class='appendDt' name='extraForms["+attrSize+"].alias' value='' /></dt>"
+				+"</dl>";
+            	$(this).prev().append(str);
+            	attrSize++;
+            	$("input[name$='isCheck']").click(function(){
+				if($(this).is(":checked")){
+						$(this).val("1");
+					}else{
+						$(this).val("0");
 					}
 				});
-            	
-            }); 
+				
+				$(".appendDt").blur(function(){
+					$(this).parent().prev().find(".appendOa").val($(this).val());
+					$(this).parent().prev().find(".appendVa").val($(this).val());
+				});
+            });
+            
+            
+            
+            
+            
+            
         });
     })
 </script>
