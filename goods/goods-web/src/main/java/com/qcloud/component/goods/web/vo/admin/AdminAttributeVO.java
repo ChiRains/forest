@@ -7,21 +7,19 @@ import com.qcloud.component.publicdata.KeyValueVO;
 
 public class AdminAttributeVO {
 
-    private long             id;
+    private long               id;
 
-    private String           name;
+    private String             name;
 
     // 1 输入框;2 下拉
-    private int              type = 1;
+    private int                type          = 1;
 
     // 值
-    private String           value;
-    
-    private List<RelationForm> relationForms;
-    
+    private String             value;
 
+    private List<RelationForm> relationForms = new ArrayList<RelationForm>();
 
-    private List<KeyValueVO> list = new ArrayList<KeyValueVO>();
+    private List<KeyValueVO>   list          = new ArrayList<KeyValueVO>();
 
     public int getType() {
 
@@ -73,16 +71,13 @@ public class AdminAttributeVO {
         this.list = list;
     }
 
-    
     public List<RelationForm> getRelationForms() {
-    
+
         return relationForms;
     }
 
-    
     public void setRelationForms(List<RelationForm> relationForms) {
-    
+
         this.relationForms = relationForms;
     }
-
 }

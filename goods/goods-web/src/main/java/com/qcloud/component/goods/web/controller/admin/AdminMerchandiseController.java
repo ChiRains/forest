@@ -1,6 +1,8 @@
 package com.qcloud.component.goods.web.controller.admin;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
@@ -14,7 +16,6 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import com.qcloud.component.goods.UnifiedMerchandiseType;
@@ -33,6 +34,7 @@ import com.qcloud.component.goods.model.key.TypeEnum;
 import com.qcloud.component.goods.model.key.TypeEnum.BrandType;
 import com.qcloud.component.goods.model.key.TypeEnum.MerchandiseStateType;
 import com.qcloud.component.goods.model.query.MerchandiseQuery;
+import com.qcloud.component.goods.model.query.UnifiedMerchandiseQuery;
 import com.qcloud.component.goods.service.AttributeDefinitionService;
 import com.qcloud.component.goods.service.ClassifyAttributeService;
 import com.qcloud.component.goods.service.ClassifySpecificationsService;
@@ -52,9 +54,13 @@ import com.qcloud.component.goods.web.form.RelationForm;
 import com.qcloud.component.goods.web.handler.KV;
 import com.qcloud.component.goods.web.handler.MerchandiseHandler;
 import com.qcloud.component.goods.web.handler.MerchandiseSpecificationsHandler;
+import com.qcloud.component.goods.web.handler.UnifiedMerchandiseHandler;
+import com.qcloud.component.goods.web.vo.UnifiedMerchandiseVO;
+import com.qcloud.component.goods.web.vo.admin.AdminAttrListVO;
 import com.qcloud.component.goods.web.vo.admin.AdminAttributeVO;
 import com.qcloud.component.goods.web.vo.admin.AdminMerchandiseSpecificationsVO;
 import com.qcloud.component.goods.web.vo.admin.AdminMerchandiseVO;
+import com.qcloud.component.goods.web.vo.admin.AdminUnifiedMerchandiseVO;
 import com.qcloud.component.publicdata.ClassifyType;
 import com.qcloud.component.publicdata.EnableType;
 import com.qcloud.component.publicdata.IntKeyValue;
@@ -77,6 +83,7 @@ import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.NumberUtil;
 import com.qcloud.pirates.util.RequestUtil;
 import com.qcloud.pirates.util.StringUtil;
+import com.qcloud.pirates.web.page.PPage;
 import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.pirates.web.security.annotation.NoReferer;
 
@@ -130,6 +137,9 @@ public class AdminMerchandiseController {
 
     @Autowired
     private UnifiedMerchandiseService                unifiedMerchandiseService;
+
+    @Autowired
+    private UnifiedMerchandiseHandler                unifiedMerchandiseHandler;
 
     @Autowired
     private MerchandiseSpecificationsHandler         merchandiseSpecificationsHandler;
@@ -234,7 +244,38 @@ public class AdminMerchandiseController {
         return model;
     }
 
-    @Transactional
+    @RequestMapping
+    public AceAjaxView listDefaultSpec(Long merchandiseId, Long specClassifyId) {
+
+        // AssertUtil.assertTrue(merchandiseId > 0, "ID无效");
+        // Merchandise merchandise = merchandiseService.get(merchandiseId);
+        // AssertUtil.assertNotNull(merchandise, "找不到商品");
+        // ModelAndView modelAndView = new ModelAndView("/admin/goods-Merchandise-toEditSpec");
+        // // 查询该商品规格列表
+        HashMap<String, Object> where = new HashMap<String, Object>();
+        // where.put("merchandiseId", merchandise.getId());
+        // where.put("order", "attributeId asc");
+        // List<MerchandiseSpecifications> list = merchandiseSpecificationsService.list(where);
+        where.clear();
+        // 查询该类目的规格列表
+        where.put("classifyId", specClassifyId);
+        List<ClassifySpecifications> classifySpecificationses = classifySpecificationsService.list(where);
+        List<AdminAttrListVO> attrList = new ArrayList<AdminAttrListVO>();
+        // 类目没有选择规格 ,获取默认规格
+        for (ClassifySpecifications cs : classifySpecificationses) {
+            AttributeDefinition definition = attributeDefinitionService.get(cs.getAttributeId());
+            AdminAttrListVO attrVo = new AdminAttrListVO();
+            attrVo.setName(definition.getName());
+            attrVo.setId(definition.getId());
+            String[] values = definition.getValue().split(",");
+            attrVo.setValueList(Arrays.asList(values));
+            attrList.add(attrVo);
+        }
+        AceAjaxView view = new AceAjaxView();
+        view.addObject("attrList", attrList);
+        return view;
+    }
+
     @RequestMapping
     public AceAjaxView add(Merchandise merchandise) {
 
@@ -1265,6 +1306,19 @@ public class AdminMerchandiseController {
         view.addObject("specClassifyId", specCVOList);
         view.addObject("merchandise", vo);
         view.addObject("mallClassifyList", mallCVOList);
+        return view;
+    }
+
+    @RequestMapping
+    public ModelAndView toEditItemState(UnifiedMerchandiseQuery query) {
+
+        AssertUtil.assertNotNull(query.getMerchandiseId(), "ID不能为空");
+        Merchandise merchandise = merchandiseService.get(query.getMerchandiseId());
+        AssertUtil.assertNotNull(merchandise, "商品档案不存在.");
+        List<UnifiedMerchandise> list = unifiedMerchandiseService.listByMerchandise(merchandise.getId(), UnifiedMerchandiseType.SINGLE.getKey());
+        List<AdminUnifiedMerchandiseVO> voList = unifiedMerchandiseHandler.toVOList4Admin(list);
+        ModelAndView view = new ModelAndView("/admin/goods-Merchandise-itemState");
+        view.addObject("list", voList);
         return view;
     }
 }
