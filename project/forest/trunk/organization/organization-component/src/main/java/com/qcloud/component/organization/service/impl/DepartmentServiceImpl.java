@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.qcloud.component.autoid.AutoIdGenerator;
 import com.qcloud.component.autoid.UniqueCodeGenerator;
 import com.qcloud.pirates.data.Page;
+import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.component.organization.dao.DepartmentDao;
 import com.qcloud.component.organization.exception.OrganizationException;
 import com.qcloud.component.organization.model.Department;
@@ -84,5 +85,19 @@ public class DepartmentServiceImpl implements DepartmentService {
     public List<Department> listAll() {
 
         return departmentDao.listAll();
+    }
+
+    @Override
+    public Department getByCode(String code) {
+
+        return departmentDao.getByCode(code);
+    }
+
+    @Override
+    public List<Department> listByParent(long parentId) {
+
+        Department department = get(parentId);
+        AssertUtil.assertNotNull(department, "部门不存在." + parentId);
+        return departmentDao.listByParent(parentId, department.getBsid());
     }
 }

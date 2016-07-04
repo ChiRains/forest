@@ -119,8 +119,8 @@ public class ScanCard4IntegralOrderController {
         // AssertUtil.assertTrue(merchantId > 0, "您尚未属于一个商家.");
         // QStore store = sellercenterClient.getStore(storeId);
         // AssertUtil.assertNotNull(store, "门店不存在." + storeId);
-        QMerchant merchant = sellercenterClient.getMerchant(store.getMerchantId());
-        AssertUtil.assertNotNull(merchant, "商家不存在." + store.getMerchantId());
+        QMerchant merchant = sellercenterClient.getMerchant(store.getMerchant().getId());
+        AssertUtil.assertNotNull(merchant, "商家不存在." + store.getMerchant().getId());
         //
         QUser user = personalcenterClient.getUser(cardNumber);
         AssertUtil.assertNotNull(user, "会员卡尚未发给用户." + cardNumber);

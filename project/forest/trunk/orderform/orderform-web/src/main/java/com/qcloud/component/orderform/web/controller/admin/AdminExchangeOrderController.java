@@ -32,8 +32,6 @@ import com.qcloud.component.orderform.web.vo.admin.AdminExchangeOrderVO;
 import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.QStore;
 import com.qcloud.component.sellercenter.SellercenterClient;
-import com.qcloud.component.sellercenter.model.Store;
-import com.qcloud.component.sellercenter.service.StoreService;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.mvc.AceAjaxView;
 import com.qcloud.pirates.mvc.AcePagingView;
@@ -61,24 +59,20 @@ public class AdminExchangeOrderController {
     @Autowired
     private ExchangeOrderItemDetailHandler exchangeOrderItemDetailHandler;
 
-//    @Autowired
-//    private AdminFilterService             adminFilterService;
-
-//    @Autowired
-//    private TokenClient                    tokenClient;
-
-//    @Autowired
-//    private StoreMemberService             storeMemberService;
-
+    // @Autowired
+    // private AdminFilterService adminFilterService;
+    // @Autowired
+    // private TokenClient tokenClient;
+    // @Autowired
+    // private StoreMemberService storeMemberService;
     @Autowired
     private SubOrderService                subOrderService;
 
     @Autowired
-    private StoreService                   storeService;
+    private SellercenterClient             sellercenterClient;
 
-//    @Autowired
-//    private MerchantMemberService          merchantMemberService;
-
+    // @Autowired
+    // private MerchantMemberService merchantMemberService;
     @Autowired
     private OrderItemService               orderItemService;
 
@@ -94,11 +88,9 @@ public class AdminExchangeOrderController {
 
         int state = query.getState();
         query.setState(getChangeState(state));
-//        long memberId = getMemberId(request);
-//        long storeId = getStoreId(memberId);
-        
+        // long memberId = getMemberId(request);
+        // long storeId = getStoreId(memberId);
         QStore store = PageParameterUtil.getParameterValues(request, SellercenterClient.STORE_LOGIN_PARAMETER_KEY);
-                
         query.setStoreId(store.getId());
         final int PAGE_SIZE = 10;
         pageNum = RequestUtil.getPageid(pageNum);
@@ -202,7 +194,7 @@ public class AdminExchangeOrderController {
         }
         //
         SubOrder subOrder = subOrderService.get(orderVO.getSubOrderId(), orderVO.getOrderDate());
-        Store store = storeService.get(orderVO.getStoreId());
+        QStore store = sellercenterClient.getStore(orderVO.getStoreId());
         // List<ExchangeOrder> records = exchangeOrderService.listBySubOrder(orderVO.getSubOrderId());
         // for (int i = 0; i < records.size(); i++) {
         // if (records.get(i).getId() == orderVO.getId()) {
@@ -224,7 +216,7 @@ public class AdminExchangeOrderController {
             AdminExchangeOrderItemDetailVO detailVO = new AdminExchangeOrderItemDetailVO();
             detailVO.setName(qOrderItem.getName());
             detailVO.setImage(fileSDKClient.getFileServerUrl() + qOrderItem.getImage());
-            detailVO.setNumber(qOrderItem.getNumber());          
+            detailVO.setNumber(qOrderItem.getNumber());
             detailVO.setSpecifications(qOrderItem.getOrderItemDetailList().get(0).getSpecifications());
             itemDetailList.add(detailVO);
         }
@@ -249,54 +241,51 @@ public class AdminExchangeOrderController {
         return view;
     }
 
-//    private long getMemberId(HttpServletRequest request) {
-//
-//        String tokenId = adminFilterService.getTokenId(request);
-//        AssertUtil.assertNotEmpty(tokenId, "获取用户登录信息失败.");
-//        String idStr = tokenClient.get(tokenId);
-//        AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
-//        long memberId = Long.parseLong(idStr);
-//        return memberId;
-//    }
-//
-//    private long getStoreId(Long memberId) {
-//
-//        long storeId = 0;
-//        HashMap where = new HashMap();
-//        where.put("memberId", memberId);
-//        StoreMember storeMember = storeMemberService.get(where);
-//        if (storeMember != null) {
-//            storeId = storeMember.getStoreId();
-//        } else {
-//            AssertUtil.assertTrue(false, "当前登录用户不属于门店!");
-//        }
-//        return storeId;
-//    }
-//
-//    private long getMerchantId(Long memberId) {
-//
-//        long merchantId = 0;
-//        HashMap where = new HashMap();
-//        where.put("memberId", memberId);
-//        List<MerchantMember> merchantMembers = merchantMemberService.listByMember(memberId);
-//        if (merchantMembers.size() > 0) {
-//            merchantId = merchantMembers.get(0).getMerchantId();
-//        } else {
-//            AssertUtil.assertTrue(false, "当前登录用户不是商家!");
-//        }
-//        return merchantId;
-//    }
-
+    // private long getMemberId(HttpServletRequest request) {
+    //
+    // String tokenId = adminFilterService.getTokenId(request);
+    // AssertUtil.assertNotEmpty(tokenId, "获取用户登录信息失败.");
+    // String idStr = tokenClient.get(tokenId);
+    // AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
+    // long memberId = Long.parseLong(idStr);
+    // return memberId;
+    // }
+    //
+    // private long getStoreId(Long memberId) {
+    //
+    // long storeId = 0;
+    // HashMap where = new HashMap();
+    // where.put("memberId", memberId);
+    // StoreMember storeMember = storeMemberService.get(where);
+    // if (storeMember != null) {
+    // storeId = storeMember.getStoreId();
+    // } else {
+    // AssertUtil.assertTrue(false, "当前登录用户不属于门店!");
+    // }
+    // return storeId;
+    // }
+    //
+    // private long getMerchantId(Long memberId) {
+    //
+    // long merchantId = 0;
+    // HashMap where = new HashMap();
+    // where.put("memberId", memberId);
+    // List<MerchantMember> merchantMembers = merchantMemberService.listByMember(memberId);
+    // if (merchantMembers.size() > 0) {
+    // merchantId = merchantMembers.get(0).getMerchantId();
+    // } else {
+    // AssertUtil.assertTrue(false, "当前登录用户不是商家!");
+    // }
+    // return merchantId;
+    // }
     @RequestMapping
     public ModelAndView list4Merchant(HttpServletRequest request, Integer pageNum, ExchangeOrderQuery query) {
 
         int state = query.getState();
         query.setState(getChangeState(state));
-//        long memberId = getMemberId(request);
-//        long merchantId = getMerchantId(memberId);
-        
+        // long memberId = getMemberId(request);
+        // long merchantId = getMerchantId(memberId);
         QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
-        
         query.setMerchantId(merchant.getId());
         final int PAGE_SIZE = 10;
         pageNum = RequestUtil.getPageid(pageNum);
@@ -390,7 +379,7 @@ public class AdminExchangeOrderController {
         }
         //
         SubOrder subOrder = subOrderService.get(orderVO.getSubOrderId(), orderVO.getOrderDate());
-        Store store = storeService.get(orderVO.getStoreId());
+        QStore store = sellercenterClient.getStore(orderVO.getStoreId());
         // List<ExchangeOrder> records = exchangeOrderService.listBySubOrder(orderVO.getSubOrderId());
         // for (int i = 0; i < records.size(); i++) {
         // if (records.get(i).getId() == orderVO.getId()) {
@@ -412,7 +401,7 @@ public class AdminExchangeOrderController {
             AdminExchangeOrderItemDetailVO detailVO = new AdminExchangeOrderItemDetailVO();
             detailVO.setName(qOrderItem.getName());
             detailVO.setImage(fileSDKClient.getFileServerUrl() + qOrderItem.getImage());
-            detailVO.setNumber(qOrderItem.getNumber());           
+            detailVO.setNumber(qOrderItem.getNumber());
             detailVO.setSpecifications(qOrderItem.getOrderItemDetailList().get(0).getSpecifications());
             itemDetailList.add(detailVO);
         }

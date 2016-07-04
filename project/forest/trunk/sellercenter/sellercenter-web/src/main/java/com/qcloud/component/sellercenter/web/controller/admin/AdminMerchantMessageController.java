@@ -15,10 +15,8 @@ import com.qcloud.component.publicservice.QMessage;
 import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.component.sellercenter.model.key.TypeEnum;
-import com.qcloud.component.sellercenter.model.query.StoreQuery;
 import com.qcloud.component.sellercenter.web.vo.admin.AdminMessageVO;
 import com.qcloud.pirates.mvc.AcePagingView;
-import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.DateUtil;
 import com.qcloud.pirates.util.NumberUtil;
 import com.qcloud.pirates.util.RequestUtil;
@@ -44,17 +42,15 @@ public class AdminMerchantMessageController {
 
     @RequestMapping
     @NoReferer
-    public ModelAndView list(HttpServletRequest request, Integer clasify, Integer pageNum, StoreQuery query) {
+    public ModelAndView list(HttpServletRequest request, Integer clasify, Integer pageNum) {
 
         clasify = clasify == null || clasify == 0 ? -1 : clasify;
         QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
-        query.setMerchantId(merchant.getId());
-        AssertUtil.assertNotNull(query.getMerchantId(), "您尚未属于一家商家.");
         final int PAGE_SIZE = 10;
         pageNum = RequestUtil.getPageid(pageNum);
         int start = NumberUtil.getPageStart(pageNum, PAGE_SIZE);
-        List<QMessage> Qlist = messageClient.listByReceiver(TypeEnum.MERCHANT_MESSAGE_CODE, clasify, query.getMerchantId(), start, PAGE_SIZE);
-        int count = messageClient.countByReceiver(TypeEnum.MERCHANT_MESSAGE_CODE, clasify, query.getMerchantId());
+        List<QMessage> Qlist = messageClient.listByReceiver(TypeEnum.MERCHANT_MESSAGE_CODE, clasify, merchant.getId(), start, PAGE_SIZE);
+        int count = messageClient.countByReceiver(TypeEnum.MERCHANT_MESSAGE_CODE, clasify, merchant.getId());
         List<AdminMessageVO> list = new ArrayList<AdminMessageVO>();
         for (QMessage message : Qlist) {
             AdminMessageVO me = new AdminMessageVO();
@@ -75,12 +71,10 @@ public class AdminMerchantMessageController {
     }
 
     @RequestMapping
-    public ModelAndView toShow(HttpServletRequest request, StoreQuery query, long id) {
+    public ModelAndView toShow(HttpServletRequest request, long id) {
 
         QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
-        query.setMerchantId(merchant.getId());
-        AssertUtil.assertNotNull(query.getMerchantId(), "您尚未属于一家商家.");
-        QMessage message = messageClient.get(TypeEnum.MERCHANT_MESSAGE_CODE, query.getMerchantId(), id);
+        QMessage message = messageClient.get(TypeEnum.MERCHANT_MESSAGE_CODE, merchant.getId(), id);
         AdminMessageVO me = new AdminMessageVO();
         me.setId(message.getId());
         me.setTitle(message.getTitle());
@@ -88,7 +82,7 @@ public class AdminMerchantMessageController {
         me.setTime(DateUtil.date2String(message.getTime(), "yyyy-MM-dd HH:mm:ss"));
         me.setRead(message.isRead());
         if (!me.isRead()) {
-            messageClient.read(TypeEnum.MERCHANT_MESSAGE_CODE, query.getMerchantId(), id);// 设置已读
+            messageClient.read(TypeEnum.MERCHANT_MESSAGE_CODE, merchant.getId(), id);// 设置已读
         }
         ModelAndView model = new ModelAndView("/admin/sellercenter-MerchantMessage-showMessage");
         model.addObject("message", me);

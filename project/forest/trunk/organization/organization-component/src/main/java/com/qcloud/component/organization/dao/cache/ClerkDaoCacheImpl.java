@@ -108,4 +108,10 @@ public class ClerkDaoCacheImpl implements ClerkDao {
 
         return clerkDaoMysqlImpl.getByJobEmail(email);
     }
+
+    @Override
+    public Clerk getByLoginAccount(String loginAccount) {
+
+        return clerkDaoMysqlImpl.getByLoginAccount(loginAccount);
+    }
 }

@@ -39,6 +39,8 @@
 	
 	<pirates:sql-z id="sqlOperator-account" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.account.dao.mysql.mapper" modelPackage="com.qcloud.component.account.model" tx="true"></pirates:sql-z>
 	
+	<pirates:sql-z id="sqlOperator-organization" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.organization.dao.mysql.mapper" modelPackage="com.qcloud.component.organization.model" tx="true"></pirates:sql-z>
+		
 	<pirates:sql-z id="sqlOperator-personalcenter" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.personalcenter.dao.mysql.mapper" modelPackage="com.qcloud.component.personalcenter.model" tx="true"></pirates:sql-z>
 		
 	<pirates:sql-z id="sqlOperator-sellercenter" name="forest" type="mybatis" mybatisMapper="com.qcloud.component.sellercenter.dao.mysql.mapper" modelPackage="com.qcloud.component.sellercenter.model" tx="true"></pirates:sql-z>

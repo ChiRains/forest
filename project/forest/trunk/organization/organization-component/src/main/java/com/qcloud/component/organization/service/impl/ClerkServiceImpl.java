@@ -21,6 +21,7 @@ import com.qcloud.component.organization.model.key.TypeEnum;
 import com.qcloud.component.organization.model.key.TypeEnum.EnableType;
 import com.qcloud.component.organization.model.query.ClerkQuery;
 import com.qcloud.component.organization.service.ClerkService;
+import com.qcloud.component.parameter.ParameterClient;
 import com.qcloud.component.permission.AccountClient;
 import com.qcloud.component.permission.model.Account;
 import com.qcloud.pirates.core.xml.Xml;
@@ -63,6 +64,9 @@ public class ClerkServiceImpl implements ClerkService {
     @Autowired
     private UniqueCodeGenerator  uniqueCodeGenerator;
 
+    @Autowired
+    private ParameterClient      parameterClient;
+
     @PostConstruct
     public void init() {
 
@@ -89,6 +93,7 @@ public class ClerkServiceImpl implements ClerkService {
         return false;
     }
 
+    @Transactional
     @Override
     public boolean add(Clerk clerk) {
 
@@ -118,8 +123,8 @@ public class ClerkServiceImpl implements ClerkService {
         clerk.setLoginAccount(loginAccount);
         String group = null;
         String ac = null;
-        group = regAccount(clerk.getMobile(), clerk.getName(), pwd, ac, group);
-        ac = clerk.getMobile();
+        group = regAccount(clerk.getLoginAccount(), clerk.getName(), pwd, ac, group);
+        ac = clerk.getLoginAccount();
         if (StringUtils.isNotEmpty(clerk.getMobile()) && enableAccountType(MOBILE_TYPE_CODE)) {
             group = regAccount(clerk.getMobile(), clerk.getName(), pwd, ac, group);
             ac = clerk.getMobile();
@@ -138,9 +143,7 @@ public class ClerkServiceImpl implements ClerkService {
         clerk.setId(id);
         boolean result = clerkDao.add(clerk);
         if (result) {
-            if (StringUtils.isNotEmpty(clerk.getMobile()) && enableAccountType(MOBILE_TYPE_CODE)) {
-                addPermissionAccount(clerk.getMobile(), clerk.getName());
-            }
+            addPermissionAccount(clerk.getLoginAccount(), clerk.getName());
         }
         return result;
     }
@@ -204,15 +207,24 @@ public class ClerkServiceImpl implements ClerkService {
     // }
     private String getDefaultPwd() {
 
-        Xml xml = XmlFactory.get(CLERK_PASSWORD_KEY);
-        AssertUtil.assertNotNull(xml, "xml尚未配置账号默认密码");
-        List<XmlItem> list = xml.getItemList();
-        for (XmlItem xmlItem : list) {
-            if ("pwd".equals(xmlItem.getAttrMap().get("key")) && Boolean.valueOf(xmlItem.getAttrMap().get("enable"))) {
-                return StringUtil.nullToEmpty(xmlItem.getText()).trim();
-            }
+        String defaultPassword = parameterClient.get(CLERK_PASSWORD_KEY);
+        if (StringUtils.isNotEmpty(defaultPassword)) {
+            return defaultPassword;
         }
-        return "123456";
+        Xml xml = XmlFactory.get(CLERK_PASSWORD_KEY);
+        defaultPassword = "123456";
+        if (xml == null) {
+            return defaultPassword;
+        } else {
+            AssertUtil.assertNotNull(xml, "xml尚未配置账号默认密码");
+            List<XmlItem> list = xml.getItemList();
+            for (XmlItem xmlItem : list) {
+                if ("pwd".equals(xmlItem.getAttrMap().get("key"))) {
+                    return StringUtil.nullToEmpty(xmlItem.getText()).trim();
+                }
+            }
+            return defaultPassword;
+        }
     }
 
     // @Override
@@ -245,7 +257,10 @@ public class ClerkServiceImpl implements ClerkService {
     @Override
     public Clerk getByAccount(String account) {
 
-        Clerk clerk = clerkDao.getByMobile(account);
+        Clerk clerk = clerkDao.getByLoginAccount(account);
+        if (clerk == null) {
+            clerk = clerkDao.getByMobile(account);
+        }
         if (clerk == null) {
             clerk = clerkDao.getByJobEmail(account);
         }
@@ -260,7 +275,7 @@ public class ClerkServiceImpl implements ClerkService {
 
         Clerk clerk = getByAccount(account);
         AssertUtil.assertNotNull(clerk, "职员不存在" + account);
-        return ClerkConstant.CLERKPREFIXCODE + clerk.getMobile();
+        return ClerkConstant.CLERKPREFIXCODE + clerk.getLoginAccount();
     }
 
     @Override

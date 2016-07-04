@@ -104,4 +104,10 @@ public class ClerkDaoRedisImpl implements ClerkDao {
 
         throw new NotImplementedException();
     }
+
+    @Override
+    public Clerk getByLoginAccount(String loginAccount) {
+
+        throw new NotImplementedException();
+    }
 }

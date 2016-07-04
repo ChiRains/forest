@@ -25,15 +25,12 @@ import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.QStore;
 import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.component.sellercenter.model.MerchantOrderForm;
-import com.qcloud.component.sellercenter.model.Store;
 import com.qcloud.component.sellercenter.model.key.TypeEnum.MerchantOrderStateType;
 import com.qcloud.component.sellercenter.model.query.MerchantOrderFormQuery;
 import com.qcloud.component.sellercenter.service.MerchantOrderFormService;
-import com.qcloud.component.sellercenter.service.StoreService;
 import com.qcloud.component.sellercenter.web.handler.MerchantOrderFormHandler;
-import com.qcloud.component.sellercenter.web.handler.StoreHandler;
+import com.qcloud.component.sellercenter.web.vo.TreeStore;
 import com.qcloud.component.sellercenter.web.vo.admin.AdminMerchantOrderFormVO;
-import com.qcloud.component.sellercenter.web.vo.admin.AdminStoreVO;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.mvc.AceAjaxView;
 import com.qcloud.pirates.mvc.AcePagingView;
@@ -56,10 +53,7 @@ public class AdminMerchantOrderFormController {
     private MerchantOrderFormHandler merchantOrderFormHandler;
 
     @Autowired
-    private StoreService             storeService;
-
-    @Autowired
-    private StoreHandler             storeHandler;
+    private SellercenterClient       sellercenterClient;
 
     @Autowired(required = false)
     private OrderformClient          orderformClient;
@@ -89,7 +83,7 @@ public class AdminMerchantOrderFormController {
         int start = NumberUtil.getPageStart(pageNum, PAGE_SIZE);
         // Store store = storeService.get(storeId);
         // AssertUtil.assertNotNull(store, "门店不存在." + storeId);
-        long merchantId = store.getMerchantId();
+        long merchantId = store.getMerchant().getId();
         pageNum = RequestUtil.getPageid(pageNum);
         Page<MerchantOrderForm> page = new Page<MerchantOrderForm>();
         if (StringUtils.isNotEmpty(query.getOrderNumber())) {
@@ -130,7 +124,7 @@ public class AdminMerchantOrderFormController {
         int start = NumberUtil.getPageStart(pageNum, PAGE_SIZE);
         // Store store = storeService.get(storeId);
         // AssertUtil.assertNotNull(store, "门店不存在." + storeId);
-        Page<MerchantOrderForm> page = merchantOrderFormService.page(query, store.getMerchantId(), store.getId(), start, PAGE_SIZE);
+        Page<MerchantOrderForm> page = merchantOrderFormService.page(query, store.getMerchant().getId(), store.getId(), start, PAGE_SIZE);
         List<AdminMerchantOrderFormVO> list = merchantOrderFormHandler.toVOList4Admin(page.getData());
         String param = "state=" + query.getState();
         AcePagingView pagingView = new AcePagingView("/admin/sellercenter-MerchantOrderForm-listStore", DIR + "/listStore?" + param, pageNum, PAGE_SIZE, page.getCount());
@@ -139,12 +133,12 @@ public class AdminMerchantOrderFormController {
         pagingView.addObject("shipType", MerchantOrderStateType.SHIP.getKey());
         // pagingView.addObject("confirmType", MerchantOrderStateType.CONFIRM.getKey());
         pagingView.addObject("query", query);
-        List<Store> storeList = storeService.listByMerchant(store.getMerchantId());
+        List<QStore> storeList = sellercenterClient.listStoreByMerchant(store.getMerchant().getId());
         List<TreeModel> treeModelList = new ArrayList<TreeModel>();
-        for (Store s : storeList) {
-            treeModelList.add(s);
+        for (QStore s : storeList) {
+            treeModelList.add(new TreeStore(s));
         }
-        List<KeyValueVO> sList = TreeUtils.exchangeObj(treeModelList, -1L, "");
+        List<KeyValueVO> sList = TreeUtils.exchangeObj(treeModelList, store.getMerchant().getId(), "");
         pagingView.addObject("storeKVList", sList);
         pagingView.addObject("needInvoiceType", NeedInvoiceType.values());
         return pagingView;
@@ -230,10 +224,10 @@ public class AdminMerchantOrderFormController {
         QStore store = PageParameterUtil.getParameterValues(request, SellercenterClient.STORE_LOGIN_PARAMETER_KEY);
         // Store s = storeService.get(storeId);
         // AssertUtil.assertNotNull(s, "门店不存在." + storeId);
-        List<Store> storeList = storeService.listByMerchant(store.getMerchantId());
+        List<QStore> storeList = sellercenterClient.listStoreByMerchant(store.getMerchant().getId());
         List<TreeModel> treeModelList = new ArrayList<TreeModel>();
-        for (Store s : storeList) {
-            treeModelList.add(s);
+        for (QStore s : storeList) {
+            treeModelList.add(new TreeStore(s));
         }
         return TreeUtils.exchangeObj(treeModelList, -1L, "");
     }
@@ -289,34 +283,44 @@ public class AdminMerchantOrderFormController {
         return view;
     }
 
-    @RequestMapping
-    public ModelAndView storeReportForm(HttpServletRequest request, Long type, Long value) {
-
-        Map<String, String> map = getTime(type, value);
-        QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
-        HashMap<String, Object> where = new HashMap<String, Object>();
-        where.put("merchantId", merchant.getId());
-        List<Store> storeList = storeService.listByMerchant(merchant.getId());
-        List<AdminStoreVO> storeVOList = storeHandler.toVOList4Admin(storeList);
-        for (AdminStoreVO storeVO : storeVOList) {
-            double sum = 0.0;
-            List<AdminMerchantOrderFormVO> merchantOrderFormVOList = merchantOrderFormHandler.toVOList4Admin(merchantOrderFormService.reportForm4store(merchant.getId(), storeVO.getId(), map.get("startDate"), map.get("endDate")));
-            for (AdminMerchantOrderFormVO adminMerchantOrderFormVO : merchantOrderFormVOList) {
-                sum += adminMerchantOrderFormVO.getSum();
-            }
-            if (sum == 0) {
-                storeVO.setSum(0);
-            } else {
-                sum = Double.valueOf(new DecimalFormat("#.00").format(sum));
-                storeVO.setSum(sum);
-            }
-            storeVO.setMerchantOrderFormVOs(merchantOrderFormVOList);
-        }
-        ModelAndView view = new ModelAndView("/admin/sellercenter-MerchantOrderForm-storeReportForm");
-        view.addObject("result", storeVOList);
-        return view;
-    }
-
+    // @RequestMapping
+    // public ModelAndView storeReportForm(HttpServletRequest request, Long type, Long value) {
+    //
+    // Map<String, String> map = getTime(type, value);
+    // QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
+    // HashMap<String, Object> where = new HashMap<String, Object>();
+    // where.put("merchantId", merchant.getId());
+    // List<QStore> storeList = sellercenterClient.listStoreByMerchant(merchant.getId());
+    // List<AdminStoreVO> storeVOList = storeHandler.toVOList4Admin(storeList);
+    // for (QStore store : storeList) {
+    //
+    //
+    // AdminStoreVO storeVO = new AdminStoreVO();
+    //
+    // storeVO.set
+    //
+    // String logoUid = fileSDKClient.urlToUid(store.getLogo());
+    // storeVO.setLogoUid(logoUid);
+    // storeVO.setLogo(fileSDKClient.getFileServerUrl() + vo.getLogo());
+    //
+    //
+    // double sum = 0.0;
+    // List<AdminMerchantOrderFormVO> merchantOrderFormVOList = merchantOrderFormHandler.toVOList4Admin(merchantOrderFormService.reportForm4store(merchant.getId(), storeVO.getId(), map.get("startDate"), map.get("endDate")));
+    // for (AdminMerchantOrderFormVO adminMerchantOrderFormVO : merchantOrderFormVOList) {
+    // sum += adminMerchantOrderFormVO.getSum();
+    // }
+    // if (sum == 0) {
+    // storeVO.setSum(0);
+    // } else {
+    // sum = Double.valueOf(new DecimalFormat("#.00").format(sum));
+    // storeVO.setSum(sum);
+    // }
+    // storeVO.setMerchantOrderFormVOs(merchantOrderFormVOList);
+    // }
+    // ModelAndView view = new ModelAndView("/admin/sellercenter-MerchantOrderForm-storeReportForm");
+    // view.addObject("result", storeVOList);
+    // return view;
+    // }
     public Map<String, String> getTime(Long type, Long valueLong) {
 
         int value = valueLong.intValue();

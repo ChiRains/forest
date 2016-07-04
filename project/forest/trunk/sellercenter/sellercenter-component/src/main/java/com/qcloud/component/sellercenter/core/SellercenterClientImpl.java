@@ -7,54 +7,38 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.qcloud.component.organization.OrganizationClient;
+import com.qcloud.component.organization.QDepartment;
 import com.qcloud.component.publicdata.KeyValueVO;
 import com.qcloud.component.publicservice.MessageClient;
 import com.qcloud.component.publicservice.SmsClient;
 import com.qcloud.component.sellercenter.QMerchant;
-import com.qcloud.component.sellercenter.QMerchantWealth;
 import com.qcloud.component.sellercenter.QStore;
 import com.qcloud.component.sellercenter.SellerMessageType;
 import com.qcloud.component.sellercenter.SellercenterClient;
-import com.qcloud.component.sellercenter.WealthType;
 import com.qcloud.component.sellercenter.entity.MerchantEntity;
-import com.qcloud.component.sellercenter.entity.MerchantWealthEntity;
 import com.qcloud.component.sellercenter.entity.StoreEntity;
-import com.qcloud.component.sellercenter.model.Merchant;
 import com.qcloud.component.sellercenter.model.MerchantEvaluation;
 import com.qcloud.component.sellercenter.model.MerchantOrderForm;
-import com.qcloud.component.sellercenter.model.MerchantWealth;
 import com.qcloud.component.sellercenter.model.Sexpress;
 import com.qcloud.component.sellercenter.model.SexpressDistrict;
-import com.qcloud.component.sellercenter.model.Store;
 import com.qcloud.component.sellercenter.model.key.TypeEnum;
 import com.qcloud.component.sellercenter.model.key.TypeEnum.NotifyType;
 import com.qcloud.component.sellercenter.model.key.TypeEnum.SexpressType;
 import com.qcloud.component.sellercenter.service.MerchantEvaluationService;
 import com.qcloud.component.sellercenter.service.MerchantOrderFormService;
-import com.qcloud.component.sellercenter.service.MerchantService;
-import com.qcloud.component.sellercenter.service.MerchantWealthService;
 import com.qcloud.component.sellercenter.service.SexpressDistrictService;
 import com.qcloud.component.sellercenter.service.SexpressService;
-import com.qcloud.component.sellercenter.service.StoreService;
 import com.qcloud.pirates.util.AssertUtil;
 
 @Component
 public class SellercenterClientImpl implements SellercenterClient {
 
     @Autowired
-    protected MerchantService          merchantService;
-
-    @Autowired
     private MessageClient              messageClient;
 
     @Autowired
     private SmsClient                  smsClient;
-
-    @Autowired
-    protected StoreService             storeService;
-
-    @Autowired
-    protected MerchantWealthService    merchantWealthService;
 
     @Autowired
     protected MerchantOrderFormService merchantOrderFormService;
@@ -68,54 +52,49 @@ public class SellercenterClientImpl implements SellercenterClient {
     @Autowired
     private SexpressDistrictService    sexpressDistrictService;
 
-    @Override
-    public QMerchant getMerchant(long merchantId) {
+    @Autowired
+    private OrganizationClient         organizationClient;
 
-        Merchant merchant = merchantService.get(merchantId);
-        return new MerchantEntity(merchant);
+    @Override
+    public MerchantEntity getMerchant(long merchantId) {
+
+        QDepartment department = organizationClient.getDepartment(merchantId);
+        return new MerchantEntity(department);
     }
 
     @Override
     public List<QStore> listStoreByMerchant(long merchantId) {
 
+        MerchantEntity merchant = getMerchant(merchantId);
         List<QStore> result = new ArrayList<QStore>();
-        List<Store> list = storeService.listByMerchant(merchantId);
-        for (Store store : list) {
-            StoreEntity storeEntity = new StoreEntity();
-            storeEntity.setId(store.getId());
-            storeEntity.setName(store.getName());
-            storeEntity.setAddress(store.getProvince() + store.getCity() + store.getDistrict() + store.getAddress());
-            storeEntity.setPhone(store.getPhone());
-            storeEntity.setMerchantId(merchantId);
-            if (store.getParentId() == Integer.valueOf(-1)) {
-                storeEntity.setRoot(true);
-            } else {
-                storeEntity.setRoot(false);
-            }
+        List<QDepartment> list = organizationClient.listDepartmantByParent(merchantId);
+        for (QDepartment department : list) {
+            StoreEntity storeEntity = new StoreEntity(merchant, department.getParent(), department);
             result.add(storeEntity);
         }
         return result;
     }
 
     @Override
-    public QStore getStore(long storeId) {
+    public StoreEntity getStore(long storeId) {
 
-        Store store = storeService.get(storeId);
-        StoreEntity storeEntity = new StoreEntity();
-        storeEntity.setId(store.getId());
-        storeEntity.setName(store.getName());
-        storeEntity.setAddress(store.getProvince() + store.getCity() + store.getDistrict() + store.getAddress());
-        storeEntity.setPhone(store.getPhone());
-        storeEntity.setMerchantId(store.getMerchantId());
-        storeEntity.setSmsMobile(store.getMobile());
-        storeEntity.setLatitude(store.getLatitude());
-        storeEntity.setLongitude(store.getLongitude());
-        if (store.getParentId() == Integer.valueOf(-1)) {
-            storeEntity.setRoot(true);
-        } else {
-            storeEntity.setRoot(false);
-        }
+        QDepartment department = organizationClient.getDepartment(storeId);
+        AssertUtil.assertNotNull(department, "门店不存在." + storeId);
+        QDepartment merchant = getMerchantDepartment(department);
+        AssertUtil.assertNotNull(merchant, "门店所属商家不存在." + storeId);
+        StoreEntity storeEntity = new StoreEntity(new MerchantEntity(merchant), department.getParent(), department);
         return storeEntity;
+    }
+
+    private QDepartment getMerchantDepartment(QDepartment department) {
+
+        while (true) {
+            // 商家为2 门店为3
+            if (department == null || department.getType() == 2) {
+                return department;
+            }
+            department = department.getParent();
+        }
     }
 
     @Override
@@ -133,10 +112,11 @@ public class SellercenterClientImpl implements SellercenterClient {
     @Override
     public boolean sendSmsToStore(long storeId, String code, Map<String, String> map) {
 
-        Store store = storeService.get(storeId);
-        Merchant merchant = merchantService.get(store.getMerchantId());
-        if (NotifyType.Yes.getKey() == merchant.getNotify() && StringUtils.isNotEmpty(store.getMobile())) {
-            smsClient.send(code, store.getMobile(), map);
+        StoreEntity store = getStore(storeId);
+        AssertUtil.assertNotNull(store, "门店不存在." + storeId);
+        MerchantEntity merchant = store.getMerchant();
+        if (merchant.isNotify() && StringUtils.isNotEmpty(store.getSmsMobile())) {
+            smsClient.send(code, store.getSmsMobile(), map);
             return true;
         }
         return false;
@@ -145,8 +125,9 @@ public class SellercenterClientImpl implements SellercenterClient {
     @Override
     public boolean sendSmsToMerchant(long merchantId, String code, Map<String, String> map) {
 
-        Merchant merchant = merchantService.get(merchantId);
-        if (NotifyType.Yes.getKey() == merchant.getNotify() && StringUtils.isNotEmpty(merchant.getReceiveMobile())) {
+        MerchantEntity merchant = getMerchant(merchantId);
+        AssertUtil.assertNotNull(merchant, "商家不存在." + merchantId);
+        if (merchant.isNotify() && StringUtils.isNotEmpty(merchant.getReceiveMobile())) {
             smsClient.send(code, merchant.getReceiveMobile(), map);
             return true;
         }
@@ -222,15 +203,14 @@ public class SellercenterClientImpl implements SellercenterClient {
     }
 
     @Override
-    public boolean addMerchantEvaluation(long evaluationId, long merchantId, long merchandiseId ,String content) {
+    public boolean addMerchantEvaluation(long evaluationId, long merchantId, long merchandiseId, String content) {
 
         MerchantEvaluation merchantEvaluation = new MerchantEvaluation();
         merchantEvaluation.setEvaluationId(evaluationId);
         merchantEvaluation.setMerchandiseId(merchandiseId);
         merchantEvaluation.setMerchantId(merchantId);
         merchantEvaluation.setEvaluationTime(new Date());
-        merchantEvaluation
-        .setContent(content);
+        merchantEvaluation.setContent(content);
         return merchantEvaluationService.add(merchantEvaluation);
     }
 
@@ -279,33 +259,9 @@ public class SellercenterClientImpl implements SellercenterClient {
     }
 
     @Override
-    public boolean calculateMyWealth(long merchantId, WealthType type, double cash, boolean needProportion, String desc) {
+    public QMerchant getMerchantByCode(String code) {
 
-        synchronized (new Long(merchantId)) {
-            double wealth = cash;
-            merchantWealthService.calculateWealth(merchantId, wealth, type.getKey(), desc);
-            return true;
-        }
-    }
-
-    @Override
-    public QMerchantWealth getMyWealth(long merchantId) {
-
-        MerchantWealth merchantWealth = merchantWealthService.getByMerchant(merchantId);
-        if (merchantWealth == null) {
-            return null;
-        }
-        MerchantWealthEntity merchantWealthEntity = new MerchantWealthEntity(merchantWealth);
-        return merchantWealthEntity;
-    }
-
-    @Override
-    public QMerchant getMerchant(String code) {
-
-        Merchant merchant = merchantService.getByCode(code);
-        if (merchant == null) {
-            return null;
-        }
-        return new MerchantEntity(merchant);
+        QDepartment department = organizationClient.getDepartmentByCode(code);
+        return new MerchantEntity(department);
     }
 }

@@ -135,4 +135,10 @@ public class ClerkDaoMysqlImpl implements ClerkDao {
 
         return sqlOperator.selectOne("com.qcloud.component.organization.dao.mysql.mapper.ClerkMapper.getByJobEmail", jobEmail);
     }
+
+    @Override
+    public Clerk getByLoginAccount(String loginAccount) {
+
+        return sqlOperator.selectOne("com.qcloud.component.organization.dao.mysql.mapper.ClerkMapper.getByLoginAccount", loginAccount);
+    }
 }

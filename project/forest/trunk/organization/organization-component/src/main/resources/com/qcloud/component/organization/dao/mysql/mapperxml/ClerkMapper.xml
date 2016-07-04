@@ -30,6 +30,10 @@
 		select * from `organization_clerk` where `jobEmail`=#{jobEmail}
 	</select>
 	
+	<select id="getByLoginAccount" parameterType="String" resultType="Clerk">
+		select * from `organization_clerk` where `loginAccount`=#{loginAccount}
+	</select>	
+	
 	<select id="listAllByMap" parameterType="java.util.HashMap" resultType="Clerk">  
         select * from `organization_clerk` where 1=1 and `enable`=1
         <if test="name != null">

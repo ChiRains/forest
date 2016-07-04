@@ -1,117 +1,76 @@
 package com.qcloud.component.sellercenter.entity;
 
+import com.qcloud.component.organization.QDepartment;
+import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.QStore;
+import com.qcloud.pirates.util.StringUtil;
 
 public class StoreEntity implements QStore {
 
-    private Long    id;
+    private MerchantEntity merchant;
 
-    private String  name;
+    private QDepartment    parent;
 
-    private String  address;
+    private QDepartment    department;
 
-    private String  phone;
+    public StoreEntity(MerchantEntity merchant, QDepartment parent, QDepartment department) {
 
-    private boolean isRoot;
-
-    private Long    merchantId;
-
-    private String  smsMobile;
-
-    private Double  latitude;
-
-    private Double  longitude;
-
-    public void setLatitude(Double latitude) {
-
-        this.latitude = latitude;
-    }
-
-    public void setLongitude(Double longitude) {
-
-        this.longitude = longitude;
-    }
-
-    public void setSmsMobile(String smsMobile) {
-
-        this.smsMobile = smsMobile;
+        super();
+        this.merchant = merchant;
+        this.department = department;
+        this.parent = parent;
     }
 
     public Long getId() {
 
-        return id;
-    }
-
-    public void setId(Long id) {
-
-        this.id = id;
+        return department.getId();
     }
 
     public String getName() {
 
-        return name;
-    }
-
-    public void setName(String name) {
-
-        this.name = name;
+        return department.getName();
     }
 
     public String getAddress() {
 
-        return address;
+        return StringUtil.nullToEmpty(department.getProvince()) + StringUtil.nullToEmpty(department.getCity()) + StringUtil.nullToEmpty(department.getDistrict()) + StringUtil.nullToEmpty(department.getAddress());
     }
 
-    public void setAddress(String address) {
+    public MerchantEntity getMerchant() {
 
-        this.address = address;
-    }
-
-    public String getPhone() {
-
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-
-        this.phone = phone;
-    }
-
-    public boolean isRoot() {
-
-        return isRoot;
-    }
-
-    public void setRoot(boolean isRoot) {
-
-        this.isRoot = isRoot;
-    }
-
-    public Long getMerchantId() {
-
-        return merchantId;
-    }
-
-    public void setMerchantId(Long merchantId) {
-
-        this.merchantId = merchantId;
+        return merchant;
     }
 
     @Override
     public String getSmsMobile() {
 
-        return smsMobile;
+        return department.getPhone();
     }
 
     @Override
     public Double getLatitude() {
 
-        return latitude;
+        return department.getLatitude();
     }
 
     @Override
     public Double getLongitude() {
 
-        return longitude;
+        return department.getLongitude();
+    }
+
+    @Override
+    public QStore getParent() {
+
+        if (parent == null || parent.getType() != 3) {
+            return null;
+        }
+        return new StoreEntity(merchant, parent.getParent(), parent);
+    }
+
+    @Override
+    public boolean isRoot() {
+
+        return parent != null && merchant != null && parent.getId() == merchant.getId();
     }
 }

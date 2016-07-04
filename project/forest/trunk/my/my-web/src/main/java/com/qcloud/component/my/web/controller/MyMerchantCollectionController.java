@@ -9,8 +9,6 @@ import com.qcloud.component.my.model.MyCollection;
 import com.qcloud.component.my.model.key.TypeEnum.CollectionType;
 import com.qcloud.component.my.web.handler.MyCollectionHandler;
 import com.qcloud.component.my.web.vo.MyMerchantCollectionVO;
-import com.qcloud.component.sellercenter.QMerchant;
-import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.pirates.mvc.FrontAjaxView;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.pirates.web.page.PPage;
@@ -27,15 +25,15 @@ public class MyMerchantCollectionController {
     @Autowired
     private MyCollectionController myCollectionController;
 
-    @Autowired
-    private SellercenterClient     sellercenterClient;
+    // @Autowired
+    // private SellercenterClient sellercenterClient;
 
     @PiratesApp
     @RequestMapping
     public FrontAjaxView collect(HttpServletRequest request, Long merchantId) {
 
-        QMerchant merchant = sellercenterClient.getMerchant(merchantId);
-        return myCollectionController.collect(request, merchantId, merchant.getClassifyId(), CollectionType.MERCHANT);
+//        QMerchant merchant = sellercenterClient.getMerchant(merchantId);
+        return myCollectionController.collect(request, merchantId, -1L, CollectionType.MERCHANT);
     }
 
     @PiratesApp

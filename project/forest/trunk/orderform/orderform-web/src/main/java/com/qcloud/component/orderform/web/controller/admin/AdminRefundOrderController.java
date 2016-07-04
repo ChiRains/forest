@@ -32,8 +32,6 @@ import com.qcloud.component.orderform.web.vo.admin.AdminRefundOrderVO;
 import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.QStore;
 import com.qcloud.component.sellercenter.SellercenterClient;
-import com.qcloud.component.sellercenter.model.Store;
-import com.qcloud.component.sellercenter.service.StoreService;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.mvc.AceAjaxView;
 import com.qcloud.pirates.mvc.AcePagingView;
@@ -72,7 +70,7 @@ public class AdminRefundOrderController {
     private SubOrderService        subOrderService;
 
     @Autowired
-    private StoreService           storeService;
+    private SellercenterClient     sellercenterClient;
 
     // @Autowired
     // private MerchantMemberService merchantMemberService;
@@ -198,7 +196,7 @@ public class AdminRefundOrderController {
         }
         //
         SubOrder subOrder = subOrderService.get(refundOrderVO.getSubOrderId(), refundOrderVO.getOrderDate());
-        Store store = storeService.get(refundOrderVO.getStoreId());
+        QStore store = sellercenterClient.getStore(refundOrder.getStoreId());
         // List<RefundOrder> records = refundOrderService.listBySubOrder(refundOrderVO.getSubOrderId());
         // for (int i = 0; i < records.size(); i++) {
         // if (records.get(i).getId() == refundOrderVO.getId()) {
@@ -300,7 +298,7 @@ public class AdminRefundOrderController {
         }
         //
         SubOrder subOrder = subOrderService.get(refundOrderVO.getSubOrderId(), refundOrderVO.getOrderDate());
-        Store store = storeService.get(refundOrderVO.getStoreId());
+        QStore store = sellercenterClient.getStore(refundOrder.getStoreId());
         // List<RefundOrder> records = refundOrderService.listBySubOrder(refundOrderVO.getSubOrderId());
         // for (int i = 0; i < records.size(); i++) {
         // if (records.get(i).getId() == refundOrderVO.getId()) {

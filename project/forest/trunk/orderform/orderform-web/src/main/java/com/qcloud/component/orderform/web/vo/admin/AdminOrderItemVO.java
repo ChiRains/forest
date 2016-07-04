@@ -1,7 +1,7 @@
 package com.qcloud.component.orderform.web.vo.admin;
 
 import com.qcloud.component.goods.model.UnifiedMerchandise;
-import com.qcloud.component.sellercenter.model.Merchant;
+import com.qcloud.component.sellercenter.QMerchant;
 
 public class AdminOrderItemVO {
 
@@ -38,7 +38,7 @@ public class AdminOrderItemVO {
     private UnifiedMerchandise item;
 
     // 商家
-    private Merchant           merchant;
+    private QMerchant           merchant;
 
     public AdminOrderItemVO() {
 
@@ -154,12 +154,12 @@ public class AdminOrderItemVO {
         this.discount = discount;
     }
 
-    public Merchant getMerchant() {
+    public QMerchant getMerchant() {
 
         return merchant;
     }
 
-    public void setMerchant(Merchant merchant) {
+    public void setMerchant(QMerchant merchant) {
 
         this.merchant = merchant;
     }

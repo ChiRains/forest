@@ -6,5 +6,27 @@ public interface QDepartment {
 
     String getName();
 
+    QDepartment getParent();
+
     Long getManager();
+
+    String getProvince();
+
+    String getCity();
+
+    String getDistrict();
+
+    String getAddress();
+
+    double getLongitude();
+
+    double getLatitude();
+
+    String getCode();
+
+    String getImage();
+
+    String getPhone();
+
+    int getType();
 }

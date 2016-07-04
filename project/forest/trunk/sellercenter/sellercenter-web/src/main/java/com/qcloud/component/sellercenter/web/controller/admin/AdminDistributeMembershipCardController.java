@@ -8,16 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.sellercenter.QMerchant;
-import com.qcloud.component.sellercenter.QStore;
 import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.component.sellercenter.exception.SellerCenterException;
 import com.qcloud.component.sellercenter.model.DistributeMembershipCard;
 import com.qcloud.component.sellercenter.model.DistributeMembershipCardStat;
-import com.qcloud.component.sellercenter.model.Merchant;
 import com.qcloud.component.sellercenter.model.query.DistributeMembershipCardQuery;
 import com.qcloud.component.sellercenter.model.query.DistributeMembershipCardStatQuery;
 import com.qcloud.component.sellercenter.service.DistributeMembershipCardService;
-import com.qcloud.component.sellercenter.service.MerchantService;
 import com.qcloud.component.sellercenter.web.handler.DistributeMembershipCardHandler;
 import com.qcloud.component.sellercenter.web.vo.admin.AdminDistributeMembershipCardVO;
 import com.qcloud.pirates.data.Page;
@@ -26,7 +23,6 @@ import com.qcloud.pirates.mvc.AcePagingView;
 import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.NumberUtil;
 import com.qcloud.pirates.util.RequestUtil;
-import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.pirates.web.security.annotation.NoReferer;
 
 @Controller
@@ -40,9 +36,6 @@ public class AdminDistributeMembershipCardController {
 
     @Autowired
     private DistributeMembershipCardHandler distributeMembershipCardHandler;
-
-    @Autowired
-    private MerchantService                 merchantService;
 
     @Autowired
     private PersonalcenterClient            personalcenterClient;
@@ -106,7 +99,7 @@ public class AdminDistributeMembershipCardController {
     @RequestMapping
     public ModelAndView initDistribute(String merchantCode, String startNumberStr, String endNumberStr) {
 
-        Merchant merchant = merchantService.getByCode(merchantCode);
+        QMerchant merchant = sellercenterClient.getMerchantByCode(merchantCode);
         AssertUtil.assertNotNull(merchant, "商家不存在." + merchantCode);
         AssertUtil.assertNotNull(startNumberStr, "开始号段不能为空");
         AssertUtil.assertNotNull(endNumberStr, "结束号段不能为空");

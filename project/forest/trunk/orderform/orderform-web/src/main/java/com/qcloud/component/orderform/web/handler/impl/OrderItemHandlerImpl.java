@@ -9,8 +9,8 @@ import com.qcloud.component.goods.service.UnifiedMerchandiseService;
 import com.qcloud.component.orderform.model.OrderItem;
 import com.qcloud.component.orderform.web.handler.OrderItemHandler;
 import com.qcloud.component.orderform.web.vo.admin.AdminOrderItemVO;
-import com.qcloud.component.sellercenter.model.Merchant;
-import com.qcloud.component.sellercenter.service.MerchantService;
+import com.qcloud.component.sellercenter.QMerchant;
+import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.pirates.core.json.Json;
 
 @Component
@@ -20,7 +20,7 @@ public class OrderItemHandlerImpl implements OrderItemHandler {
     private UnifiedMerchandiseService unifiedMerchandiseService;
 
     @Autowired
-    private MerchantService           merchantService;
+    private SellercenterClient        sellercenterClient;
 
     // @Autowired
     // private OrderItemDetailService orderItemDetailService;
@@ -49,7 +49,7 @@ public class OrderItemHandlerImpl implements OrderItemHandler {
         for (AdminOrderItemVO adminOrderItemVO : voList) {
             UnifiedMerchandise m = unifiedMerchandiseService.get(adminOrderItemVO.getUnifiedMerchandiseId());
             adminOrderItemVO.setItem(m);
-            Merchant merchant = merchantService.get(adminOrderItemVO.getMerchantId());
+            QMerchant merchant = sellercenterClient.getMerchant(adminOrderItemVO.getMerchantId());
             adminOrderItemVO.setMerchant(merchant);
         }
         return voList;

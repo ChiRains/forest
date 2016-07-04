@@ -17,4 +17,12 @@
         	and `displayName` like concat('%',#{displayName},'%') 
         </if>
     </select> 
+    
+     <select id="getByCode" parameterType="String" resultType="Department">  
+        select * from `organization_department` where 1=1 and code = #{code}       
+    </select>
+    
+     <select id="listByParent" parameterType="java.util.HashMap" resultType="Department">  
+        select * from `organization_department` where 1=1 and parentId = #{parentId} and bsid like CONCAT(#{bsid},'%') order by bsid        
+    </select>
 </mapper>

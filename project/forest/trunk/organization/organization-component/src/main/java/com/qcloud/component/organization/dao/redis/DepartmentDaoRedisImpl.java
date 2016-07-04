@@ -66,5 +66,15 @@ public class DepartmentDaoRedisImpl implements DepartmentDao {
 	public List<Department> listAll(){	
 		throw new NotImplementedException();
 	}
+
+    @Override
+    public Department getByCode(String code) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public List<Department> listByParent(long parentId, String bsid) {
+        throw new NotImplementedException();
+    }
 }
 

@@ -1,6 +1,5 @@
 package com.qcloud.component.goods.web.controller.admin;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -55,7 +54,6 @@ import com.qcloud.component.goods.web.handler.KV;
 import com.qcloud.component.goods.web.handler.MerchandiseHandler;
 import com.qcloud.component.goods.web.handler.MerchandiseSpecificationsHandler;
 import com.qcloud.component.goods.web.handler.UnifiedMerchandiseHandler;
-import com.qcloud.component.goods.web.vo.UnifiedMerchandiseVO;
 import com.qcloud.component.goods.web.vo.admin.AdminAttrListVO;
 import com.qcloud.component.goods.web.vo.admin.AdminAttributeVO;
 import com.qcloud.component.goods.web.vo.admin.AdminMerchandiseSpecificationsVO;
@@ -69,10 +67,8 @@ import com.qcloud.component.publicdata.PublicdataClient;
 import com.qcloud.component.publicdata.QClassify;
 import com.qcloud.component.publicdata.model.Classify;
 import com.qcloud.component.publicdata.util.ClassifyUtils;
-import com.qcloud.component.sellercenter.OutdatedSellercenterClient;
 import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.SellercenterClient;
-import com.qcloud.component.sellercenter.model.key.TypeEnum.CommodityAuditingType;
 import com.qcloud.pirates.core.xml.Xml;
 import com.qcloud.pirates.core.xml.XmlFactory;
 import com.qcloud.pirates.core.xml.XmlItem;
@@ -83,7 +79,6 @@ import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.NumberUtil;
 import com.qcloud.pirates.util.RequestUtil;
 import com.qcloud.pirates.util.StringUtil;
-import com.qcloud.pirates.web.page.PPage;
 import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.pirates.web.security.annotation.NoReferer;
 
@@ -105,9 +100,8 @@ public class AdminMerchandiseController {
     //
     // @Autowired
     // private TokenClient tokenClient;
-    @Autowired
-    private OutdatedSellercenterClient               outdatedSellercenterClient;
-
+    // @Autowired
+    // private OutdatedSellercenterClient outdatedSellercenterClient;
     @Autowired
     private SellercenterClient                       sellercenterClient;
 
@@ -181,47 +175,49 @@ public class AdminMerchandiseController {
         Long merchantId = merchant.getId();
         model.addObject("merchantId", merchantId);
         model.addObject("merchantIsCertified", merchant.getIsCertified());
-        model.addObject("merchantIsExternalUrl", merchant.getIsExternalUrl());
+        // 不再支持外部链接
+        model.addObject("merchantIsExternalUrl", 2);
         model.addObject("merchantIsNoReason", merchant.getIsNoReason());
         model.addObject("merchantIsSpecialService", merchant.getIsSpecialService());
         model.addObject("merchantIsIncludePost", merchant.getIsIncludePost());
+        // TODO 暂时关闭起来
         // 获取商城商品分类列表, 判断该商家是否有限制商品分类
-        boolean limitClassify = true;
-        // 商城分类
-        Xml cXml = XmlFactory.get("commoditycenter_mall_classify_attribute");
-        if (cXml != null) {
-            List<XmlItem> items = cXml.getItemList();
-            for (XmlItem xmlItem : items) {
-                limitClassify = Boolean.parseBoolean(xmlItem.getAttrMap().get("value"));
-            }
-        }
+        // boolean limitClassify = true;
+        // // 商城分类
+        // Xml cXml = XmlFactory.get("commoditycenter_mall_classify_attribute");
+        // if (cXml != null) {
+        // List<XmlItem> items = cXml.getItemList();
+        // for (XmlItem xmlItem : items) {
+        // limitClassify = Boolean.parseBoolean(xmlItem.getAttrMap().get("value"));
+        // }
+        // }
         List<KeyValueVO> mallCVOList = null;
-        if (limitClassify) {
-            List<Classify> classifyList = outdatedSellercenterClient.listMerchantMerchandiseClassify(merchantId);
-            mallCVOList = ClassifyUtils.exchangeObj(classifyList, -1, "");
-        } else {
-            List<Classify> classifyList = publicdataClient.listClassify(ClassifyType.MERCHANDISE.getKey(), true);
-            mallCVOList = ClassifyUtils.exchangeObj(classifyList, -1, "");
-        }
+        // if (limitClassify) {
+        // List<Classify> classifyList = outdatedSellercenterClient.listMerchantMerchandiseClassify(merchantId);
+        // mallCVOList = ClassifyUtils.exchangeObj(classifyList, -1, "");
+        // } else {
+        List<Classify> classifyList = publicdataClient.listClassify(ClassifyType.MERCHANDISE.getKey(), true);
+        mallCVOList = ClassifyUtils.exchangeObj(classifyList, -1, "");
+        // }
         model.addObject("mallClassifyList", mallCVOList);
         // 获取类目列表
-        boolean limitSpec = true;
-        // 商城分类
-        Xml sXml = XmlFactory.get("commoditycenter_specifications_attribute");
-        if (sXml != null) {
-            List<XmlItem> items = sXml.getItemList();
-            for (XmlItem xmlItem : items) {
-                limitSpec = Boolean.parseBoolean(xmlItem.getAttrMap().get("value"));
-            }
-        }
+        // boolean limitSpec = true;
+        // // 商城分类
+        // Xml sXml = XmlFactory.get("commoditycenter_specifications_attribute");
+        // if (sXml != null) {
+        // List<XmlItem> items = sXml.getItemList();
+        // for (XmlItem xmlItem : items) {
+        // limitSpec = Boolean.parseBoolean(xmlItem.getAttrMap().get("value"));
+        // }
+        // }
         List<KeyValueVO> specCVOList = null;
-        if (limitSpec) {
-            List<Classify> specList = outdatedSellercenterClient.listMerchantSpecClassify(merchantId);
-            specCVOList = ClassifyUtils.exchangeObj(specList, -1, "");
-        } else {
-            List<Classify> specList = publicdataClient.listClassify(ClassifyType.SPECIFICATIONS.getKey(), true);
-            specCVOList = ClassifyUtils.exchangeObj(specList, -1, "");
-        }
+        // if (limitSpec) {
+        // List<Classify> specList = outdatedSellercenterClient.listMerchantSpecClassify(merchantId);
+        // specCVOList = ClassifyUtils.exchangeObj(specList, -1, "");
+        // } else {
+        List<Classify> specList = publicdataClient.listClassify(ClassifyType.SPECIFICATIONS.getKey(), true);
+        specCVOList = ClassifyUtils.exchangeObj(specList, -1, "");
+        // }
         model.addObject("specClassifyId", specCVOList);
         // 获取商家商品分类列表
         List<Classify> merchantClassifyList = publicdataClient.listClassify(merchantId);
@@ -290,11 +286,11 @@ public class AdminMerchandiseController {
         if (exist(merchandise)) {
             AssertUtil.assertTrue(false, "商品名称重复.");
         }
-        if (CommodityAuditingType.UNNEED.getKey() == merchant.getCommodityAuditing().getKey()) {
-            merchandise.setState(MerchandiseStateType.ONLINE.getKey());
-        } else {
-            merchandise.setState(MerchandiseStateType.NEW.getKey());
-        }
+        // if (CommodityAuditingType.UNNEED.getKey() == merchant.getCommodityAuditing().getKey()) {
+        merchandise.setState(MerchandiseStateType.ONLINE.getKey());
+        // } else {
+        // merchandise.setState(MerchandiseStateType.NEW.getKey());
+        // }
         if (merchandise.getIsCertified() != EnableType.ENABLE.getKey()) {
             merchandise.setIsCertified(EnableType.DISABLE.getKey());
             merchandise.setCertified("");
@@ -345,28 +341,30 @@ public class AdminMerchandiseController {
         ModelAndView model = new ModelAndView("/admin/goods-Merchandise-edit");
         model.addObject("merchandise", adminMerchandiseVO);
         model.addObject("merchantIsCertified", merchant.getIsCertified());
-        model.addObject("merchantIsExternalUrl", merchant.getIsExternalUrl());
+        // 不再支持外部链接
+        model.addObject("merchantIsExternalUrl", 2);
         model.addObject("merchantIsNoReason", merchant.getIsNoReason());
         model.addObject("merchantIsSpecialService", merchant.getIsSpecialService());
         model.addObject("merchantIsIncludePost", merchant.getIsIncludePost());
+        // TODO 暂时关闭起来
         // 获取商城商品分类列表, 判断该商家是否有限制商品分类
-        boolean limitClassify = true;
-        // 商城分类
-        Xml cXml = XmlFactory.get("commoditycenter_mall_classify_attribute");
-        if (cXml != null) {
-            List<XmlItem> items = cXml.getItemList();
-            for (XmlItem xmlItem : items) {
-                limitClassify = Boolean.parseBoolean(xmlItem.getAttrMap().get("value"));
-            }
-        }
+        // boolean limitClassify = true;
+        // // 商城分类
+        // Xml cXml = XmlFactory.get("commoditycenter_mall_classify_attribute");
+        // if (cXml != null) {
+        // List<XmlItem> items = cXml.getItemList();
+        // for (XmlItem xmlItem : items) {
+        // limitClassify = Boolean.parseBoolean(xmlItem.getAttrMap().get("value"));
+        // }
+        // }
         List<KeyValueVO> mallCVOList = null;
-        if (limitClassify) {
-            List<Classify> classifyList = outdatedSellercenterClient.listMerchantMerchandiseClassify(merchant.getId());
-            mallCVOList = ClassifyUtils.exchangeObj(classifyList, merchandise.getMallClassifyId(), "selected");
-        } else {
-            List<Classify> classifyList = publicdataClient.listClassify(ClassifyType.MERCHANDISE);
-            mallCVOList = ClassifyUtils.exchangeObj(classifyList, merchandise.getMallClassifyId(), "selected");
-        }
+        // if (limitClassify) {
+        // List<Classify> classifyList = outdatedSellercenterClient.listMerchantMerchandiseClassify(merchant.getId());
+        // mallCVOList = ClassifyUtils.exchangeObj(classifyList, merchandise.getMallClassifyId(), "selected");
+        // } else {
+        List<Classify> classifyList = publicdataClient.listClassify(ClassifyType.MERCHANDISE);
+        mallCVOList = ClassifyUtils.exchangeObj(classifyList, merchandise.getMallClassifyId(), "selected");
+        // }
         // 获取类目列表
         model.addObject("mallClassifyList", mallCVOList);
         List<Classify> merchantClassifyList = publicdataClient.listClassify(merchant.getId());
@@ -919,6 +917,7 @@ public class AdminMerchandiseController {
         where.put("classifyId", merchandise.getSpecClassifyId());
         List<ClassifySpecifications> classifySpecificationses = classifySpecificationsService.list(where);
         List<AdminAttributeVO> adminAttributeVO = new ArrayList<AdminAttributeVO>();
+        List<AdminMerchandiseSpecificationsVO> mspecVoList = new ArrayList<AdminMerchandiseSpecificationsVO>();
         // 类目没有选择规格 ,获取默认规格
         if (classifySpecificationses.size() == 0) {
             if (list.size() == 0) {
@@ -930,9 +929,12 @@ public class AdminMerchandiseController {
                 if (unifiedMerchandise.getState() == merchandise.getState()) {
                     modelAndView.addObject("isDefault", "checked");
                 }
-                vo.setDiscount(unifiedMerchandise.getDiscount());
+                vo.setId(unifiedMerchandise.getId());
                 vo.setPurchase(unifiedMerchandise.getPurchase());
+                vo.setDiscount(unifiedMerchandise.getDiscount());
                 vo.setPrice(unifiedMerchandise.getPrice());
+                vo.setMerchandiseId(unifiedMerchandise.getMerchandiseId());
+                vo.setState(unifiedMerchandise.getState());
                 vo.setStock(unifiedMerchandise.getStock());
                 modelAndView.addObject("defaultSpec", vo);
             }
@@ -986,6 +988,24 @@ public class AdminMerchandiseController {
                 }
                 adminAttributeVO.add(attrVo);
             }
+            List<UnifiedMerchandise> merchandiseList = unifiedMerchandiseService.listByMerchandise(merchandise.getId(), UnifiedMerchandiseType.SINGLE.getKey(), merchandise.getState());
+            for (UnifiedMerchandise unifiedMerchandise : merchandiseList) {
+                AdminMerchandiseSpecificationsVO vo = new AdminMerchandiseSpecificationsVO();
+                vo.setId(unifiedMerchandise.getId());
+                vo.setPurchase(unifiedMerchandise.getPurchase());
+                vo.setDiscount(unifiedMerchandise.getDiscount());
+                vo.setPrice(unifiedMerchandise.getPrice());
+                vo.setMerchandiseId(unifiedMerchandise.getMerchandiseId());
+                vo.setState(unifiedMerchandise.getState());
+                vo.setStock(unifiedMerchandise.getStock());
+                List<MerchandiseSpecifications> msList = merchandiseSpecificationsService.listByUnifiedMerchandise(unifiedMerchandise.getId());
+                StringBuffer sb = new StringBuffer();
+                for (MerchandiseSpecifications merchandiseSpecifications : msList) {
+                    sb.append(merchandiseSpecifications.getValue()).append(" ");
+                }
+                vo.setValue0(sb.toString());
+                mspecVoList.add(vo);
+            }
         }
         List<Enumeration> enumerations = null;
         List<MerchandiseImage> merchandiseImages = merchandiseImageService.listByMerchandise(merchandise.getId());
@@ -1009,38 +1029,19 @@ public class AdminMerchandiseController {
                 }
             }
         }
-        Map<String, String> strMap = new HashMap<String, String>();
-        for (int i = 0; i < classifySpecificationses.size(); i++) {
-            String str = "";
-            List<MerchandiseSpecificationsRelation> rlist1 = merchandiseSpecificationsRelationService.listByMap(merchandise.getId(), classifySpecificationses.get(i).getAttributeId());
-            for (MerchandiseSpecificationsRelation r : rlist1) {
-                if (r.getType() == 2 && r.getIsCheck() == 1) {
-                    str += r.getAlias() + ",";
-                } else if (r.getType() == 1) {
-                    str += r.getValue() + ",";
-                }
-            }
-            strMap.put("str" + (i + 1), str);
-        }
-        List<UnifiedMerchandise> merchandiseList = unifiedMerchandiseService.listByMerchandise(merchandise.getId(), UnifiedMerchandiseType.SINGLE.getKey(), merchandise.getState());
-        List<AdminMerchandiseSpecificationsVO> mspecVoList = new ArrayList<AdminMerchandiseSpecificationsVO>();
-        for (UnifiedMerchandise unifiedMerchandise : merchandiseList) {
-            AdminMerchandiseSpecificationsVO vo = new AdminMerchandiseSpecificationsVO();
-            vo.setId(unifiedMerchandise.getId());
-            vo.setPurchase(unifiedMerchandise.getPurchase());
-            vo.setDiscount(unifiedMerchandise.getDiscount());
-            vo.setPrice(unifiedMerchandise.getPrice());
-            vo.setMerchandiseId(unifiedMerchandise.getMerchandiseId());
-            vo.setState(unifiedMerchandise.getState());
-            vo.setStock(unifiedMerchandise.getStock());
-            List<MerchandiseSpecifications> msList = merchandiseSpecificationsService.listByUnifiedMerchandise(unifiedMerchandise.getId());
-            StringBuffer sb = new StringBuffer();
-            for (MerchandiseSpecifications merchandiseSpecifications : msList) {
-                sb.append(merchandiseSpecifications.getValue()).append(" ");
-            }
-            vo.setValue0(sb.toString());
-            mspecVoList.add(vo);
-        }
+        // Map<String, String> strMap = new HashMap<String, String>();
+        // for (int i = 0; i < classifySpecificationses.size(); i++) {
+        // String str = "";
+        // List<MerchandiseSpecificationsRelation> rlist1 = merchandiseSpecificationsRelationService.listByMap(merchandise.getId(), classifySpecificationses.get(i).getAttributeId());
+        // for (MerchandiseSpecificationsRelation r : rlist1) {
+        // if (r.getType() == 2 && r.getIsCheck() == 1) {
+        // str += r.getAlias() + ",";
+        // } else if (r.getType() == 1) {
+        // str += r.getValue() + ",";
+        // }
+        // }
+        // strMap.put("str" + (i + 1), str);
+        // }
         modelAndView.addObject("mspecVoList", mspecVoList);
         modelAndView.addObject("enumerations", enumerations);
         modelAndView.addObject("imagesAtt", imagesAtt);
