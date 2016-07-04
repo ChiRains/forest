@@ -1,9 +1,11 @@
 package com.qcloud.component.organization.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.qcloud.component.autoid.AutoIdGenerator;
+import com.qcloud.component.autoid.UniqueCodeGenerator;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.component.organization.dao.DepartmentDao;
 import com.qcloud.component.organization.exception.OrganizationException;
@@ -19,6 +21,9 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Autowired
     private AutoIdGenerator     autoIdGenerator;
+
+    @Autowired
+    private UniqueCodeGenerator uniqueCodeGenerator;
 
     private static final String ID_KEY = "organization_department";
 
@@ -40,6 +45,8 @@ public class DepartmentServiceImpl implements DepartmentService {
             department.setDisplayName(department.getName());
         }
         department.setId(id);
+        String code = uniqueCodeGenerator.generate("organization-org-code", new HashMap<String, String>());
+        department.setCode(code);
         return departmentDao.add(department);
     }
 

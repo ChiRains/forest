@@ -1,5 +1,6 @@
 package com.qcloud.component.organization.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.qcloud.component.account.QAccount;
 import com.qcloud.component.account.UnifiedAccountClient;
 import com.qcloud.component.autoid.AutoIdGenerator;
+import com.qcloud.component.autoid.UniqueCodeGenerator;
 import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.organization.common.ClerkConstant;
 import com.qcloud.component.organization.dao.ClerkDao;
@@ -58,19 +60,26 @@ public class ClerkServiceImpl implements ClerkService {
 
     public static final String   CLERK_PASSWORD_KEY = "clerk-default-password";
 
+    @Autowired
+    private UniqueCodeGenerator  uniqueCodeGenerator;
+
     @PostConstruct
     public void init() {
 
         boolean mobile = enableAccountType(MOBILE_TYPE_CODE);
         boolean email = enableAccountType(EMAIL_TYPE_CODE);
         boolean idCard = enableAccountType(IDCARD_TYPE_CODE);
-        AssertUtil.assertTrue(mobile || email || idCard, "请在app.xml文件配置组织职员账号支持类型:手机或者Email或者会员卡,支持组合");
+        // 支持account
+        boolean account = true;
+        AssertUtil.assertTrue(mobile || email || idCard || account, "请在app.xml文件配置组织职员账号支持类型:手机或者Email或者会员卡,支持组合");
     }
 
     private boolean enableAccountType(String accountName) {
 
         Xml xml = XmlFactory.get(ACCOUNT_TYPE_CODE);
-        AssertUtil.assertNotNull(xml, "xml尚未配置账号支持类型");
+        if (xml == null) {
+            return false;
+        }
         List<XmlItem> list = xml.getItemList();
         for (XmlItem xmlItem : list) {
             if (accountName.equals(xmlItem.getAttrMap().get("key")) && Boolean.valueOf(xmlItem.getAttrMap().get("enable"))) {
@@ -105,8 +114,12 @@ public class ClerkServiceImpl implements ClerkService {
             }
         }
         final String pwd = getDefaultPwd();
+        String loginAccount = uniqueCodeGenerator.generate("organization-clerk-code", new HashMap<String, String>());
+        clerk.setLoginAccount(loginAccount);
         String group = null;
         String ac = null;
+        group = regAccount(clerk.getMobile(), clerk.getName(), pwd, ac, group);
+        ac = clerk.getMobile();
         if (StringUtils.isNotEmpty(clerk.getMobile()) && enableAccountType(MOBILE_TYPE_CODE)) {
             group = regAccount(clerk.getMobile(), clerk.getName(), pwd, ac, group);
             ac = clerk.getMobile();
