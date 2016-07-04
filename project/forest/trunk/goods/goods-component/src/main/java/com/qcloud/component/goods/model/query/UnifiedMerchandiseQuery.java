@@ -36,6 +36,10 @@ public class UnifiedMerchandiseQuery {
 
     private long          classifyType;
 
+    private String        code;
+
+    private long          merchandiseId;
+
     public String getName() {
 
         return name;
@@ -188,5 +192,25 @@ public class UnifiedMerchandiseQuery {
     public void setMerchantId(Long merchantId) {
 
         this.merchantId = merchantId;
+    }
+
+    public String getCode() {
+
+        return code;
+    }
+
+    public void setCode(String code) {
+
+        this.code = code;
+    }
+
+    public long getMerchandiseId() {
+
+        return merchandiseId;
+    }
+
+    public void setMerchandiseId(long merchandiseId) {
+
+        this.merchandiseId = merchandiseId;
     }
 }

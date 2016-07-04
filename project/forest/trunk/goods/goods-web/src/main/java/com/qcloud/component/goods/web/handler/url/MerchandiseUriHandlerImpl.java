@@ -36,6 +36,10 @@ public class MerchandiseUriHandlerImpl extends AbstractUriHandler {
         //
         list.add("/admin/merchandise/list4Admin.do");
         list.add("/admin/merchandise/details4Admin.do");
+        //
+        list.add("/admin/merchandise/listDefaultSpec.do");
+        //
+        list.add("/admin/merchandise/toEditItemState.do");
         return list;
     }
 
@@ -67,6 +71,7 @@ public class MerchandiseUriHandlerImpl extends AbstractUriHandler {
         //
         list.add("/admin/merchandise/list4Admin.do");
         list.add("/admin/merchandise/details4Admin.do");
+        list.add("/admin/merchandise/toEditItemState.do");
         return list;
     }
 
@@ -88,6 +93,7 @@ public class MerchandiseUriHandlerImpl extends AbstractUriHandler {
         map.put("/admin/merchandise/getRelation.do", list);
         map.put("/admin/merchandise/toEditAttributes.do", list);
         map.put("/admin/merchandise/editAttributes.do", list);
+        map.put("/admin/merchandise/toEditItemState.do", list);
         //
         map.put("/admin/merchandise/details4Admin.do", stringToList("/admin/merchandise/list4Admin.do"));
         //
