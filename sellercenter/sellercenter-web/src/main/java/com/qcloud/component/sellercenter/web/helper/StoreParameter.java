@@ -1,29 +1,18 @@
 package com.qcloud.component.sellercenter.web.helper;
 
-import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.qcloud.component.organization.OrganizationClient;
+import com.qcloud.component.organization.QClerk;
 import com.qcloud.component.sellercenter.QStore;
 import com.qcloud.component.sellercenter.SellercenterClient;
-import com.qcloud.component.sellercenter.model.StoreMember;
-import com.qcloud.component.sellercenter.service.StoreMemberService;
-import com.qcloud.component.token.TokenClient;
 import com.qcloud.pirates.util.AssertUtil;
-import com.qcloud.pirates.web.filter.admin.AdminFilterService;
 import com.qcloud.pirates.web.page.PageParameter;
+import com.qcloud.pirates.web.page.PageParameterUtil;
 
 @Component
 public class StoreParameter implements PageParameter {
-
-    @Autowired
-    private AdminFilterService adminFilterService;
-
-    @Autowired
-    private TokenClient        tokenClient;
-
-    @Autowired
-    private StoreMemberService storeMemberService;
 
     @Autowired
     private SellercenterClient sellercenterClient;
@@ -34,25 +23,13 @@ public class StoreParameter implements PageParameter {
         return SellercenterClient.STORE_LOGIN_PARAMETER_KEY;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public <T> T getValue(HttpServletRequest request) {
 
-        String tokenId = adminFilterService.getTokenId(request);
-        AssertUtil.assertNotEmpty(tokenId, "获取用户登录信息失败.");
-        String idStr = tokenClient.get(tokenId);
-        AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
-        long memberId = Long.parseLong(idStr);
-        long storeId = 0;
-        HashMap where = new HashMap();
-        where.put("memberId", memberId);
-        StoreMember storeMember = storeMemberService.get(where);
-        if (storeMember != null) {
-            storeId = storeMember.getStoreId();
-        } else {
-            AssertUtil.assertTrue(false, "当前登录用户不属于门店!");
-        }
-        QStore store = sellercenterClient.getStore(storeId);
-        AssertUtil.assertNotNull(store, "门店不存在." + storeId);
+        QClerk clerk = PageParameterUtil.getParameterValues(request, OrganizationClient.CLERK_LOGIN_PARAMETER_KEY);
+        QStore store = sellercenterClient.getStore(clerk.getDepartmentId());
+        AssertUtil.assertNotNull(store, "门店不存在." + clerk.getDepartmentId());
         return (T) store;
     }
 }

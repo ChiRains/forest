@@ -158,7 +158,7 @@ public class AdminSubOrderController {
         // StoreMember storeMember = sellercenterClient.getMemberStore(query);
         QStore qStore = sellercenterClient.getStore(storeId);
         AssertUtil.assertNotNull(qStore, "门店不存在!");
-        long merchantId = qStore.getMerchantId();
+        long merchantId = qStore.getMerchant().getId();
         SubOrder subOrder = subOrderService.get(id, orderDate);
         AssertUtil.assertNotNull(subOrder, "子单不存在." + id);
         // 判断商品是否有库存
@@ -210,7 +210,7 @@ public class AdminSubOrderController {
         Page<SubOrder> page = subOrderService.page(query, start, PAGE_SIZE);
         List<AdminSubOrderVO> list = subOrderHandler.toVOList4Admin(page.getData());
         AcePagingView pagingView = new AcePagingView("/admin/orderform-MerchantOrder-listDetail", DIR + "/listDetail", pageNum, PAGE_SIZE, page.getCount());
-        MerchantOrderForm merchantOrderForm = merchantOrderFormService.getBySubOrder(store.getMerchantId(), query.getSubOrderId());
+        MerchantOrderForm merchantOrderForm = merchantOrderFormService.getBySubOrder(store.getMerchant().getId(), query.getSubOrderId());
         if (merchantOrderForm == null) {
             throw new OrderformException("未查询到此订单");
         }
@@ -238,7 +238,7 @@ public class AdminSubOrderController {
         pagingView.addObject("shipType", MerchantOrderStateType.SHIP.getKey());
         pagingView.addObject("paymentModeType", PaymentModeType.values());
         pagingView.addObject("orderStateType", OrderStateType.values());
-        pagingView.addObject("storeList", sellercenterClient.listStoreByMerchant(store.getMerchantId()));
+        pagingView.addObject("storeList", sellercenterClient.listStoreByMerchant(store.getMerchant().getId()));
         pagingView.addObject("needInvoiceType", NeedInvoiceType.values());
         pagingView.addObject("invoiceType", InvoiceType.values());
         pagingView.addObject("deliveryModeType", DeliveryModeType.values());

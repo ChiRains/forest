@@ -32,20 +32,12 @@ import com.qcloud.component.orderform.web.vo.admin.AdminReturnOrderVO;
 import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.QStore;
 import com.qcloud.component.sellercenter.SellercenterClient;
-import com.qcloud.component.sellercenter.model.MerchantMember;
-import com.qcloud.component.sellercenter.model.Store;
-import com.qcloud.component.sellercenter.model.StoreMember;
-import com.qcloud.component.sellercenter.service.MerchantMemberService;
-import com.qcloud.component.sellercenter.service.StoreMemberService;
-import com.qcloud.component.sellercenter.service.StoreService;
-import com.qcloud.component.token.TokenClient;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.mvc.AceAjaxView;
 import com.qcloud.pirates.mvc.AcePagingView;
 import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.NumberUtil;
 import com.qcloud.pirates.util.RequestUtil;
-import com.qcloud.pirates.web.filter.admin.AdminFilterService;
 import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.pirates.web.security.annotation.NoReferer;
 
@@ -67,23 +59,16 @@ public class AdminReturnOrderController {
     @Autowired
     private ReturnOrderItemHandler returnOrderItemHandler;
 
-//    @Autowired
-//    private AdminFilterService     adminFilterService;
-//
-//    @Autowired
-//    private TokenClient            tokenClient;
-
-    @Autowired
-    private StoreMemberService     storeMemberService;
-
+    // @Autowired
+    // private AdminFilterService adminFilterService;
+    //
+    // @Autowired
+    // private TokenClient tokenClient;
     @Autowired
     private SubOrderService        subOrderService;
 
     @Autowired
-    private StoreService           storeService;
-
-    @Autowired
-    private MerchantMemberService  merchantMemberService;
+    private SellercenterClient     sellercenterClient;
 
     @Autowired
     private OrderItemService       orderItemService;
@@ -100,11 +85,9 @@ public class AdminReturnOrderController {
 
         int state = query.getState();
         query.setState(getChangeState(state));
-//        long memberId = getMemberId(request);
-//        long storeId = getStoreId(memberId);
-        
+        // long memberId = getMemberId(request);
+        // long storeId = getStoreId(memberId);
         QStore store = PageParameterUtil.getParameterValues(request, SellercenterClient.STORE_LOGIN_PARAMETER_KEY);
-                
         query.setStoreId(store.getId());
         final int PAGE_SIZE = 10;
         pageNum = RequestUtil.getPageid(pageNum);
@@ -209,7 +192,7 @@ public class AdminReturnOrderController {
         }
         //
         SubOrder subOrder = subOrderService.get(returnOrderVO.getSubOrderId(), returnOrderVO.getOrderDate());
-        Store store = storeService.get(returnOrderVO.getStoreId());
+        QStore store = sellercenterClient.getStore(returnOrderVO.getStoreId());
         // List<ReturnOrder> records = returnOrderService.listBySubOrder(returnOrderVO.getSubOrderId());
         // for (int i = 0; i < records.size(); i++) {
         // if (records.get(i).getId() == returnOrderVO.getId()) {
@@ -267,18 +250,15 @@ public class AdminReturnOrderController {
         return view;
     }
 
-
     @RequestMapping
     @NoReferer
     public ModelAndView list4Merchant(HttpServletRequest request, Integer pageNum, ReturnOrderQuery query) {
 
         int state = query.getState();
         query.setState(getChangeState(state));
-//        long memberId = getMemberId(request);
-//        long merchantId = getMerchantId(memberId);
-        
+        // long memberId = getMemberId(request);
+        // long merchantId = getMerchantId(memberId);
         QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
-                
         query.setMerchantId(merchant.getId());
         final int PAGE_SIZE = 10;
         pageNum = RequestUtil.getPageid(pageNum);
@@ -372,7 +352,7 @@ public class AdminReturnOrderController {
         }
         //
         SubOrder subOrder = subOrderService.get(returnOrderVO.getSubOrderId(), returnOrderVO.getOrderDate());
-        Store store = storeService.get(returnOrderVO.getStoreId());
+        QStore store = sellercenterClient.getStore(returnOrderVO.getStoreId());
         // List<ReturnOrder> records = returnOrderService.listBySubOrder(returnOrderVO.getSubOrderId());
         // for (int i = 0; i < records.size(); i++) {
         // if (records.get(i).getId() == returnOrderVO.getId()) {

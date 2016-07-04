@@ -15,7 +15,6 @@ import com.qcloud.component.publicservice.QMessage;
 import com.qcloud.component.sellercenter.QStore;
 import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.component.sellercenter.model.key.TypeEnum;
-import com.qcloud.component.sellercenter.model.query.StoreQuery;
 import com.qcloud.component.sellercenter.web.vo.admin.AdminMessageVO;
 import com.qcloud.pirates.mvc.AcePagingView;
 import com.qcloud.pirates.util.DateUtil;
@@ -43,9 +42,9 @@ public class AdminStoreMessageController {
 
     @RequestMapping
     @NoReferer
-    public ModelAndView list(HttpServletRequest request, Integer clasify, Integer pageNum, StoreQuery query) {
+    public ModelAndView list(HttpServletRequest request, Integer clasify, Integer pageNum) {
 
-        QStore store = PageParameterUtil.getParameterValues(request, SellercenterClient.STORE_LOGIN_PARAMETER_KEY);        
+        QStore store = PageParameterUtil.getParameterValues(request, SellercenterClient.STORE_LOGIN_PARAMETER_KEY);
         clasify = clasify == null || clasify == 0 ? -1 : clasify;
         final int PAGE_SIZE = 10;
         pageNum = RequestUtil.getPageid(pageNum);
@@ -72,9 +71,9 @@ public class AdminStoreMessageController {
     }
 
     @RequestMapping
-    public ModelAndView toShow(HttpServletRequest request, StoreQuery query, long id) {
+    public ModelAndView toShow(HttpServletRequest request, Long id) {
 
-        QStore store = PageParameterUtil.getParameterValues(request, SellercenterClient.STORE_LOGIN_PARAMETER_KEY);        
+        QStore store = PageParameterUtil.getParameterValues(request, SellercenterClient.STORE_LOGIN_PARAMETER_KEY);
         QMessage message = messageClient.get(TypeEnum.STORE_MESSAGE_CODE, store.getId(), id);
         AdminMessageVO me = new AdminMessageVO();
         me.setId(message.getId());
@@ -89,28 +88,27 @@ public class AdminStoreMessageController {
         model.addObject("message", me);
         return model;
     }
-
-//    private long getMemberId(HttpServletRequest request) {
-//
-//        String tokenId = adminFilterService.getTokenId(request);
-//        AssertUtil.assertNotEmpty(tokenId, "获取用户登录信息失败.");
-//        String idStr = tokenClient.get(tokenId);
-//        AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
-//        long memberId = Long.parseLong(idStr);
-//        return memberId;
-//    }
-//
-//    private long getStoreId(Long memberId) {
-//
-//        long storeId = 0;
-//        HashMap where = new HashMap();
-//        where.put("memberId", memberId);
-//        StoreMember storeMember = storeMemberService.get(where);
-//        if (storeMember != null) {
-//            storeId = storeMember.getStoreId();
-//        } else {
-//            AssertUtil.assertTrue(false, "当前登录用户不属于门店!");
-//        }
-//        return storeId;
-//    }
+    // private long getMemberId(HttpServletRequest request) {
+    //
+    // String tokenId = adminFilterService.getTokenId(request);
+    // AssertUtil.assertNotEmpty(tokenId, "获取用户登录信息失败.");
+    // String idStr = tokenClient.get(tokenId);
+    // AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
+    // long memberId = Long.parseLong(idStr);
+    // return memberId;
+    // }
+    //
+    // private long getStoreId(Long memberId) {
+    //
+    // long storeId = 0;
+    // HashMap where = new HashMap();
+    // where.put("memberId", memberId);
+    // StoreMember storeMember = storeMemberService.get(where);
+    // if (storeMember != null) {
+    // storeId = storeMember.getStoreId();
+    // } else {
+    // AssertUtil.assertTrue(false, "当前登录用户不属于门店!");
+    // }
+    // return storeId;
+    // }
 }

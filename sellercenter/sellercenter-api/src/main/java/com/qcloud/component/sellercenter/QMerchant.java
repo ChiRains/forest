@@ -8,17 +8,9 @@ public interface QMerchant extends IntKeyValue {
 
     public String getName();
 
-    public CommodityAuditingType getCommodityAuditing();
-
-    public DistributionType getDistribution();
-
-    public Long getClassifyId();
+    public String getCode();
 
     public String getImage();
-
-    public long getUserId();
-
-    public int getMerchantType();
 
     public String getProvince();
 
@@ -26,19 +18,11 @@ public interface QMerchant extends IntKeyValue {
 
     public String getReceiveMobile();
 
-    public boolean isNotify();
+    public int getIsIncludePost();
 
     public int getIsCertified();
 
     public int getIsSpecialService();
 
     public int getIsNoReason();
-
-    public int getIsExternalUrl();
-    
-    public int getIsIncludePost();
-    
-    public String getCode();
-    
-    public String getMerchantAdmin();
 }

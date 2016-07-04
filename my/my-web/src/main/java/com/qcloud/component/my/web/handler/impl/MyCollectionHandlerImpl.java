@@ -99,7 +99,7 @@ public class MyCollectionHandlerImpl implements MyCollectionHandler {
         vo.setMerchantId(myCollection.getObjId());
         QMerchant merchant = sellercenterClient.getMerchant(myCollection.getObjId());
         CollectionMerchant collectionMerchant = new CollectionMerchant();
-        collectionMerchant.setClassifyId(merchant.getClassifyId());
+        collectionMerchant.setClassifyId(-1L);
         collectionMerchant.setName(merchant.getName());
         collectionMerchant.setMerchantId(merchant.getId());
         if (StringUtils.isNotEmpty(merchant.getImage())) {
@@ -146,7 +146,7 @@ public class MyCollectionHandlerImpl implements MyCollectionHandler {
         collectionStore.setAddress(store.getAddress());
         collectionStore.setId(store.getId());
         collectionStore.setName(store.getName());
-        collectionStore.setPhone(store.getPhone());
+        collectionStore.setPhone(store.getSmsMobile());
         collectionStore.setLatitude(store.getLatitude());
         collectionStore.setLongitude(store.getLongitude());
         myStoreCollectionVO.setCollectionStore(collectionStore);

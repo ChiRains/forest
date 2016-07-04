@@ -1,42 +1,101 @@
 package com.qcloud.component.organization.entity;
 
 import com.qcloud.component.organization.QDepartment;
+import com.qcloud.component.organization.model.Department;
 
 public class DepartmentEntity implements QDepartment {
 
-    private Long   id;
+    private Department       department;
 
-    private String name;
+    private DepartmentEntity parent;
 
-    private Long   manager;
+    public DepartmentEntity(Department department, DepartmentEntity parent) {
+
+        super();
+        this.department = department;
+        this.parent = parent;
+    }
 
     public Long getId() {
 
-        return id;
-    }
-
-    public void setId(Long id) {
-
-        this.id = id;
+        return department.getId();
     }
 
     public String getName() {
 
-        return name;
-    }
-
-    public void setName(String name) {
-
-        this.name = name;
+        return department.getName();
     }
 
     public Long getManager() {
 
-        return manager;
+        return department.getManager();
     }
 
-    public void setManager(Long manager) {
+    @Override
+    public String getProvince() {
 
-        this.manager = manager;
+        return department.getProvince();
+    }
+
+    @Override
+    public String getCity() {
+
+        return department.getCity();
+    }
+
+    @Override
+    public String getDistrict() {
+
+        return department.getDistrict();
+    }
+
+    @Override
+    public String getAddress() {
+
+        return department.getAddress();
+    }
+
+    @Override
+    public double getLongitude() {
+
+        return department.getLongitude();
+    }
+
+    @Override
+    public double getLatitude() {
+
+        return department.getLatitude();
+    }
+
+    @Override
+    public String getCode() {
+
+        return department.getCode();
+    }
+
+    @Override
+    public String getImage() {
+
+        return department.getImage();
+    }
+
+    @Override
+    public String getPhone() {
+
+        // TODO
+        return null;
+        // return department.getPhone();
+    }
+
+    @Override
+    public QDepartment getParent() {
+
+        return parent;
+    }
+
+    @Override
+    public int getType() {
+
+        return department.getType();
     }
 }

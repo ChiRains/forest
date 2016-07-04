@@ -12,16 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.qcloud.component.autoid.AutoIdGenerator;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.publicservice.SmsClient;
+import com.qcloud.component.sellercenter.QMerchant;
+import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.component.sellercenter.dao.DistributeMembershipCardDao;
 import com.qcloud.component.sellercenter.exception.SellerCenterException;
 import com.qcloud.component.sellercenter.model.DistributeMembershipCard;
 import com.qcloud.component.sellercenter.model.DistributeMembershipCardStat;
-import com.qcloud.component.sellercenter.model.Merchant;
 import com.qcloud.component.sellercenter.model.key.TypeEnum.DistributeMembershipCardStateType;
 import com.qcloud.component.sellercenter.model.query.DistributeMembershipCardQuery;
 import com.qcloud.component.sellercenter.model.query.DistributeMembershipCardStatQuery;
 import com.qcloud.component.sellercenter.service.DistributeMembershipCardService;
-import com.qcloud.component.sellercenter.service.MerchantService;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.util.AssertUtil;
 
@@ -32,7 +32,7 @@ public class DistributeMembershipCardServiceImpl implements DistributeMembership
     private DistributeMembershipCardDao distributeMembershipCardDao;
 
     @Autowired
-    private MerchantService             merchantService;
+    private SellercenterClient          sellercenterClient;
 
     @Autowired
     private AutoIdGenerator             autoIdGenerator;
@@ -89,7 +89,7 @@ public class DistributeMembershipCardServiceImpl implements DistributeMembership
     @Override
     public boolean initDistribute(Long merchantId, String startNumStr, String endNumStr) {
 
-        Merchant merchant = merchantService.get(merchantId);
+        QMerchant merchant = sellercenterClient.getMerchant(merchantId);
         AssertUtil.assertNotNull(merchant, "商家不存在." + merchantId);
         int length = startNumStr.length();
         Long start = Long.valueOf(startNumStr);

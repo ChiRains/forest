@@ -38,6 +38,10 @@ public interface OrganizationClient {
 
     QDepartment getDepartment(Long id);
 
+    QDepartment getDepartmentByCode(String code);
+
+    List<QDepartment> listDepartmantByParent(long parentId);
+
     QDepartment getParentDepartment(Long id);
 
     QPost getPost(Long id);

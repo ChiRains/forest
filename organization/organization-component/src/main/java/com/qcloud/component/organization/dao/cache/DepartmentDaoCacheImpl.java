@@ -17,8 +17,8 @@ public class DepartmentDaoCacheImpl implements DepartmentDao {
     @Autowired
     private DepartmentDao departmentDaoMysqlImpl;
 
-    @Autowired
-    private DepartmentDao departmentDaoRedisImpl;
+//    @Autowired
+//    private DepartmentDao departmentDaoRedisImpl;
 
     @Override
     public boolean add(Department department) {
@@ -48,13 +48,13 @@ public class DepartmentDaoCacheImpl implements DepartmentDao {
     @Override
     public List<Department> list(List<Long> idList) {
 
-        return CacheLoader.list(departmentDaoRedisImpl, departmentDaoMysqlImpl, idList);
+        return CacheLoader.list(departmentDaoMysqlImpl, idList);
     }
 
     @Override
     public Map<Long, Department> map(Set<Long> idSet) {
 
-        return CacheLoader.map(departmentDaoRedisImpl, departmentDaoMysqlImpl, idSet);
+        return CacheLoader.map(departmentDaoMysqlImpl, idSet);
     }
 
     @Override
@@ -72,5 +72,17 @@ public class DepartmentDaoCacheImpl implements DepartmentDao {
     public List<Department> listAll() {
 
         return departmentDaoMysqlImpl.listAll();
+    }
+
+    @Override
+    public Department getByCode(String code) {
+
+        return departmentDaoMysqlImpl.getByCode(code);
+    }
+
+    @Override
+    public List<Department> listByParent(long parentId, String bsid) {
+
+        return departmentDaoMysqlImpl.listByParent(parentId, bsid);
     }
 }

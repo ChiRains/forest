@@ -84,7 +84,7 @@ public class OrderStateController {
         // StoreMember storeMember = outdatedSellercenterClient.getMemberStore(smq);
         // AssertUtil.assertNotNull(storeMember, "您尚未属于一家门店.");
         QStore store = PageParameterUtil.getParameterValues(request, SellercenterClient.STORE_LOGIN_PARAMETER_KEY);
-        long merchantId = store.getMerchantId();
+        long merchantId = store.getMerchant().getId();
         // orderStateService.exchangeSubOrderState(orderStateForm.getSubOrderId(), orderStateForm.getOrderDate(), OrderStateType.NORMAL_CONFIRM_ORDER.getKey(), merchantId);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("确认订单成功");
@@ -118,7 +118,7 @@ public class OrderStateController {
         // StoreMember storeMember = outdatedSellercenterClient.getMemberStore(smq);
         // AssertUtil.assertNotNull(storeMember, "您尚未属于一家门店.");
         QStore store = PageParameterUtil.getParameterValues(request, SellercenterClient.STORE_LOGIN_PARAMETER_KEY);
-        long merchantId = store.getMerchantId();
+        long merchantId = store.getMerchant().getId();
         //
         Long subOrderId = orderStateForm.getSubOrderId();
         if (subOrderId != null && subOrderId > 0) {

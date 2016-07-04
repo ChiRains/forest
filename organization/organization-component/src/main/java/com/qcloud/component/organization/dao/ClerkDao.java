@@ -26,6 +26,8 @@ public interface ClerkDao extends ISimpleDao<Clerk, Long> {
 
     public List<Clerk> listAll();
 
+    public Clerk getByLoginAccount(String loginAccount);
+    
     public Clerk getByMobile(String mobile);
 
     public Clerk getByIdCard(String idCard);

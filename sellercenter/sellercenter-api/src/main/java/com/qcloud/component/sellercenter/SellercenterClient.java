@@ -20,6 +20,8 @@ public interface SellercenterClient {
     //
     QMerchant getMerchant(long merchantId);
 
+    QMerchant getMerchantByCode(String code);
+
     QStore getStore(long storeId);
 
     List<QStore> listStoreByMerchant(long merchantId);
@@ -47,10 +49,4 @@ public interface SellercenterClient {
     List<KeyValueVO> listExpress(QMerchant merchant);
 
     String getExpressName(String expressCode);
-
-    boolean calculateMyWealth(long userId, WealthType type, double cash, boolean needProportion, String desc);
-
-    QMerchantWealth getMyWealth(long userId);
-
-    QMerchant getMerchant(String code);
 }

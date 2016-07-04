@@ -1,9 +1,7 @@
 package com.qcloud.component.organization.core;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +27,6 @@ import com.qcloud.component.organization.model.Superior;
 import com.qcloud.component.organization.model.key.TypeEnum;
 import com.qcloud.component.organization.model.key.TypeEnum.DepartmentClerkType;
 import com.qcloud.component.organization.model.key.TypeEnum.EnableType;
-import com.qcloud.component.organization.model.query.ClerkQuery;
 import com.qcloud.component.organization.service.ClerkPostService;
 import com.qcloud.component.organization.service.ClerkService;
 import com.qcloud.component.organization.service.DepartmentClerkService;
@@ -41,7 +38,6 @@ import com.qcloud.component.permission.AccountClient;
 import com.qcloud.component.permission.PermissionClient;
 import com.qcloud.component.permission.model.Account;
 import com.qcloud.component.publicservice.MessageClient;
-import com.qcloud.pirates.core.reflect.BeanUtils;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.util.AssertUtil;
 
@@ -239,11 +235,7 @@ public class OrganizationClientImpl implements OrganizationClient {
 
         Department department = departmentService.get(id);
         AssertUtil.assertNotNull(department, "部门不存在." + id);
-        DepartmentEntity de = new DepartmentEntity();
-        de.setId(id);
-        de.setName(department.getName());
-        de.setManager(department.getManager());
-        return de;
+        return getDepartment(department);
     }
 
     @Override
@@ -256,41 +248,40 @@ public class OrganizationClientImpl implements OrganizationClient {
         return pe;
     }
 
-//    @Override
-//    public Map<Long, QClerk> mapClerkAll(ClerkQuery clerkQuery) {
-//
-//        Map<Long, QClerk> map = new HashMap<Long, QClerk>();
-//        for (Clerk clerk : clerkService.listAll(BeanUtils.transBean2Map(clerkQuery))) {
-//            ClerkEntity clerkEntity = new ClerkEntity();
-//            clerkEntity.setMobile(clerk.getMobile());
-//            clerkEntity.setName(clerk.getName());
-//            clerkEntity.setId(clerk.getId());
-//            DepartmentClerk departmentClerk = departmentClerkService.getBelongsDepartment(clerk.getId());
-//            if (departmentClerk == null) {
-//                throw new OrganizationException(clerk.getName() + "(" + clerk.getMobile() + ")" + ".未配置部门信息!");
-//            }
-//            clerkEntity.setDepartmentId(departmentClerk.getDepartmentId());
-//            map.put(clerkEntity.getId(), clerkEntity);
-//        }
-//        return map;
-//    }
-//
-//    @Override
-//    public List<DepartmentClerk> listDepartmentClerkAll() {
-//
-//        return departmentClerkService.listAll();
-//    }
-//
-//    @Override
-//    public Map<Long, Department> mapDepartmentAll() {
-//
-//        Map<Long, Department> map = new HashMap<Long, Department>();
-//        for (Department department : departmentService.listAll()) {
-//            map.put(department.getId(), department);
-//        }
-//        return map;
-//    }
-
+    // @Override
+    // public Map<Long, QClerk> mapClerkAll(ClerkQuery clerkQuery) {
+    //
+    // Map<Long, QClerk> map = new HashMap<Long, QClerk>();
+    // for (Clerk clerk : clerkService.listAll(BeanUtils.transBean2Map(clerkQuery))) {
+    // ClerkEntity clerkEntity = new ClerkEntity();
+    // clerkEntity.setMobile(clerk.getMobile());
+    // clerkEntity.setName(clerk.getName());
+    // clerkEntity.setId(clerk.getId());
+    // DepartmentClerk departmentClerk = departmentClerkService.getBelongsDepartment(clerk.getId());
+    // if (departmentClerk == null) {
+    // throw new OrganizationException(clerk.getName() + "(" + clerk.getMobile() + ")" + ".未配置部门信息!");
+    // }
+    // clerkEntity.setDepartmentId(departmentClerk.getDepartmentId());
+    // map.put(clerkEntity.getId(), clerkEntity);
+    // }
+    // return map;
+    // }
+    //
+    // @Override
+    // public List<DepartmentClerk> listDepartmentClerkAll() {
+    //
+    // return departmentClerkService.listAll();
+    // }
+    //
+    // @Override
+    // public Map<Long, Department> mapDepartmentAll() {
+    //
+    // Map<Long, Department> map = new HashMap<Long, Department>();
+    // for (Department department : departmentService.listAll()) {
+    // map.put(department.getId(), department);
+    // }
+    // return map;
+    // }
     @Override
     public List<Long> listAllClerkIds() {
 
@@ -310,7 +301,7 @@ public class OrganizationClientImpl implements OrganizationClient {
     }
 
     @Override
-    public QDepartment getParentDepartment(Long id) {
+    public DepartmentEntity getParentDepartment(Long id) {
 
         Department department = departmentService.get(id);
         AssertUtil.assertNotNull(department, "部门不存在." + id);
@@ -319,10 +310,7 @@ public class OrganizationClientImpl implements OrganizationClient {
         if (parent == null) {
             return null;
         }
-        DepartmentEntity de = new DepartmentEntity();
-        de.setId(parent.getId());
-        de.setName(parent.getName());
-        return de;
+        return getDepartment(parent);
     }
 
     @Override
@@ -367,8 +355,11 @@ public class OrganizationClientImpl implements OrganizationClient {
         QDepartment department = getDepartment(departmentClerk.getDepartmentId());
         clerkEntity.setDepartmentName(department.getName());
         List<ClerkPost> clerkPostList = clerkPostService.listByClerk(clerk.getId());
-        AssertUtil.assertNotEmpty(clerkPostList, clerk.getName() + ".未设置岗位信息!");
-        clerkEntity.setPostId(clerkPostList.get(0).getPostId());
+        if (CollectionUtils.isNotEmpty(clerkPostList)) {
+            clerkEntity.setPostId(clerkPostList.get(0).getPostId());
+        } else {
+            clerkEntity.setPostId(-1L);
+        }
         clerkEntity.setHeadImage(clerk.getHeadImage());
         clerkEntity.setSex(clerk.getSex());
         clerkEntity.setJobEmail(clerk.getJobEmail());
@@ -493,5 +484,38 @@ public class OrganizationClientImpl implements OrganizationClient {
             return -1L;
         }
         return clerk.getId();
+    }
+
+    @Override
+    public QDepartment getDepartmentByCode(String code) {
+
+        Department department = departmentService.getByCode(code);
+        AssertUtil.assertNotNull(department, "部门不存在." + code);
+        return getDepartment(department);
+    }
+
+    @Override
+    public List<QDepartment> listDepartmantByParent(long parentId) {
+
+        List<Department> list = departmentService.listByParent(parentId);
+        List<QDepartment> result = new ArrayList<QDepartment>();
+        for (Department department : list) {
+            result.add(getDepartment(department));
+        }
+        return result;
+    }
+
+    private DepartmentEntity getDepartment(Department department) {
+
+        if (department == null) {
+            return null;
+        }
+        long parentId = department.getParentId();
+        Department parent = departmentService.get(parentId);
+        if (parent == null) {
+            return new DepartmentEntity(department, null);
+        }
+        DepartmentEntity pe = getDepartment(parent);
+        return new DepartmentEntity(department, pe);
     }
 }

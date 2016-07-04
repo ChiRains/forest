@@ -1,117 +1,70 @@
 package com.qcloud.component.sellercenter.entity;
 
-import com.qcloud.component.sellercenter.CommodityAuditingType;
-import com.qcloud.component.sellercenter.DistributionType;
+import com.qcloud.component.organization.QDepartment;
 import com.qcloud.component.sellercenter.QMerchant;
-import com.qcloud.component.sellercenter.model.Merchant;
-import com.qcloud.component.sellercenter.model.key.TypeEnum.NotifyType;
 
 public class MerchantEntity implements QMerchant {
 
-    private Merchant merchant;
+    private QDepartment department;
 
-    public MerchantEntity(Merchant merchant) {
+    public MerchantEntity(QDepartment department) {
 
         super();
-        this.merchant = merchant;
+        this.department = department;
     }
 
     @Override
     public long getKey() {
 
-        return merchant.getId();
+        return department.getId();
     }
 
     @Override
     public String getValue() {
 
-        return merchant.getName();
+        return department.getName();
     }
 
     @Override
     public long getId() {
 
-        return merchant.getId();
+        return department.getId();
     }
 
     @Override
     public String getName() {
 
-        return merchant.getName();
-    }
-
-    @Override
-    public CommodityAuditingType getCommodityAuditing() {
-
-        CommodityAuditingType commodityAuditing = CommodityAuditingType.NEED;
-        if (merchant.getCommodityAuditing() == CommodityAuditingType.UNNEED.getKey()) {
-            commodityAuditing = CommodityAuditingType.UNNEED;
-        }
-        return commodityAuditing;
-    }
-
-    @Override
-    public DistributionType getDistribution() {
-
-        DistributionType distribution = DistributionType.YES;
-        if (merchant.getDistribution() == DistributionType.NO.getKey()) {
-            distribution = DistributionType.NO;
-        }
-        return distribution;
-    }
-
-    @Override
-    public Long getClassifyId() {
-
-        return merchant.getClassifyId();
+        return department.getName();
     }
 
     @Override
     public String getImage() {
 
-        return merchant.getImage();
-    }
-
-    @Override
-    public long getUserId() {
-
-        return merchant.getUserId();
-    }
-
-    @Override
-    public int getMerchantType() {
-
-        return merchant.getMerchantType();
+        return department.getImage();
     }
 
     @Override
     public String getProvince() {
 
-        return merchant.getProvince();
+        return department.getProvince();
     }
 
     @Override
     public String getCity() {
 
-        return merchant.getCity();
+        return department.getCity();
     }
 
     @Override
     public String getReceiveMobile() {
 
-        return merchant.getReceiveMobile();
-    }
-
-    @Override
-    public boolean isNotify() {
-
-        return NotifyType.Yes.getKey() == merchant.getNotify();
+        return department.getPhone();
     }
 
     @Override
     public int hashCode() {
 
-        return new Long(merchant.getId()).hashCode();
+        return new Long(department.getId()).hashCode();
     }
 
     @Override
@@ -124,44 +77,42 @@ public class MerchantEntity implements QMerchant {
     }
 
     @Override
-    public int getIsCertified() {
-
-        return merchant.getIsCertified();
-    }
-
-    @Override
-    public int getIsSpecialService() {
-
-        return merchant.getIsSpecialService();
-    }
-
-    @Override
-    public int getIsNoReason() {
-
-        return merchant.getIsNoReason();
-    }
-
-    @Override
-    public int getIsExternalUrl() {
-
-        return merchant.getIsExternalUrl();
-    }
-
-    @Override
     public String getCode() {
 
-        return merchant.getCode();
+        return department.getCode();
     }
 
-    @Override
-    public String getMerchantAdmin() {
+    public boolean isNotify() {
 
-        return merchant.getAdmin();
+        // TODO
+        return false;
     }
 
     @Override
     public int getIsIncludePost() {
 
-        return merchant.getIsIncludePost();
+        // TODO
+        return 2;
+    }
+
+    @Override
+    public int getIsCertified() {
+
+        // TODO
+        return 2;
+    }
+
+    @Override
+    public int getIsSpecialService() {
+
+        // TODO
+        return 2;
+    }
+
+    @Override
+    public int getIsNoReason() {
+
+        // TODO
+        return 2;
     }
 }

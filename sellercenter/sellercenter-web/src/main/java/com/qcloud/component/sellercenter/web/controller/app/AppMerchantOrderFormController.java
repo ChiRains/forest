@@ -72,7 +72,7 @@ public class AppMerchantOrderFormController {
         default:
             break;
         }
-        List<MerchantOrderForm> list = merchantOrderFormService.list4Store(store.getMerchantId(), store.getId(), state, start, PAGE_SIZE);
+        List<MerchantOrderForm> list = merchantOrderFormService.list4Store(store.getMerchant().getId(), store.getId(), state, start, PAGE_SIZE);
         List<MerchantOrderFormVO> voList = merchantOrderFormHandler.toVOList(list);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("查询商家订单成功.");

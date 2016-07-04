@@ -13,14 +13,13 @@ import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.component.publicservice.SmsClient;
 import com.qcloud.component.publicservice.VerificationCodeClient;
+import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.QStore;
 import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.component.sellercenter.exception.SellerCenterException;
 import com.qcloud.component.sellercenter.model.DistributeMembershipCard;
-import com.qcloud.component.sellercenter.model.Merchant;
 import com.qcloud.component.sellercenter.model.key.TypeEnum.DistributeMembershipCardStateType;
 import com.qcloud.component.sellercenter.service.DistributeMembershipCardService;
-import com.qcloud.component.sellercenter.service.MerchantService;
 import com.qcloud.pirates.core.xml.Xml;
 import com.qcloud.pirates.core.xml.XmlFactory;
 import com.qcloud.pirates.core.xml.XmlItem;
@@ -54,7 +53,7 @@ public class DistributeMembershipCardController {
     private DistributeMembershipCardService distributeMembershipCardService;
 
     @Autowired
-    private MerchantService                 merchantService;
+    private SellercenterClient              sellercenterClient;
 
     // @Autowired
     // private StoreService storeService;
@@ -149,9 +148,9 @@ public class DistributeMembershipCardController {
         AssertUtil.assertTrue(exist, "会员卡不存在或者已经使用." + cardNumber);
         DistributeMembershipCard distributeMembershipCard = distributeMembershipCardService.getByCardNumber(cardNumber);
         AssertUtil.assertNotNull(distributeMembershipCard, "会员卡在商家尚未登记." + cardNumber);
-        Merchant merchant = merchantService.get(distributeMembershipCard.getMerchantId());
+        QMerchant merchant = sellercenterClient.getMerchant(distributeMembershipCard.getMerchantId());
         AssertUtil.assertNotNull(merchant, "商家不存在." + distributeMembershipCard.getMerchantId());
-        AssertUtil.assertTrue(store.getMerchantId() == distributeMembershipCard.getMerchantId(), "你不属于会员卡发卡所在的商家." + merchant.getName());
+        AssertUtil.assertTrue(merchant.getId() == distributeMembershipCard.getMerchantId(), "你不属于会员卡发卡所在的商家." + merchant.getName());
         AssertUtil.assertTrue(distributeMembershipCard.getState() == DistributeMembershipCardStateType.SEND.getKey(), "会员卡(" + cardNumber + ")不是待发卡状态.");
         return true;
     }

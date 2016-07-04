@@ -8,15 +8,15 @@ public interface QStore {
 
     String getAddress();
 
-    String getPhone();
-
-    boolean isRoot();
-
-    Long getMerchantId();
-
     String getSmsMobile();
 
     Double getLatitude();
 
     Double getLongitude();
+
+    QStore getParent();
+
+    QMerchant getMerchant();
+
+    boolean isRoot();
 }

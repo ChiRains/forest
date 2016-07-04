@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.qcloud.component.organization.OrganizationClient;
+import com.qcloud.component.organization.QClerk;
 import com.qcloud.component.sellercenter.model.DistributeMembershipCard;
-import com.qcloud.component.sellercenter.model.Member;
 import com.qcloud.component.sellercenter.model.key.TypeEnum.DistributeMembershipCardStateType;
-import com.qcloud.component.sellercenter.service.MemberService;
 import com.qcloud.component.sellercenter.web.handler.DistributeMembershipCardHandler;
 import com.qcloud.component.sellercenter.web.vo.DistributeMembershipCardVO;
 import com.qcloud.component.sellercenter.web.vo.admin.AdminDistributeMembershipCardVO;
@@ -18,7 +18,7 @@ import com.qcloud.pirates.util.DateUtil;
 public class DistributeMembershipCardHandlerImpl implements DistributeMembershipCardHandler {
 
     @Autowired
-    MemberService memberService;
+    OrganizationClient organizationClient;
 
     @Override
     public List<DistributeMembershipCardVO> toVOList(List<DistributeMembershipCard> list) {
@@ -55,8 +55,8 @@ public class DistributeMembershipCardHandlerImpl implements DistributeMembership
         vo.setCardNumber(distributeMembershipCard.getCardNumber());
         vo.setMemberMobile("");
         if (DistributeMembershipCardStateType.SENDED.getKey() == distributeMembershipCard.getState() && distributeMembershipCard.getMemberId() > 0) {
-            Member member = memberService.get(distributeMembershipCard.getMemberId());
-            vo.setMemberMobile(member == null ? "" : member.getMobile());
+            QClerk clerk = organizationClient.getClerk(distributeMembershipCard.getMemberId());
+            vo.setMemberMobile(clerk == null ? "" : clerk.getMobile());
         }
         vo.setMerchantName(distributeMembershipCard.getMerchantName());
         if (DistributeMembershipCardStateType.SEND.getKey() == distributeMembershipCard.getState()) {

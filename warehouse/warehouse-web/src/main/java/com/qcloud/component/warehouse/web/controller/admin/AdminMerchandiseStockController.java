@@ -1,10 +1,14 @@
 package com.qcloud.component.warehouse.web.controller.admin;
 
+import java.util.HashMap;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 import com.qcloud.component.sellercenter.QStore;
 import com.qcloud.component.sellercenter.SellercenterClient;
-import com.qcloud.component.sellercenter.model.StoreMember;
-import com.qcloud.component.sellercenter.service.StoreMemberService;
-import com.qcloud.component.token.TokenClient;
 import com.qcloud.component.warehouse.model.MerchandiseStock;
 import com.qcloud.component.warehouse.model.query.MerchandiseStockQuery;
 import com.qcloud.component.warehouse.service.MerchandiseStockService;
@@ -17,16 +21,8 @@ import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.NumberUtil;
 import com.qcloud.pirates.util.RequestUtil;
 import com.qcloud.pirates.util.StringUtil;
-import com.qcloud.pirates.web.filter.admin.AdminFilterService;
 import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.pirates.web.security.annotation.NoReferer;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
 
 @Controller
 @RequestMapping(value = "/" + AdminMerchandiseStockController.DIR)
@@ -107,12 +103,12 @@ public class AdminMerchandiseStockController {
             HashMap where = new HashMap();
             where.put("unifiedMerchandiseId", merchandiseStock.getUnifiedMerchandiseId());
             where.put("storeId", store.getId());
-            where.put("merchantId", store.getMerchantId());
+            where.put("merchantId", store.getMerchant().getId());
             if (merchandiseStockService.get(where) != null) {
                 AssertUtil.assertTrue(false, "已存在相同商品！");
             }
             merchandiseStock.setStoreId(store.getId());
-            merchandiseStock.setMerchantId(store.getMerchantId());
+            merchandiseStock.setMerchantId(store.getMerchant().getId());
             merchandiseStockService.add(merchandiseStock);
             if (merchandiseStock.getId() > 0) {
                 aceAjaxView.setMessage("新增成功");
