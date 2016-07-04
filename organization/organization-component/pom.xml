@@ -4,16 +4,15 @@
 	<parent>
 		<groupId>com.qcloud.component</groupId>
 		<artifactId>organization</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>organization-component</artifactId>
 	
 	<dependencies>
 		<dependency>
 			<groupId>com.qcloud.pirates</groupId>
-			<artifactId>pirates-test</artifactId>
+			<artifactId>pirates-data</artifactId>
 			<version>${pirates.version}</version>
-			<scope>provided</scope>
 		</dependency>
 		
 		<dependency>
