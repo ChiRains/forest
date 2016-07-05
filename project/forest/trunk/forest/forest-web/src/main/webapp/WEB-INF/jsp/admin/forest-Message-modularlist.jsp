@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>BMI计算</title>
+<title>消息通知</title>
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
