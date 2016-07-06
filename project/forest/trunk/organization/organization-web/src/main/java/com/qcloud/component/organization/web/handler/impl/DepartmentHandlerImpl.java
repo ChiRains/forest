@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.qcloud.pirates.core.json.Json;
+import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.organization.service.ClerkService;
 import com.qcloud.component.organization.web.handler.DepartmentHandler;
 import com.qcloud.component.organization.model.Clerk;
@@ -17,6 +18,9 @@ public class DepartmentHandlerImpl implements DepartmentHandler {
 
     @Autowired
     private ClerkService clerkService;
+    
+    @Autowired
+    private FileSDKClient fileSDKClient;
 
     @Override
     public List<DepartmentVO> toVOList(List<Department> list) {
@@ -54,6 +58,8 @@ public class DepartmentHandlerImpl implements DepartmentHandler {
     public AdminDepartmentVO toVO4Admin(Department department) {
 
         String json = Json.toJson(department);
-        return Json.toObject(json, AdminDepartmentVO.class, true);
+        AdminDepartmentVO vo=Json.toObject(json, AdminDepartmentVO.class, true);
+        vo.setImageUid(fileSDKClient.urlToUid(vo.getImage()));
+        return vo;
     }
 }

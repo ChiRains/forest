@@ -21,6 +21,37 @@ public class DepartmentVO {
 	
 	//显示级层名称
 	private String displayName;		
+	
+	// 省份
+    private String province;
+
+    // 市
+    private String city;
+
+    // 区
+    private String district;
+
+    // 地址
+    private String address;
+
+    // 经度
+    private double longitude;
+
+    // 纬度
+    private double latitude;
+
+    // 类型(1平台，2单位，3子单位，4部门)
+    private int    type;
+
+    // 编码（唯一编码）
+    private String code;
+
+    private String image;
+
+    // 登记时间
+    private Date   registTime;
+    
+    private String phone;
 
 	public DepartmentVO(){
 	
@@ -81,6 +112,138 @@ public class DepartmentVO {
 
 	public String getDisplayName() {
 		return displayName;
-	}	
+	}
+
+    
+    public String getProvince() {
+    
+        return province;
+    }
+
+    
+    public void setProvince(String province) {
+    
+        this.province = province;
+    }
+
+    
+    public String getCity() {
+    
+        return city;
+    }
+
+    
+    public void setCity(String city) {
+    
+        this.city = city;
+    }
+
+    
+    public String getDistrict() {
+    
+        return district;
+    }
+
+    
+    public void setDistrict(String district) {
+    
+        this.district = district;
+    }
+
+    
+    public String getAddress() {
+    
+        return address;
+    }
+
+    
+    public void setAddress(String address) {
+    
+        this.address = address;
+    }
+
+    
+    public double getLongitude() {
+    
+        return longitude;
+    }
+
+    
+    public void setLongitude(double longitude) {
+    
+        this.longitude = longitude;
+    }
+
+    
+    public double getLatitude() {
+    
+        return latitude;
+    }
+
+    
+    public void setLatitude(double latitude) {
+    
+        this.latitude = latitude;
+    }
+
+    
+    public int getType() {
+    
+        return type;
+    }
+
+    
+    public void setType(int type) {
+    
+        this.type = type;
+    }
+
+    
+    public String getCode() {
+    
+        return code;
+    }
+
+    
+    public void setCode(String code) {
+    
+        this.code = code;
+    }
+
+    
+    public String getImage() {
+    
+        return image;
+    }
+
+    
+    public void setImage(String image) {
+    
+        this.image = image;
+    }
+
+    
+    public Date getRegistTime() {
+    
+        return registTime;
+    }
+
+    
+    public void setRegistTime(Date registTime) {
+    
+        this.registTime = registTime;
+    }
+
+    
+    public String getPhone() {
+    
+        return phone;
+    }
+
+    
+    public void setPhone(String phone) {
+    
+        this.phone = phone;
+    }	
 		
 }

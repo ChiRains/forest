@@ -105,4 +105,30 @@ public class DepartmentDaoMysqlImpl implements DepartmentDao {
         List<Department> list = sqlOperator.selectList("com.qcloud.component.organization.dao.mysql.mapper.DepartmentMapper.listByParent", param);
         return list;
     }
+
+    @Override
+    public Department getByManager(long manager) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("manager", manager);
+        return sqlOperator.selectOne("com.qcloud.component.organization.dao.mysql.mapper.DepartmentMapper.getByManager", param);
+    }
+
+    @Override
+    public List<Department> listChildrenByParent(DepartmentQuery query,String bsid) {
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("bsid", bsid); 
+        param.put("displayName", query.getDisplayName());
+        List<Department> list = sqlOperator.selectList("com.qcloud.component.organization.dao.mysql.mapper.DepartmentMapper.listChildrenByParent", param);
+        return list;
+    }
+
+    @Override
+    public int countChildrenByParent(DepartmentQuery query,String bsid) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("bsid", bsid);
+        param.put("displayName", query.getDisplayName());
+        int total = sqlOperator.selectOne("com.qcloud.component.organization.dao.mysql.mapper.DepartmentMapper.countChildrenByParent", param);
+        return total;
+    }
 }

@@ -76,5 +76,20 @@ public class DepartmentDaoRedisImpl implements DepartmentDao {
     public List<Department> listByParent(long parentId, String bsid) {
         throw new NotImplementedException();
     }
+
+    @Override
+    public Department getByManager(long manager) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public List<Department> listChildrenByParent(DepartmentQuery query,String bsid) {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public int countChildrenByParent(DepartmentQuery query,String bsid) {
+        throw new NotImplementedException();
+    }
 }
 

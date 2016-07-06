@@ -50,6 +50,8 @@ public class Department implements IntKeyValue {
 
     // 登记时间
     private Date   registTime;
+    
+    private String phone;
 
     public Department() {
 
@@ -245,5 +247,17 @@ public class Department implements IntKeyValue {
     public String getValue() {
 
         return name;
+    }
+
+    
+    public String getPhone() {
+    
+        return phone;
+    }
+
+    
+    public void setPhone(String phone) {
+    
+        this.phone = phone;
     }
 }

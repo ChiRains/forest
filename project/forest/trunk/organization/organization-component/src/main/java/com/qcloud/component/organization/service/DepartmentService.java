@@ -22,4 +22,10 @@ public interface DepartmentService {
     List<Department> listByParent(long parentId);
 
     public List<Department> listAll();
+    
+    public Department getByManager(long manager);
+    
+    public List<Department> listChildrenByParent(DepartmentQuery query,String bsid);
+    
+    public int countChildrenByParent(DepartmentQuery query,String bsid);
 }

@@ -85,4 +85,22 @@ public class DepartmentDaoCacheImpl implements DepartmentDao {
 
         return departmentDaoMysqlImpl.listByParent(parentId, bsid);
     }
+
+    @Override
+    public Department getByManager(long manager) {
+
+        return departmentDaoMysqlImpl.getByManager(manager);
+    }
+
+    @Override
+    public List<Department> listChildrenByParent(DepartmentQuery query,String bsid) {
+
+        return departmentDaoMysqlImpl.listChildrenByParent(query,bsid);
+    }
+
+    @Override
+    public int countChildrenByParent(DepartmentQuery query,String bsid) {
+
+        return departmentDaoMysqlImpl.countChildrenByParent(query,bsid);
+    }
 }
