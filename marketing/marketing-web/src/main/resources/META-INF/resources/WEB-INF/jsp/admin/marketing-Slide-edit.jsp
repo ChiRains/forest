@@ -4,6 +4,8 @@
 <title>编辑广告图</title>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/colorbox.css"/>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/chosen.css" />
+<link rel="stylesheet"
+	href="/qcloud-admin/assets/css/bootstrap-datetimepicker.css" />
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
@@ -21,6 +23,18 @@
         <!-- PAGE CONTENT BEGINS -->
         <form id="model-form" class="form-horizontal"  role="form" action="/admin/slide/edit.do">
             <!-- #section:elements.form -->
+            <input type="hidden" id="enable"  name="enable" value="${slide.enable}">
+            <div class="space-4"></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="title"> 标题 </label>
+                <div class="col-sm-9">
+					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
+						<input type="text" class="width-100" maxlength="50" id="title" name="title" placeholder="标题" value="${slide.title}"/>
+						<i class="ace-icon fa"></i>
+					</span>
+                </div>
+            </div> 
+            
 			<input type="hidden" name="id" value="${slide.id}">		                  		
                   		<div class="space-4"></div>
             <div class="form-group">
@@ -95,6 +109,27 @@
                 </div>
             </div>
             
+  			<div class="space-4"></div>
+			<div class="form-group"><label
+				class="col-sm-3 control-label no-padding-right"
+				for="activityStrDate"> 开始时间 </label>
+				<div class="col-sm-9"><span
+					class="col-sm-5 no-padding block input-icon input-icon-right mr10">
+						<input type="text" class="width-100" id="startDate"
+						placeholder="开始时间 " name="startDate" value="<fmt:formatDate value="${slide.startDate}"  pattern="yyyy-MM-dd"/>" /> <i
+						class="ace-icon fa"></i>
+				</span></div></div>
+			<div class="space-4"></div>
+			<div class="form-group"><label
+				class="col-sm-3 control-label no-padding-right"
+				for="activityEndDate"> 结束时间 </label>
+				<div class="col-sm-9"><span
+					class="col-sm-5 no-padding block input-icon input-icon-right mr10">
+						<input type="text" class="width-100" id="endDate"
+						placeholder="结束时间" name="endDate" value="<fmt:formatDate value="${slide.endDate}"  pattern="yyyy-MM-dd"/>" /> <i
+						class="ace-icon fa"></i>
+				</span></div></div>
+            
             <div class="space-4"></div>
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
@@ -111,7 +146,14 @@
 </div><!-- /.row -->
 
 <script type="text/javascript">
-    var scripts = [null, "/qcloud-admin/assets/js/jquery.colorbox-min.js","/qcloud-admin/assets/js/upload-img.js","/qcloud-admin/assets/js/chosen.jquery.min.js", null];
+    var scripts = [null, "/qcloud-admin/assets/js/jquery.colorbox-min.js",
+                   "/qcloud-admin/assets/js/jquery.colorbox-min.js",
+                   "/qcloud-admin/assets/js/chosen.jquery.min.js",
+                   "/qcloud-admin/assets/js/upload-img.js",
+                   "/qcloud-admin/assets/js/chosen.jquery.min.js", 
+                   "/qcloud-admin/assets/js/moment.min.js",
+                   "/qcloud-admin/assets/js/bootstrap-datetimepicker.js", 
+                   "/qcloud-admin/assets/js/date-time/bootstrap-datetimepicker.min.js", , null];
     ace.load_ajax_scripts(scripts, function () {
         //inline scripts related to this page
         jQuery(function ($) {
@@ -135,6 +177,26 @@
                 var bs = getButtonSetting($(this));
                 uploadDialog(bs);
             });
+			
+
+			//开始时间
+            $('#startDate').datetimepicker({
+                
+    			language: 'zh-cn',
+    			//format: 'MM/DD/YYYY'
+    			format: 'YYYY-MM-DD',
+    		}).next().on(ace.click_event, function(){
+				$(this).prev().focus();
+			});
+            
+			//结束时间
+		 $('#endDate').datetimepicker({
+    			language: 'zh-cn',
+    			//format: 'MM/DD/YYYY'
+    			format: 'YYYY-MM-DD',
+    		}).next().on(ace.click_event, function(){
+				$(this).prev().focus();
+			});
                    
             //表单验证
             $("#model-form").validate({
