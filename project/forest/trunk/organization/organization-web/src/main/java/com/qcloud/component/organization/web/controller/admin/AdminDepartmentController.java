@@ -1,46 +1,39 @@
 package com.qcloud.component.organization.web.controller.admin;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
+import com.qcloud.component.filesdk.FileSDKClient;
+import com.qcloud.component.organization.OrganizationClient;
+import com.qcloud.component.organization.QClerk;
+import com.qcloud.component.organization.model.Department;
+import com.qcloud.component.organization.model.DepartmentClerk;
+import com.qcloud.component.organization.model.query.DepartmentQuery;
+import com.qcloud.component.organization.service.DepartmentClerkService;
+import com.qcloud.component.organization.service.DepartmentService;
+import com.qcloud.component.organization.web.handler.DepartmentHandler;
+import com.qcloud.component.organization.web.vo.admin.AdminDepartmentVO;
+import com.qcloud.component.organization.web.vo.admin.AdminPlatformTypeVO;
+import com.qcloud.component.publicdata.KeyValueVO;
+import com.qcloud.component.publicdata.PublicdataClient;
 import com.qcloud.pirates.core.xml.Xml;
 import com.qcloud.pirates.core.xml.XmlFactory;
 import com.qcloud.pirates.core.xml.XmlItem;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.mvc.AceAjaxView;
 import com.qcloud.pirates.mvc.AcePagingView;
-import com.qcloud.pirates.mvc.FrontAjaxView;
 import com.qcloud.pirates.util.AssertUtil;
-import com.qcloud.pirates.util.NumberUtil;
-import com.qcloud.pirates.util.RequestUtil;
 import com.qcloud.pirates.util.StringUtil;
 import com.qcloud.pirates.web.page.PPage;
 import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.pirates.web.security.annotation.NoReferer;
-import com.qcloud.component.filesdk.FileSDKClient;
-import com.qcloud.component.organization.OrganizationClient;
-import com.qcloud.component.organization.QClerk;
-import com.qcloud.component.organization.QDepartment;
-import com.qcloud.component.organization.exception.OrganizationException;
-import com.qcloud.component.organization.model.Department;
-import com.qcloud.component.organization.model.DepartmentClerk;
-import com.qcloud.component.organization.service.DepartmentClerkService;
-import com.qcloud.component.organization.service.DepartmentService;
-import com.qcloud.component.organization.web.handler.DepartmentHandler;
-import com.qcloud.component.organization.model.query.DepartmentQuery;
-import com.qcloud.component.organization.web.vo.admin.AdminDepartmentVO;
-import com.qcloud.component.organization.web.vo.admin.AdminPlatformTypeVO;
-import com.qcloud.component.publicdata.KeyValueVO;
-import com.qcloud.component.publicdata.PublicdataClient;
 
 @Controller
 @RequestMapping(value = "/" + AdminDepartmentController.DIR)
@@ -68,6 +61,11 @@ public class AdminDepartmentController {
     @Autowired
     private OrganizationClient     organizationClient;
 
+    /**
+     * 
+     * @param parentId
+     * @return
+     */
     public List<AdminPlatformTypeVO> typeList(Long parentId) {
 
         int key = 0;
@@ -164,6 +162,20 @@ public class AdminDepartmentController {
         view.addObject("list", list);
         return view;
     }
+    
+    @RequestMapping
+    @NoReferer
+    public ModelAndView superList(PPage pPage, DepartmentQuery query) {
+
+         Page<Department> page = departmentService.page(query, pPage.getPageStart() , pPage.getPageSize());
+        List<AdminDepartmentVO> voList = departmentHandler.toVOList4Admin(page.getData());
+        String param = "displayName=" + StringUtil.nullToEmpty(query.getDisplayName());
+        AcePagingView pagingView = new AcePagingView("/admin/organization-Department-list", DIR + "/list?" + param, pPage.getPageNum(), pPage.getPageSize(), page.getCount());
+        pagingView.addObject("result", voList);
+        pagingView.addObject("query", query);
+        return pagingView;
+    }
+
 
     @RequestMapping
     @NoReferer
@@ -186,7 +198,6 @@ public class AdminDepartmentController {
     public ModelAndView toAdd(HttpServletRequest request, DepartmentQuery query) {
 
         QClerk clerk = PageParameterUtil.getParameterValues(request, organizationClient.CLERK_LOGIN_PARAMETER_KEY);
-        // QDepartment qDepartment = organizationClient.getByManager(clerk.getId());
         Department d = departmentService.get(clerk.getDepartmentId());
         List<Department> dlist = departmentService.listChildrenByParent(query, d.getBsid());
         int root = 0;// 是否存在根节点0否1是
