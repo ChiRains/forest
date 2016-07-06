@@ -18,7 +18,7 @@ public interface UnifiedMerchandiseService {
     public Page<UnifiedMerchandise> page(UnifiedMerchandiseQuery query, int start, int count);
 
     Page<UnifiedMerchandise> select(UnifiedMerchandiseQuery query, int start, int size);
-    
+
     public List<UnifiedMerchandise> listAll();
 
     public List<UnifiedMerchandise> listByMerchandise(long merchandiseId);
@@ -38,4 +38,8 @@ public interface UnifiedMerchandiseService {
     boolean updateSalesVolume(long id, int number);
 
     boolean lockStock(long id, int stock);
+
+    boolean updateState(long id, int state);
+
+    public UnifiedMerchandise getByCodeAndMerchant(String code, long merchantId);
 }

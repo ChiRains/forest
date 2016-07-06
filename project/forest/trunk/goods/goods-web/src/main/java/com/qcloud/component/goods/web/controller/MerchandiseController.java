@@ -534,7 +534,7 @@ public class MerchandiseController {
     public HtmlView getHtmlDetailByUnifiedMerchandise(Long unifiedMerchandiseId) {
 
         UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(unifiedMerchandiseId);
-        if (UnifiedMerchandiseType.SINGLE.getKey() == unifiedMerchandise.getType() || UnifiedMerchandiseType.MARKETING.getKey() == unifiedMerchandise.getType()) {
+        if (UnifiedMerchandiseType.COMBINATION.getKey() != unifiedMerchandise.getType()) {
             return getHtmlDetailByMerchandise(unifiedMerchandise.getMerchandiseId());
         }
         HtmlView view = new HtmlView("");

@@ -49,4 +49,6 @@ public interface UnifiedMerchandiseDao extends ISimpleDao<UnifiedMerchandise, Lo
     boolean updateSalesVolume(long id, int number);
 
     boolean lockStock(long id, int stock);
+
+    UnifiedMerchandise getByCodeAndMerchant(String code, long merchantId);
 }

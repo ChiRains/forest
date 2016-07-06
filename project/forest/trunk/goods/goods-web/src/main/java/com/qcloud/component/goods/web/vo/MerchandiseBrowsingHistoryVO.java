@@ -1,6 +1,5 @@
 package com.qcloud.component.goods.web.vo;
 
-
 public class MerchandiseBrowsingHistoryVO {
 
     // 统一商品ID
@@ -26,6 +25,8 @@ public class MerchandiseBrowsingHistoryVO {
 
     // 客户端类型:1微信 2安卓 3IOS 4PC
     private String clientType;
+
+    private long   id;
 
     public MerchandiseBrowsingHistoryVO() {
 
@@ -109,5 +110,17 @@ public class MerchandiseBrowsingHistoryVO {
     public void setClientType(String clientType) {
 
         this.clientType = clientType;
+    }
+
+    
+    public long getId() {
+    
+        return id;
+    }
+
+    
+    public void setId(long id) {
+    
+        this.id = id;
     }
 }

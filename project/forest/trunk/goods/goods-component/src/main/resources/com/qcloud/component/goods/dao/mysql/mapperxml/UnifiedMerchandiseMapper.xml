@@ -4,11 +4,26 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper">          
     <select id="list4query" parameterType="java.util.HashMap" resultType="UnifiedMerchandise">  
-        select * from `goods_unified_merchandise` limit #{start},#{count}
+        select * from `goods_unified_merchandise` 
+        where 1=1
+        <if test="type !=0">
+        	and `type`=#{type}
+        </if>
+         <if test="merchantId != null">
+            AND merchantId = #{merchantId}
+        </if>
+        limit #{start},#{count}
     </select>  
     
      <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
         select count(*) from `goods_unified_merchandise`
+        where 1=1
+        <if test="type !=0">
+        	and `type`=#{type}
+        </if>
+        <if test="merchantId != null">
+            AND merchantId = #{merchantId}
+        </if>
     </select> 
             
     <select id="list4Select" parameterType="java.util.HashMap" resultType="UnifiedMerchandise">
@@ -80,4 +95,8 @@
     <update id="lockStock" parameterType="java.util.HashMap">
     	<![CDATA[update `goods_unified_merchandise` set stock = stock - #{stock},updateTime = #{updateTime} where id = #{id} and stock >= #{stock}]]>        
     </update> 
+    
+    <select id="getByCodeAndMerchant" parameterType="java.util.HashMap" resultType="UnifiedMerchandise">
+        select * from `goods_unified_merchandise` where merchantId = #{merchantId} and code=#{code} limit 1
+    </select>
 </mapper>

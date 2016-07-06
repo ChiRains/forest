@@ -76,6 +76,8 @@ public class UnifiedMerchandiseDaoMysqlImpl implements UnifiedMerchandiseDao {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("start", start);
         param.put("count", count);
+        param.put("type", query.getType());
+        param.put("merchantId", query.getMerchantId());
         List<UnifiedMerchandise> list = sqlOperator.selectList("com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper.list4query", param);
         int total = sqlOperator.selectOne("com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper.count4query", param);
         Page<UnifiedMerchandise> page = new Page<UnifiedMerchandise>();
@@ -125,7 +127,7 @@ public class UnifiedMerchandiseDaoMysqlImpl implements UnifiedMerchandiseDao {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("updateTime", new Date());
         param.put("id", id);
-        return sqlOperator.update("com.qcloud.component.activity.dao.mysql.mapper.GoldenEggActivityPrizeMapper.increaseGoodEvaluation", param) > 0;
+        return sqlOperator.update("com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper.increaseGoodEvaluation", param) > 0;
     }
 
     @Override
@@ -134,7 +136,7 @@ public class UnifiedMerchandiseDaoMysqlImpl implements UnifiedMerchandiseDao {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("updateTime", new Date());
         param.put("id", id);
-        return sqlOperator.update("com.qcloud.component.activity.dao.mysql.mapper.GoldenEggActivityPrizeMapper.increaseMiddleEvaluation", param) > 0;
+        return sqlOperator.update("com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper.increaseMiddleEvaluation", param) > 0;
     }
 
     @Override
@@ -143,7 +145,7 @@ public class UnifiedMerchandiseDaoMysqlImpl implements UnifiedMerchandiseDao {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("updateTime", new Date());
         param.put("id", id);
-        return sqlOperator.update("com.qcloud.component.activity.dao.mysql.mapper.GoldenEggActivityPrizeMapper.increaseLowEvaluation", param) > 0;
+        return sqlOperator.update("com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper.increaseLowEvaluation", param) > 0;
     }
 
     @Override
@@ -153,7 +155,7 @@ public class UnifiedMerchandiseDaoMysqlImpl implements UnifiedMerchandiseDao {
         param.put("updateTime", new Date());
         param.put("id", id);
         param.put("number", number);
-        return sqlOperator.update("com.qcloud.component.activity.dao.mysql.mapper.GoldenEggActivityPrizeMapper.updateSalesVolume", param) > 0;
+        return sqlOperator.update("com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper.updateSalesVolume", param) > 0;
     }
 
     @Override
@@ -163,7 +165,7 @@ public class UnifiedMerchandiseDaoMysqlImpl implements UnifiedMerchandiseDao {
         param.put("updateTime", new Date());
         param.put("id", id);
         param.put("stock", stock);
-        return sqlOperator.update("com.qcloud.component.activity.dao.mysql.mapper.GoldenEggActivityPrizeMapper.updateSalesVolume", param) > 0;
+        return sqlOperator.update("com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper.lockStock", param) > 0;
     }
 
     @Override
@@ -180,5 +182,15 @@ public class UnifiedMerchandiseDaoMysqlImpl implements UnifiedMerchandiseDao {
         page.setCount(total);
         page.setData(list);
         return page;
+    }
+
+    @Override
+    public UnifiedMerchandise getByCodeAndMerchant(String code, long merchantId) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("merchantId", merchantId);
+        param.put("code", code);
+        UnifiedMerchandise unifiedMerchandise = sqlOperator.selectOne("com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper.getByCodeAndMerchant", param);
+        return unifiedMerchandise;
     }
 }

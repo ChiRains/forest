@@ -40,6 +40,8 @@ public class MerchandiseUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/merchandise/listDefaultSpec.do");
         //
         list.add("/admin/merchandise/toEditItemState.do");
+        list.add("/admin/merchandise/offShelf.do");
+        list.add("/admin/merchandise/shelves.do");
         return list;
     }
 

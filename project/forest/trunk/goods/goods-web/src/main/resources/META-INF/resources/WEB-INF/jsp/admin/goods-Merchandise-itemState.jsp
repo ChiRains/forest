@@ -28,8 +28,8 @@
         <div>
             <div class="dataTables_wrapper form-inline no-footer">
                 <div class="row">
-                    <div class="col-xs-6" >
-                        <label>
+                    <div class="col-xs-12"  >
+                        <label style="float:right;">
                             <form id="query-form" action="#admin/merchandise/toEditItemState" onsubmit="listFormSearch(this); return false">
                             	<div class="dataTables_length">
                                			<input type="search" maxlength="40" class="form-control search-query"
@@ -37,7 +37,13 @@
                                    		<button type="submit" class="btn btn-purple btn-sm">
                                             <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
                                             查询
-                                        </button>                                        
+                                        </button>  
+                                        <button type="button" class="btn btn-purple btn-sm" 
+                                        	onclick="window.location='#admin/merchandise/list'"
+                                        	>
+                                            <i class="ace-icon fa fa-undo bigger-110"></i>
+                                            返回
+                                        </button>                                         
                                  </div>
                             </form>
                         </label>
@@ -75,11 +81,11 @@
                             <td>
                                 <div class="hidden-sm hidden-xs action-buttons">
                                 	 <c:if test="${item.state==4}">
-		                            		<a class="btn btn-sm btn-danger offline" api-path="/admin/merchandise/offline.do?id=${item.id}">下线
+		                            		<a class="btn btn-sm btn-danger offline" api-path="/admin/merchandise/offShelf.do?unifiedMerchandiseId=${item.id}">下线
 		                            		</a>
 		                             </c:if>
 		                             <c:if test="${item.state==5}">
-		                            		<a class="btn btn-sm btn-success online" api-path="/admin/merchandise/online.do?id=${item.id}">上线
+		                            		<a class="btn btn-sm btn-success online" api-path="/admin/merchandise/shelves.do?unifiedMerchandiseId=${item.id}">上线
 		                            		</a>
 		                            </c:if>
                                 </div>
@@ -189,7 +195,7 @@
                         $.get(auditURL, {},
                                 function (data) {
                                     data = JSON.parse(data);
-                                    if (parseInt(data["status"]) === 0) {
+                                    if (parseInt(data["status"]) !=200 ) {
                                         dialogItself.setTitle('操作失败');
                                         dialogItself.setMessage(data["message"]);
                                         dialogItself.setType(BootstrapDialog.TYPE_DANGER);
