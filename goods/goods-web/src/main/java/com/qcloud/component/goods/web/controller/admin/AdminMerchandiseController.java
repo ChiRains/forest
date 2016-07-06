@@ -857,6 +857,7 @@ public class AdminMerchandiseController {
     @RequestMapping
     public AceAjaxView offline(Long id) {
 
+        AssertUtil.assertTrue(id > 0, "ID不能为空.");
         merchandiseService.offline(id);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("操作成功");
@@ -912,8 +913,8 @@ public class AdminMerchandiseController {
         where.put("merchandiseId", merchandise.getId());
         where.put("order", "attributeId asc");
         List<MerchandiseSpecifications> list = merchandiseSpecificationsService.list(where);
-        where.clear();
         // 查询该类目的规格列表
+        where.clear();
         where.put("classifyId", merchandise.getSpecClassifyId());
         List<ClassifySpecifications> classifySpecificationses = classifySpecificationsService.list(where);
         List<AdminAttributeVO> adminAttributeVO = new ArrayList<AdminAttributeVO>();
@@ -1029,6 +1030,7 @@ public class AdminMerchandiseController {
                 }
             }
         }
+        // <<<<<<< .mine
         // Map<String, String> strMap = new HashMap<String, String>();
         // for (int i = 0; i < classifySpecificationses.size(); i++) {
         // String str = "";
@@ -1042,6 +1044,41 @@ public class AdminMerchandiseController {
         // }
         // strMap.put("str" + (i + 1), str);
         // }
+        // List<UnifiedMerchandise> merchandiseList = unifiedMerchandiseService.listByMerchandise(merchandise.getId(), UnifiedMerchandiseType.SINGLE.getKey(), merchandise.getState());
+        // List<AdminMerchandiseSpecificationsVO> mspecVoList = new ArrayList<AdminMerchandiseSpecificationsVO>();
+        // for (UnifiedMerchandise unifiedMerchandise : merchandiseList) {
+        // AdminMerchandiseSpecificationsVO vo = new AdminMerchandiseSpecificationsVO();
+        // vo.setId(unifiedMerchandise.getId());
+        // vo.setPurchase(unifiedMerchandise.getPurchase());
+        // vo.setDiscount(unifiedMerchandise.getDiscount());
+        // vo.setPrice(unifiedMerchandise.getPrice());
+        // vo.setMerchandiseId(unifiedMerchandise.getMerchandiseId());
+        // vo.setState(unifiedMerchandise.getState());
+        // vo.setStock(unifiedMerchandise.getStock());
+        // vo.setCode(unifiedMerchandise.getCode());
+        // List<MerchandiseSpecifications> msList = merchandiseSpecificationsService.listByUnifiedMerchandise(unifiedMerchandise.getId());
+        // StringBuffer sb = new StringBuffer();
+        // for (MerchandiseSpecifications merchandiseSpecifications : msList) {
+        // sb.append(merchandiseSpecifications.getValue()).append(" ");
+        // }
+        // vo.setValue0(sb.toString());
+        // mspecVoList.add(vo);
+        // }
+        // =======
+        // // Map<String, String> strMap = new HashMap<String, String>();
+        // // for (int i = 0; i < classifySpecificationses.size(); i++) {
+        // // String str = "";
+        // // List<MerchandiseSpecificationsRelation> rlist1 = merchandiseSpecificationsRelationService.listByMap(merchandise.getId(), classifySpecificationses.get(i).getAttributeId());
+        // // for (MerchandiseSpecificationsRelation r : rlist1) {
+        // // if (r.getType() == 2 && r.getIsCheck() == 1) {
+        // // str += r.getAlias() + ",";
+        // // } else if (r.getType() == 1) {
+        // // str += r.getValue() + ",";
+        // // }
+        // // }
+        // // strMap.put("str" + (i + 1), str);
+        // // }
+        // >>>>>>> .r959
         modelAndView.addObject("mspecVoList", mspecVoList);
         modelAndView.addObject("enumerations", enumerations);
         modelAndView.addObject("imagesAtt", imagesAtt);
@@ -1066,15 +1103,21 @@ public class AdminMerchandiseController {
         List<MsForm> forms = merchandiseSpecificationsForm.getList();
         AssertUtil.assertNotNull(forms, "规格列表不能为空");
         // 规格商品状态
+        // TODO
         for (MerchandiseSpecifications merchandiseSpecifications : list) {
-            UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(merchandiseSpecifications.getId());
-            AssertUtil.assertNotNull(unifiedMerchandise, "找不到统一商品" + id + " " + merchandiseSpecifications.getId());
             for (MsForm msForm : forms) {
-                if (msForm.getId() == merchandiseSpecifications.getId()) {
+                if (msForm.getId() == merchandiseSpecifications.getUnifiedMerchandiseId()) {
+                    AssertUtil.assertTrue(StringUtils.isNotEmpty(msForm.getCode().trim()), "请输入单品的编码.");
+                    UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(merchandiseSpecifications.getUnifiedMerchandiseId());
+                    AssertUtil.assertNotNull(unifiedMerchandise, "找不到统一商品" + merchandiseSpecifications.getUnifiedMerchandiseId());
+                    //
+                    UnifiedMerchandise temp = unifiedMerchandiseService.getByCodeAndMerchant(msForm.getCode().trim(), merchandise.getMerchantId());
+                    AssertUtil.assertTrue((temp != null && temp.getId() == unifiedMerchandise.getId()) || temp == null, "错误");
                     unifiedMerchandise.setDiscount(msForm.getDiscount());
                     unifiedMerchandise.setPurchase(msForm.getPurchase());
                     unifiedMerchandise.setPrice(msForm.getPrice());
                     unifiedMerchandise.setState(merchandise.getState());
+                    unifiedMerchandise.setCode(msForm.getCode().trim());
                     unifiedMerchandiseService.update(unifiedMerchandise);
                 }
             }
@@ -1188,6 +1231,24 @@ public class AdminMerchandiseController {
         //
         List<MerchandiseSpecificationsRelation> newRelation = new ArrayList<MerchandiseSpecificationsRelation>();
         List<RelationForm> relationForms = form.getRelationForms();
+        // TODO
+        Set<Long> attributeIdList = new HashSet<Long>();
+        for (RelationForm relationForm : relationForms) {
+            if (relationForm.getAttributeId() != null && relationForm.getIsCheck() == 1) {
+                attributeIdList.add(relationForm.getAttributeId());
+            }
+        }
+        HashMap<String, Object> whereMap = new HashMap<String, Object>();
+        whereMap.put("classifyId", merchandise.getSpecClassifyId());
+        List<ClassifySpecifications> classifySpecificationses = classifySpecificationsService.list(whereMap);
+        List<AttributeDefinition> attributeDefinitions = new ArrayList<AttributeDefinition>();
+        for (ClassifySpecifications classifySpecifications : classifySpecificationses) {
+            AttributeDefinition attributeDefinition = attributeDefinitionService.get(classifySpecifications.getAttributeId());
+            if (attributeDefinition != null) {
+                attributeDefinitions.add(attributeDefinition);
+            }
+        }
+        AssertUtil.assertTrue(attributeDefinitions.size() == attributeIdList.size(), "该分类的规格维度为：" + attributeDefinitions.size() + " === 当前所勾选的维度为：" + attributeIdList.size() + " === 无法生成单品.");
         for (RelationForm relationForm : relationForms) {
             if (relationForm.getAttributeId() != null && relationForm.getIsCheck() != 0) {
                 MerchandiseSpecificationsRelation relation = returnRelation(merchandise.getId(), relationForm.getAttributeId(), relationForm.getValue(), relationForm.getAlias());
@@ -1317,9 +1378,41 @@ public class AdminMerchandiseController {
         Merchandise merchandise = merchandiseService.get(query.getMerchandiseId());
         AssertUtil.assertNotNull(merchandise, "商品档案不存在.");
         List<UnifiedMerchandise> list = unifiedMerchandiseService.listByMerchandise(merchandise.getId(), UnifiedMerchandiseType.SINGLE.getKey());
-        List<AdminUnifiedMerchandiseVO> voList = unifiedMerchandiseHandler.toVOList4Admin(list);
+        List<AdminUnifiedMerchandiseVO> voList = new ArrayList<AdminUnifiedMerchandiseVO>();
+        for (UnifiedMerchandise unifiedMerchandise : list) {
+            if (unifiedMerchandise.getState() == MerchandiseStateType.OFFLINE.getKey() || unifiedMerchandise.getState() == MerchandiseStateType.ONLINE.getKey()) voList.add(unifiedMerchandiseHandler.toVO4Admin(unifiedMerchandise));
+        }
         ModelAndView view = new ModelAndView("/admin/goods-Merchandise-itemState");
         view.addObject("list", voList);
+        return view;
+    }
+
+    @RequestMapping
+    public AceAjaxView shelves(Long unifiedMerchandiseId) {
+
+        AssertUtil.greatZero(unifiedMerchandiseId, "ID不能为空。");
+        UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(unifiedMerchandiseId);
+        AssertUtil.assertNotNull(unifiedMerchandise, "统一商品不存在.");
+        Merchandise merchandise = merchandiseService.get(unifiedMerchandise.getMerchandiseId());
+        AssertUtil.assertNotNull(merchandise, "商品档案不存在.");
+        AssertUtil.assertTrue(MerchandiseStateType.ONLINE.getKey() == merchandise.getState(), "商品档案已下架,统一商品上架失败.");
+        AssertUtil.assertTrue(MerchandiseStateType.OFFLINE.getKey() == unifiedMerchandise.getState(), "只能上架处于下架状态的统一商品.");
+        unifiedMerchandiseService.updateState(unifiedMerchandiseId, MerchandiseStateType.ONLINE.getKey());
+        AceAjaxView view = new AceAjaxView();
+        view.setMessage("统一商品上架完成");
+        return view;
+    }
+
+    @RequestMapping
+    public AceAjaxView offShelf(Long unifiedMerchandiseId) {
+
+        AssertUtil.greatZero(unifiedMerchandiseId, "ID不能为空。");
+        UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(unifiedMerchandiseId);
+        AssertUtil.assertNotNull(unifiedMerchandise, "统一商品不存在.");
+        AssertUtil.assertTrue(MerchandiseStateType.ONLINE.getKey() == unifiedMerchandise.getState(), "只能下架处于上架状态的统一商品.");
+        unifiedMerchandiseService.updateState(unifiedMerchandiseId, MerchandiseStateType.OFFLINE.getKey());
+        AceAjaxView view = new AceAjaxView();
+        view.setMessage("统一商品上架完成");
         return view;
     }
 }
