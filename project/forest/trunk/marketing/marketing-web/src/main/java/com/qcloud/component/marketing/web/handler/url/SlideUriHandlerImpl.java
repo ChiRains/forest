@@ -18,6 +18,7 @@ public class SlideUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/slide/add.do");
         list.add("/admin/slide/edit.do");
         list.add("/admin/slide/delete.do");
+        list.add("/admin/slide/enable.do");
         return list;
     }
 
@@ -31,6 +32,7 @@ public class SlideUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/slide/add.do");
         list.add("/admin/slide/edit.do");
         list.add("/admin/slide/delete.do");
+        list.add("/admin/slide/enable.do");
         return list;
     }
 
@@ -44,6 +46,7 @@ public class SlideUriHandlerImpl extends AbstractUriHandler {
         map.put("/admin/slide/add.do", strList);
         map.put("/admin/slide/edit.do", strList);
         map.put("/admin/slide/delete.do", strList);
+        map.put("/admin/slide/enable.do", strList);
         return map;
     }
 

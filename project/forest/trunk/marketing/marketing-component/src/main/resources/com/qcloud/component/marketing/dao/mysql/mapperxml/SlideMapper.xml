@@ -12,6 +12,8 @@
     </select> 
     
       <select id="listBySence" parameterType="Long" resultType="Slide">  
-        select * from `marketing_slide` where `sence`=#{sence} order by `orderNum`
+        select * from `marketing_slide` where `sence`=#{sence} and `enable`=1  
+        and    #{now}  between `startDate` and `endDate`  
+        order by `orderNum`
     </select>  
 </mapper>

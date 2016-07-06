@@ -1,5 +1,7 @@
 package com.qcloud.component.marketing.web.vo.admin;
 
+import java.util.Date;
+
 public class AdminSlideVO {
 
     // ID
@@ -19,6 +21,14 @@ public class AdminSlideVO {
     private String desc;
 
     private String senceStr;
+
+    private Date   startDate;
+
+    private Date   endDate;
+
+    private int    enable;
+
+    private String title;
 
     public AdminSlideVO() {
 
@@ -92,5 +102,45 @@ public class AdminSlideVO {
     public void setDesc(String desc) {
 
         this.desc = desc;
+    }
+
+    public Date getStartDate() {
+
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+
+        this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+
+        this.endDate = endDate;
+    }
+
+    public int getEnable() {
+
+        return enable;
+    }
+
+    public void setEnable(int enable) {
+
+        this.enable = enable;
+    }
+
+    public String getTitle() {
+
+        return title;
+    }
+
+    public void setTitle(String title) {
+
+        this.title = title;
     }
 }

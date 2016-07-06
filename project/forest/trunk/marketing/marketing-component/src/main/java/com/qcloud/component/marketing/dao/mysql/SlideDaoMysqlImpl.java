@@ -1,17 +1,18 @@
 package com.qcloud.component.marketing.dao.mysql;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.Resource;
-import org.springframework.stereotype.Repository;
 import org.apache.commons.lang.NotImplementedException;
-import com.qcloud.pirates.data.Page;
-import com.qcloud.pirates.data.sql.mybatis.SqlOperator;
+import org.springframework.stereotype.Repository;
 import com.qcloud.component.marketing.dao.SlideDao;
 import com.qcloud.component.marketing.model.Slide;
 import com.qcloud.component.marketing.model.query.SlideQuery;
+import com.qcloud.pirates.data.Page;
+import com.qcloud.pirates.data.sql.mybatis.SqlOperator;
 
 @Repository
 public class SlideDaoMysqlImpl implements SlideDao {
@@ -93,7 +94,10 @@ public class SlideDaoMysqlImpl implements SlideDao {
     @Override
     public List<Slide> listBySence(int sence) {
 
-        List<Slide> list = sqlOperator.selectList("com.qcloud.component.marketing.dao.mysql.mapper.SlideMapper.listBySence", sence);
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("sence", sence);
+        param.put("now", new Date());
+        List<Slide> list = sqlOperator.selectList("com.qcloud.component.marketing.dao.mysql.mapper.SlideMapper.listBySence", param);
         return list;
     }
 }

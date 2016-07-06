@@ -64,8 +64,8 @@ public class AdminSlideController {
         ModelAndView model = new ModelAndView("/admin/marketing-Slide-add");
         model.addObject("senceTypeList", senceTypeVOList);
         model.addObject("orderNumList", orderNumList);
-        String fileSize=publicdataClient.getImageInformationByCode("shouyelunbo");
-        model.addObject("fileSize",fileSize);
+        String fileSize = publicdataClient.getImageInformationByCode("shouyelunbo");
+        model.addObject("fileSize", fileSize);
         return model;
     }
 
@@ -97,8 +97,8 @@ public class AdminSlideController {
         model.addObject("slide", adminSlideVO);
         model.addObject("senceTypeList", senceTypeVOList);
         model.addObject("orderNumList", orderNumList);
-        String fileSize=publicdataClient.getImageInformationByCode("shouyelunbo");
-        model.addObject("fileSize",fileSize);
+        String fileSize = publicdataClient.getImageInformationByCode("shouyelunbo");
+        model.addObject("fileSize", fileSize);
         return model;
     }
 
@@ -120,6 +120,18 @@ public class AdminSlideController {
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("删除成功");
         aceAjaxView.setUrl(DIR + "/list");
+        return aceAjaxView;
+    }
+
+    @RequestMapping
+    public AceAjaxView enable(long id, int enable) {
+
+        AssertUtil.assertNotNull(id, "ID不能为空");
+        Slide slide = slideService.get(id);
+        slide.setEnable(enable);
+        slideService.update(slide);
+        AceAjaxView aceAjaxView = new AceAjaxView();
+        aceAjaxView.setMessage("操作成功");
         return aceAjaxView;
     }
 }

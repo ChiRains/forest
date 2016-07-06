@@ -114,8 +114,11 @@ public class SlideServiceImpl implements SlideService {
     @Override
     public boolean update(Slide slide) {
 
-        String url = fileSDKClient.uidToUrl(slide.getImage());
-        slide.setImage(url);
+        Slide slide1 = get(slide.getId());
+        if (!slide.getImage().equals(slide1.getImage())) {
+            String url = fileSDKClient.uidToUrl(slide.getImage());
+            slide.setImage(url);
+        }
         return slideDao.update(slide);
     }
 
