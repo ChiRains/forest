@@ -145,6 +145,7 @@
                             <th>商品规格</th>
                             <th>商品库存</th>
                             <th>商品数量</th>
+                            <th>折扣价</th>
                             <th class="del-column"></th>
                         </tr>
                         </thead>
@@ -222,7 +223,7 @@
 
             function reSetIndex() {
                 $("#productList").children().each(function (i) {
-                    $(this).find("input[name$='merchandiseItemId']").attr("name", $(this).find("input[name$='merchandiseItemId']").attr("name").replace(/\[.*?\]/g, "[" + i + "]"));
+                    $(this).find("input[name$='relaUnifiedMerchandiseId']").attr("name", $(this).find("input[name$='relaUnifiedMerchandiseId']").attr("name").replace(/\[.*?\]/g, "[" + i + "]"));
                     $(this).find("input[name$='num']").attr("name", $(this).find("input[name$='num']").attr("name").replace(/\[.*?\]/g, "[" + i + "]"));
                 });
             }
@@ -268,11 +269,12 @@
                                     //console.log(count);
                                     count >= 0 && $("#productList").append(
                                             '<tr class="template kv-table-row"> ' +
-                                            '<td><input type="text" name="combinationMerchandiseItems[].merchandiseItemId" value="' + id + '" readonly class="config-key"></td> ' +
+                                            '<td><input type="text" name="combinationMerchandiseItems[].relaUnifiedMerchandiseId" value="' + id + '" readonly class="config-key"></td> ' +
                                             '<td><input type="text" value="' + name + '" readonly class="config-value"></td>' +
                                             '<td><input type="text" value="' + specifications + '" readonly class="config-value"></td>' +
                                             '<td><input type="text" value="' + stock + '" readonly class="config-value"></td>' +
-                                            '<td><input type="text" id="num" name="combinationMerchandiseItems[].num" value="0"/></td>' +
+                                            '<td><input type="text" id="num" name="combinationMerchandiseItems[].number" value="0"/></td>' +
+                                            '<td><input type="text" id="num" name="combinationMerchandiseItems[].discount" value="0"/></td>' +
                                             '<td class="del-column"> <button type="button" class="close del-row-trigger">×</button> </td> ' +
                                             '</tr>');
                                     delProduct();

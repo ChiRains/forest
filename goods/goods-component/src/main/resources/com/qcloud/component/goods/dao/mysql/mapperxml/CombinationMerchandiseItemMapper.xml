@@ -24,12 +24,12 @@
         select count(*) from `goods_combination_merchandise_item` where relaUnifiedMerchandiseId = #{relaUnifiedMerchandiseId} 
     </select>  
 
-    <select id="list" resultType="CombinationMerchandiseItem">
+    <select id="list" parameterType="java.util.HashMap" resultType="CombinationMerchandiseItem">
         SELECT * FROM goods_combination_merchandise_item WHERE 1 = 1
         <if test="id != null">
             AND id = #{id}
         </if>
-        <if test="combinationMerchandiseId != null">
+        <if test="combinationUnifiedMerchandiseId != null">
             AND combinationUnifiedMerchandiseId = #{combinationUnifiedMerchandiseId}
         </if>
         <if test="merchandiseItemId != null">
@@ -45,12 +45,12 @@
             LIMIT #{start},#{count}
         </if>
     </select>
-    <select id="count" resultType="int">
+    <select id="count" parameterType="java.util.HashMap" resultType="Integer">
         SELECT COUNT(*) FROM goods_combination_merchandise_item WHERE 1 = 1
         <if test="id != null">
             AND id = #{id}
         </if>
-        <if test="combinationMerchandiseId != null">
+        <if test="combinationUnifiedMerchandiseId != null">
             AND combinationUnifiedMerchandiseId = #{combinationUnifiedMerchandiseId}
         </if>
         <if test="merchandiseItemId != null">
@@ -66,7 +66,7 @@
             <if test="id != null">
                 id = #{id}
             </if>
-            <if test="combinationMerchandiseId != null">
+            <if test="combinationUnifiedMerchandiseId != null">
                 AND combinationUnifiedMerchandiseId = #{combinationUnifiedMerchandiseId}
             </if>
             <if test="merchandiseItemId != null">

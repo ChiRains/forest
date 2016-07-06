@@ -53,34 +53,22 @@ public class MerchandiseCustomClassificationHandlerImpl implements MerchandiseCu
 
         List<AdminMerchandiseCustomClassificationVO> voList = new ArrayList<AdminMerchandiseCustomClassificationVO>();
         for (MerchandiseCustomClassification mc : mcList) {
-            // AdminMerchandiseCustomClassificationVO vo = new AdminMerchandiseCustomClassificationVO();
-            // vo.setId(mc.getId());
-            // vo.setMerchantId(mc.getMerchantId());
-            // vo.setUnifiedMerchandiseId(mc.getUnifiedMerchandiseId());
-            // vo.setCustomClassifyId(mc.getCustomClassifyId());
-            // vo.setOrderNum(mc.getOrderNum());
-            // QUnifiedMerchandise qUnifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(mc.getUnifiedMerchandiseId());
-            // vo.setqUnifiedMerchandise(qUnifiedMerchandise);
-            // voList.add(vo);
             AdminMerchandiseCustomClassificationVO vo = new AdminMerchandiseCustomClassificationVO();
             QUnifiedMerchandise qmerchandise = commoditycenterClient.getUnifiedMerchandise(mc.getUnifiedMerchandiseId());
             if (qmerchandise != null) {
                 vo.setImage(qmerchandise.getImage() == null ? "" : qmerchandise.getImage());
-                // vo.setName(merchandise.getName());
             }
-            // vo.setName(qmerchandise.getList().get(0).getName());
             vo.setStock(qmerchandise.getStock());
             vo.setId(mc.getId());
             vo.setMerchantId(mc.getMerchantId());
             vo.setUnifiedMerchandiseId(mc.getUnifiedMerchandiseId());
             vo.setCustomClassifyId(mc.getCustomClassifyId());
             vo.setOrderNum(mc.getOrderNum());
-            vo.setSpecifications(qmerchandise.getList().get(0).getSpecifications());
+            vo.setSpecifications(qmerchandise.getSpecifications());
             vo.setName(mc.getName());
             vo.setSysCode(mc.getSysCode());
             vo.setqUnifiedMerchandise(qmerchandise);
             voList.add(vo);
-            // voList.add(toVO4Admin(mc));
         }
         return voList;
     }

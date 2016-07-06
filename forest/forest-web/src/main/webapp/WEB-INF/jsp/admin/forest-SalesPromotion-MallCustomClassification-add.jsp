@@ -84,8 +84,8 @@
                                 <td><input type="text"
                                            name="unifiedMerchandiseIds[${current.index}]"
                                            value="${item.unifiedMerchandiseId}" readonly class="config-key"></td>
-                                <td><input type="text" value="${item.qUnifiedMerchandise.list[0].name}" readonly class="config-value"></td>
-                                <td><input type="text" value="${item.qUnifiedMerchandise.list[0].specifications}" readonly class="config-value"></td>
+                                <td><input type="text" value="${item.qUnifiedMerchandise.name}" readonly class="config-value"></td>
+                                <td><input type="text" value="${item.qUnifiedMerchandise.specifications}" readonly class="config-value"></td>
                                 <td><input type="text" value="${item.qUnifiedMerchandise.stock}" readonly class="config-value"></td>
                                 <td><input type="text" name="orderNums[${current.index}]"
                                 value="${item.orderNum}"></td>
@@ -146,7 +146,7 @@
             $(".add-row-trigger").on("click", function () {
                 BootstrapDialog.show({
                     title: "商品列表",
-                    message: $('<div></div>').load('/admin/merchandiseItem/selectProductList.do'),
+                    message: $('<div></div>').load('/admin/unifiedMerchandise/selectProductList.do'),
                     cssClass: "select-product-dialog",
                     onshow: function (dialog) {
                         $(document).off("click", ".select-product-dialog a,.search-button");
@@ -176,22 +176,35 @@
                                 var specifications = obj.attr("data-specifications");
                                 var stock = obj.attr("data-stock");
                                 if (id && name) {
-
-                                    var productList = $("#productList");
-                                    var count = productList[0].childElementCount;
-                                    //console.log(count);
-                                    count >= 0 && $("#productList").append(
-                                            '<tr class="template kv-table-row"> ' +
-                                            '<td><input type="text" name="unifiedMerchandiseIds[]" value="' + id + '" readonly class="config-key"></td> ' +
-                                            '<td><input type="text" value="' + name + '" readonly class="config-value"></td>' +
-                                            '<td><input type="text" value="' + specifications + '" readonly class="config-value"></td>' +
-                                            '<td><input type="text" value="' + stock + '" readonly class="config-value"></td>' +
-                                            '<td><input type="text" name="orderNums[]" value="" class="config-value"></td>' +
-                                            '<td class="del-column"> <button type="button" class="close del-row-trigger">×</button> </td> ' +
-                                            '</tr>');
-                                    delProduct();
-                                    reSetIndex();
-                                    dialog.close();
+                                	var exist=0;
+									$("input[name^='unifiedMerchandiseIds']").each(function(){
+										var existId=$(this).val();
+										if(existId==id){
+											exist=1;
+										}
+									});
+									if(exist==0){
+	                                    var productList = $("#productList");
+	                                    var count = productList[0].childElementCount;
+	                                    //console.log(count);
+	                                    count >= 0 && $("#productList").append(
+	                                            '<tr class="template kv-table-row"> ' +
+	                                            '<td><input type="text" name="unifiedMerchandiseIds[]" value="' + id + '" readonly class="config-key"></td> ' +
+	                                            '<td><input type="text" value="' + name + '" readonly class="config-value"></td>' +
+	                                            '<td><input type="text" value="' + specifications + '" readonly class="config-value"></td>' +
+	                                            '<td><input type="text" value="' + stock + '" readonly class="config-value"></td>' +
+	                                            '<td><input type="text" name="orderNums[]" value="" class="config-value"></td>' +
+	                                            '<td class="del-column"> <button type="button" class="close del-row-trigger">×</button> </td> ' +
+	                                            '</tr>');
+	                                    delProduct();
+	                                    reSetIndex();
+                                    }else{
+                                    	BootstrapDialog.show({
+                                    		title:'商品已存在.',
+                                    		message:'商品已存在.'
+                                    	});
+                                    }
+                                   
                                 }
                                 return false;
                             }

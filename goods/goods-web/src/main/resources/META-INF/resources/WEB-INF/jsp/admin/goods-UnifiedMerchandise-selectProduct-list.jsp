@@ -26,11 +26,12 @@
             <table class="table table-striped table-bordered table-hover dataTable no-footer">
                 <thead>
                 <tr role="row">
-                    <th>商品ID</th>
+                    <th>商品编码</th>
                     <th>名称</th>
                     <th>规格</th>
                     <th>库存</th>
-                    <th>价格</th>
+                    <th>原价</th>
+                    <th>折扣价</th>
                     <th class="sorting_disabled">操作</th>
                 </tr>
                 </thead>
@@ -38,16 +39,22 @@
                 <tbody>
                 <c:forEach items="${result}" var="item" varStatus="current">
                     <tr>
-                        <td>${item.id}</td>
+                        <td>${item.code}</td>
                         <td>${item.name}</td>
                         <td>${item.specifications}</td>
                         <td>${item.stock}</td>
                         <td>${item.price}</td>
+                        <td>${item.discount}</td>
                         <td>
                             <div class="hidden-sm hidden-xs action-buttons">
                                 <a title="选择" class="green add-btn"
-                                   data-id="${item.id}" data-name="${item.name}" data-specifications="${item.specifications}"
-                                   data-stock="${item.stock}" data-price="${item.price}"
+                                   data-id="${item.id}" 
+                                   data-name="${item.name}" 
+                                   data-specifications="${item.specifications}"
+                                   data-stock="${item.stock}" 
+                                   data-price="${item.price}"
+                                   data-discount="${item.discount}"
+                                   data-code="${item.code}"
                                    href="">
                                     <i class="ace-icon glyphicon glyphicon-ok bigger-130"></i>
                                 </a>

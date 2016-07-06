@@ -12,6 +12,7 @@ import com.qcloud.component.goods.service.UnifiedMerchandiseService;
 import com.qcloud.component.publicdata.PublicdataClient;
 import com.qcloud.component.publicdata.model.Classify;
 import com.qcloud.pirates.data.Page;
+import com.qcloud.pirates.util.AssertUtil;
 
 @Service
 public class UnifiedMerchandiseServiceImpl implements UnifiedMerchandiseService {
@@ -153,6 +154,22 @@ public class UnifiedMerchandiseServiceImpl implements UnifiedMerchandiseService 
 
     @Override
     public Page<UnifiedMerchandise> select(UnifiedMerchandiseQuery query, int start, int size) {
+
         return unifiedMerchandiseDao.select(query, start, size);
+    }
+
+    @Override
+    public boolean updateState(long id, int state) {
+
+        UnifiedMerchandise unifiedMerchandise = get(id);
+        AssertUtil.assertNotNull(unifiedMerchandise, "统一商品不存在.");
+        unifiedMerchandise.setState(state);
+        return update(unifiedMerchandise);
+    }
+
+    @Override
+    public UnifiedMerchandise getByCodeAndMerchant(String code, long merchantId) {
+
+        return unifiedMerchandiseDao.getByCodeAndMerchant(code, merchantId);
     }
 }

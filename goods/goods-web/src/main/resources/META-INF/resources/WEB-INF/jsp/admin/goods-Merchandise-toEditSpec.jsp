@@ -109,14 +109,14 @@
             
             <div class="space-4"></div>
             <div class="form-group">
-                <label style="text-align:left;" class="col-sm-1 control-label no-padding-right"> 规格 :</label>
-
-                <div class="col-sm-9">
+                <label style="text-align:left;width: 90px;" class="col-sm-1 control-label no-padding-right" > 规格 :</label>
+                <div class="col-sm-9" style="width: 80%;">
                 <span class="col-sm-12 no-padding block input-icon input-icon-right mr10">
                         <table id="sample-table-1" class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr>
                             	<th class="center">规格</th>
+                            	<th class="center">编码</th>
                                 <th class="center">进货价</th>
                                 <th class="center">折扣价</th>
                                 <th class="center">原价</th>
@@ -127,9 +127,10 @@
                                 <c:if test="${defaultSpec!=null && isDefault == 'checked'}">
                             		<tr>
 									<td class='col-sm-3 center'> 默认规格
-									<input class='purchase' type='hidden' name='list[0].id' value="${defaultSpec.id}">
-									<input class='purchase' type='hidden' name='list[0].state' value="1">
+										<input class='purchase' type='hidden' name='list[0].id' value="${defaultSpec.id}">
+										<input class='purchase' type='hidden' name='list[0].state' value="1">
 									 </td>
+									<td class='col-sm-3 center'><input style='text-align: center;height:35px;' class='purchase' name='list[0].code' value="default" ></td>
 									<td class='col-sm-3 center'><input style='text-align: center;height:35px;' class='purchase' name='list[0].purchase' value="${defaultSpec.purchase}" ></td>
 									<td class='col-sm-3 center'><input style='text-align: center;height:35px;' class='purchase' name='list[0].discount' value="${defaultSpec.discount}" ></td>
 									<td class='col-sm-3 center'><input style='text-align: center;height:35px;' class='purchase' name='list[0].price' value="${defaultSpec.price}" ></td>
@@ -139,9 +140,10 @@
                             	<c:if test="${mspecVoList !=null}"><tr>
                             	<c:forEach items="${mspecVoList}" var="item" varStatus="statusItem">
 									<td class='col-sm-3 center'> ${item.value0} &nbsp;&nbsp;&nbsp;&nbsp;${item.value1}
-									<input class='purchase' type='hidden' name='list[${statusItem.index}].id' value="${item.id}">
-									<input class='purchase' type='hidden' name='list[${statusItem.index}].state' value="1">
-									 </td>
+										<input class='purchase' type='hidden' name='list[${statusItem.index}].id' value="${item.id}">
+										<input class='purchase' type='hidden' name='list[${statusItem.index}].state' value="1">
+									</td>
+									<td class='col-sm-3 center'><input style='text-align: center;height:35px;' class='purchase' name='list[${statusItem.index}].code' value="${item.code}" ></td>
 									<td class='col-sm-3 center'><input style='text-align: center;height:35px;' class='purchase' name='list[${statusItem.index}].purchase' value="${item.purchase}" ></td>									
 									<td class='col-sm-3 center'><input style='text-align: center;height:35px;' class='purchase' name='list[${statusItem.index}].discount' value="${item.discount}" ></td>
 									<td class='col-sm-3 center'><input style='text-align: center;height:35px;' class='purchase' name='list[${statusItem.index}].price' value="${item.price}" ></td>
@@ -228,12 +230,12 @@
             </c:if> 
             
             <div class="space-4"></div>
-            <div class="clearfix form-actions">
-                <div class="col-md-offset-3 col-md-9">
+            <div class="clearfix ">
+                <div style="width: 1375px; margin-left: 70px; text-align: center;">
                     <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>&nbsp;保&nbsp;存&nbsp;
                     </button>
                     &nbsp; &nbsp; &nbsp;
-                    <button id="back" class="btn" type="button"><i class="ace-icon fa fa-undo bigger-110"></i>&nbsp;返&nbsp;回&nbsp;
+                    <button onclick="window.location='#admin/merchandise/list'" class="btn" type="button"><i class="ace-icon fa fa-undo bigger-110"></i>&nbsp;返&nbsp;回&nbsp;
                     </button>
                 </div>
             </div>

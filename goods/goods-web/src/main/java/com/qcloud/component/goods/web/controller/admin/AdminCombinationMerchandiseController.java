@@ -45,19 +45,12 @@ public class AdminCombinationMerchandiseController {
     @Autowired
     private CombinationMerchandiseItemService combinationMerchandiseItemService;
 
-    // @Autowired
-    // private AdminFilterService adminFilterService;
-    //
-    // @Autowired
-    // private TokenClient tokenClient;
     @Autowired
     private UnifiedMerchandiseService         unifiedMerchandiseService;
 
     @Autowired
     private CommoditycenterClient             commoditycenterClient;
 
-    // @Autowired
-    // private OutdatedSellercenterClient outdatedSellercenterClient;
     @Autowired
     private PublicdataClient                  publicdataClient;
 
@@ -126,7 +119,6 @@ public class AdminCombinationMerchandiseController {
             }
         } else {// 新增
             // 生成组合商品唯一ID
-            combinationMerchandise.setMerchantId(merchant.getId());
             combinationMerchandise.setType(UnifiedMerchandiseType.COMBINATION.getKey());
             combinationMerchandise.setMerchantId(merchant.getId());
             unifiedMerchandiseService.add(combinationMerchandise);
@@ -177,7 +169,6 @@ public class AdminCombinationMerchandiseController {
         return modelAndView;
     }
 
-    @Transactional
     @RequestMapping
     public AceAjaxView delete(Long id) {
 
@@ -185,7 +176,6 @@ public class AdminCombinationMerchandiseController {
         AssertUtil.assertNotNull(id, "ID不能为空");
         UnifiedMerchandise combinationMerchandise = unifiedMerchandiseService.get(id);
         AssertUtil.assertNotNull(combinationMerchandise, "找不到ID");
-     
         HashMap<String, Object> where = new HashMap<String, Object>();
         where.put("combinationUnifiedMerchandiseId", combinationMerchandise.getId());
         where.put("merchantId", combinationMerchandise.getMerchantId());
@@ -196,23 +186,4 @@ public class AdminCombinationMerchandiseController {
         aceAjaxView.setUrl(DIR + "/list");
         return aceAjaxView;
     }
-    // private long getMemberId(HttpServletRequest request) {
-    //
-    // String tokenId = adminFilterService.getTokenId(request);
-    // AssertUtil.assertNotEmpty(tokenId, "获取用户登录信息失败.");
-    // String idStr = tokenClient.get(tokenId);
-    // AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
-    // return Long.parseLong(idStr);
-    // }
-    // private long getMerchantId(long memberId) {
-    //
-    // long merchantId = 0;
-    // List<QMerchant> qMerchants = outdatedSellercenterClient.listMerchant(memberId);
-    // if (qMerchants.size() > 0) {
-    // merchantId = qMerchants.get(0).getId();
-    // } else {
-    // AssertUtil.assertTrue(false, "获取商家ID失败");
-    // }
-    // return merchantId;
-    // }
 }

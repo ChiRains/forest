@@ -214,21 +214,33 @@ public class MerchandiseServiceImpl implements MerchandiseService {
         return updateMerchandiseState(MerchandiseStateType.AUDITING.getKey(), id);
     }
 
+    @Transactional
     @Override
     public boolean online(Long id) {
 
         Merchandise merchandise = get(id);
         AssertUtil.assertNotNull(merchandise, "商品不存在" + id);
         AssertUtil.assertTrue(merchandise.getState() == MerchandiseStateType.AUDITING.getKey() || merchandise.getState() == MerchandiseStateType.OFFLINE.getKey(), "商品不能上线." + id + " " + merchandise.getState());
-        return updateMerchandiseState(MerchandiseStateType.ONLINE.getKey(), id);
+        updateMerchandiseState(MerchandiseStateType.ONLINE.getKey(), id);
+        List<UnifiedMerchandise> list = unifiedMerchandiseService.listByMerchandise(id, MerchandiseStateType.ONLINE.getKey());
+        for (UnifiedMerchandise unifiedMerchandise : list) {
+            unifiedMerchandiseService.updateState(unifiedMerchandise.getId(), MerchandiseStateType.OFFLINE.getKey());
+        }
+        return true;
     }
 
+    @Transactional
     @Override
     public boolean offline(Long id) {
 
         Merchandise merchandise = get(id);
         AssertUtil.assertNotNull(merchandise, "商品不存在" + id);
-        return updateMerchandiseState(MerchandiseStateType.OFFLINE.getKey(), id);
+        updateMerchandiseState(MerchandiseStateType.OFFLINE.getKey(), id);
+        List<UnifiedMerchandise> list = unifiedMerchandiseService.listByMerchandise(id, MerchandiseStateType.ONLINE.getKey());
+        for (UnifiedMerchandise unifiedMerchandise : list) {
+            unifiedMerchandiseService.updateState(unifiedMerchandise.getId(), MerchandiseStateType.OFFLINE.getKey());
+        }
+        return true;
     }
 
     @Override

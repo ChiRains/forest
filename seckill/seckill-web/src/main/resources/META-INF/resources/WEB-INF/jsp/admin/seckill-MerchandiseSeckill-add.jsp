@@ -119,8 +119,6 @@
 	        function reSetIndex() {
 	            $("#productList").children().each(function (i) {
 	            	//$(this).find("input[name^='screeningsId']").attr("name", $(this).find("input[name^='screeningsId']").attr("name").replace(/\[.*?\]/g, "[" + i + "]"));//场次
-	            	$(this).find("input[name^='merchantIds']").attr("name", $(this).find("input[name^='merchantIds']").attr("name").replace(/\[.*?\]/g, "[" + i + "]"));
-	            	$(this).find("input[name^='merchandiseItemsIds']").attr("name", $(this).find("input[name^='merchandiseItemsIds']").attr("name").replace(/\[.*?\]/g, "[" + i + "]"));
 	                $(this).find("input[name^='unifiedMerchandiseIds']").attr("name", $(this).find("input[name^='unifiedMerchandiseIds']").attr("name").replace(/\[.*?\]/g, "[" + i + "]"));//统一商品ID
 	                //$(this).find("input[name^='purchase']").attr("name", $(this).find("input[name^='purchase']").attr("name").replace(/\[.*?\]/g, "[" + i + "]"));//进货价
 	                $(this).find("input[name^='discount']").attr("name", $(this).find("input[name^='discount']").attr("name").replace(/\[.*?\]/g, "[" + i + "]"));//折扣价
@@ -136,7 +134,7 @@
 	        $(".add-row-trigger").on("click", function () {
 	            BootstrapDialog.show({
 	                title: "商品列表",
-	                message: $('<div></div>').load('/admin/merchandiseItem/list4Select4Admin.do'),
+	                message: $('<div></div>').load('/admin/unifiedMerchandise/selectProductList.do'),
 	                cssClass: "select-product-dialog",
 	                onshow: function (dialog) {
 	                    $(document).off("click", ".select-product-dialog a,.search-button");
@@ -163,13 +161,11 @@
 	                        if (obj.hasClass("add-btn")) {
 	                      	 	$(this).removeClass("add-btn");
 				    			$(this).addClass("grey");
-	                            var merchandiseItemsIds = obj.attr("data-id");
+	                            var unifiedMerchandiseId = obj.attr("data-id");
 	                            var name = obj.attr("data-name");
 	                            var purchase=obj.attr("data-purchase");
 	                            var discount=obj.attr("data-discount");
 	                            var price=obj.attr("data-price");
-	                            var unifiedMerchandiseIds=obj.attr("data-unifiedMerchandiseId");
-	                            var merchantIds=obj.attr("data-merchantId");
 	                            var stock = obj.attr("data-stock");
 	                            if (name) {
 	
@@ -179,14 +175,9 @@
 	                                //console.log(count);
 	                                count >= 0 && $("#productList").append(
 	                                        '<tr class="template kv-table-row"> ' +
-	                                        //'<input type="hidden" name="screeningsId[]" value="' + screeningsId + '" readonly class="config-key"> ' +
-	                                        '<input type="hidden" name="unifiedMerchandiseIds[]" value="' + unifiedMerchandiseIds + '" readonly class="config-key"> ' +
-	                                        '<input type="hidden" name="merchantIds[]" value="' + merchantIds + '" readonly class="config-key"> ' +
-	                                        '<td><input type="text" name="merchandiseItemsIds[]" value="' + merchandiseItemsIds + '" readonly class="config-key"></td> ' +
+	                                        '<td><input type="text" name="unifiedMerchandiseIds[]" value="' + unifiedMerchandiseId + '" readonly class="config-key"></td> ' +
 	                                        '<td><input type="text" value="' + name + '" readonly class="config-value"></td>' +
-	                                        /* '<td><input type="text" name="purchase[]" value="' + purchase + '" readonly class="config-value"></td>' + */
 	                                        '<td><input type="text" name="discount[]" value="' + discount + '" readonly class="config-value"></td>' +
-	                                        /* '<td><input type="text" name="price[]" value="' + price + '" readonly  class="config-value"></td>' + */
 	                                        '<td><input type="text" readonly value="' + stock + '" class="config-value"></td>'+
 	                                        '<td><input type="text" name="stock[]" value="' + 0 + '" class="config-value"></td>'+
 	                                        '<td><input type="text" name="seckillPrice[]" value="0" class="config-value"></td>' +

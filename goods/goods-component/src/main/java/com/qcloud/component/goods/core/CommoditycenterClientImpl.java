@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import com.qcloud.component.goods.CommoditycenterClient;
 import com.qcloud.component.goods.QMerchandiseEvaluation;
 import com.qcloud.component.goods.QUnifiedMerchandise;
@@ -21,6 +22,7 @@ import com.qcloud.component.goods.model.MerchandiseSpecifications;
 import com.qcloud.component.goods.model.MerchandiseVipDiscount;
 import com.qcloud.component.goods.model.MonthHotSale;
 import com.qcloud.component.goods.model.UnifiedMerchandise;
+import com.qcloud.component.goods.model.key.TypeEnum.MerchandiseStateType;
 import com.qcloud.component.goods.model.key.TypeEnum.OrderType;
 import com.qcloud.component.goods.model.key.TypeEnum.QueryItemType;
 import com.qcloud.component.goods.model.key.TypeEnum.QueryType;
@@ -33,6 +35,7 @@ import com.qcloud.component.goods.service.MerchandiseSpecificationsService;
 import com.qcloud.component.goods.service.MerchandiseVipDiscountService;
 import com.qcloud.component.goods.service.MonthHotSaleService;
 import com.qcloud.component.goods.service.UnifiedMerchandiseService;
+import com.qcloud.component.publicdata.EnableType;
 import com.qcloud.component.publicdata.PublicdataClient;
 import com.qcloud.component.publicdata.model.Classify;
 import com.qcloud.pirates.data.Page;
@@ -103,7 +106,7 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
                 sb.append(merchandiseSpecifications.getValue()).append(" ");
             }
             unifiedMerchandiseEntity.setSpecifications(sb.toString());
-            unifiedMerchandiseEntity.setType(UnifiedMerchandiseType.get(unifiedMerchandise.getType()));
+            unifiedMerchandiseEntity.setType(UnifiedMerchandiseType.Factory.get(unifiedMerchandise.getType()));
             return unifiedMerchandiseEntity;
         }
     }
@@ -282,5 +285,50 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
     public boolean clearUserVipDiscount(long userId) {
 
         return merchandiseVipDiscountService.deleteByUser(userId);
+    }
+
+    @Override
+    public long regUnifiedMerchandise(long unifiedMerchandiseId, int type, String image, double discount, int integral, int stock, long activityId) {
+
+        UnifiedMerchandise rela = unifiedMerchandiseService.get(unifiedMerchandiseId);
+        UnifiedMerchandise unifiedMerchandise = new UnifiedMerchandise();
+        unifiedMerchandise.setActivityId(activityId);
+        unifiedMerchandise.setBrandId(rela.getBrandId());
+        unifiedMerchandise.setCanUseCoupon(EnableType.DISABLE.getKey());
+        unifiedMerchandise.setClickRate(0);
+        unifiedMerchandise.setCode(rela.getCode());
+        unifiedMerchandise.setDiscount(discount);
+        unifiedMerchandise.setGoodEvaluation(0);
+        unifiedMerchandise.setImage(StringUtils.isEmpty(image) ? rela.getImage() : image);
+        unifiedMerchandise.setIntegral(integral);
+        unifiedMerchandise.setKeywords(rela.getKeywords());
+        unifiedMerchandise.setLowEvaluation(0);
+        unifiedMerchandise.setMallClassifyBsid(rela.getMallClassifyBsid());
+        unifiedMerchandise.setMallClassifyId(rela.getMallClassifyId());
+        unifiedMerchandise.setMerchandiseId(rela.getMerchandiseId());
+        unifiedMerchandise.setMerchantClassifyBsid(rela.getMerchantClassifyBsid());
+        unifiedMerchandise.setMerchantClassifyId(rela.getMerchantClassifyId());
+        unifiedMerchandise.setMiddleEvaluation(0);
+        unifiedMerchandise.setName(rela.getName());
+        unifiedMerchandise.setOrder(0);
+        unifiedMerchandise.setPrice(rela.getPrice());
+        unifiedMerchandise.setPurchase(rela.getPurchase());
+        unifiedMerchandise.setRecordTime(new Date());
+        unifiedMerchandise.setRelaUnifiedMerchandiseId(rela.getId());
+        unifiedMerchandise.setSalesVolume(0);
+        unifiedMerchandise.setState(MerchandiseStateType.ONLINE.getKey());
+        unifiedMerchandise.setStock(stock);
+        unifiedMerchandise.setType(type);
+        unifiedMerchandise.setUpdateTime(new Date());
+        unifiedMerchandise.setVirtualSalesVolume(0);
+        unifiedMerchandise.setMerchantId(rela.getMerchantId());
+        unifiedMerchandiseService.add(unifiedMerchandise);
+        return unifiedMerchandise.getId();
+    }
+
+    @Override
+    public long regUnifiedMerchandise(QUnifiedMerchandise um, int type, String image, double discount, int integral, int stock, long activityId) {
+
+        return regUnifiedMerchandise(um.getId(), type, image, discount, integral, stock, activityId);
     }
 }

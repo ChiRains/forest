@@ -12,6 +12,8 @@ public class MsForm {
 
     private double  discount;
 
+    private String  code;
+
     public Long getId() {
 
         return id;
@@ -60,5 +62,15 @@ public class MsForm {
     public void setDiscount(double discount) {
 
         this.discount = discount;
+    }
+
+    public String getCode() {
+
+        return code;
+    }
+
+    public void setCode(String code) {
+
+        this.code = code;
     }
 }

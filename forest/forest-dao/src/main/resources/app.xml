@@ -6,16 +6,22 @@
 		<item name="width">180</item>
 		<item name="height">42</item>
 	</module-list>
-	
-	
+
+
 	<module-list code="pirates-file-service-mode">
-		<item>sdk</item>	
-	</module-list> 
+		<item>sdk</item>
+	</module-list>
 
 	<module-list code="personalcenter_user_account_type">
-		<item key="mobile" enable="true">手机作账号</item>		
+		<item key="mobile" enable="true">手机作账号</item>
 	</module-list>
 	
+	<module-list code="Goods-UnifiedMerchandise-Type">
+		<item key="4" name="秒杀商品"></item>
+	</module-list>
+
+
+
 	<module-list code="seckill-config-setting">
 		<item name="screeningsMinSize">4</item>
 		<item name="payMinutes">30</item>
@@ -24,60 +30,63 @@
 		<item name="killedString">已结束</item>
 		<item name="killName">超级秒杀</item>
 	</module-list>
-	
-	
 
-	<!--begin of 唯一编码设置  -->
+
+
+	<!--begin of 唯一编码设置 -->
 	<module-list code="qi-cloud-UniqueCodeGeneratorConfig">
 		<item>personalcenter-my-coupon-code</item>
 		<item>sellercenter-merchant-code</item>
 		<item>sellercenter-member-code</item>
 	</module-list>
-	
+
 	<module-list code="personalcenter-my-coupon-code">
 		<item type="string">DSL</item>
 		<item type="time">yyyyMMdd</item>
 		<item type="random">000000</item>
 	</module-list>
-	
+
 	<module-list code="sellercenter-merchant-code">
 		<item type="random">000000</item>
 	</module-list>
-	
-	<module-list code="sellercenter-member-code">	
-		<item type="variable">merchant_code</item>	
+
+	<module-list code="sellercenter-member-code">
+		<item type="variable">merchant_code</item>
 		<item type="number">0000</item>
 	</module-list>
-	<!--end of  唯一编码设置-->
+	<!--end of 唯一编码设置 -->
 
-	
-	<!--begin of  发送短信模板配置 -->	
+
+	<!--begin of 发送短信模板配置 -->
 	<module-list code="publicservice-sms-template">
-		<item code="personalcenter-user-sms-template" 						name="用户注册短信验证码模板" >用户注册短信验证码模板</item>
-		<item code="personalcenter-user-sms-fPswTemplate" 					name="用户找回密码短信模板">用户找回密码短信模板</item>
-		<item code="personalcenter-user-safety-sms-template" 				name="用户安全登录短信模板">用户安全登录短信模板</item>	
+		<item code="personalcenter-user-sms-template" name="用户注册短信验证码模板">
+			用户注册短信验证码模板</item>
+		<item code="personalcenter-user-sms-fPswTemplate" name="用户找回密码短信模板">用户找回密码短信模板
+		</item>
+		<item code="personalcenter-user-safety-sms-template" name="用户安全登录短信模板">用户安全登录短信模板
+		</item>
 	</module-list>
-	
-	
-	
+
+
+
 	<module-list code="commoditycenter-pointexchange-message">
 		<item name="title">积分兑好礼</item>
 		<item name="message">每周一更新</item>
-	</module-list>			
-	<!--end of  发送短信模板配置 -->	
-	
+	</module-list>
+	<!--end of 发送短信模板配置 -->
+
 	<module-list code="sellercenter-merchant-admin-account">
 		<item account="admin">所有商家管理员账号</item>
 	</module-list>
-	
+
 	<!-- app首页8个模块 -->
 	<module-list code="forest-app-index-module">
-		<item code="forest-discount"    tips="天天特价 爽不停">折扣专区</item>
-		<item code="forest-brand"       tips="抢大牌、不封顶">品牌特卖</item>
-		<item code="forest-new-person"  tips="50元红包">新人尊享</item>
-		<item code="forest-member" 		tips="不是买药 是买健康">会员特卖</item>
+		<item code="forest-discount" tips="天天特价 爽不停">折扣专区</item>
+		<item code="forest-brand" tips="抢大牌、不封顶">品牌特卖</item>
+		<item code="forest-new-person" tips="50元红包">新人尊享</item>
+		<item code="forest-member" tips="不是买药 是买健康">会员特卖</item>
 	</module-list>
-	
+
 	<module-list code="personalcenter-sign-in-rule">
 		<item name="rule">
 			<![CDATA[
@@ -123,11 +132,11 @@
 		<item sign="90" integral="150"></item>
 		<item sign="180" integral="300"></item>
 	</module-list>
-	
+
 	<module-list code="forest-merchant">
 		<item merchant="1010008000011601">大参林商家id</item>
 	</module-list>
-	
+
 	<module-list code="mailSenderInfo">
 		<item key="mailServerHost">smtp.exmail.qq.com</item>
 		<item key="mailServerPort">25</item>
@@ -137,31 +146,38 @@
 		<item key="mailLocalhost">tgsp.hengqin.gov.cn</item>
 		<item key="mailDebug">false</item>
 	</module-list>
-	
-	
+
+
 	<!-- begin of 后台配置项 -->
 	<module-list code="parameter_config_modular_list">
 		<item code="forest-user-protocol-config" name="会员协议">会员协议</item>
 		<item code="forest-index-modular-config" name="首页广告图和文字配置">首页广告图和文字配置</item>
-		<item code="forest-user-login-tip-message-config" name="冻结用户登录提示配置">冻结用户登录提示配置</item>
+		<item code="forest-user-login-tip-message-config" name="冻结用户登录提示配置">冻结用户登录提示配置
+		</item>
 	</module-list>
-	
+
 	<module-list code="forest-user-protocol-config">
-		<item code="forest-user-protocol"  name="会员协议" type="1" inputType="3">会员协议</item>
+		<item code="forest-user-protocol" name="会员协议" type="1" inputType="3">
+			会员协议</item>
 	</module-list>
-	
+
 	<module-list code="forest-index-modular-config">
-		<item code="forest-seckill-ind-image"  name="秒杀广告图" type="1" inputType="4">秒杀广告图</item>
-		<item code="forest-coupon-ind-image"  name="优惠券广告图" type="1" inputType="4">优惠券广告图</item>
-		<item code="forest-summer-ind-text"  name="促销信息" type="1" inputType="1">促销信息</item>
+		<item code="forest-seckill-ind-image" name="秒杀广告图" type="1"
+			inputType="4">秒杀广告图</item>
+		<item code="forest-coupon-ind-image" name="优惠券广告图" type="1"
+			inputType="4">优惠券广告图</item>
+		<item code="forest-summer-ind-text" name="促销信息" type="1"
+			inputType="1">促销信息</item>
 	</module-list>
-	
+
 	<module-list code="forest-user-login-tip-message-config">
-		<item code="tip-message"      name="提示内容" type="1" inputType="1">提示内容</item>
-		<item code="contacts-mobile"  name="客服电话" type="1" inputType="1">客服电话</item>
+		<item code="tip-message" name="提示内容" type="1" inputType="1">提示内容
+		</item>
+		<item code="contacts-mobile" name="客服电话" type="1" inputType="1">客服电话
+		</item>
 	</module-list>
-	<!--  end  of 后台配置项 -->
-	
-	
-	
+	<!-- end of 后台配置项 -->
+
+
+
 </xml>

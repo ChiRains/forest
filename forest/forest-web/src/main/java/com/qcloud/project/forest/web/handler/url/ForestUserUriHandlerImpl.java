@@ -45,6 +45,8 @@ public class ForestUserUriHandlerImpl extends AbstractUriHandler {
         list.add("/forestUser/sendSafetyCode.do");
         list.add("/forestUser/getCodeForChangeBingdingMobileByNewNumber.do");
         // =========================================
+        list.add("/app/forestUser/safetyLogin.do");
+        list.add("/app/forestUser/sendSafetyCode.do");
         list.add("/app/forestUser/getCodeForChangeBingdingMobileByNewNumber.do");
         return list;
     }
@@ -54,6 +56,7 @@ public class ForestUserUriHandlerImpl extends AbstractUriHandler {
 
         List<String> list = new ArrayList<String>();
         list.add("/app/forestUser/safetyLogin.do");
+        list.add("/app/forestUser/sendSafetyCode.do");
         list.add("/app/forestUser/getCodeForChangeBingdingMobileByOldNumber.do");
         list.add("/app/forestUser/verifyCodeForChangeBingdingMobileByOldNumber.do");
         list.add("/app/forestUser/editBingdingMobile.do");

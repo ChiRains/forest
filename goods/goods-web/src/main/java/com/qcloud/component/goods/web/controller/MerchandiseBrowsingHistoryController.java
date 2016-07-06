@@ -40,4 +40,34 @@ public class MerchandiseBrowsingHistoryController {
         view.addObject("list", voList);
         return view;
     }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView clearMyList(HttpServletRequest request) {
+
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        List<MerchandiseBrowsingHistory> list = merchandiseBrowsingHistoryService.listByUser(user.getId(), 0, Integer.MAX_VALUE);
+        for (MerchandiseBrowsingHistory merchandiseBrowsingHistory : list) {
+            merchandiseBrowsingHistoryService.delete(merchandiseBrowsingHistory.getId());
+        }
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("清空我的浏览记录成功.");
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView remove(HttpServletRequest request, Long historyId) {
+
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        List<MerchandiseBrowsingHistory> list = merchandiseBrowsingHistoryService.listByUser(user.getId(), 0, Integer.MAX_VALUE);
+        for (MerchandiseBrowsingHistory merchandiseBrowsingHistory : list) {
+            if (historyId == merchandiseBrowsingHistory.getId()) {
+                merchandiseBrowsingHistoryService.delete(merchandiseBrowsingHistory.getId());
+            }
+        }
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("删除我的浏览记录成功.");
+        return view;
+    }
 }

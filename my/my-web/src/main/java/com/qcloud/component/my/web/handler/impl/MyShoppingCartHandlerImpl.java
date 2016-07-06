@@ -110,14 +110,7 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
         vo.setPrice(NumberUtil.scale(unifiedMerchandise.getPrice(), 2));
         vo.setSpecifications(unifiedMerchandise.getSpecifications());
         vo.setStock(unifiedMerchandise.getStock());
-        UnifiedMerchandiseType merchandiseType = unifiedMerchandise.getType();
-        if (UnifiedMerchandiseType.SINGLE.equals(merchandiseType)) {
-            vo.setMerchandiseType(1);
-        } else if (UnifiedMerchandiseType.COMBINATION.equals(merchandiseType)) {
-            vo.setMerchandiseType(2);
-        } else if (UnifiedMerchandiseType.MARKETING.equals(merchandiseType)) {
-            vo.setMerchandiseType(1);
-        }
+        vo.setMerchandiseType(unifiedMerchandise.getType().getKey());
         MyCollection myCollection = myCollectionService.getByObject(myShoppingCart.getUnifiedMerchandiseId(), myShoppingCart.getUserId(), CollectionType.MERCHANDISE);
         vo.setCollect(myCollection != null);
         vo.setUnit(unifiedMerchandise.getUnit());
