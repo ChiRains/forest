@@ -10,20 +10,8 @@ public class SlideVO {
 
     private String desc;
 
-    private String title;
-
     public SlideVO() {
 
-    }
-
-    public String getTitle() {
-
-        return title;
-    }
-
-    public void setTitle(String title) {
-
-        this.title = title;
     }
 
     public void setClickUrl(String clickUrl) {
