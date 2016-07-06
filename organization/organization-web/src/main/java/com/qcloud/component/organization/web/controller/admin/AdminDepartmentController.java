@@ -187,7 +187,6 @@ public class AdminDepartmentController {
 
         QClerk clerk = PageParameterUtil.getParameterValues(request, organizationClient.CLERK_LOGIN_PARAMETER_KEY);
         // QDepartment qDepartment = organizationClient.getByManager(clerk.getId());
-        List<AdminPlatformTypeVO> typeList = new ArrayList<AdminPlatformTypeVO>();
         Department d = departmentService.get(clerk.getDepartmentId());
         List<Department> dlist = departmentService.listChildrenByParent(query, d.getBsid());
         int root = 0;// 是否存在根节点0否1是
@@ -196,7 +195,7 @@ public class AdminDepartmentController {
                 root = 1;
             }
         }
-        typeList = this.typeList(d.getId());
+        List<AdminPlatformTypeVO> typeList = this.typeList(d.getId());
         ModelAndView model = new ModelAndView("/admin/organization-Department-add");
         // List<Department> departmentList = departmentService.listAll();
         // model.addObject("departmentList", departmentList);
@@ -212,6 +211,8 @@ public class AdminDepartmentController {
     @RequestMapping
     public AceAjaxView add(Department department) {
 
+        List<AdminPlatformTypeVO> typeList = this.typeList(department.getParentId());
+        AssertUtil.assertTrue(typeList.size()>0, "该节点是最低层节点,不能再添加子节点.");
         department.setManager(Long.valueOf(-1));
         department.setRegistTime(new Date());
         if (StringUtils.isNotEmpty(department.getImage())) {
