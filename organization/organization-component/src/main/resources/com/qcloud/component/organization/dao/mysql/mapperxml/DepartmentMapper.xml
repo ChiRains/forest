@@ -25,4 +25,24 @@
      <select id="listByParent" parameterType="java.util.HashMap" resultType="Department">  
         select * from `organization_department` where 1=1 and parentId = #{parentId} and bsid like CONCAT(#{bsid},'%') order by bsid        
     </select>
+    
+    <select id="getByManager" parameterType="java.util.HashMap" resultType="Department">  
+        select * from `organization_department` where 1=1 and manager=#{manager}        
+    </select>
+    
+    <select id="listChildrenByParent" parameterType="java.util.HashMap" resultType="Department">  
+        select * from `organization_department` where 1=1 and bsid like CONCAT(#{bsid},'%')
+        <if test="displayName != null">
+        	and `displayName` like concat('%',#{displayName},'%') 
+        </if>
+        order by bsid        
+    </select>
+    
+    <select id="countChildrenByParent" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `organization_department` where 1=1 and bsid like CONCAT(#{bsid},'%')
+        <if test="displayName != null">
+        	and `displayName` like concat('%',#{displayName},'%') 
+        </if>
+    </select> 
+    
 </mapper>

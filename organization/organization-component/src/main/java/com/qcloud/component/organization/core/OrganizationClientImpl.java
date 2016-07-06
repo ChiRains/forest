@@ -518,4 +518,11 @@ public class OrganizationClientImpl implements OrganizationClient {
         DepartmentEntity pe = getDepartment(parent);
         return new DepartmentEntity(department, pe);
     }
+
+    @Override
+    public QDepartment getByManager(long manager) {
+
+        Department department = departmentService.getByManager(manager);
+        return getDepartment(department);
+    }
 }

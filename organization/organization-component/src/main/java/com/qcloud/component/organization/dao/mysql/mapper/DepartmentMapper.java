@@ -13,14 +13,14 @@ import com.qcloud.component.organization.model.query.DepartmentQuery;
 
 public interface DepartmentMapper {
 
-	@Insert("insert into `organization_department`(`id`,`parentId`,`bsid`,`name`,`manager`,`displayName`,`province`,`city`,`district`,`address`,`longitude`,`latitude`,`type`,`code`,`image`,`registTime`)"
-			+ " values(#{id},#{parentId},#{bsid},#{name},#{manager},#{displayName},#{province},#{city},#{district},#{address},#{longitude},#{latitude},#{type},#{code},#{image},#{registTime})")
+	@Insert("insert into `organization_department`(`id`,`parentId`,`bsid`,`name`,`manager`,`displayName`,`province`,`city`,`district`,`address`,`longitude`,`latitude`,`type`,`code`,`image`,`registTime`,`phone`)"
+			+ " values(#{id},#{parentId},#{bsid},#{name},#{manager},#{displayName},#{province},#{city},#{district},#{address},#{longitude},#{latitude},#{type},#{code},#{image},#{registTime},#{phone})")
 	public void insert(Department department);
 
 	@Select("select * from `organization_department` where `id`=#{id}")
 	public Department get(Long id);
 
-	@Update("update `organization_department` set `parentId`=#{parentId},`bsid`=#{bsid},`name`=#{name},`manager`=#{manager},`displayName`=#{displayName},`province`=#{province},`city`=#{city},`district`=#{district},`address`=#{address},`longitude`=#{longitude},`latitude`=#{latitude},`type`=#{type},`code`=#{code},`image`=#{image},`registTime`=#{registTime} where `id`=#{id}")
+	@Update("update `organization_department` set `parentId`=#{parentId},`bsid`=#{bsid},`name`=#{name},`manager`=#{manager},`displayName`=#{displayName},`province`=#{province},`city`=#{city},`district`=#{district},`address`=#{address},`longitude`=#{longitude},`latitude`=#{latitude},`type`=#{type},`code`=#{code},`image`=#{image},`registTime`=#{registTime},`phone`=#{phone} where `id`=#{id}")
 	public void update(Department department);
 
 	@Delete("delete from `organization_department` where `id`=#{id}")

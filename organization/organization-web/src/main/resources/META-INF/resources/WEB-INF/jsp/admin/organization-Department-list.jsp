@@ -56,7 +56,7 @@
                     <div class="col-xs-8">
                         <div class="text-right">
                             <label>
-                                <form id="query-form" action="#admin/department/list" onsubmit="listFormSearch(this); return false">
+                                <form  action="#admin/department/list" onsubmit="listFormSearch(this); return false">
                                     <div class="dataTables_length">            	                                      		                              
 	                                   	<span class="input-group-btn">	                                   	    
 								            <input type="search" maxlength="6" class="form-control search-query" placeholder="名称" name="displayName" value="${query.displayName}">

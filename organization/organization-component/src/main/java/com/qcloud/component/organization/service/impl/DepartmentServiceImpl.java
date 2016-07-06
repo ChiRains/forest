@@ -100,4 +100,22 @@ public class DepartmentServiceImpl implements DepartmentService {
         AssertUtil.assertNotNull(department, "部门不存在." + parentId);
         return departmentDao.listByParent(parentId, department.getBsid());
     }
+
+    @Override
+    public Department getByManager(long manager) {
+
+        return departmentDao.getByManager(manager);
+    }
+
+    @Override
+    public List<Department> listChildrenByParent(DepartmentQuery query,String bsid) {
+
+        return departmentDao.listChildrenByParent(query,bsid);
+    }
+
+    @Override
+    public int countChildrenByParent(DepartmentQuery query,String bsid) {
+
+        return departmentDao.countChildrenByParent(query,bsid);
+    }
 }

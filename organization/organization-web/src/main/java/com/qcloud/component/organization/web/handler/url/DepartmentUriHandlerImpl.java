@@ -19,6 +19,7 @@ public class DepartmentUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/department/edit.do");
         list.add("/department/list.do");
         list.add("/admin/department/delete.do");
+        list.add("/admin/department/platformTypeList.do");
         return list;
     }
 

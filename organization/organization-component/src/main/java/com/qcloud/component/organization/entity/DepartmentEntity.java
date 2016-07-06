@@ -82,9 +82,7 @@ public class DepartmentEntity implements QDepartment {
     @Override
     public String getPhone() {
 
-        // TODO
-        return null;
-        // return department.getPhone();
+         return department.getPhone();
     }
 
     @Override
