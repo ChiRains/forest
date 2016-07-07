@@ -108,9 +108,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public List<Department> listChildrenByParent(DepartmentQuery query,String bsid) {
+    public List<Department> listChildrenByParent(DepartmentQuery query,String bsid,int start, int count) {
 
-        return departmentDao.listChildrenByParent(query,bsid);
+        return departmentDao.listChildrenByParent(query,bsid,start,count);
     }
 
     @Override

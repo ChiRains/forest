@@ -62,7 +62,7 @@ public class AdminDepartmentController {
     private OrganizationClient     organizationClient;
 
     /**
-     * 
+     * 根据parentId获取type
      * @param parentId
      * @return
      */
@@ -162,28 +162,113 @@ public class AdminDepartmentController {
         view.addObject("list", list);
         return view;
     }
-    
+
+    /**
+     * 给superman用   begin
+     */
     @RequestMapping
     @NoReferer
-    public ModelAndView superList(PPage pPage, DepartmentQuery query) {
+    public ModelAndView list4Super(PPage pPage, DepartmentQuery query) {
 
-         Page<Department> page = departmentService.page(query, pPage.getPageStart() , pPage.getPageSize());
+        Page<Department> page = departmentService.page(query, pPage.getPageStart(), pPage.getPageSize());
         List<AdminDepartmentVO> voList = departmentHandler.toVOList4Admin(page.getData());
         String param = "displayName=" + StringUtil.nullToEmpty(query.getDisplayName());
-        AcePagingView pagingView = new AcePagingView("/admin/organization-Department-list", DIR + "/list?" + param, pPage.getPageNum(), pPage.getPageSize(), page.getCount());
+        AcePagingView pagingView = new AcePagingView("/admin/organization-Department-list4Super", DIR + "/list4Super?" + param, pPage.getPageNum(), pPage.getPageSize(), page.getCount());
         pagingView.addObject("result", voList);
         pagingView.addObject("query", query);
         return pagingView;
     }
 
+    @RequestMapping
+    public ModelAndView toAdd4Super(DepartmentQuery query) {
 
+        List<AdminPlatformTypeVO> typeList = new ArrayList<AdminPlatformTypeVO>();
+        ModelAndView model = new ModelAndView("/admin/organization-Department-add4Super");
+        List<Department> departmentList = departmentService.listAll();
+        int root = 0;// 是否存在根节点0否1是
+        for (Department department : departmentList) {
+            if (department.getParentId() == -1) {
+                root = 1;
+            }
+        }
+        if (root == 1) {// 如果存在根目录，superman只能添加根目录以下的节点
+            typeList = this.typeList(departmentList.get(0).getId());
+        } else {// 否则，只能先添加根目录
+            typeList = this.typeList(-1L);
+        }
+        model.addObject("departmentList", departmentList);
+        model.addObject("typeList", typeList);
+        model.addObject("root", root);
+        List<String> provinceList = publicdataClient.listProvince();
+        List<KeyValueVO> voList = publicdataClient.exchageStr(provinceList, null, null);
+        model.addObject("provinceList", voList);
+        return model;
+    }
+
+    @RequestMapping
+    public AceAjaxView add4Super(Department department) {
+
+        department.setManager(Long.valueOf(-1));
+        department.setRegistTime(new Date());
+        if (StringUtils.isNotEmpty(department.getImage())) {
+            department.setImage(fileSDKClient.uidToUrl(department.getImage()));
+        }
+        departmentService.add(department);
+        AceAjaxView aceAjaxView = new AceAjaxView();
+        aceAjaxView.setMessage("添加成功");
+        aceAjaxView.setUrl(DIR + "/list4Super");
+        return aceAjaxView;
+    }
+
+    @RequestMapping
+    public ModelAndView toEdit4Super(Long id) {
+
+        AssertUtil.assertNotNull(id, "ID不能为空");
+        Department department = departmentService.get(id);
+        AdminDepartmentVO adminDepartmentVO = departmentHandler.toVO4Admin(department);
+        ModelAndView model = new ModelAndView("/admin/organization-Department-edit");
+        model.addObject("department", adminDepartmentVO);
+        List<String> list = publicdataClient.listProvince();
+        List<String> cityList = publicdataClient.listCity(adminDepartmentVO.getProvince());
+        List<String> districtList = publicdataClient.listDistrict(adminDepartmentVO.getCity());
+        model.addObject("provinceList", publicdataClient.exchageStr(list, adminDepartmentVO.getProvince(), "selected"));
+        model.addObject("cityList", publicdataClient.exchageStr(cityList, adminDepartmentVO.getCity(), "selected"));
+        model.addObject("districtList", publicdataClient.exchageStr(districtList, adminDepartmentVO.getDistrict(), "selected"));
+        return model;
+    }
+
+    @RequestMapping
+    public AceAjaxView edit4Super(Department department) {
+
+        Department oldDepartment = departmentService.get(department.getId());
+        if (StringUtils.isNotEmpty(department.getImage())) {
+            department.setImage(fileSDKClient.uidToUrl(department.getImage()));
+        }
+        department.setName(department.getName());
+        department.setType(oldDepartment.getType());
+        department.setBsid(oldDepartment.getBsid());
+        department.setCode(oldDepartment.getCode());
+        department.setParentId(oldDepartment.getParentId());
+        department.setManager(oldDepartment.getManager());
+        department.setDisplayName(oldDepartment.getDisplayName());
+        department.setRegistTime(oldDepartment.getRegistTime());
+        departmentService.update(department);
+        AceAjaxView aceAjaxView = new AceAjaxView();
+        aceAjaxView.setMessage("编辑成功");
+        aceAjaxView.setUrl(DIR + "/list4Super");
+        return aceAjaxView;
+    }
+
+    /**
+     * 给superman用  end
+     */
     @RequestMapping
     @NoReferer
     public ModelAndView list(HttpServletRequest request, PPage pPage, DepartmentQuery query) {
 
         QClerk clerk = PageParameterUtil.getParameterValues(request, organizationClient.CLERK_LOGIN_PARAMETER_KEY);
         Department d = departmentService.get(clerk.getDepartmentId());
-        List<Department> list = departmentService.listChildrenByParent(query, d.getBsid());
+        List<Department> list = departmentService.listChildrenByParent(query, d.getBsid(), pPage.getPageStart(), pPage.getPageSize());
         int total = departmentService.countChildrenByParent(query, d.getBsid());
         // Page<Department> page = departmentService.page(query, pPage.getPageStart() , pPage.getPageSize());
         List<AdminDepartmentVO> voList = departmentHandler.toVOList4Admin(list);
@@ -199,7 +284,7 @@ public class AdminDepartmentController {
 
         QClerk clerk = PageParameterUtil.getParameterValues(request, organizationClient.CLERK_LOGIN_PARAMETER_KEY);
         Department d = departmentService.get(clerk.getDepartmentId());
-        List<Department> dlist = departmentService.listChildrenByParent(query, d.getBsid());
+        List<Department> dlist = departmentService.listChildrenByParent(query, d.getBsid(), 0, Integer.MAX_VALUE);
         int root = 0;// 是否存在根节点0否1是
         for (Department department : dlist) {
             if (department.getParentId() == -1) {
@@ -223,7 +308,7 @@ public class AdminDepartmentController {
     public AceAjaxView add(Department department) {
 
         List<AdminPlatformTypeVO> typeList = this.typeList(department.getParentId());
-        AssertUtil.assertTrue(typeList.size()>0, "该节点是最低层节点,不能再添加子节点.");
+        AssertUtil.assertTrue(typeList.size() > 0, "该节点是最低层节点,不能再添加子节点.");
         department.setManager(Long.valueOf(-1));
         department.setRegistTime(new Date());
         if (StringUtils.isNotEmpty(department.getImage())) {

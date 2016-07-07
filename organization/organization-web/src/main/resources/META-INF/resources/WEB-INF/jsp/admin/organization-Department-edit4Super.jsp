@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>新增组织结构</title>
+<title>编辑组织结构</title>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/colorbox.css"/>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/chosen.css" />
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
-        组织结构管理
+       组织结构管理
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
-            新增
+            编辑
         </small>
     </h1>
 </div><!-- /.page-header -->
@@ -19,69 +19,37 @@
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
-        <form id="model-form" class="form-horizontal"  role="form" action="/admin/department/add.do">
+        <form id="model-form" class="form-horizontal"  role="form" action="/admin/department/edit4Super.do">
             <!-- #section:elements.form -->
-      					<div class="space-4"></div>
+			<input type="hidden" name="id" value="${department.id}">
+			
+                  		<div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="name"> 名称 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="name" name="name" placeholder="名称" value=""/>
+						<input type="text" class="width-100" maxlength="20" id="name" name="name" placeholder="名称" value="${department.name}"/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
             </div>
             
-      					<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="displayName"> 父节点 </label>
-                <div class="col-sm-9">
-                	<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-	                	<select class="chosen-select" id="parentId" name="parentId" data-placeholder="请选择父节点">
-	                		<c:if test="${root eq 0}">
-	                			<option value="-1">默认根节点</option>
-	                		</c:if>
-	                		<c:forEach items="${departmentList}" var="item" varStatus="current">
-	                			<option value="${item.id}">${item.displayName}</option>
-	                		</c:forEach>
-	                	</select>
-                	</span>
-                </div>
-            </div>
-            
-            
-            
-      					<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="type"> 类型 </label>
-                <div class="col-sm-9">
-                	<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-	                	<select  class="form-control" id="type" name="type" >
-	                		<c:forEach items="${typeList}" var="item" varStatus="current">
-	                			<option value="${item.type}">${item.name}</option>
-	                		</c:forEach>  
-	                	</select>
-                	</span>
-                </div>
-            </div>
-            
-            
-            			<div class="space-4"></div>
+            		<div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="image"> 缩略图 </label>
                 <div class="col-sm-9">
 		    	<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-					<input type="hidden" id="image" name="image" value=""/>
+					<input type="hidden" id="image" name="image" value="${department.imageUid}"/>
                     	<button type="button" mult="false" sid="image" vid="pic2-pic-view" class="btn btn-sm btn-purple btn-upload-pic1" upfrom="0">
                         <i class="ace-icon fa fa-upload"></i> 上 传
                     	</button>
                     <ul sid="image" id="pic2-pic-view" class="ace-thumbnails clearfix">
-                    	
+                    	<img src="${department.image}" width="120" height="80"/>
                     </ul>
 		    	</span>
                 </div>
             </div> 
-                  		<div class="space-4"></div>
+            			<div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="province"> 省份 </label>
                 <div class="col-sm-9">
@@ -89,7 +57,7 @@
 					 	<select class="form-control" id="province" name="province">
 					 		  <option value="" selected>请选择一个省份</option>
 	                          <c:forEach items="${provinceList}" var="item" varStatus="current"> 
-			                  	 <option value="${item.key}" ${item.message}>${item.value}</option>
+			                  	 <option <c:if test="${department.province eq item.key}"> selected </c:if> value="${item.key}" ${item.message}>${item.value}</option>
 			                  </c:forEach> 
 			             </select> 	
 					</span>
@@ -103,7 +71,7 @@
 						 <select class="form-control" id="city" name="city">
 					 		  <option value="" selected>请选择一个市</option>
 	                          <c:forEach items="${cityList}" var="item" varStatus="current"> 
-			                  	 <option value="${item.key}" ${item.message}>${item.value}</option>
+			                  	 <option <c:if test="${department.city eq item.key}"> selected </c:if> value="${item.key}" ${item.message}>${item.value}</option>
 			                  </c:forEach> 
 			             </select> 	
 					</span>
@@ -115,54 +83,54 @@
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">						
 						 <select class="form-control" id="district" name="district">
-					 		  <option value="" selected>请选择一个市</option>
+					 		  <option value="" selected>请选择一个区</option>
 	                          <c:forEach items="${districtList}" var="item" varStatus="current"> 
-			                  	 <option value="${item.key}" ${item.message}>${item.value}</option>
+			                  	 <option <c:if test="${department.district eq item.key}"> selected </c:if> value="${item.key}" ${item.message}>${item.value}</option>
 			                  </c:forEach> 
 			             </select> 
 					</span>
                 </div>
             </div>
-            			<div class="space-4"></div>
+                  		<div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="address"> 详细地址 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="address" name="address" placeholder="详细地址" value=""/>
+						<input type="text" class="width-100" maxlength="20" id="address" name="address" placeholder="详细地址" value="${department.address}"/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
             </div>
             
-           				<div class="space-4"></div>
+            <div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right"> 经纬度 </label>
 
                 <div class="col-sm-9">
                     <span class="">
-                        <input type="text" readonly name="longitude" id="longitude" value="">
+                        <input type="text" readonly name="longitude" id="longitude" value="${department.longitude}">
                     </span>
                     <span class="">
-                        <input type="text" readonly name="latitude" id="latitude" value="">
+                        <input type="text" readonly name="latitude" id="latitude" value="${department.latitude}">
                     </span>
                     <span class="btn btn-sm btn-info" id="getPoint">
                          <i class="ace-icon glyphicon glyphicon-map-marker"></i>
                     </span>
                 </div>
-            </div>
+            </div>        
             
-            			<div class="space-4"></div>
+            		<div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="phone"> 联系方式 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="phone" name="phone" placeholder="联系方式" value=""/>
+						<input type="text" class="width-100" maxlength="20" id="phone" name="phone" placeholder="联系方式" value="${department.phone}"/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
-            </div>         
-
-            			<div class="space-4"></div>
+            </div> 
+            
+            <div class="space-4"></div>
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
                     <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>&nbsp;保&nbsp;存&nbsp;</button>
@@ -182,7 +150,6 @@
     ace.load_ajax_scripts(scripts, function () {
         //inline scripts related to this page
         jQuery(function ($) {
-        	$('.chosen-select').chosen({allow_single_deselect:true});
             $(window)
             .off('resize.chosen')
             .on('resize.chosen', function() {
@@ -192,7 +159,7 @@
                 })
             }).trigger('resize.chosen');
             
-              //初始化图片浏览
+             //初始化图片浏览
             $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
             $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange'></i>");
 
@@ -350,27 +317,7 @@
                     }]
                 });
             });
-              
-              
-            $("#parentId").change(function(){
-            	var key=$(this).val();
-            	$.ajax({
-					url:'/admin/department/platformTypeList.do',
-					data:{parentId:key},
-					dataType:'json',
-					type:'post',
-					success:function(result){
-						var html ="";
-						var data=result.data;
-						for(var i=0;i<data.list.length;i++){
-							//alert(data.list[i].name);		
-							html+="<option value='"+data.list[i].type+"'>"+data.list[i].name+"</option>";	
-						}
-						$("#type").html(html);
-						
-					}            	
-            	});
-            });       
+                   
             //表单验证
             $("#model-form").validate({
                 errorElement: 'div',
@@ -384,7 +331,7 @@
                         required: true,
                         digits:true
                     },
-					 address: {
+					address: {
                         required: true
                     },
                     sort: {

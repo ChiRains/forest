@@ -36,6 +36,7 @@
         	and `displayName` like concat('%',#{displayName},'%') 
         </if>
         order by bsid        
+        limit #{start},#{count}
     </select>
     
     <select id="countChildrenByParent" parameterType="java.util.HashMap" resultType="Integer">  

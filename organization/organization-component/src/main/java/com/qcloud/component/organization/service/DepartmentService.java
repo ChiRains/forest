@@ -25,7 +25,7 @@ public interface DepartmentService {
     
     public Department getByManager(long manager);
     
-    public List<Department> listChildrenByParent(DepartmentQuery query,String bsid);
+    public List<Department> listChildrenByParent(DepartmentQuery query,String bsid,int start, int count);
     
     public int countChildrenByParent(DepartmentQuery query,String bsid);
 }
