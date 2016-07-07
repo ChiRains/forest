@@ -203,6 +203,7 @@
 	
 	<module-list code="publicdata-dictionary-key-list">	
 		<item type="a" name="测试key"></item>	
+		<item type="b" name="测试key2"></item>	
 	</module-list>
 	
 

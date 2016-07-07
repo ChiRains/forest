@@ -132,6 +132,7 @@ public class AdminSlideController {
         slideService.update(slide);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("操作成功");
+        aceAjaxView.setUrl(DIR + "/list");
         return aceAjaxView;
     }
 }

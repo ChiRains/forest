@@ -39,8 +39,14 @@
                     <div class="col-xs-6">
                         <form id="query-form" action="#admin/dataDictionary/list" onsubmit="listFormSearch(this); return false">
                         	<div class="dataTables_length" style="float:right;">
-                        			<input type="search" maxlength="11" class="form-control search-query"
-                                       placeholder="类型" name="type" value="${query.type}">
+                                    <select class="form-control" id="type" name="type">
+					                    <option value="" selected="selected">请选择类型</option>
+					                    <c:forEach items="${types}" var="item"  varStatus="current">
+					                      <c:forEach items="${item}" var="map"  varStatus="current">
+					                      	<option value="${map.key}" <c:if test="${query.type==map.key}">selected</c:if>> ${map.value}</option>
+					                      </c:forEach>
+					                     </c:forEach>
+				                  	</select>
                            			<input type="search" maxlength="11" class="form-control search-query"
                                        placeholder="显示名称" name="value" value="${query.value}">
                                		<button type="submit" class="btn btn-purple btn-sm">
