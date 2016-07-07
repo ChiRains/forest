@@ -28,7 +28,14 @@
                 <label class="col-sm-3 control-label no-padding-right" for="type"> 类型 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="100" id="type" name="type" placeholder="类型" value="${dataDictionary.type}"/>
+                        <select class="form-control" id="type" name="type">
+	                    <option value="" selected="selected">请选择类型</option>
+	                    <c:forEach items="${types}" var="item"  varStatus="current">
+	                      <c:forEach items="${item}" var="map"  varStatus="current">
+	                      	<option value="${map.key}" <c:if test="${dataDictionary.type==map.key}">selected</c:if>> ${map.value}</option>
+	                      </c:forEach>
+	                     </c:forEach>
+	                  	</select>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
