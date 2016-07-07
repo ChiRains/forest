@@ -103,7 +103,7 @@
                      $this.next().css({'width': $this.parent().width()});
                 })
             }).trigger('resize.chosen');
-                   
+
             //表单验证
             $("#model-form").validate({
                 errorElement: 'div',
