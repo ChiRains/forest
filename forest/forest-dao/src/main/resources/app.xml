@@ -20,8 +20,6 @@
 		<item key="4" name="秒杀商品"></item>
 	</module-list>
 
-
-
 	<module-list code="seckill-config-setting">
 		<item name="screeningsMinSize">4</item>
 		<item name="payMinutes">30</item>
@@ -31,13 +29,13 @@
 		<item name="killName">超级秒杀</item>
 	</module-list>
 
-
-
 	<!--begin of 唯一编码设置 -->
 	<module-list code="qi-cloud-UniqueCodeGeneratorConfig">
 		<item>personalcenter-my-coupon-code</item>
 		<item>sellercenter-merchant-code</item>
 		<item>sellercenter-member-code</item>
+		<item>organization-org-code</item>
+		<item>organization-clerk-code</item>
 	</module-list>
 
 	<module-list code="personalcenter-my-coupon-code">
@@ -179,5 +177,33 @@
 	<!-- end of 后台配置项 -->
 
 
+	<module-list code="organization-org-code">
+		<item type="random">000000</item>
+	</module-list>
+		
+	<module-list code="organization-clerk-code">			
+		<item type="random">00000000</item>
+	</module-list>
+	
+	<module-list code="clerk-default-password">
+		<item key="pwd">654321</item>
+	</module-list>
+	
+	<module-list code="organization-platform-type-config">	
+		<item type="1" name="平台" parent="-1"></item>	
+		<item type="2" name="单位" parent="1"></item>	
+		<item type="3" name="子单位" parent="2"></item>	
+		<item type="4" name="部门" parents="organization-platform-type-p4"></item>	
+	</module-list>
+	
+	<module-list code="organization-platform-type-p4">	
+		<item parent="2"></item>	
+		<item parent="3"></item>			
+	</module-list>
+	
+	<module-list code="publicdata-dictionary-key-list">	
+		<item key="a" name="测试key"></item>	
+	</module-list>
+	
 
 </xml>
