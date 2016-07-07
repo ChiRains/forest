@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.CommoditycenterClient;
 import com.qcloud.component.goods.QUnifiedMerchandise;
 import com.qcloud.component.goods.UnifiedMerchandiseType;
@@ -54,6 +55,9 @@ public class AdminCombinationMerchandiseController {
     @Autowired
     private PublicdataClient                  publicdataClient;
 
+    @Autowired
+    private FileSDKClient                     fileSDKClient;
+
     @RequestMapping
     @NoReferer
     public ModelAndView list(PPage pPage, HttpServletRequest request) {
@@ -96,7 +100,7 @@ public class AdminCombinationMerchandiseController {
                     data.setStock(combinationMerchandise.getStock());
                 }
                 if (data.getImage() != combinationMerchandise.getImage()) {
-                    data.setImage(combinationMerchandise.getImage());
+                    data.setImage(fileSDKClient.uidToUrl(combinationMerchandise.getImage()));
                 }
                 unifiedMerchandiseService.update(data);
                 // 删除组合商品
