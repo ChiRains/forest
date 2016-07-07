@@ -202,7 +202,7 @@
 	</module-list>
 	
 	<module-list code="publicdata-dictionary-key-list">	
-		<item key="a" name="测试key"></item>	
+		<item type="a" name="测试key"></item>	
 	</module-list>
 	
 
