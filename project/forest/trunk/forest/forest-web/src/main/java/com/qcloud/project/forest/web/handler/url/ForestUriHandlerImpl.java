@@ -10,6 +10,7 @@ public class ForestUriHandlerImpl extends AbstractUriHandler {
     public List<String> adminUris() {
 
         List<String> list = new ArrayList<String>();
+        list.add("/admin/forest/advertiseSetting.do");
         return list;
     }
 

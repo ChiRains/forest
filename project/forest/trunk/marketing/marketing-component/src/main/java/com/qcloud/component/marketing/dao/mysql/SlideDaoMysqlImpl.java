@@ -76,6 +76,7 @@ public class SlideDaoMysqlImpl implements SlideDao {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("start", start);
         param.put("count", count);
+        param.put("sence", query.getSence());
         List<Slide> list = sqlOperator.selectList("com.qcloud.component.marketing.dao.mysql.mapper.SlideMapper.list4query", param);
         int total = sqlOperator.selectOne("com.qcloud.component.marketing.dao.mysql.mapper.SlideMapper.count4query", param);
         Page<Slide> page = new Page<Slide>();
