@@ -6,5 +6,151 @@
 		<item name="澳大利亚邮政">auspost</item>
 		<item name="AAE">aae</item>
 		<item name="安信达">anxindakuaixi</item>
+		<item name="百世汇通">huitongkuaidi</item>
+		<item name="百福东方">baifudongfang</item>
+		<item name="BHT">bht</item>
+		<item name="包裹/平邮/挂号信">youzhengguonei</item>
+		<item name="邦送物流">bangsongwuliu</item>
+		<item name="希伊艾斯">cces</item>
+		<item name="中国东方">coe</item>
+		<item name="传喜物流">chuanxiwuliu</item>
+		<item name="大田物流">datianwuliu</item>
+		<item name="德邦物流">debangwuliu</item>
+		<item name="DPEX">dpex</item>
+		<item name="DHL-中国件">dhl</item>
+		<item name="DHL-国际件">dhlen</item>
+		<item name="DHL-德国件">dhlde</item>
+		<item name="D速快递">dsukuaidi</item>
+		<item name="递四方">disifang</item>
+		<item name="ems">EMS</item>
+		
+		<item name="EMS-（中国-国际）">emsguoji</item>
+		<item name="Fedex">fedex</item>
+		<item name="飞康达物流">feikangda</item>
+		<item name="飞快达">feikuaida</item>
+		<item name="凡客如风达">rufengda</item>
+		<item name="风行天下">fengxingtianxia</item>
+		<item name="飞豹快递">feibaokuaidi</item>
+		
+		<item name="港中能达">ganzhongnengda</item>
+		<item name="国通快递">guotongkuaidi</item>
+		<item name="广东邮政">guangdongyouzhengwuliu</item>
+		<item name="挂号信">youzhengguonei</item>
+		<item name="国内邮件">youzhengguonei</item>
+		<item name="国际邮件">youzhengguoji</item>
+		<item name="GLS">gls</item>
+		<item name="共速达">gongsuda</item>
+		
+		<item name="汇通快运">huitongkuaidi</item>
+		<item name="汇强快递">huiqiangkuaidi</item>
+		<item name="华宇物流">tiandihuayu</item>
+		<item name="恒路物流">hengluwuliu</item>
+		<item name="华夏龙">huaxialongwuliu</item>
+		<item name="海航天天">tiantian</item>
+		<item name="海外环球">haiwaihuanqiu</item>
+		<item name="河北建华">hebeijianhua</item>
+		<item name="海盟速递">haimengsudi</item>
+		<item name="华企快运">huaqikuaiyun</item>
+		<item name="山东海红">haihongwangsong</item>
+		
+		<item name="佳吉物流">jiajiwuliu</item>
+		<item name="佳怡物流">jiayiwuliu</item>
+		<item name="加运美">jiayunmeiwuliu</item>
+		<item name="京广速递">jinguangsudikuaijian</item>
+		<item name="急先达">jixianda</item>
+		<item name="晋越快递">jinyuekuaidi</item>
+		<item name="捷特快递">jietekuaidi</item>
+		<item name="金大物流">jindawuliu</item>
+		<item name="嘉里大通">jialidatong</item>
+		
+		<item name="快捷速递">kuaijiesudi</item>
+		<item name="康力物流">kangliwuliu</item>
+		<item name="跨越物流">kuayue</item>
+		
+		<item name="联昊通">lianhaowuliu</item>
+		<item name="龙邦物流">longbanwuliu</item>
+		<item name="蓝镖快递">lanbiaokuaidi</item>
+		<item name="乐捷递">lejiedi</item>
+		<item name="联邦快递">lianbangkuaidi</item>
+		<item name="立即送">lijisong</item>
+		<item name="隆浪快递">longlangkuaidi</item>
+		
+		<item name="门对门">menduimen</item>
+		<item name="美国快递">meiguokuaidi</item>
+		<item name="明亮物流">mingliangwuliu</item>
+		
+		<item name="OCS">ocs</item>
+		<item name="onTrac">ontrac</item>
+		
+		<item name="全晨快递">quanchenkuaidi</item>
+		<item name="全际通">quanjitong</item>
+		<item name="全日通">quanritongkuaidi</item>
+		<item name="全一快递">quanyikuaidi</item>
+		<item name="全峰快递">quanfengkuaidi</item>
+		<item name="七天连锁">sevendays</item>
+		
+		<item name="如风达快递">rufengda</item>
+		
+		<item name="申通">shentong</item>
+		<item name="顺丰">shunfeng</item>
+		<item name="三态速递">santaisudi</item>
+		<item name="盛辉物流">shenghuiwuliu</item>
+		<item name="速尔物流">suer</item>
+		<item name="盛丰物流">shengfengwuliu</item>
+		<item name="上大物流">shangda</item>
+		<item name="山东海红">haihongwangsong</item>
+		<item name="赛澳递">saiaodi</item>
+		<item name="山西红马甲">sxhongmajia</item>
+		<item name="圣安物流">shenganwuliu</item>
+		<item name="穗佳物流">suijiawuliu</item>
+		
+		<item name="天地华宇">tiandihuayu</item>
+		<item name="天天快递">tiantian</item>
+		<item name="TNT">tnt</item>
+		<item name="通和天下">tonghetianxia</item>
+		
+		<item name="UPS">ups</item>
+		<item name="优速物流">youshuwuliu</item>
+		
+		<item name="万家物流">wanjiawuliu</item>
+		<item name="万象物流">wanxiangwuliu</item>
+		<item name="微特派">weitepai</item>
+		
+		<item name="新邦物流">xinbangwuliu</item>
+		<item name="信丰物流">xinfengwuliu</item>
+		<item name="新邦物流">xinbangwuliu</item>
+		<item name="新蛋奥硕物流">neweggozzo</item>
+		<item name="香港邮政">hkpost</item>
+		
+		<item name="圆通速递">yuantong</item>
+		<item name="韵达快运">yunda</item>
+		<item name="香港邮政">yuntongkuaidi</item>
+		<item name="邮政（国内）">youzhengguonei</item>
+		<item name="邮政（国际）">youzhengguoji</item>
+		<item name="远成物流">yuanchengwuliu</item>
+		<item name="亚风速递">yafengsudi</item>
+		<item name="一邦速递">yibangwuliu</item>
+		<item name="优速物流">youshuwuliu</item>
+		<item name="源伟丰快递">yuanweifeng</item>
+		<item name="元智捷诚">yuanzhijiecheng</item>
+		<item name="越丰物流">yuefengwuliu</item>
+		<item name="源安达">yuananda</item>
+		<item name="原飞航">yuanfeihangwuliu</item>
+		<item name="忠信达快递">zhongxinda</item>
+		<item name="芝麻开门">zhimakaimen</item>
+		<item name="银捷速递">yinjiesudi</item>
+		<item name="一统飞鸿">yitongfeihong</item>
+		
+		<item name="中通速递">zhongtong</item>
+		<item name="宅急送">zhaijisong</item>
+		<item name="中邮物流">zhongyouwuliu</item>
+		<item name="忠信达">zhongxinda</item>
+		<item name="中速快件">zhongsukuaidi</item>
+		<item name="芝麻开门">zhimakaimen</item>
+		<item name="郑州建华">zhengzhoujianhua</item>
+		<item name="中天万运">zhongtianwanyun</item>
+
+		
+		
 	</module-list>		
 </xml>

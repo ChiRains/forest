@@ -41,17 +41,26 @@ public class ExpressQueryController {
     public FrontAjaxView getExpressQuery(String code, String expressNum) {
 
         String result = sendPost("http://api.kuaidi100.com/api", "id=a960241fb0d1ec1d&com=" + code + "&nu=" + expressNum + "&show=0&order=desc");
-        Map<String, Object> jsonMap = Json.toMap(result);
-        Object[] objects = JSONArray.fromObject(jsonMap.get("data")).toArray();
-        List<ExpressQueryVO> list = new ArrayList<ExpressQueryVO>();
-        for (int i = 0, j = objects.length; i < j; i++) {
-            list.add(Json.toObject(Json.toFormatJson(objects[i]), ExpressQueryVO.class));
-        }
-        for (ExpressQueryVO expressQueryVO : list) {
-            expressQueryVO.setTime(DateUtil.date2String(DateUtil.str2Date(expressQueryVO.getTime()), "MM-dd HH:mm"));
-        }
         FrontAjaxView frontAjaxView = new FrontAjaxView();
-        frontAjaxView.addObject("result", list);
+        Map<String, Object> jsonMap = Json.toMap(result);
+        if (jsonMap.get("status").equals("1")) {
+            Object[] objects = JSONArray.fromObject(jsonMap.get("data")).toArray();
+            List<ExpressQueryVO> list = new ArrayList<ExpressQueryVO>();
+            for (int i = 0, j = objects.length; i < j; i++) {
+                list.add(Json.toObject(Json.toFormatJson(objects[i]), ExpressQueryVO.class));
+            }
+            for (ExpressQueryVO expressQueryVO : list) {
+                expressQueryVO.setTime(DateUtil.date2String(DateUtil.str2Date(expressQueryVO.getTime()), "MM-dd HH:mm"));
+            }
+            frontAjaxView.addObject("resultStatus", 1);
+            frontAjaxView.addObject("result", list);
+        } else if (jsonMap.get("status").equals("2")) {
+            frontAjaxView.addObject("resultStatus", 2);
+            frontAjaxView.setMessage("接口异常");
+        } else if (jsonMap.get("status").equals("0")) {
+            frontAjaxView.addObject("resultStatus", 0);
+            frontAjaxView.setMessage("暂时没有物流信息");
+        }
         return frontAjaxView;
     }
 
