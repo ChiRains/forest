@@ -127,7 +127,7 @@ public class AdminDataDictionaryController {
             List<XmlItem> messageList = xml.getItemList();
             for (XmlItem xmlItem : messageList) {
                 map = new HashMap<String, Object>();
-                map.put(xmlItem.getAttrMap().get("type"), xmlItem.getAttrMap().get("name"));
+                map.put(xmlItem.getAttrMap().get("type"), xmlItem.getAttrMap().get("type") + "---" + xmlItem.getAttrMap().get("name"));
                 maps.add(map);
             }
         }

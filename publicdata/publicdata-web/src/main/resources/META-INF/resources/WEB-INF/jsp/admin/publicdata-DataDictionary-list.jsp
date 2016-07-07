@@ -39,7 +39,7 @@
                     <div class="col-xs-6">
                         <form id="query-form" action="#admin/dataDictionary/list" onsubmit="listFormSearch(this); return false">
                         	<div class="dataTables_length" style="float:right;">
-                                    <select class="form-control" id="type" name="type">
+                                    <select class="form-control" id="type" name="type" style="width:180px">
 					                    <option value="" selected="selected">请选择类型</option>
 					                    <c:forEach items="${types}" var="item"  varStatus="current">
 					                      <c:forEach items="${item}" var="map"  varStatus="current">
