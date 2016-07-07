@@ -27,21 +27,10 @@ public class AdminCombinationMerchandiseItemVO {
 
     private int    stock;
 
+    private double discount;
+
     public AdminCombinationMerchandiseItemVO() {
 
-    }
-
-    public AdminCombinationMerchandiseItemVO(long id, long combinationMerchandiseId, long merchandiseItemId, long merchantId, int num, long unid, String name, String specifications, int stock) {
-
-        this.id = id;
-        this.combinationMerchandiseId = combinationMerchandiseId;
-        this.merchandiseItemId = merchandiseItemId;
-        this.merchantId = merchantId;
-        this.num = num;
-        this.unid = unid;
-        this.name = name;
-        this.specifications = specifications;
-        this.stock = stock;
     }
 
     public void setId(long id) {
@@ -132,5 +121,15 @@ public class AdminCombinationMerchandiseItemVO {
     public void setSpecifications(String specifications) {
 
         this.specifications = specifications;
+    }
+
+    public double getDiscount() {
+
+        return discount;
+    }
+
+    public void setDiscount(double discount) {
+
+        this.discount = discount;
     }
 }

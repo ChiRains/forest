@@ -11,9 +11,11 @@ import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.model.key.TypeEnum.BrandType;
 import com.qcloud.component.marketing.model.Slide;
 import com.qcloud.component.marketing.service.SlideService;
+import com.qcloud.component.orderform.web.form.MerchandiseDetail;
 import com.qcloud.component.parameter.ParameterClient;
 import com.qcloud.component.publicdata.PublicdataClient;
 import com.qcloud.component.publicdata.QClassify;
+import com.qcloud.pirates.core.json.Json;
 import com.qcloud.pirates.core.xml.Xml;
 import com.qcloud.pirates.core.xml.XmlFactory;
 import com.qcloud.pirates.core.xml.XmlItem;
@@ -27,6 +29,7 @@ import com.qcloud.project.forest.model.query.ArticleQuery;
 import com.qcloud.project.forest.service.ArticleService;
 import com.qcloud.project.forest.web.handler.ArticleHandler;
 import com.qcloud.project.forest.web.vo.ArticleVO;
+import com.qcloud.project.forest.web.vo.ForestOrderVO;
 
 @Controller
 @RequestMapping(value = ForestController.DIR)
@@ -217,5 +220,17 @@ public class ForestController {
         for (QClassify c : children) {
             fillFileServerUrlBeforeImage(c);
         }
+    }
+
+    @RequestMapping
+    public FrontAjaxView test(String goods) {
+
+        List<MerchandiseDetail> list = Json.toListObject(goods, MerchandiseDetail.class);
+        for (MerchandiseDetail merchandiseDetail : list) {
+            System.out.println(merchandiseDetail.getNumber());
+        }
+        FrontAjaxView view = new FrontAjaxView();
+        view.addObject("list", list);
+        return view;
     }
 }
