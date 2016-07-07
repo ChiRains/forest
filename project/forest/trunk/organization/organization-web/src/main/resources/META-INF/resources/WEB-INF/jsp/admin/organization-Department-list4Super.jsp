@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>组织结构管理</title>
+<title>部门管理</title>
 <style>
     .select-product-dialog {
         top: 50px;
@@ -35,7 +35,7 @@
     <div class="col-xs-12">
 
         <div class="table-header">
-            组织结构列表
+           组织结构列表
         </div>
 
         <!-- <div class="table-responsive"> -->
@@ -47,7 +47,7 @@
                     <div class="col-xs-4">
                         <div class="dataTables_length">
                             <a title="新增" class="btn btn-sm btn-info"
-                               href="#admin/department/toAdd">
+                               href="#admin/department/toAdd4Super">
                                 <i class="ace-icon fa fa-plus align-bottom bigger-125"></i>
                                 新&nbsp;增
                             </a>                           
@@ -56,7 +56,7 @@
                     <div class="col-xs-8">
                         <div class="text-right">
                             <label>
-                                <form  action="#admin/department/list" onsubmit="listFormSearch(this); return false">
+                                <form  action="#admin/department/list4Super" onsubmit="listFormSearch(this); return false">
                                     <div class="dataTables_length">            	                                      		                              
 	                                   	<span class="input-group-btn">	                                   	    
 								            <input type="search" maxlength="6" class="form-control search-query" placeholder="名称" name="displayName" value="${query.displayName}">
@@ -98,7 +98,7 @@
                                     <i class="ace-icon fa fa-keyboard-o bigger-130"></i>人员管理</a>
                                 </td>
                                 <td>
-                            	 	<a class="btn btn-primary btn-xs" href="#admin/department/toEdit?id=${item.id}"  data-name="修改">
+                            	 	<a class="btn btn-primary btn-xs" href="#admin/department/toEdit4Super?id=${item.id}"  data-name="修改">
                                     	<i class="ace-icon fa fa-keyboard-o bigger-130"></i>修改
                                     </a>
                                     <a class="btn btn-primary btn-xs del-item" api-path="/admin/department/delete.do?id=${item.id}"  data-name="修改">

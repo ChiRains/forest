@@ -19,7 +19,7 @@
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
-        <form id="model-form" class="form-horizontal"  role="form" action="/admin/department/add.do">
+        <form id="model-form" class="form-horizontal"  role="form" action="/admin/department/add4Super.do">
             <!-- #section:elements.form -->
       					<div class="space-4"></div>
             <div class="form-group">
@@ -49,8 +49,6 @@
                 </div>
             </div>
             
-            
-            
       					<div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="type"> 类型 </label>
@@ -63,8 +61,7 @@
 	                	</select>
                 	</span>
                 </div>
-            </div>
-            
+            </div> 
             
             			<div class="space-4"></div>
             <div class="form-group">
@@ -115,7 +112,7 @@
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">						
 						 <select class="form-control" id="district" name="district">
-					 		  <option value="" selected>请选择一个市</option>
+					 		  <option value="" selected>请选择一个区</option>
 	                          <c:forEach items="${districtList}" var="item" varStatus="current"> 
 			                  	 <option value="${item.key}" ${item.message}>${item.value}</option>
 			                  </c:forEach> 

@@ -83,7 +83,7 @@ public class DepartmentDaoRedisImpl implements DepartmentDao {
     }
 
     @Override
-    public List<Department> listChildrenByParent(DepartmentQuery query,String bsid) {
+    public List<Department> listChildrenByParent(DepartmentQuery query,String bsid,int start, int count) {
         throw new NotImplementedException();
     }
 

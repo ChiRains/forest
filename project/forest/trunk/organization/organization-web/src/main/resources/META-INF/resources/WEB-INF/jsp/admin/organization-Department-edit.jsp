@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>编辑管理员</title>
+<title>编辑组织结构</title>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/colorbox.css"/>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/chosen.css" />
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
-        管理里管理
+        组织结构管理
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             编辑
@@ -328,7 +328,8 @@
                         required: true
                     },
                     phone: {
-                        required: true
+                        required: true,
+                        digits:true
                     },
 					address: {
                         required: true

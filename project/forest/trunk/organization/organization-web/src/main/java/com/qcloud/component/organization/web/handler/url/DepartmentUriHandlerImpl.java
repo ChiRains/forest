@@ -20,6 +20,12 @@ public class DepartmentUriHandlerImpl extends AbstractUriHandler {
         list.add("/department/list.do");
         list.add("/admin/department/delete.do");
         list.add("/admin/department/platformTypeList.do");
+        //
+        list.add("/admin/department/list4Super.do");
+        list.add("/admin/department/toAdd4Super.do");
+        list.add("/admin/department/toEdit4Super.do");
+        list.add("/admin/department/add4Super.do");
+        list.add("/admin/department/edit4Super.do");
         return list;
     }
 
@@ -33,6 +39,12 @@ public class DepartmentUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/department/add.do");
         list.add("/admin/department/edit.do");
         list.add("/admin/department/delete.do");
+        //
+        list.add("/admin/department/list4Super.do");
+        list.add("/admin/department/toAdd4Super.do");
+        list.add("/admin/department/toEdit4Super.do");
+        list.add("/admin/department/add4Super.do");
+        list.add("/admin/department/edit4Super.do");
         return list;
     }
 
@@ -51,6 +63,17 @@ public class DepartmentUriHandlerImpl extends AbstractUriHandler {
         map.put("/admin/departmentClerk/selectManager.do", list);
         map.put("/admin/departmentClerk/editManager.do", list);
         map.put("/admin/departmentClerk/edit.do", list);
+        //
+        List<String> list4Super = stringToList("/admin/department/list4Super.do");
+        map.put("/admin/department/toAdd4Super.do", list4Super);
+        map.put("/admin/department/toEdit4Super.do", list4Super);
+        map.put("/admin/department/add4Super.do", list4Super);
+        map.put("/admin/department/edit4Super.do", list4Super);
+        map.put("/admin/department/delete.do", list4Super);
+        map.put("/admin/departmentClerk/selectMember.do", list4Super);
+        map.put("/admin/departmentClerk/selectManager.do", list4Super);
+        map.put("/admin/departmentClerk/editManager.do", list4Super);
+        map.put("/admin/departmentClerk/edit.do", list4Super);
         return map;
     }
 
