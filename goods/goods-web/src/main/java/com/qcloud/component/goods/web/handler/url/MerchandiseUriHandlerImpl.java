@@ -116,15 +116,28 @@ public class MerchandiseUriHandlerImpl extends AbstractUriHandler {
         list.add("/merchandise/getBySpecifications.do");
         list.add("/merchandise/getByUnifiedMerchandise.do");
         list.add("/merchandise/getPriceAndStockBySpecifications.do");
+        list.add("/app/merchandise/query.do");
+        list.add("/app/merchandise/queryBySpecifications.do");
+        list.add("/app/merchandise/getByMerchandise.do");
+        list.add("/app/merchandise/getBySpecifications.do");
+        list.add("/app/merchandise/getByUnifiedMerchandise.do");
+        list.add("/app/merchandise/getPriceAndStockBySpecifications.do");
         //
         list.add("/merchandise/getHtmlDetailByUnifiedMerchandise.do");
         list.add("/merchandise/getHtmlDetailByMerchandise.do");
         list.add("/merchandise/getDetailByUnifiedMerchandise.do");
         list.add("/merchandise/getDetailByMerchandise.do");
+        list.add("/app/merchandise/getHtmlDetailByUnifiedMerchandise.do");
+        list.add("/app/merchandise/getHtmlDetailByMerchandise.do");
+        list.add("/app/merchandise/getDetailByUnifiedMerchandise.do");
+        list.add("/app/merchandise/getDetailByMerchandise.do");
         //
         list.add("/merchandise/guess.do");
         list.add("/merchandise/guess4Merchant.do");
         list.add("/merchandise/listHotSearch.do");
+        list.add("/app/merchandise/guess.do");
+        list.add("/app/merchandise/guess4Merchant.do");
+        list.add("/app/merchandise/listHotSearch.do");
         //
         list.add("/merchandise/listShopRecommend.do");
         list.add("/app/merchandise/listShopRecommend.do");
@@ -152,6 +165,20 @@ public class MerchandiseUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/merchandise/clearMySearch.do");
         list.add("/app/merchandise/listShopRecommend.do");
         list.add("/app/merchandise/listMySearchAndTags.do");
+        //
+        list.add("/app/merchandise/query.do");
+        list.add("/app/merchandise/queryBySpecifications.do");
+        list.add("/app/merchandise/getByMerchandise.do");
+        list.add("/app/merchandise/getBySpecifications.do");
+        list.add("/app/merchandise/getByUnifiedMerchandise.do");
+        list.add("/app/merchandise/getPriceAndStockBySpecifications.do");
+        list.add("/app/merchandise/getHtmlDetailByUnifiedMerchandise.do");
+        list.add("/app/merchandise/getHtmlDetailByMerchandise.do");
+        list.add("/app/merchandise/getDetailByUnifiedMerchandise.do");
+        list.add("/app/merchandise/getDetailByMerchandise.do");
+        list.add("/app/merchandise/guess.do");
+        list.add("/app/merchandise/guess4Merchant.do");
+        list.add("/app/merchandise/listHotSearch.do");
         return list;
     }
 }
