@@ -157,12 +157,14 @@ public class MerchandiseController {
     // @Autowired
     // private EvaluationcenterClient evaluationcenterClient;
     // 查询商品,上搜索引擎后再转移这个功能,返回商品档案,还不能直接购买
+    @PiratesApp
     @RequestMapping
     public FrontPagingView query(HttpServletRequest request, PPage pPage, MerchandiseForm form) {
 
         return query(request, pPage, form, QueryItemType.M);
     }
 
+    @PiratesApp
     @RequestMapping
     public FrontPagingView queryBySpecifications(HttpServletRequest request, PPage pPage, MerchandiseForm form) {
 
@@ -267,6 +269,7 @@ public class MerchandiseController {
     // return view;
     // }
     // 依据商品档案ID,获取商品详情
+    @PiratesApp
     @RequestMapping
     public FrontAjaxView getByMerchandise(HttpServletRequest request, Long merchandiseId) {
 
@@ -289,6 +292,7 @@ public class MerchandiseController {
     }
 
     // 依据商品规格,获取商品详情
+    @PiratesApp
     @RequestMapping
     public FrontAjaxView getBySpecifications(HttpServletRequest request, Long merchandiseId, SpecificationsFormList specificationsList) {
 
@@ -326,6 +330,7 @@ public class MerchandiseController {
     }
 
     // 依据单一商品ID,获取商品详情
+    @PiratesApp
     @RequestMapping
     public FrontAjaxView getByUnifiedMerchandise(HttpServletRequest request, Long unifiedMerchandiseId) {
 
@@ -506,6 +511,7 @@ public class MerchandiseController {
         return view;
     }
 
+    @PiratesApp
     @RequestMapping
     public FrontAjaxView getDetailByUnifiedMerchandise(Long unifiedMerchandiseId) {
 
@@ -519,6 +525,7 @@ public class MerchandiseController {
         return view;
     }
 
+    @PiratesApp
     @RequestMapping
     public FrontAjaxView getDetailByMerchandise(Long merchandiseId) {
 
@@ -530,6 +537,7 @@ public class MerchandiseController {
         return view;
     }
 
+    @PiratesApp
     @RequestMapping
     public HtmlView getHtmlDetailByUnifiedMerchandise(Long unifiedMerchandiseId) {
 
@@ -541,6 +549,7 @@ public class MerchandiseController {
         return view;
     }
 
+    @PiratesApp
     @RequestMapping
     public HtmlView getHtmlDetailByMerchandise(Long merchandiseId) {
 
@@ -550,12 +559,14 @@ public class MerchandiseController {
         return view;
     }
 
+    @PiratesApp
     @RequestMapping
     public FrontAjaxView guess(Integer number) {
 
         return guess4Merchant(-1L, number);
     }
 
+    @PiratesApp
     @RequestMapping
     public FrontAjaxView guess4Merchant(Long merchantId, Integer number) {
 
@@ -568,6 +579,7 @@ public class MerchandiseController {
         return view;
     }
 
+    @PiratesApp
     @RequestMapping
     public FrontAjaxView listHotSearch(Integer number) {
 
