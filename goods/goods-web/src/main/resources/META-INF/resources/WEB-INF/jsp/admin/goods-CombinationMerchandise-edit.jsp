@@ -281,7 +281,7 @@
                                             '</tr>');
                                     delProduct();
                                     reSetIndex();
-                                    dialog.close();
+                                  //  dialog.close();
                                 }
                                 return false;
                             }
