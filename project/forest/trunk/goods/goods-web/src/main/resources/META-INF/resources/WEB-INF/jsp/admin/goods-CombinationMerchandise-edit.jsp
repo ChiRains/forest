@@ -153,13 +153,14 @@
                         <c:forEach items="${voList}" var="item" varStatus="current">
                             <tr class="template kv-table-row">
                                 <td><input type="text"
-                                           name="combinationMerchandiseItems[${current.index}].merchandiseItemId"
+                                           name="combinationMerchandiseItems[${current.index}].relaUnifiedMerchandiseId"
                                            value="${item.unid}" readonly class="config-key"></td>
                                 <td><input type="text" value="${item.name}" readonly class="config-value"></td>
                                 <td><input type="text" value="${item.specifications}" readonly
                                            class="config-value"></td>
                                 <td><input type="text" value="${item.stock}" readonly class="config-value"></td>
-                                <td><input type="text" value="${item.num}" name="combinationMerchandiseItems[${current.index}].num" class="config-value"></td>
+                                <td><input type="text" value="${item.num}" name="combinationMerchandiseItems[${current.index}].number" class="config-value"></td>
+                                <td><input type="text" value="${item.discount}" name="combinationMerchandiseItems[${current.index}].discount" class="config-value"></td>
                                 <td class="del-column">
                                     <button type="button" class="close del-row-trigger">×</button>
                                 </td>
@@ -168,7 +169,7 @@
                         </tbody>
                         <tfoot>
                         <tr>
-                            <td colspan="6">
+                            <td colspan="7">
                                 <button type="button" class="add-row-trigger btn-link">增加</button>
                             </td>
                         </tr>
@@ -224,7 +225,8 @@
             function reSetIndex() {
                 $("#productList").children().each(function (i) {
                     $(this).find("input[name$='relaUnifiedMerchandiseId']").attr("name", $(this).find("input[name$='relaUnifiedMerchandiseId']").attr("name").replace(/\[.*?\]/g, "[" + i + "]"));
-                    $(this).find("input[name$='num']").attr("name", $(this).find("input[name$='num']").attr("name").replace(/\[.*?\]/g, "[" + i + "]"));
+                    $(this).find("input[name$='number']").attr("name", $(this).find("input[name$='number']").attr("name").replace(/\[.*?\]/g, "[" + i + "]"));
+                	$(this).find("input[name$='discount']").attr("name", $(this).find("input[name$='discount']").attr("name").replace(/\[.*?\]/g, "[" + i + "]"));
                 });
             }
 

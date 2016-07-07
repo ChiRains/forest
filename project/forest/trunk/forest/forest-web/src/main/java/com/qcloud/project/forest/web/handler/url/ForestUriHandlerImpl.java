@@ -41,6 +41,8 @@ public class ForestUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/forest/latestArticle.do");
         list.add("/app/forest/shareSignIn.do");
         list.add("/app/forest/startPage.do");
+        //
+        list.add("/forest/test.do");
         return list;
     }
 

@@ -92,4 +92,12 @@ public class DepartmentUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/department/list.do");
         return list;
     }
+
+    @Override
+    public List<String> whiteNameUris() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("/department/add.do");
+        return list;
+    }
 }

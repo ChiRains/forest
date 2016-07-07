@@ -108,8 +108,9 @@ public class AdminCombinationMerchandiseController {
                 HashSet<Long> products = new HashSet<Long>();// 去重
                 for (CombinationMerchandiseItem combinationMerchandiseItem : combinationMerchandiseForm.getCombinationMerchandiseItems()) {
                     if (combinationMerchandiseItem.getRelaUnifiedMerchandiseId() > 0 && !products.contains(combinationMerchandiseItem.getRelaUnifiedMerchandiseId())) {
-                        combinationMerchandiseItem.setRelaUnifiedMerchandiseId(data.getId());
+                        combinationMerchandiseItem.setRelaUnifiedMerchandiseId(combinationMerchandiseItem.getRelaUnifiedMerchandiseId());
                         combinationMerchandiseItem.setMerchantId(data.getMerchantId());
+                        combinationMerchandiseItem.setCombinationUnifiedMerchandiseId(data.getId());
                         combinationMerchandiseItemService.add(combinationMerchandiseItem);
                         products.add(combinationMerchandiseItem.getRelaUnifiedMerchandiseId());
                     }
@@ -154,11 +155,12 @@ public class AdminCombinationMerchandiseController {
                 QUnifiedMerchandise qUnifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(combinationMerchandiseItem.getRelaUnifiedMerchandiseId());
                 if (qUnifiedMerchandise != null) {
                     AdminCombinationMerchandiseItemVO vo = new AdminCombinationMerchandiseItemVO();
-                    vo.setName(qUnifiedMerchandise.getList().get(0).getName());
+                    vo.setName(qUnifiedMerchandise.getName());
                     vo.setStock(qUnifiedMerchandise.getStock());
-                    vo.setSpecifications(qUnifiedMerchandise.getList().get(0).getSpecifications());
+                    vo.setSpecifications(qUnifiedMerchandise.getSpecifications());
                     vo.setUnid(qUnifiedMerchandise.getId());
                     vo.setNum(combinationMerchandiseItem.getNumber());
+                    vo.setDiscount(combinationMerchandiseItem.getDiscount());
                     voList.add(vo);
                 }
             }
