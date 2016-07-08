@@ -10,6 +10,12 @@ public class OrderCouponVO {
     // 有效时间
     private Date   validDate;
 
+    private Date   invalidDate;
+
+    private String validDateStr;
+
+    private String invalidDateStr;
+
     // 优惠券名称
     private String name;
 
@@ -90,5 +96,35 @@ public class OrderCouponVO {
     public void setCode(String code) {
 
         this.code = code;
+    }
+
+    public Date getInvalidDate() {
+
+        return invalidDate;
+    }
+
+    public void setInvalidDate(Date invalidDate) {
+
+        this.invalidDate = invalidDate;
+    }
+
+    public String getValidDateStr() {
+
+        return validDateStr;
+    }
+
+    public void setValidDateStr(String validDateStr) {
+
+        this.validDateStr = validDateStr;
+    }
+
+    public String getInvalidDateStr() {
+
+        return invalidDateStr;
+    }
+
+    public void setInvalidDateStr(String invalidDateStr) {
+
+        this.invalidDateStr = invalidDateStr;
     }
 }

@@ -76,4 +76,10 @@ public class MyCouponEntity implements QMyCoupon {
 
         return myCoupon.getUserId();
     }
+
+    @Override
+    public Date getInValidDate() {
+
+        return myCoupon.getInvalidDate();
+    }
 }
