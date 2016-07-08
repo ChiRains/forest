@@ -16,6 +16,8 @@ public interface QMyCoupon {
 
     Date getValidDate();
 
+    Date getInValidDate();
+
     String getName();
 
     double getPrice();

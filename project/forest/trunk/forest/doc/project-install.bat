@@ -27,8 +27,13 @@ cd my/my-api
 call mvn install
 
 cd %home%
+cd organization/organization-api
+call mvn install
+
+cd %home%
 cd sellercenter/sellercenter-api
 call mvn install
+
 
 cd %home%
 cd goods/goods-api
@@ -64,6 +69,10 @@ call mvn install
 
 cd %home%
 cd my
+call mvn install
+
+cd %home%
+cd organization
 call mvn install
 
 cd %home%

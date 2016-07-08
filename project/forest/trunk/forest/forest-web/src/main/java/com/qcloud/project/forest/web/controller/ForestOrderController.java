@@ -345,6 +345,9 @@ public class ForestOrderController {
             vo.setName(qMyCoupon.getName());
             vo.setPrice(qMyCoupon.getPrice());
             vo.setValidDate(qMyCoupon.getValidDate());
+            vo.setInvalidDate(qMyCoupon.getInValidDate());
+            vo.setValidDateStr(DateUtil.date2String(qMyCoupon.getValidDate(), "yyyy-MM-dd"));
+            vo.setInvalidDateStr(DateUtil.date2String(qMyCoupon.getInValidDate(), "yyyy-MM-dd"));
             voList.add(vo);
         }
         return voList;

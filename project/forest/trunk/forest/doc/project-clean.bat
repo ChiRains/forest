@@ -27,6 +27,10 @@ cd my/my-api
 call mvn clean
 
 cd %home%
+cd organization/organization-api
+call mvn clean
+
+cd %home%
 cd sellercenter/sellercenter-api
 call mvn clean
 
@@ -72,6 +76,10 @@ call mvn clean
 
 cd %home%
 cd my
+call mvn clean
+
+cd %home%
+cd organization
 call mvn clean
 
 cd %home%
