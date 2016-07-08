@@ -86,6 +86,7 @@ public class ArticleEvaluationDaoMysqlImpl implements ArticleEvaluationDao {
         param.put("start", start);
         param.put("count", count);
         param.put("articleId", query.getArticleId());
+        param.put("state", query.getState());
         param.put("keyWord", "%" + query.getKeyWord() + "%");
         List<ArticleEvaluation> list = sqlOperator.selectList("com.qcloud.project.forest.dao.mysql.mapper.ArticleEvaluationMapper.list4query", param);
         int total = sqlOperator.selectOne("com.qcloud.project.forest.dao.mysql.mapper.ArticleEvaluationMapper.count4query", param);

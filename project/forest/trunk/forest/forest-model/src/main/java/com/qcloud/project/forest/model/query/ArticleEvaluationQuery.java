@@ -4,15 +4,28 @@ public class ArticleEvaluationQuery {
 
     private long   articleId;
 
+    private int    state;
+
     private String keyWord;
 
     public ArticleEvaluationQuery() {
 
+        state = -1;
     }
 
     public String getKeyWord() {
 
         return keyWord;
+    }
+
+    public int getState() {
+
+        return state;
+    }
+
+    public void setState(int state) {
+
+        this.state = state;
     }
 
     public void setKeyWord(String keyWord) {

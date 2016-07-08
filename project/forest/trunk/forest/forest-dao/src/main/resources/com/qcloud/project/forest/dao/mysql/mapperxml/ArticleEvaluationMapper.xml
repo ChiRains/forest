@@ -8,6 +8,9 @@
         <if test="articleId!=0">
         and articleId=#{articleId}
         </if>
+        <if test="state!=-1">
+        and state=#{state}
+        </if>
         <if test="keyWord!='%null%'">
         and content like #{keyWord}
         </if>
@@ -19,6 +22,9 @@
 	select count(*) from `forest_article_evaluation` where 1=1
 	<if test="articleId!=0">
 		and articleId=#{articleId}
+        </if>
+        <if test="state!=-1">
+        and state=#{state}
         </if>
         <if test="keyWord!='%null%'">
         and content like #{keyWord}
