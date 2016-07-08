@@ -36,7 +36,7 @@ public class MedicationRemindersTimer extends AbstractTimer {
     @Autowired
     private MedicationRemindersService      medicationRemindersService;
 
-    Log                                     logger = LogFactory.getLog(getClass());
+    private Log                             logger = LogFactory.getLog(getClass());
 
     @Override
     public boolean isEnabled() {

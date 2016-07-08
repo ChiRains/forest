@@ -12,21 +12,24 @@ import com.qcloud.pirates.util.DateUtil;
 @Component
 public class DemoTimer extends AbstractTimer {
 
-	Log logger = LogFactory.getLog(getClass());
+    private Log logger = LogFactory.getLog(getClass());
 
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
+    @Override
+    public boolean isEnabled() {
 
-	@Override
-	public Period getPeriod() {
-	    SecondPeriod s = new SecondPeriod(2);
-		return s;
-	}
+        return true;
+    }
 
-	@Override
-	public void start() {
-		logger.info("定时器例子,当前系统时间" + DateUtil.date2String(new Date()));	
-	}
+    @Override
+    public Period getPeriod() {
+
+        SecondPeriod s = new SecondPeriod(2);
+        return s;
+    }
+
+    @Override
+    public void start() {
+
+        logger.info("定时器例子,当前系统时间" + DateUtil.date2String(new Date()));
+    }
 }
