@@ -93,12 +93,17 @@
                                 		<span class="label label-info arrowed arrowed-in-right">${item.managerName}</span>
                                 	</c:if>
                                 </td>
-                                <td>
+                          <%--      <td>
                             	 	<a class="btn btn-primary btn-xs add-member-trigger" data-id="${item.id}" data-name="人员管理-${item.displayName}">
                                     <i class="ace-icon fa fa-keyboard-o bigger-130"></i>人员管理</a>
+                                </td>  --%>
+                                <td>
+                                	<a class="btn btn-primary btn-xs" href="#admin/clerk/list"  data-name="人员管理">
+                                    	<i class="ace-icon fa fa-keyboard-o bigger-130"></i>人员管理
+                                    </a>
                                 </td>
                                 <td>
-                            	 	<a class="btn btn-primary btn-xs" href="#admin/department/toEdit?id=${item.id}"  data-name="修改">
+                            	 	<a class="btn btn-primary btn-xs add-member-trigger" href="#admin/department/toEdit?id=${item.id}"  data-name="修改">
                                     	<i class="ace-icon fa fa-keyboard-o bigger-130"></i>修改
                                     </a>
                                     <a class="btn btn-primary btn-xs del-item" api-path="/admin/department/delete.do?id=${item.id}"  data-name="修改">
@@ -124,7 +129,7 @@
     var scripts = [null, null];
     ace.load_ajax_scripts(scripts, function () {
         //inline scripts related to this page
-        $(".add-member-trigger").on("click", function () {
+  /*      $(".add-member-trigger").on("click", function () {
      		// 务必添加解绑事件，要不然会重复提交数据
      		$(document).off('click',".select-departmentClerk-trigger");
      		$(document).off('click',".search-clerk-trigger");
@@ -152,7 +157,7 @@
 	                        }
                         );
 	                });
-                
+	                
                 	$(document).on("click", ".search-clerk-trigger", function (e) {
                 		var name = $("#name").val();
 	                	dialog.getModalBody().html($('<div></div>').load('/admin/departmentClerk/selectMember.do?name='+name+'&departmentId='+id));
@@ -160,6 +165,8 @@
                 }
             });
         });
+        
+        */
         
          $(".add-manager-trigger").on("click", function () {
      		// 务必添加解绑事件，要不然会重复提交数据
