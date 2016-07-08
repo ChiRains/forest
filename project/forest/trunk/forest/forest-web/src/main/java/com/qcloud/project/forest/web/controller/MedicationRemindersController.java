@@ -150,8 +150,8 @@ public class MedicationRemindersController {
         // 修改到外部药品提醒
         MedicationRemindersTheme medicationRemindersTheme = medicationRemindersThemeService.get(medicationRemindersForm.getId());
         AssertUtil.notNull(medicationRemindersTheme, "找不到相关信息");
-        AssertUtil.assertTrue(medicationRemindersTheme.getUserId() == user.getId() ? true : false, "不能修改其他用户信息");
         if (medicationRemindersTheme != null) {
+            AssertUtil.assertTrue(medicationRemindersTheme.getUserId() == user.getId() ? true : false, "不能修改其他用户信息");
             medicationRemindersTheme.setName(medicationRemindersForm.getName());
             if (medicationRemindersForm.getImage() != null) {
                 String url = fileSDKClient.uidToUrl(medicationRemindersForm.getImage());
@@ -171,8 +171,8 @@ public class MedicationRemindersController {
         for (MedicationRemindersVO medicationRemindersVO : medicationRemindersForm.getMedicationRemindersVOs()) {
             medicationReminders = medicationRemindersService.get(medicationRemindersVO.getId());
             AssertUtil.notNull(medicationReminders, "找不到相关信息");
-            AssertUtil.assertTrue(medicationReminders.getUserId() == user.getId() ? true : false, "不能修改其他用户信息");
             if (medicationReminders != null) {
+                AssertUtil.assertTrue(medicationReminders.getUserId() == user.getId() ? true : false, "不能修改其他用户信息");
                 medicationReminders.setThemeId(medicationRemindersTheme.getId());
                 medicationReminders.setDesc(medicationRemindersVO.getDesc());
                 medicationReminders.setMedicineDosage(medicationRemindersVO.getMedicineDosage());
