@@ -4,7 +4,7 @@
 		<item name="loginLogo">/qcloud-admin/assets/images/logo.png</item>
 		<item name="loginMessage">©旗云科技</item>
 		<item name="width">180</item>
-		<item name="height">42</item>
+		<item name="height">150</item>
 	</module-list>
 
 
