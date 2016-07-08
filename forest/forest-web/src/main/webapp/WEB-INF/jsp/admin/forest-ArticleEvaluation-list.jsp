@@ -28,20 +28,18 @@
             <div class="dataTables_wrapper form-inline no-footer">
                 <div class="row">
                     <div class="col-xs-6">
-                        <div class="dataTables_length">
-                            <a title="新增" class="btn btn-sm btn-info"
-                               href="#admin/articleEvaluation/toAdd">
-                                <i class="ace-icon fa fa-plus align-bottom bigger-125"></i>
-                                新&nbsp;增
-                            </a>                           
-                        </div>
                     </div>   
              <div class="col-xs-6" style="text-align: right;">
             <label>
               <form action="#admin/articleEvaluation/list" onsubmit="listFormSearch(this); return false">
                 <div class="dataTables_length">
-	
-                  <input type="search" maxlength="11" class="form-control search-query" name="keyWord" value="${query.keyWord}" placeholder="主题/活动内容">
+		  		<select class="form-control" id="classifyId" name="state" >
+				<option value="-1" <c:if test="${query.state eq -1}">selected</c:if>>请选择审核类型</option>
+				<option value="0" <c:if test="${query.state eq 0}">selected</c:if>>未处理</option>
+				<option value="1" <c:if test="${query.state eq 1}">selected</c:if>>审核通过</option>
+
+                 </select>	
+                  <input type="search" maxlength="11" class="form-control search-query" name="keyWord" value="${query.keyWord}" placeholder="评论内容">
                   <button id="search-button" type="submit" class="btn btn-purple btn-sm">
                     <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>搜索</button>
                 </div>
@@ -55,7 +53,8 @@
                                                 <th>评论内容</th>           
                                                 <th>文章</th>           
                                                 <th>用户名</th>           
-                                                <th>评论时间</th>           
+                                                <th>评论时间</th>   
+                                                <th>审核状态</th>        
                                                 <th class="sorting_disabled">操作</th>
                     </tr>
                     </thead>
@@ -73,11 +72,18 @@
 											             </td>                         
                                                         <td>${item.articleName}</td>                         
                                                         <td>${item.userName}</td>                         
-                                                        <td><fmt:formatDate value="${item.time}" pattern="yyyy-MM-dd  HH:mm:ss" /></td>                         
+                                                        <td><fmt:formatDate value="${item.time}" pattern="yyyy-MM-dd  HH:mm:ss" /></td> 
+                                                        <td>
+                                                        <c:if test="${item.state eq 0}">未处理</c:if>
+                                                        <c:if test="${item.state eq 1}">审核通过</c:if>
+                                                        </td>                        
                                                         <td>
                                 <div class="hidden-sm hidden-xs action-buttons">
-                            		<a title="删除" class="hidden-sm hidden-xs action-buttons red delete" api-path="/admin/articleEvaluation/delete.do?id=${item.id}">删除</a>
-						                                 
+                                	<c:if test="${item.state eq 0}">
+	                                	<button class="btn btn-success success" api-path="/admin/articleEvaluation/enable.do?id=${item.id}&state=1">审核通过</button>
+	                                	<button class="btn btn-grey fail" api-path="/admin/articleEvaluation/delete.do?id=${item.id}"">审核不通过</button>
+                                	</c:if>
+						        	    <button class="btn btn-danger delete" api-path="/admin/articleEvaluation/delete.do?id=${item.id}">删除</button>
                                 </div>
                             </td>
                         </tr>
@@ -160,6 +166,57 @@
  			            }]
  			        });
  			    });
- 			
+		    //审核通过
+    	  $('.success').on('click',
+                  function() {
+                      var successUrl = $(this).attr('api-path');
+                      $.get(successUrl);
+                      location.reload(true);
+                        
+                      });
+          //审核不通过
+     	 $('.fail').on('click',
+  			    function() {
+  			        var delUrl = $(this).attr('api-path');
+  			        BootstrapDialog.show({
+  			            title: '评论审核不通过',
+  			            message: '评论审核不通过，并且删除该评论',
+  			            buttons: [{
+  			                id: 'btn-1',
+  			                label: '确定',
+  			                cssClass: 'btn btn-primary',
+  			                action: function(dialogItself) {
+  			                    $.get(delUrl, {},
+  			                    function(data) {
+  			                        data = JSON.parse(data);
+  			                        if (parseInt(data["status"]) === 0) {
+  			                            dialogItself.setTitle('删除信息失败');
+  			                            dialogItself.setMessage(data["message"]);
+  			                            dialogItself.setType(BootstrapDialog.TYPE_DANGER);
+  			                            dialogItself.getButton('btn-1').remove();
+  			                        } else {
+  			                            dialogItself.setTitle('成功');
+  			                            dialogItself.setMessage("删除信息成功！");
+  			                            dialogItself.setType(BootstrapDialog.TYPE_SUCCESS);
+  			                            setTimeout(function() {
+  			                                dialogItself.close();
+  			                            },
+  			                            1000);
+  			                            setTimeout(function() {
+  			                                location.reload(true);
+  			                            },
+  			                            1500);
+  			                        }
+  			                    });
+  			                }
+  			            },
+  			            {
+  			                label: '取消',
+  			                action: function(dialogItself) {
+  			                    dialogItself.close();
+  			                }
+  			            }]
+  			        });
+  			    });
     });
 </script>

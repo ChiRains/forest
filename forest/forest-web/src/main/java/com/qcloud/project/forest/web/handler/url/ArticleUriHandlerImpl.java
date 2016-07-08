@@ -26,6 +26,7 @@ public class ArticleUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/article/toEditClassify.do");
         list.add("/admin/article/editClassify.do");
         list.add("/admin/article/offshelves.do");
+        list.add("/admin/article/enableClassify.do");
         return list;
     }
 
@@ -47,6 +48,7 @@ public class ArticleUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/article/toEditClassify.do");
         list.add("/admin/article/editClassify.do");
         list.add("/admin/article/offshelves.do");
+        list.add("/admin/article/enableClassify.do");
         return list;
     }
 
@@ -68,6 +70,7 @@ public class ArticleUriHandlerImpl extends AbstractUriHandler {
         map.put("/admin/article/toAddClassify.do", list);
         map.put("/admin/article/deleteClassify.do", list);
         map.put("/admin/article/editClassify.do", list);
+        map.put("/admin/article/enableClassify.do", list);
         return map;
     }
 

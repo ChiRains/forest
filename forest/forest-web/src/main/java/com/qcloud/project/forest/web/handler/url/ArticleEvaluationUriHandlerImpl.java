@@ -18,6 +18,7 @@ public class ArticleEvaluationUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/articleEvaluation/add.do");
         list.add("/admin/articleEvaluation/edit.do");
         list.add("/admin/articleEvaluation/delete.do");
+        list.add("/admin/articleEvaluation/enable.do");
         return list;
     }
 
@@ -31,6 +32,7 @@ public class ArticleEvaluationUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/articleEvaluation/add.do");
         list.add("/admin/articleEvaluation/edit.do");
         list.add("/admin/articleEvaluation/delete.do");
+        list.add("/admin/articleEvaluation/enable.do");
         return list;
     }
 
@@ -45,6 +47,7 @@ public class ArticleEvaluationUriHandlerImpl extends AbstractUriHandler {
         map.put("/admin/articleEvaluation/add.do", list);
         map.put("/admin/articleEvaluation/edit.do", list);
         map.put("/admin/articleEvaluation/delete.do", list);
+        map.put("/admin/articleEvaluation/enable.do", list);
         return map;
     }
 

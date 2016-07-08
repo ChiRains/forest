@@ -80,12 +80,13 @@
 								<td>
 									<div class="hidden-sm hidden-xs action-buttons">
 									<c:if test="${item.isOffshelves eq 1}">
-									<a title="发布" class="blue enable" api-path="/admin/article/enable.do?id=${item.id}">发布</a>
-									<a title="修改基本信息" class="green" href="#admin/article/toEdit?id=${item.id}&queryStr=${queryStr}">修改</a>
-				                    <a title="删除" class="hidden-sm hidden-xs action-buttons red delete" api-path="/admin/article/delete.do?id=${item.id}">删除</a>
-				                    </c:if>
+									<button class="btn btn-warning enable" api-path="/admin/article/enable.do?id=${item.id}">发布</button>
+									<button class="btn btn-success edit" api-path="#admin/article/toEdit?id=${item.id}&queryStr=${queryStr}">修改</button>
+									<button class="btn btn-danger delete" api-path="/admin/article/delete.do?id=${item.id}">删除</button>
+			                    </c:if>
 				                    <c:if test="${item.isOffshelves eq 0}">
-                                     <a title="下架" class="hidden-sm hidden-xs action-buttons red offshelves  " api-path="/admin/article/offshelves.do?id=${item.id}">下架</a>
+				                     <button class="btn offshelves" api-path="/admin/article/offshelves.do?id=${item.id}">下架</button>
+				                     <button class="btn btn-success edit" api-path="#admin/article/toEdit?id=${item.id}&queryStr=${queryStr}">修改</button>
 				                    </c:if>
 										</div>
 							</td>
@@ -195,7 +196,7 @@
 			            }]
 			        });
 			    });
-			    //下架
+			    //发布
 			    $('.enable').on('click',
 			    function() {
 			        var delUrl = $(this).attr('api-path');
@@ -256,5 +257,11 @@
 			            }]
 			        });
 			    });
+	    //修改
+	    $('.edit').on('click',
+	    function() {
+	        var editUrl = $(this).attr('api-path');
+	        window.location.href=editUrl;
+	    });
     });
 </script>

@@ -90,7 +90,8 @@ public class AdminArticleController {
     public AceAjaxView add(Article article) {
 
         article.setImage(fileSDKClient.uidToUrl(article.getImage()));
-        article.setIsOffshelves(1);
+        article.setIsOffshelves(0);
+        article.setEnable(1);
         article.setDate(new Date());
         articleService.add(article);
         AceAjaxView aceAjaxView = new AceAjaxView();
@@ -133,7 +134,8 @@ public class AdminArticleController {
         article.setLikeCount(article2.getLikeCount());
         article.setViewCount(article2.getViewCount());
         article.setEvaluationCount(article2.getEvaluationCount());
-        article.setIsOffshelves(1);
+        article.setIsOffshelves(article2.getIsOffshelves());
+        article.setEnable(article2.getEnable());
         article.setDate(article2.getDate());
         articleService.update(article);
         AceAjaxView aceAjaxView = new AceAjaxView();
@@ -276,6 +278,19 @@ public class AdminArticleController {
         publicdataClient.delete(id);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("删除成功");
+        aceAjaxView.setUrl(DIR + "/classifyList");
+        return aceAjaxView;
+    }
+
+    @RequestMapping
+    public AceAjaxView enableClassify(Long id, Integer enable) {
+
+        AssertUtil.assertNotNull(id, "ID不能为空");
+        Classify classify = publicdataClient.getClassify(id);
+        classify.setEnable(enable);
+        publicdataClient.update(classify);
+        AceAjaxView aceAjaxView = new AceAjaxView();
+        aceAjaxView.setMessage("启用成功");
         aceAjaxView.setUrl(DIR + "/classifyList");
         return aceAjaxView;
     }

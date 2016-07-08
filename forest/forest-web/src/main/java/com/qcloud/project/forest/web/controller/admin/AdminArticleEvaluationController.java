@@ -111,4 +111,22 @@ public class AdminArticleEvaluationController {
         aceAjaxView.setUrl(DIR + "/list");
         return aceAjaxView;
     }
+
+    /**
+     * 删除评论
+     * @param id
+     * @return
+     */
+    @RequestMapping
+    public AceAjaxView enable(Long id, Integer state) {
+
+        AssertUtil.assertNotNull(id, "ID不能为空");
+        ArticleEvaluation articleEvaluation = articleEvaluationService.get(id);
+        articleEvaluation.setState(state);
+        articleEvaluationService.update(articleEvaluation);
+        AceAjaxView aceAjaxView = new AceAjaxView();
+        aceAjaxView.setMessage("操作成功");
+        aceAjaxView.setUrl(DIR + "/list");
+        return aceAjaxView;
+    }
 }
