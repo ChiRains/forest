@@ -79,7 +79,6 @@ import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.NumberUtil;
 import com.qcloud.pirates.util.RequestUtil;
 import com.qcloud.pirates.util.StringUtil;
-import com.qcloud.pirates.web.page.PPageParameter;
 import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.pirates.web.security.annotation.NoReferer;
 
@@ -1117,7 +1116,7 @@ public class AdminMerchandiseController {
                     AssertUtil.assertNotNull(unifiedMerchandise, "找不到统一商品" + merchandiseSpecifications.getUnifiedMerchandiseId());
                     //
                     UnifiedMerchandise temp = unifiedMerchandiseService.getByCodeAndMerchant(msForm.getCode().trim(), merchandise.getMerchantId());
-                    AssertUtil.assertTrue((temp != null && temp.getId() == unifiedMerchandise.getId()) || temp == null, "错误");
+                    AssertUtil.assertTrue((temp != null && temp.getId() == unifiedMerchandise.getId()) || temp == null, "统一商品唯一编码已存在.");
                     unifiedMerchandise.setDiscount(msForm.getDiscount());
                     unifiedMerchandise.setPurchase(msForm.getPurchase());
                     unifiedMerchandise.setPrice(msForm.getPrice());
