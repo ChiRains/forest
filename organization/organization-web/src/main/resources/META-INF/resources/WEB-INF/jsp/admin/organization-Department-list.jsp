@@ -98,7 +98,7 @@
                                     <i class="ace-icon fa fa-keyboard-o bigger-130"></i>人员管理</a>
                                 </td>  --%>
                                 <td>
-                                	<a class="btn btn-primary btn-xs" href="#admin/clerk/list"  data-name="人员管理">
+                                	<a class="btn btn-primary btn-xs" href="#admin/clerk/list?departmentId=${item.id}"  data-name="人员管理">
                                     	<i class="ace-icon fa fa-keyboard-o bigger-130"></i>人员管理
                                     </a>
                                 </td>
