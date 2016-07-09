@@ -129,5 +129,5 @@ public class MyOrderFormController {
 
     private int[] statOrderStates         = new int[] { 1};
 
-    private int[] statMerchantOrderStates = new int[] { 2, 3, 4};
+    private int[] statMerchantOrderStates = new int[] { 2, 3, 4, 5};
 }

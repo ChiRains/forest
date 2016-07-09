@@ -31,6 +31,9 @@ import com.qcloud.component.orderform.web.handler.SubOrderHandler;
 import com.qcloud.component.orderform.web.util.OrderStateType;
 import com.qcloud.component.orderform.web.vo.admin.AdminOrderItemDetailVO;
 import com.qcloud.component.orderform.web.vo.admin.AdminSubOrderVO;
+import com.qcloud.component.organization.OrganizationClient;
+import com.qcloud.component.organization.QDepartment;
+import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.QStore;
 import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.component.sellercenter.model.MerchantOrderForm;
@@ -86,6 +89,9 @@ public class AdminSubOrderController {
 
     @Autowired
     private WarehouseClient          warehouseClient;
+
+    @Autowired
+    private OrganizationClient       organizationClient;
 
     @RequestMapping
     @NoReferer

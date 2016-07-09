@@ -22,12 +22,14 @@
         <!-- PAGE CONTENT BEGINS -->
         <form id="model-form" class="form-horizontal" role="form" action="/admin/coupon/edit4Merchant.do">
 			<input type="hidden" name="id" value="${coupon.id}"/>
+           
+            
                   		<div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="startDate"> 开始时间 </label>
                 <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" readonly maxlength="20" id="startDate" name="startDate" placeholder="开始时间" value="<fmt:formatDate value="${coupon.startDate}" pattern="yyyy-MM-dd"/>"/>
+					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10" style="margin-top:5px;">
+						<fmt:formatDate value="${coupon.startDate}" pattern="yyyy-MM-dd"/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
@@ -42,9 +44,10 @@
 					</span>
                 </div>
             </div>
+            
                   		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="validDate"> 有效时间 </label>
+                <label class="col-sm-3 control-label no-padding-right" for="validDate"> 使用开始时间 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
 						<input type="text" class="width-100" readonly maxlength="20" id="validDate" name="validDate" placeholder="有效时间" value="<fmt:formatDate value="${coupon.validDate}" pattern="yyyy-MM-dd"/>"/>
@@ -52,6 +55,18 @@
 					</span>
                 </div>
             </div>
+            
+            <div class="space-4"></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="validDate"> 使用截止时间 </label>
+                <div class="col-sm-9">
+					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
+						<input type="text" class="width-100" readonly maxlength="20" id="invalidDate" name="invalidDate" placeholder="使用截止时间" value="<fmt:formatDate value="${coupon.invalidDate}" pattern="yyyy-MM-dd"/>"/>
+						<i class="ace-icon fa"></i>
+					</span>
+                </div>
+            </div>
+            
                   		<div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="totalOfPerson"> 总共领取张数/人 </label>
@@ -151,7 +166,7 @@
             }).trigger('resize.chosen');
            
            //value是当前的值 ,params是传入的参数值
-            $.validator.addMethod("vD",function(value,element,params){
+            /*$.validator.addMethod("vD",function(value,element,params){
            		var endDate=$("#endDate").val();
 				var startDate=$("#startDate").val();
 			   	if(value>=endDate){    //if(value>=startDate && value<=endDate){
@@ -167,7 +182,7 @@
 			   	}else{
 			   	   	return false;
 			   	}
-			},"结束时间必须大于开始时间");
+			},"结束时间必须大于开始时间");*/
 			/**
 			$.validator.addMethod("sD",function(value,element,params){
 				var date = new Date();
@@ -196,7 +211,7 @@
                 errorClass: 'help-block col-xs-12 col-sm-reset inline',
                 focusInvalid: false,
                 rules: {
-                	validDate:{
+                	/*validDate:{
                 		required: true,
                 		vD:true
                 	},
@@ -206,7 +221,7 @@
                 	},
                 	startDate:{
                 		required: true
-                	},
+                	},*/
                     priceOfPerson: {
                         required: true,
                         range: [0, 99999999],
@@ -271,7 +286,11 @@
                 autoclose:true,
                 startDate: '-1y'
             });
-            
+            $('#invalidDate').datepicker({
+                format:'yyyy-mm-dd',
+                autoclose:true,
+                startDate: '-1y'
+            });
         });
         //初始化图片浏览
         $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);

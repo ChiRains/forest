@@ -195,6 +195,7 @@ public class MerchandiseController {
         for (UnifiedMerchandise unifiedMerchandise : list) {
             Merchandise merchandise = merchandiseService.get(unifiedMerchandise.getMerchandiseId());
             MerchandiseVO merchandiseVO = merchandiseHandler.toVO(merchandise);
+            merchandiseVO.setStock(unifiedMerchandise.getStock());
             merchandiseVO.setPrice(unifiedMerchandise.getPrice());
             merchandiseVO.setDiscount(unifiedMerchandise.getDiscount());
             merchandiseVO.setSalesVolume(unifiedMerchandise.getSalesVolume() + unifiedMerchandise.getVirtualSalesVolume());
@@ -354,6 +355,7 @@ public class MerchandiseController {
         merchandiseVO.setPrice(unifiedMerchandise.getPrice());
         merchandiseVO.setDiscount(unifiedMerchandise.getDiscount());
         merchandiseVO.setSalesVolume(unifiedMerchandise.getSalesVolume());
+        merchandiseVO.setStock(unifiedMerchandise.getStock());
         //
         long sum = unifiedMerchandise.getGoodEvaluation() + unifiedMerchandise.getMiddleEvaluation() + unifiedMerchandise.getLowEvaluation();
         int goodEvaluationRate = 0;

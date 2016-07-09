@@ -61,6 +61,8 @@ public class MerchandiseVO {
 
     private long   brandId;
 
+    private int    stock;
+
     public MerchandiseVO() {
 
     }
@@ -273,5 +275,15 @@ public class MerchandiseVO {
     public void setBrandId(long brandId) {
 
         this.brandId = brandId;
+    }
+
+    public int getStock() {
+
+        return stock;
+    }
+
+    public void setStock(int stock) {
+
+        this.stock = stock;
     }
 }

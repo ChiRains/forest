@@ -76,8 +76,8 @@
 						<td>邮费：</td><td><span style="color:red;">￥${subOrder.postage}</span></td>
 					</tr>
 					<tr>
-						<td>积分：</td><td><span style="color:red;">${subOrder.integral}</span></td>
-						<td>兑兑券：</td><td><span style="color:red;">${subOrder.consumption}</span></td>
+						<td>积分：</td><td colspan="3"><span style="color:red;">${subOrder.integral}</span></td>
+						
 					</tr>
 					<tr>
 						<td>留言板：</td><td colspan="3">${subOrder.explain}</td>

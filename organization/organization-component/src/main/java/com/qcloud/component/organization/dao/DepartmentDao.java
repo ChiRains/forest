@@ -29,10 +29,14 @@ public interface DepartmentDao extends ISimpleDao<Department, Long> {
     public Department getByCode(String code);
 
     public List<Department> listByParent(long parentId, String bsid);
-    
+
     public Department getByManager(long manager);
-    
-    public List<Department> listChildrenByParent(DepartmentQuery query,String bsid,int start, int count);
-    
-    public int countChildrenByParent(DepartmentQuery query,String bsid);
+
+    public List<Department> listChildrenByParent(DepartmentQuery query, String bsid, int start, int count);
+
+    public int countChildrenByParent(DepartmentQuery query, String bsid);
+
+    public List<Department> listByAddress(DepartmentQuery query, int start, int count);
+
+    public int countByAddress(DepartmentQuery query);
 }

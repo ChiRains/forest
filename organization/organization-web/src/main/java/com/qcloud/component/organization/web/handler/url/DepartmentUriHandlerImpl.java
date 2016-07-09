@@ -90,6 +90,7 @@ public class DepartmentUriHandlerImpl extends AbstractUriHandler {
 
         List<String> list = new ArrayList<String>();
         list.add("/app/department/list.do");
+        list.add("/app/department/listStoreByAddress.do");
         return list;
     }
 
@@ -98,6 +99,9 @@ public class DepartmentUriHandlerImpl extends AbstractUriHandler {
 
         List<String> list = new ArrayList<String>();
         list.add("/department/add.do");
+        list.add("/department/listStoreByAddress.do");
+        //
+        list.add("/app/department/listStoreByAddress.do");
         return list;
     }
 }

@@ -35,6 +35,10 @@ public class MyOrderFormListVO {
     // 是否提醒过,true 已经提醒过,现在不可以提醒
     private boolean      remind = false;
 
+    private double       cash;
+
+    private int          merchandiseNumber;
+
     public long getOrderId() {
 
         return orderId;
@@ -145,15 +149,33 @@ public class MyOrderFormListVO {
         this.remind = remind;
     }
 
-    
     public String getOrderDateStr() {
-    
+
         return orderDateStr;
     }
 
-    
     public void setOrderDateStr(String orderDateStr) {
-    
+
         this.orderDateStr = orderDateStr;
+    }
+
+    public double getCash() {
+
+        return cash;
+    }
+
+    public void setCash(double cash) {
+
+        this.cash = cash;
+    }
+
+    public int getMerchandiseNumber() {
+
+        return merchandiseNumber;
+    }
+
+    public void setMerchandiseNumber(int merchandiseNumber) {
+
+        this.merchandiseNumber = merchandiseNumber;
     }
 }

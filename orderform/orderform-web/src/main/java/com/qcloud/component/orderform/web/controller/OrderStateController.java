@@ -127,7 +127,7 @@ public class OrderStateController {
             subOrder.setExpressCode(expressCode);
             subOrder.setExpressName(expressName);
             subOrder.setExpressNumber(expressNumber);
-            orderStateService.exchangeSubOrderState(subOrderId, orderStateForm.getOrderDate(), OrderStateType.NORMAL_SHIPPED.getKey(), merchantId);
+            orderStateService.exchangeSubOrderState(subOrderId, orderStateForm.getOrderDate(), OrderStateType.NORMAL_SIGN.getKey(), merchantId);
         }
         // else if (orderItemId != null && orderItemId > 0) {
         // List<OrderItemDetail> list = orderItemDetailService.listByOrderItem(orderItemId, orderStateForm.getOrderDate());
@@ -251,17 +251,17 @@ public class OrderStateController {
         if (orderId != null && orderId > 0) {
             CollectOrder collectOrder = collectOrderService.get(orderStateForm.getOrderId(), orderStateForm.getOrderDate());
             AssertUtil.assertNotNull(collectOrder, "订单数据不存在." + orderStateForm.getOrderId());
-            if (collectOrder.getState() == OrderStateType.NORMAL_SIGN.getKey()) {
+            if (collectOrder.getState() == OrderStateType.NORMAL_FINISHED.getKey()) {
                 throw new OrderformException("已经签收.");
             }
-            orderStateService.exchangeOrderState(orderId, orderStateForm.getOrderDate(), OrderStateType.NORMAL_SIGN.getKey(), user.getId());
+            orderStateService.exchangeOrderState(orderId, orderStateForm.getOrderDate(), OrderStateType.NORMAL_FINISHED.getKey(), user.getId());
         } else if (subOrderId != null && subOrderId > 0) {
             SubOrder subOrder = subOrderService.get(subOrderId, orderStateForm.getOrderDate());
             AssertUtil.assertNotNull(subOrder, "订单数据不存在." + orderStateForm.getOrderId());
-            if (subOrder.getState() == OrderStateType.NORMAL_SIGN.getKey()) {
+            if (subOrder.getState() == OrderStateType.NORMAL_FINISHED.getKey()) {
                 throw new OrderformException("已经签收.");
             }
-            orderStateService.exchangeSubOrderState(subOrderId, orderStateForm.getOrderDate(), OrderStateType.NORMAL_SIGN.getKey(), user.getId());
+            orderStateService.exchangeSubOrderState(subOrderId, orderStateForm.getOrderDate(), OrderStateType.NORMAL_FINISHED.getKey(), user.getId());
         }
         // else if (orderItemId != null && orderItemId > 0) {
         // orderStateService.exchangeOrderItemState(orderItemId, orderStateForm.getOrderDate(), OrderStateType.NORMAL_SIGN.getKey(), user.getId());

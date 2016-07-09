@@ -36,22 +36,19 @@ public class AdminMerchandiseStockController {
     @Autowired
     private MerchandiseStockHandler merchandiseStockHandler;
 
-//    @Autowired
-//    private AdminFilterService      adminFilterService;
-//
-//    @Autowired
-//    private TokenClient             tokenClient;
-
-//    @Autowired
-//    private StoreMemberService      storeMemberService;
-
+    // @Autowired
+    // private AdminFilterService adminFilterService;
+    //
+    // @Autowired
+    // private TokenClient tokenClient;
+    // @Autowired
+    // private StoreMemberService storeMemberService;
     @RequestMapping
     @NoReferer
     public ModelAndView list(Integer pageNum, MerchandiseStockQuery query, HttpServletRequest request) {
 
-//        long storeId = getStoreId(getMemberId(request));
+        // long storeId = getStoreId(getMemberId(request));
         QStore store = PageParameterUtil.getParameterValues(request, SellercenterClient.STORE_LOGIN_PARAMETER_KEY);
-        
         final int PAGE_SIZE = 10;
         pageNum = RequestUtil.getPageid(pageNum);
         int start = NumberUtil.getPageStart(pageNum, PAGE_SIZE);
@@ -85,11 +82,10 @@ public class AdminMerchandiseStockController {
     @RequestMapping
     public AceAjaxView update(MerchandiseStock merchandiseStock, HttpServletRequest request) {
 
-//        long memberId = getMemberId(request);
-//        long storeId = getStoreId(memberId);
-//        long merchantId = getMerchantId(memberId);
+        // long memberId = getMemberId(request);
+        // long storeId = getStoreId(memberId);
+        // long merchantId = getMerchantId(memberId);
         QStore store = PageParameterUtil.getParameterValues(request, SellercenterClient.STORE_LOGIN_PARAMETER_KEY);
-                
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("错误");
         if (merchandiseStock.getId() > 0) {
@@ -120,18 +116,16 @@ public class AdminMerchandiseStockController {
     @RequestMapping
     public AceAjaxView delete(Long id, HttpServletRequest request) {
 
-//        long memberId = getMemberId(request);
-//        long storeId = getStoreId(memberId);
-//        long merchantId = getMerchantId(memberId);
-        
-//        QStore store = PageParameterUtil.getParameterValues(request, SellercenterClient.STORE_LOGIN_PARAMETER_KEY);
-        
+        // long memberId = getMemberId(request);
+        // long storeId = getStoreId(memberId);
+        // long merchantId = getMerchantId(memberId);
+        // QStore store = PageParameterUtil.getParameterValues(request, SellercenterClient.STORE_LOGIN_PARAMETER_KEY);
         AssertUtil.assertNotNull(id, "ID不能为空");
         AceAjaxView aceAjaxView = new AceAjaxView();
-//        HashMap where = new HashMap();
-//        where.put("merchantId", store.getMerchantId());
-//        where.put("storeId", store.getId());
-        //  删除条件
+        // HashMap where = new HashMap();
+        // where.put("merchantId", store.getMerchantId());
+        // where.put("storeId", store.getId());
+        // 删除条件
         if (merchandiseStockService.delete(id)) {
             aceAjaxView.setMessage("删除成功");
         } else {
@@ -140,52 +134,51 @@ public class AdminMerchandiseStockController {
         }
         return aceAjaxView;
     }
-
-//    private long getMemberId(HttpServletRequest request) {
-//
-//        String tokenId = adminFilterService.getTokenId(request);
-//        AssertUtil.assertNotEmpty(tokenId, "获取用户登录信息失败.");
-//        String idStr = tokenClient.get(tokenId);
-//        AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
-//        long memberId = Long.parseLong(idStr);
-//        return memberId;
-//    }
-//
-//    // private long getMerchantId(long memberId) {
-//    // long merchantId = 0;
-//    // List<QMerchant> qMerchants = sellercenterClient.listMerchant(memberId);
-//    // if (qMerchants.size() > 0) {
-//    // merchantId = qMerchants.get(0).getId();
-//    // } else {
-//    // AssertUtil.assertTrue(false, "获取商家ID失败");
-//    // }
-//    // return merchantId;
-//    // }
-//    private long getStoreId(Long memberId) {
-//
-//        long storeId = 0;
-//        HashMap where = new HashMap();
-//        where.put("memberId", memberId);
-//        StoreMember storeMember = storeMemberService.get(where);
-//        if (storeMember != null) {
-//            storeId = storeMember.getStoreId();
-//        } else {
-//            AssertUtil.assertTrue(false, "获取门店ID失败");
-//        }
-//        return storeId;
-//    }
-//
-//    private long getMerchantId(long memberId) {
-//
-//        long merchantId = 0;
-//        HashMap where = new HashMap();
-//        where.put("memberId", memberId);
-//        StoreMember storeMember = storeMemberService.get(where);
-//        if (storeMember != null) {
-//            merchantId = storeMember.getMerchantId();
-//        } else {
-//            AssertUtil.assertTrue(false, "获取商家ID失败");
-//        }
-//        return merchantId;
-//    }
+    // private long getMemberId(HttpServletRequest request) {
+    //
+    // String tokenId = adminFilterService.getTokenId(request);
+    // AssertUtil.assertNotEmpty(tokenId, "获取用户登录信息失败.");
+    // String idStr = tokenClient.get(tokenId);
+    // AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
+    // long memberId = Long.parseLong(idStr);
+    // return memberId;
+    // }
+    //
+    // // private long getMerchantId(long memberId) {
+    // // long merchantId = 0;
+    // // List<QMerchant> qMerchants = sellercenterClient.listMerchant(memberId);
+    // // if (qMerchants.size() > 0) {
+    // // merchantId = qMerchants.get(0).getId();
+    // // } else {
+    // // AssertUtil.assertTrue(false, "获取商家ID失败");
+    // // }
+    // // return merchantId;
+    // // }
+    // private long getStoreId(Long memberId) {
+    //
+    // long storeId = 0;
+    // HashMap where = new HashMap();
+    // where.put("memberId", memberId);
+    // StoreMember storeMember = storeMemberService.get(where);
+    // if (storeMember != null) {
+    // storeId = storeMember.getStoreId();
+    // } else {
+    // AssertUtil.assertTrue(false, "获取门店ID失败");
+    // }
+    // return storeId;
+    // }
+    //
+    // private long getMerchantId(long memberId) {
+    //
+    // long merchantId = 0;
+    // HashMap where = new HashMap();
+    // where.put("memberId", memberId);
+    // StoreMember storeMember = storeMemberService.get(where);
+    // if (storeMember != null) {
+    // merchantId = storeMember.getMerchantId();
+    // } else {
+    // AssertUtil.assertTrue(false, "获取商家ID失败");
+    // }
+    // return merchantId;
+    // }
 }

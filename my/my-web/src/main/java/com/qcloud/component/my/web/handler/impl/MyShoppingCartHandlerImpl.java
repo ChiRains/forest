@@ -225,7 +225,11 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
                     vo.setDiscount(merchandise.getDiscount());
                     vo.setPrice(merchandise.getPrice());
                     vo.setUnifiedMerchandiseId(merchandise.getId());
-                    vo.setImage(merchandise.getImage());
+                    if (StringUtils.isNotEmpty(merchandise.getImage())) {
+                        vo.setImage(fileSDKClient.getFileServerUrl() + StringUtil.nullToEmpty(merchandise.getImage()));
+                    } else {
+                        vo.setImage(StringUtil.nullToEmpty(merchandise.getImage()));
+                    }
                     vo.setName(merchandise.getName());
                     vo.setUnit(merchandise.getUnit());
                     vo.setNumber(merchandise.getNumber());

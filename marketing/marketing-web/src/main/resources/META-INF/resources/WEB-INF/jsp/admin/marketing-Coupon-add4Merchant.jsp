@@ -42,9 +42,10 @@
 					</span>
                 </div>
             </div>
-                  		<div class="space-4"></div>
+
+			      		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="validDate"> 有效时间 </label>
+                <label class="col-sm-3 control-label no-padding-right" for="validDate"> 使用开始时间 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
 						<input type="text" class="width-100" readonly maxlength="20" id="validDate" name="validDate" placeholder="有效时间" value=""/>
@@ -52,6 +53,19 @@
 					</span>
                 </div>
             </div>
+            
+                   		<div class="space-4"></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="validDate"> 使用截止时间 </label>
+                <div class="col-sm-9">
+					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
+						<input type="text" class="width-100" readonly maxlength="20" id="invalidDate" name="invalidDate" placeholder="使用截止时间" value=""/>
+						<i class="ace-icon fa"></i>
+					</span>
+                </div>
+            </div>
+            
+            
                   		<div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="totalOfPerson"> 总共领取张数/人 </label>
@@ -151,7 +165,7 @@
             }).trigger('resize.chosen');
            
            //value是当前的值 ,params是传入的参数值
-           $.validator.addMethod("vD",function(value,element,params){
+           /*$.validator.addMethod("vD",function(value,element,params){
            		var endDate=$("#endDate").val();
 				var startDate=$("#startDate").val();
 			   	if(value>=endDate){    //if(value>=startDate && value<=endDate){
@@ -160,6 +174,7 @@
 			   	   	return false;
 			   	}
 			},"有效时间必须大于结束时间");       //},"有效时间必须在开始时间与结束时间之间");
+			//
             $.validator.addMethod("eD",function(value,element,params){
 				var startDate=$("#startDate").val();
 			   	if(value>startDate){
@@ -168,6 +183,7 @@
 			   	   	return false;
 			   	}
 			},"结束时间必须大于开始时间");
+			//
 			$.validator.addMethod("sD",function(value,element,params){
 				var date = new Date();
 				var y=date.getFullYear();
@@ -186,7 +202,7 @@
 			   	}else{
 			   	   	return false;
 			   	}
-			},"开始时间不能小于当前时间");
+			},"开始时间不能小于当前时间");*/
            
             //表单验证
             $("#model-form").validate({
@@ -194,7 +210,7 @@
                 errorClass: 'help-block col-xs-12 col-sm-reset inline',
                 focusInvalid: false,
                 rules: {
-                	validDate:{
+                	/*validDate:{
                 		required: true,
                 		vD:true
                 	},
@@ -205,7 +221,7 @@
                 	startDate:{
                 		required: true,
                 		sD:true
-                	},
+                	},*/
                     priceOfPerson: {
                         required: true,
                         range: [0, 99999999],
@@ -268,6 +284,12 @@
                 startDate: '-1y'
             });  
             $('#validDate').datepicker({
+                format:'yyyy-mm-dd',
+                autoclose:true,
+                startDate: '-1y'
+            });
+            
+            $('#invalidDate').datepicker({
                 format:'yyyy-mm-dd',
                 autoclose:true,
                 startDate: '-1y'

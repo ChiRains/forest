@@ -62,7 +62,7 @@ public class StoreEntity implements QStore {
     @Override
     public QStore getParent() {
 
-        if (parent == null || parent.getType() != 3) {
+        if (parent == null || parent.getType() != 2) {
             return null;
         }
         return new StoreEntity(merchant, parent.getParent(), parent);

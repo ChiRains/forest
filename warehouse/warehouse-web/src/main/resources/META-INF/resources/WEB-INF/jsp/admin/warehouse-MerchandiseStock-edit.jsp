@@ -69,19 +69,6 @@
 
             <div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="purchase"> 进货价 </label>
-
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" readonly class="width-100" maxlength="20" id="purchase" name="purchase"
-                               placeholder="进货价"
-                               value="${merchandiseStock.purchase}"/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
-            <div class="space-4"></div>
-            <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="discount"> 折扣价 </label>
 
                 <div class="col-sm-9">
@@ -146,7 +133,7 @@
             $(".select-product").on("click", function () {
                 BootstrapDialog.show({
                     title: "商品列表",
-                    message: $('<div></div>').load('/admin/stockState/selectProductList.do'),
+                    message: $('<div></div>').load('/admin/unifiedMerchandise/selectProductList.do'),
                     cssClass: "select-product-dialog",
                     onshow: function (dialog) {
                         $(document).off("click", ".select-product-dialog a,.search-button");
@@ -174,14 +161,12 @@
                                 var id = obj.attr("data-id");
                                 var name = obj.attr("data-name");
                                 var specifications = obj.attr("data-specifications");
-                                var purchase = obj.attr("data-purchase");
                                 var discount = obj.attr("data-discount");
                                 var price = obj.attr("data-price");
                                 var stock = obj.attr("data-stock");
                                 if (id && name) {
                                     $("#unifiedMerchandiseId").val(id);
                                     $("#merchandiseName").val(name);
-                                    $("#purchase").val(purchase);
                                     $("#discount").val(discount);
                                     $("#price").val(price);
                                     dialog.close();

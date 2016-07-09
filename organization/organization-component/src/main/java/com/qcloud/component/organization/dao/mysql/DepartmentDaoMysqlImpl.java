@@ -99,38 +99,67 @@ public class DepartmentDaoMysqlImpl implements DepartmentDao {
 
     @Override
     public List<Department> listByParent(long parentId, String bsid) {
+
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("parentId", parentId);
-        param.put("bsid", bsid);    
+        param.put("bsid", bsid);
         List<Department> list = sqlOperator.selectList("com.qcloud.component.organization.dao.mysql.mapper.DepartmentMapper.listByParent", param);
         return list;
     }
 
     @Override
     public Department getByManager(long manager) {
+
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("manager", manager);
         return sqlOperator.selectOne("com.qcloud.component.organization.dao.mysql.mapper.DepartmentMapper.getByManager", param);
     }
 
     @Override
-    public List<Department> listChildrenByParent(DepartmentQuery query,String bsid,int start, int count) {
+    public List<Department> listChildrenByParent(DepartmentQuery query, String bsid, int start, int count) {
+
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("start", start);
         param.put("count", count);
-        param.put("bsid", bsid); 
+        param.put("bsid", bsid);
         param.put("displayName", query.getDisplayName());
         List<Department> list = sqlOperator.selectList("com.qcloud.component.organization.dao.mysql.mapper.DepartmentMapper.listChildrenByParent", param);
         return list;
     }
 
     @Override
-    public int countChildrenByParent(DepartmentQuery query,String bsid) {
+    public int countChildrenByParent(DepartmentQuery query, String bsid) {
 
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("bsid", bsid);
         param.put("displayName", query.getDisplayName());
         int total = sqlOperator.selectOne("com.qcloud.component.organization.dao.mysql.mapper.DepartmentMapper.countChildrenByParent", param);
+        return total;
+    }
+
+    @Override
+    public List<Department> listByAddress(DepartmentQuery query, int start, int count) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("start", start);
+        param.put("count", count);
+        param.put("province", query.getProvince());
+        param.put("city", query.getCity());
+        param.put("district", query.getDistrict());
+        param.put("address", query.getAddress());
+        List<Department> list = sqlOperator.selectList("com.qcloud.component.organization.dao.mysql.mapper.DepartmentMapper.listByAddress", param);
+        return list;
+    }
+
+    @Override
+    public int countByAddress(DepartmentQuery query) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("province", query.getProvince());
+        param.put("city", query.getCity());
+        param.put("district", query.getDistrict());
+        param.put("address", query.getAddress());
+        int total = sqlOperator.selectOne("com.qcloud.component.organization.dao.mysql.mapper.DepartmentMapper.countByAddress", param);
         return total;
     }
 }

@@ -16,6 +16,7 @@ import com.qcloud.component.goods.QUnifiedMerchandise;
 import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.goods.model.CombinationMerchandiseItem;
 import com.qcloud.component.goods.model.UnifiedMerchandise;
+import com.qcloud.component.goods.model.key.TypeEnum.QueryItemType;
 import com.qcloud.component.goods.model.query.UnifiedMerchandiseQuery;
 import com.qcloud.component.goods.service.CombinationMerchandiseItemService;
 import com.qcloud.component.goods.service.UnifiedMerchandiseService;
@@ -66,6 +67,7 @@ public class AdminCombinationMerchandiseController {
         UnifiedMerchandiseQuery query = new UnifiedMerchandiseQuery();
         query.setType(UnifiedMerchandiseType.COMBINATION.getKey());
         query.setMerchantId(merchant.getId());
+        query.setQueryItemType(QueryItemType.S);
         Page<UnifiedMerchandise> page = unifiedMerchandiseService.page(query, pPage.getPageStart(), pPage.getPageSize());
         List<AdminCombinationMerchandiseVO> list = combinationMerchandiseHandler.toVOList4Admin(page.getData());
         AcePagingView pagingView = new AcePagingView("/admin/goods-CombinationMerchandise-list", DIR + "/list", pPage.getPageNum(), pPage.getPageSize(), page.getCount());

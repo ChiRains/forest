@@ -16,6 +16,8 @@ public class AdminCouponVO {
     // 有效时间
     private Date   validDate;
 
+    private Date   invalidDate;
+
     // 总共领取张数/人
     private int    totalOfPerson;
 
@@ -32,12 +34,10 @@ public class AdminCouponVO {
     private int    interval;
 
     private String imageUid;
-    
-    private Long merchantId;
-    
-    private int type;
-    
-    
+
+    private Long   merchantId;
+
+    private int    type;
 
     public AdminCouponVO() {
 
@@ -135,63 +135,66 @@ public class AdminCouponVO {
         return enable;
     }
 
-    
     public String getImage() {
-    
+
         return image;
     }
 
-    
     public void setImage(String image) {
-    
+
         this.image = image;
     }
 
-    
     public int getInterval() {
-    
+
         return interval;
     }
 
-    
     public void setInterval(int interval) {
-    
+
         this.interval = interval;
     }
 
-    
     public String getImageUid() {
-    
+
         return imageUid;
     }
 
-    
     public void setImageUid(String imageUid) {
-    
+
         this.imageUid = imageUid;
     }
 
-    
-    public Long getMerchantId() {
-    
+    public Long getMerchantId() { 
+
         return merchantId;
     }
 
-    
     public void setMerchantId(Long merchantId) {
-    
+
         this.merchantId = merchantId;
     }
 
-    
     public int getType() {
-    
+
         return type;
     }
 
-    
     public void setType(int type) {
-    
+
         this.type = type;
     }
+
+    
+    public Date getInvalidDate() {
+    
+        return invalidDate;
+    }
+
+    
+    public void setInvalidDate(Date invalidDate) {
+    
+        this.invalidDate = invalidDate;
+    }
+
 }

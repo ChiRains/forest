@@ -10,6 +10,8 @@ import org.apache.commons.lang.NotImplementedException;
 import org.springframework.stereotype.Repository;
 import com.qcloud.component.goods.dao.UnifiedMerchandiseDao;
 import com.qcloud.component.goods.model.UnifiedMerchandise;
+import com.qcloud.component.goods.model.key.TypeEnum.OrderType;
+import com.qcloud.component.goods.model.key.TypeEnum.QueryType;
 import com.qcloud.component.goods.model.query.UnifiedMerchandiseQuery;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.data.sql.mybatis.SqlOperator;
@@ -76,10 +78,30 @@ public class UnifiedMerchandiseDaoMysqlImpl implements UnifiedMerchandiseDao {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("start", start);
         param.put("count", count);
-        param.put("type", query.getType());
+        param.put("name", query.getName());
         param.put("merchantId", query.getMerchantId());
-        List<UnifiedMerchandise> list = sqlOperator.selectList("com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper.list4query", param);
-        int total = sqlOperator.selectOne("com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper.count4query", param);
+        QueryType queryType = query.getQueryType();
+        if (QueryType.SALES_VOLUME.getKey() == queryType.getKey()) { // 销量
+            param.put("orderField", "salesVolume");
+        } else if (QueryType.DATE.getKey() == queryType.getKey()) {// 日期
+            param.put("orderField", "recordTime");
+        } else if (QueryType.PRICE.getKey() == queryType.getKey()) {// 价格
+            param.put("orderField", "discount");
+        } else if (QueryType.HOT.getKey() == queryType.getKey()) {// 热度
+            param.put("orderField", "clickRate");
+        } else if (QueryType.GOODEVALUATION.getKey() == queryType.getKey()) {// 好评
+            param.put("orderField", "goodEvaluation");
+        }
+        param.put("orderType", query.getOrderType().getKey() == OrderType.ASE.getKey() ? "" : "desc");
+        param.put("queryType", query.getQueryItemType().getKey());
+        param.put("merchantClassifyId", query.getMerchantClassifyId());
+        param.put("mallClassifyId", query.getMallClassifyId());
+        param.put("merchantClassifyBsid", query.getMerchantClassifyBsid());
+        param.put("mallClassifyBsid", query.getMallClassifyBsid());
+        param.put("brandId", query.getBrandId());
+        param.put("type", query.getType());
+        List<UnifiedMerchandise> list = sqlOperator.selectList("com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper.list4Front", param);
+        int total = sqlOperator.selectOne("com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper.count4Front", param);
         Page<UnifiedMerchandise> page = new Page<UnifiedMerchandise>();
         page.setCount(total);
         page.setData(list);

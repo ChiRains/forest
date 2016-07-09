@@ -22,6 +22,9 @@ public class TreeStore implements TreeModel {
     @Override
     public long getParentId() {
 
+        if (store.getParent() == null) {
+            return -1;
+        }
         return store.getParent().getId();
     }
 
