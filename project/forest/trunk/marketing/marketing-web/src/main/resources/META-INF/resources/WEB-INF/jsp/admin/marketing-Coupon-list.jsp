@@ -45,7 +45,8 @@
                     <tr role="row">     		<th>图片</th> 
                                                 <th>开始时间</th>           
                                                 <th>结束时间</th>           
-                                                <th>有效时间</th>           
+                                                <th>使用开始时间</th>   
+                                                <th>使用截止时间</th>           
                                                 <th>总共领取张数/人</th>           
                                                 <th>总共领取金额数/人</th>    
                                                 <th>领取间隔时间(天)</th>
@@ -62,7 +63,8 @@
 							<td><img src="${item.image}" width="100" height="80"/>  </td> 
                             <td><fmt:formatDate value="${item.startDate}" pattern="yyyy-MM-dd"/></td>                         
                             <td><fmt:formatDate value="${item.endDate}" pattern="yyyy-MM-dd"/></td>                         
-                            <td><fmt:formatDate value="${item.validDate}" pattern="yyyy-MM-dd"/></td>                         
+                            <td><fmt:formatDate value="${item.validDate}" pattern="yyyy-MM-dd"/></td>  
+                            <td><fmt:formatDate value="${item.invalidDate}" pattern="yyyy-MM-dd"/></td>                                        
                             <td>${item.totalOfPerson}</td>                         
                             <td>${item.priceOfPerson}</td>     
                             <td>${item.interval}天</td>   

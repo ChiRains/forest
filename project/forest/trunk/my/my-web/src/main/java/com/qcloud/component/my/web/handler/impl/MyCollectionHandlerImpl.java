@@ -73,10 +73,10 @@ public class MyCollectionHandlerImpl implements MyCollectionHandler {
         vo.setUnifiedMerchandiseId(myCollection.getObjId());
         vo.setDiscount(unifiedMerchandise.getDiscount());
         vo.setImage(fileSDKClient.getFileServerUrl() + unifiedMerchandise.getImage());
-        vo.setMallClassifyId(unifiedMerchandise.getList().get(0).getMallClassifyId());
+        vo.setMallClassifyId(unifiedMerchandise.getMallClassifyId());
         vo.setName(unifiedMerchandise.getName());
         vo.setPrice(unifiedMerchandise.getPrice());
-        vo.setSalesVolume(unifiedMerchandise.getList().get(0).getSalesVolume());
+        vo.setSalesVolume(unifiedMerchandise.getSalesVolume());
         vo.setSpecifications(unifiedMerchandise.getSpecifications());
         return vo;
     }

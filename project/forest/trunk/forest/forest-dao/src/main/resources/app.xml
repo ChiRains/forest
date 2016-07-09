@@ -190,20 +190,19 @@
 	</module-list>
 	
 	<module-list code="organization-platform-type-config">	
-		<item type="1" name="平台" parent="-1"></item>	
-		<item type="2" name="单位" parent="1"></item>	
-		<item type="3" name="子单位" parent="2"></item>	
-		<item type="4" name="部门" parents="organization-platform-type-p4"></item>	
+		<item type="1" name="商家" parent="-1"></item>	
+		<item type="2" name="门店" parent="1"></item>	
 	</module-list>
 	
-	<module-list code="organization-platform-type-p4">	
-		<item parent="2"></item>	
-		<item parent="3"></item>			
-	</module-list>
 	
 	<module-list code="publicdata-dictionary-key-list">	
 		<item type="a" name="测试key"></item>	
 		<item type="b" name="测试key2"></item>	
+	</module-list>
+	
+	
+	<module-list code="commoditycenter_brand_attribute">	
+		<item value="true">是否有品牌</item>	
 	</module-list>
 	
 

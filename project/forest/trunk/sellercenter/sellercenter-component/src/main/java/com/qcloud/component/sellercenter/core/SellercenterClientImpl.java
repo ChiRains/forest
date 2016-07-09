@@ -89,8 +89,8 @@ public class SellercenterClientImpl implements SellercenterClient {
     private QDepartment getMerchantDepartment(QDepartment department) {
 
         while (true) {
-            // 商家为2 门店为3
-            if (department == null || department.getType() == 2) {
+            // 商家为1 门店为2
+            if (department == null || department.getType() == 1) {
                 return department;
             }
             department = department.getParent();

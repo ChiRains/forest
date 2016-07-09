@@ -36,7 +36,7 @@ public class MyMerchandiseCollectionController {
     public FrontAjaxView collect(HttpServletRequest request, Long unifiedMerchandiseId) {
 
         QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(unifiedMerchandiseId);
-        return myCollectionController.collect(request, unifiedMerchandiseId, unifiedMerchandise.getList().get(0).getMallClassifyId(), CollectionType.MERCHANDISE);
+        return myCollectionController.collect(request, unifiedMerchandiseId, unifiedMerchandise.getMallClassifyId(), CollectionType.MERCHANDISE);
     }
 
     @PiratesApp

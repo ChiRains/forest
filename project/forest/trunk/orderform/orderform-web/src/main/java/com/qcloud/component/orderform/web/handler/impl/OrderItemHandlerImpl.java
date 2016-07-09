@@ -49,7 +49,7 @@ public class OrderItemHandlerImpl implements OrderItemHandler {
         for (AdminOrderItemVO adminOrderItemVO : voList) {
             UnifiedMerchandise m = unifiedMerchandiseService.get(adminOrderItemVO.getUnifiedMerchandiseId());
             adminOrderItemVO.setItem(m);
-            QMerchant merchant = sellercenterClient.getMerchant(adminOrderItemVO.getMerchantId());
+            QMerchant merchant = sellercenterClient.getMerchant(m.getMerchantId());
             adminOrderItemVO.setMerchant(merchant);
         }
         return voList;

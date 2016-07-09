@@ -79,6 +79,7 @@ import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.NumberUtil;
 import com.qcloud.pirates.util.RequestUtil;
 import com.qcloud.pirates.util.StringUtil;
+import com.qcloud.pirates.web.page.PPageParameter;
 import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.pirates.web.security.annotation.NoReferer;
 
@@ -273,16 +274,18 @@ public class AdminMerchandiseController {
     }
 
     @RequestMapping
-    public AceAjaxView add(Merchandise merchandise) {
+    public AceAjaxView add(Merchandise merchandise, HttpServletRequest request) {
 
         // 自家商品分类
         if (merchandise.getMerchantClassifyId() <= 0) {
             throw new CommoditycenterException("请选择自家商品分类!");
         }
         // 不需要审核的,状态为直接上架
-        long merchantId = merchandise.getMerchantId();
-        QMerchant merchant = sellercenterClient.getMerchant(merchantId);
-        AssertUtil.assertNotNull(merchant, "商品所在商家不存在." + merchantId);
+        // long merchantId = merchandise.getMerchantId();
+        // QMerchant merchant = sellercenterClient.getMerchant(merchantId);
+        // AssertUtil.assertNotNull(merchant, "商品所在商家不存在." + merchantId);
+        QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
+        merchandise.setMerchantId(merchant.getId());
         if (exist(merchandise)) {
             AssertUtil.assertTrue(false, "商品名称重复.");
         }
@@ -937,6 +940,7 @@ public class AdminMerchandiseController {
                 vo.setMerchandiseId(unifiedMerchandise.getMerchandiseId());
                 vo.setState(unifiedMerchandise.getState());
                 vo.setStock(unifiedMerchandise.getStock());
+                vo.setCode(unifiedMerchandise.getCode());
                 modelAndView.addObject("defaultSpec", vo);
             }
         } else {
@@ -1005,6 +1009,7 @@ public class AdminMerchandiseController {
                     sb.append(merchandiseSpecifications.getValue()).append(" ");
                 }
                 vo.setValue0(sb.toString());
+                vo.setCode(unifiedMerchandise.getCode());
                 mspecVoList.add(vo);
             }
         }
@@ -1384,6 +1389,7 @@ public class AdminMerchandiseController {
         }
         ModelAndView view = new ModelAndView("/admin/goods-Merchandise-itemState");
         view.addObject("list", voList);
+        view.addObject("query", query);
         return view;
     }
 

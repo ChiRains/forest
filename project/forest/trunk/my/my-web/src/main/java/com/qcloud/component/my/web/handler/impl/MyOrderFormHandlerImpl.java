@@ -310,9 +310,11 @@ public class MyOrderFormHandlerImpl implements MyOrderFormHandler {
             MyOrderFormListVO vo = Json.toObject(json, MyOrderFormListVO.class, true);
             QOrder order = orderformClient.getOrder(myOrderForm.getOrderId(), myOrderForm.getTime());
             List<String> imageList = new ArrayList<String>();
+            int merchandiseNumber = 0;
             for (QMerchantOrder merchantOrder : order.getMerchantOrderList()) {
                 for (QOrderItem item : merchantOrder.getOrderItemList()) {
                     imageList.add(fileSDKClient.getFileServerUrl() + item.getImage());
+                    merchandiseNumber++;
                 }
             }
             vo.setImage(imageList);
@@ -339,6 +341,8 @@ public class MyOrderFormHandlerImpl implements MyOrderFormHandler {
             }
             vo.setAfterSale(order.canApplyAfterSale());
             vo.setEvaluation(order.canEvaluation());
+            vo.setCash(order.getCash());
+            vo.setMerchandiseNumber(merchandiseNumber);
             voList.add(vo);
         }
         return voList;

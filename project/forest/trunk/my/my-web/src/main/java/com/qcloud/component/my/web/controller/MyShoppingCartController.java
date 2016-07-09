@@ -89,7 +89,7 @@ public class MyShoppingCartController {
                 myShoppingCart.setNumber(number == null || number < 0 ? 1 : number);
                 myShoppingCart.setUnifiedMerchandiseId(unifiedMerchandiseId);
                 myShoppingCart.setMerchantId(unifiedMerchandise.getMerchantId());
-                myShoppingCart.setMerchantClassifyId(unifiedMerchandise.getList().get(0).getMerchantClassifyId());
+                myShoppingCart.setMerchantClassifyId(unifiedMerchandise.getMerchantClassifyId());
                 myShoppingCart.setUserId(user.getId());
                 myShoppingCartService.add(myShoppingCart);
             } else {
@@ -177,7 +177,7 @@ public class MyShoppingCartController {
                 myShoppingCart.setNumber(number == null || number < 0 ? 1 : number);
                 myShoppingCart.setUnifiedMerchandiseId(unifiedMerchandiseId);
                 myShoppingCart.setMerchantId(unifiedMerchandise.getMerchantId());
-                myShoppingCart.setMerchantClassifyId(unifiedMerchandise.getList().get(0).getMerchantClassifyId());
+                myShoppingCart.setMerchantClassifyId(unifiedMerchandise.getMerchantClassifyId());
                 myShoppingCart.setUserId(user.getId());
                 myShoppingCartService.add(myShoppingCart);
             } else {
@@ -188,7 +188,7 @@ public class MyShoppingCartController {
             }
         }
         FrontAjaxView view = new FrontAjaxView();
-        view.setMessage("获取购物车商品成功.");
+        view.setMessage("修改购物车商品成功.");
         return view;
     }
 

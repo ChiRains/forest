@@ -28,16 +28,17 @@
         <div>
             <div class="dataTables_wrapper form-inline no-footer">
                 <div class="row">
-                    <div class="col-xs-12"  >
+                 <div class="col-xs-12"  >
                         <label style="float:right;">
                             <form id="query-form" action="#admin/merchandise/toEditItemState" onsubmit="listFormSearch(this); return false">
                             	<div class="dataTables_length">
+                            		   <%--	<input type="hidden" name="merchandiseId" value="${query.merchandiseId}"/>
                                			<input type="search" maxlength="40" class="form-control search-query"
                                            placeholder="编号" name="name" value="${query.name}">
                                    		<button type="submit" class="btn btn-purple btn-sm">
                                             <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
                                             查询
-                                        </button>  
+                                        </button>  --%>
                                         <button type="button" class="btn btn-purple btn-sm" 
                                         	onclick="window.location='#admin/merchandise/list'"
                                         	>
@@ -47,7 +48,7 @@
                                  </div>
                             </form>
                         </label>
-                    </div>
+                    </div> 
                 </div>
                 <table class="table table-striped table-bordered table-hover dataTable no-footer">
                     <thead>

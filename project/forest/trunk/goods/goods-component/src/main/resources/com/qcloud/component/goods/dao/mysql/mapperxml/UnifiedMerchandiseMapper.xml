@@ -99,4 +99,61 @@
     <select id="getByCodeAndMerchant" parameterType="java.util.HashMap" resultType="UnifiedMerchandise">
         select * from `goods_unified_merchandise` where merchantId = #{merchantId} and code=#{code} limit 1
     </select>
+    
+    <select id="list4Front" parameterType="java.util.HashMap" resultType="UnifiedMerchandise">  
+        select * from `goods_unified_merchandise` 
+        where 1=1
+        <if test="type !=null and type !=0">
+        	and `type`=#{type}
+        </if>
+        <if test="merchantId != null and merchantId > 0">
+            AND merchantId = #{merchantId}
+        </if>
+        <if test="merchantClassifyId != null and merchantClassifyId > 0">
+            AND (merchantClassifyId = #{merchantClassifyId} OR merchantClassifyBsid like CONCAT(#{merchantClassifyBsid},'%'))
+        </if>       
+        
+        <if test="mallClassifyId != null and mallClassifyId > 0">
+            AND (mallClassifyId = #{mallClassifyId} OR mallClassifyBsid like CONCAT(#{mallClassifyBsid},'%'))
+        </if>          
+        <if test="brandId != null and brandId > 0">
+            AND brandId = #{brandId}
+        </if>
+        <if test="name != null">
+            AND (name LIKE CONCAT('%',#{name},'%') OR keywords LIKE CONCAT('%',#{name},'%'))
+        </if>           
+        <if test="queryType == 1">
+            group by merchandiseId
+        </if>   
+        order by ${orderField} ${orderType} 
+        limit #{start},#{count}
+    </select>  
+    
+     <select id="count4Front" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `goods_unified_merchandise`
+        where 1=1
+        <if test="type !=null and type !=0">
+        	and `type`=#{type}
+        </if>
+        <if test="merchantId != null and merchantId > 0">
+            AND merchantId = #{merchantId}
+        </if>
+        <if test="merchantClassifyId != null and merchantClassifyId > 0">
+            AND (merchantClassifyId = #{merchantClassifyId} OR merchantClassifyBsid like CONCAT(#{merchantClassifyBsid},'%'))
+        </if>       
+        
+        <if test="mallClassifyId != null and mallClassifyId > 0">
+            AND (mallClassifyId = #{mallClassifyId} OR mallClassifyBsid like CONCAT(#{mallClassifyBsid},'%'))
+        </if>          
+        <if test="brandId != null and brandId > 0">
+            AND brandId = #{brandId}
+        </if>
+        <if test="name != null">
+            AND (name LIKE CONCAT('%',#{name},'%') OR keywords LIKE CONCAT('%',#{name},'%'))
+        </if>           
+        <if test="queryType == 1">
+            group by merchandiseId
+        </if>   
+    </select> 
+    
 </mapper>

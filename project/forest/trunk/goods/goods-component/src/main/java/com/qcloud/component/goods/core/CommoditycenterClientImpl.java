@@ -107,6 +107,8 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
             }
             unifiedMerchandiseEntity.setSpecifications(sb.toString());
             unifiedMerchandiseEntity.setType(UnifiedMerchandiseType.Factory.get(unifiedMerchandise.getType()));
+            //
+            
             return unifiedMerchandiseEntity;
         }
     }
@@ -177,7 +179,7 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
             }
         } else {
             MerchandiseDealRecord merchandiseDealRecord = new MerchandiseDealRecord();
-            merchandiseDealRecord.setMerchandiseId(unifiedMerchandise.getList().get(0).getMerchandiseId());
+            merchandiseDealRecord.setMerchandiseId(unifiedMerchandise.getMerchandiseId());
             merchandiseDealRecord.setSpecifications(specifications);
             merchandiseDealRecord.setUserId(userId);
             merchandiseDealRecord.setTime(new Date());
@@ -195,8 +197,8 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
                 monthHotSale.setNumber(monthHotSale.getNumber() + number);
                 monthHotSaleService.update(monthHotSale);
             } else {
-                long mallClassifyId = unifiedMerchandise.getList().get(0).getMallClassifyId();
-                long merchantClassifyId = unifiedMerchandise.getList().get(0).getMerchantClassifyId();
+                long mallClassifyId = unifiedMerchandise.getMallClassifyId();
+                long merchantClassifyId = unifiedMerchandise.getMerchantClassifyId();
                 monthHotSale = new MonthHotSale();
                 monthHotSale.setMallClassifyId(mallClassifyId);
                 monthHotSale.setMerchantClassifyId(merchantClassifyId);

@@ -77,26 +77,27 @@ public class AdminMerchantOrderFormController {
         // 门店才能进行订单管理
         // long memberId = getMemberId(request);
         // long storeId = getStoreId(memberId);
-        QStore store = PageParameterUtil.getParameterValues(request, SellercenterClient.STORE_LOGIN_PARAMETER_KEY);
+        // QStore store = PageParameterUtil.getParameterValues(request, SellercenterClient.STORE_LOGIN_PARAMETER_KEY);
+        QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
         final int PAGE_SIZE = 10;
         pageNum = RequestUtil.getPageid(pageNum);
         int start = NumberUtil.getPageStart(pageNum, PAGE_SIZE);
         // Store store = storeService.get(storeId);
         // AssertUtil.assertNotNull(store, "门店不存在." + storeId);
-        long merchantId = store.getMerchant().getId();
+        long merchantId = merchant.getId();
         pageNum = RequestUtil.getPageid(pageNum);
         Page<MerchantOrderForm> page = new Page<MerchantOrderForm>();
         if (StringUtils.isNotEmpty(query.getOrderNumber())) {
             AssertUtil.assertTrue(query.getOrderNumber().length() >= 12, "请输入正确的总单号.");
             AssertUtil.assertNotNull(orderformClient, "订单接口尚未实例化.");
             QOrder order = orderformClient.getOrder(query.getOrderNumber());
-            MerchantOrderForm merchantOrderForm = merchantOrderFormService.get(order.getId(), merchantId, store.getId());
+            MerchantOrderForm merchantOrderForm = merchantOrderFormService.get(order.getId(), merchantId, 0);
             List<MerchantOrderForm> mList = new ArrayList<MerchantOrderForm>();
             mList.add(merchantOrderForm);
             page.setData(mList);
             page.setCount(mList.size());
         } else {
-            page = merchantOrderFormService.page(query, merchantId, store.getId(), start, PAGE_SIZE);
+            page = merchantOrderFormService.page(query, merchantId, 0, start, PAGE_SIZE);
         }
         List<AdminMerchantOrderFormVO> list = merchantOrderFormHandler.toVOList4Admin(page.getData());
         String param = "state=" + query.getState();

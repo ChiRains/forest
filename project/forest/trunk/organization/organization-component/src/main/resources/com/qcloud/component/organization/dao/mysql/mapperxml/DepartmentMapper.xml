@@ -46,4 +46,42 @@
         </if>
     </select> 
     
+    
+    <select id="listByAddress" parameterType="java.util.HashMap" resultType="Department">  
+        select * from `organization_department` 
+        where 1=1   
+        <if test="province !=null">
+        	and `province` like concat('%',#{province},'%')
+        </if>
+        <if test="city !=null">
+        	and `city` like concat('%',#{city},'%')
+        </if>
+        <if test="district !=null">
+        	and `district` like concat('%',#{district},'%')
+        </if>
+        <if test="address !=null">
+        	and `address` like concat('%',#{address},'%')
+        </if>
+        order by bsid        
+        limit #{start},#{count}
+    </select>
+    
+    <select id="countByAddress" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `organization_department` 
+        where 1=1 
+        <if test="province !=null">
+        	and `province` like concat('%',#{province},'%')
+        </if>
+        <if test="city !=null">
+        	and `city` like concat('%',#{city},'%')
+        </if>
+        <if test="district !=null">
+        	and `district` like concat('%',#{district},'%')
+        </if>
+        <if test="address !=null">
+        	and `address` like concat('%',#{address},'%')
+        </if>
+    </select>
+    
+    
 </mapper>

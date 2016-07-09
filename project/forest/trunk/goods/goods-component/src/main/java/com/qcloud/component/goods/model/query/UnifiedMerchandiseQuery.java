@@ -1,12 +1,13 @@
 package com.qcloud.component.goods.model.query;
 
+import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.goods.model.key.TypeEnum.OrderType;
 import com.qcloud.component.goods.model.key.TypeEnum.QueryItemType;
 import com.qcloud.component.goods.model.key.TypeEnum.QueryType;
 
 public class UnifiedMerchandiseQuery {
 
-    private Integer       type;
+    private Integer       type      = UnifiedMerchandiseType.SINGLE.getKey();
 
     private Long          merchantId;
 
@@ -18,9 +19,9 @@ public class UnifiedMerchandiseQuery {
 
     private Long          mallClassifyId;
 
-    private QueryType     queryType;
+    private QueryType     queryType = QueryType.SALES_VOLUME;
 
-    private OrderType     orderType;
+    private OrderType     orderType = OrderType.DESC;
 
     private QueryItemType queryItemType;
 

@@ -409,7 +409,7 @@ public class MyClientImpl implements MyClient {
             MyToEvaluation myToEvaluation = new MyToEvaluation();
             myToEvaluation.setDiscount(discount);
             myToEvaluation.setImage(unifiedMerchandise.getImage());
-            myToEvaluation.setMerchandiseId(unifiedMerchandise.getList().get(0).getMerchandiseId());
+            myToEvaluation.setMerchandiseId(unifiedMerchandise.getMerchandiseId());
             myToEvaluation.setMerchantId(unifiedMerchandise.getMerchantId());
             myToEvaluation.setName(unifiedMerchandise.getName());
             myToEvaluation.setOrderDate(orderDate);

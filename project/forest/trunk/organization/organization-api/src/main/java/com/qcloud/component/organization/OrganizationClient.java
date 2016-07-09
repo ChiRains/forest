@@ -63,6 +63,6 @@ public interface OrganizationClient {
     public Long sendMsgForId(long clerkId, ClerkMessageType type, String title, String content);
 
     public List<QPost> listPost();
-    
+
     QDepartment getByManager(long manager);
 }

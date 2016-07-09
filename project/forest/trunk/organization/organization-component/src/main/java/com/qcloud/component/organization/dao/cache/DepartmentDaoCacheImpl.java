@@ -17,9 +17,8 @@ public class DepartmentDaoCacheImpl implements DepartmentDao {
     @Autowired
     private DepartmentDao departmentDaoMysqlImpl;
 
-//    @Autowired
-//    private DepartmentDao departmentDaoRedisImpl;
-
+    // @Autowired
+    // private DepartmentDao departmentDaoRedisImpl;
     @Override
     public boolean add(Department department) {
 
@@ -93,14 +92,26 @@ public class DepartmentDaoCacheImpl implements DepartmentDao {
     }
 
     @Override
-    public List<Department> listChildrenByParent(DepartmentQuery query,String bsid,int start, int count) {
+    public List<Department> listChildrenByParent(DepartmentQuery query, String bsid, int start, int count) {
 
-        return departmentDaoMysqlImpl.listChildrenByParent(query,bsid,start,count);
+        return departmentDaoMysqlImpl.listChildrenByParent(query, bsid, start, count);
     }
 
     @Override
-    public int countChildrenByParent(DepartmentQuery query,String bsid) {
+    public int countChildrenByParent(DepartmentQuery query, String bsid) {
 
-        return departmentDaoMysqlImpl.countChildrenByParent(query,bsid);
+        return departmentDaoMysqlImpl.countChildrenByParent(query, bsid);
+    }
+
+    @Override
+    public List<Department> listByAddress(DepartmentQuery query, int start, int count) {
+
+        return departmentDaoMysqlImpl.listByAddress(query, start, count);
+    }
+
+    @Override
+    public int countByAddress(DepartmentQuery query) {
+
+        return departmentDaoMysqlImpl.countByAddress(query);
     }
 }

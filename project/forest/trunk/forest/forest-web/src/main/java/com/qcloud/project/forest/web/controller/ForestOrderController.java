@@ -17,11 +17,16 @@ import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.CommoditycenterClient;
 import com.qcloud.component.goods.QUnifiedMerchandise;
 import com.qcloud.component.goods.UnifiedMerchandiseType;
+import com.qcloud.component.goods.exception.CommoditycenterException;
+import com.qcloud.component.my.DeliveryModeType;
 import com.qcloud.component.my.MyClient;
 import com.qcloud.component.my.QMyConsignee;
 import com.qcloud.component.my.QMyCoupon;
 import com.qcloud.component.my.QMyDelivery;
 import com.qcloud.component.my.QMyInvoice;
+import com.qcloud.component.my.model.DeliveryMode;
+import com.qcloud.component.my.service.DeliveryModeService;
+import com.qcloud.component.my.web.form.DeliveryForm;
 import com.qcloud.component.orderform.OrderContext;
 import com.qcloud.component.orderform.OrderContext.OrderDelivery;
 import com.qcloud.component.orderform.OrderformClient;
@@ -40,6 +45,8 @@ import com.qcloud.component.orderform.web.vo.pre.PreMerchantVO;
 import com.qcloud.component.orderform.web.vo.pre.PreOrderCombinationVO;
 import com.qcloud.component.orderform.web.vo.pre.PreOrderItemVO;
 import com.qcloud.component.orderform.web.vo.pre.PreOrderMVO;
+import com.qcloud.component.organization.OrganizationClient;
+import com.qcloud.component.organization.QDepartment;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.personalcenter.QGrade;
 import com.qcloud.component.personalcenter.QUser;
@@ -100,6 +107,12 @@ public class ForestOrderController {
 
     @Autowired
     private OrderformClient       orderformClient;
+
+    @Autowired
+    private DeliveryModeService   deliveryModeService;
+
+    @Autowired
+    private OrganizationClient    organizationClient;
 
     @PiratesApp
     @RequestMapping
@@ -228,19 +241,19 @@ public class ForestOrderController {
     @PiratesApp
     @RequestMapping
     @NoReferer
-    public FrontAjaxView order(HttpServletRequest request, OrderForm orderForm, Long giftCouponUser, String prove) {
+    public FrontAjaxView order(HttpServletRequest request, OrderForm orderForm, Long giftCouponUser, String prove, DeliveryForm deliveryForm) {
 
         AssertUtil.assertNotNull(orderForm.getConsigneeId(), "收货人信息数据不能为空.");
-        AssertUtil.assertNotNull(orderForm.getDeliveryId(), "配送信息数据不能为空.");
+        // AssertUtil.assertNotNull(orderForm.getDeliveryId(), "配送信息数据不能为空.");
         AssertUtil.assertNotNull(orderForm.getInvoiceId(), "发票信息数据不能为空.");
+        AssertUtil.assertNotEmpty(deliveryForm.getTime(), "配送时间/自提时间不能为空.");
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         QMyConsignee consignee = myClient.getConsignee(orderForm.getConsigneeId());
         AssertUtil.assertNotNull(consignee, "收货人信息不存在." + orderForm.getConsigneeId());
         AssertUtil.assertNotEmpty(orderForm.getMerchandiseList(), "下订单,商品列表不能为空.");
-        // OrderContext orderContext = formToContext(user, orderForm, deliveryDate, storeId);
-        OrderContext orderContext = formToContext(user, orderForm);
-        // OrderEntity orderEntity = orderService.orderNormal(orderContext);
-        // QOrder orderEntity = forestOrderService.order(orderContext, giftCouponUser, user, deliveryDate, prove);
+        // 组织数据
+        OrderContext orderContext = formToContext(user, orderForm, deliveryForm);
+        // 下单
         QOrder orderEntity = forestOrderService.order(orderContext, giftCouponUser, user, prove);
         FrontAjaxView view = new FrontAjaxView();
         myClient.setDefaultInvoice(user.getId());
@@ -259,7 +272,7 @@ public class ForestOrderController {
         view.addObject("orderDate", DateUtil.date2String(orderEntity.getOrderDate(), DateUtil.FORMAT_STRING));
         // 会员折扣信息
         QGrade grade = user.getGrade();
-        view.addObject("discountMessage", "会员尊享:" + grade.getDiscount() * 100 / 1000 + "折优惠");
+        view.addObject("discountMessage", "会员尊享:" + NumberUtil.scale(grade.getDiscount() * 100 / 1000, 2) + "折优惠");
         return view;
     }
 
@@ -353,7 +366,7 @@ public class ForestOrderController {
         return voList;
     }
 
-    private OrderContext formToContext(QUser user, OrderForm orderForm) {
+    private OrderContext formToContext(QUser user, OrderForm orderForm, DeliveryForm deliveryForm) {
 
         // TODO
         AssertUtil.assertNotNull(orderForm.getConsigneeId(), "收货人信息数据不能为空.");
@@ -407,39 +420,44 @@ public class ForestOrderController {
         //
         Map<QMerchant, OrderDelivery> deliveryMap = new HashMap<QMerchant, OrderDelivery>();
         // 配送 送货上门
-        // DeliveryMode deliveryMode = deliveryModeService.getByUser(user.getId());
-        // if (deliveryMode == null) {
-        // deliveryMode = new DeliveryMode();
-        // deliveryMode.setUserId(user.getId());
-        // deliveryMode.setTime(DateUtil.date2String(deliveryDate, DateUtil.DATE_FORMAT_STRING));
-        // //
-        // deliveryMode.setType(DeliveryModeType.DELIVERY.getKey());
-        // deliveryMode.setStoreId(-1L);
-        // deliveryMode.setDesc("配送上门");
-        // if (storeId != -1) {
-        // QStore store = sellercenterClient.getStore(storeId);
-        // AssertUtil.assertNotNull(store, "自提门店不存在.");
-        // deliveryMode.setType(DeliveryModeType.PICKUP.getKey());
-        // deliveryMode.setStoreId(storeId);
-        // deliveryMode.setDesc("门店自提");
-        // }
-        // deliveryModeService.add(deliveryMode);
-        // } else {
-        // deliveryMode.setUserId(user.getId());
-        // deliveryMode.setTime(DateUtil.date2String(deliveryDate, DateUtil.DATE_FORMAT_STRING));
-        // deliveryMode.setType(DeliveryModeType.DELIVERY.getKey());
-        // deliveryMode.setStoreId(-1L);
-        // deliveryMode.setDesc("配送上门");
-        // if (storeId != -1) {
-        // QStore store = sellercenterClient.getStore(storeId);
-        // AssertUtil.assertNotNull(store, "自提门店不存在.");
-        // deliveryMode.setType(DeliveryModeType.PICKUP.getKey());
-        // deliveryMode.setStoreId(storeId);
-        // deliveryMode.setDesc("门店自提");
-        // }
-        // deliveryModeService.update(deliveryMode);
-        // }
-        // orderForm.setDeliveryId(deliveryMode.getId());
+        DeliveryMode deliveryMode = deliveryModeService.getByUser(user.getId());
+        if (deliveryMode == null) {
+            deliveryMode = new DeliveryMode();
+            deliveryMode.setUserId(user.getId());
+            deliveryMode.setTime(deliveryForm.getTime());
+            //
+            deliveryMode.setType(deliveryForm.getType());
+            if (DeliveryModeType.DELIVERY.getKey() == deliveryForm.getType()) {
+                deliveryMode.setDesc("送货上门");
+                deliveryMode.setStoreId(-1L);
+            } else if (DeliveryModeType.PICKUP.getKey() == deliveryForm.getType()) {
+                deliveryMode.setDesc("门店自提");
+                QDepartment department = organizationClient.getDepartment(deliveryForm.getStoreId());
+                AssertUtil.assertNotNull(department, "自提门店不存在.");
+                deliveryMode.setStoreId(department.getId());
+            } else {
+                throw new CommoditycenterException("不支持的配送方式.");
+            }
+            deliveryModeService.add(deliveryMode);
+        } else {
+            deliveryMode.setUserId(user.getId());
+            deliveryMode.setTime(deliveryForm.getTime());
+            //
+            deliveryMode.setType(deliveryForm.getType());
+            if (DeliveryModeType.DELIVERY.getKey() == deliveryForm.getType()) {
+                deliveryMode.setDesc("送货上门");
+                deliveryMode.setStoreId(-1L);
+            } else if (DeliveryModeType.PICKUP.getKey() == deliveryForm.getType()) {
+                deliveryMode.setDesc("门店自提");
+                QDepartment department = organizationClient.getDepartment(deliveryForm.getStoreId());
+                AssertUtil.assertNotNull(department, "自提门店不存在.");
+                deliveryMode.setStoreId(department.getId());
+            } else {
+                throw new CommoditycenterException("不支持的配送方式.");
+            }
+            deliveryModeService.update(deliveryMode);
+        }
+        orderForm.setDeliveryId(deliveryMode.getId());
         QMyDelivery delivery = myClient.getDelivery(orderForm.getDeliveryId());
         AssertUtil.assertNotNull(delivery, "配送信息不存在." + orderForm.getDeliveryId());
         OrderDelivery orderDelivery = new OrderDelivery();

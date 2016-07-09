@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.qcloud.component.goods.CommoditycenterClient;
 import com.qcloud.component.goods.QUnifiedMerchandise;
+import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.marketing.MarketingClient;
 import com.qcloud.component.my.DeliveryModeType;
 import com.qcloud.component.my.InvoiceType;
@@ -135,65 +136,64 @@ public class OrderServiceImpl implements OrderService {
         return orderEntity;
     }
 
-//    @Transactional
-//    @Override
-//    public OrderEntity orderExchange(QUser user, QMyConsignee consignee, QUnifiedMerchandise merchandise, int number, int state) {
-//
-//        // 上下文
-//        OrderContext context = new OrderContext();
-//        context.setUser(user);
-//        context.setConsignee(consignee);
-//        context.setDiscount(100);
-//        context.setDeliveryMap(new HashMap<QMerchant, OrderDelivery>());
-//        context.setExplainMap(new HashMap<QMerchant, String>());
-//        context.setInvoice(null);
-//        context.setMyCouponMap(new HashMap<QMerchant, List<QMyCoupon>>());
-//        Map<QUnifiedMerchandise, Integer> merchandiseMap = new HashMap<QUnifiedMerchandise, Integer>();
-//        merchandiseMap.put(merchandise, number);
-//        context.setMerchandiseMap(merchandiseMap);
-//        QMerchant merchant = sellercenterClient.getMerchant(merchandise.getMerchantId());
-//        List<QMerchant> merchantList = new ArrayList<QMerchant>();
-//        merchantList.add(merchant);
-//        context.setMerchantList(merchantList);
-//        // 初始化订单
-//        OrderEntity orderEntity = initOrder(context);
-//        orderEntity.getCollectOrder().setAfterSale(EnableType.DISABLE.getKey());
-//        orderEntity.getCollectOrder().setEvaluation(EnableType.DISABLE.getKey());
-//        // 计算消费币、或积分
-//        // 6 积分 7兑兑劵
-//        MerchantOrderEntity merchantOrderEntity = orderEntity.getEntityList().get(0);
-//        OrderItemEntity orderItemEntity = merchantOrderEntity.getEntityList().get(0);
-//        if (merchandise.getSence() == 6) {
-//            double discount = merchandise.getDiscount();
-//            int integral = new Double(discount).intValue();
-//            orderItemEntity.getOrderItem().setIntegral(integral);
-//            merchantOrderEntity.getSubOrder().setIntegral(integral);
-//            orderEntity.getCollectOrder().setIntegral(integral);
-//            orderEntity.getCollectOrder().setPaymentMode(PaymentModeType.INTEGRAL.getKey());
-//        } else if (merchandise.getSence() == 7) {
-//            double consumption = merchandise.getDiscount();
-//            orderItemEntity.getOrderItem().setConsumption(consumption);
-//            merchantOrderEntity.getSubOrder().setConsumption(consumption);
-//            orderEntity.getCollectOrder().setConsumption(consumption);
-//            orderEntity.getCollectOrder().setPaymentMode(PaymentModeType.CONSUMPTION_CURRENCY.getKey());
-//        } else {
-//            throw new OrderformException("退换仅支持积分兑换或兑兑券兑换." + merchandise.getSence());
-//        }
-//        //
-//        // 下订单
-//        order(orderEntity);
-//        // 无支付密码之前,这里直接到已支付状态
-//        if (merchandise.getSence() == 6) {
-//            personalcenterClient.calculateMyWealth(user.getId(), WealthType.INTEGRAL, 0 - orderEntity.getIntegral(), false, "积分商城兑换：" + merchandise.getName() + " " + orderEntity.getIntegral());
-//        } else if (merchandise.getSence() == 7) {
-//            personalcenterClient.calculateMyWealth(user.getId(), WealthType.COMSUMPTION_CURRENCY, 0 - orderEntity.getConsumption(), false, "商城兑兑劵兑换：" + merchandise.getName() + " " + orderEntity.getConsumption());
-//        }
-//        //
-//        orderStateService.exchangeOrderState(orderEntity.getId(), orderEntity.getOrderDate(), state, -1L);
-//        //
-//        return orderEntity;
-//    }
-
+    // @Transactional
+    // @Override
+    // public OrderEntity orderExchange(QUser user, QMyConsignee consignee, QUnifiedMerchandise merchandise, int number, int state) {
+    //
+    // // 上下文
+    // OrderContext context = new OrderContext();
+    // context.setUser(user);
+    // context.setConsignee(consignee);
+    // context.setDiscount(100);
+    // context.setDeliveryMap(new HashMap<QMerchant, OrderDelivery>());
+    // context.setExplainMap(new HashMap<QMerchant, String>());
+    // context.setInvoice(null);
+    // context.setMyCouponMap(new HashMap<QMerchant, List<QMyCoupon>>());
+    // Map<QUnifiedMerchandise, Integer> merchandiseMap = new HashMap<QUnifiedMerchandise, Integer>();
+    // merchandiseMap.put(merchandise, number);
+    // context.setMerchandiseMap(merchandiseMap);
+    // QMerchant merchant = sellercenterClient.getMerchant(merchandise.getMerchantId());
+    // List<QMerchant> merchantList = new ArrayList<QMerchant>();
+    // merchantList.add(merchant);
+    // context.setMerchantList(merchantList);
+    // // 初始化订单
+    // OrderEntity orderEntity = initOrder(context);
+    // orderEntity.getCollectOrder().setAfterSale(EnableType.DISABLE.getKey());
+    // orderEntity.getCollectOrder().setEvaluation(EnableType.DISABLE.getKey());
+    // // 计算消费币、或积分
+    // // 6 积分 7兑兑劵
+    // MerchantOrderEntity merchantOrderEntity = orderEntity.getEntityList().get(0);
+    // OrderItemEntity orderItemEntity = merchantOrderEntity.getEntityList().get(0);
+    // if (merchandise.getSence() == 6) {
+    // double discount = merchandise.getDiscount();
+    // int integral = new Double(discount).intValue();
+    // orderItemEntity.getOrderItem().setIntegral(integral);
+    // merchantOrderEntity.getSubOrder().setIntegral(integral);
+    // orderEntity.getCollectOrder().setIntegral(integral);
+    // orderEntity.getCollectOrder().setPaymentMode(PaymentModeType.INTEGRAL.getKey());
+    // } else if (merchandise.getSence() == 7) {
+    // double consumption = merchandise.getDiscount();
+    // orderItemEntity.getOrderItem().setConsumption(consumption);
+    // merchantOrderEntity.getSubOrder().setConsumption(consumption);
+    // orderEntity.getCollectOrder().setConsumption(consumption);
+    // orderEntity.getCollectOrder().setPaymentMode(PaymentModeType.CONSUMPTION_CURRENCY.getKey());
+    // } else {
+    // throw new OrderformException("退换仅支持积分兑换或兑兑券兑换." + merchandise.getSence());
+    // }
+    // //
+    // // 下订单
+    // order(orderEntity);
+    // // 无支付密码之前,这里直接到已支付状态
+    // if (merchandise.getSence() == 6) {
+    // personalcenterClient.calculateMyWealth(user.getId(), WealthType.INTEGRAL, 0 - orderEntity.getIntegral(), false, "积分商城兑换：" + merchandise.getName() + " " + orderEntity.getIntegral());
+    // } else if (merchandise.getSence() == 7) {
+    // personalcenterClient.calculateMyWealth(user.getId(), WealthType.COMSUMPTION_CURRENCY, 0 - orderEntity.getConsumption(), false, "商城兑兑劵兑换：" + merchandise.getName() + " " + orderEntity.getConsumption());
+    // }
+    // //
+    // orderStateService.exchangeOrderState(orderEntity.getId(), orderEntity.getOrderDate(), state, -1L);
+    // //
+    // return orderEntity;
+    // }
     @Transactional
     @Override
     public OrderEntity orderSeckill(QUser user, QUnifiedMerchandise merchandise) {
@@ -356,7 +356,7 @@ public class OrderServiceImpl implements OrderService {
                 }
             }
             OrderDelivery orderDelivery = context.getDeliveryMap().get(context.getMerchant(merchantOrderEntity.getMerchantId()));
-            // TODO送货上门 门店自提
+            // TODO 送货上门 门店自提
             // 物流邮费
             if (orderDelivery != null && (orderDelivery.getDelivery() != null) && DeliveryModeType.LOGISTICS.equals(orderDelivery.getDelivery().getType())) {
                 if (StringUtils.isNotEmpty(orderDelivery.getSexpressCode())) {
@@ -566,9 +566,15 @@ public class OrderServiceImpl implements OrderService {
         OrderItemEntity orderItemEntity = new OrderItemEntity(orderEntity, merchantOrderEntity, orderItem);
         List<QUnifiedMerchandise> itemList = merchandise.getList();
         List<OrderItemDetailEntity> list = new ArrayList<OrderItemDetailEntity>();
-        for (QUnifiedMerchandise merchandiseItem : itemList) {
-            OrderItemDetailEntity orderItemDetail = initOrder(orderEntity, merchantOrderEntity, orderItemEntity, merchandiseItem, number, context);
+        // TODO
+        if (merchandise.getType() == UnifiedMerchandiseType.SINGLE) {
+            OrderItemDetailEntity orderItemDetail = initOrder(orderEntity, merchantOrderEntity, orderItemEntity, merchandise, number, context);
             list.add(orderItemDetail);
+        } else {
+            for (QUnifiedMerchandise merchandiseItem : itemList) {
+                OrderItemDetailEntity orderItemDetail = initOrder(orderEntity, merchantOrderEntity, orderItemEntity, merchandiseItem, number, context);
+                list.add(orderItemDetail);
+            }
         }
         orderItemEntity.setOrderItemDetailList(list);
         return orderItemEntity;

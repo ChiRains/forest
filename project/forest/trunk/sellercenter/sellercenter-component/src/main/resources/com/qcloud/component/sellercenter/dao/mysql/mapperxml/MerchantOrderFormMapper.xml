@@ -15,17 +15,19 @@
     </select>
     
     <select id="list4query2" parameterType="java.util.HashMap" resultType="MerchantOrderForm">  
-       select * from `${table_name}` where `storeId`=#{storeId} 
+       select * from `${table_name}` where 1=1
+       <if test="storeId !=0">  and `storeId`=#{storeId}   </if>
        <if test="state !=9">and `state`=#{state}  </if>
        <if test="state ==9">and (`state`=9 or `state`=10 or `state`=11 or`state`=12)  </if>
-        <![CDATA[ and #{startDate} <= `time` and `time` <= #{endDate} order by `time` desc limit #{start},#{count}]]>
+       <![CDATA[ and #{startDate} <= `time` and `time` <= #{endDate} order by `time` desc limit #{start},#{count}]]>
     </select>  
     
     <select id="count4query2" parameterType="java.util.HashMap" resultType="Integer">  
-        select count(*) from `${table_name}` where `storeId`=#{storeId} 
-       <if test="state !=9">and `state`=#{state}  </if>
-       <if test="state ==9">and `state`=10 or `state`=11 or`state`=12   </if>
-       <![CDATA[and #{startDate} <= `time` and `time` <= #{endDate} order by `time` desc]]>
+        select count(*) from `${table_name}` where 1=1
+        <if test="storeId !=0"> and `storeId`=#{storeId}   </if>
+        <if test="state !=9">and `state`=#{state}  </if>
+        <if test="state ==9">and `state`=10 or `state`=11 or`state`=12   </if>
+        <![CDATA[and #{startDate} <= `time` and `time` <= #{endDate} order by `time` desc]]>
     </select>
     
     
@@ -45,7 +47,8 @@
     </select>
     
     <select id="getByOrderId" parameterType="java.util.HashMap" resultType="MerchantOrderForm">  
-       select * from `${table_name}` where `merchantId`=#{merchantId} and `orderId`=#{orderId} and `storeId`=#{storeId} 
+       select * from `${table_name}` where `merchantId`=#{merchantId} and `orderId`=#{orderId} 
+       <if test="storeId !=0"> and `storeId`=#{storeId}   </if>
        limit #{start},#{count}
     </select> 
     

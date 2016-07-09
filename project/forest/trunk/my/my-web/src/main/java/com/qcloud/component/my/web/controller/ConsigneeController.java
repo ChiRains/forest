@@ -78,7 +78,7 @@ public class ConsigneeController {
             throw new MyException("不能修改其他人的收货信息.");
         }
         consignee.setUserId(user.getId());
-        consignee.setAcquiesce(con.getAcquiesce());
+        // consignee.setAcquiesce(con.getAcquiesce());
         boolean exist = false;
         List<Consignee> list = consigneeService.listByUser(user.getId());
         for (Consignee c : list) {

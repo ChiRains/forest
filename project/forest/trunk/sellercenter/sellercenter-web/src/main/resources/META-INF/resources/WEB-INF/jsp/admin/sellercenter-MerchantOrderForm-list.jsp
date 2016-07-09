@@ -162,6 +162,9 @@
 									<c:if test="${item.needInvoiceType eq 1}">
 										<span style="color:red;">是</span>
                                 	</c:if>
+                                	<c:if test="${item.needInvoiceType eq 2}">
+										<span style="color:red;">否</span>
+                                	</c:if>
 								</td>
 								<c:if test="${confirmType eq query.state}">
 									<td>
@@ -289,13 +292,13 @@
 	                        	data = JSON.parse(data);
 	                        	if (parseInt(data["status"]) != 200) {
                                         dialogItself.setTitle('执行失败');
-                                        dialogItself.setMessage("请检查门店库存!");
+                                        dialogItself.setMessage(data["message"]);
                                         dialogItself.setType(BootstrapDialog.TYPE_DANGER);
                                         dialogItself.getButton('btn-2').remove();
                                         dialogItself.getButton('btn-3').remove();
                                     } else {
                                         dialogItself.setTitle('成功');
-                                        dialogItself.setMessage("操作成功!");
+                                        dialogItself.setMessage(data["message"]);
                                         dialogItself.setType(BootstrapDialog.TYPE_SUCCESS);
                                         dialogItself.getButton('btn-2').remove();
                                         setTimeout(function () {

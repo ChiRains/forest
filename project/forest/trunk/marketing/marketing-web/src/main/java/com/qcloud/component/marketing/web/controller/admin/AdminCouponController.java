@@ -27,6 +27,7 @@ import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.mvc.AceAjaxView;
 import com.qcloud.pirates.mvc.AcePagingView;
 import com.qcloud.pirates.util.AssertUtil;
+import com.qcloud.pirates.util.DateUtil;
 import com.qcloud.pirates.util.NumberUtil;
 import com.qcloud.pirates.util.RequestUtil;
 import com.qcloud.pirates.web.page.PageParameterUtil;
@@ -82,6 +83,10 @@ public class AdminCouponController {
     @RequestMapping
     public AceAjaxView add(Coupon coupon) {
 
+        AssertUtil.assertTrue(!coupon.getStartDate().before(DateUtil.str2Date(DateUtil.getDate(new Date()) + " 00:00:00", "yyyy-MM-dd")), "优惠券开始领取时间不能早于当前时间.");
+        AssertUtil.assertTrue(!coupon.getStartDate().after(coupon.getEndDate()), "优惠券开始领取时间不能晚于截止领取时间.");
+        AssertUtil.assertTrue(!coupon.getValidDate().after(coupon.getInvalidDate()), "优惠券开始使用时间不能晚于截止使用时间.");
+        AssertUtil.assertTrue(!coupon.getInvalidDate().before(coupon.getEndDate()), "优惠券截止使用时间不能早于截止领取时间.");
         coupon.setMerchantId((long) PlatformCoupon.PLATFORM.getKey());
         coupon.setEnable(Enable.ENABLE.getKey());
         couponService.add(coupon);
@@ -110,6 +115,10 @@ public class AdminCouponController {
         AssertUtil.assertNotNull(coupon.getId(), "ID不能为空");
         Coupon oldCoupon = couponService.get(coupon.getId());
         AssertUtil.assertNotNull(oldCoupon, "优惠券活动不存在");
+        AssertUtil.assertTrue(!oldCoupon.getStartDate().after(coupon.getEndDate()), "优惠券开始领取时间不能晚于截止领取时间.");
+        AssertUtil.assertTrue(!coupon.getValidDate().after(coupon.getInvalidDate()), "优惠券开始使用时间不能晚于截止使用时间.");
+        AssertUtil.assertTrue(!coupon.getInvalidDate().before(coupon.getEndDate()), "优惠券截止使用时间不能早于截止领取时间.");
+        coupon.setStartDate(oldCoupon.getStartDate());
         coupon.setMerchantId(oldCoupon.getMerchantId());
         coupon.setImage(fileSDKClient.uidToUrl(coupon.getImage()));
         coupon.setEnable(oldCoupon.getEnable());
@@ -184,6 +193,10 @@ public class AdminCouponController {
     @RequestMapping
     public AceAjaxView add4Merchant(HttpServletRequest request, Coupon coupon) {
 
+        AssertUtil.assertTrue(!coupon.getStartDate().before(DateUtil.str2Date(DateUtil.getDate(new Date()) + " 00:00:00", "yyyy-MM-dd")), "优惠券开始领取时间不能早于当前时间.");
+        AssertUtil.assertTrue(!coupon.getStartDate().after(coupon.getEndDate()), "优惠券开始领取时间不能晚于截止领取时间.");
+        AssertUtil.assertTrue(!coupon.getValidDate().after(coupon.getInvalidDate()), "优惠券开始使用时间不能晚于截止使用时间.");
+        AssertUtil.assertTrue(!coupon.getInvalidDate().before(coupon.getEndDate()), "优惠券截止使用时间不能早于截止领取时间.");
         QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
         coupon.setMerchantId(merchant.getId());
         coupon.setEnable(Enable.ENABLE.getKey());
@@ -215,7 +228,11 @@ public class AdminCouponController {
         AssertUtil.assertNotNull(oldCoupon, "优惠券活动不存在");
         QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
         AssertUtil.assertTrue(oldCoupon.getMerchantId() == merchant.getId(), "不能修改不属于自己的优惠券");
+        AssertUtil.assertTrue(!oldCoupon.getStartDate().after(coupon.getEndDate()), "优惠券开始领取时间不能晚于截止领取时间.");
+        AssertUtil.assertTrue(!coupon.getValidDate().after(coupon.getInvalidDate()), "优惠券开始使用时间不能晚于截止使用时间.");
+        AssertUtil.assertTrue(!coupon.getInvalidDate().before(coupon.getEndDate()), "优惠券截止使用时间不能早于截止领取时间.");
         //
+        coupon.setStartDate(oldCoupon.getStartDate());
         coupon.setMerchantId(oldCoupon.getMerchantId());
         coupon.setImage(fileSDKClient.uidToUrl(coupon.getImage()));
         coupon.setEnable(oldCoupon.getEnable());
