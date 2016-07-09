@@ -5,6 +5,9 @@
 <mapper namespace="com.qcloud.component.organization.dao.mysql.mapper.ClerkMapper">          
     <select id="list4query" parameterType="java.util.HashMap" resultType="Clerk">  
         select * from `organization_clerk` where 1 = 1 and `enable`=1
+        <if test="departmentId != null and departmentId!=0">
+        	and `departmentId`=#{departmentId}
+        </if>
         <if test="name != null">
         	and `name` like concat('%',#{name},'%') 
         </if>
@@ -13,6 +16,9 @@
     
      <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
         select count(*) from `organization_clerk` where 1 = 1 and `enable`=1
+        <if test="departmentId != null and departmentId!=0">
+        	and `departmentId`=#{departmentId}
+        </if>
         <if test="name != null">
         	and `name` like concat('%',#{name},'%') 
         </if>
