@@ -51,7 +51,7 @@ public class AdminClerkController {
 
     @RequestMapping
     @NoReferer
-    public ModelAndView list(PPage pPage, ClerkQuery query,Long departmentId) {
+    public ModelAndView list(PPage pPage, ClerkQuery query) {
 
         Page<Clerk> page = clerkService.page(query, pPage.getPageStart(), pPage.getPageSize());
         List<AdminClerkVO> list = clerkHandler.toVOList4Admin(page.getData());
@@ -59,7 +59,6 @@ public class AdminClerkController {
         AcePagingView pagingView = new AcePagingView("/admin/organization-Clerk-list", DIR + "/list?" + param, pPage.getPageNum(), pPage.getPageSize(), page.getCount());
         pagingView.addObject("result", list);
         pagingView.addObject("query", query);
-        pagingView.addObject("departmentId", departmentId);
         return pagingView;
     }
 
@@ -111,6 +110,7 @@ public class AdminClerkController {
         c.setJobEmail(clerk.getJobEmail());
         c.setMobile(clerk.getMobile());
         c.setSex(clerk.getSex());
+        c.setDepartmentId(clerk.getDepartmentId());
         clerkService.update(c);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("编辑成功");

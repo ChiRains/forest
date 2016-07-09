@@ -35,6 +35,8 @@ public class Clerk {
 	private String accountGroup;		
 	
 	private String inside;		
+	
+	private long departmentId;
 
 	public Clerk(){
 	
@@ -140,6 +142,18 @@ public class Clerk {
 
 	public String getInside() {
 		return inside;
-	}	
+	}
+
+    
+    public long getDepartmentId() {
+    
+        return departmentId;
+    }
+
+    
+    public void setDepartmentId(long departmentId) {
+    
+        this.departmentId = departmentId;
+    }	
 		
 }

@@ -44,7 +44,7 @@
                     <div class="col-xs-4">
                         <div class="dataTables_length">
                             <a title="新增" class="btn btn-sm btn-info"
-                               href="#admin/clerk/toAdd?departmentId=${departmentId}">
+                               href="#admin/clerk/toAdd?departmentId=${query.departmentId}">
                                 <i class="ace-icon fa fa-plus align-bottom bigger-125"></i>
                                 新&nbsp;增
                             </a> 

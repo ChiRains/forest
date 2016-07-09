@@ -38,6 +38,7 @@ public class AdminClerkVO {
     private long   departmentId;
 
     private String departmentName;
+    
 
     public AdminClerkVO() {
 
