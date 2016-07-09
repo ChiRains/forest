@@ -1,5 +1,6 @@
 package com.qcloud.component.organization.web.controller.admin;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,15 +16,20 @@ import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.NumberUtil;
 import com.qcloud.pirates.util.RequestUtil;
 import com.qcloud.pirates.util.StringUtil;
+import com.qcloud.pirates.web.page.PPage;
 import com.qcloud.pirates.web.security.annotation.NoReferer;
 import com.qcloud.component.admin.exception.AdminException;
 import com.qcloud.component.admin.model.key.TypeEnum.AdminEnableType;
+import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.organization.model.Clerk;
 import com.qcloud.component.organization.service.ClerkService;
 import com.qcloud.component.organization.service.UsergroupUserService;
 import com.qcloud.component.organization.web.handler.ClerkHandler;
 import com.qcloud.component.organization.model.query.ClerkQuery;
 import com.qcloud.component.organization.web.vo.admin.AdminClerkVO;
+import com.qcloud.component.publicdata.KeyValueVO;
+import com.qcloud.component.publicdata.PublicdataClient;
+import com.qcloud.component.publicdata.SexType;
 
 @Controller
 @RequestMapping(value = "/" + AdminClerkController.DIR)
@@ -38,35 +44,42 @@ public class AdminClerkController {
     private ClerkHandler       clerkHandler;
     @Autowired
     private UsergroupUserService usergroupUserService;
-    
+    @Autowired
+    private PublicdataClient publicdataClient;
+    @Autowired
+    private FileSDKClient  fileSDKClient;
 
     @RequestMapping
     @NoReferer
-    public ModelAndView list(Integer pageNum, ClerkQuery query) {
+    public ModelAndView list(PPage pPage, ClerkQuery query,Long departmentId) {
 
-        final int PAGE_SIZE = 10;
-        pageNum = RequestUtil.getPageid(pageNum);
-        int start = NumberUtil.getPageStart(pageNum, PAGE_SIZE);
-        Page<Clerk> page = clerkService.page(query, start, PAGE_SIZE);
+        Page<Clerk> page = clerkService.page(query, pPage.getPageStart(), pPage.getPageSize());
         List<AdminClerkVO> list = clerkHandler.toVOList4Admin(page.getData());
         String param = "name=" + StringUtil.nullToEmpty(query.getName());
-        AcePagingView pagingView = new AcePagingView("/admin/organization-Clerk-list", DIR + "/list?" + param, pageNum, PAGE_SIZE, page.getCount());
+        AcePagingView pagingView = new AcePagingView("/admin/organization-Clerk-list", DIR + "/list?" + param, pPage.getPageNum(), pPage.getPageSize(), page.getCount());
         pagingView.addObject("result", list);
         pagingView.addObject("query", query);
+        pagingView.addObject("departmentId", departmentId);
         return pagingView;
     }
 
     @RequestMapping
-    public ModelAndView toAdd() {
+    public ModelAndView toAdd(Long departmentId) {
 
         ModelAndView model = new ModelAndView("/admin/organization-Clerk-add");
+        List<KeyValueVO> sexTypeList = publicdataClient.exchageObj(SexType.values(), -1, "selected");
+        model.addObject("sexTypeList", sexTypeList);
+        model.addObject("departmentId", departmentId);
         return model;
     }
 
     @RequestMapping
-    public AceAjaxView add(Clerk clerk) {
+    public AceAjaxView add(Clerk clerk,Long departmentId) {
 
-        clerkService.add(clerk);
+        if(StringUtils.isNotEmpty(clerk.getHeadImage())){
+            clerk.setHeadImage(fileSDKClient.uidToUrl(clerk.getHeadImage()));
+        }
+        clerkService.add(clerk,departmentId);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("添加成功");
         aceAjaxView.setUrl(DIR + "/list");
@@ -81,6 +94,8 @@ public class AdminClerkController {
         AdminClerkVO adminClerkVO = clerkHandler.toVO4Admin(clerk);
         ModelAndView model = new ModelAndView("/admin/organization-Clerk-edit");
         model.addObject("clerk", adminClerkVO);
+        List<KeyValueVO> sexTypeList = publicdataClient.exchageObj(SexType.values(), -1, "selected");
+        model.addObject("sexTypeList", sexTypeList);
         return model;
     }
 
@@ -89,6 +104,13 @@ public class AdminClerkController {
 
         Clerk c = clerkService.get(clerk.getId());
         c.setName(clerk.getName());
+        if(StringUtils.isNotEmpty(clerk.getHeadImage())){
+            c.setHeadImage(fileSDKClient.uidToUrl(clerk.getHeadImage()));
+        }
+        c.setIdCard(clerk.getIdCard());
+        c.setJobEmail(clerk.getJobEmail());
+        c.setMobile(clerk.getMobile());
+        c.setSex(clerk.getSex());
         clerkService.update(c);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("编辑成功");

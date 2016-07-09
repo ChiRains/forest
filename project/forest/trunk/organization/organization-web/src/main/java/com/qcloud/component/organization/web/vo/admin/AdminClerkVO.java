@@ -23,11 +23,17 @@ public class AdminClerkVO {
 
     // 头像
     private String headImage;
+    
+    private String headImageUid;
 
     // 是否启用,在职
     private int    enable;
 
     private String jobEmail;
+    
+    private String idCard;
+    
+    private int sex;
 
     private long   departmentId;
 
@@ -135,5 +141,41 @@ public class AdminClerkVO {
     public void setDepartmentName(String departmentName) {
 
         this.departmentName = departmentName;
+    }
+
+    
+    public String getHeadImageUid() {
+    
+        return headImageUid;
+    }
+
+    
+    public void setHeadImageUid(String headImageUid) {
+    
+        this.headImageUid = headImageUid;
+    }
+
+    
+    public String getIdCard() {
+    
+        return idCard;
+    }
+
+    
+    public void setIdCard(String idCard) {
+    
+        this.idCard = idCard;
+    }
+
+    
+    public int getSex() {
+    
+        return sex;
+    }
+
+    
+    public void setSex(int sex) {
+    
+        this.sex = sex;
     }
 }

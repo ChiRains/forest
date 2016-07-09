@@ -10,6 +10,8 @@ public interface ClerkService {
 
     public boolean add(Clerk clerk);
 
+    public boolean add(Clerk clerk, Long departmentId);
+
     public Clerk get(Long id);
 
     public boolean delete(Long id);

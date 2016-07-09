@@ -123,6 +123,9 @@ public class ClerkHandlerImpl implements ClerkHandler {
 
         String json = Json.toJson(clerk);
         AdminClerkVO vo = Json.toObject(json, AdminClerkVO.class, true);
+        if (!StringUtils.isEmpty(vo.getHeadImage())) {
+            vo.setHeadImageUid(fileSDKClient.urlToUid(vo.getHeadImage()));
+        }
         DepartmentClerk departmentClerk = departmentClerkService.getBelongsDepartment(clerk.getId());
         if (departmentClerk == null) {
             vo.setDepartmentId(-1L);

@@ -17,10 +17,13 @@ import com.qcloud.component.organization.common.ClerkConstant;
 import com.qcloud.component.organization.dao.ClerkDao;
 import com.qcloud.component.organization.exception.OrganizationException;
 import com.qcloud.component.organization.model.Clerk;
+import com.qcloud.component.organization.model.DepartmentClerk;
 import com.qcloud.component.organization.model.key.TypeEnum;
+import com.qcloud.component.organization.model.key.TypeEnum.DepartmentClerkType;
 import com.qcloud.component.organization.model.key.TypeEnum.EnableType;
 import com.qcloud.component.organization.model.query.ClerkQuery;
 import com.qcloud.component.organization.service.ClerkService;
+import com.qcloud.component.organization.service.DepartmentClerkService;
 import com.qcloud.component.parameter.ParameterClient;
 import com.qcloud.component.permission.AccountClient;
 import com.qcloud.component.permission.model.Account;
@@ -35,37 +38,40 @@ import com.qcloud.pirates.util.StringUtil;
 public class ClerkServiceImpl implements ClerkService {
 
     @Autowired
-    private ClerkDao             clerkDao;
+    private ClerkDao               clerkDao;
 
     @Autowired
-    private AutoIdGenerator      autoIdGenerator;
+    private AutoIdGenerator        autoIdGenerator;
 
     @Autowired
-    private AccountClient        accountClient;
+    private AccountClient          accountClient;
 
     @Autowired
-    private FileSDKClient        fileSDKClient;
+    private FileSDKClient          fileSDKClient;
 
     @Autowired
-    private UnifiedAccountClient unifiedAccountClient;
+    private UnifiedAccountClient   unifiedAccountClient;
 
-    private static final String  ID_KEY             = "organization_clerk";
+    private static final String    ID_KEY             = "organization_clerk";
 
-    private static final String  ACCOUNT_TYPE_CODE  = "clerk_account_type";
+    private static final String    ACCOUNT_TYPE_CODE  = "clerk_account_type";
 
-    private static final String  MOBILE_TYPE_CODE   = "mobile";
+    private static final String    MOBILE_TYPE_CODE   = "mobile";
 
-    private static final String  EMAIL_TYPE_CODE    = "email";
+    private static final String    EMAIL_TYPE_CODE    = "email";
 
-    private static final String  IDCARD_TYPE_CODE   = "idCard";
+    private static final String    IDCARD_TYPE_CODE   = "idCard";
 
-    public static final String   CLERK_PASSWORD_KEY = "clerk-default-password";
-
-    @Autowired
-    private UniqueCodeGenerator  uniqueCodeGenerator;
+    public static final String     CLERK_PASSWORD_KEY = "clerk-default-password";
 
     @Autowired
-    private ParameterClient      parameterClient;
+    private UniqueCodeGenerator    uniqueCodeGenerator;
+
+    @Autowired
+    private ParameterClient        parameterClient;
+
+    @Autowired
+    private DepartmentClerkService departmentClerkService;
 
     @PostConstruct
     public void init() {
@@ -144,6 +150,21 @@ public class ClerkServiceImpl implements ClerkService {
         boolean result = clerkDao.add(clerk);
         if (result) {
             addPermissionAccount(clerk.getLoginAccount(), clerk.getName());
+        }
+        return result;
+    }
+
+    @Transactional
+    @Override
+    public boolean add(Clerk clerk, Long departmentId) {
+
+        boolean result = add(clerk);
+        if (result) {
+            DepartmentClerk departmentClerk = new DepartmentClerk();
+            departmentClerk.setClerkId(clerk.getId());
+            departmentClerk.setDepartmentId(departmentId);
+            departmentClerk.setType(DepartmentClerkType.BELONGS.getKey());
+            departmentClerkService.add(departmentClerk);
         }
         return result;
     }

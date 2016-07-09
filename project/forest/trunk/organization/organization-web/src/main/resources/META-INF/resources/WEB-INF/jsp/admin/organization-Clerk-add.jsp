@@ -19,7 +19,7 @@
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
-        <form id="model-form" class="form-horizontal"  role="form" action="/admin/clerk/add.do">
+        <form id="model-form" class="form-horizontal"  role="form" action="/admin/clerk/add.do?departmentId=${departmentId}">
             <!-- #section:elements.form -->
 
       		<div class="space-4"></div>
@@ -43,7 +43,57 @@
 					</span>
                 </div>
             </div>
-                     
+            
+            <div class="space-4"></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="jobEmail"> 邮箱 </label>
+                <div class="col-sm-9">
+					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
+						<input type="text" class="width-100" maxlength="20" id="jobEmail" name="jobEmail" placeholder="邮箱" value=""/>
+						<i class="ace-icon fa"></i>
+					</span>
+                </div>
+            </div>
+            
+            <div class="space-4"></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="idCard"> 身份证 </label>
+                <div class="col-sm-9">
+					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
+						<input type="text" class="width-100" maxlength="20" id="idCard" name="idCard" placeholder="身份证" value=""/>
+						<i class="ace-icon fa"></i>
+					</span>
+                </div>
+            </div>
+            
+            <div class="space-4"></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="sex"> 性别 </label>
+                <div class="col-sm-9">
+					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
+						<select class="form-control" id="sex" name="sex">						
+			                <c:forEach items="${sexTypeList}" var="item" varStatus="current"> 
+			               		<option value="${item.key}" ${item.message}>${item.value}</option>			                                   		
+			            	</c:forEach> 
+			            </select>
+					</span>
+                </div>
+            </div>
+             
+             <div class="space-4"></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="headImage"> 头像 </label>
+                <div class="col-sm-9">
+		    <span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
+			<input type="hidden" id="headImage" name="headImage" value=""/>
+                    	<button type="button" mult="false" sid="headImage" vid="pic1-pic-view" class="btn btn-sm btn-purple btn-upload-pic" upfrom="0">
+                        <i class="ace-icon fa fa-upload"></i> 上 传
+                    	</button>
+                    <ul sid="headImage" id="pic1-pic-view" class="ace-thumbnails clearfix">
+                    </ul>
+		    </span>
+                </div>
+            </div>         
 
             <div class="space-4"></div>
             <div class="clearfix form-actions">
@@ -73,6 +123,18 @@
                      $this.next().css({'width': $this.parent().width()});
                 })
             }).trigger('resize.chosen');
+             
+            //初始化图片浏览
+            $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
+            $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange'></i>");
+
+            var btnUpload = $(".btn-upload-pic");
+            delEvent(getButtonSetting(btnUpload));
+            //绑定事件
+            btnUpload.on('click', function () {
+                var bs = getButtonSetting($(this));
+                uploadDialog(bs);
+            }); 
                    
             //表单验证
             $("#model-form").validate({
@@ -84,9 +146,9 @@
                         required: true
                     },
                     mobile: {
-                        required: true
+                        required: true,
+                        digits: true
                     },
-
                     sort: {
                         required: true,
                         range: [0, 99999999],
@@ -121,7 +183,37 @@
                 },
 
                 submitHandler: function (form) {
-                    postForm('model-form');
+                	
+                	var mobile=$("#mobile").val();
+                	var mobileReg=/^1[3,4,5,7,8,9]\d{9}$/;
+                	var email=$("#jobEmail").val();
+                	var emailReg=/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                	var idCard=$("#idCard").val();
+                	var idCardReg=/^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/; 
+                	if(!mobileReg.test(mobile)){
+                		 BootstrapDialog.show({
+                		 	message:'请输入正确的电话号码'
+                		 });
+                		return false;
+                	}
+                	if(email!=""){
+                		if(!emailReg.test(email)){
+	                		 BootstrapDialog.show({
+	                		 	message:'邮箱格式不正确'
+	                		 });
+	                		return false;
+	                	}
+                	}
+                	if(idCard!=""){
+                		if(!idCardReg.test(idCard)){
+	                		 BootstrapDialog.show({
+	                		 	message:'身份证格式不正确'
+	                		 });
+	                		return false;
+	                	}
+                	}
+                	
+                    postForm('model-form');  
                 },
                 invalidHandler: function (form) {
                 }

@@ -44,7 +44,7 @@
                     <div class="col-xs-4">
                         <div class="dataTables_length">
                             <a title="新增" class="btn btn-sm btn-info"
-                               href="#admin/clerk/toAdd">
+                               href="#admin/clerk/toAdd?departmentId=${departmentId}">
                                 <i class="ace-icon fa fa-plus align-bottom bigger-125"></i>
                                 新&nbsp;增
                             </a> 
@@ -80,8 +80,8 @@
                         <th>工作邮箱</th>             
                         <th>状态(是否启用 )</th> 
                         <th>重置密码</th>          
+                        <th class="sorting_disabled">发送消息</th>
                         <th class="sorting_disabled">操作</th>
-                        <th class="sorting_disabled">###</th>
                     </tr>
                     </thead>
 
@@ -102,17 +102,17 @@
                                 <td>
                                 	<a class="btn btn-xs btn-primary reset-pwd" api-path="/admin/clerk/resetPwd.do?id=${item.id}">重置密码</a>
                                 </td>                     
-                                <td>
+                            	<td>
+                                    <a class="btn btn-xs btn-primary send-massage"  data-id="${item.id}" data-name="${item.name}">
+                                	<i class="ace-icon fa fa-keyboard-o align-bottom bigger-125"></i>发送消息</a>							                                 
+                            	</td>
+                            	<td>
                                 	<div class="hidden-sm hidden-xs action-buttons">
                                     <a title="修改基本信息" class="green" 
                                        href="#admin/clerk/toEdit?id=${item.id}">
                                         <i class="ace-icon fa fa-pencil bigger-130"></i>
                                     </a>
                                 	</div>
-                            	</td>
-                            	<td>
-                                    <a class="btn btn-primary send-massage"  data-id="${item.id}" data-name="${item.name}">
-                                	<i class="ace-icon fa fa-keyboard-o"></i>发送消息</a>							                                 
                             	</td>
                         </tr>
 						</c:forEach>
