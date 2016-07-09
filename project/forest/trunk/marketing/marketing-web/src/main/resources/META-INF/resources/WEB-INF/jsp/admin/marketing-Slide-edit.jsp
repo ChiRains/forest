@@ -197,6 +197,19 @@
     		}).next().on(ace.click_event, function(){
 				$(this).prev().focus();
 			});
+
+   	  		//时间验证
+			 $.validator.addMethod("timeCheck",function(value, element,params){  
+	             var timeCheck=false;
+	             var endDate=$('#endDate').val();
+	             var startDate=$('#startDate').val();
+	             if(startDate!=null && startDate<endDate)
+	             {
+	            	 timeCheck=true;
+	                 }
+	             return timeCheck;
+	          },"结束时间应该大于开始时间！");  
+			
                    
             //表单验证
             $("#model-form").validate({
@@ -209,6 +222,9 @@
                     },
                     mobile: {
                         required: true
+                    },
+                    endDate: {
+                        timeCheck: true
                     },
 
                     sort: {

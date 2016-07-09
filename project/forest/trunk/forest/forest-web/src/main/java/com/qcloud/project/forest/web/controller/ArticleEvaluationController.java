@@ -44,6 +44,7 @@ public class ArticleEvaluationController {
     public FrontPagingView list(ArticleEvaluationQuery query, PPage pPage) {
 
         AssertUtil.assertNotNull(query.getArticleId(), "资讯ID不能为空");
+        query.setState(1);
         Page<ArticleEvaluation> page = articleEvaluationService.page(query, pPage.getPageStart(), pPage.getPageSize());
         List<ArticleEvaluationVO> list = articleEvaluationHandler.toVOList(page.getData());
         FrontPagingView view = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), page.getCount());
