@@ -56,6 +56,7 @@
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ExpressQueryUriHandlerImpl"></pirates:uriHandler>
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestMailSenderUriHandlerImpl"></pirates:uriHandler>
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestMessageUriHandlerImpl"></pirates:uriHandler>
+   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.FeedbackUriHandlerImpl"></pirates:uriHandler>
 
 
 
