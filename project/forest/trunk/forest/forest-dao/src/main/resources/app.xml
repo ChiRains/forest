@@ -132,7 +132,7 @@
 	</module-list>
 
 	<module-list code="forest-merchant">
-		<item merchant="1010008000011601">大参林商家id</item>
+		<item merchant="1010008000010001">大参林商家id</item>
 	</module-list>
 
 	<module-list code="mailSenderInfo">
