@@ -78,10 +78,11 @@ public class AdminClerkController {
         if(StringUtils.isNotEmpty(clerk.getHeadImage())){
             clerk.setHeadImage(fileSDKClient.uidToUrl(clerk.getHeadImage()));
         }
+        clerk.setDepartmentId(departmentId);
         clerkService.add(clerk,departmentId);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("添加成功");
-        aceAjaxView.setUrl(DIR + "/list");
+        aceAjaxView.setUrl(DIR + "/list?departmentId="+departmentId);
         return aceAjaxView;
     }
 
@@ -114,7 +115,7 @@ public class AdminClerkController {
         clerkService.update(c);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("编辑成功");
-        aceAjaxView.setUrl(DIR + "/list");
+        aceAjaxView.setUrl(DIR + "/list?departmentId="+clerk.getDepartmentId());
         return aceAjaxView;
     }
 
@@ -167,7 +168,7 @@ public class AdminClerkController {
         clerkService.update(clerk);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage(message);
-        aceAjaxView.setUrl(DIR + "/list");
+        aceAjaxView.setUrl(DIR + "/list?departmentId="+clerk.getDepartmentId());
         return aceAjaxView;
     }
     
