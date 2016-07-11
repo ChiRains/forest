@@ -141,7 +141,7 @@ public class TypeEnum {
         }
     }
     public enum MessageClassify {
-        MEDICATIONREMINDERS(6, "药物提醒"),MERCHANTPRIVATEMESSAGE(1,"商家站内消息");
+        MEDICATIONREMINDERS(6, "药物提醒"), MERCHANTPRIVATEMESSAGE(1, "商家站内消息");
 
         private final int    key;
 
@@ -164,7 +164,7 @@ public class TypeEnum {
         }
     }
     public enum ClassifyType {
-        ARTICLE(60, "资讯分类"), SALESPROMOTION(70, "活动商品");
+        ARTICLE(60, "资讯分类"), SALESPROMOTION(70, "活动商品"), FEEDBACK(80, "反馈类型");
 
         private final int    key;
 
