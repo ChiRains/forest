@@ -1,7 +1,7 @@
 package com.qcloud.project.forest.dao;
 
-import com.qcloud.project.forest.outside.entity.AbstractResult;
-import com.qcloud.project.forest.outside.entity.SalesOrderOfflineEntity;
+import com.qcloud.project.forest.model.outside.entity.AbstractResult;
+import com.qcloud.project.forest.model.outside.entity.SalesOrderOfflineEntity;
 
 public interface OutsideOrderFormDao {
 

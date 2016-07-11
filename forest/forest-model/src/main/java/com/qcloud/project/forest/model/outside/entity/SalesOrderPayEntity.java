@@ -1,4 +1,4 @@
-package com.qcloud.project.forest.outside.entity;
+package com.qcloud.project.forest.model.outside.entity;
 
 /**
  * 支付明细类
