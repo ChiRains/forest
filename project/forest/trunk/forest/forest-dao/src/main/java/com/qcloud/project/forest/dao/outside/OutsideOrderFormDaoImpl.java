@@ -10,12 +10,12 @@ import org.springframework.stereotype.Repository;
 import com.qcloud.pirates.core.json.Json;
 import com.qcloud.pirates.util.DateUtil;
 import com.qcloud.project.forest.dao.OutsideOrderFormDao;
-import com.qcloud.project.forest.outside.entity.AbstractResult;
-import com.qcloud.project.forest.outside.entity.MessageResult;
-import com.qcloud.project.forest.outside.entity.SalesOrderInvoiceEntity;
-import com.qcloud.project.forest.outside.entity.SalesOrderLineEntity;
-import com.qcloud.project.forest.outside.entity.SalesOrderOfflineEntity;
-import com.qcloud.project.forest.outside.entity.SalesOrderPayEntity;
+import com.qcloud.project.forest.model.outside.entity.AbstractResult;
+import com.qcloud.project.forest.model.outside.entity.MessageResult;
+import com.qcloud.project.forest.model.outside.entity.SalesOrderInvoiceEntity;
+import com.qcloud.project.forest.model.outside.entity.SalesOrderLineEntity;
+import com.qcloud.project.forest.model.outside.entity.SalesOrderOfflineEntity;
+import com.qcloud.project.forest.model.outside.entity.SalesOrderPayEntity;
 import com.qcloud.project.forest.util.OutsideUtil;
 
 /**
