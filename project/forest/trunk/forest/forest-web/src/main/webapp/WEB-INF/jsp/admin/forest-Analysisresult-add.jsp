@@ -104,6 +104,7 @@
                 })
             }).trigger('resize.chosen');
             
+            
 
 			
             //表单验证
