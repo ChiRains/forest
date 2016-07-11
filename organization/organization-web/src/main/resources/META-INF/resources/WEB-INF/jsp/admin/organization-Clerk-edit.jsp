@@ -24,7 +24,7 @@
 			<input type="hidden" name="id" value="${clerk.id}">
 			<input type="hidden" name="departmentId" value="${clerk.departmentId}">
 			
-      		<div class="space-4"></div>
+      <%--		<div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="account"> 账号 </label>
                 <div class="col-sm-9">
@@ -33,7 +33,7 @@
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
-            </div>
+            </div>   --%>
             
       		<div class="space-4"></div>
             <div class="form-group">
