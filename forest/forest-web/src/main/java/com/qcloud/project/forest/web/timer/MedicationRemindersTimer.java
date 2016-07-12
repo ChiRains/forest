@@ -62,7 +62,7 @@ public class MedicationRemindersTimer extends AbstractTimer {
             medicationRemindersTheme = medicationRemindersThemeService.get(medicationReminders.getThemeId());
             if (medicationRemindersTheme.getEnable() == 1) {
                 // 发送消息
-                messageClient.sendMsg(MessageType.MEDICATIONREMINDERS.getKey(), MessageClassify.MEDICATIONREMINDERS.getKey(), medicationReminders.getUserId(), medicationReminders.getMedicineName(), null);
+                messageClient.sendMsg(MessageType.USER.getKey(), MessageClassify.MEDICATIONREMINDERS.getKey(), medicationReminders.getUserId(), medicationReminders.getMedicineName(), null);
                 logger.info(medicationReminders.getUserId() + "--消息发送成功." + medicationReminders.getMedicineName());
             }
         }

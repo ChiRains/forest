@@ -59,12 +59,12 @@ public class AdminForestMessageController {
         if (!userId_send.equals("-1")) {
             String[] ary = userId_send.split(",");
             for (String item : ary) {
-                messageClient.sendMsg(MessageType.MERCHANT.getKey(), MessageClassify.MERCHANTPRIVATEMESSAGE.getKey(), Long.valueOf(item), title, content);
+                messageClient.sendMsg(MessageType.USER.getKey(), MessageClassify.MERCHANTPRIVATEMESSAGE.getKey(), Long.valueOf(item), title, content);
             }
         } else if (userId_send.equals("-1")) {
             List<QUser> users = personalcenterClientl.userListAll();
             for (QUser qUser : users) {
-                messageClient.sendMsg(MessageType.MERCHANT.getKey(), MessageClassify.MERCHANTPRIVATEMESSAGE.getKey(), qUser.getId(), title, content);
+                messageClient.sendMsg(MessageType.USER.getKey(), MessageClassify.MERCHANTPRIVATEMESSAGE.getKey(), qUser.getId(), title, content);
             }
         }
         MessageSource messageSource = new MessageSource();
