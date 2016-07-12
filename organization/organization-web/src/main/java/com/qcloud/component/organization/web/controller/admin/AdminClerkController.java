@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,15 +18,20 @@ import com.qcloud.pirates.util.NumberUtil;
 import com.qcloud.pirates.util.RequestUtil;
 import com.qcloud.pirates.util.StringUtil;
 import com.qcloud.pirates.web.page.PPage;
+import com.qcloud.pirates.web.page.PageParameterUtil;
+import com.qcloud.pirates.web.page.PiratesParameterKey;
 import com.qcloud.pirates.web.security.annotation.NoReferer;
 import com.qcloud.component.admin.exception.AdminException;
 import com.qcloud.component.admin.model.key.TypeEnum.AdminEnableType;
 import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.organization.model.Clerk;
+import com.qcloud.component.organization.model.DepartmentClerk;
 import com.qcloud.component.organization.service.ClerkService;
+import com.qcloud.component.organization.service.DepartmentClerkService;
 import com.qcloud.component.organization.service.UsergroupUserService;
 import com.qcloud.component.organization.web.handler.ClerkHandler;
 import com.qcloud.component.organization.model.query.ClerkQuery;
+import com.qcloud.component.organization.model.query.DepartmentClerkQuery;
 import com.qcloud.component.organization.web.vo.admin.AdminClerkVO;
 import com.qcloud.component.publicdata.KeyValueVO;
 import com.qcloud.component.publicdata.PublicdataClient;
@@ -35,30 +41,46 @@ import com.qcloud.component.publicdata.SexType;
 @RequestMapping(value = "/" + AdminClerkController.DIR)
 public class AdminClerkController {
 
-    public static final String DIR = "admin/clerk";
+    public static final String     DIR = "admin/clerk";
 
     @Autowired
-    private ClerkService       clerkService;
+    private ClerkService           clerkService;
 
     @Autowired
-    private ClerkHandler       clerkHandler;
+    private ClerkHandler           clerkHandler;
+
     @Autowired
-    private UsergroupUserService usergroupUserService;
+    private UsergroupUserService   usergroupUserService;
+
     @Autowired
-    private PublicdataClient publicdataClient;
+    private PublicdataClient       publicdataClient;
+
     @Autowired
-    private FileSDKClient  fileSDKClient;
+    private FileSDKClient          fileSDKClient;
+
+    @Autowired
+    private DepartmentClerkService departmentClerkService;
 
     @RequestMapping
     @NoReferer
-    public ModelAndView list(PPage pPage, ClerkQuery query) {
+    public ModelAndView list(HttpServletRequest request, PPage pPage, Long departmentId) {
 
-        Page<Clerk> page = clerkService.page(query, pPage.getPageStart(), pPage.getPageSize());
-        List<AdminClerkVO> list = clerkHandler.toVOList4Admin(page.getData());
-        String param = "name=" + StringUtil.nullToEmpty(query.getName());
-        AcePagingView pagingView = new AcePagingView("/admin/organization-Clerk-list", DIR + "/list?" + param, pPage.getPageNum(), pPage.getPageSize(), page.getCount());
+        DepartmentClerkQuery dcquery = new DepartmentClerkQuery();
+        dcquery.setDepartmentId(departmentId);
+        Page<DepartmentClerk> dcList = departmentClerkService.page(dcquery, pPage.getPageStart(), pPage.getPageSize());
+        List<Clerk> list = new ArrayList<Clerk>();
+        for (DepartmentClerk departmentClerk : dcList.getData()) {
+            Clerk clerk = clerkService.get(departmentClerk.getClerkId());
+            list.add(clerk);
+        }
+        /*Page<Clerk> page = clerkService.page(query, pPage.getPageStart(), pPage.getPageSize());
+        List<AdminClerkVO> list = clerkHandler.toVOList4Admin(page.getData());*/
+        String pageQueryStr = StringUtil.nullToEmpty((String) PageParameterUtil.getParameterValues(request, PiratesParameterKey.PAGE_QUERY_STRING));
+        String queryStr = StringUtil.nullToEmpty((String) PageParameterUtil.getParameterValues(request, PiratesParameterKey.QUERY_STRING));
+        AcePagingView pagingView = new AcePagingView("/admin/organization-Clerk-list", DIR + "/list" + pageQueryStr, pPage.getPageNum(), pPage.getPageSize(), dcList.getCount());
         pagingView.addObject("result", list);
-        pagingView.addObject("query", query);
+        pagingView.addObject("query", dcquery);
+        pagingView.addObject("departmentId", departmentId);
         return pagingView;
     }
 
@@ -73,13 +95,12 @@ public class AdminClerkController {
     }
 
     @RequestMapping
-    public AceAjaxView add(Clerk clerk,Long departmentId) {
+    public AceAjaxView add(Clerk clerk, Long departmentId) {
 
-        if(StringUtils.isNotEmpty(clerk.getHeadImage())){
+        if (StringUtils.isNotEmpty(clerk.getHeadImage())) {
             clerk.setHeadImage(fileSDKClient.uidToUrl(clerk.getHeadImage()));
         }
-        clerk.setDepartmentId(departmentId);
-        clerkService.add(clerk,departmentId);
+        clerkService.add(clerk, departmentId);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("添加成功");
         aceAjaxView.setUrl(DIR + "/list?departmentId="+departmentId);
@@ -87,7 +108,7 @@ public class AdminClerkController {
     }
 
     @RequestMapping
-    public ModelAndView toEdit(Long id) {
+    public ModelAndView toEdit(Long id,Long departmentId) {
 
         AssertUtil.assertNotNull(id, "ID不能为空");
         Clerk clerk = clerkService.get(id);
@@ -96,26 +117,26 @@ public class AdminClerkController {
         model.addObject("clerk", adminClerkVO);
         List<KeyValueVO> sexTypeList = publicdataClient.exchageObj(SexType.values(), -1, "selected");
         model.addObject("sexTypeList", sexTypeList);
+        model.addObject("departmentId", departmentId);
         return model;
     }
 
     @RequestMapping
-    public AceAjaxView edit(Clerk clerk) {
+    public AceAjaxView edit(Clerk clerk,Long departmentId) {
 
         Clerk c = clerkService.get(clerk.getId());
         c.setName(clerk.getName());
-        if(StringUtils.isNotEmpty(clerk.getHeadImage())){
+        if (StringUtils.isNotEmpty(clerk.getHeadImage())) {
             c.setHeadImage(fileSDKClient.uidToUrl(clerk.getHeadImage()));
         }
         c.setIdCard(clerk.getIdCard());
         c.setJobEmail(clerk.getJobEmail());
         c.setMobile(clerk.getMobile());
         c.setSex(clerk.getSex());
-        c.setDepartmentId(clerk.getDepartmentId());
         clerkService.update(c);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("编辑成功");
-        aceAjaxView.setUrl(DIR + "/list?departmentId="+clerk.getDepartmentId());
+        aceAjaxView.setUrl(DIR + "/list?departmentId="+departmentId);
         return aceAjaxView;
     }
 
@@ -138,7 +159,7 @@ public class AdminClerkController {
         Clerk data = clerkService.get(id);
         AssertUtil.assertNotNull(data, "ID无效");
         AceAjaxView aceAjaxView = new AceAjaxView();
-//        data.setPassword(clerkService.getEncodeDefaultPwd());/
+        // data.setPassword(clerkService.getEncodeDefaultPwd());/
         if (clerkService.update(data)) {
             aceAjaxView.setMessage("重置成功");
         } else {
@@ -168,21 +189,21 @@ public class AdminClerkController {
         clerkService.update(clerk);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage(message);
-        aceAjaxView.setUrl(DIR + "/list?departmentId="+clerk.getDepartmentId());
+        aceAjaxView.setUrl(DIR + "/list");
         return aceAjaxView;
     }
-    
+
     @RequestMapping
-    public ModelAndView selectAllClerk(ClerkQuery query,Long groupId) {
-        ModelAndView view=new ModelAndView("/admin/organization-Clerk-allClerk");
-        view.addObject("query",query);
+    public ModelAndView selectAllClerk(ClerkQuery query, Long groupId) {
+
+        ModelAndView view = new ModelAndView("/admin/organization-Clerk-allClerk");
+        view.addObject("query", query);
         Map<String, Object> map = new HashMap<String, Object>();
         System.out.println(query.getName());
         map.put("name", query.getName());
         view.addObject("clerkList", clerkService.listAll(map));
-        view.addObject("guList",usergroupUserService.getUserByGroupId(groupId));
-        view.addObject("groupId",groupId);
+        view.addObject("guList", usergroupUserService.getUserByGroupId(groupId));
+        view.addObject("groupId", groupId);
         return view;
     }
-    
 }
