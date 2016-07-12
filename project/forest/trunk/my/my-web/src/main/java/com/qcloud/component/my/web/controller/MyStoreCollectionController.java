@@ -112,4 +112,17 @@ public class MyStoreCollectionController {
         frontAjaxView.addObject("result", myStoreCollectionVO);
         return frontAjaxView;
     }
+
+    /**
+     * 清楚店铺收藏
+     * @param request
+     * @param idList
+     * @return
+     */
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView removeAll(HttpServletRequest request, List<Long> idList) {
+
+        return myCollectionController.removeList(request, idList);
+    }
 }

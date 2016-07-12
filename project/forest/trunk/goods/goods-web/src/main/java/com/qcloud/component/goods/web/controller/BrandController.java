@@ -28,4 +28,17 @@ public class BrandController {
         view.addObject("list", classifyList);
         return view;
     }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView brandOnSale() {
+
+        List<QClassify> classifyList = publicdataClient.listClassifyForTree((long) BrandType.BRANDONSALE.getKey());
+        if (classifyList.size() >= 6) {
+            classifyList.subList(0, 6);
+        }
+        FrontAjaxView view = new FrontAjaxView();
+        view.addObject("list", classifyList);
+        return view;
+    }
 }

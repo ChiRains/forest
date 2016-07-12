@@ -40,8 +40,10 @@ public class BrandUriHandlerImpl extends AbstractUriHandler {
 
         List<String> list = new ArrayList<String>();
         list.add("/brand/list.do");
+        list.add("/brand/brandOnSale.do");
         //
         list.add("/app/brand/list.do");
+        list.add("/app/brand/brandOnSale.do");
         return list;
     }
 
@@ -51,6 +53,7 @@ public class BrandUriHandlerImpl extends AbstractUriHandler {
         List<String> list = new ArrayList<String>();
         //
         list.add("/app/brand/list.do");
+        list.add("/app/brand/brandOnSale.do");
         return list;
     }
 }
