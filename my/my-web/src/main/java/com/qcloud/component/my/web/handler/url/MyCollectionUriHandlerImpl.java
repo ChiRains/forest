@@ -52,6 +52,8 @@ public class MyCollectionUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/myStoreCollection/remove.do");
         list.add("/myStoreCollection/get.do");
         list.add("/app/myStoreCollection/get.do");
+        list.add("/myStoreCollection/removeAll.do");
+        list.add("/app/myStoreCollection/removeAll.do");
         return list;
     }
 
@@ -79,6 +81,7 @@ public class MyCollectionUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/myStoreCollection/isCollect.do");
         list.add("/app/myStoreCollection/remove.do");
         list.add("/app/myStoreCollection/get.do");
+        list.add("/app/myStoreCollection/removeAll.do");
         return list;
     }
 }
