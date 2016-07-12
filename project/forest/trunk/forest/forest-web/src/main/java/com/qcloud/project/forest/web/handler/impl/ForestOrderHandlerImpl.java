@@ -153,6 +153,13 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
         orderVO.setStateStr(ForestOrderState.get(order.getState()));
         orderVO.setInvoiceTypeStr(InvoiceType.get(order.getInvoiceType()).getName());
         orderVO.setMerchandiseNumber(merchandiseNumber);
+        orderVO.setOrderDateStr(DateUtil.date2String(order.getOrderDate(), "yyyy-MM-dd HH:mm:ss"));
+        //
+        orderVO.setPayDateStr(DateUtil.date2String(new Date(), "yyyy-MM-dd HH:mm:ss"));
+        orderVO.setResidualHour(1);
+        orderVO.setResidualMinute(0);
+        orderVO.setResidualSecond(0);
+        orderVO.setSignDateStr(DateUtil.date2String(new Date(), "yyyy-MM-dd HH:mm:ss"));
         return orderVO;
     }
 
@@ -195,7 +202,7 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
         orderItemVO.setNumber(qOrderItem.getNumber());
         orderItemVO.setSpecifications(qOrderItem.getSpecifications());
         orderItemVO.setUnifiedMerchandiseId(qOrderItem.getUnifiedMerchandiseId());
-        orderItemVO.setCode(unifiedMerchandise.getList().get(0).getCode());
+        orderItemVO.setCode(unifiedMerchandise.getCode());
         orderItemVO.setOrderItemId(qOrderItem.getId());
         orderItemVO.setAfterSale(qOrderItem.isAfterSale());
         orderItemVO.setEvaluation(qOrderItem.isEvaluation());

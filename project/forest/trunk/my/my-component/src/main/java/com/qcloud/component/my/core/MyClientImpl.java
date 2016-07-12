@@ -507,7 +507,7 @@ public class MyClientImpl implements MyClient {
             myShoppingCart.setNumber(number);
             myShoppingCart.setUnifiedMerchandiseId(unifiedMerchandiseId);
             myShoppingCart.setMerchantId(unifiedMerchandise.getMerchantId());
-            myShoppingCart.setMerchantClassifyId(unifiedMerchandise.getList().get(0).getMerchantClassifyId());
+            myShoppingCart.setMerchantClassifyId(unifiedMerchandise.getMerchantClassifyId());
             myShoppingCart.setUserId(userId);
             myShoppingCartService.add(myShoppingCart);
         } else {

@@ -203,14 +203,14 @@ public class AfterSaleServiceImpl implements AfterSaleService {
     }
 
     @Transactional
-    public boolean applyRefund(OrderEntity orderEntity, List<OrderItemEntity> list, String explain, String reason) {
+    public boolean applyRefund(OrderEntity orderEntity, List<OrderItemEntity> list, String explain, String reason, Double afterSaleSum) {
 
         AssertUtil.assertNotEmpty(list, "退款商品列表不能为空.");
         List<List<OrderItemEntity>> spitList = spitOrderItem(list);
         for (List<OrderItemEntity> itemList : spitList) {
             MerchantOrderEntity merchantOrderEntity = itemList.get(0).getMerchantOrder();
             Date now = new Date();
-            Long returnOrderId = applyRefundOrder(merchantOrderEntity, now, explain, reason);
+            Long returnOrderId = applyRefundOrder(merchantOrderEntity, now, explain, reason, afterSaleSum);
             for (OrderItemEntity orderItem : itemList) {
                 AfterSaleItem afterSale = new AfterSaleItem();
                 afterSale.setOrderItem(orderItem);
@@ -269,14 +269,14 @@ public class AfterSaleServiceImpl implements AfterSaleService {
     }
 
     @Transactional
-    public boolean applyRefund(OrderEntity orderEntity, List<AfterSaleItem> list) {
+    public boolean applyRefund(OrderEntity orderEntity, List<AfterSaleItem> list, Double afterSaleSum) {
 
         AssertUtil.assertNotEmpty(list, "退款商品列表不能为空.");
         List<List<AfterSaleItem>> spitList = spitAfterSaleItem(list);
         for (List<AfterSaleItem> itemList : spitList) {
             MerchantOrderEntity merchantOrderEntity = itemList.get(0).getOrderItem().getMerchantOrder();
             Date now = new Date();
-            Long returnOrderId = applyRefundOrder(merchantOrderEntity, now, "", "");
+            Long returnOrderId = applyRefundOrder(merchantOrderEntity, now, "", "", afterSaleSum);
             for (AfterSaleItem afterSale : itemList) {
                 applyRefundOrderItemDetail(afterSale, now, returnOrderId);
             }
@@ -395,7 +395,7 @@ public class AfterSaleServiceImpl implements AfterSaleService {
         return exchangeOrderItemDetailService.add(exchangeOrderItemDetail);
     }
 
-    private Long applyRefundOrder(MerchantOrderEntity merchantOrderEntity, Date date, String explain, String reason) {
+    private Long applyRefundOrder(MerchantOrderEntity merchantOrderEntity, Date date, String explain, String reason, Double afterSaleSum) {
 
         OrderEntity orderEntity = merchantOrderEntity.getOrder();
         RefundOrder refundOrder = new RefundOrder();
@@ -412,6 +412,7 @@ public class AfterSaleServiceImpl implements AfterSaleService {
         refundOrder.setUserId(orderEntity.getUserId());
         refundOrder.setState(orderConfigService.getRefundInitOrderState());
         refundOrder.setRefundNumber(orderNumberService.generate());
+        refundOrder.setAfterSaleSum(afterSaleSum);
         refundOrderService.add(refundOrder);
         // 发短信给门店
         String refundNumber = refundOrder.getRefundNumber();

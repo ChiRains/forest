@@ -13,14 +13,14 @@ import com.qcloud.component.orderform.model.query.RefundOrderQuery;
 
 public interface RefundOrderMapper {
 
-	@Insert("insert into `orderform_refund_order`(`id`,`orderId`,`orderDate`,`orderNumber`,`subOrderId`,`merchantId`,`storeId`,`sum`,`state`,`userId`,`time`,`refundNumber`,`explain`,`reason`,`lastUpdateTime`,`stateValidTime`)"
-			+ " values(#{id},#{orderId},#{orderDate},#{orderNumber},#{subOrderId},#{merchantId},#{storeId},#{sum},#{state},#{userId},#{time},#{refundNumber},#{explain},#{reason},#{lastUpdateTime},#{stateValidTime})")
+	@Insert("insert into `orderform_refund_order`(`id`,`orderId`,`orderDate`,`orderNumber`,`subOrderId`,`merchantId`,`storeId`,`sum`,`state`,`userId`,`time`,`refundNumber`,`explain`,`reason`,`lastUpdateTime`,`stateValidTime`,`afterSaleSum`)"
+			+ " values(#{id},#{orderId},#{orderDate},#{orderNumber},#{subOrderId},#{merchantId},#{storeId},#{sum},#{state},#{userId},#{time},#{refundNumber},#{explain},#{reason},#{lastUpdateTime},#{stateValidTime},#{afterSaleSum})")
 	public void insert(RefundOrder refundOrder);
 
 	@Select("select * from `orderform_refund_order` where `id`=#{id}")
 	public RefundOrder get(Long id);
 
-	@Update("update `orderform_refund_order` set `orderId`=#{orderId},`orderDate`=#{orderDate},`orderNumber`=#{orderNumber},`subOrderId`=#{subOrderId},`merchantId`=#{merchantId},`storeId`=#{storeId},`sum`=#{sum},`state`=#{state},`userId`=#{userId},`time`=#{time},`refundNumber`=#{refundNumber},`explain`=#{explain},`reason`=#{reason},`lastUpdateTime`=#{lastUpdateTime},`stateValidTime`=#{stateValidTime} where `id`=#{id}")
+	@Update("update `orderform_refund_order` set `orderId`=#{orderId},`orderDate`=#{orderDate},`orderNumber`=#{orderNumber},`subOrderId`=#{subOrderId},`merchantId`=#{merchantId},`storeId`=#{storeId},`sum`=#{sum},`state`=#{state},`userId`=#{userId},`time`=#{time},`refundNumber`=#{refundNumber},`explain`=#{explain},`reason`=#{reason},`lastUpdateTime`=#{lastUpdateTime},`stateValidTime`=#{stateValidTime},`afterSaleSum`=#{afterSaleSum}  where `id`=#{id}")
 	public void update(RefundOrder refundOrder);
 
 	@Delete("delete from `orderform_refund_order` where `id`=#{id}")

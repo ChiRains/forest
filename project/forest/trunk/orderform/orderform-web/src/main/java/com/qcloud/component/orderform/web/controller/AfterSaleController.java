@@ -138,14 +138,14 @@ public class AfterSaleController {
             for (AfterSaleItem afterSale : list) {
                 itemList.add(afterSale.getOrderItem());
             }
-            afterSaleService.applyRefund(orderEntity, itemList, afterSaleForm.getExplain(), afterSaleForm.getReason());
+            afterSaleService.applyRefund(orderEntity, itemList, afterSaleForm.getExplain(), afterSaleForm.getReason(), afterSaleForm.getAfterSaleSum());
             break;
         case 2: // 按商家订单退
             List<OrderItemEntity> subList = new ArrayList<OrderItemEntity>();
             for (AfterSaleItem afterSale : list) {
                 subList.add(afterSale.getOrderItem());
             }
-            afterSaleService.applyRefund(orderEntity, subList, afterSaleForm.getExplain(), afterSaleForm.getReason());
+            afterSaleService.applyRefund(orderEntity, subList, afterSaleForm.getExplain(), afterSaleForm.getReason(), afterSaleForm.getAfterSaleSum());
             break;
         default:
             throw new OrderformException("退款表单类型不正确" + afterSaleForm.getType());

@@ -41,6 +41,8 @@ public class UnifiedMerchandiseQuery {
 
     private long          merchandiseId;
 
+    private Long          activityId;
+
     public String getName() {
 
         return name;
@@ -213,5 +215,15 @@ public class UnifiedMerchandiseQuery {
     public void setMerchandiseId(long merchandiseId) {
 
         this.merchandiseId = merchandiseId;
+    }
+
+    public Long getActivityId() {
+
+        return activityId;
+    }
+
+    public void setActivityId(Long activityId) {
+
+        this.activityId = activityId;
     }
 }

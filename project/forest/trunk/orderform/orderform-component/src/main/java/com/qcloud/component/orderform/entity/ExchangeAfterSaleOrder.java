@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import com.qcloud.component.my.AfterSaleType;
 import com.qcloud.component.orderform.QAfterSaleDetail;
+import com.qcloud.component.orderform.QAfterSaleOrderItem;
 import com.qcloud.component.orderform.model.ExchangeOrder;
 
 public class ExchangeAfterSaleOrder extends AfterSaleOrder {
@@ -121,5 +122,13 @@ public class ExchangeAfterSaleOrder extends AfterSaleOrder {
     public void setState(int state) {
 
         exchangeOrder.setState(state);
+    }
+
+
+    @Override
+    public double getAfterSaleSum() {
+
+        // TODO Auto-generated method stub
+        return 0;
     }
 }
