@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.project.forest.dao.mysql.mapper.ExpressQueryHistoryMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="ExpressQueryHistory">  
+        select * from `forest_express_query_history`  where 1=1
+        <if test="userId != 0">
+       and userId =#{userId}
+        </if>
+        order by time desc
+        limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `forest_express_query_history` where 1=1
+       <if test="userId != 0">
+       and userId =#{userId}
+        </if>
+    </select> 
+    <select id="getByUserIdAndExpressNum" parameterType="java.util.HashMap" resultType="ExpressQueryHistory">  
+        select * from `forest_express_query_history`  where 1=1
+        <if test="userId != 0">
+        and userId =#{userId}
+        </if>
+        <if test="expressNum != 0">
+        and expressNum =#{expressNum}
+        </if>
+
+    </select>  
+</mapper>
