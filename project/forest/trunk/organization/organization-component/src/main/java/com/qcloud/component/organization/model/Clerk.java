@@ -1,7 +1,5 @@
 package com.qcloud.component.organization.model;
 
-import java.util.Date;
-import java.math.BigDecimal;
 
 public class Clerk {
 	
@@ -36,7 +34,6 @@ public class Clerk {
 	
 	private String inside;		
 	
-	private long departmentId;
 
 	public Clerk(){
 	
@@ -144,16 +141,4 @@ public class Clerk {
 		return inside;
 	}
 
-    
-    public long getDepartmentId() {
-    
-        return departmentId;
-    }
-
-    
-    public void setDepartmentId(long departmentId) {
-    
-        this.departmentId = departmentId;
-    }	
-		
 }

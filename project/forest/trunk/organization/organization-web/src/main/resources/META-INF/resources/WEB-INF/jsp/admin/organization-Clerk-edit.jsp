@@ -22,7 +22,7 @@
         <form id="model-form" class="form-horizontal"  role="form" action="/admin/clerk/edit.do">
             <!-- #section:elements.form -->
 			<input type="hidden" name="id" value="${clerk.id}">
-			<input type="hidden" name="departmentId" value="${clerk.departmentId}">
+			<input type="hidden" name="departmentId" value="${departmentId}">
 			
       <%--		<div class="space-4"></div>
             <div class="form-group">

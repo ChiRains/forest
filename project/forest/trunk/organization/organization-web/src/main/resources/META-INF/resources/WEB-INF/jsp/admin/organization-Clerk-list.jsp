@@ -44,7 +44,7 @@
                     <div class="col-xs-4">
                         <div class="dataTables_length">
                             <a title="新增" class="btn btn-sm btn-info"
-                               href="#admin/clerk/toAdd?departmentId=${query.departmentId}">
+                               href="#admin/clerk/toAdd?departmentId=${departmentId}">
                                 <i class="ace-icon fa fa-plus align-bottom bigger-125"></i>
                                 新&nbsp;增
                             </a> 
@@ -55,8 +55,8 @@
                     </div>
                     <div class="col-xs-8">
                         <div class="text-right">
-                            <label>
-                                <form id="query-form" action="#admin/clerk/list" onsubmit="listFormSearch(this); return false">
+                    <%--        <label>
+                                <form id="query-form" action="#admin/clerk/list?departmentId=${departmentId}" onsubmit="listFormSearch(this); return false">
                                     <div class="dataTables_length">            	                                      		                              
 	                                   	<span class="input-group-btn">	                                   	    
 								            <input type="search" maxlength="6" class="form-control search-query" placeholder="名称" name="name" value="${query.name}">
@@ -67,7 +67,7 @@
                                         </span>
                                     </div>
                                 </form>
-                            </label>
+                            </label>   --%>
                         </div>
                     </div>            
                 </div>
@@ -109,7 +109,7 @@
                             	<td>
                                 	<div class="hidden-sm hidden-xs action-buttons">
                                     <a title="修改基本信息" class="green" 
-                                       href="#admin/clerk/toEdit?id=${item.id}">
+                                       href="#admin/clerk/toEdit?id=${item.id}&departmentId=${departmentId}">
                                         <i class="ace-icon fa fa-pencil bigger-130"></i>
                                     </a>
                                 	</div>
