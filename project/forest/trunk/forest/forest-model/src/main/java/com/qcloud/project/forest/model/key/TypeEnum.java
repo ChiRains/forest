@@ -118,7 +118,7 @@ public class TypeEnum {
         }
     }
     public enum MessageType {
-        STATION("station", "站内消息"), LOGISTICS("logistics", "物流消息"), COUPONS("coupons", "优惠券消息"), PAYMENT("payment", "付款提醒"), MEDICATIONREMINDERS("medicationReminders", "用药提醒"), MERCHANT("merchant", "商家信息");
+        USER("user", "用户信息"), STATION("station", "站内消息"), LOGISTICS("logistics", "物流消息"), COUPONS("coupons", "优惠券消息"), PAYMENT("payment", "付款提醒"), MEDICATIONREMINDERS("medicationReminders", "用药提醒"), MERCHANT("merchant", "商家信息");
 
         private final String key;
 
@@ -141,7 +141,7 @@ public class TypeEnum {
         }
     }
     public enum MessageClassify {
-        MEDICATIONREMINDERS(6, "药物提醒"), MERCHANTPRIVATEMESSAGE(1, "商家站内消息");
+        MERCHANTPRIVATEMESSAGE(1, "商家站内消息"), USERPRIVATEMESSAGE(1, "用户站内消息"), LOGISTICS(2, "物流消息"), COUPONS(3, "优惠券消息"), PAYMENT(4, "付款提醒"), MEDICATIONREMINDERS(5, "药物提醒"), ;
 
         private final int    key;
 

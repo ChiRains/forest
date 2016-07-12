@@ -16,7 +16,6 @@ import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.project.forest.model.Feedback;
 import com.qcloud.project.forest.model.key.TypeEnum.ClassifyType;
 import com.qcloud.project.forest.service.FeedbackService;
-import com.qcloud.project.forest.web.handler.FeedbackHandler;
 
 @Controller
 @RequestMapping(value = FeedbackController.DIR)
@@ -26,9 +25,6 @@ public class FeedbackController {
 
     @Autowired
     private FeedbackService    feedbackService;
-
-    @Autowired
-    private FeedbackHandler    feedbackHandler;
 
     @Autowired
     private PublicdataClient   publicdataClient;
