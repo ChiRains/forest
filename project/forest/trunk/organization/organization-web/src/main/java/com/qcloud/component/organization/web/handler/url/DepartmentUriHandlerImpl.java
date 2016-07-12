@@ -59,21 +59,19 @@ public class DepartmentUriHandlerImpl extends AbstractUriHandler {
         map.put("/admin/department/edit.do", list);
         map.put("/admin/department/delete.do", list);
         //
-        map.put("/admin/departmentClerk/selectMember.do", list);
-        map.put("/admin/departmentClerk/selectManager.do", list);
-        map.put("/admin/departmentClerk/editManager.do", list);
-        map.put("/admin/departmentClerk/edit.do", list);
-        //
         List<String> list4Super = stringToList("/admin/department/list4Super.do");
         map.put("/admin/department/toAdd4Super.do", list4Super);
         map.put("/admin/department/toEdit4Super.do", list4Super);
         map.put("/admin/department/add4Super.do", list4Super);
         map.put("/admin/department/edit4Super.do", list4Super);
         map.put("/admin/department/delete.do", list4Super);
-        map.put("/admin/departmentClerk/selectMember.do", list4Super);
-        map.put("/admin/departmentClerk/selectManager.do", list4Super);
-        map.put("/admin/departmentClerk/editManager.do", list4Super);
-        map.put("/admin/departmentClerk/edit.do", list4Super);
+        //共同
+        List<String> commonList = stringToList("/admin/department/list.do", "/admin/department/list4Super.do");
+        map.put("/admin/clerk/list.do", commonList);
+        map.put("/admin/departmentClerk/selectMember.do", commonList);
+        map.put("/admin/departmentClerk/selectManager.do", commonList);
+        map.put("/admin/departmentClerk/editManager.do", commonList);
+        map.put("/admin/departmentClerk/edit.do", commonList);
         return map;
     }
 

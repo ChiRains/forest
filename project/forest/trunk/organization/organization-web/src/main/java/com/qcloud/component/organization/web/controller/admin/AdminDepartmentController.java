@@ -226,7 +226,7 @@ public class AdminDepartmentController {
         AssertUtil.assertNotNull(id, "ID不能为空");
         Department department = departmentService.get(id);
         AdminDepartmentVO adminDepartmentVO = departmentHandler.toVO4Admin(department);
-        ModelAndView model = new ModelAndView("/admin/organization-Department-edit");
+        ModelAndView model = new ModelAndView("/admin/organization-Department-edit4Super");
         model.addObject("department", adminDepartmentVO);
         List<String> list = publicdataClient.listProvince();
         List<String> cityList = publicdataClient.listCity(adminDepartmentVO.getProvince());
