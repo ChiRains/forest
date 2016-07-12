@@ -66,6 +66,14 @@ public class DepartmentUriHandlerImpl extends AbstractUriHandler {
         //共同
         List<String> commonList = stringToList("/admin/department/list.do", "/admin/department/list4Super.do");
         map.put("/admin/clerk/list.do", commonList);
+        map.put("/admin/clerk/toAdd.do", commonList);
+        map.put("/admin/clerk/add.do", commonList);
+        map.put("/admin/clerk/toEdit.do", commonList);
+        map.put("/admin/clerk/edit.do", commonList);
+        map.put("/admin/clerk/enable.do", commonList);
+        map.put("/admin/clerk/resetPwd.do", commonList);
+        map.put("/admin/clerkMessage/send.do", commonList);
+        map.put("/admin/clerkMessage/toSend.do", commonList);
         map.put("/admin/departmentClerk/selectMember.do", commonList);
         map.put("/admin/departmentClerk/selectManager.do", commonList);
         map.put("/admin/departmentClerk/editManager.do", commonList);
