@@ -34,6 +34,8 @@ public class ExpressQueryUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/expressQuery/getExpressQuery.do");
         list.add("/expressQuery/getAllExpress.do");
         list.add("/app/expressQuery/getAllExpress.do");
+        list.add("/expressQuery/getQueryHistory.do");
+        list.add("/app/expressQuery/getQueryHistory.do");
         return list;
     }
 }
