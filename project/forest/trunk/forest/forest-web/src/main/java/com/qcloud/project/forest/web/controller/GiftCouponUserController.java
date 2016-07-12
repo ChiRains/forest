@@ -15,13 +15,19 @@ import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.pirates.web.page.PPage;
 import com.qcloud.pirates.web.page.PageParameterUtil;
+import com.qcloud.project.forest.model.Config;
 import com.qcloud.project.forest.model.GiftCoupon;
 import com.qcloud.project.forest.model.GiftCouponUser;
+import com.qcloud.project.forest.model.key.TypeEnum.ConfigCodeType;
+import com.qcloud.project.forest.model.key.TypeEnum.ConfigType;
 import com.qcloud.project.forest.model.query.GiftCouponUserQuery;
+import com.qcloud.project.forest.service.ConfigService;
 import com.qcloud.project.forest.service.GiftCouponService;
 import com.qcloud.project.forest.service.GiftCouponUserService;
+import com.qcloud.project.forest.web.handler.ConfigHandler;
 import com.qcloud.project.forest.web.handler.GiftCouponHandler;
 import com.qcloud.project.forest.web.handler.GiftCouponUserHandler;
+import com.qcloud.project.forest.web.vo.GiftCouponUseRuleVO;
 import com.qcloud.project.forest.web.vo.GiftCouponUserVO;
 import com.qcloud.project.forest.web.vo.GiftCouponVO;
 
@@ -42,6 +48,12 @@ public class GiftCouponUserController {
 
     @Autowired
     private GiftCouponHandler     giftCouponHandler;
+
+    @Autowired
+    private ConfigService         configService;
+
+    @Autowired
+    private ConfigHandler         configHandler;
 
     /**
      * 获取当前用户的赠品券列表
@@ -112,5 +124,25 @@ public class GiftCouponUserController {
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("删除成功");
         return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView getGiftCouponUseRule() {
+
+        final String code = ConfigCodeType.GIFTCOUPONUSERULE.getKey();
+        Config config = configService.getByCode(code);
+        // 未初始化脚本就新增一个
+        if (config == null) {
+            config = new Config();
+            config.setCode(code);
+            config.setRemark(ConfigCodeType.GIFTCOUPONUSERULE.getName());
+            config.setType(ConfigType.GIFTCOUPONUSERULE.getKey());
+            configService.add(config);
+        }
+        GiftCouponUseRuleVO giftCouponUseRuleVO = configHandler.toGiftCouponUseRuleVO(config.getConfig());
+        FrontAjaxView frontAjaxView = new FrontAjaxView();
+        frontAjaxView.addObject("result", giftCouponUseRuleVO);
+        return frontAjaxView;
     }
 }

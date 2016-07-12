@@ -30,8 +30,7 @@ public class GiftCouponUserUriHandlerImpl extends AbstractUriHandler {
     public List<String> whiteNameUris() {
 
         List<String> list = new ArrayList<String>();
-        list.add("/giftCouponUser/myGiftCoupon.do");
-        list.add("/giftCouponUser/get.do");
+        list.add("/giftCouponUser/getGiftCouponUseRule.do");
         return list;
     }
 
@@ -42,6 +41,7 @@ public class GiftCouponUserUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/giftCouponUser/myGiftCoupon.do");
         list.add("/app/giftCouponUser/get.do");
         list.add("/app/giftCouponUser/delete.do");
+        list.add("/app/giftCouponUser/getGiftCouponUseRule.do");
         return list;
     }
 
@@ -49,9 +49,11 @@ public class GiftCouponUserUriHandlerImpl extends AbstractUriHandler {
     public List<String> userUris() {
 
         List<String> list = new ArrayList<String>();
+        list.add("/giftCouponUser/myGiftCoupon.do");
+        list.add("/giftCouponUser/get.do");
+        list.add("/giftCouponUser/delete.do");
         list.add("/app/giftCouponUser/myGiftCoupon.do");
         list.add("/app/giftCouponUser/get.do");
-        list.add("/giftCouponUser/delete.do");
         list.add("/app/giftCouponUser/delete.do");
         return list;
     }
