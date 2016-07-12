@@ -31,11 +31,15 @@ public class ForestOrderVO {
 
     private String                  deliveryDateStr;
 
+    private String                  signDateStr;
+
     private int                     deliveryMode;
 
     private String                  prove;
 
     private String                  payDateStr;
+
+    private String                  shipDateStr;
 
     private int                     invoiceType;
 
@@ -83,6 +87,14 @@ public class ForestOrderVO {
     private int                     merchandiseNumber;
 
     private String                  residualTime;
+
+    private String                  orderDateStr;
+
+    private int                     residualHour;
+
+    private int                     residualMinute;
+
+    private int                     residualSecond;
 
     public ForestOrderVO() {
 
@@ -416,5 +428,65 @@ public class ForestOrderVO {
     public void setResidualTime(String residualTime) {
 
         this.residualTime = residualTime;
+    }
+
+    public String getOrderDateStr() {
+
+        return orderDateStr;
+    }
+
+    public void setOrderDateStr(String orderDateStr) {
+
+        this.orderDateStr = orderDateStr;
+    }
+
+    public int getResidualHour() {
+
+        return residualHour;
+    }
+
+    public void setResidualHour(int residualHour) {
+
+        this.residualHour = residualHour;
+    }
+
+    public int getResidualMinute() {
+
+        return residualMinute;
+    }
+
+    public void setResidualMinute(int residualMinute) {
+
+        this.residualMinute = residualMinute;
+    }
+
+    public int getResidualSecond() {
+
+        return residualSecond;
+    }
+
+    public void setResidualSecond(int residualSecond) {
+
+        this.residualSecond = residualSecond;
+    }
+
+    public String getShipDateStr() {
+
+        return shipDateStr;
+    }
+
+    public void setShipDateStr(String shipDateStr) {
+
+        this.shipDateStr = shipDateStr;
+    }
+
+    public String getSignDateStr() {
+
+        return signDateStr;
+    }
+
+    public void setSignDateStr(String signDateStr) {
+
+        this.signDateStr = signDateStr;
     }
 }

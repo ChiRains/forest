@@ -28,6 +28,10 @@ public class ForestOrder {
 
     private String prove;
 
+    private Date   payDate;
+
+    private Date   shipDate;
+
     public ForestOrder() {
 
     }
@@ -150,5 +154,25 @@ public class ForestOrder {
     public void setProve(String prove) {
 
         this.prove = prove;
+    }
+
+    public Date getPayDate() {
+
+        return payDate;
+    }
+
+    public void setPayDate(Date payDate) {
+
+        this.payDate = payDate;
+    }
+
+    public Date getShipDate() {
+
+        return shipDate;
+    }
+
+    public void setShipDate(Date shipDate) {
+
+        this.shipDate = shipDate;
     }
 }

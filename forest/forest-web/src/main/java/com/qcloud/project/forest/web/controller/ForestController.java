@@ -21,6 +21,7 @@ import com.qcloud.pirates.core.xml.XmlFactory;
 import com.qcloud.pirates.core.xml.XmlItem;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.mvc.FrontAjaxView;
+import com.qcloud.pirates.mvc.HtmlView;
 import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.project.forest.exception.ForestException;
@@ -231,6 +232,25 @@ public class ForestController {
         }
         FrontAjaxView view = new FrontAjaxView();
         view.addObject("list", list);
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView getIntergralRules() {
+
+        String userRules = parameterClient.get("forest-user-rules");
+        FrontAjaxView view = new FrontAjaxView();
+        view.addObject("rules", userRules);
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public HtmlView getHtmlIntergralRules() {
+
+        String userRules = parameterClient.get("forest-user-rules");
+        HtmlView view = new HtmlView("<style>img{width:100%}</style>" + userRules);
         return view;
     }
 }

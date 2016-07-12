@@ -81,6 +81,7 @@ public class MyAfterSaleHandlerImpl implements MyAfterSaleHandler {
                 number += item.getNumber();
             }
         }
+        myAfterSaleVO.setCash(afterSaleOrder.getAfterSaleSum());
         myAfterSaleVO.setList(voList);
         myAfterSaleVO.setNumber(number);
         myAfterSaleVO.setState(afterSaleOrder.getUserState());

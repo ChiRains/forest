@@ -16,6 +16,8 @@ public class MerchandiseVO {
     // 商家ID
     private long   merchantId;
 
+    private String merchantName;
+
     // 名称
     private String name;
 
@@ -62,6 +64,8 @@ public class MerchandiseVO {
     private long   brandId;
 
     private int    stock;
+
+    private String label;
 
     public MerchandiseVO() {
 
@@ -285,5 +289,25 @@ public class MerchandiseVO {
     public void setStock(int stock) {
 
         this.stock = stock;
+    }
+
+    public String getMerchantName() {
+
+        return merchantName;
+    }
+
+    public void setMerchantName(String merchantName) {
+
+        this.merchantName = merchantName;
+    }
+
+    public String getLabel() {
+
+        return label;
+    }
+
+    public void setLabel(String label) {
+
+        this.label = StringUtil.nullToEmpty(label);
     }
 }

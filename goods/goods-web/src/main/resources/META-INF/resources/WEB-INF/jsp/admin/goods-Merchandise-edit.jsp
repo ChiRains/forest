@@ -145,7 +145,7 @@
             </div> -->
             <div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="keywords"> 关键字 </label>
+                <label class="col-sm-3 control-label no-padding-right" for="keywords"> 搜索关键字 </label>
 
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
@@ -154,6 +154,19 @@
 					</span>
                 </div>
             </div>
+            
+              <div class="space-4"></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="keywords"> 标签 </label>
+
+                <div class="col-sm-9">
+					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
+						<input type="text" class="width-100" maxlength="2" id="label" name="label" placeholder="热卖、促销、特价、好评..." value="${merchandise.label}"/>
+						<i class="ace-icon fa"></i>
+					</span>
+                </div>
+            </div>
+            
                                   
             <div class="space-4"></div>
             <div class="form-group">

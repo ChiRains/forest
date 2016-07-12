@@ -234,7 +234,7 @@ public class MerchandiseController {
                 // 目前只管价格,暂时不处理折扣
                 merchandiseVO.setVipDiscount(merchandiseVipDiscount == null ? 0 : merchandiseVipDiscount.getPrice());
             }
-            //
+            // 加入购物车的数量
             if (user != null) {
                 int number = myClient.getMyShoppingCartMerchandiseNumber(user.getId(), unifiedMerchandise.getId());
                 merchandiseVO.setNumber(number);
@@ -242,6 +242,8 @@ public class MerchandiseController {
                 merchandiseVO.setNumber(0);
             }
             //
+            QMerchant merchant = sellercenterClient.getMerchant(merchandiseVO.getMerchantId());
+            merchandiseVO.setMerchantName(merchant.getName());
             voList.add(merchandiseVO);
         }
         FrontPagingView view = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), page.getCount());

@@ -26,6 +26,8 @@ public class AfterSaleForm {
     //
     private String                  reason;
 
+    private double                  afterSaleSum;
+
     public Long getOrderId() {
 
         return orderId;
@@ -94,5 +96,17 @@ public class AfterSaleForm {
     public void setReason(String reason) {
 
         this.reason = reason;
+    }
+
+    
+    public double getAfterSaleSum() {
+    
+        return afterSaleSum;
+    }
+
+    
+    public void setAfterSaleSum(double afterSaleSum) {
+    
+        this.afterSaleSum = afterSaleSum;
     }
 }

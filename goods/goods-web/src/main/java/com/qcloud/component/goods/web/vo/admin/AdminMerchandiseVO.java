@@ -86,6 +86,8 @@ public class AdminMerchandiseVO {
 
     private long   brandId;
 
+    private String label;
+
     public AdminMerchandiseVO() {
 
     }
@@ -438,5 +440,15 @@ public class AdminMerchandiseVO {
     public void setBrandId(long brandId) {
 
         this.brandId = brandId;
+    }
+
+    public String getLabel() {
+
+        return label;
+    }
+
+    public void setLabel(String label) {
+
+        this.label = label;
     }
 }

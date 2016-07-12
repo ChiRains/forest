@@ -11,7 +11,13 @@ public class MyAfterSaleUriHandlerImpl extends AbstractUriHandler {
 
         List<String> list = new ArrayList<String>();
         list.add("/myAfterSale/list.do");
-        list.add("/app/myAfterSale/list.do");       
+        list.add("/app/myAfterSale/list.do");
+        //
+        list.add("/myAfterSale/listByOrder.do");
+        list.add("/app/myAfterSale/listByOrder.do");
+        //
+        list.add("/myAfterSale/listBySubOrder.do");
+        list.add("/app/myAfterSale/listBySubOrder.do");
         return list;
     }
 
@@ -19,7 +25,9 @@ public class MyAfterSaleUriHandlerImpl extends AbstractUriHandler {
     public List<String> appUris() {
 
         List<String> list = new ArrayList<String>();
-        list.add("/app/myAfterSale/list.do");     
+        list.add("/app/myAfterSale/list.do");
+        list.add("/app/myAfterSale/listByOrder.do");
+        list.add("/app/myAfterSale/listBySubOrder.do");
         return list;
     }
 }

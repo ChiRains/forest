@@ -29,7 +29,7 @@ public interface AfterSaleService {
     boolean applyReturn(OrderEntity orderEntity, List<OrderItemEntity> list, String explain, String reason);
 
     // 申请退款
-    boolean applyRefund(OrderEntity orderEntity, List<OrderItemEntity> list, String explain, String reason);
+    boolean applyRefund(OrderEntity orderEntity, List<OrderItemEntity> list, String explain, String reason, Double afterSaleSum);
 
     // 申请换货
     boolean applyExchange(OrderEntity orderEntity, List<AfterSaleDetail> list);
@@ -38,5 +38,5 @@ public interface AfterSaleService {
     boolean applyReturn(OrderEntity orderEntity, List<AfterSaleItem> list);
 
     // 申请退货
-    boolean applyRefund(OrderEntity orderEntity, List<AfterSaleItem> list);
+    boolean applyRefund(OrderEntity orderEntity, List<AfterSaleItem> list, Double afterSaleSum);
 }

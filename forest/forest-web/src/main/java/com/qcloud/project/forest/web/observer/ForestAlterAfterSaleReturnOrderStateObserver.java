@@ -48,7 +48,7 @@ public class ForestAlterAfterSaleReturnOrderStateObserver extends AbstractNotify
 
         AssertUtil.assertTrue(variable != null, "发起售后订单跳转状态未定义.");
         QMerchantOrder merchantOrder = t.getMerchantOrder();
-        if (merchantOrder.getOrder().getState() == 60) {
+        if (merchantOrder.getOrder().getState() == 70) {
             orderStateService.returnOrderState(merchantOrder.getOrder().getId(), merchantOrder.getOrder().getOrderDate(), -999L);
         }
     }

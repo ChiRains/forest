@@ -33,6 +33,8 @@ public class ForestUriHandlerImpl extends AbstractUriHandler {
         list.add("/forest/latestArticle.do");
         list.add("/forest/shareSignIn.do");
         list.add("/forest/startPage.do");
+        list.add("/forest/getIntergralRules.do");
+        list.add("/forest/getHtmlIntergralRules.do");
         //
         list.add("/app/forest/classifyList.do");
         list.add("/app/forest/getMerchant.do");
@@ -42,6 +44,8 @@ public class ForestUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/forest/latestArticle.do");
         list.add("/app/forest/shareSignIn.do");
         list.add("/app/forest/startPage.do");
+        list.add("/app/forest/getIntergralRules.do");
+        list.add("/app/forest/getHtmlIntergralRules.do");
         //
         list.add("/forest/test.do");
         return list;
@@ -59,6 +63,8 @@ public class ForestUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/forest/latestArticle.do");
         list.add("/app/forest/shareSignIn.do");
         list.add("/app/forest/startPage.do");
+        list.add("/app/forest/getIntergralRules.do");
+        list.add("/app/forest/getHtmlIntergralRules.do");
         return list;
     }
 }

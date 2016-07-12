@@ -37,4 +37,6 @@ public interface QAfterSaleOrder {
     public int getUserState();
 
     public String getUserStateStr();
+
+    public double getAfterSaleSum();
 }

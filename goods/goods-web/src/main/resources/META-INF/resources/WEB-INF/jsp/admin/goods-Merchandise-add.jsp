@@ -120,9 +120,17 @@
 						</tr>
 						
 						<tr>
-							<td style="width: 200px;">关键字(标签)：</td>
+							<td style="width: 200px;">搜索关键字：</td>
 							<td style="width: 300px;"> 
 								<input type="text" class="qi-cloud-text" maxlength="100" id="keywords" name="keywords" placeholder="关键字" value=""/>
+							</td>
+						</tr>
+						
+						
+						<tr>
+							<td style="width: 200px;">标签：</td>
+							<td style="width: 300px;"> 
+								<input type="text" class="width-100" maxlength="2" id="label" name="label" placeholder="热卖、促销、特价、好评..." value=""/>
 							</td>
 						</tr>
 						
