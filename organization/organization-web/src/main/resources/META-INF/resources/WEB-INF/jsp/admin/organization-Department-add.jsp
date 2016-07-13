@@ -4,7 +4,23 @@
 <title>新增组织结构</title>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/colorbox.css"/>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/chosen.css" />
+<style>
+ .select-product-dialog {
+        top: 100px;
+        left:-200px;
+    }
 
+    .select-product-dialog tr {
+
+        word-break: break-all;
+    }
+
+    .select-product-dialog .modal-content {
+        min-height: 400px;
+        min-width: 800px;
+    }
+
+</style>
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
@@ -49,8 +65,6 @@
                 </div>
             </div>
             
-            
-            
       					<div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="type"> 类型 </label>
@@ -64,7 +78,6 @@
                 	</span>
                 </div>
             </div>
-            
             
             			<div class="space-4"></div>
             <div class="form-group">
@@ -307,7 +320,8 @@
                 BootstrapDialog.show({
                     title: '坐标设置',
                     message: '<div>经纬度：<span><input type="text" readonly class="lng" value="' + lng + '"></span><span><input type="text" readonly class="lat" value="' + lat + '"></span></div>' +
-                    '<div id="bmap" style="height: 300px;"></div>',
+                    '<div id="bmap" style="height: 400px;"></div>',
+                    cssClass: "select-product-dialog",
                     onshown: function (dialog) {
                         var map = new BMap.Map(bmap);
                         if (lng && lat) {
@@ -315,6 +329,8 @@
                         } else {
                             map.centerAndZoom("珠海", 13);
                         }
+                        map.enableScrollWheelZoom(); //滚轮缩放
+                        map.addControl(new BMap.NavigationControl()); //左上角控件
                         var menu = new BMap.ContextMenu();
                         var txtMenuItem = [
                             {
