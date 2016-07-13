@@ -4,10 +4,30 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.qcloud.project.forest.dao.mysql.mapper.FeedbackMapper">          
     <select id="list4query" parameterType="java.util.HashMap" resultType="Feedback">  
-        select * from `forest_feedback` limit #{start},#{count}
+        select * from `forest_feedback` where 1=1
+        <if test="state != -1">
+        and state=#{state}
+        </if>
+        <if test="keyword != null">
+        and content like concat("%",#{keyword},"%")
+        </if>
+        <if test="classify != 0">
+        and classify=#{classify}
+        </if>
+        order by date
+         limit #{start},#{count}
     </select>  
     
     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
-        select count(*) from `forest_feedback`
+        select count(*) from `forest_feedback` where 1=1
+        <if test="state != -1">
+        and state=#{state}
+        </if>
+        <if test="keyword != null">
+        and content like concat("%",#{keyword},"%")
+        </if>
+        <if test="classify != 0">
+        and classify=#{classify}
+        </if>
     </select> 
 </mapper>

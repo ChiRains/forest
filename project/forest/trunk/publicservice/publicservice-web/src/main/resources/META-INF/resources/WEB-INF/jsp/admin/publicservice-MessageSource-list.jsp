@@ -40,7 +40,6 @@
                 <table class="table table-striped table-bordered table-hover dataTable no-footer">
                     <thead>
                     <tr role="row">     
-                                                <th>消息标题</th>           
                                                 <th>消息内容</th>           
                                                 <th>发布时间</th>           
                     </tr>
@@ -49,7 +48,6 @@
                     <tbody>
                            <c:forEach items="${result}" var="item" varStatus="current"> 
                             <tr>            
-                                                        <td>${item.title}</td>                         
                                                         <td><label class="showcontent"     content="${item.content}">
 						                                <c:choose>
 						                               <c:when test="${fn:length(item.content)>20}">

@@ -49,7 +49,8 @@ public class AdminMyMessageController {
         }
         ModelAndView model = new ModelAndView("/admin/personalcenter-User-selectMember");
         model.addObject("userList", list);
-        if (!userId_send.equals("0") && userId_send != "") {
+        // userId_send=-1时为选择所有用户
+        if (!userId_send.equals("0") && userId_send != "" && !userId_send.equals("-1")) {
             String[] userId = userId_send.split(",");
             List<User> checkedList = new ArrayList<User>();
             for (int i = 0; i < userId.length; i++) {
@@ -59,6 +60,10 @@ public class AdminMyMessageController {
                 checkedList.add(user);
             }
             model.addObject("result", checkedList);
+        }
+        // 选择所有用户
+        if (userId_send.equals("-1")) {
+            model.addObject("result", list);
         }
         return model;
     }
