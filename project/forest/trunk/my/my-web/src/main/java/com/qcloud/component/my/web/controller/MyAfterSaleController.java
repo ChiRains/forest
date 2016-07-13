@@ -37,7 +37,7 @@ public class MyAfterSaleController {
         List<MyAfterSaleVO> voList = myAfterSaleHandler.toVOList(list);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取我的售后列表成功.");
-        view.addObject("list", voList);
+        view.addObject("data", voList);
         return view;
     }
 
@@ -50,7 +50,7 @@ public class MyAfterSaleController {
         List<MyAfterSaleVO> voList = myAfterSaleHandler.toVOList(list);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取我的售后列表成功.");
-        view.addObject("list", voList);
+        view.addObject("data", voList);
         return view;
     }
 
@@ -63,7 +63,7 @@ public class MyAfterSaleController {
         List<MyAfterSaleVO> voList = myAfterSaleHandler.toVOList(list);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取我的售后列表成功.");
-        view.addObject("list", voList);
+        view.addObject("data", voList);
         return view;
     }
 }

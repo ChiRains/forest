@@ -18,7 +18,9 @@ public enum OrderStateType {
     //
     NORMAL_INVALID(80, "已关闭"),
     //
-    NORMAL_TRADE_SUCCESS(90, "交易成功");
+    NORMAL_TRADE_SUCCESS(90, "交易成功"),
+    //
+    NORMAL_FINISHED_DELETE(100, "已删除");
 
     //
     private final int    key;

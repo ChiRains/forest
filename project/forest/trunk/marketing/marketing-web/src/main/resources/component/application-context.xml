@@ -32,7 +32,7 @@
 	<pirates:uriHandler class="com.qcloud.component.marketing.web.handler.url.SlideUriHandlerImpl"></pirates:uriHandler>	
 	<pirates:uriHandler class="com.qcloud.component.marketing.web.handler.url.CouponUriHandlerImpl"></pirates:uriHandler>	
 	<pirates:uriHandler class="com.qcloud.component.marketing.web.handler.url.CouponItemsUriHandlerImpl"></pirates:uriHandler>	
-	<pirates:uriHandler class="com.qcloud.component.marketing.web.handler.url.PointExchangeUriHandlerImpl"></pirates:uriHandler>	
+<!-- 	<pirates:uriHandler class="com.qcloud.component.marketing.web.handler.url.PointExchangeUriHandlerImpl"></pirates:uriHandler>	 -->
 	<pirates:uriHandler class="com.qcloud.component.marketing.web.handler.url.CurrencyExchangeUriHandlerImpl"></pirates:uriHandler>	
 	<pirates:uriHandler class="com.qcloud.component.marketing.web.handler.url.RecentDiscountUriHandlerImpl"></pirates:uriHandler>	
 	

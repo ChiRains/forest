@@ -91,6 +91,8 @@ public class CouponUriHandlerImpl extends AbstractUriHandler {
         list.add("/coupon/judgeMerchantExistAndCanExtract.do");
         list.add("/coupon/listActivityCoupon.do");
         list.add("/coupon/listMerchantActivityCoupon.do");
+        list.add("/coupon/listMerchantActivityIntegralCoupon.do");
+        list.add("/coupon/extractIntegralCoupon.do");
         //
         list.add("/app/coupon/canExtract.do");
         list.add("/app/coupon/extractCoupon.do");
@@ -99,6 +101,8 @@ public class CouponUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/coupon/judgeMerchantExistAndCanExtract.do");
         list.add("/app/coupon/listActivityCoupon.do");
         list.add("/app/coupon/listMerchantActivityCoupon.do");
+        list.add("/app/coupon/listMerchantActivityIntegralCoupon.do");
+        list.add("/app/coupon/extractIntegralCoupon.do");
         return list;
     }
 
@@ -113,6 +117,9 @@ public class CouponUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/coupon/judgeMerchantExistAndCanExtract.do");
         list.add("/app/coupon/listActivityCoupon.do");
         list.add("/app/coupon/listMerchantActivityCoupon.do");
+        // /////
+        list.add("/app/coupon/listMerchantActivityIntegralCoupon.do");
+        list.add("/app/coupon/extractIntegralCoupon.do");
         return list;
     }
 }

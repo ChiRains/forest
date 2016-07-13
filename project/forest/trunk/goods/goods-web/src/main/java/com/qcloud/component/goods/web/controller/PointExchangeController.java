@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.CommoditycenterClient;
-import com.qcloud.component.goods.model.UnifiedMerchandise;
 import com.qcloud.component.goods.model.query.UnifiedMerchandiseQuery;
 import com.qcloud.component.goods.service.MerchandiseEvaluationService;
 import com.qcloud.component.goods.service.MerchandiseImageService;
@@ -24,7 +23,6 @@ import com.qcloud.component.publicdata.PublicdataClient;
 import com.qcloud.component.publicdata.QClassify;
 import com.qcloud.component.publicservice.ShareClient;
 import com.qcloud.component.sellercenter.SellercenterClient;
-import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.mvc.FrontAjaxView;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 
@@ -272,6 +270,25 @@ public class PointExchangeController {
         merchandiseList.add(merchandiseListVO);
         FrontAjaxView view = new FrontAjaxView();
         view.addObject("list", merchandiseList);
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView getDetails(Long unifiedMerchandiseId) {
+
+        //
+        PointMerchandiseVO merchandise = new PointMerchandiseVO();
+        merchandise.setDesc("补肾 ");
+        merchandise.setDiscount(0);
+        merchandise.setImage("");
+        merchandise.setIntegral(4000);
+        merchandise.setName("牡蛎碳酸钙颗粒 ");
+        merchandise.setPrice(25.8);
+        merchandise.setUnifiedMerchandiseId(1010008000010601L);
+        //
+        FrontAjaxView view = new FrontAjaxView();
+        view.addObject("merchandise", merchandise);
         return view;
     }
 }
