@@ -79,12 +79,12 @@
 		<item state="20" type="4" observer="merchandiseSalesVolumeObserver" variable="">销量</item>
 		<!-- 商品销量 结束 -->
 		<!-- 商品待评价 开始 -->
-		<item state="40" type="3" observer="merchandiseToEvaluationObserver" variable="">商品待评价</item>
+		<item state="50" type="3" observer="merchandiseToEvaluationObserver" variable="">商品待评价</item>
 		<!-- 商品待评价 结束 -->
 		<!-- 商品库存 开始 -->
 		<item state="10" type="3" observer="lockMerchandiseOnLineStockObserver" variable="">锁定库存</item>
 		<!-- <item state="40" type="4" observer="lockMerchandiseOffLineStockObserver" variable="">锁定库存</item> -->
-		<item state="50" type="3" observer="releaseMerchandiseOnLineStockObserver" variable="">订单失效,释放库存</item>
+		<item state="60" type="3" observer="releaseMerchandiseOnLineStockObserver" variable="">订单失效,释放库存</item>
 		<item state="70" type="3" observer="releaseMerchandiseOnLineStockObserver" variable="">订单取消,释放库存</item>
 		<!-- 商品库存 结束 -->
 		
@@ -148,8 +148,8 @@
 		</item>
 		
 		<item init="false" orderState="70" orderStateDesc="退款中"
-			merchantOrderState="7" merchantOrderStateDesc="退款中" userOrderState="2"
-			userOrderStateDesc="退款中" finish="false">退款中：退款中：待配货
+			merchantOrderState="7" merchantOrderStateDesc="退款中" userOrderState="7"
+			userOrderStateDesc="取消中" finish="false">退款中：退款中：取消中
 		</item>
 		
 		<item init="false" orderState="80" orderStateDesc="已关闭"
@@ -160,6 +160,11 @@
 		<item init="false" orderState="90" orderStateDesc="交易成功"
 			merchantOrderState="9" merchantOrderStateDesc="交易成功" userOrderState="9"
 			userOrderStateDesc="交易成功" finish="true">交易成功:交易成功：交易成功
+		</item>
+		
+		<item init="false" orderState="100" orderStateDesc="已删除"
+			merchantOrderState="9" merchantOrderStateDesc="交易成功" userOrderState="10"
+			userOrderStateDesc="已删除" finish="true">已删除:交易成功：已删除
 		</item>
 	</module-list>
 
@@ -173,6 +178,7 @@
 		<item orderState="70" refund="false" return="false" exchange="false"></item>
 		<item orderState="80" refund="false" return="false" exchange="false"></item>
 		<item orderState="90" refund="false" return="false" exchange="false"></item>
+		<item orderState="100" refund="false" return="false" exchange="false"></item>
 	</module-list>
 
 	<module-list code="orderform-normal-state-chain">
@@ -180,6 +186,7 @@
 		<item chain="orderform-normal-state-chain-2"></item>
 		<item chain="orderform-normal-state-chain-3"></item>
 		<item chain="orderform-normal-state-chain-4"></item>
+		<item chain="orderform-normal-state-chain-5"></item>
 	</module-list>
 
 	<module-list code="orderform-normal-state-chain-1">
@@ -206,6 +213,11 @@
 	<module-list code="orderform-normal-state-chain-4">
 		<item orderState="70"></item>
 		<item orderState="20"></item>
+	</module-list>
+	
+	<module-list code="orderform-normal-state-chain-5">
+		<item orderState="50"></item>
+		<item orderState="100"></item>
 	</module-list>
 	
 	<module-list code="orderform-refund-state">

@@ -288,4 +288,42 @@ public class CouponController {
         }
         throw new MarketingException("大参林商家未配置.forest-merchant");
     }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView listMerchantActivityIntegralCoupon(HttpServletRequest request, Long merchantId) {
+
+        // TODO
+        // AssertUtil.assertNotNull(merchantId, "商家ID不能为空");
+        merchantId = getMerchantClassify();
+        AssertUtil.greatZero(merchantId, "商家ID必须大于0" + merchantId);
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        List<Coupon> list = couponService.listActivityCoupon(merchantId);
+        List<CouponItemsVO> voList = new ArrayList<CouponItemsVO>();
+        for (Coupon coupon : list) {
+            if (couponService.canExtract(user.getId(), coupon)) {
+                List<CouponItems> itemList = couponItemsService.list4Extract(coupon.getId());
+                if (ListUtil.isNotEmpty(list)) {
+                    CouponItemsVO itemVO = couponItemsHandler.toVO(itemList.get(0));
+                    itemVO.setStartDateStr(DateUtil.date2String(coupon.getStartDate(), "yyyy-MM-dd"));
+                    itemVO.setEndDateStr(DateUtil.date2String(coupon.getEndDate(), "yyyy-MM-dd"));
+                    voList.add(itemVO);
+                }
+            }
+        }
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("优惠券可领列表.");
+        view.addObject("list", voList);
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView extractIntegralCoupon(HttpServletRequest request) {
+
+        // TODO
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("兑换优惠券成功.");
+        return view;
+    }
 }

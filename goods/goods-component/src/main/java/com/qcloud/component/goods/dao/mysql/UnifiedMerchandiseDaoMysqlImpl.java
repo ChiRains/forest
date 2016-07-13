@@ -100,6 +100,7 @@ public class UnifiedMerchandiseDaoMysqlImpl implements UnifiedMerchandiseDao {
         param.put("mallClassifyBsid", query.getMallClassifyBsid());
         param.put("brandId", query.getBrandId());
         param.put("type", query.getType());
+        param.put("activityId", query.getActivityId());
         List<UnifiedMerchandise> list = sqlOperator.selectList("com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper.list4Front", param);
         int total = sqlOperator.selectOne("com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper.count4Front", param);
         Page<UnifiedMerchandise> page = new Page<UnifiedMerchandise>();

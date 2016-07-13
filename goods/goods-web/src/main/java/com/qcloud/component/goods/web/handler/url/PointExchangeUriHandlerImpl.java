@@ -12,6 +12,7 @@ public class PointExchangeUriHandlerImpl extends AbstractUriHandler {
         List<String> list = new ArrayList<String>();
         list.add("/app/pointExchange/exchangRange.do");
         list.add("/app/pointExchange/listMerchandise.do");
+        list.add("/app/pointExchange/getDetails.do");
         return list;
     }
 
@@ -28,9 +29,11 @@ public class PointExchangeUriHandlerImpl extends AbstractUriHandler {
         List<String> list = new ArrayList<String>();
         list.add("/pointExchange/exchangRange.do");
         list.add("/pointExchange/listMerchandise.do");
+        list.add("/pointExchange/getDetails.do");
         //
         list.add("/app/pointExchange/exchangRange.do");
         list.add("/app/pointExchange/listMerchandise.do");
+        list.add("/app/pointExchange/getDetails.do");
         return list;
     }
 }

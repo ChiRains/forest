@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.qcloud.component.orderform.QOrder;
 import com.qcloud.component.orderform.engine.OrderStateService;
 import com.qcloud.component.orderform.exception.OrderformException;
 import com.qcloud.component.orderform.model.CollectOrder;
@@ -296,6 +297,22 @@ public class OrderStateController {
         // // -------------------------测试代码-------------------------------------
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("签收成功");
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView deleteOrder(HttpServletRequest request, Date orderDate, Long orderId) {
+
+        AssertUtil.assertNotNull(orderDate, "订单日期不能为空.");
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        CollectOrder collectOrder = collectOrderService.get(orderId, orderDate);
+        AssertUtil.assertNotNull(collectOrder, "订单数据不存在.");
+        AssertUtil.assertTrue(collectOrder.getUserId() == user.getId(), "不允许删除别人的订单哦.");
+        AssertUtil.assertTrue(collectOrder.getState() == OrderStateType.NORMAL_FINISHED.getKey(), "订单已经失效.");
+        orderStateService.exchangeOrderState(orderId, orderDate, OrderStateType.NORMAL_FINISHED_DELETE.getKey(), -1L);
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("删除订单成功.");
         return view;
     }
 
