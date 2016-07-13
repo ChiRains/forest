@@ -100,6 +100,10 @@ public class ExpressQueryController {
         return frontAjaxView;
     }
 
+    /**
+     * 获取快递企业
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView getAllExpress() {
@@ -117,7 +121,7 @@ public class ExpressQueryController {
             }
         }
         FrontAjaxView frontAjaxView = new FrontAjaxView();
-        frontAjaxView.addObject("result", expressVOs);
+        frontAjaxView.addObject("list", expressVOs);
         return frontAjaxView;
     }
 
@@ -136,7 +140,7 @@ public class ExpressQueryController {
         expressQueryHistoryQuery.setUserId(user.getId());
         Page<ExpressQueryHistory> page = expressQueryHistoryService.page(expressQueryHistoryQuery, pPage.getPageStart(), pPage.getPageSize());
         List<ExpressQueryHistoryVO> list = expressQueryHistoryHandler.toVOList(page.getData());
-        FrontPagingView frontPagingView = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), list.size());
+        FrontPagingView frontPagingView = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), page.getCount());
         frontPagingView.setList(list);
         return frontPagingView;
     }

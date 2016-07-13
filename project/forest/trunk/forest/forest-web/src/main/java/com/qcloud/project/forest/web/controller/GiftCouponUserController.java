@@ -85,7 +85,7 @@ public class GiftCouponUserController {
                 }
             }
         }
-        FrontPagingView frontPagingView = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), voList.size());
+        FrontPagingView frontPagingView = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), page.getCount());
         frontPagingView.setList(voList);
         return frontPagingView;
     }
@@ -126,6 +126,10 @@ public class GiftCouponUserController {
         return view;
     }
 
+    /**
+     * 获取赠品券使用规则
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView getGiftCouponUseRule() {

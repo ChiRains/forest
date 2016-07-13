@@ -1,7 +1,8 @@
 package com.qcloud.project.forest.web.vo;
 
-
 public class PromotionalOffersVO {
+
+    private long   id;
 
     // 商品图片
     private String image;
@@ -14,6 +15,16 @@ public class PromotionalOffersVO {
 
     public PromotionalOffersVO() {
 
+    }
+
+    public long getId() {
+
+        return id;
+    }
+
+    public void setId(long id) {
+
+        this.id = id;
     }
 
     public String getImage() {
