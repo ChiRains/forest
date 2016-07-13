@@ -112,7 +112,9 @@
         <if test="merchantClassifyId != null and merchantClassifyId > 0">
             AND (merchantClassifyId = #{merchantClassifyId} OR merchantClassifyBsid like CONCAT(#{merchantClassifyBsid},'%'))
         </if>       
-        
+        <if test="activityId !=null and activityId !=0">
+        	and `activityId`=#{activityId}
+        </if>
         <if test="mallClassifyId != null and mallClassifyId > 0">
             AND (mallClassifyId = #{mallClassifyId} OR mallClassifyBsid like CONCAT(#{mallClassifyBsid},'%'))
         </if>          
@@ -137,6 +139,9 @@
         </if>
         <if test="merchantId != null and merchantId > 0">
             AND merchantId = #{merchantId}
+        </if>
+        <if test="activityId !=null and activityId !=0">
+        	and `activityId`=#{activityId}
         </if>
         <if test="merchantClassifyId != null and merchantClassifyId > 0">
             AND (merchantClassifyId = #{merchantClassifyId} OR merchantClassifyBsid like CONCAT(#{merchantClassifyBsid},'%'))

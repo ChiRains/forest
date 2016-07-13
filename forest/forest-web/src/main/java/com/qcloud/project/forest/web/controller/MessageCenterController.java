@@ -77,6 +77,7 @@ public class MessageCenterController {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         List<QMessage> messages = messageClient.listContentByReceiver(MessageType.USER.getKey(), type, user.getId(), pPage.getPageStart(), pPage.getPageSize());
+        int messageNum = messageClient.countByReceiver(MessageType.USER.getKey(), type, user.getId());
         List<MessageVO> messageVOs = new ArrayList<MessageVO>();
         MessageVO messageVO = null;
         for (QMessage qMessage : messages) {
@@ -86,7 +87,7 @@ public class MessageCenterController {
             messageVO.setUrl(qMessage.getTitle());
             messageVOs.add(messageVO);
         }
-        FrontPagingView frontPagingView = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), messages.size());
+        FrontPagingView frontPagingView = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), messageNum);
         frontPagingView.setList(messageVOs);
         return frontPagingView;
     }
