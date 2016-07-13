@@ -54,9 +54,6 @@
                 <div class="col-sm-9">
                 	<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
 	                	<select class="chosen-select" id="parentId" name="parentId" data-placeholder="请选择父节点">
-	                		<c:if test="${root eq 0}">
-	                			<option value="-1">默认根节点</option>
-	                		</c:if>
 	                		<c:forEach items="${departmentList}" var="item" varStatus="current">
 	                			<option value="${item.id}">${item.displayName}</option>
 	                		</c:forEach>
