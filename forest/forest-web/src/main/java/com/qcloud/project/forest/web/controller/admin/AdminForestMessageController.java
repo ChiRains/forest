@@ -55,7 +55,6 @@ public class AdminForestMessageController {
 
         QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
         AssertUtil.assertNotEmpty(content, "请填写好发送内容");
-        AssertUtil.assertNotEmpty(title, "请填写好标题");
         if (!userId_send.equals("-1")) {
             String[] ary = userId_send.split(",");
             for (String item : ary) {

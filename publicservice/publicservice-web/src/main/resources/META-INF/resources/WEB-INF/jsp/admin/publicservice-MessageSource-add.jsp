@@ -38,10 +38,10 @@
 
                   		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="title"> 消息标题 </label>
+                <label class="col-sm-3 control-label no-padding-right" for="title"> 消息链接 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="title" name="title" placeholder="消息标题" value=""/>
+						<input type="text" class="width-100" maxlength="100" id="title" name="title" placeholder="消息链接" value=""/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
@@ -61,7 +61,7 @@
             <div class="space-4"></div>
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
-                    <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>&nbsp;保&nbsp;存&nbsp;</button>
+                    <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>&nbsp;推&nbsp;送&nbsp;</button>
                     &nbsp; &nbsp; &nbsp;
                     <button id="back" class="btn" type="button"><i class="ace-icon fa fa-undo bigger-110"></i>&nbsp;返&nbsp;回&nbsp;</button>
                 </div>

@@ -1,17 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>编辑管理员</title>
+<title>查看反馈信息</title>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/colorbox.css"/>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/chosen.css" />
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
-        管理里管理
+        反馈信息管理
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
-            编辑
+            查看
         </small>
     </h1>
 </div><!-- /.page-header -->
@@ -24,72 +24,80 @@
 			<input type="hidden" name="id" value="${feedback.id}">
 			<input type="hidden" name="queryStr" value="${queryStr}">
 			
-			      		<div class="space-4"></div>
+                  		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="id">  </label>
+                <label class="col-sm-3 control-label no-padding-right" for="userId"> 用户名 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="id" name="id" placeholder="" value="${feedback.id}"/>
+						<input type="text" class="width-100" id="userName" name="userName" readonly value="${feedback.userName}"/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
             </div>
                   		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="userId"> 用户ID </label>
+                <label class="col-sm-3 control-label no-padding-right" for="userId"> 联系电话</label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="userId" name="userId" placeholder="用户ID" value="${feedback.userId}"/>
+						<input type="text" class="width-100"  id="userName" name="userName" readonly value="${feedback.mobile} "/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
             </div>
+            
+                              		<div class="space-4"></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="classify"> 反馈类型 </label>
+                <div class="col-sm-9">
+					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
+						<input type="text" class="width-100"  id="classify" name="classify" placeholder="反馈类型" readonly="readonly" value="${feedback.classifyName}"/>
+						<i class="ace-icon fa"></i>
+					</span>
+                </div>
+            </div>
+            
+            
+            
                   		<div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="content"> 反馈内容 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="content" name="content" placeholder="反馈内容" value="${feedback.content}"/>
+						<textarea rows="4" class="width-100" readonly="readonly">${feedback.content}</textarea>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
             </div>
-                  		<div class="space-4"></div>
+            
+             <div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="classify"> 反馈类型 </label>
+                <label class="col-sm-3 control-label no-padding-right" for="type"> 类型 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="classify" name="classify" placeholder="反馈类型" value="${feedback.classify}"/>
+						<input type="text" class="width-100"  id="typeName" name="typeName" value="${feedback.typeName} " readonly/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
             </div>
-                  		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="type"> 类型（1，很好；2，一般；3，差劲） </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="type" name="type" placeholder="类型（1，很好；2，一般；3，差劲）" value="${feedback.type}"/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
-                  		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="state"> 状态（0，未处理；1，已查看） </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="state" name="state" placeholder="状态（0，未处理；1，已查看）" value="${feedback.state}"/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
+
                   		<div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="date"> 反馈时间 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="date" name="date" placeholder="反馈时间" value="${feedback.date}"/>
+						<input type="text" class="width-100"  id="date" name="date"  value="${feedback.date} " readonly/>
+						<i class="ace-icon fa"></i>
+					</span>
+                </div>
+            </div>
+            
+            
+                  		<div class="space-4"></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="state"> 状态 </label>
+                <div class="col-sm-9">
+					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
+						<input type="text" class="width-100"  id="state" name="state"  value="${feedback.stateName} " readonly/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
@@ -98,8 +106,6 @@
             <div class="space-4"></div>
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
-                    <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                    &nbsp; &nbsp; &nbsp;
                     <button id="back" class="btn" type="button"><i class="ace-icon fa fa-undo bigger-110"></i>&nbsp;返&nbsp;回&nbsp;</button>
                 </div>
             </div>
