@@ -285,18 +285,11 @@ public class AdminDepartmentController {
         QClerk clerk = PageParameterUtil.getParameterValues(request, organizationClient.CLERK_LOGIN_PARAMETER_KEY);
         Department d = departmentService.get(clerk.getDepartmentId());
         List<Department> dlist = departmentService.listChildrenByParent(query, d.getBsid(), 0, Integer.MAX_VALUE);
-        int root = 0;// 是否存在根节点0否1是
-        for (Department department : dlist) {
-            if (department.getParentId() == -1) {
-                root = 1;
-            }
-        }
         List<AdminPlatformTypeVO> typeList = this.typeList(d.getId());
         ModelAndView model = new ModelAndView("/admin/organization-Department-add");
         // List<Department> departmentList = departmentService.listAll();
         // model.addObject("departmentList", departmentList);
         model.addObject("departmentList", dlist);
-        model.addObject("root", root);
         model.addObject("typeList", typeList);
         List<String> provinceList = publicdataClient.listProvince();
         List<KeyValueVO> voList = publicdataClient.exchageStr(provinceList, null, null);
