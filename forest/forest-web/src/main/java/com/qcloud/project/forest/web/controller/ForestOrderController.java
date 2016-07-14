@@ -529,10 +529,17 @@ public class ForestOrderController {
             vo.setLocation("假地址");
             vo.setTime(DateUtil.date2String(new Date(), "yyyy-MM-dd HH:mm:ss"));
             volist.add(vo);
+            ExpressQueryVO vo2 = new ExpressQueryVO();
+            vo2.setContext("假数据2");
+            vo2.setLocation("假地址2");
+            vo2.setTime(DateUtil.date2String(new Date(), "yyyy-MM-dd HH:mm:ss"));
+            volist.add(vo2);
         }
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取订单物流信息成功");
+        view.addObject("image", "");
         view.addObject("list", volist);
+        view.addObject("stateStr", "正在派送");
         view.addObject("exist", CollectionUtils.isNotEmpty(volist));
         return view;
     }

@@ -500,6 +500,12 @@ public class MerchandiseController {
                 comVOList.add(combinationMerchandiseVO);
             }
         }
+        double topVoucher = 0.0;
+        for (CombinationMerchandiseVO combination : comVOList) {
+            if (combination.getSurplus() > topVoucher) {
+                topVoucher = combination.getSurplus();
+            }
+        }
         FrontAjaxView view = new FrontAjaxView();
         view.addObject("combinationList", comVOList);
         //
@@ -512,6 +518,7 @@ public class MerchandiseController {
         view.addObject("merchantExt", merchantMerchandiseVO);
         view.addObject("sexpressList", sexpressVOList);
         view.addObject("evaluation", merchandiseEvaluationVO == null ? new HashMap<String, String>() : merchandiseEvaluationVO);
+        view.addObject("topVoucher", topVoucher);// 最高优惠
         return view;
     }
 

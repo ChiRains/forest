@@ -115,7 +115,7 @@ public class CombinationMerchandiseItemDaoMysqlImpl implements CombinationMercha
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("start", start);
         param.put("count", count);
-        param.put("merchandiseItemId", merchandiseItemId);
+        param.put("relaUnifiedMerchandiseId", merchandiseItemId);
         List<CombinationMerchandiseItem> list = sqlOperator.selectList("com.qcloud.component.goods.dao.mysql.mapper.CombinationMerchandiseItemMapper.listByMerchandiseItem", param);
         return list;
     }

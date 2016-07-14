@@ -85,12 +85,14 @@
 		<item code="forest-member" tips="不是买药 是买健康">会员特卖</item>
 	</module-list>
 
+	<!--<p>
+		    <strong>签到规格</strong><br/>
+		</p>
+    -->
 	<module-list code="personalcenter-sign-in-rule">
 		<item name="rule">
 			<![CDATA[
-			<p>
-			    <strong>签到规格</strong><br/>
-			</p>			
+						
 			<ol class=" list-paddingleft-2" style="list-style-type: decimal;">
 			    <li>
 			        <p>
