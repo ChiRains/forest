@@ -78,6 +78,7 @@ public class ExpressQueryController {
             expressQueryHistory.setExpressName(expressName);
             expressQueryHistory.setExpressNum(expressNum);
             expressQueryHistory.setUserId(user.getId());
+            expressQueryHistory.setExpressCode(code);
             expressQueryHistory.setTime(new Date());
             expressQueryHistoryService.add(expressQueryHistory);
             Object[] objects = JSONArray.fromObject(jsonMap.get("data")).toArray();

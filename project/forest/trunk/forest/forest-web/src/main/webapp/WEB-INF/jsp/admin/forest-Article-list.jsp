@@ -66,8 +66,8 @@
 							<tr>
 								<td>${item.title}</td>
 								<td><img style="max-height: 150px; max-width: 150px;"
-									src="${item.image}" /></td>
-								</td>
+									src="${item.image}" />
+									</td>
 								<td><label class="showbrief" content="${item.brief}">
 										<c:choose>
 											<c:when test="${fn:length(item.brief)>20}">${fn:substring(item.brief,0,20)} .....</c:when>

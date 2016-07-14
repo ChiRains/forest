@@ -31,6 +31,8 @@ public class GiftCouponUserUriHandlerImpl extends AbstractUriHandler {
 
         List<String> list = new ArrayList<String>();
         list.add("/giftCouponUser/getGiftCouponUseRule.do");
+        list.add("/app/giftCouponUser/getGiftCouponUseHtmlRule.do");
+        list.add("/giftCouponUser/getGiftCouponUseHtmlRule.do");
         return list;
     }
 
@@ -42,6 +44,7 @@ public class GiftCouponUserUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/giftCouponUser/get.do");
         list.add("/app/giftCouponUser/delete.do");
         list.add("/app/giftCouponUser/getGiftCouponUseRule.do");
+        list.add("/app/giftCouponUser/getGiftCouponUseHtmlRule.do");
         return list;
     }
 

@@ -26,7 +26,7 @@ public class AdminConfigController {
     private ConfigHandler      configHandler;
 
     /**
-     * 跳转到编辑用户协议
+     * 跳转到编辑赠品券使用规则
      * @return
      */
     @RequestMapping
@@ -49,8 +49,8 @@ public class AdminConfigController {
     }
 
     /**
-     * 提交编辑用户协议
-     * @param userProtocolVO
+     * 提交编辑赠品券使用规则
+     * @param giftCouponUseRuleVO
      * @return
      */
     @RequestMapping

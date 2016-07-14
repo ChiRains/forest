@@ -9,6 +9,8 @@ public class ExpressQueryHistory {
     // 快递公司名称
     private String expressName;
 
+    private String expressCode;
+
     // 快递单号
     private String expressNum;
 
@@ -21,14 +23,25 @@ public class ExpressQueryHistory {
 
     }
 
-    public ExpressQueryHistory(long id, String expressName, String expressNum, long userId, Date time) {
+    public ExpressQueryHistory(long id, String expressName, String expressCode, String expressNum, long userId, Date time) {
 
         super();
         this.id = id;
         this.expressName = expressName;
+        this.expressCode = expressCode;
         this.expressNum = expressNum;
         this.userId = userId;
         this.time = time;
+    }
+
+    public String getExpressCode() {
+
+        return expressCode;
+    }
+
+    public void setExpressCode(String expressCode) {
+
+        this.expressCode = expressCode;
     }
 
     public long getId() {

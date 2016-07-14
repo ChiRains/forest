@@ -230,7 +230,7 @@ public class TypeEnum {
         }
     }
     public enum BrandType {
-        Brand(100, "品牌"), BRANDONSALE(110, "品牌特卖");
+        Brand(100, "品牌");
 
         private final int    key;
 

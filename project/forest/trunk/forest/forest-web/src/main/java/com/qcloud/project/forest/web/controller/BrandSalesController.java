@@ -21,10 +21,10 @@ import com.qcloud.project.forest.web.handler.PromotionalOffersHandler;
 import com.qcloud.project.forest.web.vo.PromotionalOffersVO;
 
 @Controller
-@RequestMapping(value = PromotionalOffersController.DIR)
-public class PromotionalOffersController {
+@RequestMapping(value = BrandSalesController.DIR)
+public class BrandSalesController {
 
-    public static final String        DIR = "/promotionalOffers";
+    public static final String        DIR = "/brandSales";
 
     @Autowired
     private PublicdataClient          publicdataClient;
@@ -35,11 +35,39 @@ public class PromotionalOffersController {
     @Autowired
     private PromotionalOffersHandler  promotionalOffersHandler;
 
+    /**
+     * 展示六个品牌
+     * @return
+     */
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView getPromotionalOffersClassify() {
+    public FrontAjaxView brandOnSaleBrands() {
 
-        List<Classify> classifies = publicdataClient.listClassify((long) ClassifyType.PROMOTIONALOFFERS.getKey());
+        List<Classify> classifies = publicdataClient.listClassify((long) ClassifyType.BRANDONSALEBRAND.getKey());
+        if (classifies.size() >= 6) {
+            classifies.subList(0, 6);
+        }
+        Iterator<Classify> iter = classifies.iterator();
+        while (iter.hasNext()) {
+            Classify s = iter.next();
+            if (s.getEnable() != 1) {
+                iter.remove();
+            }
+        }
+        FrontAjaxView view = new FrontAjaxView();
+        view.addObject("list", classifies);
+        return view;
+    }
+
+    /**
+     * 展示品牌特卖下面的类别
+     * @return
+     */
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView getBrandSalesClassify() {
+
+        List<Classify> classifies = publicdataClient.listClassify((long) ClassifyType.BRANDONSALECLASSIFY.getKey());
         Iterator<Classify> iter = classifies.iterator();
         while (iter.hasNext()) {
             Classify s = iter.next();
@@ -52,11 +80,16 @@ public class PromotionalOffersController {
         return frontAjaxView;
     }
 
+    /**
+     * 展示品牌特卖的商品
+     * @param pPage
+     * @param classifyId
+     * @return
+     */
     @PiratesApp
     @RequestMapping
-    public FrontPagingView getPromotionalOfferslist(PPage pPage, Long classifyId) {
+    public FrontPagingView getBrandSaleslist(PPage pPage, Long classifyId) {
 
-        Classify classify = publicdataClient.getClassify(classifyId);
         UnifiedMerchandiseQuery unifiedMerchandiseQuery = new UnifiedMerchandiseQuery();
         unifiedMerchandiseQuery.setActivityId(classifyId);
         unifiedMerchandiseQuery.setQueryItemType(QueryItemType.S);
@@ -64,7 +97,6 @@ public class PromotionalOffersController {
         List<PromotionalOffersVO> list = promotionalOffersHandler.toVOList(page.getData());
         FrontPagingView frontPagingView = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), page.getCount());
         frontPagingView.setList(list);
-        frontPagingView.addObject("image", classify.getImage());
         return frontPagingView;
     }
 }

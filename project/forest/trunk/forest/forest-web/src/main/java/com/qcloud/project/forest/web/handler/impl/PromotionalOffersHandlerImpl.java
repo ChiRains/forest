@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 import com.qcloud.component.goods.model.UnifiedMerchandise;
 import com.qcloud.pirates.core.json.Json;
-import com.qcloud.project.forest.model.PromotionalOffers;
 import com.qcloud.project.forest.web.handler.PromotionalOffersHandler;
 import com.qcloud.project.forest.web.vo.PromotionalOffersVO;
 import com.qcloud.project.forest.web.vo.admin.AdminPromotionalOffersVO;
@@ -31,19 +30,16 @@ public class PromotionalOffersHandlerImpl implements PromotionalOffersHandler {
     }
 
     @Override
-    public List<AdminPromotionalOffersVO> toVOList4Admin(List<PromotionalOffers> list) {
+    public List<AdminPromotionalOffersVO> toVOList4Admin(List<UnifiedMerchandise> list) {
 
-        List<AdminPromotionalOffersVO> voList = new ArrayList<AdminPromotionalOffersVO>();
-        for (PromotionalOffers adminPromotionalOffers : list) {
-            voList.add(toVO4Admin(adminPromotionalOffers));
-        }
-        return voList;
+        // TODO Auto-generated method stub
+        return null;
     }
 
     @Override
-    public AdminPromotionalOffersVO toVO4Admin(PromotionalOffers promotionalOffers) {
+    public AdminPromotionalOffersVO toVO4Admin(UnifiedMerchandise unifiedMerchandise) {
 
-        String json = Json.toJson(promotionalOffers);
-        return Json.toObject(json, AdminPromotionalOffersVO.class, true);
+        // TODO Auto-generated method stub
+        return null;
     }
 }
