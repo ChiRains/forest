@@ -128,6 +128,7 @@ public class AdminCombinationMerchandiseController {
             // 生成组合商品唯一ID
             combinationMerchandise.setType(UnifiedMerchandiseType.COMBINATION.getKey());
             combinationMerchandise.setMerchantId(merchant.getId());
+            combinationMerchandise.setImage(fileSDKClient.uidToUrl(combinationMerchandise.getImage()));
             unifiedMerchandiseService.add(combinationMerchandise);
             // 生成组合商品
             for (CombinationMerchandiseItem combinationMerchandiseItem : combinationMerchandiseForm.getCombinationMerchandiseItems()) {
