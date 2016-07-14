@@ -1,4 +1,4 @@
-package com.qcloud.project.forest.web.vo;
+package com.qcloud.project.forest.model;
 
 public class ExpressQueryVO {
 

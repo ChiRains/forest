@@ -33,6 +33,7 @@ public class ForestOrderUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/forestOrder/prepareOrder.do");
         list.add("/app/forestOrder/order.do");
         list.add("/app/forestOrder/get.do");
+        list.add("/app/forestOrder/expressByOrder.do");
         return list;
     }
 
@@ -43,10 +44,12 @@ public class ForestOrderUriHandlerImpl extends AbstractUriHandler {
         list.add("/forestOrder/prepareOrder.do");
         list.add("/forestOrder/order.do");
         list.add("/forestOrder/get.do");
+        list.add("/forestOrder/expressByOrder.do");
         //
         list.add("/app/forestOrder/prepareOrder.do");
         list.add("/app/forestOrder/order.do");
         list.add("/app/forestOrder/get.do");
+        list.add("/app/forestOrder/expressByOrder.do");
         return list;
     }
 }

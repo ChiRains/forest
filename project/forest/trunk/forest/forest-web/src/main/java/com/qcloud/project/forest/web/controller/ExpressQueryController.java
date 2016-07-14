@@ -2,7 +2,6 @@ package com.qcloud.project.forest.web.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -25,11 +24,12 @@ import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.pirates.web.page.PPage;
 import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.project.forest.model.ExpressQueryHistory;
+import com.qcloud.project.forest.model.ExpressQueryVO;
 import com.qcloud.project.forest.model.query.ExpressQueryHistoryQuery;
 import com.qcloud.project.forest.service.ExpressQueryHistoryService;
+import com.qcloud.project.forest.service.ExpressQueryService;
 import com.qcloud.project.forest.web.handler.ExpressQueryHistoryHandler;
 import com.qcloud.project.forest.web.vo.ExpressQueryHistoryVO;
-import com.qcloud.project.forest.web.vo.ExpressQueryVO;
 import com.qcloud.project.forest.web.vo.ExpressVO;
 
 @Controller
@@ -46,6 +46,9 @@ public class ExpressQueryController {
     @Autowired
     private ExpressQueryHistoryService expressQueryHistoryService;
 
+    @Autowired
+    private ExpressQueryService        expressQueryService;
+
     /**
      * 快递查询
      * @param code
@@ -57,13 +60,10 @@ public class ExpressQueryController {
     public FrontAjaxView getExpressQuery(HttpServletRequest request, String code, String expressNum, String expressName) {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
-        Map<String, String> map = new HashMap<String, String>();
-        map.put("id", "a960241fb0d1ec1d");
+        Map<String, String> map = expressQueryService.getApiConfig();
         map.put("com", code);
         map.put("nu", expressNum);
-        map.put("show", "0");
-        map.put("order", "desc");
-        String result = HttpUtils.doPost("http://api.kuaidi100.com/api", map);
+        String result = HttpUtils.doPost(ExpressQueryService.apiUrl, map);
         FrontAjaxView frontAjaxView = new FrontAjaxView();
         Map<String, Object> jsonMap = Json.toMap(result);
         if (jsonMap.get("status").equals("1")) {

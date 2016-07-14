@@ -152,6 +152,7 @@
 		<item code="forest-index-modular-config" name="首页广告图和文字配置">首页广告图和文字配置</item>
 		<item code="forest-user-login-tip-message-config" name="冻结用户登录提示配置">冻结用户登录提示配置</item>
 		<item code="forest-user-rules-config" name="会员规则配置">会员规则配置</item>
+		<item code="order-refund-state-message-config" name="退款状态信息配置">退款状态信息配置</item>
 	</module-list>
 
 	<module-list code="forest-user-protocol-config">
@@ -202,6 +203,15 @@
 	<module-list code="commoditycenter_brand_attribute">	
 		<item value="true">是否有品牌</item>	
 	</module-list>
+	
+	<module-list code="order-refund-state-message-config">
+		<item state="10" code="order-refund-create"  type="1" inputType="1" name="等待审核描述">等待审核</item>
+		<item state="20" code="order-refund-wait"  type="1" inputType="1" name="等待退款描述">等待退款</item>
+		<item state="30" code="order-refund-finished"  type="1" inputType="1" name="退款成功描述">退款成功</item>
+		<item state="40" code="order-refund-rejuct"  type="1" inputType="1" name="拒绝退款描述">拒绝退款</item>
+		<item state="50" code="order-refund-closed"  type="1" inputType="1" name="退款成功描述">用户关闭</item>
+	</module-list>
+	
 	
 
 </xml>

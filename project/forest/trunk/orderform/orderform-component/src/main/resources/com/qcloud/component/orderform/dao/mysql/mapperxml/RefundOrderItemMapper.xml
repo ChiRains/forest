@@ -12,6 +12,6 @@
     </select> 
     
     <select id="listByRefund" parameterType="Long" resultType="RefundOrderItem">  
-        select * from `orderform_refund_order_item` where `refundId`=#{refundId} and (`state`=10 or `state`=20)
+        select * from `orderform_refund_order_item` where `refundId`=#{refundId}  <!--  and (`state`=10 or `state`=20) -->
     </select>
 </mapper>

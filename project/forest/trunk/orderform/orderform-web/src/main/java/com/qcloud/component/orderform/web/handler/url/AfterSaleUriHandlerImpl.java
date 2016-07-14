@@ -26,6 +26,9 @@ public class AfterSaleUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/afterSale/reApplyReturnOrder.do");
         list.add("/app/afterSale/reApplyRefundOrder.do");
         list.add("/app/afterSale/reApplyExchangeOrder.do");
+        //
+        list.add("/afterSale/getAfterSaleInfo.do");
+        list.add("/app/afterSale/getAfterSaleInfo.do");
         return list;
     }
 
@@ -41,6 +44,8 @@ public class AfterSaleUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/afterSale/reApplyReturnOrder.do");
         list.add("/app/afterSale/reApplyRefundOrder.do");
         list.add("/app/afterSale/reApplyExchangeOrder.do");
+        //
+        list.add("/app/afterSale/getAfterSaleInfo.do");
         return list;
     }
 }

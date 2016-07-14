@@ -31,8 +31,6 @@ public class ForestOrderVO {
 
     private String                  deliveryDateStr;
 
-    private String                  signDateStr;
-
     private int                     deliveryMode;
 
     private String                  prove;
@@ -40,6 +38,8 @@ public class ForestOrderVO {
     private String                  payDateStr;
 
     private String                  shipDateStr;
+
+    private String                  signDateStr;
 
     private int                     invoiceType;
 

@@ -25,7 +25,9 @@ import com.qcloud.component.my.QMyCoupon;
 import com.qcloud.component.my.QMyDelivery;
 import com.qcloud.component.my.QMyInvoice;
 import com.qcloud.component.my.model.DeliveryMode;
+import com.qcloud.component.my.model.MyAfterSale;
 import com.qcloud.component.my.service.DeliveryModeService;
+import com.qcloud.component.my.service.MyAfterSaleService;
 import com.qcloud.component.my.web.form.DeliveryForm;
 import com.qcloud.component.orderform.OrderContext;
 import com.qcloud.component.orderform.OrderContext.OrderDelivery;
@@ -52,6 +54,7 @@ import com.qcloud.component.personalcenter.QGrade;
 import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.component.piratesship.web.form.ListForm;
 import com.qcloud.component.publicdata.KeyValueVO;
+import com.qcloud.component.publicdata.model.query.ExpressQuery;
 import com.qcloud.component.publicservice.PayClient;
 import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.SellercenterClient;
@@ -64,8 +67,11 @@ import com.qcloud.pirates.util.StringUtil;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.pirates.web.security.annotation.NoReferer;
+import com.qcloud.project.forest.exception.ForestException;
+import com.qcloud.project.forest.model.ExpressQueryVO;
 import com.qcloud.project.forest.model.ForestOrder;
 import com.qcloud.project.forest.model.GiftCouponUser;
+import com.qcloud.project.forest.service.ExpressQueryService;
 import com.qcloud.project.forest.service.ForestOrderService;
 import com.qcloud.project.forest.service.GiftCouponUserService;
 import com.qcloud.project.forest.web.handler.ForestOrderHandler;
@@ -113,6 +119,12 @@ public class ForestOrderController {
 
     @Autowired
     private OrganizationClient    organizationClient;
+
+    @Autowired
+    private ExpressQueryService   expressQueryService;
+
+    @Autowired
+    private MyAfterSaleService    myAfterSaleService;
 
     @PiratesApp
     @RequestMapping
@@ -499,6 +511,46 @@ public class ForestOrderController {
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取订单成功");
         view.addObject("order", orderVO);
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView expressByOrder(HttpServletRequest request, Long orderId, Date orderDate) {
+
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        AssertUtil.assertNotNull(orderId, "订单ID不能为空.");
+        AssertUtil.assertNotNull(orderDate, "订单日期不能为空.");
+        QOrder order = orderformClient.getOrder(orderId, orderDate);
+        List<ExpressQueryVO> volist = expressQueryService.getList(user.getId(), order.getMerchantOrderList().get(0).getExpressCode(), order.getMerchantOrderList().get(0).getExpressNumber());
+        if (CollectionUtils.isEmpty(volist)) {
+            ExpressQueryVO vo = new ExpressQueryVO();
+            vo.setContext("假数据");
+            vo.setLocation("假地址");
+            vo.setTime(DateUtil.date2String(new Date(), "yyyy-MM-dd HH:mm:ss"));
+            volist.add(vo);
+        }
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("获取订单物流信息成功");
+        view.addObject("list", volist);
+        view.addObject("exist", CollectionUtils.isNotEmpty(volist));
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView expressByAfterSale(HttpServletRequest request, Long afterSaleId) {
+
+        // QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        MyAfterSale myAfterSale = myAfterSaleService.get(afterSaleId);
+        AssertUtil.assertNotNull(myAfterSale, "售后单不存在.");
+        if (myAfterSale.getType() == 2) {
+        } else {
+        }
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("获取订单物流信息成功");
+        // view.addObject("list", volist);
+        // view.addObject("exist", CollectionUtils.isNotEmpty(volist));
         return view;
     }
 }

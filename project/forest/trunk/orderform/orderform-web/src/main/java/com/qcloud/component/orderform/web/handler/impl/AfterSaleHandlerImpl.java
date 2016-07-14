@@ -17,11 +17,18 @@ import com.qcloud.component.orderform.entity.AfterSaleOrder;
 import com.qcloud.component.orderform.entity.ExchangeAfterSaleOrder;
 import com.qcloud.component.orderform.entity.MerchantOrderEntity;
 import com.qcloud.component.orderform.web.handler.AfterSaleHandler;
+import com.qcloud.component.orderform.web.vo.AfterSaleInfoDetailsVO;
+import com.qcloud.component.orderform.web.vo.AfterSaleInfoMerchandiseVO;
+import com.qcloud.component.orderform.web.vo.AfterSaleInfoMessage;
 import com.qcloud.component.orderform.web.vo.AfterSaleOrderItemVO;
 import com.qcloud.component.orderform.web.vo.personal.AfterSaleItemVO;
 import com.qcloud.component.orderform.web.vo.personal.AfterSaleVO;
+import com.qcloud.component.parameter.ParameterClient;
 import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.SellercenterClient;
+import com.qcloud.pirates.core.xml.XmlFactory;
+import com.qcloud.pirates.core.xml.Xml;
+import com.qcloud.pirates.core.xml.XmlItem;
 import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.DateUtil;
 
@@ -33,6 +40,9 @@ public class AfterSaleHandlerImpl implements AfterSaleHandler {
 
     @Autowired
     private FileSDKClient      fileSDKClient;
+
+    @Autowired
+    private ParameterClient    parameterClient;
 
     @Override
     public List<AfterSaleVO> toVOList(List<QAfterSaleOrder> list) {
@@ -159,5 +169,69 @@ public class AfterSaleHandlerImpl implements AfterSaleHandler {
             afterSaleOrderItemVO.setOrderItemId(qOrderItem.getId());
         }
         return afterSaleOrderItemVO;
+    }
+
+    @Override
+    public AfterSaleInfoDetailsVO toDetailsVO(QAfterSaleOrder afterSaleOrder) {
+
+        AfterSaleInfoDetailsVO afterSaleInfo = new AfterSaleInfoDetailsVO();
+        afterSaleInfo.setAfterSaleSum(afterSaleOrder.getAfterSaleSum());
+        afterSaleInfo.setAfterSaleType(afterSaleOrder.getAfterSaleType().getKey());
+        afterSaleInfo.setExplain(afterSaleOrder.getExplain());
+        int number = 0;
+        if (AfterSaleType.EXCHANGE.equals(afterSaleOrder.getAfterSaleType().getKey())) {
+            List<QAfterSaleDetail> list = afterSaleOrder.listItem();
+            for (QAfterSaleDetail detail : list) {
+                AfterSaleInfoMerchandiseVO myAfterSaleMerchandiseVO = new AfterSaleInfoMerchandiseVO();
+                myAfterSaleMerchandiseVO.setDiscount(detail.getOrderItemDetail().getOrderItem().getDiscount());
+                myAfterSaleMerchandiseVO.setImage(fileSDKClient.getFileServerUrl() + detail.getOrderItemDetail().getImage());
+                myAfterSaleMerchandiseVO.setName(detail.getOrderItemDetail().getName());
+                myAfterSaleMerchandiseVO.setNumber(detail.getNumber());
+                myAfterSaleMerchandiseVO.setSpecifications(detail.getOrderItemDetail().getSpecifications());
+                afterSaleInfo.getList().add(myAfterSaleMerchandiseVO);
+                number += detail.getNumber();
+            }
+        } else {
+            List<QAfterSaleItem> list = afterSaleOrder.listItem();
+            for (QAfterSaleItem item : list) {
+                AfterSaleInfoMerchandiseVO myAfterSaleMerchandiseVO = new AfterSaleInfoMerchandiseVO();
+                myAfterSaleMerchandiseVO.setDiscount(item.getOrderItem().getDiscount());
+                myAfterSaleMerchandiseVO.setImage(fileSDKClient.getFileServerUrl() + item.getOrderItem().getImage());
+                myAfterSaleMerchandiseVO.setName(item.getOrderItem().getName());
+                myAfterSaleMerchandiseVO.setNumber(item.getNumber());
+                myAfterSaleMerchandiseVO.setSpecifications(item.getOrderItem().getSpecifications());
+                afterSaleInfo.getList().add(myAfterSaleMerchandiseVO);
+                number += item.getNumber();
+            }
+        }
+        afterSaleInfo.setMessageList(listMessage(afterSaleOrder.getState()));
+        afterSaleInfo.setNumber(number);
+        afterSaleInfo.setReason(afterSaleOrder.getReason());
+        afterSaleInfo.setState(afterSaleOrder.getState());
+        afterSaleInfo.setStateStr(afterSaleOrder.getUserStateStr());
+        return afterSaleInfo;
+    }
+
+    public List<AfterSaleInfoMessage> listMessage(int afterSaleState) {
+
+        List<AfterSaleInfoMessage> messageList = new ArrayList<AfterSaleInfoMessage>();
+        Xml xml = XmlFactory.get("order-refund-state-message-config");
+        if (xml != null) {
+            List<XmlItem> itemList = xml.getItemList();
+            for (XmlItem xmlItem : itemList) {
+                int state = Integer.parseInt(String.valueOf(xmlItem.getAttrMap().get("state")));
+                String stateDesc = xmlItem.getText();
+                String code = xmlItem.getAttrMap().get("code");
+                String message = String.valueOf(parameterClient.get(code));
+                if (state <= afterSaleState) {
+                    AfterSaleInfoMessage afterSaleInfoMessage = new AfterSaleInfoMessage();
+                    afterSaleInfoMessage.setState(state);
+                    afterSaleInfoMessage.setMessage(message);
+                    afterSaleInfoMessage.setStateDesc(stateDesc);
+                    messageList.add(afterSaleInfoMessage);
+                }
+            }
+        }
+        return messageList;
     }
 }

@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import com.qcloud.component.my.AfterSaleType;
 import com.qcloud.component.orderform.QAfterSaleItem;
-import com.qcloud.component.orderform.QAfterSaleOrderItem;
 import com.qcloud.component.orderform.model.RefundOrder;
 
 public class RefundAfterSaleOrder extends AfterSaleOrder {

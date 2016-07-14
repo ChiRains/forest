@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.qcloud.component.my.AfterSaleType;
+import com.qcloud.component.orderform.OrderformClient;
+import com.qcloud.component.orderform.QAfterSaleOrder;
 import com.qcloud.component.orderform.engine.AfterSaleSelecterService;
 import com.qcloud.component.orderform.engine.AfterSaleService;
 import com.qcloud.component.orderform.engine.OrderSelecterService;
@@ -32,6 +34,7 @@ import com.qcloud.component.orderform.web.util.AfterSaleDetailUtils;
 import com.qcloud.component.orderform.web.util.AfterSaleItemUtils;
 import com.qcloud.component.orderform.web.util.ExchangeOrderStateType;
 import com.qcloud.component.orderform.web.util.ReturnOrderStateType;
+import com.qcloud.component.orderform.web.vo.AfterSaleInfoDetailsVO;
 import com.qcloud.component.orderform.web.vo.AfterSaleInformationVO;
 import com.qcloud.component.orderform.web.vo.AfterSaleOrderItemVO;
 import com.qcloud.pirates.mvc.FrontAjaxView;
@@ -62,6 +65,9 @@ public class AfterSaleController {
 
     @Autowired
     private AfterSaleHandler         afterSaleHandler;
+
+    @Autowired
+    private OrderformClient          orderformClient;
 
     // 重新申请退货
     @PiratesApp
@@ -332,6 +338,19 @@ public class AfterSaleController {
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取我的售后状态列表成功.");
         view.addObject("list", voList);
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView getAfterSaleInfo(HttpServletRequest request, Long afterSaleId, Integer type) {
+
+        AfterSaleType afterSaleType = AfterSaleType.get(type);
+        QAfterSaleOrder afterSaleOrder = orderformClient.getAfterSaleOrder(afterSaleId, afterSaleType);
+        AfterSaleInfoDetailsVO afterSaleInfo = afterSaleHandler.toDetailsVO(afterSaleOrder);
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("获取售后订单详情成功.");
+        view.addObject("afterSale", afterSaleInfo);
         return view;
     }
 }
