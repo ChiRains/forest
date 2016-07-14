@@ -36,6 +36,9 @@ public class PreMerchantVO {
     //
     private List<OrderCouponVO>         couponList          = new ArrayList<OrderCouponVO>();
 
+    //
+    private List<String>                imageList           = new ArrayList<String>();
+
     public long getMerchantId() {
 
         return merchantId;
@@ -154,5 +157,15 @@ public class PreMerchantVO {
     public void setCombinationItemList(List<PreOrderCombinationVO> combinationItemList) {
 
         this.combinationItemList = combinationItemList;
+    }
+
+    public List<String> getImageList() {
+
+        return imageList;
+    }
+
+    public void setImageList(List<String> imageList) {
+
+        this.imageList = imageList;
     }
 }

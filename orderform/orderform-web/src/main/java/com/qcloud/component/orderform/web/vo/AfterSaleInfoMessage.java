@@ -1,5 +1,6 @@
 package com.qcloud.component.orderform.web.vo;
 
+
 public class AfterSaleInfoMessage {
 
     private int    state;

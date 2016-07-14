@@ -11,6 +11,15 @@ public class MerchandiseSpecificationsUriHandlerImpl extends AbstractUriHandler 
 
         List<String> list = new ArrayList<String>();
         list.add("/merchandiseSpecifications/listByMerchandise.do");
+        list.add("/app/merchandiseSpecifications/listByMerchandise.do");
+        return list;
+    }
+
+    @Override
+    public List<String> appUris() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("/app/merchandiseSpecifications/listByMerchandise.do");
         return list;
     }
 }

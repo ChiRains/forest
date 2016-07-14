@@ -96,6 +96,8 @@ public class ForestOrderVO {
 
     private int                     residualSecond;
 
+    private List<String>            imageList           = new ArrayList<String>();
+
     public ForestOrderVO() {
 
     }
@@ -488,5 +490,15 @@ public class ForestOrderVO {
     public void setSignDateStr(String signDateStr) {
 
         this.signDateStr = signDateStr;
+    }
+
+    public List<String> getImageList() {
+
+        return imageList;
+    }
+
+    public void setImageList(List<String> imageList) {
+
+        this.imageList = imageList;
     }
 }

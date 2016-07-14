@@ -107,6 +107,7 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
             vo.setImage(StringUtil.nullToEmpty(unifiedMerchandise.getImage()));
         }
         vo.setName(unifiedMerchandise.getName());
+        vo.setDiscount(NumberUtil.scale(unifiedMerchandise.getPrice(), 2));
         vo.setPrice(NumberUtil.scale(unifiedMerchandise.getPrice(), 2));
         vo.setSpecifications(unifiedMerchandise.getSpecifications());
         vo.setStock(unifiedMerchandise.getStock());
@@ -212,7 +213,7 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
             } else if (unifiedMerchandise.getType().equals(UnifiedMerchandiseType.COMBINATION)) {// 组合商品
                 CombinationListVO combination = new CombinationListVO();
                 combination.setName(unifiedMerchandise.getName());
-                combination.setSum(unifiedMerchandise.getDiscount());
+                combination.setSum(NumberUtil.scale(unifiedMerchandise.getDiscount(), 2));
                 combination.setNumber(myShoppingCart.getNumber());
                 combination.setStock(unifiedMerchandise.getStock());
                 combination.setUnifiedMerchandiseId(unifiedMerchandise.getId());
@@ -222,14 +223,15 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
                 for (QUnifiedMerchandise merchandise : unifiedMerchandise.getList()) {
                     MyShoppingCartVO vo = new MyShoppingCartVO();
                     vo.setSpecifications(merchandise.getSpecifications());
-                    vo.setDiscount(merchandise.getDiscount());
-                    vo.setPrice(merchandise.getPrice());
+                    vo.setDiscount(NumberUtil.scale(merchandise.getDiscount(), 2));
+                    vo.setPrice(NumberUtil.scale(merchandise.getPrice(), 2));
                     vo.setUnifiedMerchandiseId(merchandise.getId());
                     if (StringUtils.isNotEmpty(merchandise.getImage())) {
                         vo.setImage(fileSDKClient.getFileServerUrl() + StringUtil.nullToEmpty(merchandise.getImage()));
                     } else {
                         vo.setImage(StringUtil.nullToEmpty(merchandise.getImage()));
                     }
+                    vo.setDiscount(merchandise.getDiscount());
                     vo.setName(merchandise.getName());
                     vo.setUnit(merchandise.getUnit());
                     vo.setNumber(merchandise.getNumber());

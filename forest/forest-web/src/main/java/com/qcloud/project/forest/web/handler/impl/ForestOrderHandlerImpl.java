@@ -106,6 +106,7 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
                     orderVO.getOrderItemList().add(toOrderItemVO(qOrderItem, unifiedMerchandise));
                 }
                 merchandiseNumber++;
+                orderVO.getImageList().add(fileSDKClient.getFileServerUrl() + unifiedMerchandise.getImage());
             }
         }
         //

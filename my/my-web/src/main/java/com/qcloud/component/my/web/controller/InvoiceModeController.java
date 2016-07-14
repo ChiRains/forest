@@ -92,10 +92,10 @@ public class InvoiceModeController {
 
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView get(HttpServletRequest request, Long invoiceId) {
+    public FrontAjaxView get(HttpServletRequest request, Long id) {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
-        InvoiceMode invoiceMode = invoiceModeService.get(invoiceId);
+        InvoiceMode invoiceMode = invoiceModeService.get(id);
         AssertUtil.assertNotNull(invoiceMode, "发票信息不存在.");
         AssertUtil.assertTrue(invoiceMode.getUserId() == user.getId(), "不能获取他人的发票信息.");
         InvoiceModeVO invoiceModeVO = invoiceModeHandler.toVO(invoiceMode);
@@ -120,13 +120,13 @@ public class InvoiceModeController {
 
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView setDefault(HttpServletRequest request, Long invoiceId) {
+    public FrontAjaxView setDefault(HttpServletRequest request, Long id) {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
-        InvoiceMode invoiceMode = invoiceModeService.get(invoiceId);
+        InvoiceMode invoiceMode = invoiceModeService.get(id);
         AssertUtil.assertNotNull(invoiceMode, "发票信息不存在.");
         AssertUtil.assertTrue(user.getId() == invoiceMode.getUserId(), "不允许修改别人的发票信息.");
-        invoiceModeService.setDefault(invoiceId);
+        invoiceModeService.setDefault(id);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("设置默认发票信息成功.");
         return view;
@@ -152,15 +152,35 @@ public class InvoiceModeController {
 
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView delete(HttpServletRequest request, Long invoiceId) {
+    public FrontAjaxView delete(HttpServletRequest request, Long id) {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         InvoiceMode invoiceMode = invoiceModeService.getDefault(user.getId());
         AssertUtil.assertNotNull(invoiceMode, "发票信息不存在.");
         AssertUtil.assertTrue(user.getId() == invoiceMode.getUserId(), "不允许删除别人的发票信息.");
-        invoiceModeService.delete(invoiceId);
+        invoiceModeService.delete(id);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("删除发票信息成功.");
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView edit(HttpServletRequest request, InvoiceForm invoiceForm) {
+
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        InvoiceMode invoiceMode = invoiceModeService.get(invoiceForm.getId());
+        AssertUtil.assertNotNull(invoiceMode, "发票信息不存在.");
+        AssertUtil.assertTrue(user.getId() == invoiceMode.getUserId(), "不允许修改别人的发票信息.");
+        int isDefault = invoiceForm.getIsDefault() < 1 || invoiceForm.getIsDefault() > 2 ? 2 : invoiceForm.getIsDefault();
+        invoiceMode.setIsDefault(isDefault);
+        invoiceMode.setContent(invoiceForm.getContent());
+        invoiceMode.setHead(invoiceForm.getHead());
+        invoiceMode.setMode(invoiceForm.getMode());
+        invoiceMode.setType(invoiceForm.getType());
+        invoiceModeService.update(invoiceMode);
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("修改发票信息成功.");
         return view;
     }
 }

@@ -54,7 +54,6 @@ import com.qcloud.component.personalcenter.QGrade;
 import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.component.piratesship.web.form.ListForm;
 import com.qcloud.component.publicdata.KeyValueVO;
-import com.qcloud.component.publicdata.model.query.ExpressQuery;
 import com.qcloud.component.publicservice.PayClient;
 import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.SellercenterClient;
@@ -67,7 +66,6 @@ import com.qcloud.pirates.util.StringUtil;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.pirates.web.security.annotation.NoReferer;
-import com.qcloud.project.forest.exception.ForestException;
 import com.qcloud.project.forest.model.ExpressQueryVO;
 import com.qcloud.project.forest.model.ForestOrder;
 import com.qcloud.project.forest.model.GiftCouponUser;
@@ -188,6 +186,7 @@ public class ForestOrderController {
                         }
                     }
                     preOrderItemVO.setSum(orderItemEntity.getSum());
+                    preMerchantVO.getImageList().add(fileSDKClient.getFileServerUrl() + orderItemEntity.getImage());
                     preMerchantVO.getPreOrderItemList().add(preOrderItemVO);
                 } else if (merchandise.getType().equals(UnifiedMerchandiseType.COMBINATION)) {
                     PreOrderCombinationVO preOrderCombinationVO = new PreOrderCombinationVO();
