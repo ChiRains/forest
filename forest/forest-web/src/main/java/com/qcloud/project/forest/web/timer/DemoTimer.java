@@ -23,7 +23,7 @@ public class DemoTimer extends AbstractTimer {
     @Override
     public Period getPeriod() {
 
-        SecondPeriod s = new SecondPeriod(2);
+        SecondPeriod s = new SecondPeriod(60);
         return s;
     }
 

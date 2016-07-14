@@ -32,6 +32,8 @@ public class ForestOrder {
 
     private Date   shipDate;
 
+    private Date   signDate;
+
     public ForestOrder() {
 
     }
@@ -174,5 +176,17 @@ public class ForestOrder {
     public void setShipDate(Date shipDate) {
 
         this.shipDate = shipDate;
+    }
+
+    
+    public Date getSignDate() {
+    
+        return signDate;
+    }
+
+    
+    public void setSignDate(Date signDate) {
+    
+        this.signDate = signDate;
     }
 }

@@ -310,7 +310,7 @@ public class OrderStateController {
         AssertUtil.assertNotNull(collectOrder, "订单数据不存在.");
         AssertUtil.assertTrue(collectOrder.getUserId() == user.getId(), "不允许删除别人的订单哦.");
         AssertUtil.assertTrue(collectOrder.getState() == OrderStateType.NORMAL_FINISHED.getKey(), "订单已经失效.");
-        orderStateService.exchangeOrderState(orderId, orderDate, OrderStateType.NORMAL_FINISHED_DELETE.getKey(), -1L);
+        orderStateService.exchangeOrderState(orderId, orderDate, OrderStateType.NORMAL_FINISHED_DELETE.getKey(), -999L);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("删除订单成功.");
         return view;
@@ -320,7 +320,7 @@ public class OrderStateController {
     public FrontAjaxView testExchagneOrderState(OrderStateForm orderStateForm, Integer state) {
 
         // 正式环境必须注释以下代码
-        orderStateService.exchangeOrderState(orderStateForm.getOrderId(), orderStateForm.getOrderDate(), state, -1L);
+        orderStateService.exchangeOrderState(orderStateForm.getOrderId(), orderStateForm.getOrderDate(), state, -999L);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("成功");
         return view;

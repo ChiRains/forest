@@ -18,6 +18,7 @@ import com.qcloud.component.orderform.PaymentModeType;
 import com.qcloud.component.orderform.QMerchantOrder;
 import com.qcloud.component.orderform.QOrder;
 import com.qcloud.component.orderform.QOrderItem;
+import com.qcloud.component.orderform.engine.AfterSaleSelecterService;
 import com.qcloud.component.orderform.web.vo.personal.OrderItemVO;
 import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.SellercenterClient;
@@ -154,12 +155,10 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
         orderVO.setInvoiceTypeStr(InvoiceType.get(order.getInvoiceType()).getName());
         orderVO.setMerchandiseNumber(merchandiseNumber);
         orderVO.setOrderDateStr(DateUtil.date2String(order.getOrderDate(), "yyyy-MM-dd HH:mm:ss"));
-        //
-        orderVO.setPayDateStr(DateUtil.date2String(new Date(), "yyyy-MM-dd HH:mm:ss"));
+        // 剩余支付时间
         orderVO.setResidualHour(1);
         orderVO.setResidualMinute(0);
         orderVO.setResidualSecond(0);
-        orderVO.setSignDateStr(DateUtil.date2String(new Date(), "yyyy-MM-dd HH:mm:ss"));
         return orderVO;
     }
 
