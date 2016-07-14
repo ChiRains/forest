@@ -164,7 +164,7 @@ public class TypeEnum {
         }
     }
     public enum ClassifyType {
-        ARTICLE(60, "资讯分类"), SALESPROMOTION(70, "活动商品"), FEEDBACK(80, "反馈类型"), PROMOTIONALOFFERS(90, "促销优惠");
+        ARTICLE(60, "资讯分类"), SALESPROMOTION(70, "活动商品"), FEEDBACK(80, "反馈类型"), PROMOTIONALOFFERS(90, "促销优惠"), BRANDONSALEBRAND(110, "品牌特卖品牌"), BRANDONSALECLASSIFY(120, "品牌特卖品牌类别");
 
         private final int    key;
 

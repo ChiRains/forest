@@ -26,7 +26,7 @@ public class TypeEnum {
         }
     }
     public enum SenceType {
-        LIMIT(1, "限时折扣"), FULL(2, "满减送"), DOUBLE(3, "双倍积分"), SECKILL(4, "秒杀"), SPECIAL(5, "特价"), POINTEXCHANGE(6, "积分兑换"), CURRENCYEXCHANGE(7, "消费币兑换"),GROUPBUYS(8,"团购");
+        LIMIT(1, "限时折扣"), FULL(2, "满减送"), DOUBLE(3, "双倍积分"), SECKILL(4, "秒杀"), SPECIAL(5, "特价"), POINTEXCHANGE(6, "积分兑换"), CURRENCYEXCHANGE(7, "消费币兑换"), GROUPBUYS(8, "团购"), BRANDSALE(9, "品牌特卖");
 
         private final int    key;
 
@@ -94,7 +94,6 @@ public class TypeEnum {
             return name;
         }
     }
-    
     public enum PlatformCoupon {
         PLATFORM(-1, "线上");
 

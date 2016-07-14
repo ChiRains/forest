@@ -10,19 +10,15 @@ public class PromotionalOffersUriHandlerImpl extends AbstractUriHandler {
     public List<String> adminUris() {
 
         List<String> list = new ArrayList<String>();
-        list.add("/admin/promotionalOffers/list.do");
-        list.add("/admin/promotionalOffers/toAdd.do");
-        list.add("/admin/promotionalOffers/toEdit.do");
-        list.add("/admin/promotionalOffers/add.do");
-        list.add("/admin/promotionalOffers/edit.do");
-        return list;
-    }
-
-    @Override
-    public List<String> permissionUris() {
-
-        List<String> list = new ArrayList<String>();
-        list.add("/admin/promotionalOffers/list.do");
+        list.add("/admin/promotionalOffers/listPromotionalOfferClassify.do");
+        list.add("/admin/promotionalOffers/enablePromotionalOfferClassify.do");
+        list.add("/admin/promotionalOffers/toAddPromotionalOfferClassify.do");
+        list.add("/admin/promotionalOffers/addPromotionalOfferClassify.do");
+        list.add("/admin/promotionalOffers/toEditPromotionalOfferClassify.do");
+        list.add("/admin/promotionalOffers/editPromotionalOfferClassify.do");
+        list.add("/admin/promotionalOffers/listPromotionalOffer.do");
+        list.add("/admin/promotionalOffers/toAddPromotionalOffer.do");
+        list.add("/admin/promotionalOffers/addPromotionalOffer.do");
         return list;
     }
 

@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>管理员管理</title>
+<title>促销优惠管理</title>
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
-        管理员管理
+        促销优惠管理
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             列表
@@ -18,7 +18,7 @@
     <div class="col-xs-12">
 
         <div class="table-header">
-            管理员列表
+            促销优惠商品列表
         </div>
 
         <!-- <div class="table-responsive"> -->
@@ -30,7 +30,7 @@
                     <div class="col-xs-6">
                         <div class="dataTables_length">
                             <a title="新增" class="btn btn-sm btn-info"
-                               href="#admin/promotionalOffers/toAdd">
+                               href="#admin/promotionalOffers/toAddPromotionalOffer?classifyId=${classifyId}">
                                 <i class="ace-icon fa fa-plus align-bottom bigger-125"></i>
                                 新&nbsp;增
                             </a>                           
@@ -40,12 +40,9 @@
                 <table class="table table-striped table-bordered table-hover dataTable no-footer">
                     <thead>
                     <tr role="row">     
-                                                <th></th>           
-                                                <th>商品类别ID</th>           
                                                 <th>商品图片</th>           
                                                 <th>商品名称</th>           
                                                 <th>商品价格</th>           
-                                                <th>时间</th>           
                                                 <th class="sorting_disabled">操作</th>
                     </tr>
                     </thead>
@@ -53,12 +50,10 @@
                     <tbody>
                            <c:forEach items="${result}" var="item" varStatus="current"> 
                             <tr>            
-                                                        <td>${id}</td>                         
-                                                        <td>${classify}</td>                         
-                                                        <td>${image}</td>                         
-                                                        <td>${name}</td>                         
-                                                        <td>${price}</td>                         
-                                                        <td>${time}</td>                         
+                                                        <td><img style="max-height: 150px; max-width: 150px;"
+																src="${item.image}" />
+														</td>                                                        <td>${item.name}</td>                         
+                                                        <td>${item.price}</td>                         
                                                         <td>
                                 <div class="hidden-sm hidden-xs action-buttons">
                                     <a title="修改基本信息" class="green" 

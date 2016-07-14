@@ -11,6 +11,7 @@ import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.mvc.FrontAjaxView;
 import com.qcloud.pirates.mvc.FrontPagingView;
+import com.qcloud.pirates.mvc.HtmlView;
 import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.pirates.web.page.PPage;
@@ -148,5 +149,16 @@ public class GiftCouponUserController {
         FrontAjaxView frontAjaxView = new FrontAjaxView();
         frontAjaxView.addObject("result", giftCouponUseRuleVO);
         return frontAjaxView;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public HtmlView getGiftCouponUseHtmlRule() {
+
+        final String code = ConfigCodeType.GIFTCOUPONUSERULE.getKey();
+        Config config = configService.getByCode(code);
+        GiftCouponUseRuleVO giftCouponUseRuleVO = configHandler.toGiftCouponUseRuleVO(config.getConfig());
+        HtmlView view = new HtmlView("<style>img{width:100%;} </style>" + giftCouponUseRuleVO.getContent());
+        return view;
     }
 }

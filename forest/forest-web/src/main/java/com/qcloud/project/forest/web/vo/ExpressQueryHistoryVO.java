@@ -11,16 +11,29 @@ public class ExpressQueryHistoryVO {
     // 查询时间
     private String time;
 
+    private String expressCode;
+
     public ExpressQueryHistoryVO() {
 
     }
 
-    public ExpressQueryHistoryVO(String expressName, String expressNum, String time) {
+    public ExpressQueryHistoryVO(String expressName, String expressNum, String time, String expressCode) {
 
         super();
         this.expressName = expressName;
         this.expressNum = expressNum;
         this.time = time;
+        this.expressCode = expressCode;
+    }
+
+    public String getExpressCode() {
+
+        return expressCode;
+    }
+
+    public void setExpressCode(String expressCode) {
+
+        this.expressCode = expressCode;
     }
 
     public String getTime() {
