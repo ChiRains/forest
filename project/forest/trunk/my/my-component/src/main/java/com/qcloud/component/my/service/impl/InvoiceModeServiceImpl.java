@@ -1,7 +1,5 @@
 package com.qcloud.component.my.service.impl;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;

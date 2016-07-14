@@ -1,6 +1,8 @@
 package com.qcloud.component.orderform.web.handler.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,10 +26,11 @@ import com.qcloud.component.orderform.web.vo.AfterSaleOrderItemVO;
 import com.qcloud.component.orderform.web.vo.personal.AfterSaleItemVO;
 import com.qcloud.component.orderform.web.vo.personal.AfterSaleVO;
 import com.qcloud.component.parameter.ParameterClient;
+import com.qcloud.component.publicdata.model.Classify;
 import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.SellercenterClient;
-import com.qcloud.pirates.core.xml.XmlFactory;
 import com.qcloud.pirates.core.xml.Xml;
+import com.qcloud.pirates.core.xml.XmlFactory;
 import com.qcloud.pirates.core.xml.XmlItem;
 import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.DateUtil;
@@ -232,6 +235,14 @@ public class AfterSaleHandlerImpl implements AfterSaleHandler {
                 }
             }
         }
+        Collections.sort(messageList, new Comparator<AfterSaleInfoMessage>() {
+
+            @Override
+            public int compare(AfterSaleInfoMessage o1, AfterSaleInfoMessage o2) {
+
+                return String.valueOf(o2.getState()).compareTo(String.valueOf(o1.getState()));
+            }
+        });
         return messageList;
     }
 }

@@ -16,6 +16,8 @@ public class InvoiceForm {
 
     private int    isDefault;
 
+    private long   id;
+
     public int getMode() {
 
         return mode;
@@ -64,5 +66,15 @@ public class InvoiceForm {
     public void setIsDefault(int isDefault) {
 
         this.isDefault = isDefault;
+    }
+
+    public long getId() {
+
+        return id;
+    }
+
+    public void setId(long id) {
+
+        this.id = id;
     }
 }

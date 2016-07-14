@@ -12,7 +12,6 @@ import com.qcloud.component.my.web.handler.MyCollectionHandler;
 import com.qcloud.component.my.web.vo.MyStoreCollectionVO;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.personalcenter.QUser;
-import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.pirates.mvc.FrontAjaxView;
 import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
@@ -30,9 +29,6 @@ public class MyStoreCollectionController {
 
     @Autowired
     private MyCollectionHandler    myCollectionHandler;
-
-    @Autowired
-    private SellercenterClient     sellercenterClient;
 
     @Autowired
     private MyCollectionService    myCollectionService;
