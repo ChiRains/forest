@@ -13,6 +13,9 @@ public interface CommoditycenterClient {
 
     long regUnifiedMerchandise(QUnifiedMerchandise unifiedMerchandise, int type, String image, double discount, int integral, int stock, long activityId);
 
+    // 下架
+    boolean takeDownByUnifiedMerchandise(long unifiedMerchandiseId);
+
     QMerchandiseEvaluation getMerchandiseEvaluation(long evaluationId, long merchandiseId);
 
     // 更新线上库存,只能更新单一商品的库存,stock为差额

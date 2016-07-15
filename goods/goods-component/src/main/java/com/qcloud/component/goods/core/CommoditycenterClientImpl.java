@@ -108,7 +108,6 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
             unifiedMerchandiseEntity.setSpecifications(sb.toString());
             unifiedMerchandiseEntity.setType(UnifiedMerchandiseType.Factory.get(unifiedMerchandise.getType()));
             //
-            
             return unifiedMerchandiseEntity;
         }
     }
@@ -332,5 +331,13 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
     public long regUnifiedMerchandise(QUnifiedMerchandise um, int type, String image, double discount, int integral, int stock, long activityId) {
 
         return regUnifiedMerchandise(um.getId(), type, image, discount, integral, stock, activityId);
+    }
+
+    @Override
+    public boolean takeDownByUnifiedMerchandise(long unifiedMerchandiseId) {
+
+        UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(unifiedMerchandiseId);
+        AssertUtil.assertNotNull(unifiedMerchandise, "统一商品不存在.");
+        return unifiedMerchandiseService.updateState(unifiedMerchandiseId, MerchandiseStateType.OFFLINE.getKey());
     }
 }
