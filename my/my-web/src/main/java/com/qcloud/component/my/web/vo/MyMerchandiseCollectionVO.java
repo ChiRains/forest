@@ -30,6 +30,14 @@ public class MyMerchandiseCollectionVO {
 
     private Long   mallClassifyId;
 
+    private double goodEvaluationRate;
+
+    private int    stock;
+
+    private String label;
+
+    private String merchantName;
+
     public MyMerchandiseCollectionVO() {
 
     }
@@ -132,5 +140,45 @@ public class MyMerchandiseCollectionVO {
     public void setMallClassifyId(Long mallClassifyId) {
 
         this.mallClassifyId = mallClassifyId;
+    }
+
+    public double getGoodEvaluationRate() {
+
+        return goodEvaluationRate;
+    }
+
+    public void setGoodEvaluationRate(double goodEvaluationRate) {
+
+        this.goodEvaluationRate = goodEvaluationRate;
+    }
+
+    public int getStock() {
+
+        return stock;
+    }
+
+    public void setStock(int stock) {
+
+        this.stock = stock;
+    }
+
+    public String getLabel() {
+
+        return label;
+    }
+
+    public void setLabel(String label) {
+
+        this.label = label;
+    }
+
+    public String getMerchantName() {
+
+        return merchantName;
+    }
+
+    public void setMerchantName(String merchantName) {
+
+        this.merchantName = merchantName;
     }
 }

@@ -121,12 +121,39 @@
                 </div>
             </div>
             
-                                <div class="space-4"></div>
+                    <div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="">  </label>
                <div class="col-sm-9">
 					<span style="color:red;" class="col-sm-5 no-padding block input-icon input-icon-right mr10">
 						${fileSize}
+					</span>
+                </div>
+            </div>
+            
+            
+             		<div class="space-4"></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="type"> 类型（新增后不能再修改） </label>
+
+                <div class="col-sm-9">
+					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
+						<c:if test="${combinationMerchandise != null}">
+							<select class="width-100" name="combinationMerchandise.type" id="type">
+								<c:if test="${combinationMerchandise.type == 1}">
+									<option value="1">固定搭配</option>	
+								</c:if>
+								<c:if test="${combinationMerchandise.type == 2}">
+									<option value="2">自由搭配</option>
+								</c:if>
+							</select>
+						</c:if>
+						<c:if test="${combinationMerchandise == null}">
+							<select class="width-100" name="combinationMerchandise.type" id="type">
+								<option value="1">固定搭配</option>
+								<option value="2">自由搭配</option>
+							</select>
+						</c:if>
 					</span>
                 </div>
             </div>

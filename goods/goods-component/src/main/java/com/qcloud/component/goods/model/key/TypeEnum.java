@@ -298,6 +298,29 @@ public class TypeEnum {
             this.name = name;
         }
     }
+    public enum CombinationMerchandiseType {
+        FIXED(1, "固定搭配"), FREE(2, "自由搭配");
+
+        private final int    key;
+
+        private final String name;
+
+        public int getKey() {
+
+            return key;
+        }
+
+        public String getName() {
+
+            return name;
+        }
+
+        private CombinationMerchandiseType(int key, String name) {
+
+            this.key = key;
+            this.name = name;
+        }
+    }
 
     public final static String EXCEL_TEMPLATE_DIR = "/WEB-INF/excel";
 }

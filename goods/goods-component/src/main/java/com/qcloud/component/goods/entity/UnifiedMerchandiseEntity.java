@@ -203,4 +203,10 @@ public class UnifiedMerchandiseEntity implements QUnifiedMerchandise {
 
         return merchandise.getSysCode();
     }
+
+    @Override
+    public String getLabel() {
+
+        return merchandise.getLabel();
+    }
 }
