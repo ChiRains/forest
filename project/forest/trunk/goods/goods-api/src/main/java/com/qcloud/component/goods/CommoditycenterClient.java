@@ -40,4 +40,6 @@ public interface CommoditycenterClient {
     double statMaxVipDiscount(long unifiedMerchandiseId);
 
     boolean clearUserVipDiscount(long userId);
+
+    QMerchandise getMerchandise(long merchandiseId);
 }

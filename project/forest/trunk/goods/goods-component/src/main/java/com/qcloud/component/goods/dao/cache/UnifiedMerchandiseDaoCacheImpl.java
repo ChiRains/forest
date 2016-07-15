@@ -9,6 +9,7 @@ import com.qcloud.pirates.data.CacheLoader;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.component.goods.dao.UnifiedMerchandiseDao;
 import com.qcloud.component.goods.model.UnifiedMerchandise;
+import com.qcloud.component.goods.model.key.TypeEnum.MerchandiseStateType;
 import com.qcloud.component.goods.model.query.UnifiedMerchandiseQuery;
 
 @Repository
@@ -130,5 +131,11 @@ public class UnifiedMerchandiseDaoCacheImpl implements UnifiedMerchandiseDao {
     public UnifiedMerchandise getByCodeAndMerchant(String code, long merchantId) {
 
         return unifiedMerchandiseDaoMysqlImpl.getByCodeAndMerchant(code, merchantId);
+    }
+
+    @Override
+    public List<UnifiedMerchandise> listByMerchandise(long merchandiseId, MerchandiseStateType stateType) {
+
+        return unifiedMerchandiseDaoMysqlImpl.listByMerchandise(merchandiseId, stateType);
     }
 }

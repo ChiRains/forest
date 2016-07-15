@@ -11,6 +11,7 @@ import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.data.redis.Redis;
 import com.qcloud.component.goods.dao.UnifiedMerchandiseDao;
 import com.qcloud.component.goods.model.UnifiedMerchandise;
+import com.qcloud.component.goods.model.key.TypeEnum.MerchandiseStateType;
 import com.qcloud.component.goods.model.query.UnifiedMerchandiseQuery;
 
 @Repository
@@ -128,6 +129,12 @@ public class UnifiedMerchandiseDaoRedisImpl implements UnifiedMerchandiseDao {
 
     @Override
     public UnifiedMerchandise getByCodeAndMerchant(String code, long merchantId) {
+
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public List<UnifiedMerchandise> listByMerchandise(long merchandiseId, MerchandiseStateType stateType) {
 
         throw new NotImplementedException();
     }

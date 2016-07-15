@@ -222,10 +222,10 @@ public class MerchandiseServiceImpl implements MerchandiseService {
         AssertUtil.assertNotNull(merchandise, "商品不存在" + id);
         AssertUtil.assertTrue(merchandise.getState() == MerchandiseStateType.AUDITING.getKey() || merchandise.getState() == MerchandiseStateType.OFFLINE.getKey(), "商品不能上线." + id + " " + merchandise.getState());
         updateMerchandiseState(MerchandiseStateType.ONLINE.getKey(), id);
-        List<UnifiedMerchandise> list = unifiedMerchandiseService.listByMerchandise(id, MerchandiseStateType.ONLINE.getKey());
-        for (UnifiedMerchandise unifiedMerchandise : list) {
-            unifiedMerchandiseService.updateState(unifiedMerchandise.getId(), MerchandiseStateType.OFFLINE.getKey());
-        }
+        // List<UnifiedMerchandise> list = unifiedMerchandiseService.listByMerchandise(id, MerchandiseStateType.ONLINE.getKey());
+        // for (UnifiedMerchandise unifiedMerchandise : list) {
+        // unifiedMerchandiseService.updateState(unifiedMerchandise.getId(), MerchandiseStateType.OFFLINE.getKey());
+        // }
         return true;
     }
 
@@ -236,10 +236,10 @@ public class MerchandiseServiceImpl implements MerchandiseService {
         Merchandise merchandise = get(id);
         AssertUtil.assertNotNull(merchandise, "商品不存在" + id);
         updateMerchandiseState(MerchandiseStateType.OFFLINE.getKey(), id);
-        List<UnifiedMerchandise> list = unifiedMerchandiseService.listByMerchandise(id, MerchandiseStateType.ONLINE.getKey());
-        for (UnifiedMerchandise unifiedMerchandise : list) {
-            unifiedMerchandiseService.updateState(unifiedMerchandise.getId(), MerchandiseStateType.OFFLINE.getKey());
-        }
+        // List<UnifiedMerchandise> list = unifiedMerchandiseService.listByMerchandise(id, MerchandiseStateType.ONLINE.getKey());
+        // for (UnifiedMerchandise unifiedMerchandise : list) {
+        // unifiedMerchandiseService.updateState(unifiedMerchandise.getId(), MerchandiseStateType.OFFLINE.getKey());
+        // }
         return true;
     }
 
