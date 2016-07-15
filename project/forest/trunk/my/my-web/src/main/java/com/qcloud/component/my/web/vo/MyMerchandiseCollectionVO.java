@@ -30,7 +30,7 @@ public class MyMerchandiseCollectionVO {
 
     private Long   mallClassifyId;
 
-    private double goodEvaluationRate;
+    private int    goodEvaluationRate;
 
     private int    stock;
 
@@ -142,12 +142,12 @@ public class MyMerchandiseCollectionVO {
         this.mallClassifyId = mallClassifyId;
     }
 
-    public double getGoodEvaluationRate() {
+    public int getGoodEvaluationRate() {
 
         return goodEvaluationRate;
     }
 
-    public void setGoodEvaluationRate(double goodEvaluationRate) {
+    public void setGoodEvaluationRate(int goodEvaluationRate) {
 
         this.goodEvaluationRate = goodEvaluationRate;
     }
