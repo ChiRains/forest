@@ -79,9 +79,13 @@ public class MyCollectionHandlerImpl implements MyCollectionHandler {
         vo.setSalesVolume(unifiedMerchandise.getSalesVolume());
         vo.setSpecifications(unifiedMerchandise.getSpecifications());
         vo.setStock(unifiedMerchandise.getStock());
-        //
-        double goodEvaluation = unifiedMerchandise.getGoodEvaluation() / (unifiedMerchandise.getGoodEvaluation() + unifiedMerchandise.getMiddleEvaluation() + unifiedMerchandise.getLowEvaluation());
-        vo.setGoodEvaluationRate(goodEvaluation);
+        // 好评率
+        long sum = unifiedMerchandise.getGoodEvaluation() + unifiedMerchandise.getMiddleEvaluation() + unifiedMerchandise.getLowEvaluation();
+        int goodEvaluationRate = 0;
+        if (sum != 0) {
+            goodEvaluationRate = new Double(unifiedMerchandise.getGoodEvaluation() * 100 / sum).intValue();
+        }
+        vo.setGoodEvaluationRate(goodEvaluationRate);
         vo.setLabel(unifiedMerchandise.getLabel());
         QMerchant merchant = sellercenterClient.getMerchant(unifiedMerchandise.getMerchantId());
         vo.setMerchantName(merchant.getName());
