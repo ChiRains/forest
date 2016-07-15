@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>促销优惠管理</title>
+<title>品牌特卖商品管理</title>
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
-        促销优惠管理
+        品牌特卖商品管理
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             列表
@@ -18,7 +18,7 @@
     <div class="col-xs-12">
 
         <div class="table-header">
-            促销优惠商品列表
+            品牌特卖商品列表
         </div>
 
         <!-- <div class="table-responsive"> -->
@@ -30,7 +30,7 @@
                     <div class="col-xs-6">
                         <div class="dataTables_length">
                             <a title="新增" class="btn btn-sm btn-info"
-                               href="#admin/promotionalOffers/toAddPromotionalOffer?classifyId=${classifyId}">
+                               href="#admin/brandSales/toAddMerchandise?classifyId=${classifyId}">
                                 <i class="ace-icon fa fa-plus align-bottom bigger-125"></i>
                                 新&nbsp;增
                             </a>                           
@@ -52,14 +52,15 @@
                             <tr>            
                                                         <td><img style="max-height: 150px; max-width: 150px;"
 																src="${item.image}" />
-														</td>                                                        <td>${item.name}</td>                         
+														</td>                                                        
+														<td>${item.name}</td>                         
                                                         <td>${item.price}</td>                         
-                                                        <td>
+                                                         <td>
                                 <div class="hidden-sm hidden-xs action-buttons">
-								<button class="btn btn-danger  delete" api-path="/admin/promotionalOffers/deletePromotionalOffer.do?id=${item.id}">删除</button>
+								<button class="btn btn-danger  delete" api-path="/admin/brandSales/deleteMerchandise.do?id=${item.id}">删除</button>
 							                                 
                                 </div>
-                            </td>
+                            </td> 
                         </tr>
 						</c:forEach>
                     </tbody>

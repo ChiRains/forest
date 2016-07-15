@@ -8,6 +8,8 @@ public class ArticleQuery {
 
     private int    enable;
 
+    private int    homePage;
+
     public int getEnable() {
 
         return enable;
@@ -40,5 +42,15 @@ public class ArticleQuery {
     public void setClassifyId(long classifyId) {
 
         this.classifyId = classifyId;
+    }
+
+    public int getHomePage() {
+
+        return homePage;
+    }
+
+    public void setHomePage(int homePage) {
+
+        this.homePage = homePage;
     }
 }

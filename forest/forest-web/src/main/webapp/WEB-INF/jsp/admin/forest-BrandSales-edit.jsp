@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>编辑活动商品类别</title>
+<title>编辑促销优惠商品</title>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/colorbox.css"/>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/chosen.css" />
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
-        活动商品类别管理
+        促销优惠商品管理
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             编辑
@@ -19,54 +19,73 @@
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
-        <form id="model-form" class="form-horizontal"  role="form" action="/admin/salesPromotion/editSalesPromotionClassify.do">
+        <form id="model-form" class="form-horizontal"  role="form" action="/admin/promotionalOffers/edit.do">
             <!-- #section:elements.form -->
-			<input type="hidden" id="parentId" name="parentId" value="-1">
-			<input type="hidden" id="type" name="type" value="${classify.type}">
-			<input type="hidden" id="id" name="id" value="${classify.id}">
+<input type="hidden" name="classifyId" value="${classifyId}">
+			<input type="hidden" id="unifiedMerchandiseId" name="unifiedMerchandiseId" value="${unifiedMerchandise.unid}" readonly class="config-key">
 
                   		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="medicationId"> 名称 </label>
+                <label class="col-sm-3 control-label no-padding-right" for="discount"> 商品名称</label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="name" name="name" placeholder="名称" value="${classify.name}"/>
-						<i class="ace-icon fa"></i>
+					<input type="text" id="unifiedMerchandiseName" value="${unifiedMerchandise.name}" readonly class="config-value">                                
+					<button type="button" class="add btn-link">增加</button>
+											<i class="ace-icon fa"></i>
 					</span>
                 </div>
             </div>
-                  		<div class="space-4"></div>
+                <div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="image"> 图片 </label>
                 <div class="col-sm-9">
-					<input type="hidden"  id="image" name="image" value="${uid}" onchange="fileChange(this);"/>
+					<input type="hidden"  id="image" name="image" value="" onchange="fileChange(this);"/>
 					<button type="button" mult="false" sid="image" vid="pic-pic-view2" class="btn btn-sm btn-purple btn-upload-pic"  upfrom="0"  ><i class="ace-icon fa fa-upload">
 					</i> 上 传</button>
                     <ul sid="image" id="pic-pic-view2" class="ace-thumbnails clearfix">
                         <li pic-id="">
                             <a style="line-height: 150px;text-align: center;width:150px;height: 150px;" href="" data-rel="colorbox" class="cboxElement">
-                                <img style="max-height: 150px;max-width: 150px;" alt="" src="${classify.image}">
+                                <img style="max-height: 150px;max-width: 150px;" alt="" src="${unifiedMerchandise.image }">
                             </a>
                             <div class="tools tools-bottom"><a onclick="imgDel(this);" href="javascript:;" title="删除"><i class="ace-icon fa fa-times red"></i></a></div>
                         </li>
                     </ul>
                 </div>
             </div>
-            
-                              		<div class="space-4"></div>
+
+                  		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="remark"> 描述 </label>
+                <label class="col-sm-3 control-label no-padding-right" for="discount"> 商品折扣</label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="remark" name="remark" placeholder="描述" value="${classify.remark}"/>
+						<input type="text" class="width-100" maxlength="20" id="discount" name="discount" placeholder="商品折扣" value="${unifiedMerchandise.discount }" onkeyup="this.value=this.value.replace(/\D/g, '')"/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
             </div>
 
-					
+                  		<div class="space-4"></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="integral">积分</label>
+                <div class="col-sm-9">
+					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
+						<input type="text" class="width-100" maxlength="20" id="integral" name="integral" placeholder="积分" value="${unifiedMerchandise.integral}"/>
+						<i class="ace-icon fa"></i>
+					</span>
+                </div>
+            </div>
                      
-
+                       <div class="space-4"></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="stock"> 商品库存 </label>
+                <div class="col-sm-9">
+					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
+						<input type="text" class="width-100" maxlength="20" id="stock" name="stock" placeholder="商品库存" value="${unifiedMerchandise.stock }" onkeyup="this.value=this.value.replace(/\D/g, '')"/>
+						<i class="ace-icon fa"></i>
+					</span>
+                </div>
+            </div>
+            
             <div class="space-4"></div>
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
@@ -95,15 +114,56 @@
                      $this.next().css({'width': $this.parent().width()});
                 })
             }).trigger('resize.chosen');
-        	 $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
-             $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange'></i>");
-             var btnUpload = $(".btn-upload-pic");
-             delEvent(getButtonSetting(btnUpload));
-             btnUpload.on('click', function () {
-                 var bs = getButtonSetting($(this));
-                 uploadDialog(bs);
-             });
- 				
+
+          //选择商品
+            $(".add").on("click", function () {
+                BootstrapDialog.show({
+                    title: "商品列表",
+                    message: $('<div></div>').load('/admin/unifiedMerchandise/selectProductList.do'),
+                    cssClass: "select-product-dialog",
+                    onshow: function (dialog) {
+                        $(document).off("click", ".select-product-dialog a,.search-button");
+                        $(document).on("click", ".select-product-dialog a,.search-button", function (e) {
+                            e.preventDefault();
+                            var obj = $(this);
+                            //console.log(obj);
+                            if (obj.hasClass("search-button")) {
+                                var form = obj.parents("form").eq(0);
+                                if (form) {
+                                    var url = form.prop("action");
+                                    var fieldArray = form.serializeArray();
+                                    var query_str = "";
+                                    $.each(fieldArray, function (i, data) {
+                                        if ($.trim(data['value'])) {
+                                            query_str += (query_str == '') ? '?' + data['name'] + '=' + data['value'] : '&' + data['name'] + '=' + data['value'];
+                                        }
+                                    });
+                                    url && dialog.getModalBody().html($('<div></div>').load(url + query_str));
+                                }
+                                return false;
+                            }
+
+                            if (obj.hasClass("add-btn")) {
+                                var id = obj.attr("data-id");
+                                var name = obj.attr("data-name");
+                                $("#unifiedMerchandiseName").attr("value",name);
+                                $("#unifiedMerchandiseId").attr("value",id);
+                                    reSetIndex();
+                                  dialog.close();
+                                return false;
+                            }
+
+                            var url = obj.attr("href").replace(/#/, "/");
+                            if (url != "javascript:;" && url) {
+                                dialog.getModalBody().html($('<div></div>').load(url));
+                                return false;
+                            }
+
+                            return false;
+                        });
+                    }
+                });
+            });
                    
             //表单验证
             $("#model-form").validate({

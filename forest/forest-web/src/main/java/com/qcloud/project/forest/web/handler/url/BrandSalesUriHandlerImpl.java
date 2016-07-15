@@ -10,6 +10,17 @@ public class BrandSalesUriHandlerImpl extends AbstractUriHandler {
     public List<String> adminUris() {
 
         List<String> list = new ArrayList<String>();
+        list.add("/admin/brandSales/listBrand.do");
+        list.add("/admin/brandSales/listClassify.do");
+        list.add("/admin/brandSales/enable.do");
+        list.add("/admin/brandSales/toAdd.do");
+        list.add("/admin/brandSales/add.do");
+        list.add("/admin/brandSales/toEdit.do");
+        list.add("/admin/brandSales/edit.do");
+        list.add("/admin/brandSales/listMerchandise.do");
+        list.add("/admin/brandSales/toAddMerchandise.do");
+        list.add("/admin/brandSales/addMerchandise.do");
+        list.add("/admin/brandSales/deleteMerchandise.do");
         return list;
     }
 

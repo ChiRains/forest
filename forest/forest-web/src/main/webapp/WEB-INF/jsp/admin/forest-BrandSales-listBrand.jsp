@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>促销优惠类别管理</title>
+<title>品牌特卖品牌管理</title>
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
-        促销优惠类别管理
+        品牌特卖品牌管理
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             列表
@@ -18,7 +18,7 @@
     <div class="col-xs-12">
 
         <div class="table-header">
-            促销优惠类别列表
+            品牌特卖品牌列表
         </div>
 
         <!-- <div class="table-responsive"> -->
@@ -30,7 +30,7 @@
                     <div class="col-xs-6">
                         <div class="dataTables_length">
                             <a title="新增" class="btn btn-sm btn-info"
-                               href="#admin/promotionalOffers/toAddPromotionalOfferClassify">
+                               href="#admin/brandSales/toAdd?type=1">
                                 <i class="ace-icon fa fa-plus align-bottom bigger-125"></i>
                                 新&nbsp;增
                             </a>                           
@@ -40,7 +40,7 @@
                 <table class="table table-striped table-bordered table-hover dataTable no-footer">
                     <thead>
                     <tr role="row">     
-                                                <th>类别名称</th>           
+                                                <th>品牌名称</th>           
                                                 <th>图片</th>           
                                                 <th>备注</th>           
                                                 <th>是否启用</th>           
@@ -49,7 +49,7 @@
                     </thead>
 
                     <tbody>
-                           <c:forEach items="${promotionalOfferClassify}" var="item" varStatus="current"> 
+                           <c:forEach items="${brands}" var="item" varStatus="current"> 
                             <tr>            
                                                         <td>${item.name}</td>                         
                                                         <td><img style="max-height: 150px; max-width: 150px;"
@@ -65,8 +65,8 @@
                                                         </td>                         
                                                         <td>
                                 <div class="hidden-sm hidden-xs action-buttons">
-                                    <button class="btn btn-success edit" api-path="#admin/promotionalOffers/toEditPromotionalOfferClassify?id=${item.id}&queryStr=${queryStr}">修改</button>					                                 
-                                    <button class="btn btn-warning check" api-path="#admin/promotionalOffers/listPromotionalOffer?classifyId=${item.id}&queryStr=${queryStr}">查看商品</button>
+                                    <button class="btn btn-success edit" api-path="#admin/brandSales/toEdit?id=${item.id}&queryStr=${queryStr}">修改</button>					                                 
+                                    <button class="btn btn-warning check" api-path="#admin/brandSales/listMerchandise?classifyId=${item.id}&queryStr=${queryStr}">查看商品</button>
                                     
                                 </div>
                             </td>
@@ -128,7 +128,7 @@
         	        function() {
         	            var editUrl = $(this).attr('api-path');
         	            window.location.href=editUrl;
-        	        });
+        	});
          //查看商品
          $('.check').on('click',
         	        function() {

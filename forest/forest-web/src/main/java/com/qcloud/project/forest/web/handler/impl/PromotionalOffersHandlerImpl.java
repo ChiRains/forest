@@ -26,7 +26,9 @@ public class PromotionalOffersHandlerImpl implements PromotionalOffersHandler {
     public PromotionalOffersVO toVO(UnifiedMerchandise UnifiedMerchandise) {
 
         String json = Json.toJson(UnifiedMerchandise);
-        return Json.toObject(json, PromotionalOffersVO.class, true);
+        PromotionalOffersVO promotionalOffersVO = Json.toObject(json, PromotionalOffersVO.class, true);
+        promotionalOffersVO.setPrice(UnifiedMerchandise.getDiscount());
+        return promotionalOffersVO;
     }
 
     @Override

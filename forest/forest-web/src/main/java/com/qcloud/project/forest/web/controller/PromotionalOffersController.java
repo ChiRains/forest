@@ -35,6 +35,10 @@ public class PromotionalOffersController {
     @Autowired
     private PromotionalOffersHandler  promotionalOffersHandler;
 
+    /**
+     * 获取促销优惠类别
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView getPromotionalOffersClassify() {
@@ -52,6 +56,12 @@ public class PromotionalOffersController {
         return frontAjaxView;
     }
 
+    /**
+     * 获取促销优惠商品
+     * @param pPage
+     * @param classifyId
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontPagingView getPromotionalOfferslist(PPage pPage, Long classifyId) {
