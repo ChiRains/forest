@@ -15,4 +15,8 @@
         select * from `forest_parts_merchandise` where `classifyId` = #{classifyId}
     </select>
     
+    <delete id="deleteByClassify">
+       DELETE FROM `forest_parts_merchandise` WHERE `classifyId`=#{classifyId}
+    </delete>
+    
 </mapper>

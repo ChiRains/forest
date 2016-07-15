@@ -21,6 +21,7 @@ public class PartsMerchandiseUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/partsMerchandise/toEditParts.do");
         list.add("/admin/partsMerchandise/editParts.do");
         list.add("/admin/partsMerchandise/toEditMerchandise.do");
+        list.add("/admin/partsMerchandise/editMerchandise.do");
         return list;
     }
 

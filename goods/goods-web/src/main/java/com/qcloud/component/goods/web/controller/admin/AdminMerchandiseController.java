@@ -1,5 +1,8 @@
 package com.qcloud.component.goods.web.controller.admin;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -17,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import com.qcloud.component.goods.QUnifiedMerchandise;
 import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.goods.exception.CommoditycenterException;
 import com.qcloud.component.goods.model.AttributeDefinition;
@@ -54,6 +58,7 @@ import com.qcloud.component.goods.web.handler.KV;
 import com.qcloud.component.goods.web.handler.MerchandiseHandler;
 import com.qcloud.component.goods.web.handler.MerchandiseSpecificationsHandler;
 import com.qcloud.component.goods.web.handler.UnifiedMerchandiseHandler;
+import com.qcloud.component.goods.web.vo.MerchandiseVO;
 import com.qcloud.component.goods.web.vo.admin.AdminAttrListVO;
 import com.qcloud.component.goods.web.vo.admin.AdminAttributeVO;
 import com.qcloud.component.goods.web.vo.admin.AdminMerchandiseSpecificationsVO;
@@ -79,6 +84,7 @@ import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.NumberUtil;
 import com.qcloud.pirates.util.RequestUtil;
 import com.qcloud.pirates.util.StringUtil;
+import com.qcloud.pirates.web.page.PPage;
 import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.pirates.web.security.annotation.NoReferer;
 
@@ -1420,5 +1426,65 @@ public class AdminMerchandiseController {
         AceAjaxView view = new AceAjaxView();
         view.setMessage("统一商品上架完成");
         return view;
+    }
+
+    @RequestMapping
+    @NoReferer
+    public ModelAndView selectProductList(HttpServletRequest request, Integer pageNum, MerchandiseQuery query) {
+
+        QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
+        query.setMerchantId(merchant.getId());
+        final int PAGE_SIZE = 10;
+        pageNum = RequestUtil.getPageid(pageNum);
+        int start = NumberUtil.getPageStart(pageNum, PAGE_SIZE);
+        Page<Merchandise> page = merchandiseService.page(query, start, PAGE_SIZE);
+        List<Map<String, Object>> voList = new ArrayList<Map<String, Object>>();
+        for (Merchandise merchandise : page.getData()) {
+            Map<String, Object> paramMap = new HashMap<String, Object>();
+            // 最低单价
+            double lowDiscount = 0;
+            double lowPrice = 0;
+            long lowEvaluation = 0;
+            long middleEvaluation = 0;
+            long goodEvaluation = 0;
+            long totalSalesVolume = 0;
+            List<UnifiedMerchandise> unifiedMerchandises = unifiedMerchandiseService.listByMerchandise(merchandise.getId(), MerchandiseStateType.ONLINE);
+            for (UnifiedMerchandise unifiedMerchandise : unifiedMerchandises) {
+                // 价格
+                if (unifiedMerchandise.getDiscount() < lowDiscount || lowDiscount == 0) {
+                    lowDiscount = unifiedMerchandise.getDiscount();
+                    lowPrice = unifiedMerchandise.getPrice();
+                }
+                lowEvaluation = lowEvaluation + unifiedMerchandise.getLowEvaluation();
+                middleEvaluation = middleEvaluation + unifiedMerchandise.getMiddleEvaluation();
+                goodEvaluation = goodEvaluation + unifiedMerchandise.getGoodEvaluation();
+                totalSalesVolume = totalSalesVolume + unifiedMerchandise.getSalesVolume() + unifiedMerchandise.getVirtualSalesVolume();
+            }
+            DecimalFormat df = new DecimalFormat("0.00");// 格式化小数
+            paramMap.put("id", merchandise.getId());
+            paramMap.put("name", merchandise.getName());
+            paramMap.put("lowDiscount", df.format(lowDiscount));
+            paramMap.put("lowPrice", df.format(lowPrice));
+            long totalEvaluation = lowEvaluation + middleEvaluation + goodEvaluation;
+            if (totalEvaluation > 0) {
+                float rate = (float) goodEvaluation / totalEvaluation;
+                paramMap.put("hpRate", df.format(rate));
+            } else {
+                paramMap.put("hpRate", 0);
+            }
+            paramMap.put("totalSalesVolume", totalSalesVolume);
+            for (MerchandiseStateType stateType : MerchandiseStateType.values()) {
+                if (stateType.getKey() == merchandise.getState()) {
+                    paramMap.put("stateStr", stateType.getName());
+                    break;
+                }
+            }
+            voList.add(paramMap);
+        }
+        String param = "name=" + StringUtil.nullToEmpty(query.getName()) + "&code=" + StringUtil.nullToEmpty(query.getCode());
+        AcePagingView pagingView = new AcePagingView("/admin/goods-Merchandise-selectProduct-list", DIR + "/selectProductList?" + param, pageNum, PAGE_SIZE, page.getCount());
+        pagingView.addObject("result", voList);
+        pagingView.addObject("query", query);
+        return pagingView;
     }
 }

@@ -2,24 +2,18 @@ package com.qcloud.project.forest.web.controller.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import com.qcloud.component.goods.CommoditycenterClient;
 import com.qcloud.component.goods.QMerchandise;
-import com.qcloud.component.goods.QUnifiedMerchandise;
-import com.qcloud.component.goods.model.UnifiedMerchandise;
-import com.qcloud.component.goods.model.query.UnifiedMerchandiseQuery;
 import com.qcloud.component.publicdata.PublicdataClient;
 import com.qcloud.component.publicdata.QClassify;
 import com.qcloud.component.publicdata.model.Classify;
-import com.qcloud.component.sellercenter.QMerchant;
-import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.mvc.AceAjaxView;
 import com.qcloud.pirates.mvc.AcePagingView;
@@ -208,15 +202,21 @@ public class AdminPartsMerchandiseController {
     }
 
     @RequestMapping
-    @NoReferer
-    public ModelAndView selectProductList(HttpServletRequest request, PPage pPage, PartsMerchandiseQuery query) {
+    @Transactional
+    public AceAjaxView editMerchandise(PartsMerchandiseQuery query) {
 
-        Page<PartsMerchandise> page = partsMerchandiseService.page(query, pPage.getPageStart(), pPage.getPageSize());
-        List<AdminPartsMerchandiseVO> list = partsMerchandiseHandler.toVOList4Admin(page.getData());
-        String pageQueryStr = StringUtil.nullToEmpty((String) PageParameterUtil.getParameterValues(request, PiratesParameterKey.PAGE_QUERY_STRING));
-        String queryStr = StringUtil.nullToEmpty((String) PageParameterUtil.getParameterValues(request, PiratesParameterKey.QUERY_STRING));
-        AcePagingView pagingView = new AcePagingView("/admin/forest-PartsMerchandise-list", DIR + "/list?" + pageQueryStr, pPage.getPageNum(), pPage.getPageSize(), page.getCount());
-        pagingView.addObject("result", list);
-        return pagingView;
+        AssertUtil.greatZero(query.getClassifyId(), "分类不能为空.");
+        // 先删除
+        partsMerchandiseService.deleteByClassify(query.getClassifyId());
+        for (Long merchandiseId : query.getMerchandiseIds()) {
+            PartsMerchandise partsMerchandise = new PartsMerchandise();
+            partsMerchandise.setMerchandiseId(merchandiseId);
+            partsMerchandise.setClassifyId(query.getClassifyId());
+            partsMerchandiseService.add(partsMerchandise);
+        }
+        AceAjaxView aceAjaxView = new AceAjaxView();
+        aceAjaxView.setMessage("编辑成功");
+        aceAjaxView.setUrl(DIR + "/toEditMerchandise?classifyId=" + query.getClassifyId());
+        return aceAjaxView;
     }
 }

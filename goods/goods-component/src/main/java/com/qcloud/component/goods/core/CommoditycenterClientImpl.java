@@ -368,7 +368,7 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
         entity.setBrandId(m.getBrandId());
         entity.setLabel(m.getLabel());
         // 最低单价
-        double lowDiscount = Double.MAX_VALUE;
+        double lowDiscount = 0;
         double lowPrice = 0;
         long lowEvaluation = 0;
         long middleEvaluation = 0;
@@ -377,7 +377,7 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
         List<UnifiedMerchandise> unifiedMerchandises = unifiedMerchandiseService.listByMerchandise(merchandiseId, MerchandiseStateType.ONLINE);
         for (UnifiedMerchandise unifiedMerchandise : unifiedMerchandises) {
             // 价格
-            if (unifiedMerchandise.getDiscount() < lowDiscount) {
+            if (unifiedMerchandise.getDiscount() < lowDiscount || lowDiscount == 0) {
                 lowDiscount = unifiedMerchandise.getDiscount();
                 lowPrice = unifiedMerchandise.getPrice();
             }
@@ -386,6 +386,7 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
             goodEvaluation = goodEvaluation + unifiedMerchandise.getGoodEvaluation();
             totalSalesVolume = totalSalesVolume + unifiedMerchandise.getSalesVolume() + unifiedMerchandise.getVirtualSalesVolume();
         }
+        DecimalFormat df = new DecimalFormat("0.00");// 格式化小数
         entity.setLowDiscount(lowDiscount);
         entity.setLowPrice(lowPrice);
         entity.setLowEvaluation(lowEvaluation);
@@ -395,7 +396,6 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
         long totalEvaluation = lowEvaluation + middleEvaluation + goodEvaluation;
         if (totalEvaluation > 0) {
             float rate = (float) goodEvaluation / totalEvaluation;
-            DecimalFormat df = new DecimalFormat("0.00");// 格式化小数
             entity.setHpRate(df.format(rate));
         } else {
             entity.setHpRate("0");
