@@ -13,14 +13,14 @@ import com.qcloud.component.goods.model.query.CombinationMerchandiseItemQuery;
 
 public interface CombinationMerchandiseItemMapper {
 
-	@Insert("insert into `goods_combination_merchandise_item`(`id`,`combinationUnifiedMerchandiseId`,`relaUnifiedMerchandiseId`,`merchantId`,`number`,`discount`)"
-			+ " values(#{id},#{combinationUnifiedMerchandiseId},#{relaUnifiedMerchandiseId},#{merchantId},#{number},#{discount})")
+	@Insert("insert into `goods_combination_merchandise_item`(`id`,`combinationUnifiedMerchandiseId`,`relaUnifiedMerchandiseId`,`merchantId`,`number`,`discount`,`type`)"
+			+ " values(#{id},#{combinationUnifiedMerchandiseId},#{relaUnifiedMerchandiseId},#{merchantId},#{number},#{discount},#{type})")
 	public void insert(CombinationMerchandiseItem combinationMerchandiseItem);
 
 	@Select("select * from `goods_combination_merchandise_item` where `id`=#{id}")
 	public CombinationMerchandiseItem get(Long id);
 
-	@Update("update `goods_combination_merchandise_item` set `combinationUnifiedMerchandiseId`=#{combinationUnifiedMerchandiseId},`relaUnifiedMerchandiseId`=#{relaUnifiedMerchandiseId},`merchantId`=#{merchantId},`number`=#{number},`discount`=#{discount} where `id`=#{id}")
+	@Update("update `goods_combination_merchandise_item` set `combinationUnifiedMerchandiseId`=#{combinationUnifiedMerchandiseId},`relaUnifiedMerchandiseId`=#{relaUnifiedMerchandiseId},`merchantId`=#{merchantId},`number`=#{number},`discount`=#{discount},`type`=#{type} where `id`=#{id}")
 	public void update(CombinationMerchandiseItem combinationMerchandiseItem);
 
 	@Delete("delete from `goods_combination_merchandise_item` where `id`=#{id}")
