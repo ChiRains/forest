@@ -74,4 +74,6 @@ public interface QUnifiedMerchandise {
 
     // 是否包邮
     boolean getIsIncludePost();
+
+    String getLabel();
 }
