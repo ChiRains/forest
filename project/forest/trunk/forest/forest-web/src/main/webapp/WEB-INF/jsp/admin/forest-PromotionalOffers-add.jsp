@@ -69,7 +69,7 @@
                 <label class="col-sm-3 control-label no-padding-right" for="integral">积分</label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="integral" name="integral" placeholder="积分" value=""/>
+						<input type="text" class="width-100" maxlength="20" id="integral" name="integral" placeholder="积分" value="" onkeyup="this.value=this.value.replace(/\D/g, '')"/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
