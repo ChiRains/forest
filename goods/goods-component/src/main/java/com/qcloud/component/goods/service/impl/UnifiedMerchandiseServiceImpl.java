@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.qcloud.component.autoid.AutoIdGenerator;
 import com.qcloud.component.goods.dao.UnifiedMerchandiseDao;
 import com.qcloud.component.goods.model.UnifiedMerchandise;
+import com.qcloud.component.goods.model.key.TypeEnum.MerchandiseStateType;
 import com.qcloud.component.goods.model.query.UnifiedMerchandiseQuery;
 import com.qcloud.component.goods.service.UnifiedMerchandiseService;
 import com.qcloud.component.publicdata.PublicdataClient;
@@ -171,5 +172,11 @@ public class UnifiedMerchandiseServiceImpl implements UnifiedMerchandiseService 
     public UnifiedMerchandise getByCodeAndMerchant(String code, long merchantId) {
 
         return unifiedMerchandiseDao.getByCodeAndMerchant(code, merchantId);
+    }
+
+    @Override
+    public List<UnifiedMerchandise> listByMerchandise(long merchandiseId, MerchandiseStateType stateType) {
+
+        return unifiedMerchandiseDao.listByMerchandise(merchandiseId, stateType);
     }
 }

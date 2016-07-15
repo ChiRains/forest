@@ -10,6 +10,7 @@ import org.apache.commons.lang.NotImplementedException;
 import org.springframework.stereotype.Repository;
 import com.qcloud.component.goods.dao.UnifiedMerchandiseDao;
 import com.qcloud.component.goods.model.UnifiedMerchandise;
+import com.qcloud.component.goods.model.key.TypeEnum.MerchandiseStateType;
 import com.qcloud.component.goods.model.key.TypeEnum.OrderType;
 import com.qcloud.component.goods.model.key.TypeEnum.QueryType;
 import com.qcloud.component.goods.model.query.UnifiedMerchandiseQuery;
@@ -215,5 +216,15 @@ public class UnifiedMerchandiseDaoMysqlImpl implements UnifiedMerchandiseDao {
         param.put("code", code);
         UnifiedMerchandise unifiedMerchandise = sqlOperator.selectOne("com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper.getByCodeAndMerchant", param);
         return unifiedMerchandise;
+    }
+
+    @Override
+    public List<UnifiedMerchandise> listByMerchandise(long merchandiseId, MerchandiseStateType stateType) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("merchandiseId", merchandiseId);
+        param.put("state", stateType.getKey());
+        List<UnifiedMerchandise> list = sqlOperator.selectList("com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper.listByMerchandiseAndState", param);
+        return list;
     }
 }

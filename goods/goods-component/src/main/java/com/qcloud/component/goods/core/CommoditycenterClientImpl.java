@@ -1,5 +1,6 @@
 package com.qcloud.component.goods.core;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -8,9 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import com.qcloud.component.goods.CommoditycenterClient;
+import com.qcloud.component.goods.QMerchandise;
 import com.qcloud.component.goods.QMerchandiseEvaluation;
 import com.qcloud.component.goods.QUnifiedMerchandise;
 import com.qcloud.component.goods.UnifiedMerchandiseType;
+import com.qcloud.component.goods.entity.MerchandiseEntity;
 import com.qcloud.component.goods.entity.MerchandiseEvaluationEntity;
 import com.qcloud.component.goods.entity.UnifiedMerchandiseEntity;
 import com.qcloud.component.goods.exception.CommoditycenterException;
@@ -331,6 +334,79 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
     public long regUnifiedMerchandise(QUnifiedMerchandise um, int type, String image, double discount, int integral, int stock, long activityId) {
 
         return regUnifiedMerchandise(um.getId(), type, image, discount, integral, stock, activityId);
+    }
+
+    @Override
+    public QMerchandise getMerchandise(long merchandiseId) {
+
+        MerchandiseEntity entity = new MerchandiseEntity();
+        Merchandise m = merchandiseService.get(merchandiseId);
+        AssertUtil.assertNotNull(m, "商品不存在." + merchandiseId);
+        entity.setId(m.getId());
+        entity.setMerchantClassifyId(m.getMerchantClassifyId());
+        entity.setMallClassifyId(m.getMallClassifyId());
+        entity.setSpecClassifyId(m.getSpecClassifyId());
+        entity.setMerchantId(m.getMerchantId());
+        entity.setName(m.getName());
+        entity.setSysCode(m.getSysCode());
+        entity.setImage(m.getImage());
+        entity.setKeywords(m.getKeywords());
+        entity.setWeight(m.getWeight());
+        entity.setState(m.getState());
+        entity.setUnit(m.getUnit());
+        entity.setDetails(m.getDetails());
+        entity.setDesc(m.getDesc());
+        entity.setIsCertified(m.getIsCertified());
+        entity.setIsSpecialService(m.getIsSpecialService());
+        entity.setIsNoReason(m.getIsNoReason());
+        entity.setIsExternalUrl(m.getIsExternalUrl());
+        entity.setCertified(m.getCertified());
+        entity.setSpecialService(m.getSpecialService());
+        entity.setNoReason(m.getNoReason());
+        entity.setExternalUrl(m.getExternalUrl());
+        entity.setIsIncludePost(m.getIsIncludePost());
+        entity.setBrandId(m.getBrandId());
+        entity.setLabel(m.getLabel());
+        // 最低单价
+        double lowDiscount = Double.MAX_VALUE;
+        double lowPrice = 0;
+        long lowEvaluation = 0;
+        long middleEvaluation = 0;
+        long goodEvaluation = 0;
+        long totalSalesVolume = 0;
+        List<UnifiedMerchandise> unifiedMerchandises = unifiedMerchandiseService.listByMerchandise(merchandiseId, MerchandiseStateType.ONLINE);
+        for (UnifiedMerchandise unifiedMerchandise : unifiedMerchandises) {
+            // 价格
+            if (unifiedMerchandise.getDiscount() < lowDiscount) {
+                lowDiscount = unifiedMerchandise.getDiscount();
+                lowPrice = unifiedMerchandise.getPrice();
+            }
+            lowEvaluation = lowEvaluation + unifiedMerchandise.getLowEvaluation();
+            middleEvaluation = middleEvaluation + unifiedMerchandise.getMiddleEvaluation();
+            goodEvaluation = goodEvaluation + unifiedMerchandise.getGoodEvaluation();
+            totalSalesVolume = totalSalesVolume + unifiedMerchandise.getSalesVolume() + unifiedMerchandise.getVirtualSalesVolume();
+        }
+        entity.setLowDiscount(lowDiscount);
+        entity.setLowPrice(lowPrice);
+        entity.setLowEvaluation(lowEvaluation);
+        entity.setMiddleEvaluation(middleEvaluation);
+        entity.setGoodEvaluation(goodEvaluation);
+        entity.setTotalSalesVolume(totalSalesVolume);
+        long totalEvaluation = lowEvaluation + middleEvaluation + goodEvaluation;
+        if (totalEvaluation > 0) {
+            float rate = (float) goodEvaluation / totalEvaluation;
+            DecimalFormat df = new DecimalFormat("0.00");// 格式化小数
+            entity.setHpRate(df.format(rate));
+        } else {
+            entity.setHpRate("0");
+        }
+        for (MerchandiseStateType stateType : MerchandiseStateType.values()) {
+            if (stateType.getKey() == entity.getState()) {
+                entity.setStateStr(stateType.getName());
+                break;
+            }
+        }
+        return entity;
     }
 
     @Override

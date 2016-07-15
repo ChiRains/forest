@@ -56,7 +56,7 @@ public class MerchandiseEvaluationController {
         Page<MerchandiseEvaluation> page = merchandiseEvaluationService.page(merchandiseId, t, start, PAGE_SIZE);
         List<MerchandiseEvaluationVO> voList = merchandiseEvaluationHandler.toVOList(page.getData());
         FrontPagingView view = new FrontPagingView(pageNum, PAGE_SIZE, page.getCount());
-        view.addObject("list", voList);
+        view.setList(voList);
         return view;
     }
 

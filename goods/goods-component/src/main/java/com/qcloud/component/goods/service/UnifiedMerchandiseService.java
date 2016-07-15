@@ -3,6 +3,7 @@ package com.qcloud.component.goods.service;
 import java.util.List;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.component.goods.model.UnifiedMerchandise;
+import com.qcloud.component.goods.model.key.TypeEnum.MerchandiseStateType;
 import com.qcloud.component.goods.model.query.UnifiedMerchandiseQuery;
 
 public interface UnifiedMerchandiseService {
@@ -26,6 +27,8 @@ public interface UnifiedMerchandiseService {
     public List<UnifiedMerchandise> listByMerchandise(long merchandiseId, int type);
 
     public List<UnifiedMerchandise> listByMerchandise(long merchandiseId, int type, int state);
+
+    public List<UnifiedMerchandise> listByMerchandise(long merchandiseId, MerchandiseStateType stateType);
 
     public Long addThenRetrunId(UnifiedMerchandise unifiedMerchandise);
 

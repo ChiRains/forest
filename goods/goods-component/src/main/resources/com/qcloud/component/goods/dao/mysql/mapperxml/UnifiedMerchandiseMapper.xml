@@ -161,4 +161,8 @@
         </if>   
     </select> 
     
+    <select id="listByMerchandiseAndState" parameterType="Long" resultType="UnifiedMerchandise">  
+        select * from `goods_unified_merchandise` where merchandiseId = #{merchandiseId} and state = #{state}
+    </select>
+    
 </mapper>

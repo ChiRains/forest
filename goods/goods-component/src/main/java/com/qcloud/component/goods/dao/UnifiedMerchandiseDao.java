@@ -6,6 +6,7 @@ import java.util.Set;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.data.api.ISimpleDao;
 import com.qcloud.component.goods.model.UnifiedMerchandise;
+import com.qcloud.component.goods.model.key.TypeEnum.MerchandiseStateType;
 import com.qcloud.component.goods.model.query.UnifiedMerchandiseQuery;
 
 /**
@@ -51,4 +52,6 @@ public interface UnifiedMerchandiseDao extends ISimpleDao<UnifiedMerchandise, Lo
     boolean lockStock(long id, int stock);
 
     UnifiedMerchandise getByCodeAndMerchant(String code, long merchantId);
+
+    public List<UnifiedMerchandise> listByMerchandise(long merchandiseId, MerchandiseStateType stateType);
 }
