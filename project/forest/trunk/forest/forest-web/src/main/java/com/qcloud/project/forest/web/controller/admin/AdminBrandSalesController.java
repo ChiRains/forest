@@ -24,10 +24,14 @@ import com.qcloud.project.forest.web.handler.PromotionalOffersHandler;
 import com.qcloud.project.forest.web.vo.PromotionalOffersVO;
 
 @Controller
-@RequestMapping(value = "/" + AdminPromotionalOffersController.DIR)
-public class AdminPromotionalOffersController {
+@RequestMapping(value = "/" + AdminBrandSalesController.DIR)
+public class AdminBrandSalesController {
 
-    public static final String        DIR = "admin/promotionalOffers";
+    public static final String        DIR      = "admin/brandSales";
+
+    public static final int           BRAND    = 1;                 // 品牌
+
+    public static final int           CLASSIFY = 2;                 // 类别
 
     @Autowired
     private PublicdataClient          publicdataClient;
@@ -44,15 +48,10 @@ public class AdminPromotionalOffersController {
     @Autowired
     private CommoditycenterClient     commoditycenterClient;
 
-    /**
-     * 展示促销优惠类别
-     * @param pPage
-     * @return
-     */
     @RequestMapping
-    public AcePagingView listPromotionalOfferClassify(PPage pPage) {
+    public AcePagingView listBrand(PPage pPage) {
 
-        List<Classify> list = publicdataClient.listClassify((long) ClassifyType.PROMOTIONALOFFERS.getKey());
+        List<Classify> list = publicdataClient.listClassify((long) ClassifyType.BRANDONSALEBRAND.getKey());
         pPage.setPageSize(10);
         int i = (pPage.getPageNum() - 1) * pPage.getPageSize() + pPage.getPageSize();
         if (i > list.size()) {
@@ -60,18 +59,29 @@ public class AdminPromotionalOffersController {
         }
         List<Classify> resultList = new ArrayList<Classify>();
         resultList.addAll(list.subList((pPage.getPageNum() - 1) * pPage.getPageSize(), i));
-        AcePagingView acePagingView = new AcePagingView("/admin/forest-PromotionalOfferClassify-list", DIR + "/listPromotionalOfferClassify", pPage.getPageNum(), pPage.getPageSize(), list.size());
-        acePagingView.addObject("promotionalOfferClassify", resultList);
+        AcePagingView acePagingView = new AcePagingView("/admin/forest-BrandSales-listBrand", DIR + "/listBrand", pPage.getPageNum(), pPage.getPageSize(), list.size());
+        acePagingView.addObject("brands", resultList);
         return acePagingView;
     }
 
-    /**
-     * 启用促销优惠类别
-     * @param classifyId
-     * @return
-     */
     @RequestMapping
-    public AceAjaxView enablePromotionalOfferClassify(Long classifyId, int enable) {
+    public AcePagingView listClassify(PPage pPage) {
+
+        List<Classify> list = publicdataClient.listClassify((long) ClassifyType.BRANDONSALECLASSIFY.getKey());
+        pPage.setPageSize(10);
+        int i = (pPage.getPageNum() - 1) * pPage.getPageSize() + pPage.getPageSize();
+        if (i > list.size()) {
+            i = list.size();
+        }
+        List<Classify> resultList = new ArrayList<Classify>();
+        resultList.addAll(list.subList((pPage.getPageNum() - 1) * pPage.getPageSize(), i));
+        AcePagingView acePagingView = new AcePagingView("/admin/forest-BrandSales-listClassify", DIR + "/listClassify", pPage.getPageNum(), pPage.getPageSize(), list.size());
+        acePagingView.addObject("brands", resultList);
+        return acePagingView;
+    }
+
+    @RequestMapping
+    public AceAjaxView enable(Long classifyId, int enable) {
 
         Classify classify = publicdataClient.getClassify(classifyId);
         classify.setEnable(enable);
@@ -82,53 +92,46 @@ public class AdminPromotionalOffersController {
         return aceAjaxView;
     }
 
-    /**
-     * 跳转添加促销活动类别
-     * @return
-     */
     @RequestMapping
-    public ModelAndView toAddPromotionalOfferClassify() {
+    public ModelAndView toAdd(int type) {
 
-        ModelAndView modelAndView = new ModelAndView("/admin/forest-PromotionalOfferClassify-add");
+        String jsp = "";
+        if (type == BRAND) {
+            jsp = "/admin/forest-BrandSales-addBrand";
+        } else if (type == CLASSIFY) {
+            jsp = "/admin/forest-BrandSales-addClassify";
+        }
+        ModelAndView modelAndView = new ModelAndView(jsp);
         return modelAndView;
     }
 
-    /**
-     * 添加促销优惠类别
-     * @param classify
-     * @return
-     */
     @RequestMapping
-    public AceAjaxView addPromotionalOfferClassify(Classify classify) {
+    public AceAjaxView add(Classify classify, int type) {
 
-        classify.setType(ClassifyType.PROMOTIONALOFFERS.getKey());
+        long classifyType = 0;
+        if (type == BRAND) {
+            classifyType = ClassifyType.BRANDONSALEBRAND.getKey();
+        } else if (type == CLASSIFY) {
+            classifyType = ClassifyType.BRANDONSALECLASSIFY.getKey();
+        }
+        classify.setType(classifyType);
         publicdataClient.addClassify(classify);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("添加成功");
         return aceAjaxView;
     }
 
-    /**
-     * 跳转到编辑促销优惠
-     * @param id
-     * @return
-     */
     @RequestMapping
-    public ModelAndView toEditPromotionalOfferClassify(Long id) {
+    public ModelAndView toEdit(Long id) {
 
         Classify classify = publicdataClient.getClassify(id);
-        ModelAndView modelAndView = new ModelAndView("/admin/forest-PromotionalOfferClassify-edit");
+        ModelAndView modelAndView = new ModelAndView("/admin/forest-BrandSales-edit");
         modelAndView.addObject("classify", classify);
         return modelAndView;
     }
 
-    /**
-     * 提交编辑促销优惠类别
-     * @param classify
-     * @return
-     */
     @RequestMapping
-    public AceAjaxView editPromotionalOfferClassify(Classify classify) {
+    public AceAjaxView edit(Classify classify) {
 
         Classify classify1 = publicdataClient.getClassify(classify.getId());
         if (classify.getImage().equals(classify1.getImage())) {
@@ -142,7 +145,7 @@ public class AdminPromotionalOffersController {
     }
 
     @RequestMapping
-    public AcePagingView listPromotionalOffer(PPage pPage, Long classifyId) {
+    public AcePagingView listMerchandise(PPage pPage, Long classifyId) {
 
         UnifiedMerchandiseQuery unifiedMerchandiseQuery = new UnifiedMerchandiseQuery();
         unifiedMerchandiseQuery.setActivityId(classifyId);
@@ -156,22 +159,22 @@ public class AdminPromotionalOffersController {
             }
         }
         List<PromotionalOffersVO> list = promotionalOffersHandler.toVOList(page.getData());
-        AcePagingView pagingView = new AcePagingView("/admin/forest-PromotionalOffers-list", DIR + "/listPromotionalOffer", pPage.getPageNum(), pPage.getPageSize(), page.getCount());
+        AcePagingView pagingView = new AcePagingView("/admin/forest-BrandSales-list", DIR + "/listMerchandise", pPage.getPageNum(), pPage.getPageSize(), page.getCount());
         pagingView.addObject("result", list);
         pagingView.addObject("classifyId", classifyId);
         return pagingView;
     }
 
     @RequestMapping
-    public ModelAndView toAddPromotionalOffer(Long classifyId) {
+    public ModelAndView toAddMerchandise(Long classifyId) {
 
-        ModelAndView modelAndView = new ModelAndView("/admin/forest-PromotionalOffers-add");
+        ModelAndView modelAndView = new ModelAndView("/admin/forest-BrandSales-add");
         modelAndView.addObject("classifyId", classifyId);
         return modelAndView;
     }
 
     @RequestMapping
-    public AceAjaxView addPromotionalOffer(Long unifiedMerchandiseId, String image, Double discount, Integer integral, Integer stock, Long classifyId) {
+    public AceAjaxView addMerchandise(Long unifiedMerchandiseId, String image, Double discount, Integer integral, Integer stock, Long classifyId) {
 
         image = fileSDKClient.uidToUrl(image);
         commoditycenterClient.regUnifiedMerchandise(unifiedMerchandiseId, 1, image, discount, integral, stock, classifyId);
@@ -181,7 +184,7 @@ public class AdminPromotionalOffersController {
     }
 
     @RequestMapping
-    public AceAjaxView deletePromotionalOffer(Long id) {
+    public AceAjaxView deleteMerchandise(Long id) {
 
         commoditycenterClient.takeDownByUnifiedMerchandise(id);
         AceAjaxView aceAjaxView = new AceAjaxView();

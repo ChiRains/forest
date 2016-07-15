@@ -19,6 +19,7 @@ public class PromotionalOffersUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/promotionalOffers/listPromotionalOffer.do");
         list.add("/admin/promotionalOffers/toAddPromotionalOffer.do");
         list.add("/admin/promotionalOffers/addPromotionalOffer.do");
+        list.add("/admin/promotionalOffers/deletePromotionalOffer.do");
         return list;
     }
 
