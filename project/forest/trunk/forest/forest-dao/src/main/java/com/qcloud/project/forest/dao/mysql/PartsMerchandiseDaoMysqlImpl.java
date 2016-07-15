@@ -94,4 +94,10 @@ public class PartsMerchandiseDaoMysqlImpl implements PartsMerchandiseDao {
         List<PartsMerchandise> list = sqlOperator.selectList("com.qcloud.project.forest.dao.mysql.mapper.PartsMerchandiseMapper.listAll");
         return list;
     }
+
+    @Override
+    public boolean deleteByClassify(long classifyId) {
+
+        return sqlOperator.delete("com.qcloud.project.forest.dao.mysql.mapper.PartsMerchandiseMapper.deleteByClassify", classifyId) > 0;
+    }
 }

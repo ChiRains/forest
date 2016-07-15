@@ -37,10 +37,9 @@
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
-        <form id="model-form" class="form-horizontal" role="form" action="/admin/combinationMerchandise/update.do">
+        <form id="model-form" class="form-horizontal" role="form" action="/admin/partsMerchandise/editMerchandise.do">
             <!-- #section:elements.form -->
-            <input type="hidden" name="combinationMerchandise.id"
-                   value="${combinationMerchandise.id > 0?combinationMerchandise.id:0}">
+            <input type="hidden" name="classifyId" value="${classify.id}">
              
             <div class="space-4"></div>
             <div class="form-group">
@@ -62,13 +61,14 @@
                         <tbody id="productList">
                         <c:forEach items="${qMerchandises}" var="item" varStatus="current">
                             <tr class="template kv-table-row">
+                            	<input type="hidden" name="merchandiseIds" value="${item.id}" readonly class="config-value">
                                 <td><input type="text" value="${item.name}" readonly class="config-value"></td>
                                 <td><input type="text" value="${item.lowDiscount}" readonly
                                            class="config-value"></td>
                                 <td><input type="text" value="${item.lowPrice}" readonly class="config-value"></td>
-                                <td><input type="text" value="${item.hpRate}" readonly name="combinationMerchandiseItems[${current.index}].number" class="config-value"></td>
-                                <td><input type="text" value="${item.totalSalesVolume}" readonly name="combinationMerchandiseItems[${current.index}].discount" class="config-value"></td>
-                                <td><input type="text" value="${item.stateStr}" readonly name="combinationMerchandiseItems[${current.index}].discount" class="config-value"></td>
+                                <td><input type="text" value="${item.hpRate}" readonly class="config-value"></td>
+                                <td><input type="text" value="${item.totalSalesVolume}" readonly class="config-value"></td>
+                                <td><input type="text" value="${item.stateStr}" readonly class="config-value"></td>
                                 <td class="del-column">
                                     <button type="button" class="close del-row-trigger">×</button>
                                 </td>
@@ -93,8 +93,7 @@
                     <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>&nbsp;保&nbsp;存&nbsp;
                     </button>
                     &nbsp; &nbsp; &nbsp;
-                    <button id="back" class="btn" type="button"><i class="ace-icon fa fa-undo bigger-110"></i>&nbsp;返&nbsp;回&nbsp;
-                    </button>
+                    <a class="blue btn" href="#admin/partsMerchandise/listParts"><i class="ace-icon fa fa-undo bigger-110"></i>&nbsp;返&nbsp;回&nbsp;</a>
                 </div>
             </div>
 
@@ -120,9 +119,7 @@
 
             function reSetIndex() {
                 $("#productList").children().each(function (i) {
-                    $(this).find("input[name$='relaUnifiedMerchandiseId']").attr("name", $(this).find("input[name$='relaUnifiedMerchandiseId']").attr("name").replace(/\[.*?\]/g, "[" + i + "]"));
-                    $(this).find("input[name$='number']").attr("name", $(this).find("input[name$='number']").attr("name").replace(/\[.*?\]/g, "[" + i + "]"));
-                	$(this).find("input[name$='discount']").attr("name", $(this).find("input[name$='discount']").attr("name").replace(/\[.*?\]/g, "[" + i + "]"));
+                    $(this).find("input[name$='merchandiseIds']").attr("name", $(this).find("input[name$='merchandiseIds']").attr("name").replace(/\[.*?\]/g, "[" + i + "]"));
                 });
             }
 
@@ -131,7 +128,7 @@
             $(".add-row-trigger").on("click", function () {
                 BootstrapDialog.show({
                     title: "商品列表",
-                    message: $('<div></div>').load('/admin/unifiedMerchandise/selectProductList.do'),
+                    message: $('<div></div>').load('/admin/merchandise/selectProductList.do'),
                     cssClass: "select-product-dialog",
                     onshow: function (dialog) {
                         $(document).off("click", ".select-product-dialog a,.search-button");
@@ -158,8 +155,11 @@
                             if (obj.hasClass("add-btn")) {
                                 var id = obj.attr("data-id");
                                 var name = obj.attr("data-name");
-                                var specifications = obj.attr("data-specifications");
-                                var stock = obj.attr("data-stock");
+                                var lowDiscount = obj.attr("data-lowDiscount");
+                                var lowPrice = obj.attr("data-lowPrice");
+                                var hpRate = obj.attr("data-hpRate");
+                                var totalSalesVolume = obj.attr("data-totalSalesVolume");
+                                var stateStr = obj.attr("data-stateStr");
                                 if (id && name) {
 
                                     var productList = $("#productList");
@@ -167,17 +167,18 @@
                                     //console.log(count);
                                     count >= 0 && $("#productList").append(
                                             '<tr class="template kv-table-row"> ' +
-                                            '<td><input type="text" name="combinationMerchandiseItems[].relaUnifiedMerchandiseId" value="' + id + '" readonly class="config-key"></td> ' +
+                                            '<input type="hidden" name="merchandiseIds" value="' + id + '" readonly class="config-key"> ' +
                                             '<td><input type="text" value="' + name + '" readonly class="config-value"></td>' +
-                                            '<td><input type="text" value="' + specifications + '" readonly class="config-value"></td>' +
-                                            '<td><input type="text" value="' + stock + '" readonly class="config-value"></td>' +
-                                            '<td><input type="text" id="num" name="combinationMerchandiseItems[].number" value="0"/></td>' +
-                                            '<td><input type="text" id="num" name="combinationMerchandiseItems[].discount" value="0"/></td>' +
+                                            '<td><input type="text" value="' + lowDiscount + '" readonly class="config-value"></td>' +
+                                            '<td><input type="text" value="' + lowPrice + '" readonly class="config-value"></td>' +
+                                            '<td><input type="text" value="' + hpRate + '" readonly class="config-value"></td>' +
+                                            '<td><input type="text" value="' + totalSalesVolume + '" readonly class="config-value"></td>' +
+                                            '<td><input type="text" value="' + stateStr + '" readonly class="config-value"></td>' +
                                             '<td class="del-column"> <button type="button" class="close del-row-trigger">×</button> </td> ' +
                                             '</tr>');
                                     delProduct();
                                     reSetIndex();
-                                  //  dialog.close();
+                                    dialog.close();
                                 }
                                 return false;
                             }

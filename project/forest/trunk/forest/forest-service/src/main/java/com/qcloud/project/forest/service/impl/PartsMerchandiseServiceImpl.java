@@ -62,4 +62,10 @@ public class PartsMerchandiseServiceImpl implements PartsMerchandiseService {
 
         return partsMerchandiseDao.listAll();
     }
+
+    @Override
+    public boolean deleteByClassify(long classifyId) {
+
+        return partsMerchandiseDao.deleteByClassify(classifyId);
+    }
 }
