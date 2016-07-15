@@ -6,6 +6,21 @@
 <link rel="stylesheet" href="/qcloud-admin/assets/css/chosen.css"/>
 
 <!-- ajax layout which only needs content area -->
+<style>
+.chosen-container-single{
+	width:800px!important;
+}
+.tags{
+	width:800px!important;
+	margin-left: 3px!important;
+}
+.qi-cloud-text{
+	width:800px!important;
+}
+.help-block{
+	color:red;
+}
+</style>
 <div class="page-header">
     <h1>
         商品管理
@@ -18,299 +33,235 @@
 <!-- /.page-header -->
 
 <div class="row">
-    <div class="col-xs-12">
+	<div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
         <form id="model-form" class="form-horizontal" role="form" action="/admin/merchandise/edit.do">
-            <!-- #section:elements.form -->
-            <input type="hidden" name="id" value="${merchandise.id}">
-            <input type="hidden" name="merchantId" value="${merchandise.merchantId}">
-			<input type="hidden" name="pageNum" value="${pageNum}">
+       
+        <div class="dataTables_wrapper form-inline no-footer">
+        	
+               	<table class="table table-striped table-bordered table-hover dataTable no-footer">
+					<caption class="text-left table-header btn-info">商品档案信息</caption>
+					<tbody>
+						<tr>
+							<td style="width: 200px;">商品名称：</td>
+							<td style="width: 300px;"> 
+								<input type="text" class="qi-cloud-text" maxlength="10" id="name" name="name" placeholder="名称" value="${merchandise.name}"/>
+								<span  class="chosen-container"></span>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 200px;">商城商品分类:</td>
+							<td style="width: 300px;"> 
+								<select class="chosen-select" id="mallClassifyId" name="mallClassifyId" >
+		                            <option value="-1" selected>请选择分类</option>
+		                            <c:forEach items="${mallClassifyList}" var="item" varStatus="current">
+		                                <option value="${item.key}" ${item.message}>${item.value}</option>
+		                            </c:forEach>
+		                        </select>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 200px;">自家商品分类：</td>
+							<td style="width: 300px;"> 
+								<select class="chosen-select" id="merchantClassifyId" name="merchantClassifyId">
+		                            <option value="-1" selected>请选择分类</option>
+		                            <c:forEach items="${merchantClassifyList}" var="item" varStatus="current">
+		                                <option value="${item.key}" ${item.message}>${item.value}</option>
+		                            </c:forEach>
+		                        </select>
+							</td>
+						</tr>
+					
+						<tr>
+							<td style="width: 200px;">规格类目：<br></td>
+							<td style="width: 300px;"> 
+								<select class="chosen-select" id="specClassifyId" name="specClassifyId">
+			                          <option value="${merchandise.specClassifyId}">${merchandise.specClassifyStr}</option>                              
+		                        </select>
+							</td>
+						</tr>
+						
+						<tr id="specClassifyList" style="display:none;">
+							<td style="width: 200px;"></td>
+							<td style="width: 300px;" id="attrList"> 
+								<%-- <span>111</span><br>
+								<span><input type="checkbox"  style="width:20px!important;height:20px;"/>11</span> --%>
+							</td>
+						</tr>
+						
+						
+						<c:if test="${hasBrand}">
+							<tr>
+								<td style="width: 200px;"> 品  牌：<br></td>
+								<td style="width: 300px;"> 
+									<select class="chosen-select" id="brandId" name="brandId">
+			                            <option value="-1" selected>请选择品牌 </option>
+			                            <c:forEach items="${brandList}" var="item" varStatus="current">
+			                                <option value="${item.id}">${item.name}</option>
+			                            </c:forEach>
+			                        </select>
+								</td>
+							</tr>
+			            </c:if>
+			            <c:if test="${!hasBrand}">
+			            	<input type="hidden"  value="-1" name="brandId" id="brandId" />
+			            </c:if>
+						
+						<tr>
+							<td style="width: 200px;">商品缩略图：<br><strong><font color="red">商品列表显示图</font></strong></td>
+							<td style="width: 300px;"> 
+								<input type="hidden"  id="image" name="image" value="${merchandise.imageUid}"/>
+								<button type="button" mult="false" sid="image" vid="pic-pic-view"   class="btn btn-sm btn-purple btn-upload-pic"  upfrom="0"  >
+								<i class="ace-icon fa fa-upload"></i> 上 传
+								</button>
+								<ul sid="pic" id="pic-pic-view" class="ace-thumbnails clearfix">
+									<img style="max-width:150px;max-height:150px;" alt="" src="${merchandise.image}">
+								</ul>
+							</td>
+						</tr>
+						
+						<tr>
+							<td style="width: 200px;">搜索关键字：</td>
+							<td style="width: 300px;"> 
+								<input type="text" class="qi-cloud-text" maxlength="100" id="keywords" name="keywords" placeholder="关键字" value="${merchandise.keywords}"/>
+							</td>
+						</tr>
+						
+						
+						<tr>
+							<td style="width: 200px;">标签：</td>
+							<td style="width: 300px;"> 
+								<input type="text" class="width-100" maxlength="2" id="label" name="label" placeholder="热卖、促销、特价、好评..." value="${merchandise.label}"/>
+							</td>
+						</tr>
+						
+						<tr>
+							<td style="width: 200px;">重量：</td>
+							<td style="width: 300px;"> 
+								<input type="text" class="qi-cloud-text" maxlength="10" id="weight" name="weight" placeholder="重量" value="${merchandise.weight}"/>
+								<span  class="chosen-container"></span>
+							</td>
+						</tr>
+						
+						<tr>
+							<td style="width: 200px;">单位：</td>
+							<td style="width: 300px;"> 
+								<input type="text" class="qi-cloud-text" maxlength="100" id="unit" name="unit" placeholder="单位" value="${merchandise.unit}"/>
+							</td>
+						</tr>
+						
+						<tr>
+							<td style="width: 200px;">商品简介：</td>
+							<td style="width: 300px;"> 
+								<input type="text" class="qi-cloud-text" maxlength="200" id="desc" name="desc" placeholder="描述 " value="${merchandise.desc}"/>
+							</td>
+						</tr>
+						
+						<c:if test="${merchantIsIncludePost==2}">
+				            <tr>
+								<td style="width: 200px;">是否包邮：</td>
+								<td style="width: 300px;"> 
+									  <input type="radio" style="width:20px!important;height:20px;" <c:if test="${merchandise.isIncludePost ==1}"> checked </c:if> name="isIncludePost" value="1"/>是
+	                    				<input type="radio" style="width:20px!important;height:20px;" <c:if test="${merchandise.isIncludePost ==2}"> checked </c:if> name="isIncludePost" value="2"/>否
+								</td>
+							</tr>
+						</c:if>
+						<c:if test="${merchantIsIncludePost==1}">
+			                <input type="hidden"  name="isIncludePost" value="1"/>
+						</c:if>  
+						
+						
+						
+						<c:if test="${merchantIsCertified==1}">
+							<tr>
+								<td style="width: 200px;">正品保证描述：</td>
+								<td style="width: 300px;"> 
+									<input type="checkbox"  style="width:20px!important;height:20px;" 
+				                		<c:if test="${merchandise.isCertified==1}">checked value="1" </c:if>
+				                		<c:if test="${merchandise.isCertified!=1}"> value="2" </c:if>
+				                		id="isCertified" " name="isCertified" />
+				                		
+				                    <input type="text" class="width-95" id="certified" name="certified"
+				                    	<c:if test="${merchandise.isCertified!=1}"> style="display:none" </c:if>
+				                     	value="${merchandise.certified}">
+								</td>
+							</tr>
+				        </c:if>  
+				        
+				        <c:if test="${merchantIsNoReason==1}">
+							<tr>
+								<td style="width: 200px;">无理由退货描述：</td>
+								<td style="width: 300px;"> 
+									<input type="checkbox" 
+				                		<c:if test="${merchandise.isNoReason==1}">checked value="1" </c:if>
+				                		<c:if test="${merchandise.isNoReason!=1}"> value="2" </c:if>
+				                		 style="width:20px!important;height:20px;" id="isNoReason"  name="isNoReason" />
+				                    <input type="text" class="width-95" id="noReason"
+				                    	<c:if test="${merchandise.isNoReason!=1}"> style="display:none" </c:if>
+				                        name="noReason" value="${merchandise.noReason}">
+								</td>
+							</tr>
+				        </c:if>  
+				        
+				        
+				        <c:if test="${merchantIsExternalUrl==1}">
+							<tr>
+								<td style="width: 200px;">商品外部链接：</td>
+								<td style="width: 300px;"> 
+									<input type="checkbox"  style="width:20px!important;height:20px;" 
+				                		<c:if test="${merchandise.isExternalUrl==1}">checked value="1" </c:if>
+				                		<c:if test="${merchandise.isExternalUrl!=1}"> value="2" </c:if>
+				                		id="isExternalUrl" name="isExternalUrl" />
+				                    <input type="text" class="width-95" id="externalUrl"
+				                    	<c:if test="${merchandise.isExternalUrl!=1}"> style="display:none" </c:if>
+				                        name="externalUrl" placeholder="商品外部链接" value="${merchandise.externalUrl}">
+								</td>
+							</tr>
+				        </c:if>  
+				        
+				        
+				        <c:if test="${merchantIsSpecialService==1}">
+							<tr>
+								<td style="width: 200px;">特色服务：</td>
+								<td style="width: 300px;"> 
+									<input type="checkbox" checked style="width:20px!important;height:20px;"
+				                		<c:if test="${merchandise.isSpecialService==1}">checked value="1" </c:if>
+				                		<c:if test="${merchandise.isSpecialService!=1}"> value="2" </c:if>
+				                	 	id="isSpecialService"  name="isSpecialService" />
+								</td>
+							</tr>
+				        </c:if>  
+				        
+				        <c:if test="${merchantIsSpecialService==1}">
+							<tr id="isSpecialServiceDiv">
+								<td style="width: 200px;"></td>
+								<td style="width: 300px;"> 
+									<textarea class="width-95" style="height:400px!important;width:800px!important;" class="col-xs-10 no-float" id="specialService" name="specialService" >${merchandise.specialService}</textarea>
+	                    		</td>
+							</tr>
+				        </c:if> 
+				        
+						<tr >
+							<td style="width: 200px;">商品详情</td>
+							<td style="width: 300px;"> 
+								<textarea class="width-100" style="height:600px!important;width:800px!important;" class="col-xs-10 no-float" id="details" name="details">${merchandise.details}</textarea>
+							</td>
+						</tr>
+						
+						<tr style="display:none;">
+							<td>
+								<input type="hidden" name="id" value="${merchandise.id}">
+						        <input type="hidden" name="merchantId" value="${merchandise.merchantId}">
+								<input type="hidden" name="pageNum" value="${pageNum}"
+							</td>
+						</tr>
+						
+					</tbody>
+				</table>
 			
-			<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="specClassifyId"> 规格 </label>
-                
-                <div class="col-sm-9">
-                	 <span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<select class="chosen-select" id="specClassifyId" name="specClassifyId">
-                          <option value="${merchandise.specClassifyId}">${merchandise.specClassifyStr}</option>                              
-                        </select>
-					</span>
-                </div>                              				
-            </div>
-
-            <div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="mallClassifyId"> 商城商品分类 </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<select class="chosen-select" id="mallClassifyId" name="mallClassifyId">
-							<option value="-1" selected>请选择分类</option>
-                            <c:forEach items="${mallClassifyList}" var="item" varStatus="current">
-                               <option value="${item.key}"
-                                        <c:if test="${merchandise.mallClassifyId == item.key}">selected</c:if> >${item.value}
-                                </option>                              
-                            </c:forEach>
-                        </select>
-					</span>
-                </div>
-            </div>
-
-            <div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="merchantClassifyId"> 自家商品分类 </label>
-
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<select class="chosen-select" id="merchantClassifyId" name="merchantClassifyId">
-                            <option value="-1" selected>请选择分类</option>
-                            <c:forEach items="${merchantClassifyList}" var="item" varStatus="current">
-                                <option value="${item.key}"
-                                        <c:if test="${merchandise.merchantClassifyId == item.key}">selected</c:if> >${item.value}</option>
-                            </c:forEach>
-                        </select>
-					</span>
-                </div>
-            </div>
-            
-            <c:if test="${hasBrand}">
-	            <div class="space-4"></div>
-	            <div class="form-group">
-	                <label class="col-sm-3 control-label no-padding-right" for="brand">  品  牌   </label>	
-	                <div class="col-sm-9">
-						<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-							<select class="chosen-select" id="brandId" name="brandId">
-	                            <option value="-1" selected>请选择品牌 </option>
-	                            <c:forEach items="${brandList}" var="item" varStatus="current">
-	                                <option <c:if test="${merchandise.brandId eq item.id}"> selected </c:if> value="${item.id}">${item.name}</option>
-	                            </c:forEach>
-	                        </select>
-						</span>
-	                </div>
-	            </div>
-            </c:if>
-            <c:if test="${!hasBrand}">
-            	<input type="hidden"  value="-1" name="brandId" id="brandId" />
-            </c:if>
-
-            <div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="name"> 名称 </label>
-
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="10" id="name" name="name" placeholder="名称" value="${merchandise.name}"/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
-          
-            <div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="image"> 缩略图 </label>
-
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="hidden"  id="image" name="image" value="${merchandise.imageUid}"/>
-						<button type="button" mult="false" sid="image" vid="pic-pic-view"   class="btn btn-sm btn-purple btn-upload-pic"  upfrom="0"  >
-						<i class="ace-icon fa fa-upload"></i> 上 传
-						</button>
-						<ul sid="pic" id="pic-pic-view" class="ace-thumbnails clearfix">
-							<img style="max-width:150px;max-height:150px;" alt="" src="${merchandise.image}">
-						</ul>
-					</span>
-                </div>
-            </div>
-            
-                         <div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="">  </label>
-               <div class="col-sm-9">
-					<span style="color:red;" class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						${fileSize}
-					</span>
-                </div>
-            </div>
-            
-           <!-- <div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="state"> 状态 </label>
-
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="state" name="state" placeholder="状态" value="${merchandise.state}"/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div> -->
-            <div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="keywords"> 搜索关键字 </label>
-
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="100" id="keywords" name="keywords" placeholder="关键字" value="${merchandise.keywords}"/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
-            
-              <div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="keywords"> 标签 </label>
-
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="2" id="label" name="label" placeholder="热卖、促销、特价、好评..." value="${merchandise.label}"/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
-            
-                                  
-            <div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="weight"> 重量  </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="weight" name="weight" placeholder="重量" value="${merchandise.weight}"/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>            
-            
-            <div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="unit"> 单位 </label>
-
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="100" id="unit" name="unit" placeholder="单位" value="${merchandise.unit}"/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
-            
-            <div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="desc">  描述   </label>
-
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="200" id="desc" name="desc" placeholder="描述 " value="${merchandise.desc}"/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
-
-            <div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="details"> 详情 </label>
-
-                <div class="col-sm-9">
-                    <textarea style="height:600px!important;" class="col-xs-10 no-float" id="details" name="details">${merchandise.details}</textarea>
-                </div>
-            </div>
-            
-            <c:if test="${merchantIsCertified==1}">
-	        	<div class="space-4"></div>
-	            <div class="form-group">
-	                <label class="col-sm-3 control-label no-padding-right" for="isCertified"> 正品保证 </label>
-	                <div class="col-sm-9">
-	                	<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-	                	<input type="checkbox"  style="width:20px!important;height:20px;" 
-	                		<c:if test="${merchandise.isCertified==1}">checked value="1" </c:if>
-	                		<c:if test="${merchandise.isCertified!=1}"> value="2" </c:if>
-	                		id="isCertified" " name="isCertified" />
-	                		
-	                    <input type="text" class="width-95" id="certified" name="certified"
-	                    	<c:if test="${merchandise.isCertified!=1}"> style="display:none" </c:if>
-	                     	value="${merchandise.certified}">
-	                    </span>
-	                </div>
-	            </div>
-	        </c:if>  
-	        
-	        <c:if test="${merchantIsNoReason==1}">
-	        	<div class="space-4"></div>
-	            <div class="form-group">
-	                <label class="col-sm-3 control-label no-padding-right" for="isNoReason"> 无理由退货 </label>
-	                <div class="col-sm-9">
-	                	<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-	                	<input type="checkbox" 
-	                		<c:if test="${merchandise.isNoReason==1}">checked value="1" </c:if>
-	                		<c:if test="${merchandise.isNoReason!=1}"> value="2" </c:if>
-	                		 style="width:20px!important;height:20px;" id="isNoReason"  name="isNoReason" />
-	                    <input type="text" class="width-95" id="noReason"
-	                    	<c:if test="${merchandise.isNoReason!=1}"> style="display:none" </c:if>
-	                        name="noReason" value="${merchandise.noReason}">
-	                    </span>
-	                </div>
-	            </div>
-	        </c:if>  
-	        
-	        <c:if test="${merchantIsExternalUrl==1}">
-	        	<div class="space-4"></div>
-	            <div class="form-group">
-	                <label class="col-sm-3 control-label no-padding-right" for="isExternalUrl"> 商品外部链接 </label>
-	                <div class="col-sm-9">
-	                	<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-	                	<input type="checkbox"  style="width:20px!important;height:20px;" 
-	                		<c:if test="${merchandise.isExternalUrl==1}">checked value="1" </c:if>
-	                		<c:if test="${merchandise.isExternalUrl!=1}"> value="2" </c:if>
-	                		id="isExternalUrl" name="isExternalUrl" />
-	                    <input type="text" class="width-95" id="externalUrl"
-	                    	<c:if test="${merchandise.isExternalUrl!=1}"> style="display:none" </c:if>
-	                        name="externalUrl" placeholder="商品外部链接" value="${merchandise.externalUrl}">
-	                    </span>
-	                </div>
-	            </div>
-	        </c:if> 
-	        
-	        <c:if test="${merchantIsSpecialService==1}">
-	        	<div class="space-4"></div>
-	            <div class="form-group">
-	                <label class="col-sm-3 control-label no-padding-right" for="isSpecialService"> 特色服务 </label>
-	                <div class="col-sm-9">
-	                	<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-	                	<input type="checkbox" checked style="width:20px!important;height:20px;"
-	                		<c:if test="${merchandise.isSpecialService==1}">checked value="1" </c:if>
-	                		<c:if test="${merchandise.isSpecialService!=1}"> value="2" </c:if>
-	                	 	id="isSpecialService"  name="isSpecialService" />
-	                    </span>
-	                </div>
-	            </div>
-	        </c:if>   
-	        
-	        
-	        <c:if test="${merchantIsSpecialService==1}">
-	        	<div class="space-4"></div>
-	            <div class="form-group" id="isSpecialServiceDiv">
-	                <label class="col-sm-3 control-label no-padding-right" for="isSpecialServiceDiv"> </label>
-	                <div class="col-sm-9">
-	                	<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-	                  	<textarea class="width-95" style="height:400px!important;width:800px!important;" class="col-xs-10 no-float" id="specialService" name="specialService" >${merchandise.specialService}</textarea>
-	                    </span>
-	                </div>
-	            </div>
-	        </c:if>   
-	        
-	        <c:if test="${merchantIsIncludePost==2}">
-				<div class="space-4"></div>
-	            <div class="form-group">
-	                <label class="col-sm-3 control-label no-padding-right" for="isIncludePost"> 商品是否包邮 </label>
-	
-	               <div class="col-sm-9">
-	                    <input type="radio" <c:if test="${merchandise.isIncludePost ==1}"> checked </c:if> name="isIncludePost" value="1"/>是
-	                    <input type="radio" <c:if test="${merchandise.isIncludePost ==2}"> checked </c:if> name="isIncludePost" value="2"/>否
-	               </div>
-	            </div>
-			</c:if>
-			<c:if test="${merchantIsIncludePost==1}">
-                <input type="hidden"  name="isIncludePost" value="1"/>
-			</c:if> 
-
-            <div class="space-4"></div>
+        </div>
+        	
+ 			<div class="space-4"></div>
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
                     <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>&nbsp;保&nbsp;存&nbsp;</button>
@@ -319,9 +270,11 @@
                 </div>
             </div>
 
+
         </form>
         <!-- PAGE CONTENT ENDS -->
-    </div>
+    </div>	
+
     <!-- /.col -->
 </div>
 <!-- /.row -->
@@ -470,8 +423,10 @@
                     }
                     else if (element.is('.chosen-select')) {
                         error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                    }else{
+                    	error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'))
                     }
-                    else error.insertAfter(element.parent());
+                    //else error.insertAfter(element.parent());
                 },
 
                 submitHandler: function (form) {

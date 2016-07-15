@@ -31,6 +31,8 @@ public class CombinationMerchandiseVO {
 
     private List<CombinationMerchandiseItemVO> itemList = new ArrayList<CombinationMerchandiseItemVO>();
 
+    private int                                type;
+
     public CombinationMerchandiseVO() {
 
     }
@@ -123,5 +125,15 @@ public class CombinationMerchandiseVO {
     public void setItemList(List<CombinationMerchandiseItemVO> itemList) {
 
         this.itemList = itemList;
+    }
+
+    public int getType() {
+
+        return type;
+    }
+
+    public void setType(int type) {
+
+        this.type = type;
     }
 }

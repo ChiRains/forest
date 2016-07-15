@@ -1159,7 +1159,7 @@ public class AdminMerchandiseController {
         merchandiseImageService.setMerchandiseImages(merchandise.getId(), newImages);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("编辑成功");
-        aceAjaxView.setUrl(DIR+"/toEditSpec?id="+merchandise.getId());
+        aceAjaxView.setUrl(DIR + "/toEditSpec?id=" + merchandise.getId());
         return aceAjaxView;
     }
 

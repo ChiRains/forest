@@ -496,6 +496,7 @@ public class MerchandiseController {
             if (!combinationMerchandiseIdList.contains(combinationMerchandiseItem.getCombinationUnifiedMerchandiseId())) {
                 UnifiedMerchandise combinationMerchandise = unifiedMerchandiseService.get(combinationMerchandiseItem.getCombinationUnifiedMerchandiseId());
                 CombinationMerchandiseVO combinationMerchandiseVO = combinationMerchandiseHandler.toVO(combinationMerchandise);
+                combinationMerchandiseVO.setType(combinationMerchandiseItem.getType());
                 combinationMerchandiseIdList.add(combinationMerchandiseItem.getCombinationUnifiedMerchandiseId());
                 comVOList.add(combinationMerchandiseVO);
             }
