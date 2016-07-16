@@ -38,6 +38,7 @@ public class PartsMerchandiseUriHandlerImpl extends AbstractUriHandler {
 
         List<String> list = new ArrayList<String>();
         list.add("/partsMerchandise/listParts.do");
+        list.add("/partsMerchandise/list.do");
         return list;
     }
 }

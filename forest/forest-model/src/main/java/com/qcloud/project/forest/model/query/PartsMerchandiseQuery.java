@@ -7,7 +7,7 @@ public class PartsMerchandiseQuery {
 
     private List<Long> merchandiseIds = new ArrayList<Long>();
 
-    private Long       classifyId;
+    private long       classifyId;
 
     public List<Long> getMerchandiseIds() {
 
@@ -19,12 +19,12 @@ public class PartsMerchandiseQuery {
         this.merchandiseIds = merchandiseIds;
     }
 
-    public Long getClassifyId() {
+    public long getClassifyId() {
 
         return classifyId;
     }
 
-    public void setClassifyId(Long classifyId) {
+    public void setClassifyId(long classifyId) {
 
         this.classifyId = classifyId;
     }

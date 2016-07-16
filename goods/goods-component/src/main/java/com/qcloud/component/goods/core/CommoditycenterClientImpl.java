@@ -398,7 +398,7 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
             float rate = (float) goodEvaluation / totalEvaluation;
             entity.setHpRate(df.format(rate));
         } else {
-            entity.setHpRate("0");
+            entity.setHpRate("0.00");
         }
         for (MerchandiseStateType stateType : MerchandiseStateType.values()) {
             if (stateType.getKey() == entity.getState()) {
