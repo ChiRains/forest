@@ -81,6 +81,7 @@ public class PartsMerchandiseDaoMysqlImpl implements PartsMerchandiseDao {
         param.put("start", start);
         param.put("count", count);
         param.put("classifyId", query.getClassifyId());
+        param.put("state", query.getState());
         List<PartsMerchandise> list = sqlOperator.selectList("com.qcloud.project.forest.dao.mysql.mapper.PartsMerchandiseMapper.list4query", param);
         int total = sqlOperator.selectOne("com.qcloud.project.forest.dao.mysql.mapper.PartsMerchandiseMapper.count4query", param);
         Page<PartsMerchandise> page = new Page<PartsMerchandise>();
@@ -100,5 +101,11 @@ public class PartsMerchandiseDaoMysqlImpl implements PartsMerchandiseDao {
     public boolean deleteByClassify(long classifyId) {
 
         return sqlOperator.delete("com.qcloud.project.forest.dao.mysql.mapper.PartsMerchandiseMapper.deleteByClassify", classifyId) > 0;
+    }
+
+    @Override
+    public boolean deleteByMerchandiseId(long merchandiseId) {
+
+        return sqlOperator.delete("com.qcloud.project.forest.dao.mysql.mapper.PartsMerchandiseMapper.deleteByMerchandiseId", merchandiseId) > 0;
     }
 }

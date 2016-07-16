@@ -82,4 +82,10 @@ public class PartsMerchandiseDaoRedisImpl implements PartsMerchandiseDao {
 
         throw new NotImplementedException();
     }
+
+    @Override
+    public boolean deleteByMerchandiseId(long merchandiseId) {
+
+        throw new NotImplementedException();
+    }
 }

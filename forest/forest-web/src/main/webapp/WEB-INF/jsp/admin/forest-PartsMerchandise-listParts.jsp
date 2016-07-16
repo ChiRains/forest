@@ -17,6 +17,12 @@
             <i class="ace-icon fa fa-angle-double-right"></i>
             列表
         </small>
+         <small>
+     <span style="color:red">[备注：当有部位药品操作上下架时，请点击此按钮
+      <a class="btn btn-info flushState" api-path="/admin/partsMerchandise/flushState.do"><i class="ace-icon fa fa-check bigger-110"></i>&nbsp;更新商品状态&nbsp;
+        </a> 同步更新.]</span>
+       </small>
+   
     </h1>
 </div>
 <!-- /.page-header -->
@@ -220,5 +226,44 @@
         	var index=$(this).attr("data-index");
         	$(".ddlist"+index).toggle();
         });
+        
+        $('.flushState').on('click', function () {
+            var auditURL = $(this).attr('api-path');
+            BootstrapDialog.show({
+                title: '确认更新',
+                message: '商品状态确认更新?',
+                buttons: [{
+                   	label: '确定',
+                    cssClass: 'btn btn-primary',
+                    action: function (dialogItself) {
+                        $.get(auditURL, {},
+                                function (data) {
+                                    data = JSON.parse(data);
+                                    if (parseInt(data["status"]) === 0) {
+                                        dialogItself.setTitle('操作失败');
+                                        dialogItself.setMessage(data["message"]);
+                                        dialogItself.setType(BootstrapDialog.TYPE_DANGER);
+                                    } else {
+                                        dialogItself.setTitle('操作成功');
+                                        dialogItself.setMessage("更新成功！");
+                                        dialogItself.setType(BootstrapDialog.TYPE_SUCCESS);
+                                        setTimeout(function () {
+                                            dialogItself.close();
+                                        }, 1000);
+                                        setTimeout(function () {
+                                            location.reload(true);
+                                        }, 1500);
+                                    }
+                                });
+                    }
+                }, {
+                    label: '取消',
+                    action: function (dialogItself) {
+                        dialogItself.close();
+                    }
+                }]
+            });
+        });
+        
     });
 </script>

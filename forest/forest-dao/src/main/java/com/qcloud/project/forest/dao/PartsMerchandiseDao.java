@@ -29,4 +29,6 @@ public interface PartsMerchandiseDao extends ISimpleDao<PartsMerchandise, Long> 
     public List<PartsMerchandise> listByClassifyId(Long classifyId);
 
     public boolean deleteByClassify(long classifyId);
+
+    public boolean deleteByMerchandiseId(long merchandiseId);
 }

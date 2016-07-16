@@ -1481,8 +1481,8 @@ public class AdminMerchandiseController {
             }
             voList.add(paramMap);
         }
-        String param = "name=" + StringUtil.nullToEmpty(query.getName()) + "&code=" + StringUtil.nullToEmpty(query.getCode());
-        AcePagingView pagingView = new AcePagingView("/admin/goods-Merchandise-selectProduct-list", DIR + "/selectProductList?" + param, pageNum, PAGE_SIZE, page.getCount());
+        String param = "name=" + StringUtil.nullToEmpty(query.getName());
+        AcePagingView pagingView = new AcePagingView("/admin/goods-Merchandise-selectProduct-list", DIR + "/selectProductList.do?" + param, pageNum, PAGE_SIZE, page.getCount());
         pagingView.addObject("result", voList);
         pagingView.addObject("query", query);
         return pagingView;

@@ -182,7 +182,6 @@
                                 }
                                 return false;
                             }
-
                             var url = obj.attr("href").replace(/#/, "/");
                             if (url != "javascript:;" && url) {
                                 dialog.getModalBody().html($('<div></div>').load(url));

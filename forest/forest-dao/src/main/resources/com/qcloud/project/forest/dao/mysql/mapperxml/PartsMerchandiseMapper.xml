@@ -8,6 +8,9 @@
         <if test="classifyId > 0">
 			and `classifyId` =#{classifyId}
 		</if>
+		<if test="state > 0">
+			and `state` =#{state}
+		</if>
         limit #{start},#{count}
     </select>  
     
@@ -15,6 +18,9 @@
         select count(*) from `forest_parts_merchandise` where 1=1
         <if test="classifyId > 0">
 			and `classifyId` =#{classifyId}
+		</if>
+		<if test="state > 0">
+			and `state` =#{state}
 		</if>
     </select> 
     
@@ -24,6 +30,10 @@
     
     <delete id="deleteByClassify">
        DELETE FROM `forest_parts_merchandise` WHERE `classifyId`=#{classifyId}
+    </delete>
+    
+    <delete id="deleteByMerchandiseId">
+       DELETE FROM `forest_parts_merchandise` WHERE `merchandiseId`=#{merchandiseId}
     </delete>
     
 </mapper>

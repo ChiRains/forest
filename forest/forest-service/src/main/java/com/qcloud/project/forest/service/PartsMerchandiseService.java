@@ -22,4 +22,6 @@ public interface PartsMerchandiseService {
     public List<PartsMerchandise> listAll();
 
     public boolean deleteByClassify(long classifyId);
+
+    public boolean deleteByMerchandiseId(long merchandiseId);
 }
