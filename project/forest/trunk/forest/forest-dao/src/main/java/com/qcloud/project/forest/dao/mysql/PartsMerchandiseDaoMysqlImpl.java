@@ -80,6 +80,7 @@ public class PartsMerchandiseDaoMysqlImpl implements PartsMerchandiseDao {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("start", start);
         param.put("count", count);
+        param.put("classifyId", query.getClassifyId());
         List<PartsMerchandise> list = sqlOperator.selectList("com.qcloud.project.forest.dao.mysql.mapper.PartsMerchandiseMapper.list4query", param);
         int total = sqlOperator.selectOne("com.qcloud.project.forest.dao.mysql.mapper.PartsMerchandiseMapper.count4query", param);
         Page<PartsMerchandise> page = new Page<PartsMerchandise>();

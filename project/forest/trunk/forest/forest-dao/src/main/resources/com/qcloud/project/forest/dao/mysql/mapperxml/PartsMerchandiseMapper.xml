@@ -4,11 +4,18 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.qcloud.project.forest.dao.mysql.mapper.PartsMerchandiseMapper">          
     <select id="list4query" parameterType="java.util.HashMap" resultType="PartsMerchandise">  
-        select * from `forest_parts_merchandise` limit #{start},#{count}
+        select * from `forest_parts_merchandise` where 1=1
+        <if test="classifyId > 0">
+			and `classifyId` =#{classifyId}
+		</if>
+        limit #{start},#{count}
     </select>  
     
     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
-        select count(*) from `forest_parts_merchandise`
+        select count(*) from `forest_parts_merchandise` where 1=1
+        <if test="classifyId > 0">
+			and `classifyId` =#{classifyId}
+		</if>
     </select> 
     
     <select id="listByClassifyId" parameterType="java.util.HashMap" resultType="PartsMerchandise">  

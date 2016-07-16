@@ -56,6 +56,8 @@ public interface QMerchandise {
      * 大参林要看商品最低价格
      * @return
      */
+    public double getLowDiscount();
+
     public double getLowPrice();
 
     public long getTotalSalesVolume();
