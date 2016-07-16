@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.model.UnifiedMerchandise;
 import com.qcloud.component.goods.model.key.TypeEnum.QueryItemType;
 import com.qcloud.component.goods.model.query.UnifiedMerchandiseQuery;
@@ -35,6 +36,9 @@ public class BrandSalesController {
     @Autowired
     private PromotionalOffersHandler  promotionalOffersHandler;
 
+    @Autowired
+    private FileSDKClient             fileSDKClient;
+
     /**
      * 展示六个品牌
      * @return
@@ -50,6 +54,7 @@ public class BrandSalesController {
         Iterator<Classify> iter = classifies.iterator();
         while (iter.hasNext()) {
             Classify s = iter.next();
+            s.setImage(fileSDKClient.getFileServerUrl() + s.getImage());
             if (s.getEnable() != 1) {
                 iter.remove();
             }
@@ -71,6 +76,7 @@ public class BrandSalesController {
         Iterator<Classify> iter = classifies.iterator();
         while (iter.hasNext()) {
             Classify s = iter.next();
+            s.setImage(fileSDKClient.getFileServerUrl() + s.getImage());
             if (s.getEnable() != 1) {
                 iter.remove();
             }

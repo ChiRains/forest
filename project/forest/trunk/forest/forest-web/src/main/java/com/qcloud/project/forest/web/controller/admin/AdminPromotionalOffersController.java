@@ -60,6 +60,9 @@ public class AdminPromotionalOffersController {
         }
         List<Classify> resultList = new ArrayList<Classify>();
         resultList.addAll(list.subList((pPage.getPageNum() - 1) * pPage.getPageSize(), i));
+        for (Classify classify : resultList) {
+            classify.setImage(fileSDKClient.getFileServerUrl() + classify.getImage());
+        }
         AcePagingView acePagingView = new AcePagingView("/admin/forest-PromotionalOfferClassify-list", DIR + "/listPromotionalOfferClassify", pPage.getPageNum(), pPage.getPageSize(), list.size());
         acePagingView.addObject("promotionalOfferClassify", resultList);
         return acePagingView;
@@ -141,6 +144,12 @@ public class AdminPromotionalOffersController {
         return aceAjaxView;
     }
 
+    /**
+     * 展示促销优惠的商品
+     * @param pPage
+     * @param classifyId
+     * @return
+     */
     @RequestMapping
     public AcePagingView listPromotionalOffer(PPage pPage, Long classifyId) {
 
@@ -162,6 +171,11 @@ public class AdminPromotionalOffersController {
         return pagingView;
     }
 
+    /**
+     * 跳转到添加商品的页面
+     * @param classifyId
+     * @return
+     */
     @RequestMapping
     public ModelAndView toAddPromotionalOffer(Long classifyId) {
 
@@ -170,6 +184,16 @@ public class AdminPromotionalOffersController {
         return modelAndView;
     }
 
+    /**
+     * 添加商品
+     * @param unifiedMerchandiseId
+     * @param image
+     * @param discount
+     * @param integral
+     * @param stock
+     * @param classifyId
+     * @return
+     */
     @RequestMapping
     public AceAjaxView addPromotionalOffer(Long unifiedMerchandiseId, String image, Double discount, Integer integral, Integer stock, Long classifyId) {
 
@@ -180,6 +204,11 @@ public class AdminPromotionalOffersController {
         return aceAjaxView;
     }
 
+    /**
+     * 删除商品
+     * @param id
+     * @return
+     */
     @RequestMapping
     public AceAjaxView deletePromotionalOffer(Long id) {
 

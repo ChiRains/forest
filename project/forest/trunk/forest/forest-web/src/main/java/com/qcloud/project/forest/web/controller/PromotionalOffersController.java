@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.model.UnifiedMerchandise;
 import com.qcloud.component.goods.model.key.TypeEnum.QueryItemType;
 import com.qcloud.component.goods.model.query.UnifiedMerchandiseQuery;
@@ -35,6 +36,9 @@ public class PromotionalOffersController {
     @Autowired
     private PromotionalOffersHandler  promotionalOffersHandler;
 
+    @Autowired
+    private FileSDKClient             fileSDKClient;
+
     /**
      * 获取促销优惠类别
      * @return
@@ -47,6 +51,7 @@ public class PromotionalOffersController {
         Iterator<Classify> iter = classifies.iterator();
         while (iter.hasNext()) {
             Classify s = iter.next();
+            s.setImage(fileSDKClient.getFileServerUrl() + s.getImage());
             if (s.getEnable() != 1) {
                 iter.remove();
             }
@@ -74,7 +79,7 @@ public class PromotionalOffersController {
         List<PromotionalOffersVO> list = promotionalOffersHandler.toVOList(page.getData());
         FrontPagingView frontPagingView = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), page.getCount());
         frontPagingView.setList(list);
-        frontPagingView.addObject("image", classify.getImage());
+        frontPagingView.addObject("image", fileSDKClient.getFileServerUrl() + classify.getImage());
         return frontPagingView;
     }
 }
