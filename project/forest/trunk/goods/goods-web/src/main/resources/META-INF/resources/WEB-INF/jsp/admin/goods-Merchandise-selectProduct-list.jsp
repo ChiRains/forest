@@ -9,7 +9,7 @@
                     <label>
                         <div class="input-group">
 
-                            <input type="search" maxlength="20" class="form-control search-query" placeholder="名称"
+                            <input type="search" maxlength="20" class="form-control search-query" placeholder="名称/系统编码"
                                    name="name" value="${query.name}">
                             <span class="input-group-btn">
                                 <button type="button" class="btn btn-purple btn-sm search-button">

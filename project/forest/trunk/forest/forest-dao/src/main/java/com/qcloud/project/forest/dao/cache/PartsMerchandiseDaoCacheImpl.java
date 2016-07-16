@@ -83,4 +83,10 @@ public class PartsMerchandiseDaoCacheImpl implements PartsMerchandiseDao {
 
         return partsMerchandiseDaoMysqlImpl.deleteByClassify(classifyId);
     }
+
+    @Override
+    public boolean deleteByMerchandiseId(long merchandiseId) {
+
+        return partsMerchandiseDaoMysqlImpl.deleteByMerchandiseId(merchandiseId);
+    }
 }

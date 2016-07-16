@@ -3,6 +3,7 @@ package com.qcloud.project.forest.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.qcloud.component.autoid.AutoIdGenerator;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.project.forest.dao.PartsMerchandiseDao;
@@ -64,8 +65,16 @@ public class PartsMerchandiseServiceImpl implements PartsMerchandiseService {
     }
 
     @Override
+    @Transactional
     public boolean deleteByClassify(long classifyId) {
 
         return partsMerchandiseDao.deleteByClassify(classifyId);
+    }
+
+    @Override
+    @Transactional
+    public boolean deleteByMerchandiseId(long merchandiseId) {
+
+        return partsMerchandiseDao.deleteByMerchandiseId(merchandiseId);
     }
 }

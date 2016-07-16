@@ -212,11 +212,33 @@ public class AdminPartsMerchandiseController {
             PartsMerchandise partsMerchandise = new PartsMerchandise();
             partsMerchandise.setMerchandiseId(merchandiseId);
             partsMerchandise.setClassifyId(query.getClassifyId());
+            QMerchandise qMerchandise = commoditycenterClient.getMerchandise(merchandiseId);
+            AssertUtil.assertNotNull(qMerchandise, "请检查数据，商品不存在." + merchandiseId);
+            partsMerchandise.setState(qMerchandise.getState());
             partsMerchandiseService.add(partsMerchandise);
         }
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("编辑成功");
         aceAjaxView.setUrl(DIR + "/toEditMerchandise?classifyId=" + query.getClassifyId());
+        return aceAjaxView;
+    }
+
+    /**
+     * 刷新商品上下架状态
+     * @return
+     */
+    @RequestMapping
+    public AceAjaxView flushState() {
+
+        List<PartsMerchandise> partsMerchandises = partsMerchandiseService.listAll();
+        for (PartsMerchandise p : partsMerchandises) {
+            QMerchandise qMerchandise = commoditycenterClient.getMerchandise(p.getMerchandiseId());
+            AssertUtil.assertNotNull(qMerchandise, "请检查数据，商品不存在." + p.getMerchandiseId());
+            p.setState(qMerchandise.getState());
+            partsMerchandiseService.update(p);
+        }
+        AceAjaxView aceAjaxView = new AceAjaxView();
+        aceAjaxView.setMessage("更新成功");
         return aceAjaxView;
     }
 }

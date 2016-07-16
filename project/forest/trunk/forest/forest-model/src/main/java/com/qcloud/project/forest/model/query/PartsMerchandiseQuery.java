@@ -9,6 +9,8 @@ public class PartsMerchandiseQuery {
 
     private long       classifyId;
 
+    private int        state;
+
     public List<Long> getMerchandiseIds() {
 
         return merchandiseIds;
@@ -27,5 +29,15 @@ public class PartsMerchandiseQuery {
     public void setClassifyId(long classifyId) {
 
         this.classifyId = classifyId;
+    }
+
+    public int getState() {
+
+        return state;
+    }
+
+    public void setState(int state) {
+
+        this.state = state;
     }
 }

@@ -13,14 +13,14 @@ import com.qcloud.project.forest.model.query.PartsMerchandiseQuery;
 
 public interface PartsMerchandiseMapper {
 
-	@Insert("insert into `forest_parts_merchandise`(`id`,`merchandiseId`,`classifyId`)"
-			+ " values(#{id},#{merchandiseId},#{classifyId})")
+	@Insert("insert into `forest_parts_merchandise`(`id`,`merchandiseId`,`classifyId`,`state`)"
+			+ " values(#{id},#{merchandiseId},#{classifyId},#{state})")
 	public void insert(PartsMerchandise partsMerchandise);
 
 	@Select("select * from `forest_parts_merchandise` where `id`=#{id}")
 	public PartsMerchandise get(Long id);
 
-	@Update("update `forest_parts_merchandise` set `merchandiseId`=#{merchandiseId},`classifyId`=#{classifyId} where `id`=#{id}")
+	@Update("update `forest_parts_merchandise` set `merchandiseId`=#{merchandiseId},`classifyId`=#{classifyId},`state`=#{state} where `id`=#{id}")
 	public void update(PartsMerchandise partsMerchandise);
 
 	@Delete("delete from `forest_parts_merchandise` where `id`=#{id}")

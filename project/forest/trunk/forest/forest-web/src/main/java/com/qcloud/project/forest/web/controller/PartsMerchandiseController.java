@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.QMerchandise;
+import com.qcloud.component.goods.model.key.TypeEnum.MerchandiseStateType;
 import com.qcloud.component.my.model.MyCoupon;
 import com.qcloud.component.my.web.vo.MyCouponVO;
 import com.qcloud.component.organization.OrganizationClient;
@@ -77,6 +78,7 @@ public class PartsMerchandiseController {
     public FrontPagingView list(HttpServletRequest request, PPage pPage, PartsMerchandiseQuery query) {
 
         AssertUtil.greatZero(query.getClassifyId(), "分类id不能为空.");
+        query.setState(MerchandiseStateType.ONLINE.getKey());
         Page<PartsMerchandise> page = partsMerchandiseService.page(query, pPage.getPageStart(), pPage.getPageSize());
         List<PartsMerchandiseVO> voList = partsMerchandiseHandler.toVOList(page.getData());
         List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
