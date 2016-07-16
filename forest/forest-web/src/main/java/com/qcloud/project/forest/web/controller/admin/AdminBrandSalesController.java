@@ -48,6 +48,11 @@ public class AdminBrandSalesController {
     @Autowired
     private CommoditycenterClient     commoditycenterClient;
 
+    /**
+     * 品牌特卖品牌列表
+     * @param pPage
+     * @return
+     */
     @RequestMapping
     public AcePagingView listBrand(PPage pPage) {
 
@@ -59,11 +64,19 @@ public class AdminBrandSalesController {
         }
         List<Classify> resultList = new ArrayList<Classify>();
         resultList.addAll(list.subList((pPage.getPageNum() - 1) * pPage.getPageSize(), i));
+        for (Classify classify : resultList) {
+            classify.setImage(fileSDKClient.getFileServerUrl() + classify.getImage());
+        }
         AcePagingView acePagingView = new AcePagingView("/admin/forest-BrandSales-listBrand", DIR + "/listBrand", pPage.getPageNum(), pPage.getPageSize(), list.size());
         acePagingView.addObject("brands", resultList);
         return acePagingView;
     }
 
+    /**
+     * 品牌特卖类别列表
+     * @param pPage
+     * @return
+     */
     @RequestMapping
     public AcePagingView listClassify(PPage pPage) {
 
@@ -75,11 +88,20 @@ public class AdminBrandSalesController {
         }
         List<Classify> resultList = new ArrayList<Classify>();
         resultList.addAll(list.subList((pPage.getPageNum() - 1) * pPage.getPageSize(), i));
+        for (Classify classify : resultList) {
+            classify.setImage(fileSDKClient.getFileServerUrl() + classify.getImage());
+        }
         AcePagingView acePagingView = new AcePagingView("/admin/forest-BrandSales-listClassify", DIR + "/listClassify", pPage.getPageNum(), pPage.getPageSize(), list.size());
         acePagingView.addObject("brands", resultList);
         return acePagingView;
     }
 
+    /**
+     * 是否启用品牌或类别
+     * @param classifyId
+     * @param enable
+     * @return
+     */
     @RequestMapping
     public AceAjaxView enable(Long classifyId, int enable) {
 
@@ -92,6 +114,11 @@ public class AdminBrandSalesController {
         return aceAjaxView;
     }
 
+    /**
+     * 添加品牌或类别
+     * @param type
+     * @return
+     */
     @RequestMapping
     public ModelAndView toAdd(int type) {
 
@@ -105,6 +132,12 @@ public class AdminBrandSalesController {
         return modelAndView;
     }
 
+    /**
+     * 提交添加品牌或类别
+     * @param classify
+     * @param type
+     * @return
+     */
     @RequestMapping
     public AceAjaxView add(Classify classify, int type) {
 
@@ -121,15 +154,26 @@ public class AdminBrandSalesController {
         return aceAjaxView;
     }
 
+    /**
+     * 编辑品牌或类别
+     * @param id
+     * @return
+     */
     @RequestMapping
     public ModelAndView toEdit(Long id) {
 
         Classify classify = publicdataClient.getClassify(id);
+        classify.setImage(fileSDKClient.getFileServerUrl() + classify.getImage());
         ModelAndView modelAndView = new ModelAndView("/admin/forest-BrandSales-edit");
         modelAndView.addObject("classify", classify);
         return modelAndView;
     }
 
+    /**
+     * 提交编辑品牌或类别
+     * @param classify
+     * @return
+     */
     @RequestMapping
     public AceAjaxView edit(Classify classify) {
 
@@ -144,6 +188,12 @@ public class AdminBrandSalesController {
         return aceAjaxView;
     }
 
+    /**
+     * 展示品牌特卖的商品
+     * @param pPage
+     * @param classifyId
+     * @return
+     */
     @RequestMapping
     public AcePagingView listMerchandise(PPage pPage, Long classifyId) {
 
@@ -165,6 +215,11 @@ public class AdminBrandSalesController {
         return pagingView;
     }
 
+    /**
+     * 添加品牌特卖的商品
+     * @param classifyId
+     * @return
+     */
     @RequestMapping
     public ModelAndView toAddMerchandise(Long classifyId) {
 
@@ -173,6 +228,16 @@ public class AdminBrandSalesController {
         return modelAndView;
     }
 
+    /**
+     * 提交添加品牌特卖的商品
+     * @param unifiedMerchandiseId
+     * @param image
+     * @param discount
+     * @param integral
+     * @param stock
+     * @param classifyId
+     * @return
+     */
     @RequestMapping
     public AceAjaxView addMerchandise(Long unifiedMerchandiseId, String image, Double discount, Integer integral, Integer stock, Long classifyId) {
 
@@ -183,6 +248,11 @@ public class AdminBrandSalesController {
         return aceAjaxView;
     }
 
+    /**
+     * 删除品牌特卖的商品
+     * @param id
+     * @return
+     */
     @RequestMapping
     public AceAjaxView deleteMerchandise(Long id) {
 

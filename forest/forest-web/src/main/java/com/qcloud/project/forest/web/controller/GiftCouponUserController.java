@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.pirates.data.Page;
@@ -55,6 +56,9 @@ public class GiftCouponUserController {
 
     @Autowired
     private ConfigHandler         configHandler;
+
+    @Autowired
+    private FileSDKClient         fileSDKClient;
 
     /**
      * 获取当前用户的赠品券列表
