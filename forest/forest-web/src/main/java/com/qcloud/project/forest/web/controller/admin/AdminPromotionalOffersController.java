@@ -1,6 +1,5 @@
 package com.qcloud.project.forest.web.controller.admin;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,18 +52,16 @@ public class AdminPromotionalOffersController {
     public AcePagingView listPromotionalOfferClassify(PPage pPage) {
 
         List<Classify> list = publicdataClient.listClassify((long) ClassifyType.PROMOTIONALOFFERS.getKey());
-        pPage.setPageSize(10);
         int i = (pPage.getPageNum() - 1) * pPage.getPageSize() + pPage.getPageSize();
         if (i > list.size()) {
             i = list.size();
         }
-        List<Classify> resultList = new ArrayList<Classify>();
-        resultList.addAll(list.subList((pPage.getPageNum() - 1) * pPage.getPageSize(), i));
-        for (Classify classify : resultList) {
+        list.subList((pPage.getPageNum() - 1) * pPage.getPageSize(), i);
+        for (Classify classify : list) {
             classify.setImage(fileSDKClient.getFileServerUrl() + classify.getImage());
         }
         AcePagingView acePagingView = new AcePagingView("/admin/forest-PromotionalOfferClassify-list", DIR + "/listPromotionalOfferClassify", pPage.getPageNum(), pPage.getPageSize(), list.size());
-        acePagingView.addObject("promotionalOfferClassify", resultList);
+        acePagingView.addObject("promotionalOfferClassify", list);
         return acePagingView;
     }
 

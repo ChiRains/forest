@@ -1,6 +1,5 @@
 package com.qcloud.project.forest.web.controller.admin;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,18 +56,16 @@ public class AdminBrandSalesController {
     public AcePagingView listBrand(PPage pPage) {
 
         List<Classify> list = publicdataClient.listClassify((long) ClassifyType.BRANDONSALEBRAND.getKey());
-        pPage.setPageSize(10);
         int i = (pPage.getPageNum() - 1) * pPage.getPageSize() + pPage.getPageSize();
         if (i > list.size()) {
             i = list.size();
         }
-        List<Classify> resultList = new ArrayList<Classify>();
-        resultList.addAll(list.subList((pPage.getPageNum() - 1) * pPage.getPageSize(), i));
-        for (Classify classify : resultList) {
+        list.subList((pPage.getPageNum() - 1) * pPage.getPageSize(), i);
+        for (Classify classify : list) {
             classify.setImage(fileSDKClient.getFileServerUrl() + classify.getImage());
         }
         AcePagingView acePagingView = new AcePagingView("/admin/forest-BrandSales-listBrand", DIR + "/listBrand", pPage.getPageNum(), pPage.getPageSize(), list.size());
-        acePagingView.addObject("brands", resultList);
+        acePagingView.addObject("brands", list);
         return acePagingView;
     }
 
@@ -86,13 +83,12 @@ public class AdminBrandSalesController {
         if (i > list.size()) {
             i = list.size();
         }
-        List<Classify> resultList = new ArrayList<Classify>();
-        resultList.addAll(list.subList((pPage.getPageNum() - 1) * pPage.getPageSize(), i));
-        for (Classify classify : resultList) {
+        list.subList((pPage.getPageNum() - 1) * pPage.getPageSize(), i);
+        for (Classify classify : list) {
             classify.setImage(fileSDKClient.getFileServerUrl() + classify.getImage());
         }
         AcePagingView acePagingView = new AcePagingView("/admin/forest-BrandSales-listClassify", DIR + "/listClassify", pPage.getPageNum(), pPage.getPageSize(), list.size());
-        acePagingView.addObject("brands", resultList);
+        acePagingView.addObject("brands", list);
         return acePagingView;
     }
 

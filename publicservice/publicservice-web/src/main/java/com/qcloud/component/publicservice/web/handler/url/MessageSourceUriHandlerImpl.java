@@ -36,7 +36,7 @@ public class MessageSourceUriHandlerImpl extends AbstractUriHandler {
     public Map<String, List<String>> permissionRelaMap() {
 
         Map<String, List<String>> map = new HashMap<String, List<String>>();
-        List<String> list = stringToList("/admin/messageSource/list.do");
+        List<String> list = stringToList("/admin/messageSource/list.do", "/admin/forestMessage/modularList.do");
         //
         map.put("/admin/messageSource/list.do", list);
         map.put("/admin/messageSource/toAdd.do", list);
