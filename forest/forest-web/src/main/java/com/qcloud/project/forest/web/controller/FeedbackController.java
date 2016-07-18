@@ -29,6 +29,12 @@ public class FeedbackController {
     @Autowired
     private PublicdataClient   publicdataClient;
 
+    /**
+     * 提交反馈
+     * @param request
+     * @param feedback
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView commitFeedback(HttpServletRequest request, Feedback feedback) {
@@ -43,6 +49,10 @@ public class FeedbackController {
         return frontAjaxView;
     }
 
+    /**
+     * 获取反馈类型
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView getFeedbackClassify() {

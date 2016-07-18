@@ -30,6 +30,11 @@ public class MessageCenterController {
     @Autowired
     public MessageClient       messageClient;
 
+    /**
+     * 获取消息类型和数量
+     * @param request
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView getMessageTypeAndNum(HttpServletRequest request) {
@@ -71,6 +76,13 @@ public class MessageCenterController {
         return frontAjaxView;
     }
 
+    /**
+     * 获取消息列表
+     * @param request
+     * @param pPage
+     * @param type
+     * @return
+     */
     @PiratesApp
     @RequestMapping
     public FrontPagingView getMessageList(HttpServletRequest request, PPage pPage, int type) {
