@@ -131,8 +131,6 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
         } else {
             orderVO.setProve("");
         }
-        orderVO.setDeliveryDateStr(DateUtil.date2String(forestOrder.getDeliveryDate(), "yyyy-MM-dd HH:mm:ss"));
-        orderVO.setPayDateStr(DateUtil.date2String(new Date(), "yyyy-MM-dd HH:mm:ss"));
         orderVO.setInvoiceType(order.getInvoiceType());
         orderVO.setPaymentMode(order.getPaymentMode());
         orderVO.setCounpon(order.getCoupon());
@@ -156,6 +154,8 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
         orderVO.setInvoiceTypeStr(InvoiceType.get(order.getInvoiceType()).getName());
         orderVO.setMerchandiseNumber(merchandiseNumber);
         orderVO.setOrderDateStr(DateUtil.date2String(order.getOrderDate(), "yyyy-MM-dd HH:mm:ss"));
+        orderVO.setDeliveryDateStr(order.getMerchantOrderList().get(0).getDeliveryTimeStr());
+        orderVO.setPayDateStr(DateUtil.date2String(forestOrder.getPayDate(), "yyyy-MM-dd HH:mm:ss"));
         // 剩余支付时间
         orderVO.setResidualHour(1);
         orderVO.setResidualMinute(0);

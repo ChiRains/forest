@@ -20,7 +20,7 @@ public interface UnifiedMerchandiseMapper {
 	@Select("select * from `goods_unified_merchandise` where `id`=#{id}")
 	public UnifiedMerchandise get(Long id);
 
-	@Update("update `goods_unified_merchandise` set `mallClassifyId`=#{mallClassifyId},`mallClassifyBsid`=#{mallClassifyBsid},`merchantClassifyId`=#{merchantClassifyId},`merchantClassifyBsid`=#{merchantClassifyBsid},`name`=#{name},`code`=#{code},`image`=#{image},`brandId`=#{brandId},`purchase`=#{purchase},`discount`=#{discount},`price`=#{price},`integral`=#{integral},`canUseCoupon`=#{canUseCoupon},`keywords`=#{keywords},`state`=#{state},`virtualSalesVolume`=#{virtualSalesVolume},`order`=#{order},`activityId`=#{activityId},`updateTime`=#{updateTime},relaUnifiedMerchandiseId=#{relaUnifiedMerchandiseId} where `id`=#{id}")
+	@Update("update `goods_unified_merchandise` set `mallClassifyId`=#{mallClassifyId},`mallClassifyBsid`=#{mallClassifyBsid},`merchantClassifyId`=#{merchantClassifyId},`merchantClassifyBsid`=#{merchantClassifyBsid},`name`=#{name},`code`=#{code},`image`=#{image},`brandId`=#{brandId},`purchase`=#{purchase},`discount`=#{discount},`price`=#{price},`integral`=#{integral},`canUseCoupon`=#{canUseCoupon},`keywords`=#{keywords},`state`=#{state},`virtualSalesVolume`=#{virtualSalesVolume},`order`=#{order},`activityId`=#{activityId},`updateTime`=#{updateTime},relaUnifiedMerchandiseId=#{relaUnifiedMerchandiseId},`stock`=#{stock} where `id`=#{id}")
 	public void update(UnifiedMerchandise unifiedMerchandise);
 
 	@Delete("delete from `goods_unified_merchandise` where `id`=#{id}")

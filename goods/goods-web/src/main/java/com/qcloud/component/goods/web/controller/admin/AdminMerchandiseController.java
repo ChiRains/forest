@@ -1245,6 +1245,13 @@ public class AdminMerchandiseController {
         // TODO
         Set<Long> attributeIdList = new HashSet<Long>();
         for (RelationForm relationForm : relationForms) {
+            if (StringUtils.isNotEmpty(relationForm.getAlias())) {
+                relationForm.setAlias(relationForm.getAlias().trim());
+            }
+            if (StringUtils.isNotEmpty(relationForm.getValue())) {
+                relationForm.setValue(relationForm.getValue().trim());
+                relationForm.setOldAlias(relationForm.getValue().trim());
+            }
             if (relationForm.getAttributeId() != null && relationForm.getIsCheck() == 1) {
                 attributeIdList.add(relationForm.getAttributeId());
             }
@@ -1259,7 +1266,7 @@ public class AdminMerchandiseController {
                 attributeDefinitions.add(attributeDefinition);
             }
         }
-        AssertUtil.assertTrue(attributeDefinitions.size() == attributeIdList.size(), "该分类的规格维度为：" + attributeDefinitions.size() + " === 当前所勾选的维度为：" + attributeIdList.size() + " === 无法生成单品.");
+        AssertUtil.assertTrue((attributeIdList.size() == 0 || attributeDefinitions.size() == attributeIdList.size()), "该分类的规格维度为：" + attributeDefinitions.size() + " === 当前所勾选的维度为：" + attributeIdList.size() + " === 无法生成单品.");
         for (RelationForm relationForm : relationForms) {
             if (relationForm.getAttributeId() != null && relationForm.getIsCheck() != 0) {
                 MerchandiseSpecificationsRelation relation = returnRelation(merchandise.getId(), relationForm.getAttributeId(), relationForm.getValue(), relationForm.getAlias());
@@ -1306,8 +1313,8 @@ public class AdminMerchandiseController {
                     continue;
                 }
                 MerchandiseSpecificationsRelation relation = new MerchandiseSpecificationsRelation();
-                relation.setOldAlias(relationForm.getValue());
-                relation.setAlias(relationForm.getAlias());
+                relation.setOldAlias(relationForm.getValue().trim());
+                relation.setAlias(relationForm.getAlias().trim());
                 relation.setType(2);
                 relation.setAttributeId(relationForm.getAttributeId());
                 relation.setMerchandiseId(merchandise.getId());
@@ -1485,6 +1492,32 @@ public class AdminMerchandiseController {
         AcePagingView pagingView = new AcePagingView("/admin/goods-Merchandise-selectProduct-list", DIR + "/selectProductList.do?" + param, pageNum, PAGE_SIZE, page.getCount());
         pagingView.addObject("result", voList);
         pagingView.addObject("query", query);
+        return pagingView;
+    }
+
+    @RequestMapping
+    @NoReferer
+    public ModelAndView listStock(HttpServletRequest request, Integer pageNum, MerchandiseQuery query) {
+
+        QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
+        query.setMerchantId(merchant.getId());
+        final int PAGE_SIZE = 10;
+        pageNum = RequestUtil.getPageid(pageNum);
+        int start = NumberUtil.getPageStart(pageNum, PAGE_SIZE);
+        Page<Merchandise> page = merchandiseService.page(query, start, PAGE_SIZE);
+        List<AdminMerchandiseVO> list = merchandiseHandler.toVOList4Admin(page.getData());
+        String param = "name=" + StringUtil.nullToEmpty(query.getName()) + "&merchantClassifyId=" + query.getMerchantClassifyId() + "&code=" + StringUtil.nullToEmpty(query.getCode()) + "&specClassifyId=" + (query.getSpecClassifyId() == null ? -1L : query.getSpecClassifyId());
+        AcePagingView pagingView = new AcePagingView("/admin/goods-Merchandise-listStock", DIR + "/listStock?" + param, pageNum, PAGE_SIZE, page.getCount());
+        pagingView.addObject("result", list);
+        // pagingView.addObject("merchantList", merchantKVList);
+        pagingView.addObject("query", query);
+        List<Classify> mallClassifyList = publicdataClient.listClassify(query.getMerchantId());
+        List<KeyValueVO> mallCVOList = ClassifyUtils.exchangeObj(mallClassifyList, -1, "");
+        pagingView.addObject("merchantClassifyList", mallCVOList);
+        // 获取类目列表
+        List<Classify> specClassifyList = publicdataClient.listClassify(ClassifyType.SPECIFICATIONS.getKey());
+        List<KeyValueVO> specCVOList = ClassifyUtils.exchangeObj(specClassifyList, -1, "");
+        pagingView.addObject("specClassifyId", specCVOList);
         return pagingView;
     }
 }
