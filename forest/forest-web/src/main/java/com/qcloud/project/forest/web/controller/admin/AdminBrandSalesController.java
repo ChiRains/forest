@@ -156,12 +156,19 @@ public class AdminBrandSalesController {
      * @return
      */
     @RequestMapping
-    public ModelAndView toEdit(Long id) {
+    public ModelAndView toEdit(Long id, Integer type) {
 
+        String jsp = "";
+        if (type == BRAND) {
+            jsp = "/admin/forest-BrandSales-editBrand";
+        } else if (type == CLASSIFY) {
+            jsp = "/admin/forest-BrandSales-editClassify";
+        }
         Classify classify = publicdataClient.getClassify(id);
-        classify.setImage(fileSDKClient.getFileServerUrl() + classify.getImage());
-        ModelAndView modelAndView = new ModelAndView("/admin/forest-BrandSales-edit");
+        classify.setImage(classify.getImage());
+        ModelAndView modelAndView = new ModelAndView(jsp);
         modelAndView.addObject("classify", classify);
+        modelAndView.addObject("uid", classify.getImage());
         return modelAndView;
     }
 
@@ -171,13 +178,13 @@ public class AdminBrandSalesController {
      * @return
      */
     @RequestMapping
-    public AceAjaxView edit(Classify classify) {
+    public AceAjaxView edit(Classify classify, String uid) {
 
-        Classify classify1 = publicdataClient.getClassify(classify.getId());
-        if (classify.getImage().equals(classify1.getImage())) {
-            classify.setImage(fileSDKClient.urlToUid(classify.getImage()));
+        if (classify.getImage() != null) {
+            if (classify.getImage().equals(uid)) {
+                classify.setImage(fileSDKClient.urlToUid(classify.getImage()));
+            }
         }
-        classify.setEnable(classify1.getEnable());
         publicdataClient.update(classify);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("修改成功");

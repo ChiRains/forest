@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>编辑品牌特卖品牌</title>
+<title>编辑品牌特卖类别</title>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/colorbox.css"/>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/chosen.css" />
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
-        品牌特卖品牌管理
+        品牌特卖类别管理
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             编辑
@@ -19,9 +19,12 @@
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
-        <form id="model-form" class="form-horizontal"  role="form" action="/admin/promotionalOffers/editPromotionalOfferClassify.do">
+        <form id="model-form" class="form-horizontal"  role="form" action="/admin/brandSales/edit.do">
             <!-- #section:elements.form -->
-            <input type="hidden" name="id" value="${classify.id}">
+             <input type="hidden" name="id" value="${classify.id}">
+             <input type="hidden" name="enable" value="${classify.enable}">
+             <input type="hidden" name="uid" value="${uid}">
+            
 
                   		<div class="space-4"></div>
             <div class="form-group">
@@ -33,26 +36,7 @@
 					</span>
                 </div>
             </div>
-			                  		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="image"> 图片 </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">						
-						<input type="hidden" id="image" name="image" value="${classify.image}"/>
-						<button type="button" mult="false" sid="image" vid="pic-pic-view" class="btn btn-sm btn-purple btn-upload-pic" upfrom="0">
-						<i class="ace-icon fa fa-upload"></i> 上 传
-						</button>
-						<ul sid="pic" id="pic-pic-view" class="ace-thumbnails clearfix">
-						 <li pic-id="">
-                            <a style="line-height: 150px;text-align: center;width:150px;height: 150px;" href="" data-rel="colorbox" class="cboxElement">
-                                <img style="max-height: 150px;max-width: 150px;" alt="" src="${classify.image}">
-                            </a>
-                            <div class="tools tools-bottom"><a onclick="imgDel(this);" href="javascript:;" title="删除"><i class="ace-icon fa fa-times red"></i></a></div>
-                        </li>
-						</ul>
-					</span>
-                </div>
-            </div>
+
                   		<div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="remark"> 备注 </label>
@@ -95,15 +79,6 @@
                 })
             }).trigger('resize.chosen');
 
-            //图片浏览
-            $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
-            $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange'></i>");
-            var btnUpload = $(".btn-upload-pic");
-            delEvent(getButtonSetting(btnUpload));
-            btnUpload.on('click', function () {
-                var bs = getButtonSetting($(this));
-                uploadDialog(bs);
-            });
                    
             //表单验证
             $("#model-form").validate({
