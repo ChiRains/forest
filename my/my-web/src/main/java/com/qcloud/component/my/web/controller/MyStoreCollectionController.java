@@ -117,8 +117,11 @@ public class MyStoreCollectionController {
      */
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView removeAll(HttpServletRequest request, List<Long> idList) {
+    public FrontAjaxView removeAll(HttpServletRequest request, Long classifyId) {
 
-        return myCollectionController.removeList(request, idList);
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        myCollectionService.deleteByUser(user.getId(), CollectionType.STORE, classifyId);
+        FrontAjaxView frontAjaxView = new FrontAjaxView();
+        return frontAjaxView;
     }
 }

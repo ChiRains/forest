@@ -139,4 +139,19 @@ public class MyCollectionDaoMysqlImpl implements MyCollectionDao {
         map.put("userId", userId);
         return sqlOperator.selectOne("com.qcloud.component.my.dao.mysql.mapper.MyCollectionMapper.countByUserId", map);
     }
+
+    @Override
+    public List<MyCollection> listByUser(Long userId, CollectionType type, Long classifyId) {
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("table_name", getTableName(userId));
+        map.put("userId", userId);
+        if (classifyId == null || classifyId == 0) {
+            classifyId = -1L;
+        }
+        map.put("classifyId", classifyId);
+        map.put("type", type.getKey());
+        List<MyCollection> list = sqlOperator.selectList("com.qcloud.component.my.dao.mysql.mapper.MyCollectionMapper.listByUser", map);
+        return list;
+    }
 }
