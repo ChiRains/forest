@@ -65,7 +65,7 @@
                                                         </td>                         
                                                         <td>
                                 <div class="hidden-sm hidden-xs action-buttons">
-                                    <button class="btn btn-success edit" api-path="#admin/brandSales/toEdit?id=${item.id}&queryStr=${queryStr}">修改</button>					                                 
+                                    <button class="btn btn-success edit" api-path="#admin/brandSales/toEdit?type=1&id=${item.id}&queryStr=${queryStr}">修改</button>					                                 
                                     <button class="btn btn-warning check" api-path="#admin/brandSales/listMerchandise?classifyId=${item.id}&queryStr=${queryStr}">查看商品</button>
                                     
                                 </div>

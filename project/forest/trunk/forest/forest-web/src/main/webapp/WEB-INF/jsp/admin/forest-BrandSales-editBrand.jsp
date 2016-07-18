@@ -19,9 +19,11 @@
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
-        <form id="model-form" class="form-horizontal"  role="form" action="/admin/promotionalOffers/editPromotionalOfferClassify.do">
+        <form id="model-form" class="form-horizontal"  role="form" action="/admin/brandSales/edit.do">
             <!-- #section:elements.form -->
             <input type="hidden" name="id" value="${classify.id}">
+            <input type="hidden" name="enable" value="${classify.enable}">
+            <input type="hidden" name="uid" value="${uid}">
 
                   		<div class="space-4"></div>
             <div class="form-group">

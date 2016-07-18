@@ -21,7 +21,7 @@
         <!-- PAGE CONTENT BEGINS -->
         <form id="model-form" class="form-horizontal"  role="form" action="/admin/promotionalOffers/edit.do">
             <!-- #section:elements.form -->
-<input type="hidden" name="classifyId" value="${classifyId}">
+			<input type="hidden" name="classifyId" value="${classifyId}">
 			<input type="hidden" id="unifiedMerchandiseId" name="unifiedMerchandiseId" value="${unifiedMerchandise.unid}" readonly class="config-key">
 
                   		<div class="space-4"></div>
