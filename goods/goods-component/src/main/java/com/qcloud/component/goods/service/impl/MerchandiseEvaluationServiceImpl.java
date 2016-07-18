@@ -1,6 +1,7 @@
 package com.qcloud.component.goods.service.impl;
 
 import java.util.Date;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -127,7 +128,7 @@ public class MerchandiseEvaluationServiceImpl implements MerchandiseEvaluationSe
     // }
     @Transactional
     @Override
-    public boolean evaluate(long toEvaluationId, long userId, String content, int star) {
+    public boolean evaluate(long toEvaluationId, long userId, String content, int star, List<String> images) {
 
         QMyToEvaluation myToEvaluation = myClient.getMyToEvaluation(toEvaluationId);
         AssertUtil.assertNotNull(myToEvaluation, "待评价项不存在.");
@@ -141,6 +142,15 @@ public class MerchandiseEvaluationServiceImpl implements MerchandiseEvaluationSe
         merchandiseEvaluation.setStatus(StatusType.UNDO.getKey());
         merchandiseEvaluation.setTime(new Date());
         merchandiseEvaluation.setUserId(userId);
+        StringBuilder sb = new StringBuilder();
+        for (String image : images) {
+            if (sb.length() == 0) {
+                sb.append(image);
+            } else {
+                sb.append(",").append(image);
+            }
+        }
+        merchandiseEvaluation.setImages(sb.toString());
         add(merchandiseEvaluation);
         sellercenterClient.addMerchantEvaluation(merchandiseEvaluation.getId(), myToEvaluation.getMerchantId(), merchandiseEvaluation.getMerchandiseId(), merchandiseEvaluation.getContent());
         myClient.addMyEvaluation(merchandiseEvaluation.getId(), merchandiseEvaluation.getUserId(), merchandiseEvaluation.getMerchandiseId(), toEvaluationId);

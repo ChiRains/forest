@@ -24,4 +24,6 @@ public interface MyToEvaluationService {
     public List<MyToEvaluation> listByUserAndOrder(long userId, long subOrderId, int start, int count);
 
     public int countByUserAndOrder(long userId, long subOrderId);
+
+    public List<MyToEvaluation> listByUserAndOrderId(long userId, long orderId);
 }

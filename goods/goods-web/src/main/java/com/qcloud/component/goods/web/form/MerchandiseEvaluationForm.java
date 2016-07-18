@@ -1,15 +1,20 @@
 package com.qcloud.component.goods.web.form;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MerchandiseEvaluationForm {
 
     //
-    private Long   toEvaluationId;
+    private Long         toEvaluationId;
 
     // 评价内容
-    private String content;
+    private String       content;
 
     // 星级(1-5星，星值=(1-5)*10)
-    private int    star;
+    private int          star;
+
+    private List<String> images = new ArrayList<String>();
 
     public String getContent() {
 
@@ -39,5 +44,15 @@ public class MerchandiseEvaluationForm {
     public void setToEvaluationId(Long toEvaluationId) {
 
         this.toEvaluationId = toEvaluationId;
+    }
+
+    public List<String> getImages() {
+
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+
+        this.images = images;
     }
 }

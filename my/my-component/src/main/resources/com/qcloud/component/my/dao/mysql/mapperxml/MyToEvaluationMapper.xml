@@ -22,4 +22,9 @@
     <select id="countByUserAndOrder" parameterType="java.util.HashMap" resultType="Integer">  
         select count(*) from `my_my_to_evaluation` where userId = #{userId} and subOrderId = #{subOrderId}
     </select>        
+    
+    <select id="listByUserAndOrderId" parameterType="java.util.HashMap" resultType="MyToEvaluation">  
+        select * from `my_my_to_evaluation` where `userId` = #{userId} and `orderId` = #{orderId}
+    </select>
+    
 </mapper>
