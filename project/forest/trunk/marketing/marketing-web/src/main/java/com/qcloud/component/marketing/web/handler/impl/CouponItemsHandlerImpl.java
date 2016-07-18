@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 import com.qcloud.component.marketing.model.CouponItems;
 import com.qcloud.component.marketing.web.handler.CouponItemsHandler;
+import com.qcloud.component.marketing.web.vo.CouponItemsIntegralVO;
 import com.qcloud.component.marketing.web.vo.CouponItemsVO;
 import com.qcloud.component.marketing.web.vo.admin.AdminCouponItemsVO;
 import com.qcloud.pirates.core.json.Json;
@@ -44,5 +45,14 @@ public class CouponItemsHandlerImpl implements CouponItemsHandler {
 
         String json = Json.toJson(couponItems);
         return Json.toObject(json, AdminCouponItemsVO.class, true);
+    }
+
+    @Override
+    public CouponItemsIntegralVO toIntegralVO(CouponItems couponItems) {
+
+        CouponItemsIntegralVO integralVO = new CouponItemsIntegralVO();
+        String json = Json.toJson(couponItems);
+        integralVO = Json.toObject(json, CouponItemsIntegralVO.class, true);
+        return integralVO;
     }
 }

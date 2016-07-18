@@ -1,6 +1,5 @@
 package com.qcloud.component.marketing.model;
 
-
 public class CouponItems {
 
     private long   id;
@@ -25,6 +24,8 @@ public class CouponItems {
 
     // 使用限额
     private double limitPrice;
+
+    private double cash;
 
     private int    type;
 
@@ -133,5 +134,15 @@ public class CouponItems {
     public void setType(int type) {
 
         this.type = type;
+    }
+
+    public double getCash() {
+
+        return cash;
+    }
+
+    public void setCash(double cash) {
+
+        this.cash = cash;
     }
 }

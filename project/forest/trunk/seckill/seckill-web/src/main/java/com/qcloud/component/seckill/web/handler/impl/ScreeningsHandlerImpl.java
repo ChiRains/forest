@@ -1,6 +1,8 @@
 package com.qcloud.component.seckill.web.handler.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.NotImplementedException;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -241,5 +242,25 @@ public class ScreeningsHandlerImpl implements ScreeningsHandler {
         System.out.println(diff / 1000 / 60 / 60 + "时");
         System.out.println(diff / 1000 / 60 % 60 + "分");
         System.out.println(diff / 1000 % 60 + "秒");
+    }
+
+    @Override
+    public MerchandiseSeckillVO getCrazySeckill(Screenings screenings) {
+
+        List<MerchandiseSeckill> merchandiseList = merchandiseSeckillService.listByScreenings(screenings.getId());
+        List<MerchandiseSeckillVO> merchandiseVOList = merchandiseSeckillHandler.toVOList(merchandiseList);
+        if (CollectionUtils.isNotEmpty(merchandiseVOList)) {
+            Collections.sort(merchandiseVOList, new Comparator<MerchandiseSeckillVO>() {
+
+                @Override
+                public int compare(MerchandiseSeckillVO arg0, MerchandiseSeckillVO arg1) {
+
+                    return String.valueOf(arg1.getSalesVolume()).compareTo(String.valueOf(arg0.getSalesVolume()));
+                }
+            });
+            return merchandiseVOList.get(0);
+        } else {
+            return null;
+        }
     }
 }

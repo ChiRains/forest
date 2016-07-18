@@ -75,6 +75,19 @@
                 </div>
             </div> 
             
+            <c:if test="${couponItems.type eq 2}">
+            	<div class="space-4"></div>
+	            <div class="form-group">
+	                <label class="col-sm-3 control-label no-padding-right" for="cash"> 积分兑换额 </label>
+	                <div class="col-sm-9">
+						<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
+							<input type="text" class="width-100"  maxlength="20" id="cash" name="cash" placeholder="积分兑换额" value="${couponItems.cash}"/>
+							<i class="ace-icon fa"></i>
+						</span>
+	                </div>
+	            </div> 
+            </c:if>
+            
                   		<div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="totalNum"> 总数量 </label>
@@ -180,6 +193,11 @@
                     totalNum: {
                         required: true,
                         range : [0, 99999999],
+                        digits: true
+                    },
+                    cash:{
+                  	    required: true,
+                    	range : [0, 99999999],
                         digits: true
                     }
                 },

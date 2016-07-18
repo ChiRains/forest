@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.qcloud.component.marketing.exception.MarketingException;
 import com.qcloud.component.marketing.model.Coupon;
 import com.qcloud.component.marketing.model.CouponItems;
+import com.qcloud.component.marketing.model.key.TypeEnum.CouponType;
 import com.qcloud.component.marketing.service.CouponItemsService;
 import com.qcloud.component.marketing.service.CouponService;
 import com.qcloud.component.marketing.web.handler.CouponHandler;
@@ -260,13 +261,15 @@ public class CouponController {
         List<Coupon> list = couponService.listActivityCoupon(merchantId);
         List<CouponItemsVO> voList = new ArrayList<CouponItemsVO>();
         for (Coupon coupon : list) {
-            if (couponService.canExtract(user.getId(), coupon)) {
-                List<CouponItems> itemList = couponItemsService.list4Extract(coupon.getId());
-                if (ListUtil.isNotEmpty(list)) {
-                    CouponItemsVO itemVO = couponItemsHandler.toVO(itemList.get(0));
-                    itemVO.setStartDateStr(DateUtil.date2String(coupon.getStartDate(), "yyyy-MM-dd"));
-                    itemVO.setEndDateStr(DateUtil.date2String(coupon.getEndDate(), "yyyy-MM-dd"));
-                    voList.add(itemVO);
+            if (coupon.getType() == CouponType.Normal.getKey()) {// 普通优惠券
+                if (couponService.canExtract(user.getId(), coupon)) {
+                    List<CouponItems> itemList = couponItemsService.list4Extract(coupon.getId());
+                    if (ListUtil.isNotEmpty(list)) {
+                        CouponItemsVO itemVO = couponItemsHandler.toVO(itemList.get(0));
+                        itemVO.setStartDateStr(DateUtil.date2String(coupon.getStartDate(), "yyyy-MM-dd"));
+                        itemVO.setEndDateStr(DateUtil.date2String(coupon.getEndDate(), "yyyy-MM-dd"));
+                        voList.add(itemVO);
+                    }
                 }
             }
         }
@@ -301,18 +304,20 @@ public class CouponController {
         List<Coupon> list = couponService.listActivityCoupon(merchantId);
         List<CouponItemsVO> voList = new ArrayList<CouponItemsVO>();
         for (Coupon coupon : list) {
-            if (couponService.canExtract(user.getId(), coupon)) {
-                List<CouponItems> itemList = couponItemsService.list4Extract(coupon.getId());
-                if (ListUtil.isNotEmpty(list)) {
-                    CouponItemsVO itemVO = couponItemsHandler.toVO(itemList.get(0));
-                    itemVO.setStartDateStr(DateUtil.date2String(coupon.getStartDate(), "yyyy-MM-dd"));
-                    itemVO.setEndDateStr(DateUtil.date2String(coupon.getEndDate(), "yyyy-MM-dd"));
-                    voList.add(itemVO);
+            if (coupon.getType() == CouponType.Integral.getKey()) {// 积分优惠券
+                if (couponService.canExtract(user.getId(), coupon)) {
+                    List<CouponItems> itemList = couponItemsService.list4Extract(coupon.getId());
+                    if (ListUtil.isNotEmpty(list)) {
+                        CouponItemsVO itemVO = couponItemsHandler.toIntegralVO(itemList.get(0));
+                        itemVO.setStartDateStr(DateUtil.date2String(coupon.getStartDate(), "yyyy-MM-dd"));
+                        itemVO.setEndDateStr(DateUtil.date2String(coupon.getEndDate(), "yyyy-MM-dd"));
+                        voList.add(itemVO);
+                    }
                 }
             }
         }
         FrontAjaxView view = new FrontAjaxView();
-        view.setMessage("优惠券可领列表.");
+        view.setMessage("积分优惠券可领列表.");
         view.addObject("list", voList);
         return view;
     }
@@ -321,7 +326,6 @@ public class CouponController {
     @RequestMapping
     public FrontAjaxView extractIntegralCoupon(HttpServletRequest request) {
 
-        // TODO
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("兑换优惠券成功.");
         return view;
