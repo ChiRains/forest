@@ -158,4 +158,18 @@ public class MyCollectionServiceImpl implements MyCollectionService {
 
         return myCollectionDao.countByUserId(userId);
     }
+
+    @Override
+    public boolean deleteByUser(Long userId, CollectionType type, Long classifyId) {
+
+        boolean flag = true;
+        List<MyCollection> myCollections = myCollectionDao.listByUser(userId, type, classifyId);
+        for (MyCollection myCollection : myCollections) {
+            flag = delete(myCollection.getId(), userId);
+            if (flag == false) {
+                break;
+            }
+        }
+        return flag;
+    }
 }

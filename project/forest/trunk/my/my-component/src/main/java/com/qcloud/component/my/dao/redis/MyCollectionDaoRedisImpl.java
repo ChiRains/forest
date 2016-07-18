@@ -99,4 +99,10 @@ public class MyCollectionDaoRedisImpl implements MyCollectionDao {
 
         throw new NotImplementedException();
     }
+
+    @Override
+    public List<MyCollection> listByUser(Long userId, CollectionType type, Long classifyId) {
+
+        throw new NotImplementedException();
+    }
 }

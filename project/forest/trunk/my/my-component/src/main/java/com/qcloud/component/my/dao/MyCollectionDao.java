@@ -36,4 +36,6 @@ public interface MyCollectionDao extends ISimpleDao<MyCollection, Long> {
     List<MyCollection> list(Long userId, CollectionType type, Long classifyId, int start, int count);
 
     public int countByUserId(Long userId);
+
+    public List<MyCollection> listByUser(Long userId, CollectionType type, Long classifyId);
 }

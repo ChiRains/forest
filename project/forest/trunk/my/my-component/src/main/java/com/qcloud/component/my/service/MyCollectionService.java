@@ -31,4 +31,6 @@ public interface MyCollectionService {
     public int count(Long objId, CollectionType type);
 
     public int countByUserId(Long userId);
+
+    public boolean deleteByUser(Long userId, CollectionType type, Long classifyId);
 }
