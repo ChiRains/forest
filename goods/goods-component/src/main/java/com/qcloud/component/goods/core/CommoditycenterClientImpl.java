@@ -227,7 +227,7 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
         UnifiedMerchandiseQuery unifiedMerchandiseQuery = new UnifiedMerchandiseQuery();
         unifiedMerchandiseQuery.setQueryType(QueryType.HOT);
         unifiedMerchandiseQuery.setOrderType(OrderType.DESC);
-        unifiedMerchandiseQuery.setQueryItemType(QueryItemType.M);
+        unifiedMerchandiseQuery.setQueryItemType(QueryItemType.S);
         if (merchantId != -1L) {
             unifiedMerchandiseQuery.setMerchantId(merchantId);
         }
