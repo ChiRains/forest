@@ -63,9 +63,11 @@
                                             +部位</a>
                                         <a class="blue" href="#admin/partsMerchandise/toEditParts?classifyId=${levelOne.id}"><i class="ace-icon fa fa-pencil bigger-130"></i></a>
                         				<span class="lbl middle"></span>
+                        				<!-- 
                         				<a class="red" href="#">
 											<i class="ace-icon fa fa-trash-o bigger-130"></i>
 										</a>
+										 -->
                                     </div>
                                 </div>
                                     <ol class="dd-list ddlist${levelOne.id}">
@@ -83,9 +85,11 @@
                                                             +位置</a>
                                                         <a class="blue" href="#admin/partsMerchandise/toEditParts?classifyId=${levelTwo.id}"><i class="ace-icon fa fa-pencil bigger-130"></i></a>
 		                                				<span class="lbl middle"></span>
+		                                				<!-- 
 		                                				<a class="red" href="#">
 															<i class="ace-icon fa fa-trash-o bigger-130"></i>
 														</a>
+														 -->
                                                     </div>
                                                 </div>
                                                     <ol class="dd-list ddlist${levelTwo.id}">
@@ -103,9 +107,11 @@
 			                                                            +症状</a>
 			                                                        <a class="blue" href="#admin/partsMerchandise/toEditParts?classifyId=${levelThree.id}"><i class="ace-icon fa fa-pencil bigger-130"></i></a>
 					                                				<span class="lbl middle"></span>
+					                                				<!-- 
 					                                				<a class="red" href="#">
 																		<i class="ace-icon fa fa-trash-o bigger-130"></i>
 																	</a>
+																	 -->
 			                                                    </div>
                                                                 </div>
                                                             </li>
@@ -120,9 +126,11 @@
 			                                                            	
 					                                                        <a class="blue" href="#admin/partsMerchandise/toEditParts?classifyId=${levelFour.id}"><i class="ace-icon fa fa-pencil bigger-130"></i></a>
 							                                				<span class="lbl middle"></span>
+							                                				<!-- 
 							                                				<a class="red" href="#">
 																				<i class="ace-icon fa fa-trash-o bigger-130"></i>
 																			</a>
+																			 -->
 		                                                                </div>
 		                                                            </li>
 		                                                        </c:forEach>
