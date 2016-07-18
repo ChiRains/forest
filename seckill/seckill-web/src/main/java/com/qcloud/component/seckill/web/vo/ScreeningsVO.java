@@ -2,22 +2,25 @@ package com.qcloud.component.seckill.web.vo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public abstract class ScreeningsVO {
 
-    private long         id;
+    private long                      id;
 
-    private String       beginTimeStr;
+    private String                    beginTimeStr;
 
-    private String       endTimeStr;
+    private String                    endTimeStr;
 
     // 1结束 2进行中 3即将开枪
-    private int          state;
+    private int                       state;
 
-    private String       nowStr;
+    private String                    nowStr;
 
     // 轮播图
-    private List<String> screeningsSlideList = new ArrayList<String>();
+    private List<String>              screeningsSlideList    = new ArrayList<String>();
+
+    private List<Map<String, Object>> screeningsSlideMapList = new ArrayList<Map<String, Object>>();
 
     public ScreeningsVO() {
 
@@ -81,5 +84,17 @@ public abstract class ScreeningsVO {
     public void setScreeningsSlideList(List<String> screeningsSlideList) {
 
         this.screeningsSlideList = screeningsSlideList;
+    }
+
+    
+    public List<Map<String, Object>> getScreeningsSlideMapList() {
+    
+        return screeningsSlideMapList;
+    }
+
+    
+    public void setScreeningsSlideMapList(List<Map<String, Object>> screeningsSlideMapList) {
+    
+        this.screeningsSlideMapList = screeningsSlideMapList;
     }
 }

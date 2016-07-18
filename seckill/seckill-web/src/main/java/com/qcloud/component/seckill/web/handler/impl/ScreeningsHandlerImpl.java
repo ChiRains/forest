@@ -2,11 +2,14 @@ package com.qcloud.component.seckill.web.handler.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.qcloud.component.filesdk.FileSDKClient;
@@ -158,7 +161,28 @@ public class ScreeningsHandlerImpl implements ScreeningsHandler {
     @Override
     public ScreeningsMerchandiseVO toVO4Merchandise(Screenings screenings) {
 
-        throw new NotImplementedException();
+        Date now = new Date();
+        ScreeningsMerchandiseVO screeningsVO = new ScreeningsMerchandiseVO();
+        screeningsVO.setBeginTimeStr(DateUtil.date2String(screenings.getBeginTime(), "HH:mm:ss"));
+        screeningsVO.setEndTimeStr(DateUtil.date2String(screenings.getEndTime(), "HH:mm:ss"));
+        screeningsVO.setId(screenings.getId());
+        screeningsVO.setState(calculateState(screenings, now));
+        screeningsVO.setNowStr(DateUtil.date2String(now));
+        List<MerchandiseSeckill> merchandiseList = merchandiseSeckillService.listByScreenings(screenings.getId());
+        List<MerchandiseSeckillVO> merchandiseVOList = merchandiseSeckillHandler.toVOList(merchandiseList);
+        screeningsVO.setList(merchandiseVOList);
+        //
+        List<ScreeningsSlide> slideList = screeningsSlideService.listByScreenings(screenings.getId());
+        List<Map<String, Object>> screeningsSlideMapList = new ArrayList<Map<String, Object>>();
+        for (ScreeningsSlide screeningsSlide : slideList) {
+            if (StringUtils.isNotEmpty(screeningsSlide.getImage())) {
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("image", fileSDKClient.getFileServerUrl() + screeningsSlide.getImage());
+                screeningsSlideMapList.add(map);
+            }
+        }
+        screeningsVO.setScreeningsSlideMapList(screeningsSlideMapList);
+        return screeningsVO;
     }
 
     @Override

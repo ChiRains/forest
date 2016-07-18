@@ -43,6 +43,10 @@ public class UnifiedMerchandiseQuery {
 
     private Long          activityId;
 
+    private double        maxDiscount;
+
+    private double        minDiscount;
+
     public String getName() {
 
         return name;
@@ -225,5 +229,25 @@ public class UnifiedMerchandiseQuery {
     public void setActivityId(Long activityId) {
 
         this.activityId = activityId;
+    }
+
+    public double getMaxDiscount() {
+
+        return maxDiscount;
+    }
+
+    public void setMaxDiscount(double maxDiscount) {
+
+        this.maxDiscount = maxDiscount;
+    }
+
+    public double getMinDiscount() {
+
+        return minDiscount;
+    }
+
+    public void setMinDiscount(double minDiscount) {
+
+        this.minDiscount = minDiscount;
     }
 }
