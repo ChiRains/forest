@@ -92,6 +92,8 @@ public class UnifiedMerchandiseDaoMysqlImpl implements UnifiedMerchandiseDao {
             param.put("orderField", "clickRate");
         } else if (QueryType.GOODEVALUATION.getKey() == queryType.getKey()) {// 好评
             param.put("orderField", "goodEvaluation");
+        } else if (QueryType.COMPLEX.getKey() == queryType.getKey()) {// 综合 TODO
+            param.put("orderField", "clickRate");
         }
         param.put("orderType", query.getOrderType().getKey() == OrderType.ASE.getKey() ? "" : "desc");
         param.put("queryType", query.getQueryItemType().getKey());

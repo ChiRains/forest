@@ -82,7 +82,7 @@ public class TypeEnum {
         }
     }
     public enum QueryType {
-        SALES_VOLUME(1, "销量"), DATE(2, "时间"), PRICE(3, "价格"), HOT(4, "热度"), GOODEVALUATION(5, "好评");
+        SALES_VOLUME(1, "销量"), DATE(2, "时间"), PRICE(3, "价格"), HOT(4, "热度"), GOODEVALUATION(5, "好评"), COMPLEX(6, "综合");
 
         private final int    key;
 
