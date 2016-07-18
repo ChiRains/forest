@@ -271,6 +271,11 @@ public class AdminArticleController {
         return aceAjaxView;
     }
 
+    /**
+     * 删除资讯类别
+     * @param id
+     * @return
+     */
     @RequestMapping
     public AceAjaxView deleteClassify(Long id) {
 
@@ -282,6 +287,12 @@ public class AdminArticleController {
         return aceAjaxView;
     }
 
+    /**
+     * 启用资讯类别
+     * @param id
+     * @param enable
+     * @return
+     */
     @RequestMapping
     public AceAjaxView enableClassify(Long id, Integer enable) {
 
