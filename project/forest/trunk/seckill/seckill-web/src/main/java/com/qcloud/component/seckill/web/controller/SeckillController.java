@@ -64,6 +64,39 @@ public class SeckillController {
         return view;
     }
 
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView listByScreenings(Long screeningsId, Integer size) {
+
+        AssertUtil.assertNotNull(screeningsId, "场次ID不能为空.");
+        SeckillConfig seckillConfig = seckillConfigService.get();
+        int screeningsMinSize = seckillConfig.getScreeningsMinSize();
+        size = size == null || size <= 0 || size > screeningsMinSize ? screeningsMinSize : size;
+        List<Screenings> list = screeningsService.listToday(size);
+        List<ScreeningsListVO> voList = screeningsHandler.toVOList(list);
+        Screenings current = null;
+        for (Screenings screenings : list) {
+            if (screenings.getId() == screeningsId) {
+                current = screenings;
+                break;
+            }
+        }
+        if (current == null) {
+            current = screeningsService.calculate(list);
+        }
+        for (ScreeningsListVO screeningsListVO : voList) {
+            screeningsListVO.setCurrent(current.getId() == screeningsListVO.getId());
+            screeningsListVO.setTitle(DateUtil.date2String(DateUtil.str2Date(screeningsListVO.getBeginTimeStr()), "HH") + "点场");
+        }
+        // ScreeningsVO screeningsVO = current == null ? null : screeningsHandler.toVO4Classify(current);
+        ScreeningsVO screeningsVO = current == null ? null : screeningsHandler.toVO4Merchandise(current);
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage(screeningsVO == null ? "今天暂无秒杀数据" : "获取秒杀数据成功.");
+        view.addObject("list", voList);
+        view.addObject("current", screeningsVO);
+        return view;
+    }
+
     @RequestMapping
     public FrontAjaxView listByScreenings4List(Long screeningsId, Integer size) {
 

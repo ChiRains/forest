@@ -17,6 +17,9 @@ public class SeckillUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/seckill/listByScreenings4Classify.do");
         list.add("/app/seckill/listByScreeings4List.do");
         list.add("/app/seckill/current.do");
+        //
+        list.add("/seckill/listByScreenings.do");
+        list.add("/app/seckill/listByScreenings.do");
         return list;
     }
 
@@ -27,6 +30,8 @@ public class SeckillUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/seckill/listByScreenings4Classify.do");
         list.add("/app/seckill/listByScreeings4List.do");
         list.add("/app/seckill/current.do");
+        //
+        list.add("/app/seckill/listByScreenings.do");
         return list;
     }
 }

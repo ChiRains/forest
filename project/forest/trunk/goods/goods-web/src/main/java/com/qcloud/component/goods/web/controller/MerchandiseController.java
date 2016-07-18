@@ -189,6 +189,8 @@ public class MerchandiseController {
         query.setOrderType(OrderType.get(form.getOrderType()));
         query.setQueryItemType(type);
         query.setBrandId(form.getBrandId());
+        query.setMaxDiscount(form.getMaxDiscount());
+        query.setMinDiscount(form.getMinDiscount());
         Page<UnifiedMerchandise> page = unifiedMerchandiseService.page(query, pPage.getPageStart(), pPage.getPageSize().intValue());
         List<UnifiedMerchandise> list = page.getData();
         List<MerchandiseVO> voList = new ArrayList<MerchandiseVO>();

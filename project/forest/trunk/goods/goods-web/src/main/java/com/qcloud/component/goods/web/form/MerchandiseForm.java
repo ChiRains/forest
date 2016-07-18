@@ -18,6 +18,10 @@ public class MerchandiseForm {
 
     private Long    brandId;
 
+    private Double  maxDiscount;
+
+    private Double  minDiscount;
+
     public String getKeywords() {
 
         return keywords;
@@ -104,5 +108,25 @@ public class MerchandiseForm {
     public void setBrandId(Long brandId) {
 
         this.brandId = brandId;
+    }
+
+    public Double getMaxDiscount() {
+
+        return maxDiscount == null ? 0 : maxDiscount;
+    }
+
+    public void setMaxDiscount(Double maxDiscount) {
+
+        this.maxDiscount = maxDiscount;
+    }
+
+    public Double getMinDiscount() {
+
+        return minDiscount == null ? 0 : minDiscount;
+    }
+
+    public void setMinDiscount(Double minDiscount) {
+
+        this.minDiscount = minDiscount;
     }
 }
