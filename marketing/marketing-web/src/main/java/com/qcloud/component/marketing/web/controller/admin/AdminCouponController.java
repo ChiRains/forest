@@ -13,6 +13,7 @@ import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.marketing.exception.MarketingException;
 import com.qcloud.component.marketing.model.Coupon;
 import com.qcloud.component.marketing.model.CouponItems;
+import com.qcloud.component.marketing.model.key.TypeEnum.CouponType;
 import com.qcloud.component.marketing.model.key.TypeEnum.Enable;
 import com.qcloud.component.marketing.model.key.TypeEnum.PlatformCoupon;
 import com.qcloud.component.marketing.model.query.CouponQuery;
@@ -178,6 +179,8 @@ public class AdminCouponController {
         List<AdminCouponVO> list = couponHandler.toVOList4Admin(page.getData());
         AcePagingView pagingView = new AcePagingView("/admin/marketing-Coupon-list4Merchant", DIR + "/list4Merchant", pageNum, PAGE_SIZE, page.getCount());
         pagingView.addObject("result", list);
+        pagingView.addObject("couponType", CouponType.values());
+        pagingView.addObject("query", query);
         return pagingView;
     }
 
@@ -187,6 +190,7 @@ public class AdminCouponController {
         ModelAndView model = new ModelAndView("/admin/marketing-Coupon-add4Merchant");
         String fileSize = publicdataClient.getImageInformationByCode("youhuiquanhuodong");
         model.addObject("fileSize", fileSize);
+        model.addObject("couponType", CouponType.values());
         return model;
     }
 
@@ -217,6 +221,7 @@ public class AdminCouponController {
         model.addObject("coupon", adminCouponVO);
         String fileSize = publicdataClient.getImageInformationByCode("youhuiquanhuodong");
         model.addObject("fileSize", fileSize);
+        model.addObject("couponType", CouponType.values());
         return model;
     }
 

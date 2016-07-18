@@ -10,7 +10,9 @@ import com.qcloud.component.seckill.model.SeckillConfig;
 import com.qcloud.component.seckill.service.ScreeningsService;
 import com.qcloud.component.seckill.service.SeckillConfigService;
 import com.qcloud.component.seckill.web.handler.ScreeningsHandler;
+import com.qcloud.component.seckill.web.vo.MerchandiseSeckillVO;
 import com.qcloud.component.seckill.web.vo.ScreeningsListVO;
+import com.qcloud.component.seckill.web.vo.ScreeningsMerchandiseVO;
 import com.qcloud.component.seckill.web.vo.ScreeningsVO;
 import com.qcloud.pirates.mvc.FrontAjaxView;
 import com.qcloud.pirates.util.AssertUtil;
@@ -90,10 +92,12 @@ public class SeckillController {
         }
         // ScreeningsVO screeningsVO = current == null ? null : screeningsHandler.toVO4Classify(current);
         ScreeningsVO screeningsVO = current == null ? null : screeningsHandler.toVO4Merchandise(current);
+        MerchandiseSeckillVO carzySeckill = screeningsHandler.getCrazySeckill(current);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage(screeningsVO == null ? "今天暂无秒杀数据" : "获取秒杀数据成功.");
         view.addObject("list", voList);
         view.addObject("current", screeningsVO);
+        view.addObject("carzySeckill", carzySeckill);
         return view;
     }
 

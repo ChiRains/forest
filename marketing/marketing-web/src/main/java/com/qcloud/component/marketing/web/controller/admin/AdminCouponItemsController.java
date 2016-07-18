@@ -193,6 +193,7 @@ public class AdminCouponItemsController {
         AssertUtil.assertTrue(couponItems.getLimitPrice() > couponItems.getPrice(), "优惠券限额必须大于优惠券面额");
         Coupon coupon = couponService.get(couponItems.getCouponID());
         AssertUtil.assertNotNull(coupon, "优惠劵活动不存在" + couponItems.getCouponID());
+        couponItems.setType(coupon.getType());
         if (couponItems.getId() == 0) {
             couponItemsService.add(couponItems);
         } else {

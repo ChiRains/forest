@@ -132,6 +132,23 @@
 					</span>
                 </div>
             </div>
+            
+            
+                    		<div class="space-4"></div>
+            <div class="form-group">
+                <label class="col-sm-3 control-label no-padding-right" for="description"> 类型 </label>
+                <div class="col-sm-9">
+					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
+						<select name="type" id="type" class="width-100">
+							<c:forEach items="${couponType}" var="type">
+								<option value="${type.key}">${type.name}</option>
+							</c:forEach>
+						</select>
+						<i class="ace-icon fa"></i>
+					</span>
+                </div>
+            </div>
+            
 
             <div class="space-4"></div>
             <div class="clearfix form-actions">

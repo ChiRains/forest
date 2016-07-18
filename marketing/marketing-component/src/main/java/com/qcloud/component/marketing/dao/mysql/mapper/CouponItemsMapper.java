@@ -13,14 +13,14 @@ import com.qcloud.component.marketing.model.query.CouponItemsQuery;
 
 public interface CouponItemsMapper {
 
-	@Insert("insert into `marketing_coupon_items`(`id`,`couponID`,`name`,`price`,`totalNum`,`sendNum`,`usedNum`,`limitPrice`,`type`)"
-			+ " values(#{id},#{couponID},#{name},#{price},#{totalNum},#{sendNum},#{usedNum},#{limitPrice},#{type})")
+	@Insert("insert into `marketing_coupon_items`(`id`,`couponID`,`name`,`price`,`totalNum`,`sendNum`,`usedNum`,`limitPrice`,`type`,`cash`)"
+			+ " values(#{id},#{couponID},#{name},#{price},#{totalNum},#{sendNum},#{usedNum},#{limitPrice},#{type},#{cash})")
 	public void insert(CouponItems couponItems);
 
 	@Select("select * from `marketing_coupon_items` where `id`=#{id}")
 	public CouponItems get(Long id);
 
-	@Update("update `marketing_coupon_items` set `couponID`=#{couponID},`name`=#{name},`price`=#{price},`totalNum`=#{totalNum},`sendNum`=#{sendNum},`usedNum`=#{usedNum},`limitPrice`=#{limitPrice},`type`=#{type} where `id`=#{id}")
+	@Update("update `marketing_coupon_items` set `couponID`=#{couponID},`name`=#{name},`price`=#{price},`totalNum`=#{totalNum},`sendNum`=#{sendNum},`usedNum`=#{usedNum},`limitPrice`=#{limitPrice},`type`=#{type},`cash`=#{cash}  where `id`=#{id}")
 	public void update(CouponItems couponItems);
 
 	@Delete("delete from `marketing_coupon_items` where `id`=#{id}")

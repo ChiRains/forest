@@ -36,7 +36,31 @@
                                 新&nbsp;增
                             </a>                           
                         </div>
-                    </div>    
+                    </div>
+                    <div class="col-xs-6">
+	                    <div class="text-right">
+	                        <label>
+	                            <form action="#admin/coupon/list4Merchant" onsubmit="listFormSearch(this); return false">
+	                               <div class="dataTables_length">
+	                               			优惠券类型
+	                               			<select id="type" name="type" style="width:140px;">
+	                               				<option value="">请选择优惠券类型进行筛选</option>
+	                               				<c:forEach items="${couponType}" var="couponType" varStatus="current">
+	                               					<option value="${couponType.key}"
+	                               					<c:if test="${couponType.key eq query.type}">
+	                               						selected
+					                				</c:if>>${couponType.name}</option>
+	                               				</c:forEach>
+					                		 </select>
+	                                   		<button type="submit" class="btn btn-purple btn-sm">
+	                                            <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
+	                                            查询
+	                                        </button>                                        
+	                                 </div>
+	                            </form>
+	                        </label>
+	                    </div>
+	                </div>     
                 </div>
                                     
                 </div>

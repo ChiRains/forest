@@ -77,6 +77,7 @@ public class CouponDaoMysqlImpl implements CouponDao {
         param.put("start", start);
         param.put("count", count);
         param.put("merchantId", query.getMerchantId());
+        param.put("type", query.getType());
         List<Coupon> list = sqlOperator.selectList("com.qcloud.component.marketing.dao.mysql.mapper.CouponMapper.list4query", param);
         int total = sqlOperator.selectOne("com.qcloud.component.marketing.dao.mysql.mapper.CouponMapper.count4query", param);
         Page<Coupon> page = new Page<Coupon>();

@@ -6,7 +6,12 @@
     <select id="list4query" parameterType="java.util.HashMap" resultType="Coupon">  
         select * from `marketing_coupon`
         where 1=1 
-        <if test="merchantId !=0">and `merchantId`=#{merchantId}</if>
+        <if test="merchantId !=0">
+        	and `merchantId`=#{merchantId}
+        </if>
+        <if test="type !=0">
+        	and `type`=#{type}
+        </if>
         limit #{start},#{count}
     </select>  
     
