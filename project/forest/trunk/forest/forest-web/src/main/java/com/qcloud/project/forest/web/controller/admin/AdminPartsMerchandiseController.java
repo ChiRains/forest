@@ -208,6 +208,7 @@ public class AdminPartsMerchandiseController {
         AssertUtil.greatZero(query.getClassifyId(), "分类不能为空.");
         // 先删除
         partsMerchandiseService.deleteByClassify(query.getClassifyId());
+        List<Long> repeatList = new ArrayList<Long>();
         for (Long merchandiseId : query.getMerchandiseIds()) {
             PartsMerchandise partsMerchandise = new PartsMerchandise();
             partsMerchandise.setMerchandiseId(merchandiseId);
@@ -215,7 +216,11 @@ public class AdminPartsMerchandiseController {
             QMerchandise qMerchandise = commoditycenterClient.getMerchandise(merchandiseId);
             AssertUtil.assertNotNull(qMerchandise, "请检查数据，商品不存在." + merchandiseId);
             partsMerchandise.setState(qMerchandise.getState());
-            partsMerchandiseService.add(partsMerchandise);
+            // 去除重复
+            if (!repeatList.contains(partsMerchandise.getId())) {
+                repeatList.add(partsMerchandise.getId());
+                partsMerchandiseService.add(partsMerchandise);
+            }
         }
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("编辑成功");

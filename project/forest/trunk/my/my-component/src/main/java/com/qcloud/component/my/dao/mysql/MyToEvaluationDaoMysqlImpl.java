@@ -127,4 +127,14 @@ public class MyToEvaluationDaoMysqlImpl implements MyToEvaluationDao {
         //
         return sqlOperator.selectOne("com.qcloud.component.my.dao.mysql.mapper.MyToEvaluationMapper.countByUserAndOrder", param);
     }
+
+    @Override
+    public List<MyToEvaluation> listByUserAndOrderId(long userId, long orderId) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("userId", userId);
+        param.put("orderId", orderId);
+        List<MyToEvaluation> list = sqlOperator.selectList("com.qcloud.component.my.dao.mysql.mapper.MyToEvaluationMapper.listByUserAndOrderId", param);
+        return list;
+    }
 }

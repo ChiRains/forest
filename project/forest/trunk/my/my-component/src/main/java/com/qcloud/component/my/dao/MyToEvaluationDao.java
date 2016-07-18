@@ -31,4 +31,6 @@ public interface MyToEvaluationDao extends ISimpleDao<MyToEvaluation, Long> {
     public List<MyToEvaluation> listByUserAndOrder(long userId, long subOrderId, int start, int count);
 
     int countByUserAndOrder(long userId, long subOrderId);
+
+    public List<MyToEvaluation> listByUserAndOrderId(long userId, long orderId);
 }

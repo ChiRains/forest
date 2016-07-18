@@ -30,6 +30,8 @@ public class MerchandiseEvaluation {
 
     private int    anonymous;
 
+    private String images;
+
     public MerchandiseEvaluation() {
 
     }
@@ -122,5 +124,15 @@ public class MerchandiseEvaluation {
     public void setAnonymous(int anonymous) {
 
         this.anonymous = anonymous;
+    }
+
+    public String getImages() {
+
+        return images;
+    }
+
+    public void setImages(String images) {
+
+        this.images = images;
     }
 }

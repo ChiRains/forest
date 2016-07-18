@@ -44,8 +44,9 @@ public interface MyClient {
 
     boolean cancleUseMyCoupon(long userId, long myCouponId);
 
-    //
     QMyToEvaluation getMyToEvaluation(long toEvaluationId);
+
+    List<QMyToEvaluation> listByUserAndOrderId(long userId, long orderId);
 
     //
     int getMyShoppingCartMerchandiseNumber(long userId, long unifiedMerchandiseId);

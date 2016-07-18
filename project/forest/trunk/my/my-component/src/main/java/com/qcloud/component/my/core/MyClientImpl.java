@@ -19,6 +19,7 @@ import com.qcloud.component.my.QMyConsignee;
 import com.qcloud.component.my.QMyCoupon;
 import com.qcloud.component.my.QMyDelivery;
 import com.qcloud.component.my.QMyInvoice;
+import com.qcloud.component.my.QMyToEvaluation;
 import com.qcloud.component.my.entity.MyConsigneeEntity;
 import com.qcloud.component.my.entity.MyCouponEntity;
 import com.qcloud.component.my.entity.MyDeliveryEntity;
@@ -324,7 +325,7 @@ public class MyClientImpl implements MyClient {
         myToEvaluationService.delete(toEvaluationId);
         boolean result = canEvaluate(userId, myToEvaluation.getSubOrderId());
         if (!result) {
-            updateMyOrderFormState(userId, myToEvaluation.getOrderId(), myToEvaluation.getSubOrderId(), MyOrderStateType.EVALUATED.getKey());
+            updateMyOrderFormState(userId, myToEvaluation.getOrderId(), MyOrderStateType.EVALUATED.getKey());
         }
         return true;
     }
@@ -517,5 +518,16 @@ public class MyClientImpl implements MyClient {
             myShoppingCartService.update(myShoppingCart);
         }
         return false;
+    }
+
+    @Override
+    public List<QMyToEvaluation> listByUserAndOrderId(long userId, long orderId) {
+
+        List<QMyToEvaluation> entityList = new ArrayList<QMyToEvaluation>();
+        List<MyToEvaluation> list = myToEvaluationService.listByUserAndOrderId(userId, orderId);
+        for (MyToEvaluation myToEvaluation : list) {
+            entityList.add(new MyToEvaluationEntity(myToEvaluation));
+        }
+        return entityList;
     }
 }
