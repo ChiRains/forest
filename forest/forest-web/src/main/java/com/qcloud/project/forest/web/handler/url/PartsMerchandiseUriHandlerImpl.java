@@ -40,6 +40,17 @@ public class PartsMerchandiseUriHandlerImpl extends AbstractUriHandler {
         List<String> list = new ArrayList<String>();
         list.add("/partsMerchandise/listParts.do");
         list.add("/partsMerchandise/list.do");
+        list.add("/app/partsMerchandise/listParts.do");
+        list.add("/app/partsMerchandise/list.do");
+        return list;
+    }
+
+    @Override
+    public List<String> appUris() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("/app/partsMerchandise/listParts.do");
+        list.add("/app/partsMerchandise/list.do");
         return list;
     }
 }
