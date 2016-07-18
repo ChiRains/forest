@@ -78,10 +78,10 @@ public class ArticleController {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         ArticlePraise articlePraise = articlePraiseService.getByArticleIdAndUserId(id, user.getId());
-        AssertUtil.assertNotNull(id, "ID不能为空");
+        AssertUtil.greatZero(id, "ID不能为空");
         Article article = articleService.get(id);
+        AssertUtil.assertNotNull(article, "文章不存在.");
         ArticleVO articleVO = articleHandler.toVO(article);
-        articleVO.setContent(null);
         // 更新浏览数
         article.setViewCount(article.getViewCount() + 1);
         articleService.update(article);
