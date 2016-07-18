@@ -18,6 +18,8 @@ public class UnifiedMerchandiseUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/unifiedMerchandise/add.do");
         list.add("/admin/unifiedMerchandise/edit.do");
         list.add("/admin/unifiedMerchandise/selectProductList.do");
+        list.add("/admin/unifiedMerchandise/listStock.do");
+        list.add("/admin/unifiedMerchandise/editList.do");
         return list;
     }
 

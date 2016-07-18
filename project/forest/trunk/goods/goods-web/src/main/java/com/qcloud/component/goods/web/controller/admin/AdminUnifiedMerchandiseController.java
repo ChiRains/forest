@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import com.qcloud.component.goods.CommoditycenterClient;
 import com.qcloud.component.goods.QUnifiedMerchandise;
+import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.goods.model.UnifiedMerchandise;
+import com.qcloud.component.goods.model.key.TypeEnum.MerchandiseStateType;
 import com.qcloud.component.goods.model.query.UnifiedMerchandiseQuery;
 import com.qcloud.component.goods.service.UnifiedMerchandiseService;
+import com.qcloud.component.goods.web.form.UnifiedMerchandiseListForm;
 import com.qcloud.component.goods.web.handler.UnifiedMerchandiseHandler;
 import com.qcloud.component.goods.web.vo.admin.AdminUnifiedMerchandiseVO;
 import com.qcloud.component.sellercenter.QMerchant;
@@ -128,5 +131,33 @@ public class AdminUnifiedMerchandiseController {
         aceAjaxView.setMessage("删除成功");
         aceAjaxView.setUrl(DIR + "/list");
         return aceAjaxView;
+    }
+
+    @RequestMapping
+    @NoReferer
+    public ModelAndView listStock(PPage pPage, UnifiedMerchandiseQuery query) {
+
+        List<UnifiedMerchandise> list = unifiedMerchandiseService.listByMerchandise(query.getMerchandiseId(), UnifiedMerchandiseType.SINGLE.getKey());
+        List<AdminUnifiedMerchandiseVO> voList = unifiedMerchandiseHandler.toVOList4Admin(list);
+        List<AdminUnifiedMerchandiseVO> result = new ArrayList<AdminUnifiedMerchandiseVO>();
+        for (AdminUnifiedMerchandiseVO merchandise : voList) {
+            if (merchandise.getState() == MerchandiseStateType.ONLINE.getKey()/* ||merchandise.getState()==MerchandiseStateType.OFFLINE.getKey() */) {
+                result.add(merchandise);
+            }
+        }
+        ModelAndView pagingView = new ModelAndView("/admin/goods-UnifiedMerchandise-listStock");
+        pagingView.addObject("result", result);
+        return pagingView;
+    }
+
+    @RequestMapping
+    public AceAjaxView editList(UnifiedMerchandiseListForm form) {
+
+        List<UnifiedMerchandise> merchandiseList = form.getMerchandiseList();
+        AssertUtil.assertNotEmpty(merchandiseList, "商品列表不能为空.");
+        unifiedMerchandiseService.editMoneyAndStockByList(merchandiseList);
+        AceAjaxView view = new AceAjaxView();
+        view.setMessage("修改成功. ");
+        return view;
     }
 }

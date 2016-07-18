@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.qcloud.component.autoid.AutoIdGenerator;
 import com.qcloud.component.goods.dao.UnifiedMerchandiseDao;
 import com.qcloud.component.goods.model.UnifiedMerchandise;
@@ -178,5 +179,22 @@ public class UnifiedMerchandiseServiceImpl implements UnifiedMerchandiseService 
     public List<UnifiedMerchandise> listByMerchandise(long merchandiseId, MerchandiseStateType stateType) {
 
         return unifiedMerchandiseDao.listByMerchandise(merchandiseId, stateType);
+    }
+
+    @Transactional
+    @Override
+    public boolean editMoneyAndStockByList(List<UnifiedMerchandise> merchandiseList) {
+
+        for (UnifiedMerchandise um : merchandiseList) {
+            UnifiedMerchandise unifiedMerchandise = get(um.getId());
+            AssertUtil.assertNotNull(unifiedMerchandise, "统一商品不存在.");
+            AssertUtil.assertTrue(um.getDiscount() >= 0 && um.getPrice() >= 0 && um.getPurchase() >= 0 && um.getStock() >= 0, "进货价/原价/折扣价/库存数量必须大于或者等于 0");
+            unifiedMerchandise.setDiscount(um.getDiscount());
+            unifiedMerchandise.setPurchase(um.getPurchase());
+            unifiedMerchandise.setPrice(um.getPrice());
+            unifiedMerchandise.setStock(um.getStock());
+            update(unifiedMerchandise);
+        }
+        return true;
     }
 }

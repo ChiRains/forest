@@ -15,30 +15,37 @@ import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.util.AssertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.List;
 
 @Service
 public class ClassifySpecificationsServiceImpl implements ClassifySpecificationsService {
+
     @Autowired
-    private ClassifySpecificationsDao classifySpecificationsDao;
+    private ClassifySpecificationsDao  classifySpecificationsDao;
+
     @Autowired
-    private AutoIdGenerator autoIdGenerator;
+    private AutoIdGenerator            autoIdGenerator;
+
     @Autowired
-    private PublicdataClient publicdataClient;
+    private PublicdataClient           publicdataClient;
+
     @Autowired
-    private ParameterClient parameterClient;
+    private ParameterClient            parameterClient;
+
     //
-    private static final String CLASSIFY_SPECIFICATIONS_NUMBER = "merchandise-classify-specifications-number";
+    private static final String        CLASSIFY_SPECIFICATIONS_NUMBER = "merchandise-classify-specifications-number";
+
     @Autowired
     private AttributeDefinitionService attributeDefinitionService;
+
     //
-    private static final String ID_KEY = "goods_classify_specifications";
+    private static final String        ID_KEY                         = "goods_classify_specifications";
 
     @PostConstruct
-    public void init() {    
+    public void init() {
+
         final Integer number = parameterClient.get(CLASSIFY_SPECIFICATIONS_NUMBER);
         if (number == null) {
             throw new CommoditycenterException("请初始化参数：" + CLASSIFY_SPECIFICATIONS_NUMBER);
@@ -50,6 +57,7 @@ public class ClassifySpecificationsServiceImpl implements ClassifySpecifications
 
     @Override
     public boolean add(ClassifySpecifications classifySpecifications) {
+
         Classify classify = publicdataClient.getClassify(classifySpecifications.getClassifyId());
         AssertUtil.assertNotNull(classify, "分类不存在.");
         AttributeDefinition attributeDefinition = attributeDefinitionService.get(classifySpecifications.getAttributeId());
@@ -61,9 +69,9 @@ public class ClassifySpecificationsServiceImpl implements ClassifySpecifications
             }
         }
         final Integer number = parameterClient.get(CLASSIFY_SPECIFICATIONS_NUMBER);
-        if (csList.size() >= number) {
-            throw new CommoditycenterException("商品分类规格已经达到" + number + "个,不允许再添加.");
-        }
+//        if (csList.size() >= number) {
+//            throw new CommoditycenterException("商品分类规格已经达到" + number + "个,不允许再添加.");
+//        }
         long id = autoIdGenerator.get(ID_KEY);
         classifySpecifications.setId(id);
         return classifySpecificationsDao.add(classifySpecifications);
@@ -71,16 +79,19 @@ public class ClassifySpecificationsServiceImpl implements ClassifySpecifications
 
     @Override
     public ClassifySpecifications get(Long id) {
+
         return classifySpecificationsDao.get(id);
     }
 
     @Override
     public boolean delete(Long id) {
+
         return classifySpecificationsDao.delete(id);
     }
 
     @Override
     public boolean update(ClassifySpecifications classifySpecifications) {
+
         Classify classify = publicdataClient.getClassify(classifySpecifications.getClassifyId());
         AssertUtil.assertNotNull(classify, "分类不存在.");
         AttributeDefinition attributeDefinition = attributeDefinitionService.get(classifySpecifications.getAttributeId());
@@ -90,30 +101,36 @@ public class ClassifySpecificationsServiceImpl implements ClassifySpecifications
 
     @Override
     public Page<ClassifySpecifications> page(ClassifySpecificationsQuery query, int start, int count) {
+
         return classifySpecificationsDao.page(query, start, count);
     }
 
     public List<ClassifySpecifications> listAll() {
+
         return classifySpecificationsDao.listAll();
     }
 
     @Override
     public List<ClassifySpecifications> listByClassify(Long classifyId) {
+
         return classifySpecificationsDao.listByClassify(classifyId);
     }
 
     @Override
     public ClassifySpecifications get(HashMap where) {
+
         return classifySpecificationsDao.get(where);
     }
 
     @Override
     public List<ClassifySpecifications> list(HashMap where) {
+
         return classifySpecificationsDao.list(where);
     }
 
     @Override
     public Page<ClassifySpecifications> page(HashMap where, int start, int size) {
+
         return classifySpecificationsDao.page(where, start, size);
     }
 }

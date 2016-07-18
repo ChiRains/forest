@@ -45,4 +45,6 @@ public interface UnifiedMerchandiseService {
     boolean updateState(long id, int state);
 
     public UnifiedMerchandise getByCodeAndMerchant(String code, long merchantId);
+
+    public boolean editMoneyAndStockByList(List<UnifiedMerchandise> merchandiseList);
 }
