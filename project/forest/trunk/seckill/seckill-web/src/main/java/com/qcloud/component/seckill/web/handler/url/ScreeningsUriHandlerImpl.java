@@ -31,6 +31,7 @@ public class ScreeningsUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/screenings/add.do");
         // list.add("/admin/screenings/edit.do");
         list.add("/admin/screenings/delete.do");
+        list.add("/admin/screeningsSlide/list.do");
         return list;
     }
 
@@ -42,6 +43,7 @@ public class ScreeningsUriHandlerImpl extends AbstractUriHandler {
         map.put("/admin/screenings/toAdd.do", strList);
         map.put("/admin/screenings/add.do", strList);
         map.put("/admin/screenings/delete.do", strList);
+        map.put("/admin/screeningsSlide/list.do", strList);
         return map;
     }
 
