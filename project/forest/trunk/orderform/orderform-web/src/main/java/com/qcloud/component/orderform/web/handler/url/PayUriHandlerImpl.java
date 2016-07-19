@@ -23,6 +23,9 @@ public class PayUriHandlerImpl extends AbstractUriHandler {
         List<String> list = new ArrayList<String>();
         list.add("/pay/paied.do");
         list.add("/pay/alipayPaied.do");
+        //
+        list.add("/pay/payModeList.do");
+        list.add("/app/pay/payModeList.do");
         return list;
     }
 
@@ -31,6 +34,8 @@ public class PayUriHandlerImpl extends AbstractUriHandler {
 
         List<String> list = new ArrayList<String>();
         list.add("/app/pay/prepareAlipayPay.do");
+        //
+        list.add("/app/pay/payModeList.do");
         return list;
     }
 }

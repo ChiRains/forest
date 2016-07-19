@@ -23,9 +23,10 @@
     http://www.qi-cloud.com/schema/pirates 
     http://www.qi-cloud.com/schema/pirates-0.1.xsd">
 
-<pirates:redis-z id="redis-token" name="forest"></pirates:redis-z>
-<pirates:redis-z id="redis-personalcenter" name="forest"></pirates:redis-z>
-<pirates:redis-z id="redis-publicservice" name="forest"></pirates:redis-z>	
-<pirates:redis-z id="redis-orderform" name="forest"></pirates:redis-z>	
-
+	<pirates:redis-z id="redis-token" name="forest"></pirates:redis-z>
+	<pirates:redis-z id="redis-personalcenter" name="forest"></pirates:redis-z>
+	<pirates:redis-z id="redis-publicservice" name="forest"></pirates:redis-z>	
+	<pirates:redis-z id="redis-orderform" name="forest"></pirates:redis-z>	
+	<pirates:redis-z id="session-token" name="session"></pirates:redis-z>
+	
 </beans>
