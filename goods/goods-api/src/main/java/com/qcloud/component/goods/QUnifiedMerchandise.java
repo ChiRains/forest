@@ -76,4 +76,6 @@ public interface QUnifiedMerchandise {
     boolean getIsIncludePost();
 
     String getLabel();
+
+    long getIntegral();
 }

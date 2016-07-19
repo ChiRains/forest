@@ -2,9 +2,9 @@
 <xml>
 	<module-list code="orderform-auto-change">
 		<item source="10" dest="60" type="1" timeSplit="15"
-			timeLimit="normalOrderInvalidLimit" condition="">失效</item>
+			timeLimit="normalOrderInvalidLimit" condition="">关闭订单</item>
 			
-		<item source="20" dest="30" type="1" timeSplit="1440"
+		<item source="30" dest="40" type="1" timeSplit="1440"
 			timeLimit="autoSignNormalOrderLimit" condition="">自动签收</item>
 			
 	</module-list>
@@ -148,9 +148,9 @@
 			userOrderStateDesc="已完成" finish="true">已完成:已完成：已完成
 		</item>
 		
-		<item init="false" orderState="60" orderStateDesc="取消订单"
-			merchantOrderState="6" merchantOrderStateDesc="取消订单" userOrderState="6"
-			userOrderStateDesc="取消订单" finish="true">取消订单：取消：取消
+		<item init="false" orderState="60" orderStateDesc="已关闭"
+			merchantOrderState="6" merchantOrderStateDesc="已关闭" userOrderState="6"
+			userOrderStateDesc="已关闭" finish="true">已关闭：已关闭：已关闭
 		</item>
 		
 		<item init="false" orderState="70" orderStateDesc="退款中"
@@ -158,9 +158,9 @@
 			userOrderStateDesc="取消中" finish="false">退款中：退款中：取消中
 		</item>
 		
-		<item init="false" orderState="80" orderStateDesc="已关闭"
-			merchantOrderState="8" merchantOrderStateDesc="已关闭" userOrderState="8"
-			userOrderStateDesc="已关闭" finish="true">已关闭：已关闭：已关闭
+		<item init="false" orderState="80" orderStateDesc="已取消"
+			merchantOrderState="8" merchantOrderStateDesc="已取消" userOrderState="8"
+			userOrderStateDesc="已取消" finish="true">已取消：已取消：已取消
 		</item>
 		
 		<item init="false" orderState="90" orderStateDesc="交易成功"

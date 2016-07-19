@@ -1,5 +1,7 @@
 package com.qcloud.project.forest.model.key;
 
+import com.qcloud.pirates.exception.PiratesRuntimeException;
+
 public class TypeEnum {
 
     public enum EnableType {
@@ -287,6 +289,40 @@ public class TypeEnum {
         public String getName() {
 
             return name;
+        }
+    }
+    public enum IntegralOrderStateType {
+        TO_PAY(10, "待付款"), TO_SHIP(20, "待发货"), TO_SIGN(30, "待签收"), FINISHED(40, "已完成");
+
+        private final int    key;
+
+        private final String name;
+
+        private IntegralOrderStateType(int key, String name) {
+
+            this.key = key;
+            this.name = name;
+        }
+
+        public int getKey() {
+
+            return key;
+        }
+
+        public String getName() {
+
+            return name;
+        }
+
+        public static String get(int key) {
+
+            IntegralOrderStateType[] typeList = IntegralOrderStateType.values();
+            for (IntegralOrderStateType type : typeList) {
+                if (type.getKey() == key) {
+                    return type.getName();
+                }
+            }
+            throw new PiratesRuntimeException("积分订单状态不存在.");
         }
     }
 }
