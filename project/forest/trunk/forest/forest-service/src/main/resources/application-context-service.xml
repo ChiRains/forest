@@ -25,4 +25,6 @@
 
 	<import resource="application-context-dao.xml"></import>
 	<pirates:component-scan base-package="com.qcloud.project.forest.service"></pirates:component-scan>
+		<pirates:component-scan base-package="com.qcloud.project.forest.service.eximpl"></pirates:component-scan>
+	
 </beans>

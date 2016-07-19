@@ -2,36 +2,32 @@ package com.qcloud.component.organization.dao.mysql.mapper;
 
 import java.util.List;
 import java.util.Map;
-
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-
 import com.qcloud.component.organization.model.Department;
-import com.qcloud.component.organization.model.query.DepartmentQuery;
 
 public interface DepartmentMapper {
 
-	@Insert("insert into `organization_department`(`id`,`parentId`,`bsid`,`name`,`manager`,`displayName`,`province`,`city`,`district`,`address`,`longitude`,`latitude`,`type`,`code`,`image`,`registTime`,`phone`)"
-			+ " values(#{id},#{parentId},#{bsid},#{name},#{manager},#{displayName},#{province},#{city},#{district},#{address},#{longitude},#{latitude},#{type},#{code},#{image},#{registTime},#{phone})")
-	public void insert(Department department);
+    @Insert("insert into `organization_department`(`id`,`parentId`,`bsid`,`name`,`manager`,`displayName`,`province`,`city`,`district`,`address`,`longitude`,`latitude`,`type`,`code`,`image`,`registTime`,`phone`,`shopHour`)" + " values(#{id},#{parentId},#{bsid},#{name},#{manager},#{displayName},#{province},#{city},#{district},#{address},#{longitude},#{latitude},#{type},#{code},#{image},#{registTime},#{phone},#{shopHour})")
+    public void insert(Department department);
 
-	@Select("select * from `organization_department` where `id`=#{id}")
-	public Department get(Long id);
+    @Select("select * from `organization_department` where `id`=#{id}")
+    public Department get(Long id);
 
-	@Update("update `organization_department` set `parentId`=#{parentId},`bsid`=#{bsid},`name`=#{name},`manager`=#{manager},`displayName`=#{displayName},`province`=#{province},`city`=#{city},`district`=#{district},`address`=#{address},`longitude`=#{longitude},`latitude`=#{latitude},`type`=#{type},`code`=#{code},`image`=#{image},`registTime`=#{registTime},`phone`=#{phone} where `id`=#{id}")
-	public void update(Department department);
+    @Update("update `organization_department` set `parentId`=#{parentId},`bsid`=#{bsid},`name`=#{name},`manager`=#{manager},`displayName`=#{displayName},`province`=#{province},`city`=#{city},`district`=#{district},`address`=#{address},`longitude`=#{longitude},`latitude`=#{latitude},`type`=#{type},`code`=#{code},`image`=#{image},`registTime`=#{registTime},`phone`=#{phone},`shopHour`=#{shopHour} where `id`=#{id}")
+    public void update(Department department);
 
-	@Delete("delete from `organization_department` where `id`=#{id}")
-	public void delete(Long id);
+    @Delete("delete from `organization_department` where `id`=#{id}")
+    public void delete(Long id);
 
-	@Select("select * from `organization_department` limit #{start},#{count}")
-	public List<Department> list4page(Map<String,Object> param);
+    @Select("select * from `organization_department` limit #{start},#{count}")
+    public List<Department> list4page(Map<String, Object> param);
 
-	@Select("select count(*) from `organization_department`")
-	public int count4page(Map<String,Object> param);
-	
-	@Select("select * from `organization_department`")
-	public List<Department> listAll();
+    @Select("select count(*) from `organization_department`")
+    public int count4page(Map<String, Object> param);
+
+    @Select("select * from `organization_department`")
+    public List<Department> listAll();
 }

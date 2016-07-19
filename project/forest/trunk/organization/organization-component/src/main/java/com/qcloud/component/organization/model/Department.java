@@ -50,14 +50,16 @@ public class Department implements IntKeyValue {
 
     // 登记时间
     private Date   registTime;
-    
+
     private String phone;
+
+    private String shopHour;   // 营业时间
 
     public Department() {
 
     }
 
-    public Department(long id, long parentId, String bsid, String name, long manager, String displayName, String province, String city, String district, String address, double longitude, double latitude, int type, String code, String image, Date registTime) {
+    public Department(String shopHour, long id, long parentId, String bsid, String name, long manager, String displayName, String province, String city, String district, String address, double longitude, double latitude, int type, String code, String image, Date registTime) {
 
         this.id = id;
         this.parentId = parentId;
@@ -75,6 +77,7 @@ public class Department implements IntKeyValue {
         this.code = code;
         this.image = image;
         this.registTime = registTime;
+        this.shopHour = shopHour;
     }
 
     public void setId(long id) {
@@ -249,15 +252,23 @@ public class Department implements IntKeyValue {
         return name;
     }
 
-    
     public String getPhone() {
-    
+
         return phone;
     }
 
-    
     public void setPhone(String phone) {
-    
+
         this.phone = phone;
+    }
+
+    public String getShopHour() {
+
+        return shopHour;
+    }
+
+    public void setShopHour(String shopHour) {
+
+        this.shopHour = shopHour;
     }
 }

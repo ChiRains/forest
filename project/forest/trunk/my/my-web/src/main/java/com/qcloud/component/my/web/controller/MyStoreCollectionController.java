@@ -33,6 +33,22 @@ public class MyStoreCollectionController {
     @Autowired
     private MyCollectionService    myCollectionService;
 
+    public static double Distance(double long1, double lat1, double long2, double lat2) {
+
+        double a, b, R;
+        R = 6378137; // 地球半径
+        lat1 = lat1 * Math.PI / 180.0;
+        lat2 = lat2 * Math.PI / 180.0;
+        a = lat1 - lat2;
+        b = (long1 - long2) * Math.PI / 180.0;
+        double d;
+        double sa2, sb2;
+        sa2 = Math.sin(a / 2.0);
+        sb2 = Math.sin(b / 2.0);
+        d = 2 * R * Math.asin(Math.sqrt(sa2 * sa2 + Math.cos(lat1) * Math.cos(lat2) * sb2 * sb2));
+        return d;
+    }
+
     /**
      * 展示我的店铺收藏
      * @param request
@@ -41,10 +57,13 @@ public class MyStoreCollectionController {
      * @return
      */
     @RequestMapping
-    public FrontAjaxView list(HttpServletRequest request, PPage pPage, Long classifyId) {
+    public FrontAjaxView list(HttpServletRequest request, PPage pPage, Long classifyId, double latitude, double longitude) {
 
         List<MyCollection> list = myCollectionController.list(request, pPage, CollectionType.STORE, classifyId);
         List<MyStoreCollectionVO> myStoreCollectionVOs = myCollectionHandler.toStoreMyCollectionVOList(list);
+        for (MyStoreCollectionVO myStoreCollectionVO : myStoreCollectionVOs) {
+            myStoreCollectionVO.setDistance(Distance(longitude, latitude, myStoreCollectionVO.getLongitude(), myStoreCollectionVO.getLatitude()));
+        }
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取我的店铺收藏成功.");
         view.addObject("list", myStoreCollectionVOs);
@@ -98,14 +117,20 @@ public class MyStoreCollectionController {
      */
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView get(HttpServletRequest request, Long id) {
+    public FrontAjaxView get(HttpServletRequest request, Long id, double latitude, double longitude) {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         MyCollection myCollection = myCollectionService.get(id, user.getId());
         MyStoreCollectionVO myStoreCollectionVO = myCollectionHandler.toStoreMyCollectionVO(myCollection);
+        myStoreCollectionVO.setDistance(Distance(longitude, latitude, myStoreCollectionVO.getLongitude(), myStoreCollectionVO.getLatitude()));
         AssertUtil.notNull(myCollection, "找不到相关收藏");
         FrontAjaxView frontAjaxView = new FrontAjaxView();
         frontAjaxView.addObject("result", myStoreCollectionVO);
+        if (myCollection != null) {
+            frontAjaxView.addObject("isCollect", 1);
+        } else {
+            frontAjaxView.addObject("isCollect", 0);
+        }
         return frontAjaxView;
     }
 
