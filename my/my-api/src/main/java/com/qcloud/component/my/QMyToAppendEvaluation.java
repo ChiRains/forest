@@ -2,7 +2,7 @@ package com.qcloud.component.my;
 
 import java.util.Date;
 
-public interface QMyToEvaluation {
+public interface QMyToAppendEvaluation {
 
     public long getId();
 
@@ -31,4 +31,6 @@ public interface QMyToEvaluation {
     public String getOrderNumber();
 
     public String getSpecifications();
+
+    public long getEvaluationId();
 }

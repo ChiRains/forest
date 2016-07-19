@@ -96,4 +96,10 @@ public class MyToEvaluationEntity implements QMyToEvaluation {
 
         return myToEvaluation.getOrderNumber();
     }
+
+    @Override
+    public String getSpecifications() {
+
+        return myToEvaluation.getSpecifications();
+    }
 }

@@ -19,11 +19,13 @@ import com.qcloud.component.my.QMyConsignee;
 import com.qcloud.component.my.QMyCoupon;
 import com.qcloud.component.my.QMyDelivery;
 import com.qcloud.component.my.QMyInvoice;
+import com.qcloud.component.my.QMyToAppendEvaluation;
 import com.qcloud.component.my.QMyToEvaluation;
 import com.qcloud.component.my.entity.MyConsigneeEntity;
 import com.qcloud.component.my.entity.MyCouponEntity;
 import com.qcloud.component.my.entity.MyDeliveryEntity;
 import com.qcloud.component.my.entity.MyInvoiceEntity;
+import com.qcloud.component.my.entity.MyToAppendEvaluationEntity;
 import com.qcloud.component.my.entity.MyToEvaluationEntity;
 import com.qcloud.component.my.model.Consignee;
 import com.qcloud.component.my.model.DeliveryMode;
@@ -34,6 +36,7 @@ import com.qcloud.component.my.model.MyCoupon;
 import com.qcloud.component.my.model.MyEvaluation;
 import com.qcloud.component.my.model.MyOrderForm;
 import com.qcloud.component.my.model.MyShoppingCart;
+import com.qcloud.component.my.model.MyToAppendEvaluation;
 import com.qcloud.component.my.model.MyToEvaluation;
 import com.qcloud.component.my.model.SearchHistory;
 import com.qcloud.component.my.model.key.TypeEnum.CollectionType;
@@ -49,6 +52,7 @@ import com.qcloud.component.my.service.MyCouponService;
 import com.qcloud.component.my.service.MyEvaluationService;
 import com.qcloud.component.my.service.MyOrderFormService;
 import com.qcloud.component.my.service.MyShoppingCartService;
+import com.qcloud.component.my.service.MyToAppendEvaluationService;
 import com.qcloud.component.my.service.MyToEvaluationService;
 import com.qcloud.component.my.service.SearchHistoryService;
 import com.qcloud.component.orderform.OrderformClient;
@@ -102,6 +106,9 @@ public class MyClientImpl implements MyClient {
 
     @Autowired
     private SearchHistoryService          searchHistoryService;
+
+    @Autowired
+    private MyToAppendEvaluationService   myToAppendEvaluationService;
 
     @Override
     public boolean addMyOrderForm(long userId, int state, Date time, long orderId) {
@@ -322,7 +329,7 @@ public class MyClientImpl implements MyClient {
         myEvaluation.setUserId(userId);
         myEvaluation.setMerchandiseId(merchandiseId);
         myEvaluationService.add(myEvaluation);
-        myToEvaluationService.delete(toEvaluationId);
+        myToEvaluationService.synAppendEvaluation(toEvaluationId, evaluationId);
         boolean result = canEvaluate(userId, myToEvaluation.getSubOrderId());
         if (!result) {
             updateMyOrderFormState(userId, myToEvaluation.getOrderId(), MyOrderStateType.EVALUATED.getKey());
@@ -398,15 +405,16 @@ public class MyClientImpl implements MyClient {
     public boolean addMyToEvaluation(long userId, long unifiedMerchandiseId, double discount, long subOrderId, long orderItemId, Date orderDate, String orderNumber) {
 
         QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(unifiedMerchandiseId);
-        if (UnifiedMerchandiseType.SINGLE.equals(unifiedMerchandise.getType())) {
-            QMerchantOrder merchantOrder = orderformClient.getMerchantOrder(subOrderId, orderDate);
-            long orderItemDetailId = -1;
-            List<QOrderItem> list = merchantOrder.getOrderItemList();
-            for (QOrderItem qOrderItem : list) {
-                if (qOrderItem.getId() == orderItemId) {
-                    orderItemDetailId = qOrderItem.getOrderItemDetailList().get(0).getId();
-                }
+        QMerchantOrder merchantOrder = orderformClient.getMerchantOrder(subOrderId, orderDate);
+        long orderItemDetailId = -1;
+        List<QOrderItem> list = merchantOrder.getOrderItemList();
+        for (QOrderItem qOrderItem : list) {
+            if (qOrderItem.getId() == orderItemId) {
+                orderItemDetailId = qOrderItem.getOrderItemDetailList().get(0).getId();
             }
+        }
+        // 单品
+        if (UnifiedMerchandiseType.SINGLE.equals(unifiedMerchandise.getType())) {
             MyToEvaluation myToEvaluation = new MyToEvaluation();
             myToEvaluation.setDiscount(discount);
             myToEvaluation.setImage(unifiedMerchandise.getImage());
@@ -422,9 +430,30 @@ public class MyClientImpl implements MyClient {
             myToEvaluation.setSignDate(new Date());
             myToEvaluation.setUnifiedMerchandiseId(unifiedMerchandiseId);
             myToEvaluation.setUserId(userId);
-            return myToEvaluationService.add(myToEvaluation);
+            myToEvaluation.setSpecifications(unifiedMerchandise.getSpecifications());
+            myToEvaluationService.add(myToEvaluation);
+        } else if (UnifiedMerchandiseType.COMBINATION.equals(unifiedMerchandise.getType())) { // 组合商品
+            for (QUnifiedMerchandise qUnifiedMerchandise : unifiedMerchandise.getList()) {
+                MyToEvaluation myToEvaluation = new MyToEvaluation();
+                myToEvaluation.setDiscount(discount);
+                myToEvaluation.setImage(qUnifiedMerchandise.getImage());
+                myToEvaluation.setMerchandiseId(qUnifiedMerchandise.getMerchandiseId());
+                myToEvaluation.setMerchantId(qUnifiedMerchandise.getMerchantId());
+                myToEvaluation.setName(qUnifiedMerchandise.getName());
+                myToEvaluation.setOrderDate(orderDate);
+                myToEvaluation.setOrderId(merchantOrder.getOrder().getId());
+                myToEvaluation.setSubOrderId(subOrderId);
+                myToEvaluation.setOrderItemId(orderItemId);
+                myToEvaluation.setOrderItemDetailId(orderItemDetailId);
+                myToEvaluation.setOrderNumber(orderNumber);
+                myToEvaluation.setSignDate(new Date());
+                myToEvaluation.setUnifiedMerchandiseId(unifiedMerchandiseId);
+                myToEvaluation.setUserId(userId);
+                myToEvaluation.setSpecifications(unifiedMerchandise.getSpecifications());
+                myToEvaluationService.add(myToEvaluation);
+            }
         }
-        return false;
+        return true;
     }
 
     @Override
@@ -529,5 +558,28 @@ public class MyClientImpl implements MyClient {
             entityList.add(new MyToEvaluationEntity(myToEvaluation));
         }
         return entityList;
+    }
+
+    @Override
+    public List<QMyToAppendEvaluation> listAppendEvaluation(long userId, long orderId) {
+
+        List<QMyToAppendEvaluation> entityList = new ArrayList<QMyToAppendEvaluation>();
+        List<MyToAppendEvaluation> list = myToAppendEvaluationService.listAppendEvaluation(userId, orderId);
+        for (MyToAppendEvaluation myToAppendEvaluation : list) {
+            entityList.add(new MyToAppendEvaluationEntity(myToAppendEvaluation));
+        }
+        return entityList;
+    }
+
+    public QMyToAppendEvaluation getMyToAppendEvaluation(long appEvaluationId) {
+
+        MyToAppendEvaluation myToAppendEvaluation = myToAppendEvaluationService.get(appEvaluationId);
+        return myToAppendEvaluation != null ? new MyToAppendEvaluationEntity(myToAppendEvaluation) : null;
+    }
+
+    @Override
+    public boolean deleteAppendEvaluation(long appEvaluationId) {
+
+        return myToAppendEvaluationService.delete(appEvaluationId);
     }
 }

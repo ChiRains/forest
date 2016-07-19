@@ -32,6 +32,15 @@ public class MerchandiseEvaluationVO {
     // 好评数量
     private long   goodEvaluation;
 
+    // 评价图片
+    private String images;
+
+    // 追加评论
+    private String addContent;
+
+    // 客服回复
+    private String replyContent;
+
     public void setMerchandiseId(long merchandiseId) {
 
         this.merchandiseId = merchandiseId;
@@ -130,5 +139,35 @@ public class MerchandiseEvaluationVO {
     public void setGoodEvaluation(long goodEvaluation) {
 
         this.goodEvaluation = goodEvaluation;
+    }
+
+    public String getImages() {
+
+        return images;
+    }
+
+    public void setImages(String images) {
+
+        this.images = images;
+    }
+
+    public String getAddContent() {
+
+        return addContent;
+    }
+
+    public void setAddContent(String addContent) {
+
+        this.addContent = addContent;
+    }
+
+    public String getReplyContent() {
+
+        return replyContent;
+    }
+
+    public void setReplyContent(String replyContent) {
+
+        this.replyContent = replyContent;
     }
 }

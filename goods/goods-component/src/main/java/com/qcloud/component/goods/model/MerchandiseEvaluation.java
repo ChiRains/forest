@@ -30,7 +30,14 @@ public class MerchandiseEvaluation {
 
     private int    anonymous;
 
+    // 评价图片多个带,
     private String images;
+
+    // 追加评论
+    private String addContent;
+
+    // 客服回复
+    private String replyContent;
 
     public MerchandiseEvaluation() {
 
@@ -134,5 +141,25 @@ public class MerchandiseEvaluation {
     public void setImages(String images) {
 
         this.images = images;
+    }
+
+    public String getAddContent() {
+
+        return addContent;
+    }
+
+    public void setAddContent(String addContent) {
+
+        this.addContent = addContent;
+    }
+
+    public String getReplyContent() {
+
+        return replyContent;
+    }
+
+    public void setReplyContent(String replyContent) {
+
+        this.replyContent = replyContent;
     }
 }

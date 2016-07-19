@@ -3,14 +3,14 @@ package com.qcloud.component.my.model;
 import java.util.Date;
 import java.math.BigDecimal;
 
-public class MyToEvaluation {
+public class MyToAppendEvaluation {
 
     private long   id;
 
     // 购买用户
     private long   userId;
 
-    // 统一商品ID
+    // 统一商品ID（大参林已做组合拆分）
     private long   unifiedMerchandiseId;
 
     // 商品id
@@ -51,11 +51,14 @@ public class MyToEvaluation {
     // 规格
     private String specifications;
 
-    public MyToEvaluation() {
+    // 商品评价id
+    private long   evaluationId;
+
+    public MyToAppendEvaluation() {
 
     }
 
-    public MyToEvaluation(long id, long userId, long unifiedMerchandiseId, long merchandiseId, String name, String image, double discount, long merchantId, long orderId, long subOrderId, long orderItemId, Date orderDate, String orderNumber, Date signDate, long orderItemDetailId, String specifications) {
+    public MyToAppendEvaluation(long id, long userId, long unifiedMerchandiseId, long merchandiseId, String name, String image, double discount, long merchantId, long orderId, long subOrderId, long orderItemId, Date orderDate, String orderNumber, Date signDate, long orderItemDetailId, String specifications, long evaluationId) {
 
         this.id = id;
         this.userId = userId;
@@ -73,6 +76,7 @@ public class MyToEvaluation {
         this.signDate = signDate;
         this.orderItemDetailId = orderItemDetailId;
         this.specifications = specifications;
+        this.evaluationId = evaluationId;
     }
 
     public void setId(long id) {
@@ -225,13 +229,23 @@ public class MyToEvaluation {
         return orderItemDetailId;
     }
 
+    public void setSpecifications(String specifications) {
+
+        this.specifications = specifications;
+    }
+
     public String getSpecifications() {
 
         return specifications;
     }
 
-    public void setSpecifications(String specifications) {
+    public long getEvaluationId() {
 
-        this.specifications = specifications;
+        return evaluationId;
+    }
+
+    public void setEvaluationId(long evaluationId) {
+
+        this.evaluationId = evaluationId;
     }
 }

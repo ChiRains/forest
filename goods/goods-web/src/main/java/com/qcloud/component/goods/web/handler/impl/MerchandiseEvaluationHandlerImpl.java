@@ -33,32 +33,8 @@ public class MerchandiseEvaluationHandlerImpl implements MerchandiseEvaluationHa
     public List<MerchandiseEvaluationVO> toVOList(List<MerchandiseEvaluation> list) {
 
         List<MerchandiseEvaluationVO> voList = new ArrayList<MerchandiseEvaluationVO>();
-        for (MerchandiseEvaluation me : list) {
-            MerchandiseEvaluationVO vo = new MerchandiseEvaluationVO();
-            vo.setMerchandiseId(me.getMerchandiseId());
-            vo.setContent(me.getContent());
-            vo.setStar(me.getStar());
-            vo.setTime(DateUtil.date2String(me.getTime(), "yyyy-MM-dd HH:mm"));
-            vo.setSpecifications(me.getSpecifications());
-            QUser user = personalcenterClient.getUser(me.getUserId());
-            if (user == null) {
-                vo.setUserName("神秘用户");
-                vo.setHeadImage("");
-            } else {
-                vo.setUserName(user.getNickname());
-                vo.setHeadImage(user.getHeadImage());
-            }
-            List<UnifiedMerchandise> merchandiseList = unifiedMerchandiseService.listByMerchandise(me.getMerchandiseId(), UnifiedMerchandiseType.SINGLE.getKey());
-            if (merchandiseList.size() == 0) {
-                vo.setGoodEvaluation(Integer.valueOf(0));
-                vo.setMiddleEvaluation(Integer.valueOf(0));
-                vo.setLowEvaluation(Integer.valueOf(0));
-            } else {
-                vo.setGoodEvaluation(merchandiseList.get(0).getGoodEvaluation());
-                vo.setMiddleEvaluation(merchandiseList.get(0).getMiddleEvaluation());
-                vo.setLowEvaluation(merchandiseList.get(0).getLowEvaluation());
-            }
-            voList.add(vo);
+        for (MerchandiseEvaluation merchandiseEvaluation : list) {
+            voList.add(toVO(merchandiseEvaluation));
         }
         return voList;
     }
@@ -67,7 +43,17 @@ public class MerchandiseEvaluationHandlerImpl implements MerchandiseEvaluationHa
     public MerchandiseEvaluationVO toVO(MerchandiseEvaluation merchandiseEvaluation) {
 
         String json = Json.toJson(merchandiseEvaluation);
-        return Json.toObject(json, MerchandiseEvaluationVO.class, true);
+        MerchandiseEvaluationVO vo = Json.toObject(json, MerchandiseEvaluationVO.class, true);
+        vo.setTime(DateUtil.date2String(merchandiseEvaluation.getTime(), "yyyy-MM-dd HH:mm"));
+        QUser user = personalcenterClient.getUser(merchandiseEvaluation.getUserId());
+        if (user == null) {
+            vo.setUserName("神秘用户");
+            vo.setHeadImage("");
+        } else {
+            vo.setUserName(user.getNickname());
+            vo.setHeadImage(user.getHeadImage());
+        }
+        return vo;
     }
 
     @Override
