@@ -64,5 +64,8 @@
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.PartsMerchandiseUriHandlerImpl"></pirates:uriHandler>
 
 
+	<pirates:settings>
+		<pirates:session distributed="true" redis="session-token" />
+	</pirates:settings>
 
 </beans>

@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +28,7 @@ import com.qcloud.component.orderform.service.CollectOrderService;
 import com.qcloud.component.orderform.web.util.OrderStateType;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.personalcenter.QUser;
+import com.qcloud.component.publicdata.KeyValueVO;
 import com.qcloud.component.publicservice.WeiXinPayClient;
 import com.qcloud.component.publicservice.exception.PublicServiceException;
 import com.qcloud.pirates.core.env.ProjectInfo;
@@ -55,12 +58,11 @@ public class PayController {
     @Autowired
     PersonalcenterClient       personalcenterClient;
 
-//    @Autowired
-//    UserFilterService          userFilterService;
-//
-//    @Autowired
-//    TokenClient                tokenClient;
-
+    // @Autowired
+    // UserFilterService userFilterService;
+    //
+    // @Autowired
+    // TokenClient tokenClient;
     @Autowired
     OrderSelecterService       orderSelecterService;
 
@@ -152,7 +154,7 @@ public class PayController {
                         AssertUtil.assertNotNull(orderEntity, "订单不存在." + attach);
                         if (orderEntity.getState() < OrderStateType.NORMAL_TO_PACKING.getKey()) {
                             orderStateService.exchangeOrderState(orderId, orderDate, OrderStateType.NORMAL_TO_PACKING.getKey(), -1L);
-                            collectOrderService.updatePaymentMode(orderId, orderDate, PaymentModeType.ONLINE_MICROCHANNELPAY);
+                            collectOrderService.updatePaymentMode(orderId, orderDate, PaymentModeType.WEIXIN_PAY);
                         } else {
                             throw new PublicServiceException("订单状态已经发生变化." + attach + " " + orderEntity.getState());
                         }
@@ -255,17 +257,16 @@ public class PayController {
         }
     }
 
-//    private QUser getUser(HttpServletRequest request) {
-//
-//        String token = userFilterService.getTokenId(request);
-//        AssertUtil.assertNotEmpty(token, "获取用户登录信息失败.");
-//        String idStr = tokenClient.get(token);
-//        AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
-//        QUser user = personalcenterClient.getUser(Long.parseLong(idStr));
-//        AssertUtil.assertNotNull(user, "用户不存在.");
-//        return user;
-//    }
-
+    // private QUser getUser(HttpServletRequest request) {
+    //
+    // String token = userFilterService.getTokenId(request);
+    // AssertUtil.assertNotEmpty(token, "获取用户登录信息失败.");
+    // String idStr = tokenClient.get(token);
+    // AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
+    // QUser user = personalcenterClient.getUser(Long.parseLong(idStr));
+    // AssertUtil.assertNotNull(user, "用户不存在.");
+    // return user;
+    // }
     private static String Inputstr2Str_Reader(InputStream in) {
 
         try {
@@ -281,5 +282,23 @@ public class PayController {
         } catch (IOException e) {
             throw new PublicServiceException("处理微信支付异步通知失败" + e.getMessage(), e);
         }
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView payModeList() {
+
+        List<KeyValueVO> volist = new ArrayList<KeyValueVO>();
+        PaymentModeType[] list = PaymentModeType.values();
+        for (PaymentModeType paymentModeType : list) {
+            KeyValueVO valueVO = new KeyValueVO();
+            valueVO.setKey(String.valueOf(paymentModeType.getKey()));
+            valueVO.setValue(paymentModeType.getName());
+            volist.add(valueVO);
+        }
+        FrontAjaxView view = new FrontAjaxView();
+        view.addObject("list", volist);
+        view.setMessage("获取付款方式成功.");
+        return view;
     }
 }
