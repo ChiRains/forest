@@ -62,6 +62,7 @@
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ConfigUriHandlerImpl"></pirates:uriHandler>
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.BrandSalesUriHandlerImpl"></pirates:uriHandler>
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.PartsMerchandiseUriHandlerImpl"></pirates:uriHandler>
+   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ActivityUriHandlerImpl"></pirates:uriHandler>
 
 
 	<pirates:settings>
