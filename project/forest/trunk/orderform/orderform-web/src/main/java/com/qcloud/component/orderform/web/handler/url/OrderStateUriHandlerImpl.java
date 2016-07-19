@@ -43,6 +43,8 @@ public class OrderStateUriHandlerImpl extends AbstractUriHandler {
 
         List<String> list = new ArrayList<String>();
         list.add("/orderState/testExchagneOrderState.do");
+        // 上线必须删除以下代码
+        list.add("/orderState/virtualPay.do");
         return list;
     }
 

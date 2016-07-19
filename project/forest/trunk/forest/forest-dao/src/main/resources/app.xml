@@ -36,6 +36,7 @@
 		<item>sellercenter-member-code</item>
 		<item>organization-org-code</item>
 		<item>organization-clerk-code</item>
+		<item>forest-integral-order-code</item>
 	</module-list>
 
 	<module-list code="personalcenter-my-coupon-code">
@@ -44,6 +45,12 @@
 		<item type="random">000000</item>
 	</module-list>
 
+	<module-list code="forest-integral-order-code">
+		<item type="string">JF</item>
+		<item type="time">yyyyMMdd</item>
+		<item type="random">000000</item>
+	</module-list>
+	
 	<module-list code="sellercenter-merchant-code">
 		<item type="random">000000</item>
 	</module-list>
@@ -214,6 +221,8 @@
 		<item state="50" code="order-refund-closed"  type="1" inputType="1" name="退款成功描述">用户关闭</item>
 	</module-list>
 	
-	
+	<module-list code="publicservice-pay-operations">			
+		<item module="fr" operate="orderPayOperator">订单支付</item>	
+	</module-list>
 
 </xml>

@@ -325,4 +325,14 @@ public class OrderStateController {
         view.setMessage("成功");
         return view;
     }
+
+    @RequestMapping
+    public FrontAjaxView virtualPay(OrderStateForm orderStateForm) {
+
+        // 正式环境必须注释以下代码
+        orderStateService.exchangeOrderState(orderStateForm.getOrderId(), orderStateForm.getOrderDate(), OrderStateType.NORMAL_TO_PACKING.getKey(), -999L);
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("成功");
+        return view;
+    }
 }

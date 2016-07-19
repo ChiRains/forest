@@ -48,21 +48,23 @@
     <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestUriHandlerImpl"></pirates:uriHandler>
     <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestOrderUriHandlerImpl"></pirates:uriHandler>
    
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.GiftCouponUriHandlerImpl"></pirates:uriHandler>
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.GiftCouponUserUriHandlerImpl"></pirates:uriHandler>
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.SalesPromotionUriHandlerImpl"></pirates:uriHandler>
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.MedicationRemindersUriHandlerImpl"></pirates:uriHandler>
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ModularUriHandlerImpl"></pirates:uriHandler>
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ExpressQueryUriHandlerImpl"></pirates:uriHandler>
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestMailSenderUriHandlerImpl"></pirates:uriHandler>
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestMessageUriHandlerImpl"></pirates:uriHandler>
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.FeedbackUriHandlerImpl"></pirates:uriHandler>
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.MessageCenterUriHandlerImpl"></pirates:uriHandler>
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.PromotionalOffersUriHandlerImpl"></pirates:uriHandler>
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ConfigUriHandlerImpl"></pirates:uriHandler>
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.BrandSalesUriHandlerImpl"></pirates:uriHandler>
-   <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.PartsMerchandiseUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.GiftCouponUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.GiftCouponUserUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.SalesPromotionUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.MedicationRemindersUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ModularUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ExpressQueryUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestMailSenderUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ForestMessageUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.FeedbackUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.MessageCenterUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.PromotionalOffersUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ConfigUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.BrandSalesUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.PartsMerchandiseUriHandlerImpl"></pirates:uriHandler>
+    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.IntegralOrderUriHandlerImpl"></pirates:uriHandler>
    <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ActivityUriHandlerImpl"></pirates:uriHandler>
+
 
 
 	<pirates:settings>

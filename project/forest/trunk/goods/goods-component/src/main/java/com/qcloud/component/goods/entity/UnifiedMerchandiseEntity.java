@@ -209,4 +209,10 @@ public class UnifiedMerchandiseEntity implements QUnifiedMerchandise {
 
         return merchandise.getLabel();
     }
+
+    @Override
+    public long getIntegral() {
+
+        return unifiedMerchandise.getIntegral();
+    }
 }

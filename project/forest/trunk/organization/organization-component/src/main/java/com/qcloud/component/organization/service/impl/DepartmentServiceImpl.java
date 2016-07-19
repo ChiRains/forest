@@ -21,7 +21,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     private DepartmentDao       departmentDao;
 
     @Autowired
-    private AutoIdGenerator     autoIdGenerator;
+    private AutoIdGenerator     autoIdGenerator; 
 
     @Autowired
     private UniqueCodeGenerator uniqueCodeGenerator;
