@@ -11,7 +11,7 @@ public interface MyToEvaluationService {
 
     public MyToEvaluation get(Long id);
 
-    public boolean delete(Long id);
+    public boolean synAppendEvaluation(Long toEvaluationId, Long evaluationId);
 
     public boolean update(MyToEvaluation myToEvaluation);
 

@@ -48,6 +48,10 @@ public interface MyClient {
 
     List<QMyToEvaluation> listByUserAndOrderId(long userId, long orderId);
 
+    List<QMyToAppendEvaluation> listAppendEvaluation(long userId, long orderId);
+
+    QMyToAppendEvaluation getMyToAppendEvaluation(long appEvaluationId);
+
     //
     int getMyShoppingCartMerchandiseNumber(long userId, long unifiedMerchandiseId);
 
@@ -80,4 +84,6 @@ public interface MyClient {
     boolean clearMySearchHistory(long userId, int type);
 
     boolean addMyShoppingCart(long userId, long unifiedMerchandiseId, int number);
+
+    boolean deleteAppendEvaluation(long appEvaluationId);
 }

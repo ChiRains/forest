@@ -10,14 +10,14 @@ import com.qcloud.component.goods.model.MerchandiseEvaluation;
 
 public interface MerchandiseEvaluationMapper {
 
-	@Insert("insert into `${table_name}`(`id`,`merchandiseId`,`content`,`star`,`time`,`status`,`specifications`,`userId`,`anonymous`,`images`)"
-			+ " values(#{id},#{merchandiseId},#{content},#{star},#{time},#{status},#{specifications},#{userId},#{anonymous},#{images})")
+	@Insert("insert into `${table_name}`(`id`,`merchandiseId`,`content`,`star`,`time`,`status`,`specifications`,`userId`,`anonymous`,`images`,`addContent`,`replyContent`)"
+			+ " values(#{id},#{merchandiseId},#{content},#{star},#{time},#{status},#{specifications},#{userId},#{anonymous},#{images},#{addContent},#{replyContent})")
 	public void insert(MerchandiseEvaluation merchandiseEvaluation);
 
 	@Select("select * from `${table_name}` where `id`=#{id}")
 	public MerchandiseEvaluation get(Long id);
 
-	@Update("update `${table_name}` set `merchandiseId`=#{merchandiseId},`content`=#{content},`star`=#{star},`time`=#{time},`status`=#{status},`specifications`=#{specifications},`userId`=#{userId},`anonymous`=#{anonymous},`images`=#{images} where `id`=#{id}")
+	@Update("update `${table_name}` set `merchandiseId`=#{merchandiseId},`content`=#{content},`star`=#{star},`time`=#{time},`status`=#{status},`specifications`=#{specifications},`userId`=#{userId},`anonymous`=#{anonymous},`images`=#{images},`addContent`=#{addContent},`replyContent`=#{replyContent} where `id`=#{id}")
 	public void update(MerchandiseEvaluation merchandiseEvaluation);
 
 	@Delete("delete from `${table_name}` where `id`=#{id}")

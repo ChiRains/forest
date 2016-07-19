@@ -50,6 +50,7 @@ public class MerchandiseEvaluationUriHandlerImpl extends AbstractUriHandler {
 
         List<String> list = new ArrayList<String>();
         list.add("/merchandiseEvaluation/list.do");
+        list.add("/app/merchandiseEvaluation/list.do");
         return list;
     }
 
@@ -59,8 +60,12 @@ public class MerchandiseEvaluationUriHandlerImpl extends AbstractUriHandler {
         List<String> list = new ArrayList<String>();
         list.add("/merchandiseEvaluation/evaluate.do");
         list.add("/merchandiseEvaluation/toEvaluate.do");
+        list.add("/merchandiseEvaluation/toAdditional.do");
+        list.add("/merchandiseEvaluation/additional.do");
         list.add("/app/merchandiseEvaluation/evaluate.do");
         list.add("/app/merchandiseEvaluation/toEvaluate.do");
+        list.add("/app/merchandiseEvaluation/toAdditional.do");
+        list.add("/app/merchandiseEvaluation/additional.do");
         return list;
     }
 
@@ -70,6 +75,9 @@ public class MerchandiseEvaluationUriHandlerImpl extends AbstractUriHandler {
         List<String> list = new ArrayList<String>();
         list.add("/app/merchandiseEvaluation/evaluate.do");
         list.add("/app/merchandiseEvaluation/toEvaluate.do");
+        list.add("/app/merchandiseEvaluation/toAdditional.do");
+        list.add("/app/merchandiseEvaluation/list.do");
+        list.add("/app/merchandiseEvaluation/additional.do");
         return list;
     }
 }

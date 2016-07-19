@@ -3,8 +3,11 @@ package com.qcloud.component.my.service.impl;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.qcloud.component.autoid.AutoIdGenerator;
+import com.qcloud.component.my.dao.MyToAppendEvaluationDao;
 import com.qcloud.component.my.dao.MyToEvaluationDao;
+import com.qcloud.component.my.model.MyToAppendEvaluation;
 import com.qcloud.component.my.model.MyToEvaluation;
 import com.qcloud.component.my.model.query.MyToEvaluationQuery;
 import com.qcloud.component.my.service.MyToEvaluationService;
@@ -14,12 +17,15 @@ import com.qcloud.pirates.data.Page;
 public class MyToEvaluationServiceImpl implements MyToEvaluationService {
 
     @Autowired
-    private MyToEvaluationDao   myToEvaluationDao;
+    private MyToEvaluationDao       myToEvaluationDao;
 
     @Autowired
-    private AutoIdGenerator     autoIdGenerator;
+    private AutoIdGenerator         autoIdGenerator;
 
-    private static final String ID_KEY = "personalcenter_my_to_evaluation";
+    @Autowired
+    private MyToAppendEvaluationDao myToAppendEvaluationDao;
+
+    private static final String     ID_KEY = "personalcenter_my_to_evaluation";
 
     @Override
     public boolean add(MyToEvaluation myToEvaluation) {
@@ -36,9 +42,30 @@ public class MyToEvaluationServiceImpl implements MyToEvaluationService {
     }
 
     @Override
-    public boolean delete(Long id) {
+    @Transactional
+    public boolean synAppendEvaluation(Long toEvaluationId, Long evaluationId) {
 
-        return myToEvaluationDao.delete(id);
+        MyToAppendEvaluation myToAppendEvaluation = new MyToAppendEvaluation();
+        MyToEvaluation mt = get(toEvaluationId);
+        myToAppendEvaluation.setUserId(mt.getUserId());
+        myToAppendEvaluation.setUnifiedMerchandiseId(mt.getUnifiedMerchandiseId());
+        myToAppendEvaluation.setMerchandiseId(mt.getMerchandiseId());
+        myToAppendEvaluation.setName(mt.getName());
+        myToAppendEvaluation.setImage(mt.getImage());
+        myToAppendEvaluation.setDiscount(mt.getDiscount());
+        myToAppendEvaluation.setMerchantId(mt.getMerchantId());
+        myToAppendEvaluation.setOrderId(mt.getOrderId());
+        myToAppendEvaluation.setSubOrderId(mt.getSubOrderId());
+        myToAppendEvaluation.setOrderItemId(mt.getOrderItemId());
+        myToAppendEvaluation.setOrderDate(mt.getOrderDate());
+        myToAppendEvaluation.setOrderNumber(mt.getOrderNumber());
+        myToAppendEvaluation.setSignDate(mt.getSignDate());
+        myToAppendEvaluation.setOrderItemDetailId(mt.getOrderItemDetailId());
+        myToAppendEvaluation.setSpecifications(mt.getSpecifications());
+        myToAppendEvaluation.setEvaluationId(evaluationId);
+        // 添加待追加评论
+        myToAppendEvaluationDao.add(myToAppendEvaluation);
+        return myToEvaluationDao.delete(toEvaluationId);
     }
 
     @Override

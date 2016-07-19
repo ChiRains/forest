@@ -5,7 +5,7 @@ import java.util.List;
 
 public class MerchandiseEvaluationForm {
 
-    //
+    // 待评价id
     private Long         toEvaluationId;
 
     // 评价内容
@@ -15,6 +15,9 @@ public class MerchandiseEvaluationForm {
     private int          star;
 
     private List<String> images = new ArrayList<String>();
+
+    // 待追评id
+    private Long         appEvaluationId;
 
     public String getContent() {
 
@@ -54,5 +57,15 @@ public class MerchandiseEvaluationForm {
     public void setImages(List<String> images) {
 
         this.images = images;
+    }
+
+    public Long getAppEvaluationId() {
+
+        return appEvaluationId;
+    }
+
+    public void setAppEvaluationId(Long appEvaluationId) {
+
+        this.appEvaluationId = appEvaluationId;
     }
 }
