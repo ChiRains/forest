@@ -29,7 +29,7 @@ public class ActivityDaoCacheImpl implements ActivityDao {
     @Override
     public Activity get(Long id) {
 
-        return CacheLoader.get(activityDaoRedisImpl, activityDaoMysqlImpl, id);
+        return activityDaoMysqlImpl.get(id);
     }
 
     @Override

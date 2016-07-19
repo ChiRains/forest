@@ -75,6 +75,7 @@ public class ActivityDaoMysqlImpl implements ActivityDao {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("start", start);
         param.put("count", count);
+        param.put("departmentId", query.getDepartmentId());
         List<Activity> list = sqlOperator.selectList("com.qcloud.project.forest.dao.mysql.mapper.ActivityMapper.list4query", param);
         int total = sqlOperator.selectOne("com.qcloud.project.forest.dao.mysql.mapper.ActivityMapper.count4query", param);
         Page<Activity> page = new Page<Activity>();
