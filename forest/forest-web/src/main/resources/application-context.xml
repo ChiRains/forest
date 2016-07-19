@@ -37,6 +37,7 @@
 	<pirates:component-scan base-package="com.qcloud.project.forest.web.controller"></pirates:component-scan>
 	<pirates:component-scan base-package="com.qcloud.project.forest.web.eximpl"></pirates:component-scan>
 	<pirates:component-scan base-package="com.qcloud.project.forest.web.observer"></pirates:component-scan>
+	<pirates:component-scan base-package="com.qcloud.project.forest.web.pay"></pirates:component-scan>	
 	<pirates:timer-scan base-package="com.qcloud.project.forest.web.timer"></pirates:timer-scan>
 	
     <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.AnalysisresultUriHandlerImpl"></pirates:uriHandler>

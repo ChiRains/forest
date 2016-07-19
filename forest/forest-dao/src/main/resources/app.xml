@@ -18,6 +18,7 @@
 	
 	<module-list code="Goods-UnifiedMerchandise-Type">
 		<item key="4" name="秒杀商品"></item>
+		<item key="5" name="积分商品"></item>
 	</module-list>
 
 	<module-list code="seckill-config-setting">
@@ -223,6 +224,7 @@
 	
 	<module-list code="publicservice-pay-operations">			
 		<item module="fr" operate="orderPayOperator">订单支付</item>	
+		<item module="jr" operate="integralOrderPayOperator">积分订单支付</item>	
 	</module-list>
 
 </xml>
