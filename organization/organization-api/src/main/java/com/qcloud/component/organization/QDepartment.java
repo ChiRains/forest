@@ -29,4 +29,6 @@ public interface QDepartment {
     String getPhone();
 
     int getType();
+
+    String getShopHour();
 }

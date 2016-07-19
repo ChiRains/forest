@@ -82,7 +82,7 @@ public class DepartmentEntity implements QDepartment {
     @Override
     public String getPhone() {
 
-         return department.getPhone();
+        return department.getPhone();
     }
 
     @Override
@@ -95,5 +95,11 @@ public class DepartmentEntity implements QDepartment {
     public int getType() {
 
         return department.getType();
+    }
+
+    @Override
+    public String getShopHour() {
+
+        return department.getShopHour();
     }
 }

@@ -17,6 +17,7 @@ public class ScreeningsSlideUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/screeningsSlide/toEdit.do");
         list.add("/admin/screeningsSlide/add.do");
         list.add("/admin/screeningsSlide/edit.do");
+        list.add("/admin/screeningsSlide/delete.do");
         return list;
     }
 

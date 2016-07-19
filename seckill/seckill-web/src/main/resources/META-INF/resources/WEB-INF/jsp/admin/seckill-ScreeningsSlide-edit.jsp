@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>编辑管理员</title>
+<title>编辑秒杀活动轮播图</title>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/colorbox.css"/>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/chosen.css" />
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
-        管理里管理
+       秒杀活动轮播图管理
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             编辑
@@ -22,27 +22,9 @@
         <form id="model-form" class="form-horizontal"  role="form" action="/admin/screeningsSlide/edit.do">
             <!-- #section:elements.form -->
 			<input type="hidden" name="id" value="${screeningsSlide.id}">
+			<input type="hidden" name="screeningsId" value="${screeningsSlide.screeningsId}">
 			
-			      		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="id"> ID </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="id" name="id" placeholder="ID" value="${screeningsSlide.id}"/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
-                  		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="screeningsId"> 场次 </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="screeningsId" name="screeningsId" placeholder="场次" value="${screeningsSlide.screeningsId}"/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
+
                   		<div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="clickUrl"> 点击地址 </label>
@@ -57,10 +39,17 @@
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="image"> 图片 </label>
                 <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="image" name="image" placeholder="图片" value="${screeningsSlide.image}"/>
-						<i class="ace-icon fa"></i>
-					</span>
+					<input type="hidden"  id="image" name="image" value="${screeningsSlide.image}" onchange="fileChange(this);"/>
+					<button type="button" mult="false" sid="image" vid="pic-pic-view2" class="btn btn-sm btn-purple btn-upload-pic"  upfrom="0"  ><i class="ace-icon fa fa-upload">
+					</i> 上 传</button>
+                    <ul sid="image" id="pic-pic-view2" class="ace-thumbnails clearfix">
+                        <li pic-id="">
+                            <a style="line-height: 150px;text-align: center;width:150px;height: 150px;" href="" data-rel="colorbox" class="cboxElement">
+                                <img style="max-height: 150px;max-width: 150px;" alt="" src="${screeningsSlide.image}">
+                            </a>
+                            <div class="tools tools-bottom"><a onclick="imgDel(this);" href="javascript:;" title="删除"><i class="ace-icon fa fa-times red"></i></a></div>
+                        </li>
+                    </ul>
                 </div>
             </div>
                   		<div class="space-4"></div>
@@ -68,7 +57,7 @@
                 <label class="col-sm-3 control-label no-padding-right" for="orderNum"> 排序 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="orderNum" name="orderNum" placeholder="排序" value="${screeningsSlide.orderNum}"/>
+						<input type="text" class="width-100" maxlength="20" id="orderNum" name="orderNum" placeholder="排序" value="${screeningsSlide.orderNum}" onkeyup="value=value.replace(/[^\d]/g,'') " />
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
@@ -102,6 +91,17 @@
                      $this.next().css({'width': $this.parent().width()});
                 })
             }).trigger('resize.chosen');
+
+            //图片浏览
+            $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
+            $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange'></i>");
+            var btnUpload = $(".btn-upload-pic");
+            delEvent(getButtonSetting(btnUpload));
+            btnUpload.on('click', function () {
+                var bs = getButtonSetting($(this));
+                uploadDialog(bs);
+            });
+                
                    
             //表单验证
             $("#model-form").validate({

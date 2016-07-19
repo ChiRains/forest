@@ -9,16 +9,17 @@ import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.CommoditycenterClient;
 import com.qcloud.component.goods.QUnifiedMerchandise;
 import com.qcloud.component.my.model.MyCollection;
+import com.qcloud.component.my.web.handler.ActivityForMy;
 import com.qcloud.component.my.web.handler.MyCollectionHandler;
 import com.qcloud.component.my.web.vo.CollectionMerchant;
-import com.qcloud.component.my.web.vo.CollectionStore;
 import com.qcloud.component.my.web.vo.MerchantHotMerchandise;
 import com.qcloud.component.my.web.vo.MyMerchandiseCollectionVO;
 import com.qcloud.component.my.web.vo.MyMerchantCollectionVO;
 import com.qcloud.component.my.web.vo.MyStoreCollectionVO;
 import com.qcloud.component.my.web.vo.admin.AdminMyCollectionVO;
+import com.qcloud.component.organization.OrganizationClient;
+import com.qcloud.component.organization.QDepartment;
 import com.qcloud.component.sellercenter.QMerchant;
-import com.qcloud.component.sellercenter.QStore;
 import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.pirates.core.json.Json;
 import com.qcloud.pirates.util.DateUtil;
@@ -34,7 +35,13 @@ public class MyCollectionHandlerImpl implements MyCollectionHandler {
     private SellercenterClient    sellercenterClient;
 
     @Autowired
+    private OrganizationClient    organizationClient;
+
+    @Autowired
     private FileSDKClient         fileSDKClient;
+
+    @Autowired
+    private ActivityForMy         activityForMy;
 
     @Override
     public List<AdminMyCollectionVO> toVOList4Admin(List<MyCollection> list) {
@@ -150,17 +157,16 @@ public class MyCollectionHandlerImpl implements MyCollectionHandler {
 
         String json = Json.toJson(myCollection);
         MyStoreCollectionVO myStoreCollectionVO = Json.toObject(json, MyStoreCollectionVO.class, true);
-        myStoreCollectionVO.setStoreId(myCollection.getObjId());
-        myStoreCollectionVO.setTimeStr(DateUtil.date2String(myCollection.getTime()));
-        QStore store = sellercenterClient.getStore(myCollection.getObjId());
-        CollectionStore collectionStore = new CollectionStore();
-        collectionStore.setAddress(store.getAddress());
-        collectionStore.setId(store.getId());
-        collectionStore.setName(store.getName());
-        collectionStore.setPhone(store.getSmsMobile());
-        collectionStore.setLatitude(store.getLatitude());
-        collectionStore.setLongitude(store.getLongitude());
-        myStoreCollectionVO.setCollectionStore(collectionStore);
+        QDepartment department = organizationClient.getDepartment(myCollection.getObjId());
+        myStoreCollectionVO.setAddress(department.getAddress());
+        myStoreCollectionVO.setName(department.getName());
+        myStoreCollectionVO.setPhone(department.getPhone());
+        myStoreCollectionVO.setLatitude(department.getLatitude());
+        myStoreCollectionVO.setLongitude(department.getLongitude());
+        myStoreCollectionVO.setImage(department.getImage());
+        myStoreCollectionVO.setActivities(activityForMy.getName(department.getId()));
+        myStoreCollectionVO.setStoreId(department.getId());
+        myStoreCollectionVO.setShopHour(department.getShopHour());
         return myStoreCollectionVO;
     }
 }

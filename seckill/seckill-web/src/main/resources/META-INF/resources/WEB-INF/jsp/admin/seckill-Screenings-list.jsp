@@ -74,7 +74,11 @@
 	                               <div class="hidden-sm hidden-xs action-buttons">
 	                                    <a title="删除" class="red del-item-new" api-path="/admin/screenings/delete.do?id=${item.id}">
 	                                        <i class="ace-icon fa fa-trash-o bigger-130"></i>
-	                                    </a>					                                 
+	                                    </a>	
+	                                 <a title="添加轮播图" class="green" 
+                                       href="#admin/screeningsSlide/list?screeningsId=${item.id}">
+                                        <i class="ace-icon fa fa-cog bigger-130"></i>
+                                    </a>				                                 
 	                                </div>
 	                            </td>
                         	</tr>
