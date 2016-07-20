@@ -20,6 +20,8 @@ public class MerchandiseEvaluationUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/merchandiseEvaluation/agree.do");
         list.add("/admin/merchandiseEvaluation/disagree.do");
         list.add("/admin/merchandiseEvaluation/delete.do");
+        list.add("/admin/merchandiseEvaluation/toReplyContent.do");
+        list.add("/admin/merchandiseEvaluation/replyContent.do");
         return list;
     }
 

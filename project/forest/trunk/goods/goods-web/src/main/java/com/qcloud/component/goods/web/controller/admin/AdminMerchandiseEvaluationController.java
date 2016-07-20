@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import com.qcloud.component.goods.UnifiedMerchandiseType;
@@ -258,7 +259,7 @@ public class AdminMerchandiseEvaluationController {
                 throw new CommoditycenterException("当前评论已经审核完成." + merchandiseEvaluation.getContent());
             }
             merchandiseEvaluation.setStatus(StatusType.UNPASS.getKey());
-            merchandiseEvaluationService.synUnifiedMerchandiseEvaluation(merchandiseEvaluation);
+            merchandiseEvaluationService.update(merchandiseEvaluation);
         }
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("审核完成");
@@ -295,6 +296,32 @@ public class AdminMerchandiseEvaluationController {
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("编辑成功");
         aceAjaxView.setUrl("admin/merchantEvaluation/list");
+        return aceAjaxView;
+    }
+
+    @RequestMapping
+    public ModelAndView toReplyContent(Long evaluationId, Long merchandiseId) {
+
+        AssertUtil.greatZero(evaluationId, "评价id不能为空.");
+        AssertUtil.greatZero(merchandiseId, "商品id不能为空.");
+        ModelAndView model = new ModelAndView("/admin/goods-MerchandiseEvaluation-replyContent");
+        MerchandiseEvaluation merchandiseEvaluation = merchandiseEvaluationService.get(evaluationId, merchandiseId);
+        AssertUtil.assertNotNull(merchandiseEvaluation, "商品评价不存在.");
+        model.addObject("merchandiseEvaluation", merchandiseEvaluation);
+        return model;
+    }
+
+    @RequestMapping
+    public AceAjaxView replyContent(Long id, Long merchandiseId, String content, String alreadyContent) {
+
+        AssertUtil.greatZero(id, "评价id不能为空.");
+        AssertUtil.assertTrue(StringUtils.isEmpty(alreadyContent), "该评论已回复,请勿重复操作.");
+        AssertUtil.assertTrue(!StringUtils.isEmpty(content), "内容不能为空.");
+        AceAjaxView aceAjaxView = new AceAjaxView();
+        MerchandiseEvaluation merchandiseEvaluation = merchandiseEvaluationService.get(id, merchandiseId);
+        merchandiseEvaluation.setReplyContent(content);
+        merchandiseEvaluationService.update(merchandiseEvaluation);
+        aceAjaxView.setMessage("客服回复成功.");
         return aceAjaxView;
     }
 }
