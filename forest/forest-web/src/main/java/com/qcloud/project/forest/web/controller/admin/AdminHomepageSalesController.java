@@ -23,10 +23,10 @@ import com.qcloud.project.forest.web.handler.PromotionalOffersHandler;
 import com.qcloud.project.forest.web.vo.PromotionalOffersVO;
 
 @Controller
-@RequestMapping(value = "/" + AdminPromotionalOffersController.DIR)
-public class AdminPromotionalOffersController {
+@RequestMapping(value = "/" + AdminHomepageSalesController.DIR)
+public class AdminHomepageSalesController {
 
-    public static final String        DIR = "admin/promotionalOffers";
+    public static final String        DIR = "admin/homepageSales";
 
     @Autowired
     private PublicdataClient          publicdataClient;
@@ -44,9 +44,9 @@ public class AdminPromotionalOffersController {
     private CommoditycenterClient     commoditycenterClient;
 
     @RequestMapping
-    public AcePagingView listPromotionalOfferClassify(PPage pPage) {
+    public AcePagingView listHomepageSalesClassify(PPage pPage) {
 
-        List<Classify> list = publicdataClient.listClassify((long) ClassifyType.PROMOTIONALOFFERS.getKey());
+        List<Classify> list = publicdataClient.listClassify((long) ClassifyType.HOMEPAGESALECLASSIFY.getKey());
         int i = (pPage.getPageNum() - 1) * pPage.getPageSize() + pPage.getPageSize();
         if (i > list.size()) {
             i = list.size();
@@ -55,13 +55,13 @@ public class AdminPromotionalOffersController {
         for (Classify classify : list) {
             classify.setImage(fileSDKClient.getFileServerUrl() + classify.getImage());
         }
-        AcePagingView acePagingView = new AcePagingView("/admin/forest-PromotionalOfferClassify-list", DIR + "/listPromotionalOfferClassify", pPage.getPageNum(), pPage.getPageSize(), list.size());
-        acePagingView.addObject("promotionalOfferClassify", list);
+        AcePagingView acePagingView = new AcePagingView("/admin/forest-HomepageSalesClassify-list", DIR + "/listHomepageSalesClassify", pPage.getPageNum(), pPage.getPageSize(), list.size());
+        acePagingView.addObject("HomepageSalesClassify", list);
         return acePagingView;
     }
 
     @RequestMapping
-    public AceAjaxView enablePromotionalOfferClassify(Long classifyId, int enable) {
+    public AceAjaxView enableHomepageSalesClassify(Long classifyId, int enable) {
 
         Classify classify = publicdataClient.getClassify(classifyId);
         classify.setEnable(enable);
@@ -73,16 +73,16 @@ public class AdminPromotionalOffersController {
     }
 
     @RequestMapping
-    public ModelAndView toAddPromotionalOfferClassify() {
+    public ModelAndView toAddHomepageSalesClassify() {
 
-        ModelAndView modelAndView = new ModelAndView("/admin/forest-PromotionalOfferClassify-add");
+        ModelAndView modelAndView = new ModelAndView("/admin/forest-HomepageSalesClassify-add");
         return modelAndView;
     }
 
     @RequestMapping
-    public AceAjaxView addPromotionalOfferClassify(Classify classify) {
+    public AceAjaxView addHomepageSalesClassify(Classify classify) {
 
-        classify.setType(ClassifyType.PROMOTIONALOFFERS.getKey());
+        classify.setType(ClassifyType.HOMEPAGESALECLASSIFY.getKey());
         publicdataClient.addClassify(classify);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("添加成功");
@@ -90,22 +90,17 @@ public class AdminPromotionalOffersController {
     }
 
     @RequestMapping
-    public ModelAndView toEditPromotionalOfferClassify(Long id) {
+    public ModelAndView toEditHomepageSalesClassify(Long id) {
 
         Classify classify = publicdataClient.getClassify(id);
-        ModelAndView modelAndView = new ModelAndView("/admin/forest-PromotionalOfferClassify-edit");
+        ModelAndView modelAndView = new ModelAndView("/admin/forest-HomepageSalesClassify-edit");
         modelAndView.addObject("classify", classify);
         return modelAndView;
     }
 
     @RequestMapping
-    public AceAjaxView editPromotionalOfferClassify(Classify classify) {
+    public AceAjaxView editHomepageSalesClassify(Classify classify) {
 
-        Classify classify1 = publicdataClient.getClassify(classify.getId());
-        if (classify.getImage().equals(classify1.getImage())) {
-            classify.setImage(fileSDKClient.urlToUid(classify.getImage()));
-        }
-        classify.setEnable(classify1.getEnable());
         publicdataClient.update(classify);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("修改成功");
@@ -113,7 +108,7 @@ public class AdminPromotionalOffersController {
     }
 
     @RequestMapping
-    public AcePagingView listPromotionalOffer(PPage pPage, Long classifyId) {
+    public AcePagingView listHomepageSales(PPage pPage, Long classifyId) {
 
         UnifiedMerchandiseQuery unifiedMerchandiseQuery = new UnifiedMerchandiseQuery();
         unifiedMerchandiseQuery.setActivityId(classifyId);
@@ -127,16 +122,16 @@ public class AdminPromotionalOffersController {
             }
         }
         List<PromotionalOffersVO> list = promotionalOffersHandler.toVOList(page.getData());
-        AcePagingView pagingView = new AcePagingView("/admin/forest-PromotionalOffers-list", DIR + "/listPromotionalOffer", pPage.getPageNum(), pPage.getPageSize(), page.getCount());
+        AcePagingView pagingView = new AcePagingView("/admin/forest-HomepageSales-list", DIR + "/listHomepageSales", pPage.getPageNum(), pPage.getPageSize(), page.getCount());
         pagingView.addObject("result", list);
         pagingView.addObject("classifyId", classifyId);
         return pagingView;
     }
 
     @RequestMapping
-    public ModelAndView toAddPromotionalOffer(Long classifyId) {
+    public ModelAndView toAddHomepageSales(Long classifyId) {
 
-        ModelAndView modelAndView = new ModelAndView("/admin/forest-PromotionalOffers-add");
+        ModelAndView modelAndView = new ModelAndView("/admin/forest-HomepageSales-add");
         modelAndView.addObject("classifyId", classifyId);
         return modelAndView;
     }
@@ -152,7 +147,7 @@ public class AdminPromotionalOffersController {
      * @return
      */
     @RequestMapping
-    public AceAjaxView addPromotionalOffer(Long unifiedMerchandiseId, String image, Double discount, Integer integral, Integer stock, Long classifyId) {
+    public AceAjaxView addHomepageSales(Long unifiedMerchandiseId, String image, Double discount, Integer integral, Integer stock, Long classifyId) {
 
         image = fileSDKClient.uidToUrl(image);
         commoditycenterClient.regUnifiedMerchandise(unifiedMerchandiseId, 1, image, discount, integral, stock, classifyId);
@@ -162,7 +157,7 @@ public class AdminPromotionalOffersController {
     }
 
     @RequestMapping
-    public AceAjaxView deletePromotionalOffer(Long id) {
+    public AceAjaxView deleteHomepageSales(Long id) {
 
         commoditycenterClient.takeDownByUnifiedMerchandise(id);
         AceAjaxView aceAjaxView = new AceAjaxView();

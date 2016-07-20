@@ -4,6 +4,22 @@
 <title>新增品牌特卖商品</title>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/colorbox.css"/>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/chosen.css" />
+<style>
+    .select-product-dialog {
+        top: 50px;
+    }
+
+    .select-product-dialog tr {
+
+        word-break: break-all;
+    }
+
+    .select-product-dialog .modal-content {
+        min-height: 600px;
+        min-width: 800px;
+    }
+
+</style>
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
@@ -64,16 +80,6 @@
                 </div>
             </div>
 
-                  		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="integral">积分</label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="integral" name="integral" placeholder="积分" value="" onkeyup="this.value=this.value.replace(/\D/g, '')"/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
                      
                        <div class="space-4"></div>
             <div class="form-group">
@@ -157,8 +163,7 @@
                                 var name = obj.attr("data-name");
                                 $("#unifiedMerchandiseName").attr("value",name);
                                 $("#unifiedMerchandiseId").attr("value",id);
-                                    reSetIndex();
-                                  dialog.close();
+                                dialog.close();
                                 return false;
                             }
 

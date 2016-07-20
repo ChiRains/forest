@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>编辑促销优惠商品</title>
+<title>新增首页商品商品</title>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/colorbox.css"/>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/chosen.css" />
 <style>
@@ -24,10 +24,10 @@
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
-        促销优惠商品管理
+        首页商品商品管理
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
-            编辑
+            新增
         </small>
     </h1>
 </div><!-- /.page-header -->
@@ -35,17 +35,17 @@
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
-        <form id="model-form" class="form-horizontal"  role="form" action="/admin/promotionalOffers/edit.do">
+        <form id="model-form" class="form-horizontal"  role="form" action="/admin/homepageSales/addHomepageSales.do">
             <!-- #section:elements.form -->
-<input type="hidden" name="classifyId" value="${classifyId}">
-			<input type="hidden" id="unifiedMerchandiseId" name="unifiedMerchandiseId" value="${unifiedMerchandise.unid}" readonly class="config-key">
+			<input type="hidden" name="classifyId" value="${classifyId}">
+			<input type="hidden" id="unifiedMerchandiseId" name="unifiedMerchandiseId" value="${item.unid}" readonly class="config-key">
 
                   		<div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="discount"> 商品名称</label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-					<input type="text" id="unifiedMerchandiseName" value="${unifiedMerchandise.name}" readonly class="config-value">                                
+					<input type="text" id="unifiedMerchandiseName" value="${item.name}" readonly class="config-value">                                
 					<button type="button" class="add btn-link">增加</button>
 											<i class="ace-icon fa"></i>
 					</span>
@@ -61,7 +61,7 @@
                     <ul sid="image" id="pic-pic-view2" class="ace-thumbnails clearfix">
                         <li pic-id="">
                             <a style="line-height: 150px;text-align: center;width:150px;height: 150px;" href="" data-rel="colorbox" class="cboxElement">
-                                <img style="max-height: 150px;max-width: 150px;" alt="" src="${unifiedMerchandise.image }">
+                                <img style="max-height: 150px;max-width: 150px;" alt="" src="">
                             </a>
                             <div class="tools tools-bottom"><a onclick="imgDel(this);" href="javascript:;" title="删除"><i class="ace-icon fa fa-times red"></i></a></div>
                         </li>
@@ -71,26 +71,28 @@
 
                   		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="discount"> 商品折扣</label>
+                <label class="col-sm-3 control-label no-padding-right" for="discount"> 商品价格</label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="discount" name="discount" placeholder="商品折扣" value="${unifiedMerchandise.discount }" onkeyup="this.value=this.value.replace(/\D/g, '')"/>
+						<input type="text" class="width-100" maxlength="20" id="discount" name="discount" placeholder="商品价格" value="" onkeyup="this.value=this.value.replace(/\D/g, '')"/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
             </div>
+
                      
                        <div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="stock"> 商品库存 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="stock" name="stock" placeholder="商品库存" value="${unifiedMerchandise.stock }" onkeyup="this.value=this.value.replace(/\D/g, '')"/>
+						<input type="text" class="width-100" maxlength="20" id="stock" name="stock" placeholder="商品库存" value="" onkeyup="this.value=this.value.replace(/\D/g, '')"/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
             </div>
-            
+                     
+
             <div class="space-4"></div>
             <div class="clearfix form-actions">
                 <div class="col-md-offset-3 col-md-9">
@@ -119,8 +121,16 @@
                      $this.next().css({'width': $this.parent().width()});
                 })
             }).trigger('resize.chosen');
-
-          //选择商品
+            //图片
+	       	 $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
+	            $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange'></i>");
+	            var btnUpload = $(".btn-upload-pic");
+	            delEvent(getButtonSetting(btnUpload));
+	            btnUpload.on('click', function () {
+	                var bs = getButtonSetting($(this));
+	                uploadDialog(bs);
+	            });
+            //选择商品
             $(".add").on("click", function () {
                 BootstrapDialog.show({
                     title: "商品列表",
@@ -153,7 +163,6 @@
                                 var name = obj.attr("data-name");
                                 $("#unifiedMerchandiseName").attr("value",name);
                                 $("#unifiedMerchandiseId").attr("value",id);
-                                    reSetIndex();
                                   dialog.close();
                                 return false;
                             }
