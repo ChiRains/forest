@@ -39,6 +39,9 @@ public class MerchandiseEvaluation {
     // 客服回复
     private String replyContent;
 
+    // 统一商品id
+    private long   unifiedMerchandiseId;
+
     public MerchandiseEvaluation() {
 
     }
@@ -161,5 +164,15 @@ public class MerchandiseEvaluation {
     public void setReplyContent(String replyContent) {
 
         this.replyContent = replyContent;
+    }
+
+    public long getUnifiedMerchandiseId() {
+
+        return unifiedMerchandiseId;
+    }
+
+    public void setUnifiedMerchandiseId(long unifiedMerchandiseId) {
+
+        this.unifiedMerchandiseId = unifiedMerchandiseId;
     }
 }

@@ -36,49 +36,21 @@ public class AdminMerchantEvaluationController {
     @Autowired
     private MerchantEvaluationHandler merchantEvaluationHandler;
 
-    // @Autowired
-    // private MerchandiseEvaluationService merchandiseEvaluationService;
-    //
-    // @Autowired
-    // private MerchandiseEvaluationHandler merchandiseEvaluationHandler;
-    //
-    // @Autowired
-    // private MerchandiseService merchandiseService;
-    // @Autowired
-    // private TokenClient tokenClient;
-    //
-    // @Autowired
-    // private AdminFilterService adminFilterService;
-    // @Autowired
-    // private OutdatedSellercenterClient outdatedSellercenterClient;
     @RequestMapping
     @NoReferer
     public ModelAndView list(HttpServletRequest request, Integer pageNum, MerchantEvaluationQuery query) {
 
         final int PAGE_SIZE = 10;
-        // String tokenId = adminFilterService.getTokenId(request);
-        // AssertUtil.assertNotEmpty(tokenId, "获取用户登录信息失败.");
-        // String idStr = tokenClient.get(tokenId);
-        // AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
-        // // 根据登录用户获取对应商家
-        // List<QMerchant> merchantMembers = outdatedSellercenterClient.listMerchant(Long.valueOf(idStr));
-        // // TODO 这里列表要是为空呢.
         QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
         query.setMerchantId(merchant.getId());
         pageNum = RequestUtil.getPageid(pageNum);
         int start = NumberUtil.getPageStart(pageNum, PAGE_SIZE);
         Page<MerchantEvaluation> page = merchantEvaluationService.page(query, start, PAGE_SIZE);
-        // List<Long[]> idList = new ArrayList<Long[]>();
         List<AdminMerchantEvaluationVO> voList = new ArrayList<AdminMerchantEvaluationVO>();
         // 获取商品档案id,评价表id集合,obj[0]=评价表id, obj[1]=商品档案id
         for (MerchantEvaluation merchantEvaluation : page.getData()) {
-            // MerchandiseEvaluation4Seller me = merchandiseEvaluationGetter.get(merchantEvaluation.getEvaluationId(), merchantEvaluation.getMerchandiseId());
-            // idList.add(new Long[] { merchantEvaluation.getEvaluationId(), merchantEvaluation.getMerchandiseId()});
             voList.add(merchantEvaluationHandler.toVO4Admin(merchantEvaluation));
         }
-        // 根据商品档案id,评价id获取评论表数据
-        // List<MerchandiseEvaluation> merchandiseEvaluationList = merchandiseEvaluationService.getListByMerchandiseIds(idList);
-        // List<AdminMerchandiseEvaluationVO> list = merchandiseEvaluationHandler.toVOList4Admin(merchandiseEvaluationList);
         String time = null;
         if (DateUtil.date2String(query.getTime(), DateUtil.DATE_FORMAT_STRING) != null) {
             time = "time=" + DateUtil.date2String(query.getTime(), DateUtil.DATE_FORMAT_STRING);

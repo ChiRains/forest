@@ -21,6 +21,8 @@ public interface MerchandiseEvaluationService {
     public Page<MerchandiseEvaluation> page(MerchandiseEvaluationQuery query, int start, int count);
 
     public Page<MerchandiseEvaluation> page(long merchandiseId, StarLevelType starLevelType, int start, int count);
+
+    public boolean synUnifiedMerchandiseEvaluation(MerchandiseEvaluation merchandiseEvaluation);
     // /**
     // * 获取评论表数据
     // * @param idList obj[0]=评价表id,obj[1]=商品档案id

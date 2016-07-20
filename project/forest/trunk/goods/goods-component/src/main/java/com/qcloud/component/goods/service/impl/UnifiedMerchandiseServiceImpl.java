@@ -134,33 +134,21 @@ public class UnifiedMerchandiseServiceImpl implements UnifiedMerchandiseService 
     }
 
     @Override
-    public boolean increaseGoodEvaluation(long merchandiseId) {
+    public boolean increaseGoodEvaluation(long unifiedMerchandiseId) {
 
-        List<UnifiedMerchandise> list = listByMerchandise(merchandiseId);
-        for (UnifiedMerchandise um : list) {
-            unifiedMerchandiseDao.increaseGoodEvaluation(um.getId());
-        }
-        return true;
+        return unifiedMerchandiseDao.increaseGoodEvaluation(unifiedMerchandiseId);
     }
 
     @Override
-    public boolean increaseMiddleEvaluation(long merchandiseId) {
+    public boolean increaseMiddleEvaluation(long unifiedMerchandiseId) {
 
-        List<UnifiedMerchandise> list = listByMerchandise(merchandiseId);
-        for (UnifiedMerchandise um : list) {
-            unifiedMerchandiseDao.increaseMiddleEvaluation(um.getId());
-        }
-        return true;
+        return unifiedMerchandiseDao.increaseMiddleEvaluation(unifiedMerchandiseId);
     }
 
     @Override
-    public boolean increaseLowEvaluation(long merchandiseId) {
+    public boolean increaseLowEvaluation(long unifiedMerchandiseId) {
 
-        List<UnifiedMerchandise> list = listByMerchandise(merchandiseId);
-        for (UnifiedMerchandise um : list) {
-            unifiedMerchandiseDao.increaseLowEvaluation(um.getId());
-        }
-        return true;
+        return unifiedMerchandiseDao.increaseLowEvaluation(unifiedMerchandiseId);
     }
 
     @Override
