@@ -125,7 +125,7 @@ public class IntegralOrderServiceImpl implements IntegralOrderService {
             return 0;
         } else {// 只需要给积分
             integralOrder.setState(IntegralOrderStateType.TO_SHIP.getKey());
-            personalcenterClient.calculateMyWealth(userId, WealthType.INTEGRAL, integral, false, "购买商品：" + unifiedMerchandise.getName() + "使用积分:" + cash);
+            personalcenterClient.calculateMyWealth(userId, WealthType.INTEGRAL, -integral, false, "购买商品：" + unifiedMerchandise.getName() + "使用积分:" + cash);
             add(integralOrder);
             return 1;
         }

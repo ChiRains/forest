@@ -22,8 +22,12 @@ public interface CouponService {
 
     public boolean canExtract(Long userId, Coupon coupon);
 
+    public boolean canIntegralExtract(Long userId, Coupon coupon);
+
     // 随机抽取指定优惠券活动中发行的优惠券,并返回myCouponId
     public Long extractCoupon(Long userId, Coupon coupon);
+
+    public Long extractIntegralCoupon(Long userId, Coupon coupon);
 
     public Long extractCouponItem(Long userId, CouponItems couponItems);
 

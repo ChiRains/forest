@@ -5,11 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.goods.model.Merchandise;
 import com.qcloud.component.goods.model.MerchandiseSpecifications;
 import com.qcloud.component.goods.model.MerchandiseSpecificationsRelation;
 import com.qcloud.component.goods.model.UnifiedMerchandise;
+import com.qcloud.component.goods.model.key.TypeEnum.MerchandiseStateType;
 import com.qcloud.component.goods.service.MerchandiseService;
 import com.qcloud.component.goods.service.MerchandiseSpecificationsRelationService;
 import com.qcloud.component.goods.service.MerchandiseSpecificationsService;
@@ -44,6 +46,9 @@ public class MerchandiseSpecificationsController {
     @Autowired
     private MerchandiseSpecificationsService         merchandiseSpecificationsService;
 
+    @Autowired
+    private FileSDKClient                            fileSDKClient;
+
     @PiratesApp
     @RequestMapping
     public FrontAjaxView listByMerchandise(Long merchandiseId) {
@@ -64,19 +69,21 @@ public class MerchandiseSpecificationsController {
         List<UnifiedMerchandise> merchandiseList = unifiedMerchandiseService.listByMerchandise(merchandiseId, UnifiedMerchandiseType.SINGLE.getKey());
         List<UnifiedMerchandiseSpecificationVO> voList = new ArrayList<UnifiedMerchandiseSpecificationVO>();
         for (UnifiedMerchandise unifiedMerchandise : merchandiseList) {
-            UnifiedMerchandiseSpecificationVO vo = new UnifiedMerchandiseSpecificationVO();
-            vo.setDiscount(unifiedMerchandise.getDiscount());
-            vo.setImage(unifiedMerchandise.getImage());
-            vo.setName(unifiedMerchandise.getName());
-            vo.setPrice(unifiedMerchandise.getPrice());
-            vo.setStock(unifiedMerchandise.getStock());
-            vo.setUnifiedMerchandiseId(unifiedMerchandise.getId());
-            List<MerchandiseSpecifications> specificationList = merchandiseSpecificationsService.listByUnifiedMerchandise(unifiedMerchandise.getId());
-            for (MerchandiseSpecifications merchandiseSpecifications : specificationList) {
-                vo.getSpecificationsList().add(merchandiseSpecifications.getValue());
+            if (unifiedMerchandise.getState() == MerchandiseStateType.ONLINE.getKey()) {// 只拿上线的
+                UnifiedMerchandiseSpecificationVO vo = new UnifiedMerchandiseSpecificationVO();
+                vo.setDiscount(unifiedMerchandise.getDiscount());
+                vo.setImage(fileSDKClient.getFileServerUrl() + unifiedMerchandise.getImage());
+                vo.setName(unifiedMerchandise.getName());
+                vo.setPrice(unifiedMerchandise.getPrice());
+                vo.setStock(unifiedMerchandise.getStock());
+                vo.setUnifiedMerchandiseId(unifiedMerchandise.getId());
+                List<MerchandiseSpecifications> specificationList = merchandiseSpecificationsService.listByUnifiedMerchandise(unifiedMerchandise.getId());
+                for (MerchandiseSpecifications merchandiseSpecifications : specificationList) {
+                    vo.getSpecificationsList().add(merchandiseSpecifications.getValue());
+                }
+                //
+                voList.add(vo);
             }
-            //
-            voList.add(vo);
         }
         FrontAjaxView view = new FrontAjaxView();
         view.addObject("specificationsList", attributeSpecificationsVOList);

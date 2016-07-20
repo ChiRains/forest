@@ -173,7 +173,7 @@ public class ClassifySpecificationsHandlerImpl implements ClassifySpecifications
             vo.setName(attributeDefinition.getName());
             List<String> stringList = new ArrayList<String>(list.size());
             for (MerchandiseSpecificationsRelation merchandiseSpecificationsRelation : list) {
-                if (attributeId == merchandiseSpecificationsRelation.getAttributeId()) {
+                if (attributeId == merchandiseSpecificationsRelation.getAttributeId() && merchandiseSpecificationsRelation.getIsCheck() == 1) {
                     stringList.add(merchandiseSpecificationsRelation.getAlias());
                 }
             }

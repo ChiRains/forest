@@ -193,6 +193,7 @@
 		<item chain="orderform-normal-state-chain-3"></item>
 		<item chain="orderform-normal-state-chain-4"></item>
 		<item chain="orderform-normal-state-chain-5"></item>
+		<item chain="orderform-normal-state-chain-6"></item>
 	</module-list>
 
 	<module-list code="orderform-normal-state-chain-1">
@@ -223,6 +224,11 @@
 	
 	<module-list code="orderform-normal-state-chain-5">
 		<item orderState="50"></item>
+		<item orderState="100"></item>
+	</module-list>
+	
+	<module-list code="orderform-normal-state-chain-1">
+		<item orderState="60"></item>
 		<item orderState="100"></item>
 	</module-list>
 	
