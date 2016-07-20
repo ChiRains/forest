@@ -32,11 +32,11 @@ public interface UnifiedMerchandiseService {
 
     public Long addThenRetrunId(UnifiedMerchandise unifiedMerchandise);
 
-    boolean increaseGoodEvaluation(long merchandiseId);
+    boolean increaseGoodEvaluation(long unifiedMerchandiseId);
 
-    boolean increaseMiddleEvaluation(long merchandiseId);
+    boolean increaseMiddleEvaluation(long unifiedMerchandiseId);
 
-    boolean increaseLowEvaluation(long merchandiseId);
+    boolean increaseLowEvaluation(long unifiedMerchandiseId);
 
     boolean updateSalesVolume(long id, int number);
 

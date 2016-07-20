@@ -142,9 +142,10 @@ public class AdminMerchandiseEvaluationController {
         for (MerchandiseSpecifications merchandiseSpecifications : merchandiseSpecificationss) {
             sb.append(merchandiseSpecifications.getValue()).append(" - ");
         }
-          //
+        //
         merchandiseEvaluation.setSpecifications(sb.toString());
         merchandiseEvaluation.setAnonymous(EnableType.DISABLE.getKey());
+        merchandiseEvaluation.setUnifiedMerchandiseId(unifiedMerchandise.getId());
         boolean flag = merchandiseEvaluationService.add(merchandiseEvaluation);
         AssertUtil.assertTrue(flag, "评价失败.");
         // 更新单一商品好中差评
@@ -227,7 +228,7 @@ public class AdminMerchandiseEvaluationController {
                 throw new CommoditycenterException("当前评论已经审核完成." + merchandiseEvaluation.getContent());
             }
             merchandiseEvaluation.setStatus(StatusType.PASS.getKey());
-            merchandiseEvaluationService.update(merchandiseEvaluation);
+            merchandiseEvaluationService.synUnifiedMerchandiseEvaluation(merchandiseEvaluation);
         }
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("审核完成");
@@ -257,7 +258,7 @@ public class AdminMerchandiseEvaluationController {
                 throw new CommoditycenterException("当前评论已经审核完成." + merchandiseEvaluation.getContent());
             }
             merchandiseEvaluation.setStatus(StatusType.UNPASS.getKey());
-            merchandiseEvaluationService.update(merchandiseEvaluation);
+            merchandiseEvaluationService.synUnifiedMerchandiseEvaluation(merchandiseEvaluation);
         }
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("审核完成");
@@ -290,7 +291,7 @@ public class AdminMerchandiseEvaluationController {
             throw new CommoditycenterException("当前评论已经审核完成." + merchandiseEvaluation.getContent());
         }
         merchandiseEvaluation.setStatus(me.getStatus());
-        merchandiseEvaluationService.update(merchandiseEvaluation);
+        merchandiseEvaluationService.synUnifiedMerchandiseEvaluation(merchandiseEvaluation);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("编辑成功");
         aceAjaxView.setUrl("admin/merchantEvaluation/list");

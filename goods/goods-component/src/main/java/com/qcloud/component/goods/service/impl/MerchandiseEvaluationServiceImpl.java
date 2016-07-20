@@ -73,14 +73,20 @@ public class MerchandiseEvaluationServiceImpl implements MerchandiseEvaluationSe
     @Override
     public boolean update(MerchandiseEvaluation merchandiseEvaluation) {
 
+        return merchandiseEvaluationDao.update(merchandiseEvaluation);
+    }
+
+    @Override
+    public boolean synUnifiedMerchandiseEvaluation(MerchandiseEvaluation merchandiseEvaluation) {
+
         int star = merchandiseEvaluation.getStar();
         if (merchandiseEvaluation.getStatus() == StatusType.PASS.getKey()) {
             if (StarLevelType.CP.getKey() >= star) {
-                unifiedMerchandiseService.increaseLowEvaluation(merchandiseEvaluation.getMerchandiseId());
+                unifiedMerchandiseService.increaseLowEvaluation(merchandiseEvaluation.getUnifiedMerchandiseId());
             } else if (StarLevelType.ZP.getKey() >= star && star > StarLevelType.CP.getKey()) {
-                unifiedMerchandiseService.increaseMiddleEvaluation(merchandiseEvaluation.getMerchandiseId());
+                unifiedMerchandiseService.increaseMiddleEvaluation(merchandiseEvaluation.getUnifiedMerchandiseId());
             } else {
-                unifiedMerchandiseService.increaseGoodEvaluation(merchandiseEvaluation.getMerchandiseId());
+                unifiedMerchandiseService.increaseGoodEvaluation(merchandiseEvaluation.getUnifiedMerchandiseId());
             }
         }
         return merchandiseEvaluationDao.update(merchandiseEvaluation);
@@ -133,6 +139,7 @@ public class MerchandiseEvaluationServiceImpl implements MerchandiseEvaluationSe
         QMyToEvaluation myToEvaluation = myClient.getMyToEvaluation(toEvaluationId);
         AssertUtil.assertNotNull(myToEvaluation, "待评价项不存在.");
         QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(myToEvaluation.getUnifiedMerchandiseId());
+        AssertUtil.assertNotNull(unifiedMerchandise, "统一商品不存在，请检查数据." + myToEvaluation.getUnifiedMerchandiseId());
         MerchandiseEvaluation merchandiseEvaluation = new MerchandiseEvaluation();
         merchandiseEvaluation.setAnonymous(merchandiseEvaluation.getAnonymous() == EnableType.ENABLE.getKey() ? EnableType.ENABLE.getKey() : merchandiseEvaluation.getAnonymous());
         merchandiseEvaluation.setContent(content);
@@ -151,10 +158,10 @@ public class MerchandiseEvaluationServiceImpl implements MerchandiseEvaluationSe
             }
         }
         merchandiseEvaluation.setImages(sb.toString());
+        merchandiseEvaluation.setUnifiedMerchandiseId(unifiedMerchandise.getId());
         add(merchandiseEvaluation);
         sellercenterClient.addMerchantEvaluation(merchandiseEvaluation.getId(), myToEvaluation.getMerchantId(), merchandiseEvaluation.getMerchandiseId(), merchandiseEvaluation.getContent());
         myClient.addMyEvaluation(merchandiseEvaluation.getId(), merchandiseEvaluation.getUserId(), merchandiseEvaluation.getMerchandiseId(), toEvaluationId);
-        
         return true;
     }
 }
