@@ -227,7 +227,7 @@
 		<item orderState="100"></item>
 	</module-list>
 	
-	<module-list code="orderform-normal-state-chain-1">
+	<module-list code="orderform-normal-state-chain-6">
 		<item orderState="60"></item>
 		<item orderState="100"></item>
 	</module-list>
