@@ -10,6 +10,8 @@ public class SimpleMerchandiseVO {
 
     private double discount;
 
+    private String merchantName;
+
     public Long getUnifiedMerchandiseId() {
 
         return unifiedMerchandiseId;
@@ -48,5 +50,15 @@ public class SimpleMerchandiseVO {
     public void setName(String name) {
 
         this.name = name;
+    }
+
+    public String getMerchantName() {
+
+        return merchantName;
+    }
+
+    public void setMerchantName(String merchantName) {
+
+        this.merchantName = merchantName;
     }
 }

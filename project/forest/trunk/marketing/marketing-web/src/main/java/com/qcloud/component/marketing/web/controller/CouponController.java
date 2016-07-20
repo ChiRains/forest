@@ -296,8 +296,6 @@ public class CouponController {
     @RequestMapping
     public FrontAjaxView listMerchantActivityIntegralCoupon(HttpServletRequest request, Long merchantId) {
 
-        // TODO
-        // AssertUtil.assertNotNull(merchantId, "商家ID不能为空");
         merchantId = getMerchantClassify();
         AssertUtil.greatZero(merchantId, "商家ID必须大于0" + merchantId);
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
@@ -324,10 +322,25 @@ public class CouponController {
 
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView extractIntegralCoupon(HttpServletRequest request) {
+    public FrontAjaxView extractIntegralCoupon(HttpServletRequest request, Long couponId) {
 
-        FrontAjaxView view = new FrontAjaxView();
-        view.setMessage("兑换优惠券成功.");
-        return view;
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        Coupon coupon = couponService.get(couponId);
+        Long myCouponId = couponService.extractIntegralCoupon(user.getId(), coupon);
+        QMyCoupon myCoupon = myClient.getMyCoupon(user.getId(), myCouponId);
+        if (myCoupon == null) {
+            FrontAjaxView ajaxView = new FrontAjaxView();
+            ajaxView.setMessage("领取失败.");
+            ajaxView.addObject("price", 0);
+            ajaxView.addObject("date", "");
+            ajaxView.addObject("id", myCouponId);
+            return ajaxView;
+        }
+        FrontAjaxView ajaxView = new FrontAjaxView();
+        ajaxView.setMessage("领取成功");
+        ajaxView.addObject("price", myCoupon.getPrice());
+        ajaxView.addObject("date", DateUtil.date2String(myCoupon.getExtractDate(), DateUtil.DATE_FORMAT_STRING));
+        ajaxView.addObject("id", myCouponId);
+        return ajaxView;
     }
 }

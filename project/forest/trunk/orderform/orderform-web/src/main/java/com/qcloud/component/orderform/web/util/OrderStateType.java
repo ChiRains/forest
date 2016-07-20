@@ -12,11 +12,11 @@ public enum OrderStateType {
     //
     NORMAL_FINISHED(50, "已完成"),
     //
-    NORMAL_CANCEL_ORDER(60, "取消订单"),
+    NORMAL_CANCEL_ORDER(60, "已关闭"),
     //
     NORMAL_AFTER_SALE(70, "退款中"),
     //
-    NORMAL_INVALID(80, "已关闭"),
+    NORMAL_INVALID(80, "已取消"),
     //
     NORMAL_TRADE_SUCCESS(90, "交易成功"),
     //

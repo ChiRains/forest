@@ -96,6 +96,8 @@ public class MerchandiseHandlerImpl implements MerchandiseHandler {
         vo.setImage(fileSDKClient.getFileServerUrl() + merchandise.getImage());
         vo.setName(merchandise.getName());
         vo.setUnifiedMerchandiseId(merchandise.getId());
+        QMerchant merchant = sellercenterClient.getMerchant(merchandise.getMerchantId());
+        vo.setMerchantName(merchant.getName());
         return vo;
     }
 

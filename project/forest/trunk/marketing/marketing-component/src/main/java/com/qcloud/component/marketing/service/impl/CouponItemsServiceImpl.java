@@ -6,26 +6,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.qcloud.component.autoid.AutoIdGenerator;
 import com.qcloud.component.marketing.dao.CouponItemsDao;
+import com.qcloud.component.marketing.exception.MarketingException;
 import com.qcloud.component.marketing.model.Coupon;
 import com.qcloud.component.marketing.model.CouponItems;
 import com.qcloud.component.marketing.model.query.CouponItemsQuery;
 import com.qcloud.component.marketing.service.CouponItemsService;
 import com.qcloud.component.my.MyClient;
+import com.qcloud.component.personalcenter.PersonalcenterClient;
+import com.qcloud.component.personalcenter.QMyWealth;
+import com.qcloud.component.personalcenter.WealthType;
 import com.qcloud.pirates.data.Page;
 
 @Service
 public class CouponItemsServiceImpl implements CouponItemsService {
 
     @Autowired
-    private CouponItemsDao      couponItemsDao;
+    private CouponItemsDao       couponItemsDao;
 
     @Autowired
-    private AutoIdGenerator     autoIdGenerator;
-
-    private static final String ID_KEY = "marketing_coupon_items";
+    private AutoIdGenerator      autoIdGenerator;
 
     @Autowired
-    private MyClient            myClient;
+    private PersonalcenterClient personalcenterClient;
+
+    private static final String  ID_KEY = "marketing_coupon_items";
+
+    @Autowired
+    private MyClient             myClient;
 
     @Override
     public boolean add(CouponItems couponItems) {
@@ -98,6 +105,27 @@ public class CouponItemsServiceImpl implements CouponItemsService {
     }
 
     @Override
+    public Long extractIntegralCoupon(Long userId, Coupon coupon) {
+
+        synchronized (new Long(coupon.getId())) {
+            // 获取剩余优惠券列表
+            List<CouponItems> list = list4Extract(coupon.getId());
+            if (list.size() == 0) {
+                return -1L;
+            }
+            CouponItems items = null;
+            if (list.size() == 1) {
+                items = list.get(0);
+            } else {
+                int index = new Random().nextInt(list.size());
+                items = list.get(index);
+                // 判断是否超出每人最大领取数量 /每人最大领取金额
+            }
+            return extractIntegralCoupon(userId, coupon, items);
+        }
+    }
+
+    @Override
     public Long extractCouponItem(Long userId, Coupon coupon, CouponItems items) {
 
         synchronized (new Long(coupon.getId())) {
@@ -120,6 +148,19 @@ public class CouponItemsServiceImpl implements CouponItemsService {
     private Long extractCoupon(Long userId, Coupon coupon, CouponItems items) {
 
         Long myCouponId = myClient.extractCoupon(userId, items.getCouponID(), items.getId(), coupon.getValidDate(), coupon.getInvalidDate(), items.getLimitPrice(), items.getName(), items.getPrice(), coupon.getMerchantId());
+        items.setSendNum(items.getSendNum() + 1);
+        update(items);
+        return myCouponId;
+    }
+
+    private Long extractIntegralCoupon(Long userId, Coupon coupon, CouponItems items) {
+
+        QMyWealth myWealth = personalcenterClient.getMyWealth(userId);
+        if (myWealth.getIntegral() < items.getCash()) {
+            throw new MarketingException("积分余额不足,无法进行兑换.");
+        }
+        Long myCouponId = myClient.extractCoupon(userId, items.getCouponID(), items.getId(), coupon.getValidDate(), coupon.getInvalidDate(), items.getLimitPrice(), items.getName(), items.getPrice(), coupon.getMerchantId());
+        personalcenterClient.calculateMyWealth(userId, WealthType.INTEGRAL, -items.getCash(), false, "使用积分:" + items.getCash() + "兑换了一张优惠券");
         items.setSendNum(items.getSendNum() + 1);
         update(items);
         return myCouponId;

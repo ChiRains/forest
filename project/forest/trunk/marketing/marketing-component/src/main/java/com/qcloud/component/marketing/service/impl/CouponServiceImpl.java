@@ -5,12 +5,14 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import com.qcloud.component.autoid.AutoIdGenerator;
 import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.marketing.dao.CouponDao;
 import com.qcloud.component.marketing.exception.MarketingException;
 import com.qcloud.component.marketing.model.Coupon;
 import com.qcloud.component.marketing.model.CouponItems;
+import com.qcloud.component.marketing.model.key.TypeEnum.CouponType;
 import com.qcloud.component.marketing.model.query.CouponQuery;
 import com.qcloud.component.marketing.service.CouponItemsService;
 import com.qcloud.component.marketing.service.CouponService;
@@ -167,5 +169,52 @@ public class CouponServiceImpl implements CouponService {
     public List<Coupon> listByPlatform() {
 
         return couponDao.listByPlatform();
+    }
+
+    @Override
+    public boolean canIntegralExtract(Long userId, Coupon coupon) {
+
+        if (coupon == null) {
+            throw new MarketingException("优惠劵不存在.");
+        }
+        if (coupon.getType() == CouponType.Normal.getKey()) {
+            throw new MarketingException("优惠劵不存在.");
+        }
+        if (coupon.getEndDate().before(new Date())) {
+            throw new MarketingException("优惠券活动已过期.");
+        }
+        if (coupon.getEnable() == ParamEnableType.DISABLE.getKey()) {
+            throw new MarketingException("优惠券活动已经停止.");
+        }
+        // 积分优惠券无下列限制
+        // List<QMyCoupon> list = myClient.listExtractCouponByUser(userId, coupon.getId());
+        // double sum = 0.0;
+        // Date date = coupon.getStartDate();
+        // for (QMyCoupon qMyCoupon : list) {
+        // sum += qMyCoupon.getPrice();
+        // if (date.before(qMyCoupon.getExtractDate())) {
+        // date = qMyCoupon.getExtractDate();
+        // }
+        // }
+        // if (sum >= coupon.getPriceOfPerson()) {
+        // return false;
+        // }
+        // if (list.size() >= coupon.getTotalOfPerson()) {
+        // return false;
+        // }
+        // if (list.size() > 0 && coupon.getTotalOfPerson() > 1 && DateUtil.addDate(date, coupon.getInterval()).after(new Date())) {
+        // return false;
+        // }
+        return true;
+    }
+
+    @Transactional
+    @Override
+    public Long extractIntegralCoupon(Long userId, Coupon coupon) {
+
+        if (canIntegralExtract(userId, coupon)) {
+            return couponItemsService.extractCoupon(userId, coupon);
+        }
+        return -1L;
     }
 }

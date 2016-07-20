@@ -18,9 +18,6 @@
         min-width: 800px;
     }
 
-    /*.select-dialog .modal-body{*/
-    /*padding: 0;*/
-    /*}*/
 </style>
 <!-- ajax layout which only needs content area -->
 <div class="page-header">

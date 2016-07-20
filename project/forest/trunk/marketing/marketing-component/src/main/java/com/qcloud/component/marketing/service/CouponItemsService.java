@@ -26,6 +26,8 @@ public interface CouponItemsService {
 
     public Long extractCoupon(Long userId, Coupon coupon);
 
+    public Long extractIntegralCoupon(Long userId, Coupon coupon);
+
     public Long extractCouponItem(Long userId, Coupon coupon, CouponItems items);
 
     public List<CouponItems> listByCouponId(Long couponId);

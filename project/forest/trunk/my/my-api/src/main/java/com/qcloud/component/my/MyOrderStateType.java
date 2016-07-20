@@ -10,11 +10,11 @@ public enum MyOrderStateType {
     //
     SIGN(4, "待收货"), SUCCESS(5, "成功"),
     //
-    CANCEL_ORDER(6, "已取消"),
+    CANCEL_ORDER(6, "已关闭"),
     //
     AFTERSALES(7, "售后"),
     //
-    INVALID(8, "已关闭"),
+    INVALID(8, "已取消"),
     //
     EVALUATED(9, "评价");
 
