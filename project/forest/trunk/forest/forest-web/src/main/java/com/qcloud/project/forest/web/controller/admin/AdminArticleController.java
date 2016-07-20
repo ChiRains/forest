@@ -45,12 +45,6 @@ public class AdminArticleController {
     @Autowired
     private PublicdataClient   publicdataClient;
 
-    /**
-     * 展示资讯列表
-     * @param pageNum
-     * @param query
-     * @return
-     */
     @RequestMapping
     @NoReferer
     public ModelAndView list(HttpServletRequest request, PPage pPage, ArticleQuery query) {
@@ -68,10 +62,6 @@ public class AdminArticleController {
         return pagingView;
     }
 
-    /**
-     * 跳转到添加资讯列表
-     * @return
-     */
     @RequestMapping
     public ModelAndView toAdd() {
 
@@ -81,11 +71,6 @@ public class AdminArticleController {
         return model;
     }
 
-    /**
-     * 提交添加资讯
-     * @param article
-     * @return
-     */
     @RequestMapping
     public AceAjaxView add(Article article) {
 
@@ -100,11 +85,6 @@ public class AdminArticleController {
         return aceAjaxView;
     }
 
-    /**
-     * 跳转到编辑资讯页面
-     * @param id
-     * @return
-     */
     @RequestMapping
     public ModelAndView toEdit(Long id) {
 
@@ -118,11 +98,6 @@ public class AdminArticleController {
         return model;
     }
 
-    /**
-     * 提交编辑资讯
-     * @param article
-     * @return
-     */
     @RequestMapping
     public AceAjaxView edit(Article article) {
 
@@ -144,11 +119,6 @@ public class AdminArticleController {
         return aceAjaxView;
     }
 
-    /**
-     * 删除资讯
-     * @param id
-     * @return
-     */
     @RequestMapping
     public AceAjaxView delete(Long id) {
 
@@ -160,12 +130,6 @@ public class AdminArticleController {
         return aceAjaxView;
     }
 
-    /**
-     * 发布资讯
-     * @param id
-     * @param value
-     * @return
-     */
     @RequestMapping
     public AceAjaxView enable(Long id) {
 
@@ -180,11 +144,6 @@ public class AdminArticleController {
         return aceAjaxView;
     }
 
-    /**
-     * 下架
-     * @param id
-     * @return
-     */
     @RequestMapping
     public AceAjaxView offshelves(Long id) {
 
@@ -198,10 +157,6 @@ public class AdminArticleController {
         return aceAjaxView;
     }
 
-    /**
-     * 资讯类别列表
-     * @return
-     */
     @RequestMapping
     public ModelAndView classifyList() {
 
@@ -211,10 +166,6 @@ public class AdminArticleController {
         return pagingView;
     }
 
-    /**
-     * 跳转到添加资讯类别
-     * @return
-     */
     @RequestMapping
     public ModelAndView toAddClassify() {
 
@@ -222,11 +173,6 @@ public class AdminArticleController {
         return model;
     }
 
-    /**
-     * 提交添加资讯类别
-     * @param classify
-     * @return
-     */
     @RequestMapping
     public ModelAndView addClassify(Classify classify) {
 
@@ -239,11 +185,6 @@ public class AdminArticleController {
         return aceAjaxView;
     }
 
-    /**
-     * 跳转到编辑资讯类别
-     * @param id
-     * @return
-     */
     @RequestMapping
     public ModelAndView toEditClassify(Long id) {
 
@@ -254,11 +195,6 @@ public class AdminArticleController {
         return model;
     }
 
-    /**
-     * 提交编辑资讯类别
-     * @param classify
-     * @return
-     */
     @RequestMapping
     public AceAjaxView editClassify(Classify classify) {
 
@@ -271,11 +207,6 @@ public class AdminArticleController {
         return aceAjaxView;
     }
 
-    /**
-     * 删除资讯类别
-     * @param id
-     * @return
-     */
     @RequestMapping
     public AceAjaxView deleteClassify(Long id) {
 
@@ -287,12 +218,6 @@ public class AdminArticleController {
         return aceAjaxView;
     }
 
-    /**
-     * 启用资讯类别
-     * @param id
-     * @param enable
-     * @return
-     */
     @RequestMapping
     public AceAjaxView enableClassify(Long id, Integer enable) {
 

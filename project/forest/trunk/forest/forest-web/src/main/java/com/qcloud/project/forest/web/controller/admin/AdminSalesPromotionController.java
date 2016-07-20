@@ -67,11 +67,6 @@ public class AdminSalesPromotionController {
     @Autowired
     private ClassifyService                        classifyService;
 
-    /**
-     * 展示活动商品的类别
-     * @param pPage
-     * @return
-     */
     @RequestMapping
     public ModelAndView listClassify(PPage pPage) {
 
@@ -87,10 +82,6 @@ public class AdminSalesPromotionController {
         return pagingView;
     }
 
-    /**
-     * 跳转到添加类别界面
-     * @return
-     */
     @RequestMapping
     public ModelAndView toAddSalesPromotionClassify() {
 
@@ -99,11 +90,6 @@ public class AdminSalesPromotionController {
         return modelAndView;
     }
 
-    /**
-     * 提交添加类别
-     * @param classify
-     * @return
-     */
     @RequestMapping
     public AceAjaxView addSalesPromotionClassify(Classify classify) {
 
@@ -189,13 +175,6 @@ public class AdminSalesPromotionController {
         return pagingView;
     }
 
-    /**
-     * 自定义商城列表
-     * @param request
-     * @param pageNum
-     * @param query
-     * @return
-     */
     @RequestMapping
     @NoReferer
     public ModelAndView mallList(HttpServletRequest request, Integer pageNum, MerchandiseCustomClassificationQuery query) {
@@ -220,11 +199,6 @@ public class AdminSalesPromotionController {
         return pagingView;
     }
 
-    /**
-     * 跳转到新增商品页面
-     * @param query
-     * @return
-     */
     @RequestMapping
     public ModelAndView toAddClassifyForMerchantCustom(HttpServletRequest request, MerchandiseCustomClassificationQuery query) {
 
@@ -248,12 +222,6 @@ public class AdminSalesPromotionController {
         return modelAndView;
     }
 
-    /**
-     * 提交新增商品
-     * @param merchandiseCustomClassificationForm
-     * @param request
-     * @return
-     */
     @RequestMapping
     public AceAjaxView addClassifyForMerchantCustom(MerchandiseCustomClassificationForm merchandiseCustomClassificationForm, HttpServletRequest request) {
 
@@ -280,11 +248,6 @@ public class AdminSalesPromotionController {
         return aceAjaxView;
     }
 
-    /**
-     * 跳转到商城自定义新增页面
-     * @param query
-     * @return
-     */
     @RequestMapping
     public ModelAndView toAddClassifyForMallCustom(HttpServletRequest request, MerchandiseCustomClassificationQuery query) {
 
@@ -344,11 +307,6 @@ public class AdminSalesPromotionController {
         return aceAjaxView;
     }
 
-    /**
-     * 删除商品
-     * @param id
-     * @return
-     */
     @RequestMapping
     public AceAjaxView deleteMall(Long id) {
 
