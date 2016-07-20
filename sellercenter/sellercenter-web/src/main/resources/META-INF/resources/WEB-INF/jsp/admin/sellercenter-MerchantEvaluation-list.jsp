@@ -2,7 +2,25 @@
 <%@include file="../taglib.inc.jsp" %>
 
 <title>评价中心</title>
+<style>
+    .select-product-dialog {
+        top: 60px;
+    }
 
+    .select-product-dialog tr {
+
+        word-break: break-all;
+    }
+
+    .select-product-dialog .modal-content {
+        min-height: 400px;
+        min-width: 600px;
+    }
+
+    /*.select-dialog .modal-body{*/
+    /*padding: 0;*/
+    /*}*/
+</style>
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
@@ -60,6 +78,7 @@
                     <tr role="row">     
                         <th>商品名称</th>           
                         <th>评价内容</th>
+                        <th>追加评价</th>
                         <th>星级</th> 
                         <th>审核状态</th>           
                         <th>规格</th>
@@ -70,6 +89,7 @@
                         	<input type="button" class="AuditBtn" api-path="/admin/merchandiseEvaluation/agree.do" style="color:green;" value="审核通过" />
 							<input type="button" class="UnAuditBtn" api-path="/admin/merchandiseEvaluation/disagree.do" style="color:red;" value="审核不通过" />
 						</th>
+						<th>客服回复</th>
                     </tr>
                     </thead>
 
@@ -80,10 +100,19 @@
                                 <td>
                                 <label class="showcontent" content="${item.content}">
                                  <c:choose>
-	                                <c:when test="${fn:length(item.content)>20}">
-	                               		<a>${fn:substring(item.content,0,20)} .....</a>
+	                                <c:when test="${fn:length(item.content)>15}">
+	                               		<a>${fn:substring(item.content,0,15)} .....</a>
 	                                </c:when>
 	                                <c:otherwise><a>${item.content}</a></c:otherwise>
+                                </c:choose> 
+                                </td> 
+                                <td>
+                                <label class="showcontent2" content="${item.addContent}">
+                                 <c:choose>
+	                                <c:when test="${fn:length(item.addContent)>15}">
+	                               		<a>${fn:substring(item.addContent,0,15)} .....</a>
+	                                </c:when>
+	                                <c:otherwise><a>${item.addContent}</a></c:otherwise>
                                 </c:choose> 
                                 </td>                         
                                 <td>
@@ -132,6 +161,24 @@
 									</span>
                                 </div>
                             </td>
+                            <td>
+                                <div class="hidden-sm hidden-xs action-buttons add-replyContent" 
+                                	data-evaluationId="${item.evaluationId}"
+                                    data-merchandiseId="${item.merchandiseId}"
+                                    data-replyContent="${item.replyContent}">
+                                    
+                                    	<c:if test="${item.replyContent eq null || item.replyContent eq ''}">
+	                                    <a title="客服回复" class="green" style="cursor:pointer">
+	                                        <i class="ace-icon fa fa-comment bigger-130"></i>
+	                                    </a>							                                 
+                                    	</c:if>
+                                    	<c:if test="${item.replyContent ne null && item.replyContent ne ''}">
+                                    	<a title="客服回复" class="blue" style="cursor:pointer">
+	                                        <i class="ace-icon fa fa-eye bigger-130"></i>
+	                                     </a>
+                                    	</c:if>
+                                </div>
+                        	</td>
                         </tr>
                    </c:forEach>  
                     </tbody>
@@ -327,7 +374,7 @@
 	     $('.showcontent').on('click', function () {
 	    	var content=$(this).attr('content');
 	        BootstrapDialog.show({
-	            title: '内容',
+	            title: '评价内容',
 	            message:content,
 	            buttons: [{
 	                id: 'btn-1',
@@ -339,6 +386,87 @@
 	            }]
 	        });
         });
+        
+        $('.showcontent2').on('click', function () {
+	    	var content=$(this).attr('content');
+	        BootstrapDialog.show({
+	            title: '追加评论',
+	            message:content,
+	            buttons: [{
+	                id: 'btn-1',
+	                label: '确定',
+	                cssClass: 'btn btn-primary',
+	                action: function (dialogItself) {
+	                    dialogItself.close();
+	                }
+	            }]
+	        });
+        });
+        
+        $('.add-replyContent').on('click', function () {
+        //
+        	if($(".modal-dialog").length > 0){
+		    	$(".modal-dialog").remove();
+        	}
+	    	var evaluationId=$(this).attr('data-evaluationId');
+	    	var merchandiseId=$(this).attr('data-merchandiseId');
+	    	var replyContent = $(this).attr('data-replyContent');
+	        BootstrapDialog.show({ 
+                title:"客服回复",   
+                message: $('<div></div>').load('/admin/merchandiseEvaluation/toReplyContent.do?evaluationId=' + evaluationId + '&merchandiseId=' + merchandiseId),
+                cssClass: "select-product-dialog",
+                onshow: function (dialog) {
+                },
+                buttons: [{
+	                label: '回复',
+	                cssClass: 'btn btn-primary',
+	                action: function (dialog) {
+	                	BootstrapDialog.show({
+			            title: '客服回复!',
+			            message: '确认提交回复内容?',
+			            buttons: [{
+			                id: 'btn-1',
+			                label: '确定',
+			                cssClass: 'btn btn-primary',
+			                action: function(dialogItself) {
+			                    $.get("/admin/merchandiseEvaluation/replyContent.do?" + $(".delivery-form").serialize(), {},
+			                    function(data) {
+			                        data = JSON.parse(data);
+			                        if (parseInt(data["status"]) == 200) {
+			                            dialogItself.setTitle('成功');
+			                            dialogItself.setMessage("回复成功！");
+			                            dialogItself.setType(BootstrapDialog.TYPE_SUCCESS);
+			                            dialogItself.getButton('btn-1').remove();
+			                            setTimeout(function() {
+			                                dialogItself.close();
+			                            },
+			                            1000);
+			                            setTimeout(function() {
+			                                location.reload(true);
+			                            },
+			                            1500);
+			                        } else {
+			                         	dialogItself.setTitle('操作失败');
+			                            dialogItself.setMessage(data["message"]);
+			                            dialogItself.setType(BootstrapDialog.TYPE_DANGER);
+			                            dialogItself.getButton('btn-1').remove();
+			                        }
+			                    });
+			                }
+			            },
+				            {
+				                label: '取消',
+				                action: function(dialogItself) {
+				                    dialogItself.close();
+				                }
+				            }]
+				        });
+                    }
+                }]
+            });
+            
+        });
+        
     });
     
 </script>

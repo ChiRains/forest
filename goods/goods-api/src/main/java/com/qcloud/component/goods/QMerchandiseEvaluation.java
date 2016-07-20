@@ -19,4 +19,8 @@ public interface QMerchandiseEvaluation {
     public long getUserId();
 
     public String getMerchandiseName();
+
+    public String getAddContent();
+
+    public String getReplyContent();
 }

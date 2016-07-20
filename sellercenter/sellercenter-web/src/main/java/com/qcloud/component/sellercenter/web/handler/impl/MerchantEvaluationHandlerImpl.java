@@ -53,6 +53,9 @@ public class MerchantEvaluationHandlerImpl implements MerchantEvaluationHandler 
         if (merchandiseEvaluation.getStar() % 10 != 0) {
             vo.getStars().add(Integer.valueOf(1));
         }
+        vo.setEvaluationId(merchantEvaluation.getEvaluationId());
+        vo.setAddContent(merchandiseEvaluation.getAddContent());
+        vo.setReplyContent(merchandiseEvaluation.getReplyContent());
         return vo;
     }
     // @Override

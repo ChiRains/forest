@@ -57,4 +57,16 @@ public class MerchandiseEvaluationEntity implements QMerchandiseEvaluation {
 
         return merchandise.getName();
     }
+
+    @Override
+    public String getAddContent() {
+
+        return merchandiseEvaluation.getAddContent();
+    }
+
+    @Override
+    public String getReplyContent() {
+
+        return merchandiseEvaluation.getReplyContent();
+    }
 }
