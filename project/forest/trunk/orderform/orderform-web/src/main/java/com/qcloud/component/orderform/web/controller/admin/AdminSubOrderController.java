@@ -32,8 +32,6 @@ import com.qcloud.component.orderform.web.util.OrderStateType;
 import com.qcloud.component.orderform.web.vo.admin.AdminOrderItemDetailVO;
 import com.qcloud.component.orderform.web.vo.admin.AdminSubOrderVO;
 import com.qcloud.component.organization.OrganizationClient;
-import com.qcloud.component.organization.QDepartment;
-import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.QStore;
 import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.component.sellercenter.model.MerchantOrderForm;
@@ -249,6 +247,9 @@ public class AdminSubOrderController {
         pagingView.addObject("invoiceType", InvoiceType.values());
         pagingView.addObject("deliveryModeType", DeliveryModeType.values());
         pagingView.addObject("orderDiscountList", orderDiscountList);
+        pagingView.addObject("orderDate", collectOrder.getTime());
+        pagingView.addObject("orderId", merchantOrderForm.getOrderId());
+        pagingView.addObject("subOrderId", merchantOrderForm.getSubOrderId());
         return pagingView;
     }
 
