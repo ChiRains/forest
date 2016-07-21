@@ -64,8 +64,11 @@ public class ArticleController {
     @RequestMapping
     public FrontAjaxView get(Long id, HttpServletRequest request) {
 
-        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
-        ArticlePraise articlePraise = articlePraiseService.getByArticleIdAndUserId(id, user.getId());
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_IS_LOGIN_PARAMETER_KEY);
+        ArticlePraise articlePraise = null;
+        if (user != null) {
+            articlePraise = articlePraiseService.getByArticleIdAndUserId(id, user.getId());
+        }
         AssertUtil.greatZero(id, "ID不能为空");
         Article article = articleService.get(id);
         AssertUtil.assertNotNull(article, "文章不存在.");

@@ -21,6 +21,11 @@
         <div>
             <div class="dataTables_wrapper form-inline no-footer">
                	<table class="table table-striped table-bordered table-hover dataTable no-footer">
+               	
+ 					<input type="hidden" id="orderDate" value="<fmt:formatDate value="${orderDate}" pattern="yyyy-MM-dd HH:mm:ss" />">
+ 					<input type="hidden" id="orderId" value="${orderId}">
+ 					<input type="hidden" id="subOrderId" value="${subOrderId}">
+               		
                		<fmt:formatDate value="${collectOrder.time}" pattern="yyyy-MM-dd" var="time"/>
 					<caption class="text-left table-header btn-info">订单基本信息</caption>
 					<tbody><tr>
@@ -236,6 +241,8 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="dataTables_length" align="right">
+                        <button class="btn btn-warning shipOrder" api-path="/orderState/shipOrder.do">配货</button>
+                        
                             <c:if test="${shipType eq merchantOrderForm.state}">
                              <a title="发货" class="btn btn-sm btn-success deliverOrder-item" href="javascript:;"
                              api-path="<%=request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()%>/orderState/deliverOrder.do?subOrderId=${subOrder.id}&orderDate=${time}">
@@ -264,7 +271,49 @@
                      $this.next().css({'width': $this.parent().width()});
                 })
             }).trigger('resize.chosen');
-                   
+
+            //配货
+             $('.shipOrder').on('click',
+            		 function() {
+                 var url = $(this).attr('api-path');
+          		 var data = {
+            		 orderId:$("#orderId").val(),
+            		 orderDate:$("#orderDate").val(),
+            		 subOrderId:$("#subOrderId").val()
+                 };
+                 $.ajax({
+                     url:url,
+                     type:'POST',
+                     data:data,
+                     dataType: 'json',
+                     cache: false,
+                     async: false,
+                     error: function(){
+                         BootstrapDialog.alert({
+                             title: '错误',
+                             message:'网络错误，请稍后再尝试！',
+                             type: BootstrapDialog.TYPE_DANGER,
+                             callback: function(){setTimeout(function(){el[0].checked = !el[0].checked;},500)}
+                         });
+                     },
+                     success:function(rd){
+                         if(rd['status'] == 200){
+                             BootstrapDialog.alert({
+                                 title: '成功',
+                                 message:"配货成功",
+                                 buttons: [{
+                                     id: 'btn-1',
+                                     label: '确定',
+                                     cssClass: 'btn btn-primary',
+                                     action: function(dialogItself) {
+                                         dialogItself.close();
+                                     }
+                                 }]
+                             });
+                         }
+                     }
+                 })
+             });
             //表单验证
             $("#model-form").validate({
                 errorElement: 'div',
