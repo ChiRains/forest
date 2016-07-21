@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.Resource;
-import org.springframework.stereotype.Repository;
 import org.apache.commons.lang.NotImplementedException;
+import org.springframework.stereotype.Repository;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.data.sql.mybatis.SqlOperator;
 import com.qcloud.project.forest.dao.IntegralOrderDao;
@@ -75,6 +75,7 @@ public class IntegralOrderDaoMysqlImpl implements IntegralOrderDao {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("start", start);
         param.put("count", count);
+        param.put("orderNumber", query.getKeyword());
         List<IntegralOrder> list = sqlOperator.selectList("com.qcloud.project.forest.dao.mysql.mapper.IntegralOrderMapper.list4query", param);
         int total = sqlOperator.selectOne("com.qcloud.project.forest.dao.mysql.mapper.IntegralOrderMapper.count4query", param);
         Page<IntegralOrder> page = new Page<IntegralOrder>();

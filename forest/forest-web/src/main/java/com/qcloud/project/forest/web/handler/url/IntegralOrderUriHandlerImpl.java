@@ -16,7 +16,7 @@ public class IntegralOrderUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/integralOrder/add.do");
         list.add("/admin/integralOrder/edit.do");
         list.add("/admin/integralOrder/shipOrder.do");
-        
+        list.add("/admin/integralOrder/shipOrderForm.do");
         return list;
     }
 

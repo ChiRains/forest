@@ -115,6 +115,9 @@
                     mobile: {
                         required: true
                     },
+                    orderNum: {
+                        required: true
+                    },
 
                     sort: {
                         required: true,

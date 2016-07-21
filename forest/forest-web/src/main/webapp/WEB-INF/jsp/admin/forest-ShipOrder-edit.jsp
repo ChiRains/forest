@@ -1,72 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>新增秒杀活动轮播图</title>
-<link rel="stylesheet" href="/qcloud-admin/assets/css/colorbox.css"/>
-<link rel="stylesheet" href="/qcloud-admin/assets/css/chosen.css" />
 
-<!-- ajax layout which only needs content area -->
-<div class="page-header">
-    <h1>
-        秒杀活动轮播图管理
-        <small>
-            <i class="ace-icon fa fa-angle-double-right"></i>
-            新增
-        </small>
-    </h1>
-</div><!-- /.page-header -->
 
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
-        <form id="model-form" class="form-horizontal"  role="form" action="/admin/screeningsSlide/add.do">
             <!-- #section:elements.form -->
-			<input type="hidden" name="screeningsId" value="${screeningsId}">
-                  		<div class="space-4"></div>
+			<input type="hidden" class="orderId" id="orderId" name="orderId" value="${orderId}">
+			<input type="hidden" id="expressCode" name="expressCode" value="">
+			
+			      		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="clickUrl"> 点击地址 </label>
+                <label class="col-sm-3 control-label no-padding-right" for="id">快递公司</label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="clickUrl" name="clickUrl" placeholder="点击地址" value=""/>
+					<select class="form-control expressName" id="expressName" name="expressName">
+                    <option value="" selected="selected">请选择快递公司</option>
+                    <c:forEach items="${expressVOs}" var="item" varStatus="current">
+                      <option value="${item.name}"  data-code="${item.code}"> ${item.name}</option></c:forEach>
+                  </select>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
             </div>
                   		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="image"> 图片 </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">						
-						<input type="hidden" id="image" name="image" value=""/>
-						<button type="button" mult="false" sid="image" vid="pic-pic-view" class="btn btn-sm btn-purple btn-upload-pic" upfrom="0">
-						<i class="ace-icon fa fa-upload"></i> 上 传
-						</button>
-						<ul sid="pic" id="pic-pic-view" class="ace-thumbnails clearfix"></ul>
-					</span>
-                </div>
-            </div>
-                  		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="orderNum"> 排序 </label>
+                <label class="col-sm-3 control-label no-padding-right" for="name">快递单号</label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="orderNum" name="orderNum" placeholder="排序" value="" onkeyup="value=value.replace(/[^\d]/g,'') " />
+						<input type="text" class="width-100 expressNumber"  maxlength="50" id="expressNumber" name="expressNumber" placeholder="快递单号" value=""/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
             </div>
-                     
-
-            <div class="space-4"></div>
-            <div class="clearfix form-actions">
-                <div class="col-md-offset-3 col-md-9">
-                    <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>&nbsp;保&nbsp;存&nbsp;</button>
-                    &nbsp; &nbsp; &nbsp;
-                    <button id="back" class="btn" type="button"><i class="ace-icon fa fa-undo bigger-110"></i>&nbsp;返&nbsp;回&nbsp;</button>
-                </div>
-            </div>
-
-        </form>
         <!-- PAGE CONTENT ENDS -->
     </div>
     <!-- /.col -->
@@ -86,29 +53,23 @@
                 })
             }).trigger('resize.chosen');
 
-            //图片浏览
-            $('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
-            $("#cboxLoadingGraphic").html("<i class='ace-icon fa fa-spinner orange'></i>");
-            var btnUpload = $(".btn-upload-pic");
-            delEvent(getButtonSetting(btnUpload));
-            btnUpload.on('click', function () {
-                var bs = getButtonSetting($(this));
-                uploadDialog(bs);
-            });
-                   
-            //表单验证
-            $("#model-form").validate({
+            $("#expressName").on('change',
+          		function() {
+                var code = $("#expressName").find("option:selected").attr("data-code");
+                $("#expressCode").val(code);
+				
+                });
+     
+             //表单验证
+            $("#form").validate({
                 errorElement: 'div',
                 errorClass: 'help-block col-xs-12 col-sm-reset inline',
                 focusInvalid: false,
                 rules: {
-                    name: {
+                    expressName: {
                         required: true
                     },
-                    mobile: {
-                        required: true
-                    },
-                    orderNum: {
+                    expressNumber: {
                         required: true
                     },
 
@@ -146,11 +107,11 @@
                 },
 
                 submitHandler: function (form) {
-                    postForm('model-form');
+                    postForm('form');
                 },
                 invalidHandler: function (form) {
                 }
             });
-        });
+        }); 
     })
 </script>
