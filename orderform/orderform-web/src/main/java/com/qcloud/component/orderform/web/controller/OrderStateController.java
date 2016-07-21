@@ -93,6 +93,23 @@ public class OrderStateController {
     }
 
     /**
+     * 商家确认订单
+     * @param orderForm
+     * @return
+     */
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView shipOrder(HttpServletRequest request, OrderStateForm orderStateForm) {
+
+        QStore store = PageParameterUtil.getParameterValues(request, SellercenterClient.STORE_LOGIN_PARAMETER_KEY);
+        long merchantId = store.getMerchant().getId();
+        orderStateService.exchangeSubOrderState(orderStateForm.getSubOrderId(), orderStateForm.getOrderDate(), OrderStateType.NORMAL_SHIPPED.getKey(), merchantId);
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("确认订单成功");
+        return view;
+    }
+
+    /**
      * 商家订单发货
      * 
      * @param orderStateForm
