@@ -2,16 +2,20 @@ package com.qcloud.component.my.web.controller;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import com.qcloud.component.autoid.UniqueCodeGenerator;
+import com.qcloud.component.autoid.service.UniqueCodeCalculator;
 import com.qcloud.component.goods.CommoditycenterClient;
 import com.qcloud.component.goods.QUnifiedMerchandise;
 import com.qcloud.component.my.model.MyShoppingCart;
 import com.qcloud.component.my.service.MyShoppingCartService;
 import com.qcloud.component.my.web.handler.MyShoppingCartHandler;
+import com.qcloud.component.my.web.vo.CombinationListVO;
 import com.qcloud.component.my.web.vo.MyShoppingCartClassifyVO;
 import com.qcloud.component.my.web.vo.MyShoppingCartCombinationVO;
 import com.qcloud.component.my.web.vo.MyShoppingCartMerchantVO;
@@ -29,7 +33,7 @@ import com.qcloud.pirates.web.page.PageParameterUtil;
 @RequestMapping(value = MyShoppingCartController.DIR)
 public class MyShoppingCartController {
 
-    public static final String    DIR = "/myShoppingCart";
+    public static final String    DIR        = "/myShoppingCart";
 
     @Autowired
     private MyShoppingCartService myShoppingCartService;
@@ -39,6 +43,11 @@ public class MyShoppingCartController {
 
     @Autowired
     private CommoditycenterClient commoditycenterClient;
+
+    @Autowired
+    private UniqueCodeGenerator   uniqueCodeGenerator;
+
+    private static final String   group_code = "my-shopping-cart-group-code";
 
     @PiratesApp
     @RequestMapping
@@ -91,6 +100,10 @@ public class MyShoppingCartController {
                 myShoppingCart.setMerchantId(unifiedMerchandise.getMerchantId());
                 myShoppingCart.setMerchantClassifyId(unifiedMerchandise.getMerchantClassifyId());
                 myShoppingCart.setUserId(user.getId());
+                // TODO
+                String group = uniqueCodeGenerator.generate(group_code, new HashMap<String, String>());
+                myShoppingCart.setGroup(group);
+                myShoppingCart.setCombinationMerchandiseId(-1L);
                 myShoppingCartService.add(myShoppingCart);
             } else {
                 myShoppingCart.setTime(new Date());
@@ -317,6 +330,31 @@ public class MyShoppingCartController {
 
     @PiratesApp
     @RequestMapping
+    public FrontAjaxView addFreeList(HttpServletRequest request, ListForm list, Long combinationMerchandiseId) {
+
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        for (Long unifiedMerchandiseId : list.getLongList()) {
+            QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(unifiedMerchandiseId);
+            AssertUtil.assertNotNull(unifiedMerchandise, "获取商品信息失败.");
+            MyShoppingCart myShoppingCart = myShoppingCartService.getByUnifiedMerchandise(unifiedMerchandiseId, user.getId());
+            if (myShoppingCart == null) {
+                myShoppingCart = new MyShoppingCart();
+                myShoppingCart.setTime(new Date());
+                myShoppingCart.setNumber(1);
+                myShoppingCart.setUnifiedMerchandiseId(unifiedMerchandiseId);
+                myShoppingCart.setMerchantId(unifiedMerchandise.getMerchantId());
+                myShoppingCart.setMerchantClassifyId(unifiedMerchandise.getList().get(0).getMerchantClassifyId());
+                myShoppingCart.setUserId(user.getId());
+                myShoppingCartService.add(myShoppingCart);
+            }
+        }
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("添加购物车成功.");
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
     public FrontAjaxView list4Combination(HttpServletRequest request, PPage pPage) {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
@@ -335,5 +373,16 @@ public class MyShoppingCartController {
         view.addObject("total", total);
         // view.addObject("sum", sum);
         return view;
+    }
+
+    public static void main(String[] args) {
+
+        for (int i = 1; i < 100; i++) {
+            if (i < 10) {
+                System.out.println("create table my_my_shopping_cart_00" + i + " like my_my_shopping_cart_000;");
+            } else {
+                System.out.println("create table my_my_shopping_cart_0" + i + " like my_my_shopping_cart_000;");
+            }
+        }
     }
 }

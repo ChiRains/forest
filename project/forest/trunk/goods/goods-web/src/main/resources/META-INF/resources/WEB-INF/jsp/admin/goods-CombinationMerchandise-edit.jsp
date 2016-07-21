@@ -137,10 +137,10 @@
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
 						<c:if test="${combinationMerchandise != null}">
 							<select class="width-100" name="combinationMerchandise.type" id="type">
-								<c:if test="${combinationMerchandise.type == 1}">
+								<c:if test="${combinationMerchandiseType == 1}">
 									<option value="1">固定搭配</option>	
 								</c:if>
-								<c:if test="${combinationMerchandise.type == 2}">
+								<c:if test="${combinationMerchandiseType == 2}">
 									<option value="2">自由搭配</option>
 								</c:if>
 							</select>

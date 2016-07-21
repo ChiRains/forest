@@ -28,6 +28,8 @@ public class MerchandiseBrowsingHistoryVO {
 
     private long   id;
 
+    private String merchantName;
+
     public MerchandiseBrowsingHistoryVO() {
 
     }
@@ -112,15 +114,23 @@ public class MerchandiseBrowsingHistoryVO {
         this.clientType = clientType;
     }
 
-    
     public long getId() {
-    
+
         return id;
     }
 
-    
     public void setId(long id) {
-    
+
         this.id = id;
+    }
+
+    public String getMerchantName() {
+
+        return merchantName;
+    }
+
+    public void setMerchantName(String merchantName) {
+
+        this.merchantName = merchantName;
     }
 }
