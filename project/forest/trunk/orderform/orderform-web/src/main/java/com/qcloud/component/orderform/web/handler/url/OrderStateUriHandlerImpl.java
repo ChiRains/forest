@@ -25,6 +25,7 @@ public class OrderStateUriHandlerImpl extends AbstractUriHandler {
         list.add("/orderState/exchangeOrder.do");
         list.add("/orderState/remindDeliverGoods.do");
         list.add("/orderState/deleteOrder.do");
+        list.add("/orderState/shipOrder.do");
         //
         list.add("/app/orderState/cancelOrder.do");
         list.add("/app/orderState/signOrder.do");
@@ -35,6 +36,7 @@ public class OrderStateUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/orderState/confirmOrder.do");
         list.add("/app/orderState/deliverOrder.do");
         list.add("/app/orderState/deleteOrder.do");
+        list.add("/orderState/shipOrder.do");
         return list;
     }
 
