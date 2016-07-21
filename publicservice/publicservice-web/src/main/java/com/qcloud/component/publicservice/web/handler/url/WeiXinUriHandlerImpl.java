@@ -42,6 +42,7 @@ public class WeiXinUriHandlerImpl extends AbstractUriHandler {
         list.add("/weixinConfig/getAuthorizeUrl.do");
         list.add("/weixinConfig/getJSSDKConfig.do");
         list.add("/weixinConfig/addWeixinImage.do");
+        list.add("/weixinConfig/addWeixinImages.do");
         list.add("/weixinConfig/isSubscribe.do");
         list.add("/weixinConfig/getCodeUrl.do");
         list.add("/weixinConfig/loadOpenId.do");
