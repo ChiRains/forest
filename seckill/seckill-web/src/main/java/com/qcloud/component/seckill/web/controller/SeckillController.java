@@ -1,5 +1,6 @@
 package com.qcloud.component.seckill.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.commons.lang.NotImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,15 +90,20 @@ public class SeckillController {
         for (ScreeningsListVO screeningsListVO : voList) {
             screeningsListVO.setCurrent(current.getId() == screeningsListVO.getId());
             screeningsListVO.setTitle(DateUtil.date2String(DateUtil.str2Date(screeningsListVO.getBeginTimeStr()), "HH") + "点场");
+            screeningsListVO.setBeginTimeStr(DateUtil.date2String(DateUtil.str2Date(screeningsListVO.getBeginTimeStr()), "HH:mm:ss"));
+            screeningsListVO.setEndTimeStr(DateUtil.date2String(DateUtil.str2Date(screeningsListVO.getEndTimeStr()), "HH:mm:ss"));
         }
         // ScreeningsVO screeningsVO = current == null ? null : screeningsHandler.toVO4Classify(current);
         ScreeningsVO screeningsVO = current == null ? null : screeningsHandler.toVO4Merchandise(current);
+        List<MerchandiseSeckillVO> carzySeckillList = new ArrayList<MerchandiseSeckillVO>();
         MerchandiseSeckillVO carzySeckill = screeningsHandler.getCrazySeckill(current);
+        carzySeckillList.add(carzySeckill);
+        carzySeckillList.add(carzySeckill);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage(screeningsVO == null ? "今天暂无秒杀数据" : "获取秒杀数据成功.");
         view.addObject("list", voList);
         view.addObject("current", screeningsVO);
-        view.addObject("carzySeckill", carzySeckill);
+        view.addObject("carzySeckillList", carzySeckillList);
         return view;
     }
 

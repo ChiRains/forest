@@ -9,6 +9,8 @@ import com.qcloud.component.goods.QUnifiedMerchandise;
 import com.qcloud.component.goods.model.MerchandiseBrowsingHistory;
 import com.qcloud.component.goods.web.handler.MerchandiseBrowsingHistoryHandler;
 import com.qcloud.component.goods.web.vo.MerchandiseBrowsingHistoryVO;
+import com.qcloud.component.sellercenter.QMerchant;
+import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.DateUtil;
@@ -17,10 +19,13 @@ import com.qcloud.pirates.util.DateUtil;
 public class MerchandiseBrowsingHistoryHandlerImpl implements MerchandiseBrowsingHistoryHandler {
 
     @Autowired
-    CommoditycenterClient commoditycenterClient;
+    CommoditycenterClient      commoditycenterClient;
 
     @Autowired
-    FileSDKClient         fileSDKClient;
+    FileSDKClient              fileSDKClient;
+
+    @Autowired
+    private SellercenterClient sellercenterClient;
 
     @Override
     public List<MerchandiseBrowsingHistoryVO> toVOList(List<MerchandiseBrowsingHistory> list) {
@@ -61,6 +66,9 @@ public class MerchandiseBrowsingHistoryHandlerImpl implements MerchandiseBrowsin
         vo.setPrice(unifiedMerchandise.getPrice());
         vo.setUnifiedMerchandiseId(merchandiseBrowsingHistory.getUnifiedMerchandiseId());
         vo.setSpecifications(unifiedMerchandise.getSpecifications());
+        vo.setId(merchandiseBrowsingHistory.getId());
+        QMerchant merchant = sellercenterClient.getMerchant(unifiedMerchandise.getMerchantId());
+        vo.setMerchantName(merchant.getName());
         return vo;
     }
 }

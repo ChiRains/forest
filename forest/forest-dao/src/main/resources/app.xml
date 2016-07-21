@@ -38,6 +38,11 @@
 		<item>organization-org-code</item>
 		<item>organization-clerk-code</item>
 		<item>forest-integral-order-code</item>
+		<item>my-shopping-cart-group-code</item>
+	</module-list>
+
+	<module-list code="my-shopping-cart-group-code">
+		<item type="number">0000000000</item>
 	</module-list>
 
 	<module-list code="personalcenter-my-coupon-code">

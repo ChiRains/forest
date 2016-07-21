@@ -117,6 +117,7 @@ public class AdminCombinationMerchandiseController {
                         combinationMerchandiseItem.setRelaUnifiedMerchandiseId(combinationMerchandiseItem.getRelaUnifiedMerchandiseId());
                         combinationMerchandiseItem.setMerchantId(data.getMerchantId());
                         combinationMerchandiseItem.setCombinationUnifiedMerchandiseId(data.getId());
+                        combinationMerchandiseItem.setType(combinationMerchandise.getType());
                         combinationMerchandiseItemService.add(combinationMerchandiseItem);
                         products.add(combinationMerchandiseItem.getRelaUnifiedMerchandiseId());
                     }
@@ -158,7 +159,9 @@ public class AdminCombinationMerchandiseController {
             where.put("combinationUnifiedMerchandiseId", combinationMerchandise.getId());
             List<CombinationMerchandiseItem> combinationMerchandiseItems = combinationMerchandiseItemService.list(where);
             List<AdminCombinationMerchandiseItemVO> voList = new ArrayList<AdminCombinationMerchandiseItemVO>();
+            int combinationMerchandiseType = 1;
             for (CombinationMerchandiseItem combinationMerchandiseItem : combinationMerchandiseItems) {
+                combinationMerchandiseType = combinationMerchandiseItem.getType();
                 QUnifiedMerchandise qUnifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(combinationMerchandiseItem.getRelaUnifiedMerchandiseId());
                 if (qUnifiedMerchandise != null) {
                     AdminCombinationMerchandiseItemVO vo = new AdminCombinationMerchandiseItemVO();
@@ -171,6 +174,7 @@ public class AdminCombinationMerchandiseController {
                     voList.add(vo);
                 }
             }
+            modelAndView.addObject("combinationMerchandiseType", combinationMerchandiseType);
             modelAndView.addObject("voList", voList);
         }
         String fileSize = publicdataClient.getImageInformationByCode("zuheshangpinsuoluetu");
