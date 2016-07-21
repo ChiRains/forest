@@ -1,7 +1,9 @@
 package com.qcloud.component.publicservice.web.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import com.qcloud.component.publicservice.model.WeiXinConfig;
 import com.qcloud.component.publicservice.service.WeiXinAPIService;
 import com.qcloud.component.publicservice.service.WeiXinConfigService;
 import com.qcloud.component.publicservice.service.WeiXinUserService;
+import com.qcloud.component.publicservice.web.form.WeixinForm;
 import com.qcloud.pirates.mvc.FrontAjaxView;
 import com.qcloud.pirates.mvc.HtmlView;
 import com.qcloud.pirates.util.AssertUtil;
@@ -140,6 +143,34 @@ public class WeixinController {
         view.setMessage("添加图片成功");
         view.addObject("uid", uid);
         view.addObject("url", fileSDKClient.uidToUrl(uid));
+        return view;
+    }
+
+    /**
+     * 添加多张图片(微信端)
+     * @param media_id      媒体文件ID
+     * @return
+     */
+    @RequestMapping
+    public FrontAjaxView addWeixinImages(WeixinForm weixinForm) {
+
+        AssertUtil.assertTrue(weixinForm.getMedia_ids().size() > 0, "media_id不能为空!");
+        List<String> urls = new ArrayList<String>();
+        List<String> uids = new ArrayList<String>();
+        for (String media_id : weixinForm.getMedia_ids()) {
+            WeiXinConfig weiXinConfig = weiXinConfigService.get();
+            String appId = weiXinConfig.getAppId();
+            String appSecret = weiXinConfig.getAppSecret();
+            String accessToken = weiXinAPIService.getAccessToken(appId, appSecret);
+            QFile file = WXUtil.getImageFile(media_id, accessToken);
+            String uid = fileSDKClient.saveToUid(file);
+            urls.add(fileSDKClient.uidToUrl(uid));
+            uids.add(uid);
+        }
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("添加图片成功");
+        view.addObject("uids", uids);
+        view.addObject("urls", urls);
         return view;
     }
 
