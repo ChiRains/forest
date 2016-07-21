@@ -4,11 +4,19 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.qcloud.project.forest.dao.mysql.mapper.IntegralOrderMapper">          
     <select id="list4query" parameterType="java.util.HashMap" resultType="IntegralOrder">  
-        select * from `forest_integral_order` limit #{start},#{count}
+        select * from `forest_integral_order`  where 1=1
+        <if test="orderNumber>0">
+        and `orderNumber`=#{orderNumber}
+        </if>
+        order by time
+        limit #{start},#{count}
     </select>  
     
     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
-        select count(*) from `forest_integral_order`
+        select count(*) from `forest_integral_order`  where 1=1
+        <if test="orderNumber>0">
+        and `orderNumber`=#{orderNumber}
+        </if>
     </select> 
     
     
@@ -41,7 +49,7 @@
     <select id="getByOrder" parameterType="java.util.HashMap" resultType="IntegralOrder">  
         select * from `forest_integral_order` 
         where 1=1
-        and `orderId`=#{orderId}
+        and `orderNumber`=#{orderId}
         limit 1
     </select>  
 </mapper>

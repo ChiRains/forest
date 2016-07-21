@@ -35,12 +35,21 @@
                                 新&nbsp;增
                             </a>                           
                         </div>
-                    </div>                    
+                    </div> 
+                    <div class="col-xs-6" style="text-align: right;">
+
+									<div class="dataTables_length">
+	                            <a title="新增" class="btn btn-sm btn-info"
+                               href="#admin/screenings/list">
+
+                                		返&nbsp;回
+                            </a>  
+									</div>
+				</div>                   
                 </div>
                 <table class="table table-striped table-bordered table-hover dataTable no-footer">
                     <thead>
                     <tr role="row">     
-                                                <th>场次</th>           
                                                 <th>点击地址</th>           
                                                 <th>图片</th>           
                                                 <th>排序</th>           
@@ -51,7 +60,6 @@
                     <tbody>
                            <c:forEach items="${result}" var="item" varStatus="current"> 
                             <tr>            
-                                                        <td>${item.screeningsId}</td>                         
                                                         <td>${item.clickUrl}</td>                         
 														<td><img style="max-height: 150px; max-width: 150px;"
 															src="${item.image}" />
