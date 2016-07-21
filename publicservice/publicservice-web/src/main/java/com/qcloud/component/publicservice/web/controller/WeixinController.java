@@ -110,7 +110,7 @@ public class WeixinController {
         String appId = weiXinConfig.getAppId();
         String appSecret = weiXinConfig.getAppSecret();
         String jsapiTicket = weiXinAPIService.getJsapiTicket(appId, appSecret);
-        long timestamp = (new Date()).getTime()/1000;
+        long timestamp = (new Date()).getTime() / 1000;
         String nonceStr = RandomStringGenerator.getRandomStringByLength(16);
         String signature = WXUtil.getJSSDKSign(jsapiTicket, nonceStr, timestamp, url);
         FrontAjaxView view = new FrontAjaxView();
@@ -138,6 +138,7 @@ public class WeixinController {
         String uid = fileSDKClient.saveToUid(file);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("添加图片成功");
+        view.addObject("uid", uid);
         view.addObject("url", fileSDKClient.uidToUrl(uid));
         return view;
     }
