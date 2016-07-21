@@ -51,10 +51,6 @@ public class AdminMerchantEvaluationController {
         for (MerchantEvaluation merchantEvaluation : page.getData()) {
             voList.add(merchantEvaluationHandler.toVO4Admin(merchantEvaluation));
         }
-        String time = null;
-        if (DateUtil.date2String(query.getTime(), DateUtil.DATE_FORMAT_STRING) != null) {
-            time = "time=" + DateUtil.date2String(query.getTime(), DateUtil.DATE_FORMAT_STRING);
-        }
         if (query.getStatus() != 0) {
             Iterator<AdminMerchantEvaluationVO> iter = voList.iterator();
             while (iter.hasNext()) {
@@ -64,7 +60,8 @@ public class AdminMerchantEvaluationController {
                 }
             }
         }
-        AcePagingView pagingView = new AcePagingView("/admin/sellercenter-MerchantEvaluation-list", DIR + "/list?" + time, pageNum, PAGE_SIZE, voList.size());
+        String param = "status=" + query.getStatus();
+        AcePagingView pagingView = new AcePagingView("/admin/sellercenter-MerchantEvaluation-list", DIR + "/list?" + param, pageNum, PAGE_SIZE, voList.size());
         pagingView.addObject("result", voList);
         pagingView.addObject("query", query);
         pagingView.addObject("statusType", StatusType.values());
