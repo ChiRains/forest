@@ -353,4 +353,21 @@ public class AfterSaleController {
         view.addObject("afterSale", afterSaleInfo);
         return view;
     }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView listRefundReason() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("质量问题");
+        list.add("商品成分描述不符");
+        list.add("卖家发错货");
+        list.add("收到商品少件或破损");
+        list.add("拍错/多拍/不喜欢");
+        list.add("生产日期/保质期描述不符");
+        list.add("其他");
+        FrontAjaxView view = new FrontAjaxView();
+        view.addObject("list", list);
+        return view;
+    }
 }

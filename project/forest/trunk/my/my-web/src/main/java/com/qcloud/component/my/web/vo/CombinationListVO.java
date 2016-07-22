@@ -17,6 +17,8 @@ public class CombinationListVO {
 
     private int                    stock;
 
+    private String                 group;
+
     private List<MyShoppingCartVO> merchandiseList = new ArrayList<MyShoppingCartVO>();
 
     public String getName() {
@@ -87,5 +89,15 @@ public class CombinationListVO {
     public void setStock(int stock) {
 
         this.stock = stock;
+    }
+
+    public String getGroup() {
+
+        return group;
+    }
+
+    public void setGroup(String group) {
+
+        this.group = group;
     }
 }

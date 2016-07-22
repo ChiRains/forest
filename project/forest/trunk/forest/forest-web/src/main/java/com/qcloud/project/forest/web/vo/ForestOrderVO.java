@@ -86,7 +86,7 @@ public class ForestOrderVO {
 
     private int                     merchandiseNumber;
 
-    private String                  residualTime;
+    private long                    residualTime;
 
     private String                  orderDateStr;
 
@@ -422,12 +422,12 @@ public class ForestOrderVO {
         this.merchandiseNumber = merchandiseNumber;
     }
 
-    public String getResidualTime() {
+    public long getResidualTime() {
 
         return residualTime;
     }
 
-    public void setResidualTime(String residualTime) {
+    public void setResidualTime(long residualTime) {
 
         this.residualTime = residualTime;
     }

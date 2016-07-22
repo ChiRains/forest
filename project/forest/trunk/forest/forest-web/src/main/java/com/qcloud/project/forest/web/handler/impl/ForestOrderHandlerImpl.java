@@ -149,7 +149,7 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
         orderVO.setState(order.getState());
         orderVO.setDeliveryModeStr(DeliveryModeType.get(order.getMerchantOrderList().get(0).getDeliveryMode()).getName());
         orderVO.setPaymentModeStr(PaymentModeType.get(order.getPaymentMode()).getName());
-        orderVO.setResidualTime("23:59:99");
+        orderVO.setResidualTime(DateUtil.addDate(order.getOrderDate(), 1).getTime());
         orderVO.setStateStr(ForestOrderState.get(order.getState()));
         orderVO.setInvoiceTypeStr(InvoiceType.get(order.getInvoiceType()).getName());
         orderVO.setMerchandiseNumber(merchandiseNumber);

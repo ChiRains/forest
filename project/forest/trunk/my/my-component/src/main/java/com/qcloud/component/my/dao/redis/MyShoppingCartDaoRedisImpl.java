@@ -104,4 +104,10 @@ public class MyShoppingCartDaoRedisImpl implements MyShoppingCartDao {
 
         throw new NotImplementedException();
     }
+
+    @Override
+    public List<MyShoppingCart> listByGroup(String group, Long userId) {
+
+        throw new NotImplementedException();
+    }
 }

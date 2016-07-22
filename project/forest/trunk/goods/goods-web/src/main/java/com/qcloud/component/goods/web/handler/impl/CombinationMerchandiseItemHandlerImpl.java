@@ -61,6 +61,7 @@ public class CombinationMerchandiseItemHandlerImpl implements CombinationMerchan
             sb.append(merchandiseSpecifications.getValue()).append(" ");
         }
         combinationMerchandiseItemVO.setSpecifications(sb.toString());
+        combinationMerchandiseItemVO.setUnifiedMerchandiseId(unifiedMerchandise.getId());
         return combinationMerchandiseItemVO;
     }
 

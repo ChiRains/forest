@@ -136,6 +136,7 @@ public class AdminCombinationMerchandiseController {
                 if (combinationMerchandiseItem.getRelaUnifiedMerchandiseId() > 0) {
                     combinationMerchandiseItem.setCombinationUnifiedMerchandiseId(combinationMerchandise.getId());
                     combinationMerchandiseItem.setMerchantId(combinationMerchandise.getMerchantId());
+                    combinationMerchandiseItem.setType(combinationMerchandiseForm.getCombinationMerchandise().getType());
                     combinationMerchandiseItemService.add(combinationMerchandiseItem);
                 }
             }
