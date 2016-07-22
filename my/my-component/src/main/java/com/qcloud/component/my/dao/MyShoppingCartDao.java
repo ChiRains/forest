@@ -37,4 +37,6 @@ public interface MyShoppingCartDao extends ISimpleDao<MyShoppingCart, Long> {
     int count(Long userId);
 
     boolean clean(Long userId);
+
+    public List<MyShoppingCart> listByGroup(String group, Long userId);
 }

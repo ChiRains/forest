@@ -2,8 +2,11 @@ package com.qcloud.component.my.web.handler.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +17,7 @@ import com.qcloud.component.goods.QUnifiedMerchandise;
 import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.marketing.MarketingClient;
 import com.qcloud.component.marketing.QCoupon;
+import com.qcloud.component.my.exception.MyException;
 import com.qcloud.component.my.model.MyCollection;
 import com.qcloud.component.my.model.MyShoppingCart;
 import com.qcloud.component.my.model.key.TypeEnum.CollectionType;
@@ -116,6 +120,7 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
         vo.setCollect(myCollection != null);
         vo.setUnit(unifiedMerchandise.getUnit());
         vo.setSum(NumberUtil.scale(vo.getDiscount() * vo.getNumber(), 2));
+        vo.setGroup(myShoppingCart.getGroup());
         return vo;
     }
 
@@ -256,5 +261,156 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
             }
         }
         return result;
+    }
+
+    @Override
+    public List<MyShoppingCartCombinationVO> toVOList4Group(List<MyShoppingCart> list) {
+
+        Map<String, List<MyShoppingCart>> groupShoppingCartList = new HashMap<String, List<MyShoppingCart>>();
+        for (MyShoppingCart myShoppingCart : list) {
+            List<MyShoppingCart> cartList = groupShoppingCartList.get(myShoppingCart.getGroup());
+            if (cartList == null) {
+                cartList = new ArrayList<MyShoppingCart>();
+                cartList.add(myShoppingCart);
+            } else {
+                cartList.add(myShoppingCart);
+            }
+            groupShoppingCartList.put(myShoppingCart.getGroup(), cartList);
+        }
+        Map<Long, MyShoppingCartCombinationVO> map = new HashMap<Long, MyShoppingCartCombinationVO>();
+        Map<String, List<CombinationListVO>> groupCombinationList = new HashMap<String, List<CombinationListVO>>();
+        List<MyShoppingCartCombinationVO> result = new ArrayList<MyShoppingCartCombinationVO>();
+        //
+        for (String group : groupShoppingCartList.keySet()) {
+            List<MyShoppingCart> cartList = groupShoppingCartList.get(group);
+            for (MyShoppingCart myShoppingCart : cartList) {
+                MyShoppingCartVO myShoppingCartVO = toVO(myShoppingCart);
+                MyShoppingCartCombinationVO myShoppingCartMerchantVO = map.get(myShoppingCartVO.getMerchantId());
+                if (myShoppingCartMerchantVO == null) {
+                    myShoppingCartMerchantVO = new MyShoppingCartCombinationVO();
+                    myShoppingCartMerchantVO.setMerchantId(myShoppingCartVO.getMerchantId());
+                    QMerchant merchant = sellercenterClient.getMerchant(myShoppingCartVO.getMerchantId());
+                    AssertUtil.assertNotNull(merchant, "商家不存在." + myShoppingCartVO.getMerchantId());
+                    myShoppingCartMerchantVO.setName(merchant.getName());
+                    if (StringUtils.isNotEmpty(merchant.getImage())) {
+                        myShoppingCartMerchantVO.setImage(fileSDKClient.getFileServerUrl() + StringUtil.nullToEmpty(merchant.getImage()));
+                    } else {
+                        myShoppingCartMerchantVO.setImage(StringUtil.nullToEmpty(merchant.getImage()));
+                    }
+                    result.add(myShoppingCartMerchantVO);
+                    map.put(myShoppingCartVO.getMerchantId(), myShoppingCartMerchantVO);
+                }
+                // 判断
+                QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(myShoppingCartVO.getUnifiedMerchandiseId());
+                if (myShoppingCartVO.getCombinationMerchandiseId() == -1) {// 单品或者固定搭配
+                    // 单品
+                    if (unifiedMerchandise.getType().equals(UnifiedMerchandiseType.SINGLE)) {
+                        myShoppingCartMerchantVO.getMerchandiseList().add(myShoppingCartVO);
+                    } else if (unifiedMerchandise.getType().equals(UnifiedMerchandiseType.COMBINATION)) {// 组合商品
+                        CombinationListVO combination = new CombinationListVO();
+                        combination.setSum(NumberUtil.scale(unifiedMerchandise.getDiscount(), 2));
+                        combination.setName(unifiedMerchandise.getName());
+                        combination.setNumber(myShoppingCart.getNumber());
+                        combination.setStock(unifiedMerchandise.getStock());
+                        combination.setUnifiedMerchandiseId(unifiedMerchandise.getId());
+                        combination.setGroup(group);
+                        String desc = unifiedMerchandise.getName();
+                        //
+                        List<MyShoppingCartVO> comMerchandiseList = new ArrayList<MyShoppingCartVO>();
+                        for (QUnifiedMerchandise merchandise : unifiedMerchandise.getList()) {
+                            MyShoppingCartVO vo = new MyShoppingCartVO();
+                            vo.setSpecifications(merchandise.getSpecifications());
+                            vo.setDiscount(NumberUtil.scale(merchandise.getDiscount(), 2));
+                            vo.setPrice(NumberUtil.scale(merchandise.getPrice(), 2));
+                            vo.setUnifiedMerchandiseId(merchandise.getId());
+                            if (StringUtils.isNotEmpty(merchandise.getImage())) {
+                                vo.setImage(fileSDKClient.getFileServerUrl() + StringUtil.nullToEmpty(merchandise.getImage()));
+                            } else {
+                                vo.setImage(StringUtil.nullToEmpty(merchandise.getImage()));
+                            }
+                            vo.setDiscount(merchandise.getDiscount());
+                            vo.setName(merchandise.getName());
+                            vo.setUnit(merchandise.getUnit());
+                            vo.setNumber(merchandise.getNumber());
+                            vo.setStock(merchandise.getStock());
+                            vo.setTimeStr(myShoppingCartVO.getTimeStr());
+                            vo.setMerchantId(merchandise.getMerchantId());
+                            vo.setMerchantClassifyId(merchandise.getMerchantClassifyId());
+                            vo.setMerchandiseType(2);
+                            vo.setGroup(group);
+                            desc += merchandise.getName();
+                            comMerchandiseList.add(vo);
+                        }
+                        combination.setDesc(desc);
+                        combination.setMerchandiseList(comMerchandiseList);
+                        myShoppingCartMerchantVO.getCombinationList().add(combination);
+                    }
+                } else {// 自由搭配 // TODO
+                    if (!groupCombinationList.containsKey(group)) {
+                        double sum = 0.0;
+                        CombinationListVO combination = new CombinationListVO();
+                        combination.setName(unifiedMerchandise.getName());
+                        combination.setStock(unifiedMerchandise.getStock());
+                        combination.setUnifiedMerchandiseId(unifiedMerchandise.getId());
+                        combination.setGroup(group);
+                        String desc = "自由搭配：";
+                        int combinationNumber = 1;
+                        //
+                        List<MyShoppingCartVO> comMerchandiseList = new ArrayList<MyShoppingCartVO>();
+                        for (MyShoppingCart combinationCart : cartList) {
+                            QUnifiedMerchandise merchandise = getFreeMerchandise(myShoppingCartVO.getCombinationMerchandiseId(), combinationCart.getUnifiedMerchandiseId());
+                            MyShoppingCartVO vo = new MyShoppingCartVO();
+                            vo.setSpecifications(merchandise.getSpecifications());
+                            vo.setDiscount(NumberUtil.scale(merchandise.getDiscount(), 2));
+                            vo.setPrice(NumberUtil.scale(merchandise.getPrice(), 2));
+                            vo.setUnifiedMerchandiseId(merchandise.getId());
+                            if (StringUtils.isNotEmpty(merchandise.getImage())) {
+                                vo.setImage(fileSDKClient.getFileServerUrl() + StringUtil.nullToEmpty(merchandise.getImage()));
+                            } else {
+                                vo.setImage(StringUtil.nullToEmpty(merchandise.getImage()));
+                            }
+                            vo.setName(merchandise.getName());
+                            vo.setUnit(merchandise.getUnit());
+                            vo.setNumber(merchandise.getNumber());
+                            combinationNumber = combinationCart.getNumber() / merchandise.getNumber();
+                            vo.setStock(merchandise.getStock());
+                            vo.setTimeStr(myShoppingCartVO.getTimeStr());
+                            vo.setMerchantId(merchandise.getMerchantId());
+                            vo.setMerchantClassifyId(merchandise.getMerchantClassifyId());
+                            vo.setMerchandiseType(2);
+                            desc += merchandise.getName() + "  ";
+                            sum += merchandise.getDiscount();
+                            vo.setGroup(group);
+                            comMerchandiseList.add(vo);
+                        }
+                        combination.setNumber(combinationNumber);
+                        combination.setSum(NumberUtil.scale(sum, 2));
+                        combination.setDesc(desc);
+                        combination.setMerchandiseList(comMerchandiseList);
+                        myShoppingCartMerchantVO.getCombinationList().add(combination);
+                        groupCombinationList.put(group, myShoppingCartMerchantVO.getCombinationList());
+                    }
+                }
+                // 购物车优惠劵
+                myShoppingCartMerchantVO.setCoupon(false);
+                QCoupon qCoupon = marketingClient.getActivityCoupon(myShoppingCartVO.getMerchantId());
+                if (qCoupon != null) {
+                    boolean coupon = marketingClient.canExtract(myShoppingCart.getUserId(), qCoupon.getId());
+                    myShoppingCartMerchantVO.setCoupon(coupon);
+                }
+            }
+        }
+        return result;
+    }
+
+    public QUnifiedMerchandise getFreeMerchandise(Long combinationMerchandiseId, Long freeMerchandiseId) {
+
+        QUnifiedMerchandise combinationMerchandise = commoditycenterClient.getUnifiedMerchandise(combinationMerchandiseId);
+        for (QUnifiedMerchandise merchandise : combinationMerchandise.getList()) {
+            if (freeMerchandiseId.intValue() == merchandise.getId().intValue()) {
+                return merchandise;
+            }
+        }
+        throw new MyException("商品不存在.");
     }
 }

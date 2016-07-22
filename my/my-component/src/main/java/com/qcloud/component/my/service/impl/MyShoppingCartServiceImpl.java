@@ -84,11 +84,19 @@ public class MyShoppingCartServiceImpl implements MyShoppingCartService {
 
     @Override
     public int count(Long userId) {
+
         return myShoppingCartDao.count(userId);
     }
 
     @Override
     public boolean clean(Long userId) {
+
         return myShoppingCartDao.clean(userId);
+    }
+
+    @Override
+    public List<MyShoppingCart> listByGroup(String group, Long userId) {
+
+        return myShoppingCartDao.listByGroup(group, userId);
     }
 }

@@ -108,4 +108,10 @@ public class MyShoppingCartDaoCacheImpl implements MyShoppingCartDao {
 
         return myShoppingCartDaoMysqlImpl.clean(userId);
     }
+
+    @Override
+    public List<MyShoppingCart> listByGroup(String group, Long userId) {
+
+        return myShoppingCartDaoMysqlImpl.listByGroup(group, userId);
+    }
 }

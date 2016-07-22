@@ -19,6 +19,8 @@ public interface MyShoppingCartHandler {
     List<MyShoppingCartMerchantVO> toVOList4Merchant(List<MyShoppingCart> list);
 
     List<MyShoppingCartCombinationVO> toVOList4Combination(List<MyShoppingCart> list);
+    
+    List<MyShoppingCartCombinationVO> toVOList4Group(List<MyShoppingCart> list);
 
     List<AdminMyShoppingCartVO> toVOList4Admin(List<MyShoppingCart> list);
 

@@ -15,30 +15,32 @@ import com.qcloud.component.sellercenter.QMerchant;
 public class OrderContext {
 
     // 下单用户 必填
-    private QUser                             user         = null;
+    private QUser                                               user         = null;
 
     // 收货信息 必填
-    private QMyConsignee                      consignee    = null;
+    private QMyConsignee                                        consignee    = null;
 
     // 发票 可为空
-    private QMyInvoice                        invoice;
+    private QMyInvoice                                          invoice;
 
     // 物流信息 可为空
-    private Map<QMerchant, OrderDelivery>     deliveryMap  = new HashMap<QMerchant, OrderDelivery>();
+    private Map<QMerchant, OrderDelivery>                       deliveryMap  = new HashMap<QMerchant, OrderDelivery>();
 
     // 下单描述 可为空
-    private Map<QMerchant, String>            explainMap   = new HashMap<QMerchant, String>();
+    private Map<QMerchant, String>                              explainMap   = new HashMap<QMerchant, String>();
 
     // 使用优惠劵 可为空
-    private Map<QMerchant, List<QMyCoupon>>   myCouponMap  = new HashMap<QMerchant, List<QMyCoupon>>();
+    private Map<QMerchant, List<QMyCoupon>>                     myCouponMap  = new HashMap<QMerchant, List<QMyCoupon>>();
 
     // 购买物品 必填
-    private Map<QUnifiedMerchandise, Integer> merchandiseMap;
+    private Map<QUnifiedMerchandise, Integer>                   merchandiseMap;
 
-    private int                               discount     = 100;
+    private Map<QUnifiedMerchandise, List<QUnifiedMerchandise>> freeMerchandiseMap;
+
+    private int                                                 discount     = 100;
 
     // 商家列表
-    private List<QMerchant>                   merchantList = new ArrayList<QMerchant>();
+    private List<QMerchant>                                     merchantList = new ArrayList<QMerchant>();
 
     public QUser getUser() {
 

@@ -30,4 +30,6 @@ public interface MyShoppingCartService {
     public List<MyShoppingCart> list(Long userId, int start, int count);
 
     public int count(Long userId);
+
+    public List<MyShoppingCart> listByGroup(String group, Long userId);
 }

@@ -38,6 +38,10 @@ public class MyShoppingCartVO {
 
     private double  sum;
 
+    private long    combinationMerchandiseId;
+
+    private String  group;
+
     public MyShoppingCartVO() {
 
     }
@@ -190,5 +194,25 @@ public class MyShoppingCartVO {
     public void setSum(double sum) {
 
         this.sum = sum;
+    }
+
+    public long getCombinationMerchandiseId() {
+
+        return combinationMerchandiseId;
+    }
+
+    public void setCombinationMerchandiseId(long combinationMerchandiseId) {
+
+        this.combinationMerchandiseId = combinationMerchandiseId;
+    }
+
+    public String getGroup() {
+
+        return group;
+    }
+
+    public void setGroup(String group) {
+
+        this.group = group;
     }
 }

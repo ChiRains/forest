@@ -24,7 +24,11 @@ public class MyShoppingCartUriHandlerImpl extends AbstractUriHandler {
         list.add("/myShoppingCart/listAll4Classify.do");
         list.add("/myShoppingCart/listAll4Merchant.do");
         list.add("/myShoppingCart/syncList.do");
+        // 2016-07 ryuma
         list.add("/myShoppingCart/list4Combination.do");
+        list.add("/myShoppingCart/addFreeList.do");
+        list.add("/myShoppingCart/list4Group.do");
+        list.add("/myShoppingCart/editorList.do");
         // ###############################################
         list.add("/app/myShoppingCart/clear.do");
         list.add("/app/myShoppingCart/reduce.do");
@@ -42,6 +46,9 @@ public class MyShoppingCartUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/myShoppingCart/listAll4Merchant.do");
         list.add("/app/myShoppingCart/syncList.do");
         list.add("/app/myShoppingCart/list4Combination.do");
+        list.add("/app/myShoppingCart/addFreeList.do");
+        list.add("/app/myShoppingCart/list4Group.do");
+        list.add("/app/myShoppingCart/editorList.do");
         return list;
     }
 
@@ -67,6 +74,9 @@ public class MyShoppingCartUriHandlerImpl extends AbstractUriHandler {
         //
         list.add("/app/myShoppingCart/syncList.do");
         list.add("/app/myShoppingCart/list4Combination.do");
+        list.add("/app/myShoppingCart/addFreeList.do");
+        list.add("/app/myShoppingCart/list4Group.do");
+        list.add("/app/myShoppingCart/editorList.do");
         return list;
     }
 }

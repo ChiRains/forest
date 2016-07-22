@@ -135,7 +135,7 @@
         </if>   
         order by ${orderField} ${orderType} 
         limit #{start},#{count}
-    </select>  
+     </select>  
     
      <select id="count4Front" parameterType="java.util.HashMap" resultType="Integer">  
         select count(*) from (select *  from `goods_unified_merchandise`

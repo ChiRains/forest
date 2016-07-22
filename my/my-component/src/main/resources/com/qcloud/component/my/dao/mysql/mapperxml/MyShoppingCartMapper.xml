@@ -25,5 +25,12 @@
     
     <delete id="clean" parameterType="java.util.HashMap">
     	delete from `${table_name}` where `userId`=#{userId}
-    </delete>        
+    </delete>   
+    
+    <select id="listByGroup" parameterType="java.util.HashMap" resultType="MyShoppingCart">  
+        select * from `${table_name}` 
+        where `userId`=#{userId} 
+        and `group`=${group}
+        order by `merchantId`,`merchantClassifyId` 
+    </select>     
 </mapper>

@@ -20,6 +20,8 @@ public class CombinationMerchandiseItemVO {
     // 商家ID
     private long   merchantId;
 
+    private long   unifiedMerchandiseId;
+
     public CombinationMerchandiseItemVO() {
 
     }
@@ -82,5 +84,15 @@ public class CombinationMerchandiseItemVO {
     public long getMerchantId() {
 
         return merchantId;
+    }
+
+    public long getUnifiedMerchandiseId() {
+
+        return unifiedMerchandiseId;
+    }
+
+    public void setUnifiedMerchandiseId(long unifiedMerchandiseId) {
+
+        this.unifiedMerchandiseId = unifiedMerchandiseId;
     }
 }

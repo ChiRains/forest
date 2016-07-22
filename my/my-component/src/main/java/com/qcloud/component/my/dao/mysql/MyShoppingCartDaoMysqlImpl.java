@@ -133,7 +133,7 @@ public class MyShoppingCartDaoMysqlImpl implements MyShoppingCartDao {
         map.put("table_name", getTableName(userId));
         map.put("userId", userId);
         Integer total = sqlOperator.selectOne("com.qcloud.component.my.dao.mysql.mapper.MyShoppingCartMapper.count", map);
-        if(total == null){
+        if (total == null) {
             return 0;
         }
         return total;
@@ -141,9 +141,20 @@ public class MyShoppingCartDaoMysqlImpl implements MyShoppingCartDao {
 
     @Override
     public boolean clean(Long userId) {
+
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("table_name", getTableName(userId));
         map.put("userId", userId);
         return sqlOperator.delete("com.qcloud.component.my.dao.mysql.mapper.MyShoppingCartMapper.clean", map) > 0;
+    }
+
+    @Override
+    public List<MyShoppingCart> listByGroup(String group, Long userId) {
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("table_name", getTableName(userId));
+        map.put("userId", userId);
+        map.put("group", group);
+        return sqlOperator.selectList("com.qcloud.component.my.dao.mysql.mapper.MyShoppingCartMapper.listByGroup", map);
     }
 }

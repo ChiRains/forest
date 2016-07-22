@@ -499,6 +499,7 @@ public class MerchandiseController {
                 UnifiedMerchandise combinationMerchandise = unifiedMerchandiseService.get(combinationMerchandiseItem.getCombinationUnifiedMerchandiseId());
                 CombinationMerchandiseVO combinationMerchandiseVO = combinationMerchandiseHandler.toVO(combinationMerchandise);
                 combinationMerchandiseVO.setType(combinationMerchandiseItem.getType());
+                
                 combinationMerchandiseIdList.add(combinationMerchandiseItem.getCombinationUnifiedMerchandiseId());
                 comVOList.add(combinationMerchandiseVO);
             }
