@@ -1,4 +1,4 @@
-package com.qcloud.project.forest.model.outside.entity;
+package com.qcloud.project.forest.model.oms;
 
 import java.util.LinkedHashMap;
 import java.util.List;

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 根节点的名字必须是xml -->
+<xml>
+	
+	<module-list code="oms-dispacher-method">
+		<item omsToMethod="logistics.offline.send" invoke="deliverOrder" paramType="java.lang.String">发货</item>
+	</module-list>
+</xml>

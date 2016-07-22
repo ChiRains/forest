@@ -10,5 +10,6 @@
 		<item name="pirates">框架</item>	
 		<item name="filestorage">文件仓库</item>	
 		<item name="express">快递公司</item>	
+		<item name="oms">管易OMS配置方法</item>	
 	</module-list>		
 </xml>

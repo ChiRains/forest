@@ -17,7 +17,7 @@ public class OutsideToOmsController {
     public static final String DIR    = "/";
 
     @Autowired
-    public OmsDispatcherClient    client;
+    public OmsDispatcherClient client;
 
     private Log                logger = LogFactory.getLog(getClass());
 

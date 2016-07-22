@@ -1,15 +1,20 @@
 package com.qcloud.project.forest.service.oms;
 
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import com.qcloud.component.orderform.OrderformClient;
 
-@Service
+@Component
 public class OmsDispatcherServiceImpl implements OmsDispatcherService {
-    
-    
-    @Override
-    public boolean offlineSend() {
 
-        
+    @Autowired
+    public OrderformClient orderformClient;
+
+    @Override
+    public boolean deliverOrder(String name) {
+
+        System.out.println("====================" + name);
+        // orderformClient.exchangeOrderState(orderId, orderDate, state, -1L);
         return false;
     }
 }
