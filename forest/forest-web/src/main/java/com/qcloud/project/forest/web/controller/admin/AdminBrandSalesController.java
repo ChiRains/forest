@@ -55,7 +55,7 @@ public class AdminBrandSalesController {
     @RequestMapping
     public AcePagingView listBrand(PPage pPage) {
 
-        List<Classify> list = publicdataClient.listClassify((long) ClassifyType.BRANDONSALEBRAND.getKey());
+        List<Classify> list = publicdataClient.listClassify((long) ClassifyType.BRANDONSALEBRAND.getKey(), true);
         int i = (pPage.getPageNum() - 1) * pPage.getPageSize() + pPage.getPageSize();
         if (i > list.size()) {
             i = list.size();
@@ -77,7 +77,7 @@ public class AdminBrandSalesController {
     @RequestMapping
     public AcePagingView listClassify(PPage pPage) {
 
-        List<Classify> list = publicdataClient.listClassify((long) ClassifyType.BRANDONSALECLASSIFY.getKey());
+        List<Classify> list = publicdataClient.listClassify((long) ClassifyType.BRANDONSALECLASSIFY.getKey(), true);
         pPage.setPageSize(10);
         int i = (pPage.getPageNum() - 1) * pPage.getPageSize() + pPage.getPageSize();
         if (i > list.size()) {

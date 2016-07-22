@@ -46,7 +46,7 @@ public class AdminPromotionalOffersController {
     @RequestMapping
     public AcePagingView listPromotionalOfferClassify(PPage pPage) {
 
-        List<Classify> list = publicdataClient.listClassify((long) ClassifyType.PROMOTIONALOFFERS.getKey());
+        List<Classify> list = publicdataClient.listClassify((long) ClassifyType.PROMOTIONALOFFERS.getKey(), true);
         int i = (pPage.getPageNum() - 1) * pPage.getPageSize() + pPage.getPageSize();
         if (i > list.size()) {
             i = list.size();
