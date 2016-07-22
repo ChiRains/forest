@@ -24,15 +24,15 @@ public class OmsStandardImpl implements OmsStandard {
     public void handle(String method) {
 
         // 用JDK7不然×××××
-        switch (method) {
-        case LOGISTICS_OFFLINE_SEND: // 发货
-            
-            logger.info("发货接口调用." + method);
-            break;
-        case ITEM_QUANTITY_UPDATE:
-            
-            logger.info("库存更新接口调用." + method);
-            break;
-        }
+        // switch (method) {
+        // case LOGISTICS_OFFLINE_SEND: // 发货
+        // //
+        // dispatcherService.deliverOrder();
+        // logger.info("发货接口调用." + method);
+        // break;
+        // case ITEM_QUANTITY_UPDATE:
+        // logger.info("库存更新接口调用." + method);
+        // break;
+        // }
     }
 }
