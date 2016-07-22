@@ -10,7 +10,7 @@ public class OutsideToOmsUriHandlerImpl extends AbstractUriHandler {
     public List<String> whiteNameUris() {
 
         List<String> list = new ArrayList<String>();
-        list.add("/dispatcherOMS/");
+        list.add("/omsToDispatcher/");
         return list;
     }
 
@@ -18,7 +18,7 @@ public class OutsideToOmsUriHandlerImpl extends AbstractUriHandler {
     public List<String> restfulUris() {
 
         List<String> list = new ArrayList<String>();
-        list.add("/dispatcherOMS/");
+        list.add("/omsToDispatcher/");
         return list;
     }
 }
