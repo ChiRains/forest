@@ -230,7 +230,7 @@ public class OrderformClientImpl implements OrderformClient {
 
     @Override
     public String getNormalPersonalOrderStateDesc(int state) {
-        
+
         return orderConfigService.getNormalPersonalOrderStateDesc(state);
     }
 }

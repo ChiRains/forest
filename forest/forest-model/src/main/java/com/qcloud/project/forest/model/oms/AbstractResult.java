@@ -1,4 +1,4 @@
-package com.qcloud.project.forest.model.outside.entity;
+package com.qcloud.project.forest.model.oms;
 
 public abstract class AbstractResult {
 
