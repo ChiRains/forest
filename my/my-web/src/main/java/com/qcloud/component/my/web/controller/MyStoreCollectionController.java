@@ -57,12 +57,16 @@ public class MyStoreCollectionController {
      * @return
      */
     @RequestMapping
-    public FrontAjaxView list(HttpServletRequest request, PPage pPage, Long classifyId, double latitude, double longitude) {
+    public FrontAjaxView list(HttpServletRequest request, PPage pPage, Long classifyId, Double latitude, Double longitude) {
 
         List<MyCollection> list = myCollectionController.list(request, pPage, CollectionType.STORE, classifyId);
         List<MyStoreCollectionVO> myStoreCollectionVOs = myCollectionHandler.toStoreMyCollectionVOList(list);
         for (MyStoreCollectionVO myStoreCollectionVO : myStoreCollectionVOs) {
-            myStoreCollectionVO.setDistance(Distance(longitude, latitude, myStoreCollectionVO.getLongitude(), myStoreCollectionVO.getLatitude()));
+            if (latitude != 0 && longitude != 0) {
+                myStoreCollectionVO.setDistance(Distance(longitude, latitude, myStoreCollectionVO.getLongitude(), myStoreCollectionVO.getLatitude()));
+            } else if (latitude == 0 || longitude == 0) {
+                myStoreCollectionVO.setDistance(0.0);
+            }
         }
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取我的店铺收藏成功.");
@@ -117,13 +121,18 @@ public class MyStoreCollectionController {
      */
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView get(HttpServletRequest request, Long id, double latitude, double longitude) {
+    public FrontAjaxView get(HttpServletRequest request, Long id, Double latitude, Double longitude) {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         MyCollection myCollection = myCollectionService.get(id, user.getId());
         MyStoreCollectionVO myStoreCollectionVO = myCollectionHandler.toStoreMyCollectionVO(myCollection);
         myStoreCollectionVO.setDistance(Distance(longitude, latitude, myStoreCollectionVO.getLongitude(), myStoreCollectionVO.getLatitude()));
         AssertUtil.notNull(myCollection, "找不到相关收藏");
+        if (latitude != 0 && longitude != 0) {
+            myStoreCollectionVO.setDistance(Distance(longitude, latitude, myStoreCollectionVO.getLongitude(), myStoreCollectionVO.getLatitude()));
+        } else if (latitude == 0 || longitude == 0) {
+            myStoreCollectionVO.setDistance(0.0);
+        }
         FrontAjaxView frontAjaxView = new FrontAjaxView();
         frontAjaxView.addObject("result", myStoreCollectionVO);
         if (myCollection != null) {

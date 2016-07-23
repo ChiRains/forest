@@ -42,4 +42,5 @@
 	<pirates:uriHandler class="com.qcloud.component.organization.web.handler.url.ContactsUriHandlerImpl"></pirates:uriHandler>	
 	<pirates:uriHandler class="com.qcloud.component.organization.web.handler.url.ClerkPostUriHandlerImpl"></pirates:uriHandler>	
 	<pirates:uriHandler class="com.qcloud.component.organization.web.handler.url.ClerkMessageUriHandlerImpl"></pirates:uriHandler>		
+	<pirates:uriHandler class="com.qcloud.component.organization.web.handler.url.DepartmentImageUriHandlerImpl"></pirates:uriHandler>		
 </beans>

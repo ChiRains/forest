@@ -65,4 +65,7 @@ public interface OrganizationClient {
     public List<QPost> listPost();
 
     QDepartment getByManager(long manager);
+
+    // 展示门店图片
+    List<String> listDepartmentImages(Long departmentId);
 }
