@@ -1,6 +1,7 @@
 package com.qcloud.component.organization;
 
 import java.util.List;
+import java.util.Map;
 import com.qcloud.pirates.data.Page;
 
 public interface OrganizationClient {
@@ -67,5 +68,5 @@ public interface OrganizationClient {
     QDepartment getByManager(long manager);
 
     // 展示门店图片
-    List<String> listDepartmentImages(Long departmentId);
+    List<Map<String, Object>> listDepartmentImages(Long departmentId);
 }

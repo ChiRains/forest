@@ -13,6 +13,7 @@ import com.qcloud.component.my.web.vo.MyStoreCollectionVO;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.pirates.mvc.FrontAjaxView;
+import com.qcloud.pirates.mvc.FrontPagingView;
 import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.pirates.web.page.PPage;
@@ -57,7 +58,7 @@ public class MyStoreCollectionController {
      * @return
      */
     @RequestMapping
-    public FrontAjaxView list(HttpServletRequest request, PPage pPage, Long classifyId, Double latitude, Double longitude) {
+    public FrontPagingView list(HttpServletRequest request, PPage pPage, Long classifyId, Double latitude, Double longitude) {
 
         List<MyCollection> list = myCollectionController.list(request, pPage, CollectionType.STORE, classifyId);
         List<MyStoreCollectionVO> myStoreCollectionVOs = myCollectionHandler.toStoreMyCollectionVOList(list);
@@ -68,10 +69,10 @@ public class MyStoreCollectionController {
                 myStoreCollectionVO.setDistance(0.0);
             }
         }
-        FrontAjaxView view = new FrontAjaxView();
-        view.setMessage("获取我的店铺收藏成功.");
-        view.addObject("list", myStoreCollectionVOs);
-        return view;
+        FrontPagingView frontPagingView = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), list.size());
+        frontPagingView.setMessage("获取我的店铺收藏成功.");
+        frontPagingView.setList(myStoreCollectionVOs);
+        return frontPagingView;
     }
 
     /**
@@ -144,7 +145,7 @@ public class MyStoreCollectionController {
     }
 
     /**
-     * 清楚店铺收藏
+     * 清除店铺收藏
      * @param request
      * @param idList
      * @return

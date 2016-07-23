@@ -113,7 +113,7 @@ public class AdminArticleEvaluationController {
     }
 
     /**
-     * 删除评论
+     * 审核评论
      * @param id
      * @return
      */
