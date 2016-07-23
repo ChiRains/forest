@@ -6,6 +6,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.organization.ClerkMessageType;
 import com.qcloud.component.organization.OrganizationClient;
 import com.qcloud.component.organization.QClerk;
@@ -21,6 +22,7 @@ import com.qcloud.component.organization.model.Clerk;
 import com.qcloud.component.organization.model.ClerkPost;
 import com.qcloud.component.organization.model.Department;
 import com.qcloud.component.organization.model.DepartmentClerk;
+import com.qcloud.component.organization.model.DepartmentImage;
 import com.qcloud.component.organization.model.Post;
 import com.qcloud.component.organization.model.PostRole;
 import com.qcloud.component.organization.model.Superior;
@@ -30,6 +32,7 @@ import com.qcloud.component.organization.model.key.TypeEnum.EnableType;
 import com.qcloud.component.organization.service.ClerkPostService;
 import com.qcloud.component.organization.service.ClerkService;
 import com.qcloud.component.organization.service.DepartmentClerkService;
+import com.qcloud.component.organization.service.DepartmentImageService;
 import com.qcloud.component.organization.service.DepartmentService;
 import com.qcloud.component.organization.service.PostRoleService;
 import com.qcloud.component.organization.service.PostService;
@@ -73,6 +76,12 @@ public class OrganizationClientImpl implements OrganizationClient {
 
     @Autowired
     MessageClient          messageClient;
+
+    @Autowired
+    DepartmentImageService departmentImageService;
+
+    @Autowired
+    FileSDKClient          fileSDKClient;
 
     @Override
     public Long registClerk(String name, String mobile, Long departmentId, String jobEmail, String idCard, String password) {
@@ -524,5 +533,16 @@ public class OrganizationClientImpl implements OrganizationClient {
 
         Department department = departmentService.getByManager(manager);
         return getDepartment(department);
+    }
+
+    @Override
+    public List<String> listDepartmentImages(Long departmentId) {
+
+        List<String> strings = new ArrayList<String>();
+        List<DepartmentImage> departmentImages = departmentImageService.listByDepartmentId(departmentId);
+        for (DepartmentImage departmentImage : departmentImages) {
+            strings.add(fileSDKClient.getFileServerUrl() + departmentImage.getImage());
+        }
+        return strings;
     }
 }

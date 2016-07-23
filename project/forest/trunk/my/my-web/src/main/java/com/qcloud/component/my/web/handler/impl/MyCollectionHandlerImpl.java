@@ -163,7 +163,7 @@ public class MyCollectionHandlerImpl implements MyCollectionHandler {
         myStoreCollectionVO.setPhone(department.getPhone());
         myStoreCollectionVO.setLatitude(department.getLatitude());
         myStoreCollectionVO.setLongitude(department.getLongitude());
-        myStoreCollectionVO.setImage(department.getImage());
+        myStoreCollectionVO.setImages(organizationClient.listDepartmentImages(department.getId()));
         myStoreCollectionVO.setActivities(activityForMy.getName(department.getId()));
         myStoreCollectionVO.setStoreId(department.getId());
         myStoreCollectionVO.setShopHour(department.getShopHour());

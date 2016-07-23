@@ -12,7 +12,7 @@ public class MyStoreCollectionVO {
 
     private long         storeId;
 
-    private String       image;
+    private List<String> images;
 
     private double       latitude;  // 经度
 
@@ -31,14 +31,14 @@ public class MyStoreCollectionVO {
         super();
     }
 
-    public MyStoreCollectionVO(long id, String address, int distance, long storeId, String image, double latitude, double longitude, String name, String phone, String shopHour, List<String> activities) {
+    public MyStoreCollectionVO(long id, String address, double distance, long storeId, List<String> images, double latitude, double longitude, String name, String phone, String shopHour, List<String> activities) {
 
         super();
         this.id = id;
         this.address = address;
         this.distance = distance;
         this.storeId = storeId;
-        this.image = image;
+        this.images = images;
         this.latitude = latitude;
         this.longitude = longitude;
         this.name = name;
@@ -72,7 +72,7 @@ public class MyStoreCollectionVO {
         return distance;
     }
 
-    public void setDistance(Double distance) {
+    public void setDistance(double distance) {
 
         this.distance = distance;
     }
@@ -87,14 +87,14 @@ public class MyStoreCollectionVO {
         this.storeId = storeId;
     }
 
-    public String getImage() {
+    public List<String> getImages() {
 
-        return image;
+        return images;
     }
 
-    public void setImage(String image) {
+    public void setImages(List<String> images) {
 
-        this.image = image;
+        this.images = images;
     }
 
     public double getLatitude() {
