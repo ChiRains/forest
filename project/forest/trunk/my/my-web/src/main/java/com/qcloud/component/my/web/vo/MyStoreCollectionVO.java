@@ -1,37 +1,38 @@
 package com.qcloud.component.my.web.vo;
 
 import java.util.List;
+import java.util.Map;
 
 public class MyStoreCollectionVO {
 
-    private long         id;
+    private long                      id;
 
-    private String       address;
+    private String                    address;
 
-    private double       distance;
+    private double                    distance;
 
-    private long         storeId;
+    private long                      storeId;
 
-    private List<String> images;
+    private List<Map<String, Object>> images;
 
-    private double       latitude;  // 经度
+    private double                    latitude;  // 经度
 
-    private double       longitude; // 纬度
+    private double                    longitude; // 纬度
 
-    private String       name;
+    private String                    name;
 
-    private String       phone;
+    private String                    phone;
 
-    private String       shopHour;
+    private String                    shopHour;
 
-    private List<String> activities;
+    private List<String>              activities;
 
     public MyStoreCollectionVO() {
 
         super();
     }
 
-    public MyStoreCollectionVO(long id, String address, double distance, long storeId, List<String> images, double latitude, double longitude, String name, String phone, String shopHour, List<String> activities) {
+    public MyStoreCollectionVO(long id, String address, double distance, long storeId, List<Map<String, Object>> images, double latitude, double longitude, String name, String phone, String shopHour, List<String> activities) {
 
         super();
         this.id = id;
@@ -87,12 +88,12 @@ public class MyStoreCollectionVO {
         this.storeId = storeId;
     }
 
-    public List<String> getImages() {
+    public List<Map<String, Object>> getImages() {
 
         return images;
     }
 
-    public void setImages(List<String> images) {
+    public void setImages(List<Map<String, Object>> images) {
 
         this.images = images;
     }

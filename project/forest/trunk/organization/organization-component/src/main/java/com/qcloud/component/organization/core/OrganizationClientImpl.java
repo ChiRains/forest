@@ -1,7 +1,9 @@
 package com.qcloud.component.organization.core;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -536,12 +538,15 @@ public class OrganizationClientImpl implements OrganizationClient {
     }
 
     @Override
-    public List<String> listDepartmentImages(Long departmentId) {
+    public List<Map<String, Object>> listDepartmentImages(Long departmentId) {
 
-        List<String> strings = new ArrayList<String>();
+        List<Map<String, Object>> strings = new ArrayList<Map<String, Object>>();
         List<DepartmentImage> departmentImages = departmentImageService.listByDepartmentId(departmentId);
+        Map<String, Object> map = null;
         for (DepartmentImage departmentImage : departmentImages) {
-            strings.add(fileSDKClient.getFileServerUrl() + departmentImage.getImage());
+            map = new HashMap<String, Object>();
+            map.put("image", fileSDKClient.getFileServerUrl() + departmentImage.getImage());
+            strings.add(map);
         }
         return strings;
     }
