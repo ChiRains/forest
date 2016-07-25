@@ -160,6 +160,7 @@ public class AfterSaleController {
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("申请退款成功");
         view.addObject("afterSaleId", refundList.get(0));
+        view.addObject("type", 1);
         return view;
     }
 
