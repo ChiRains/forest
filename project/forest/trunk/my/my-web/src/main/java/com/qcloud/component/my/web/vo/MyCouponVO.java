@@ -29,7 +29,7 @@ public class MyCouponVO {
     // 面额
     private double  price;
 
-    // 状态 1未使用 2已使用
+    // 状态 1未使用 2已使用3已失效
     private int     state;
 
     // 使用订单

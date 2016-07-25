@@ -12,6 +12,7 @@ import com.qcloud.component.orderform.QOrder;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.pirates.mvc.FrontAjaxView;
+import com.qcloud.pirates.mvc.FrontPagingView;
 import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.DateUtil;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
@@ -58,10 +59,11 @@ public class IntegralOrderController {
 
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView list(HttpServletRequest request, PPage pPage) {
+    public FrontPagingView list(HttpServletRequest request, PPage pPage) {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         List<IntegralOrder> orderList = integralOrderService.listByUserAndFront(user.getId(), pPage.getPageStart(), pPage.getPageSize());
+        int total = integralOrderService.countByUserAndFront(user.getId());
         List<IntegralOrderListVO> volist = integralOrderHandler.toListVOList(orderList);
         if (volist.isEmpty()) {
             IntegralOrderListVO order = new IntegralOrderListVO();
@@ -76,8 +78,8 @@ public class IntegralOrderController {
             order.setStateStr("待发货");
             volist.add(order);
         }
-        FrontAjaxView view = new FrontAjaxView();
-        view.addObject("data", volist);
+        FrontPagingView view = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), total);
+        view.setList(volist);
         return view;
     }
 

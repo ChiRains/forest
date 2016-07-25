@@ -15,7 +15,14 @@ public class RangeGradeUriHandlerImpl extends AbstractUriHandler {
 		list.add("/admin/rangeGrade/toEdit.do");
 		list.add("/admin/rangeGrade/add.do");
 		list.add("/admin/rangeGrade/edit.do");
-		
+		//
+		list.add("/admin/rangeGrade/rangeList.do");
+		list.add("/admin/rangeGrade/toAddRange.do");
+        list.add("/admin/rangeGrade/toEditRange.do");
+        list.add("/admin/rangeGrade/addRange.do");
+        list.add("/admin/rangeGrade/editRange.do");
+        list.add("/admin/rangeGrade/deleteRange.do");
+        list.add("/admin/rangeGrade/enableRange.do");
 		return list;
 	}
 

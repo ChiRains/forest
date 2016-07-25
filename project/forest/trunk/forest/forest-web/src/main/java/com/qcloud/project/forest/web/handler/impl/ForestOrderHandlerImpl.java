@@ -110,14 +110,12 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
         for (QMerchantOrder qMerchantOrder : merchantOrderList) {
             List<CombinationItemVO> combinationItemList = new ArrayList<CombinationItemVO>();
             for (QOrderItem qOrderItem : qMerchantOrder.getOrderItemList()) {
-               
                 QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(qOrderItem.getUnifiedMerchandiseId());
-                if (unifiedMerchandise.getType().equals(UnifiedMerchandiseType.COMBINATION)) {
+                if (unifiedMerchandise.getType().equals(UnifiedMerchandiseType.COMBINATION)) {// 自由搭配
                     //
                     CombinationItemVO combinationItemVO = toOrderItemVOList(qOrderItem, unifiedMerchandise);
                     combinationItemList.add(combinationItemVO);
-                    
-                } else {
+                } else {// 单品
                     orderVO.getOrderItemList().add(toOrderItemVO(qOrderItem, unifiedMerchandise));
                 }
                 merchandiseNumber++;
@@ -202,10 +200,11 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
         //
         List<OrderItemVO> orderItemList = new ArrayList<OrderItemVO>();
         List<QOrderItemDetail> orderItemDetailList = qOrderItem.getOrderItemDetailList();
+        // 从orderItemDetails里面取数据
         for (QOrderItemDetail qOrderItemDetail : orderItemDetailList) {
             OrderItemVO itemVO = new OrderItemVO();
             itemVO.setName(qOrderItemDetail.getName());
-            itemVO.setImage(qOrderItemDetail.getImage());
+            itemVO.setImage(fileSDKClient.getFileServerUrl() + qOrderItemDetail.getImage());
             itemVO.setSpecifications(qOrderItemDetail.getSpecifications());
             itemVO.setDiscount(qOrderItemDetail.getDiscount());
             itemVO.setNumber(qOrderItemDetail.getNumber());
@@ -219,18 +218,18 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
             orderItemList.add(itemVO);
             combinationItemVO.setDesc(StringUtil.nullToEmpty(combinationItemVO.getDesc()) + "+" + itemVO.getName());
         }
-//        for (QUnifiedMerchandise merchandise : unifiedMerchandise.getList()) {
-//            OrderItemVO itemVO = new OrderItemVO();
-//            itemVO.setName(merchandise.getName());
-//            itemVO.setImage(merchandise.getImage());
-//            itemVO.setSpecifications(merchandise.getSpecifications());
-//            itemVO.setDiscount(merchandise.getDiscount());
-//            itemVO.setNumber(merchandise.getNumber());
-//            itemVO.setUnifiedMerchandiseId(merchandise.getId());
-//            itemVO.setPrice(merchandise.getPrice());
-//            orderItemList.add(itemVO);
-//            combinationItemVO.setDesc(combinationItemVO.getDesc() + "+" + itemVO.getName());
-//        }
+        // for (QUnifiedMerchandise merchandise : unifiedMerchandise.getList()) {
+        // OrderItemVO itemVO = new OrderItemVO();
+        // itemVO.setName(merchandise.getName());
+        // itemVO.setImage(merchandise.getImage());
+        // itemVO.setSpecifications(merchandise.getSpecifications());
+        // itemVO.setDiscount(merchandise.getDiscount());
+        // itemVO.setNumber(merchandise.getNumber());
+        // itemVO.setUnifiedMerchandiseId(merchandise.getId());
+        // itemVO.setPrice(merchandise.getPrice());
+        // orderItemList.add(itemVO);
+        // combinationItemVO.setDesc(combinationItemVO.getDesc() + "+" + itemVO.getName());
+        // }
         combinationItemVO.setDesc(combinationItemVO.getDesc().substring(1, combinationItemVO.getDesc().length() - 1));
         combinationItemVO.setOrderItemList(orderItemList);
         return combinationItemVO;

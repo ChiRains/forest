@@ -109,4 +109,11 @@ public class MyWealthDetailDaoCacheImpl implements MyWealthDetailDao {
 
         return myWealthDetailDaoMysqlImpl.getByIdandUserId(id, userId);
     }
+
+    @Override
+    public int countByUserAndTime(Long wealthId, Long userId, Integer type, Integer detailType, Date begin, Date end) {
+
+      
+        return myWealthDetailDaoMysqlImpl.countByUserAndTime(wealthId, userId, type, detailType, begin, end);
+    }
 }

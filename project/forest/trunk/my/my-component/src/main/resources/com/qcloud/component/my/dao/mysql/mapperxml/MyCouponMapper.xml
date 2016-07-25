@@ -12,7 +12,7 @@
     </select> 
     
     <select id="listByUser" parameterType="java.util.HashMap" resultType="MyCoupon">  
-         <![CDATA[ select * from `my_my_coupon` where userId=#{userId} and state <> 3]]>
+         <![CDATA[ select * from `my_my_coupon` where userId=#{userId} and state <> 4]]>
 	        <if test="type == 1">
 	           <![CDATA[ and validDate <= #{nowtime} and invalidDate >=#{nowtime} and state = 1]]>
 	        </if>
@@ -20,22 +20,28 @@
 	           and state = 2
 	        </if>
 	        <if test="type == 3">
+	           and state = 3
+	        </if>
+	        <!-- <if test="type == 3">
 	            <![CDATA[and invalidDate <= #{nowtime} and state = 1]]>
-	        </if>              
+	        </if> -->              
        <![CDATA[ limit #{start},#{count}]]>
     </select>  
     
     <select id="countByUser" parameterType="java.util.HashMap" resultType="Integer">  
-         <![CDATA[ select count(*) from `my_my_coupon` where userId=#{userId} and state <> 3]]>
+         <![CDATA[ select count(*) from `my_my_coupon` where userId=#{userId} and state <> 4]]>
 	        <if test="type == 1">
 	           <![CDATA[ and validDate <= #{nowtime} and invalidDate >=#{nowtime} and state = 1]]>
 	        </if>
 	        <if test="type == 2">
 	           and state = 2
 	        </if>
-	        <if test="type == 3">
+			<!-- <if test="type == 3">
 	            <![CDATA[and invalidDate <= #{nowtime} and state = 1]]>
-	        </if>                    
+	        </if>  --> 
+	        <if test="type == 3">
+	           and state = 3
+	        </if>                  
     </select> 
     
     <select id="listByUserAndCoupon" parameterType="java.util.HashMap" resultType="MyCoupon">  
@@ -54,6 +60,6 @@
     </select>    
      
     <select id="getByCode" parameterType="java.util.HashMap" resultType="MyCoupon">  
-        <![CDATA[ select * from `my_my_coupon` where code = #{code} and state <> 3]]>
+        <![CDATA[ select * from `my_my_coupon` where code = #{code} and state <> 4]]>
     </select>           
 </mapper>

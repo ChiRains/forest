@@ -34,6 +34,7 @@ public class MyCouponHandlerImpl implements MyCouponHandler {
         vo.setInvalidDateStr(DateUtil.date2String(vo.getInvalidDate(), DateUtil.DATE_FORMAT_STRING));
         vo.setExpire(DateUtil.before(myCoupon.getValidDate(), new Date()));
         vo.setOrderDateStr(DateUtil.date2String(myCoupon.getOrderDate(), DateUtil.DATE_FORMAT_STRING));
+        // 状态
         return vo;
     }
 

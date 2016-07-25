@@ -35,6 +35,8 @@ public interface MyWealthDetailDao extends ISimpleDao<MyWealthDetail, Long> {
 
     public List<MyWealthDetail> listByUserAndTime(Long wealthId, Long userId, Integer type, Integer detailType, Date begin, Date end, int start, int size);
 
+    public int countByUserAndTime(Long wealthId, Long userId, Integer type, Integer detailType, Date begin, Date end);
+
     public double sumByUserAndTime(long wealthId, long userId, int type, Integer detailType, Date begin, Date end, int start, int size);
     
     MyWealthDetail getByIdandUserId(Long id, Long userId);

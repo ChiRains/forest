@@ -39,6 +39,7 @@ public class MyCouponUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/myCoupon/listCanUse.do");
         list.add("/app/myCoupon/getByCode.do");
         list.add("/app/myCoupon/delete.do");
+        list.add("/app/myCoupon/page.do");
         return list;
     }
 
@@ -50,6 +51,7 @@ public class MyCouponUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/myCoupon/listCanUse.do");
         list.add("/app/myCoupon/getByCode.do");
         list.add("/app/myCoupon/delete.do");
+        list.add("/app/myCoupon/page.do");
         return list;
     }
 }

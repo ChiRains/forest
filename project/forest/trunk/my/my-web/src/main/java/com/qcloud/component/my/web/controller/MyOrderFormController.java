@@ -17,6 +17,7 @@ import com.qcloud.component.my.web.vo.MyOrderFormSimpleVO;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.pirates.mvc.FrontAjaxView;
+import com.qcloud.pirates.mvc.FrontPagingView;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.pirates.web.page.PPage;
 import com.qcloud.pirates.web.page.PageParameterUtil;
@@ -38,16 +39,15 @@ public class MyOrderFormController {
 
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView query(HttpServletRequest request, MyOrderFormQuery query, PPage pPage) {
+    public FrontPagingView query(HttpServletRequest request, MyOrderFormQuery query, PPage pPage) {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         List<MyOrderForm> list = myOrderFormService.list(query, user.getId(), pPage.getPageStart(), pPage.getPageSize());
         int size = myOrderFormService.count(query, user.getId());
         List<MyOrderFormSimpleVO> voList = myOrderFormHandler.toVOList4Simple(list);
-        FrontAjaxView view = new FrontAjaxView();
+        FrontPagingView view = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), size);
         view.setMessage("查询我的订单成功.");
-        view.addObject("data", voList);
-        view.addObject("size", size);
+        view.setList(voList);
         return view;
     }
 
@@ -114,16 +114,15 @@ public class MyOrderFormController {
 
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView list(HttpServletRequest request, MyOrderFormQuery query, PPage pPage) {
+    public FrontPagingView list(HttpServletRequest request, MyOrderFormQuery query, PPage pPage) {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         List<MyOrderForm> list = myOrderFormService.list(query, user.getId(), pPage.getPageStart(), pPage.getPageSize());
         int size = myOrderFormService.count(query, user.getId());
         List<MyOrderFormListVO> voList = myOrderFormHandler.toVOList4List(list);
-        FrontAjaxView view = new FrontAjaxView();
+        FrontPagingView view = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), size);
         view.setMessage("查询我的订单成功.");
-        view.addObject("data", voList);
-        view.addObject("size", size);
+        view.setList(voList);
         return view;
     }
 

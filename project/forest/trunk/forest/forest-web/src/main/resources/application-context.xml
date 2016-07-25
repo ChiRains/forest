@@ -69,6 +69,7 @@
     <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.ActivityUriHandlerImpl"></pirates:uriHandler>
     <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.HomepageSalesUriHandlerImpl"></pirates:uriHandler>
     <pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.OutsideToOmsUriHandlerImpl"></pirates:uriHandler>
+	<pirates:uriHandler class="com.qcloud.project.forest.web.handler.url.RangeGradeUriHandlerImpl"></pirates:uriHandler>
 
 	<pirates:settings>
 		<pirates:session distributed="true" redis="session-token" />

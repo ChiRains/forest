@@ -115,7 +115,7 @@ public class MedicationController {
         List<MedicationVO> voList = medicationHandler.toVOList(page.getData());
         FrontPagingView view = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), page.getCount());
         view.setMessage("用药列表成功!");
-        view.addObject("data", voList);
+        view.setList(voList);
         return view;
     }
 

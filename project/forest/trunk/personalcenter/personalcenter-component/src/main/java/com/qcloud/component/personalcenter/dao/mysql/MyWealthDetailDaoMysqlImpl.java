@@ -215,4 +215,26 @@ public class MyWealthDetailDaoMysqlImpl implements MyWealthDetailDao {
         MyWealthDetail myWealthDetail=sqlOperator.selectOne("com.qcloud.component.personalcenter.dao.mysql.mapper.MyWealthDetailMapper.getByIdandUserId", param);
         return myWealthDetail;
     }
+
+    @Override
+    public int countByUserAndTime(Long wealthId, Long userId, Integer type, Integer detailType, Date begin, Date end) {
+
+        detailType = detailType == null || detailType < 1 || detailType > 3 ? 1 : detailType;
+        String pointSqlFragment = "";
+        if (detailType == 2) {
+            pointSqlFragment = " and point > 0 ";
+        } else if (detailType == 3) {
+            pointSqlFragment = " and point < 0 ";
+        }
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("table_name", getTableName(userId));
+        param.put("wealthId", wealthId);
+        param.put("userId", userId);
+        param.put("type", type);
+        param.put("pointSqlFragment", pointSqlFragment);
+        param.put("beginTime", begin != null ? DateUtil.date2String(begin) : begin);
+        param.put("endTime", end != null ? DateUtil.date2String(end) : end);
+        int total = sqlOperator.selectOne("com.qcloud.component.personalcenter.dao.mysql.mapper.MyWealthDetailMapper.countByUserAndTime", param);
+        return total;
+    }
 }

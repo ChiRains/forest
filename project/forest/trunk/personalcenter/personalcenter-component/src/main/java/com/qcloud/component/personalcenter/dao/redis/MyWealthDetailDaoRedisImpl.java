@@ -105,7 +105,13 @@ public class MyWealthDetailDaoRedisImpl implements MyWealthDetailDao {
 
     @Override
     public MyWealthDetail getByIdandUserId(Long id, Long userId) {
-        throw new NotImplementedException();
 
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public int countByUserAndTime(Long wealthId, Long userId, Integer type, Integer detailType, Date begin, Date end) {
+
+        throw new NotImplementedException();
     }
 }
