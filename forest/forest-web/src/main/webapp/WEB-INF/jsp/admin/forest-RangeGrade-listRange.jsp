@@ -47,7 +47,7 @@
                             <div class="dd-handle">
                                 <span class="">&nbsp;${levelOne.name}</span>
                                  <div class="pull-right action-buttons">
-                                    <a class="btn btn-white btn-minier btn-info" title="设置" href="#admin/partsMerchandise/toAddParts?classifyId=${levelOne.id}">
+                                    <a class="btn btn-white btn-minier btn-info" title="设置" href="#admin/rangeGrade/list?rangeId=${levelOne.id}">
                                         	设置会员等级</a>
                                     <a class="blue" href="#admin/rangeGrade/toEditRange?id=${levelOne.id}"><i class="ace-icon fa fa-pencil bigger-130"></i></a>
                     				<span class="lbl middle"></span>

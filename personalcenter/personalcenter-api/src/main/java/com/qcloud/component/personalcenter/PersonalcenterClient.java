@@ -37,6 +37,10 @@ public interface PersonalcenterClient {
     boolean calculateMyWealth(long userId, WealthType type, double cash, boolean needProportion, String desc);
 
     QMyWealth getMyWealth(long userId);
-    
-    boolean editUserParam(long userId,String name,String nickName,String email,String headImage,int sex,String mobile, String province,String city,String district,String address);
+
+    boolean editUserParam(long userId, String name, String nickName, String email, String headImage, int sex, String mobile, String province, String city, String district, String address);
+
+    List<QGrade> getGradeList();
+
+    QGrade getGrade(long id);
 }

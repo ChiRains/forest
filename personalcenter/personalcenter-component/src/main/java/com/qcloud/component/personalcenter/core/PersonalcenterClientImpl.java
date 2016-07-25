@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.qcloud.component.parameter.ParameterClient;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
+import com.qcloud.component.personalcenter.QGrade;
 import com.qcloud.component.personalcenter.QMyWealth;
 import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.component.personalcenter.UserMessageType;
 import com.qcloud.component.personalcenter.WealthType;
+import com.qcloud.component.personalcenter.entity.GradeEntity;
 import com.qcloud.component.personalcenter.entity.MyWealthEntity;
 import com.qcloud.component.personalcenter.entity.UserEntity;
 import com.qcloud.component.personalcenter.model.Grade;
@@ -236,20 +238,41 @@ public class PersonalcenterClientImpl implements PersonalcenterClient {
         return userService.update(user);
     }
 
-	@Override
-	public boolean editUserParam(long userId, String name, String nickName,String email, String headImage, int sex, 
-									String mobile,String province, String city, String district,String address) {
-		User user = userService.get(userId);
-		user.setName(name);
-		user.setNickname(nickName);
-		user.setEmail(email);
-		user.setHeadImage(headImage);
-		user.setSex(sex);
-		user.setMobile(mobile);
-		user.setProvince(province);
-		user.setCity(city);
-		user.setDistrict(district);
-		user.setAddress(address);
-		return userService.update(user);
-	}
+    @Override
+    public boolean editUserParam(long userId, String name, String nickName, String email, String headImage, int sex, String mobile, String province, String city, String district, String address) {
+
+        User user = userService.get(userId);
+        user.setName(name);
+        user.setNickname(nickName);
+        user.setEmail(email);
+        user.setHeadImage(headImage);
+        user.setSex(sex);
+        user.setMobile(mobile);
+        user.setProvince(province);
+        user.setCity(city);
+        user.setDistrict(district);
+        user.setAddress(address);
+        return userService.update(user);
+    }
+
+    @Override
+    public List<QGrade> getGradeList() {
+
+        List<Grade> list = gradeService.listAll();
+        List<QGrade> qlist = new ArrayList<QGrade>();
+        for (Grade grade : list) {
+            GradeEntity entity = new GradeEntity(grade);
+            qlist.add(entity);
+        }
+        return qlist;
+    }
+
+    @Override
+    public QGrade getGrade(long id) {
+
+        Grade grade = gradeService.get(id);
+        AssertUtil.assertNotNull(grade, "用户等级不存在.");
+        GradeEntity entity = new GradeEntity(grade);
+        return entity;
+    }
 }

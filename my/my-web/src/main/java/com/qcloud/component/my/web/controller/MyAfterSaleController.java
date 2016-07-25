@@ -12,6 +12,7 @@ import com.qcloud.component.my.web.vo.MyAfterSaleVO;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.pirates.mvc.FrontAjaxView;
+import com.qcloud.pirates.mvc.FrontPagingView;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.pirates.web.page.PPage;
 import com.qcloud.pirates.web.page.PageParameterUtil;
@@ -30,14 +31,15 @@ public class MyAfterSaleController {
 
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView list(HttpServletRequest request, PPage pPage) {
+    public FrontPagingView list(HttpServletRequest request, PPage pPage) {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         List<MyAfterSale> list = myAfterSaleService.listByUser(user.getId(), pPage.getPageStart(), pPage.getPageSize());
+        int total = myAfterSaleService.countByUser(user.getId());
         List<MyAfterSaleVO> voList = myAfterSaleHandler.toVOList(list);
-        FrontAjaxView view = new FrontAjaxView();
+        FrontPagingView view = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), total);
         view.setMessage("获取我的售后列表成功.");
-        view.addObject("data", voList);
+        view.setList(voList);
         return view;
     }
 

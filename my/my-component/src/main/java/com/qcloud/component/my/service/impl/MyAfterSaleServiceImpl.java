@@ -83,6 +83,13 @@ public class MyAfterSaleServiceImpl implements MyAfterSaleService {
 
     @Override
     public int stat(long userId) {
+
         return myAfterSaleDao.stat(userId);
+    }
+
+    @Override
+    public int countByUser(long userId) {
+
+        return myAfterSaleDao.countByUser(userId);
     }
 }

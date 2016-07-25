@@ -1,12 +1,14 @@
 package com.qcloud.project.forest.web.controller.admin;
 
+import java.net.URLEncoder;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import java.net.URLEncoder;
-import java.util.List;
-import javax.servlet.http.HttpServletRequest;
+import com.qcloud.component.personalcenter.PersonalcenterClient;
+import com.qcloud.component.personalcenter.QGrade;
 import com.qcloud.component.publicdata.PublicdataClient;
 import com.qcloud.component.publicdata.model.Classify;
 import com.qcloud.pirates.data.Page;
@@ -19,26 +21,29 @@ import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.pirates.web.page.PiratesParameterKey;
 import com.qcloud.pirates.web.security.annotation.NoReferer;
 import com.qcloud.project.forest.model.RangeGrade;
-import com.qcloud.project.forest.service.RangeGradeService;
-import com.qcloud.project.forest.web.handler.RangeGradeHandler;
 import com.qcloud.project.forest.model.key.TypeEnum;
 import com.qcloud.project.forest.model.query.RangeGradeQuery;
+import com.qcloud.project.forest.service.RangeGradeService;
+import com.qcloud.project.forest.web.handler.RangeGradeHandler;
 import com.qcloud.project.forest.web.vo.admin.AdminRangeGradeVO;
 
 @Controller
 @RequestMapping(value = "/" + AdminRangeGradeController.DIR)
 public class AdminRangeGradeController {
 
-    public static final String DIR = "admin/rangeGrade";
+    public static final String   DIR = "admin/rangeGrade";
 
     @Autowired
-    private RangeGradeService  rangeGradeService;
+    private RangeGradeService    rangeGradeService;
 
     @Autowired
-    private RangeGradeHandler  rangeGradeHandler;
+    private RangeGradeHandler    rangeGradeHandler;
 
     @Autowired
-    private PublicdataClient   publicdataClient;
+    private PublicdataClient     publicdataClient;
+
+    @Autowired
+    private PersonalcenterClient personalcenterClient;
 
     @RequestMapping
     @NoReferer
@@ -51,13 +56,17 @@ public class AdminRangeGradeController {
         AcePagingView pagingView = new AcePagingView("/admin/forest-RangeGrade-list", DIR + "/list?" + pageQueryStr, pPage.getPageNum(), pPage.getPageSize(), page.getCount());
         pagingView.addObject("result", list);
         pagingView.addObject("queryStr", URLEncoder.encode(queryStr));
+        pagingView.addObject("query", query);
         return pagingView;
     }
 
     @RequestMapping
-    public ModelAndView toAdd() {
+    public ModelAndView toAdd(Long rangeId) {
 
+        List<QGrade> list = personalcenterClient.getGradeList();
         ModelAndView model = new ModelAndView("/admin/forest-RangeGrade-add");
+        model.addObject("result", list);
+        model.addObject("rangeId", rangeId);
         return model;
     }
 
@@ -67,7 +76,7 @@ public class AdminRangeGradeController {
         rangeGradeService.add(rangeGrade);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("添加成功");
-        aceAjaxView.setUrl(DIR + "/list");
+        aceAjaxView.setUrl(DIR + "/list?rangeId=" + rangeGrade.getRangeId());
         return aceAjaxView;
     }
 
