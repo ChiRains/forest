@@ -380,7 +380,7 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
                             vo.setMerchantClassifyId(merchandise.getMerchantClassifyId());
                             vo.setMerchandiseType(2);
                             desc += merchandise.getName() + "  ";
-                            sum += merchandise.getDiscount();
+                            sum += merchandise.getDiscount() * merchandise.getNumber();
                             vo.setGroup(group);
                             comMerchandiseList.add(vo);
                         }
