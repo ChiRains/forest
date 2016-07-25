@@ -203,28 +203,30 @@ public class AfterSaleServiceImpl implements AfterSaleService {
     }
 
     @Transactional
-    public boolean applyRefund(OrderEntity orderEntity, List<OrderItemEntity> list, String explain, String reason, Double afterSaleSum) {
+    public List<Long> applyRefund(OrderEntity orderEntity, List<OrderItemEntity> list, String explain, String reason, Double afterSaleSum) {
 
         AssertUtil.assertNotEmpty(list, "退款商品列表不能为空.");
-        List<List<OrderItemEntity>> spitList = spitOrderItem(list);
+        List<List<OrderItemEntity>> spitList = spitOrderItem(list); 
+        List<Long> refundList = new ArrayList<Long>();
         for (List<OrderItemEntity> itemList : spitList) {
             MerchantOrderEntity merchantOrderEntity = itemList.get(0).getMerchantOrder();
             Date now = new Date();
-            Long returnOrderId = applyRefundOrder(merchantOrderEntity, now, explain, reason, afterSaleSum);
+            Long refundOrderId = applyRefundOrder(merchantOrderEntity, now, explain, reason, afterSaleSum);
             for (OrderItemEntity orderItem : itemList) {
                 AfterSaleItem afterSale = new AfterSaleItem();
                 afterSale.setOrderItem(orderItem);
                 afterSale.setExplain(explain);
                 afterSale.setReason(reason);
                 afterSale.setNumber(orderItem.getNumber());
-                applyRefundOrderItemDetail(afterSale, now, returnOrderId);
+                applyRefundOrderItemDetail(afterSale, now, refundOrderId);
             }
-            RefundAfterSaleOrder refundAfterSaleOrder = afterSaleSelecterService.getRefundOrder(merchantOrderEntity, returnOrderId);
+            RefundAfterSaleOrder refundAfterSaleOrder = afterSaleSelecterService.getRefundOrder(merchantOrderEntity, refundOrderId);
             orderObserverService.doNotify(refundAfterSaleOrder, refundAfterSaleOrder.getState());
+            refundList.add(refundOrderId);
             // sellercenterClient.updateOrderFormState(merchantOrderEntity.getMerchantId(), merchantOrderEntity.getId(), MerchantOrderStateType.REFUND.getKey());
         }
         // myClient.updateMyOrderFormState(orderEntity.getUserId(), orderEntity.getId(), MyOrderStateType.AFTERSALES.getKey());
-        return true;
+        return refundList;
     }
 
     @Transactional

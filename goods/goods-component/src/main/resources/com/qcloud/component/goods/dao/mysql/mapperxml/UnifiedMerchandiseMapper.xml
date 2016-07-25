@@ -178,4 +178,78 @@
         select * from `goods_unified_merchandise` where merchandiseId = #{merchandiseId} and state = #{state}
     </select>
     
+    
+    <select id="list4Back" parameterType="java.util.HashMap" resultType="UnifiedMerchandise">  
+        select * from `goods_unified_merchandise`  
+        where 1=1 and `state`!=1 
+        <if test="type !=null and type !=0">
+        	and `type`=#{type}
+        </if>
+        <if test="merchantId != null and merchantId > 0">
+            AND merchantId = #{merchantId}
+        </if>
+        <if test="merchantClassifyId != null and merchantClassifyId > 0">
+            AND (merchantClassifyId = #{merchantClassifyId} OR merchantClassifyBsid like CONCAT(#{merchantClassifyBsid},'%'))
+        </if>       
+        <if test="activityId !=null and activityId !=0">
+        	and `activityId`=#{activityId}
+        </if>
+        <if test="mallClassifyId != null and mallClassifyId > 0">
+            AND (mallClassifyId = #{mallClassifyId} OR mallClassifyBsid like CONCAT(#{mallClassifyBsid},'%'))
+        </if>          
+        <if test="brandId != null and brandId > 0">
+            AND brandId = #{brandId}
+        </if>
+        <if test="name != null">
+            AND (name LIKE CONCAT('%',#{name},'%') OR keywords LIKE CONCAT('%',#{name},'%'))
+        </if>     
+        <if test="minDiscount !=null and minDiscount > 0">
+        	<![CDATA[ and (discount >=#{minDiscount})]]>
+        </if> 
+        <if test="maxDiscount !=null and maxDiscount > 0">
+        	<![CDATA[ and (discount <=#{maxDiscount}) ]]>
+        </if>    
+        <if test="queryType == 1">
+            group by merchandiseId
+        </if>   
+        order by ${orderField} ${orderType} 
+        limit #{start},#{count}
+     </select>  
+    
+     <select id="count4Back" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from (select *  from `goods_unified_merchandise`
+        where 1=1 and `state`!=1 
+        <if test="type !=null and type !=0">
+        	and `type`=#{type}
+        </if>
+        <if test="merchantId != null and merchantId > 0">
+            AND merchantId = #{merchantId}
+        </if>
+        <if test="activityId !=null and activityId !=0">
+        	and `activityId`=#{activityId}
+        </if>
+        <if test="merchantClassifyId != null and merchantClassifyId > 0">
+            AND (merchantClassifyId = #{merchantClassifyId} OR merchantClassifyBsid like CONCAT(#{merchantClassifyBsid},'%'))
+        </if>       
+        
+        <if test="mallClassifyId != null and mallClassifyId > 0">
+            AND (mallClassifyId = #{mallClassifyId} OR mallClassifyBsid like CONCAT(#{mallClassifyBsid},'%'))
+        </if>          
+        <if test="brandId != null and brandId > 0">
+            AND brandId = #{brandId}
+        </if>
+        <if test="name != null">
+            AND (name LIKE CONCAT('%',#{name},'%') OR keywords LIKE CONCAT('%',#{name},'%'))
+        </if>
+        <if test="minDiscount !=null and minDiscount > 0">
+        	<![CDATA[ and (discount >=#{minDiscount})]]>
+        </if> 
+        <if test="maxDiscount !=null and maxDiscount > 0">
+        	<![CDATA[ and (discount <=#{maxDiscount}) ]]>
+        </if>             
+        <if test="queryType == 1">
+            group by merchandiseId
+        </if>   
+        ) A
+    </select>
 </mapper>

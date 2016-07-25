@@ -308,7 +308,7 @@ public class MyClientImpl implements MyClient {
         MyCoupon myCoupon = myCouponService.get(myCouponId);
         AssertUtil.assertNotNull(myCoupon, "优惠劵不存在." + myCouponId);
         AssertUtil.assertTrue(myCoupon.getState() == CouponStateType.NOTUSE.getKey(), "优惠劵不是未使用状态." + myCouponId);
-        AssertUtil.assertTrue(myCoupon.getValidDate().after(new Date()), "优惠劵不是未使用状态." + myCouponId);
+        AssertUtil.assertTrue(myCoupon.getInvalidDate().after(new Date()), "优惠劵不是未使用状态." + myCouponId);
         myCoupon.setState(CouponStateType.USE.getKey());
         myCoupon.setOrderId(orderId);
         myCoupon.setOrderDate(orderDate);

@@ -13,14 +13,14 @@ import com.qcloud.component.orderform.model.query.OrderItemDetailQuery;
 
 public interface OrderItemDetailMapper {
 
-	@Insert("insert into `${table_name}`(`id`,`orderId`,`subOrderId`,`orderItemId`,`merchantId`,`unifiedMerchandiseId`,`merchandiseItemId`,`number`,`name`,`state`,`specifications`,`image`,`code`,`weight`)"
-			+ " values(#{id},#{orderId},#{subOrderId},#{orderItemId},#{merchantId},#{unifiedMerchandiseId},#{merchandiseItemId},#{number},#{name},#{state},#{specifications},#{image},#{code},#{weight})")
+	@Insert("insert into `${table_name}`(`id`,`orderId`,`subOrderId`,`orderItemId`,`merchantId`,`unifiedMerchandiseId`,`merchandiseItemId`,`number`,`name`,`state`,`specifications`,`image`,`code`,`weight`,`discount`)"
+			+ " values(#{id},#{orderId},#{subOrderId},#{orderItemId},#{merchantId},#{unifiedMerchandiseId},#{merchandiseItemId},#{number},#{name},#{state},#{specifications},#{image},#{code},#{weight},#{discount})")
 	public void insert(OrderItemDetail orderItemDetail);
 
 	@Select("select * from `${table_name}` where `id`=#{id}")
 	public OrderItemDetail get(Long id);
 
-	@Update("update `${table_name}` set `orderId`=#{orderId},`subOrderId`=#{subOrderId},`orderItemId`=#{orderItemId},`merchantId`=#{merchantId},`unifiedMerchandiseId`=#{unifiedMerchandiseId},`merchandiseItemId`=#{merchandiseItemId},`number`=#{number},`name`=#{name},`state`=#{state},`specifications`=#{specifications},`image`=#{image},`code`=#{code},`weight`=#{weight} where `id`=#{id}")
+	@Update("update `${table_name}` set `orderId`=#{orderId},`subOrderId`=#{subOrderId},`orderItemId`=#{orderItemId},`merchantId`=#{merchantId},`unifiedMerchandiseId`=#{unifiedMerchandiseId},`merchandiseItemId`=#{merchandiseItemId},`number`=#{number},`name`=#{name},`state`=#{state},`specifications`=#{specifications},`image`=#{image},`code`=#{code},`weight`=#{weight},`discount`=#{discount}  where `id`=#{id}")
 	public void update(OrderItemDetail orderItemDetail);
 
 	@Delete("delete from `${table_name}` where `id`=#{id}")

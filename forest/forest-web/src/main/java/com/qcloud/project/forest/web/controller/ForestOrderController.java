@@ -36,6 +36,7 @@ import com.qcloud.component.orderform.QOrder;
 import com.qcloud.component.orderform.engine.OrderService;
 import com.qcloud.component.orderform.entity.MerchantOrderEntity;
 import com.qcloud.component.orderform.entity.OrderEntity;
+import com.qcloud.component.orderform.entity.OrderItemDetailEntity;
 import com.qcloud.component.orderform.entity.OrderItemEntity;
 import com.qcloud.component.orderform.web.form.MerchandiseDetail;
 import com.qcloud.component.orderform.web.form.OrderForm;
@@ -138,16 +139,53 @@ public class ForestOrderController {
         List<MerchandiseDetail> merchandiseList = orderForm.getMerchandiseList();
         //
         Map<QUnifiedMerchandise, Integer> merchandiseMap = new HashMap<QUnifiedMerchandise, Integer>();
+        Set<Long> freeMerchandiseSet = new HashSet<Long>();
+        // TODO
+        Map<QUnifiedMerchandise, Integer> freeCombinationMap = new HashMap<QUnifiedMerchandise, Integer>();
+        Map<QUnifiedMerchandise, Map<QUnifiedMerchandise, Integer>> freeMerchandiseListMap = new HashMap<QUnifiedMerchandise, Map<QUnifiedMerchandise, Integer>>();
         for (MerchandiseDetail merchandiseDetail : merchandiseList) {
-            QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(merchandiseDetail.getUnifiedMerchandiseId());
-            AssertUtil.assertNotNull(unifiedMerchandise, "商品不存在." + merchandiseDetail.getUnifiedMerchandiseId());
-            QMerchant merchant = sellercenterClient.getMerchant(unifiedMerchandise.getMerchantId());
-            merchantSet.add(merchant);
-            merchandiseMap.put(unifiedMerchandise, merchandiseDetail.getNumber());
+            if (merchandiseDetail.getCombinationMerchandiseId() == -1) {// 单品和固定搭配
+                QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(merchandiseDetail.getUnifiedMerchandiseId());
+                AssertUtil.assertNotNull(unifiedMerchandise, "商品不存在." + merchandiseDetail.getUnifiedMerchandiseId());
+                QMerchant merchant = sellercenterClient.getMerchant(unifiedMerchandise.getMerchantId());
+                merchantSet.add(merchant);
+                merchandiseMap.put(unifiedMerchandise, merchandiseDetail.getNumber());
+            } else {// 自由组合
+                QUnifiedMerchandise freeCombinationMerchandise = commoditycenterClient.getUnifiedMerchandise(merchandiseDetail.getCombinationMerchandiseId());
+                AssertUtil.assertNotNull(freeCombinationMerchandise, "自由搭配组合不存在." + merchandiseDetail.getCombinationMerchandiseId());
+                freeMerchandiseSet.add(freeCombinationMerchandise.getId());
+                QMerchant merchant = sellercenterClient.getMerchant(freeCombinationMerchandise.getMerchantId());
+                merchantSet.add(merchant);
+            }
+        }
+        for (Long freeCombinationMerchandiseId : freeMerchandiseSet) {
+            QUnifiedMerchandise freeCombinationMerchandise = commoditycenterClient.getUnifiedMerchandise(freeCombinationMerchandiseId);
+            int matchNumber = 0;// 判断
+            int combinationNumber = 0;
+            Map<QUnifiedMerchandise, Integer> freeMerchandiseList = new HashMap<QUnifiedMerchandise, Integer>();
+            for (MerchandiseDetail merchandiseDetail : merchandiseList) {
+                for (QUnifiedMerchandise merchandiseItems : freeCombinationMerchandise.getList()) {
+                    if (merchandiseDetail.getCombinationMerchandiseId().longValue() == freeCombinationMerchandiseId.longValue() && merchandiseDetail.getUnifiedMerchandiseId().longValue() == merchandiseItems.getId().longValue()) {
+                        freeMerchandiseList.put(merchandiseItems, merchandiseDetail.getNumber());
+                        combinationNumber = merchandiseDetail.getCombinationMerchandiseNumber();
+                        matchNumber++;
+                    }
+                }
+            }
+            if (matchNumber == freeCombinationMerchandise.getList().size()) {// 自由搭配商品全买了
+                merchandiseMap.put(freeCombinationMerchandise, combinationNumber);
+            } else {
+                freeCombinationMap.put(freeCombinationMerchandise, combinationNumber);
+                freeMerchandiseListMap.put(freeCombinationMerchandise, freeMerchandiseList);
+            }
         }
         context.setMerchandiseMap(merchandiseMap);
+        context.setFreeCombinationMap(freeCombinationMap);// 自由搭配商品集合：id + number
+        context.setFreeMerchandiseListMap(freeMerchandiseListMap);// 自由搭配商品的子商品集合 combination : unifiedMerchandiseId + number
         context.setMerchantList(new ArrayList<QMerchant>(merchantSet));
-        // 计算邮费 begin
+        judgePrepareMerchandiseStock(context);// 判断
+        // AssertUtil.assertTrue(false, "测试用抛异常----");
+        // 计算邮费 begin TODO
         Map<QMerchant, List<OrderExpressVO>> expressMap = calculatePreparePostage(context, orderForm.getExpressCode());
         // 计算邮费 end
         OrderEntity orderEntity = orderService.prepareOrderNormal(context);
@@ -190,27 +228,47 @@ public class ForestOrderController {
                     preMerchantVO.getPreOrderItemList().add(preOrderItemVO);
                 } else if (merchandise.getType().equals(UnifiedMerchandiseType.COMBINATION)) {
                     PreOrderCombinationVO preOrderCombinationVO = new PreOrderCombinationVO();
-                    preOrderCombinationVO.setDiscount(orderItemEntity.getDiscount());
+                    preOrderCombinationVO.setDiscount(orderItemEntity.getSum());
                     preOrderCombinationVO.setUnifiedMerchandiseId(orderItemEntity.getUnifiedMerchandiseId());
                     preOrderCombinationVO.setImage(fileSDKClient.getFileServerUrl() + orderItemEntity.getImage());
-                    preOrderCombinationVO.setPrice(orderItemEntity.getPrice());
+                    preOrderCombinationVO.setPrice(orderItemEntity.getSum());
                     preOrderCombinationVO.setName(orderItemEntity.getName());
                     preOrderCombinationVO.setNumber(orderItemEntity.getNumber());
-                    for (QUnifiedMerchandise merchandiseItem : merchandise.getList()) {
+                    //
+                    List<OrderItemDetailEntity> orderItemDetailsList = orderItemEntity.getEntityList();
+                    for (OrderItemDetailEntity orderItemDetailEntity : orderItemDetailsList) {
+                        QUnifiedMerchandise merchandiseItem = commoditycenterClient.getUnifiedMerchandise(orderItemDetailEntity.getUnifiedMerchandiseId());
+                        // orderItemDetails拿过来
                         OrderItemVO orderItem = new OrderItemVO();
-                        orderItem.setCode(merchandiseItem.getCode());
-                        orderItem.setName(merchandiseItem.getName());
-                        orderItem.setDiscount(merchandiseItem.getDiscount());
-                        orderItem.setPrice(merchandiseItem.getPrice());
-                        orderItem.setImage(fileSDKClient.getFileServerUrl() + merchandiseItem.getImage());
-                        orderItem.setUnifiedMerchandiseId(merchandiseItem.getId());
-                        orderItem.setSpecifications(merchandiseItem.getSpecifications());
+                        orderItem.setCode(orderItemDetailEntity.getCode());
+                        orderItem.setName(orderItemDetailEntity.getName());
+                        orderItem.setDiscount(orderItemDetailEntity.getDiscount());
+                        orderItem.setImage(fileSDKClient.getFileServerUrl() + orderItemDetailEntity.getImage());
+                        orderItem.setUnifiedMerchandiseId(orderItemDetailEntity.getId());
+                        orderItem.setSpecifications(orderItemDetailEntity.getSpecifications());
                         orderItem.setAfterSale(false);
-                        orderItem.setNumber(merchandiseItem.getNumber());
+                        orderItem.setNumber(orderItemDetailEntity.getNumber());
                         orderItem.setEvaluation(false);
+                        // 统一商品拿过来
+                        orderItem.setPrice(merchandiseItem.getPrice());
                         orderItem.setUnit(merchandiseItem.getUnit());
                         preOrderCombinationVO.getOrderItemList().add(orderItem);
                     }
+                    // for (QUnifiedMerchandise merchandiseItem : merchandise.getList()) {
+                    // OrderItemVO orderItem = new OrderItemVO();
+                    // orderItem.setCode(merchandiseItem.getCode());
+                    // orderItem.setName(merchandiseItem.getName());
+                    // orderItem.setDiscount(merchandiseItem.getDiscount());
+                    // orderItem.setPrice(merchandiseItem.getPrice());
+                    // orderItem.setImage(fileSDKClient.getFileServerUrl() + merchandiseItem.getImage());
+                    // orderItem.setUnifiedMerchandiseId(merchandiseItem.getId());
+                    // orderItem.setSpecifications(merchandiseItem.getSpecifications());
+                    // orderItem.setAfterSale(false);
+                    // orderItem.setNumber(merchandiseItem.getNumber());
+                    // orderItem.setEvaluation(false);
+                    // orderItem.setUnit(merchandiseItem.getUnit());
+                    // preOrderCombinationVO.getOrderItemList().add(orderItem);
+                    // }
                     //
                     preMerchantVO.getCombinationItemList().add(preOrderCombinationVO);
                 }
@@ -247,6 +305,19 @@ public class ForestOrderController {
         QGrade grade = user.getGrade();
         view.addObject("discountMessage", "会员尊享:" + grade.getDiscount() * 100 / 1000 + "折优惠");
         return view;
+    }
+
+    // 判断预下单商品库存
+    public void judgePrepareMerchandiseStock(OrderContext context) {
+
+        Map<QUnifiedMerchandise, Integer> merchandiseMap = context.getMerchandiseMap();
+        for (Map.Entry<QUnifiedMerchandise, Integer> entry : merchandiseMap.entrySet()) {
+            AssertUtil.assertTrue(entry.getKey().getStock() >= entry.getValue(), "抱歉,订单商品:" + entry.getKey().getName() + "数量库存只剩下" + entry.getKey().getStock() + "了哦.");
+        }
+        Map<QUnifiedMerchandise, Integer> freeMerchandiseMap = context.getFreeCombinationMap();
+        for (Map.Entry<QUnifiedMerchandise, Integer> entry : freeMerchandiseMap.entrySet()) {
+            AssertUtil.assertTrue(entry.getKey().getStock() >= entry.getValue(), "抱歉,订单商品:" + entry.getKey().getName() + "数量库存只剩下" + entry.getKey().getStock() + "了哦.");
+        }
     }
 
     @PiratesApp
@@ -379,10 +450,8 @@ public class ForestOrderController {
 
     private OrderContext formToContext(QUser user, OrderForm orderForm, DeliveryForm deliveryForm) {
 
-        // TODO
         AssertUtil.assertNotNull(orderForm.getConsigneeId(), "收货人信息数据不能为空.");
         AssertUtil.assertNotNull(orderForm.getInvoiceId(), "发票信息数据不能为空.");
-        // AssertUtil.assertNotNull(deliveryDate, "配送时间/自提时间不能为空.");
         QMyConsignee consignee = myClient.getConsignee(orderForm.getConsigneeId());
         AssertUtil.assertNotNull(consignee, "收货人信息不存在." + orderForm.getConsigneeId());
         AssertUtil.assertNotEmpty(orderForm.getMerchandiseList(), "下订单,商品列表不能为空.");
@@ -394,13 +463,48 @@ public class ForestOrderController {
         Set<QMerchant> merchantSet = new HashSet<QMerchant>();
         List<MerchandiseDetail> merchandiseList = orderForm.getMerchandiseList();
         Map<QUnifiedMerchandise, Integer> merchandiseMap = new HashMap<QUnifiedMerchandise, Integer>();
-        for (MerchandiseDetail detail : merchandiseList) {
-            QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(detail.getUnifiedMerchandiseId());
-            AssertUtil.assertNotNull(unifiedMerchandise, "商品不存在" + detail.getUnifiedMerchandiseId());
-            QMerchant merchant = sellercenterClient.getMerchant(unifiedMerchandise.getMerchantId());
-            merchantSet.add(merchant);
-            merchandiseMap.put(unifiedMerchandise, detail.getNumber());
+        Set<Long> freeMerchandiseSet = new HashSet<Long>();
+        // TODO
+        Map<QUnifiedMerchandise, Integer> freeCombinationMap = new HashMap<QUnifiedMerchandise, Integer>();
+        Map<QUnifiedMerchandise, Map<QUnifiedMerchandise, Integer>> freeMerchandiseListMap = new HashMap<QUnifiedMerchandise, Map<QUnifiedMerchandise, Integer>>();
+        for (MerchandiseDetail merchandiseDetail : merchandiseList) {
+            if (merchandiseDetail.getCombinationMerchandiseId() == -1) {// 单品和固定搭配
+                QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(merchandiseDetail.getUnifiedMerchandiseId());
+                AssertUtil.assertNotNull(unifiedMerchandise, "商品不存在." + merchandiseDetail.getUnifiedMerchandiseId());
+                QMerchant merchant = sellercenterClient.getMerchant(unifiedMerchandise.getMerchantId());
+                merchantSet.add(merchant);
+                merchandiseMap.put(unifiedMerchandise, merchandiseDetail.getNumber());
+            } else {// 自由组合
+                QUnifiedMerchandise freeCombinationMerchandise = commoditycenterClient.getUnifiedMerchandise(merchandiseDetail.getCombinationMerchandiseId());
+                AssertUtil.assertNotNull(freeCombinationMerchandise, "自由搭配组合不存在." + merchandiseDetail.getCombinationMerchandiseId());
+                freeMerchandiseSet.add(freeCombinationMerchandise.getId());
+                QMerchant merchant = sellercenterClient.getMerchant(freeCombinationMerchandise.getMerchantId());
+                merchantSet.add(merchant);
+            }
         }
+        for (Long freeCombinationMerchandiseId : freeMerchandiseSet) {
+            QUnifiedMerchandise freeCombinationMerchandise = commoditycenterClient.getUnifiedMerchandise(freeCombinationMerchandiseId);
+            int matchNumber = 0;// 判断
+            int combinationNumber = 0;
+            Map<QUnifiedMerchandise, Integer> freeMerchandiseList = new HashMap<QUnifiedMerchandise, Integer>();
+            for (MerchandiseDetail merchandiseDetail : merchandiseList) {
+                for (QUnifiedMerchandise merchandiseItems : freeCombinationMerchandise.getList()) {
+                    if (merchandiseDetail.getCombinationMerchandiseId().longValue() == freeCombinationMerchandiseId.longValue() && merchandiseDetail.getUnifiedMerchandiseId().longValue() == merchandiseItems.getId().longValue()) {
+                        freeMerchandiseList.put(merchandiseItems, merchandiseDetail.getNumber());
+                        combinationNumber = merchandiseDetail.getCombinationMerchandiseNumber();
+                        matchNumber++;
+                    }
+                }
+            }
+            if (matchNumber == freeCombinationMerchandise.getList().size()) {// 自由搭配商品全买了
+                merchandiseMap.put(freeCombinationMerchandise, combinationNumber);
+            } else {
+                freeCombinationMap.put(freeCombinationMerchandise, combinationNumber);
+                freeMerchandiseListMap.put(freeCombinationMerchandise, freeMerchandiseList);
+            }
+        }
+        context.setFreeCombinationMap(freeCombinationMap);
+        context.setFreeMerchandiseListMap(freeMerchandiseListMap);
         AssertUtil.assertTrue(merchantSet.size() == 1, "只能下一个商家商品的订单.");
         context.setMerchandiseMap(merchandiseMap);
         context.setMerchantList(new ArrayList<QMerchant>(merchantSet));

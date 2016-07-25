@@ -46,9 +46,12 @@ public class MerchandiseBrowsingHistoryUriHandlerImpl extends AbstractUriHandler
         list.add("/merchandiseBrowsingHistory/list.do");
         list.add("/merchandiseBrowsingHistory/clearMyList.do");
         list.add("/merchandiseBrowsingHistory/remove.do");
+        list.add("/merchandiseBrowsingHistory/list4Page.do");
+        //
         list.add("/app/merchandiseBrowsingHistory/list.do");
         list.add("/app/merchandiseBrowsingHistory/clearMyList.do");
         list.add("/app/merchandiseBrowsingHistory/remove.do");
+        list.add("/app/merchandiseBrowsingHistory/list4Page.do");
         return list;
     }
 
@@ -59,6 +62,7 @@ public class MerchandiseBrowsingHistoryUriHandlerImpl extends AbstractUriHandler
         list.add("/app/merchandiseBrowsingHistory/list.do");
         list.add("/app/merchandiseBrowsingHistory/clearMyList.do");
         list.add("/app/merchandiseBrowsingHistory/remove.do");
+        list.add("/app/merchandiseBrowsingHistory/list4Page.do");
         return list;
     }
 }

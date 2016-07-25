@@ -63,7 +63,6 @@ public class OrderItemDetailEntity implements QOrderItemDetail {
     //
     // this.afterSaleItemList = afterSaleItemList;
     // }
-
     @Override
     public String getName() {
 
@@ -126,5 +125,11 @@ public class OrderItemDetailEntity implements QOrderItemDetail {
     public int getNumber() {
 
         return orderItemDetail.getNumber();
+    }
+
+    @Override
+    public double getDiscount() {
+
+        return orderItemDetail.getDiscount();
     }
 }

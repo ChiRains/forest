@@ -14,16 +14,23 @@ import com.qcloud.component.marketing.model.CouponItems;
 import com.qcloud.component.marketing.service.CouponItemsService;
 import com.qcloud.component.my.DeliveryModeType;
 import com.qcloud.component.my.InvoiceType;
+import com.qcloud.component.my.MyClient;
+import com.qcloud.component.my.QMyCoupon;
+import com.qcloud.component.my.model.MyCoupon;
 import com.qcloud.component.orderform.PaymentModeType;
 import com.qcloud.component.orderform.QMerchantOrder;
 import com.qcloud.component.orderform.QOrder;
 import com.qcloud.component.orderform.QOrderItem;
+import com.qcloud.component.orderform.QOrderItemDetail;
 import com.qcloud.component.orderform.engine.AfterSaleSelecterService;
+import com.qcloud.component.orderform.model.OrderDiscount;
+import com.qcloud.component.orderform.service.OrderDiscountService;
 import com.qcloud.component.orderform.web.vo.personal.OrderItemVO;
 import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.pirates.core.json.Json;
 import com.qcloud.pirates.util.DateUtil;
+import com.qcloud.pirates.util.StringUtil;
 import com.qcloud.project.forest.model.ForestOrder;
 import com.qcloud.project.forest.model.GiftCoupon;
 import com.qcloud.project.forest.model.key.TypeEnum.ForestOrderState;
@@ -50,6 +57,12 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
 
     @Autowired
     private FileSDKClient         fileSDKClient;
+
+    @Autowired
+    private OrderDiscountService  orderDiscountService;
+
+    @Autowired
+    private MyClient              myClient;
 
     @Override
     public List<ForestOrderVO> toVOList(List<ForestOrder> list) {
@@ -93,30 +106,42 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
         orderVO.setExplain(order.getMerchantOrderList().get(0).getExplain());
         List<QMerchantOrder> merchantOrderList = order.getMerchantOrderList();
         int merchandiseNumber = 0;
+        List<OrderDiscount> discountList = new ArrayList<OrderDiscount>();
         for (QMerchantOrder qMerchantOrder : merchantOrderList) {
+            List<CombinationItemVO> combinationItemList = new ArrayList<CombinationItemVO>();
             for (QOrderItem qOrderItem : qMerchantOrder.getOrderItemList()) {
-                List<CombinationItemVO> combinationItemList = new ArrayList<CombinationItemVO>();
+               
                 QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(qOrderItem.getUnifiedMerchandiseId());
                 if (unifiedMerchandise.getType().equals(UnifiedMerchandiseType.COMBINATION)) {
                     //
                     CombinationItemVO combinationItemVO = toOrderItemVOList(qOrderItem, unifiedMerchandise);
                     combinationItemList.add(combinationItemVO);
-                    orderVO.setCombinationItemList(combinationItemList);
+                    
                 } else {
                     orderVO.getOrderItemList().add(toOrderItemVO(qOrderItem, unifiedMerchandise));
                 }
                 merchandiseNumber++;
                 orderVO.getImageList().add(fileSDKClient.getFileServerUrl() + unifiedMerchandise.getImage());
             }
+            discountList = orderDiscountService.listBySubOrder(qMerchantOrder.getId());
+            orderVO.setCombinationItemList(combinationItemList);
         }
         //
-        CouponItems couponItems = couponItemsService.get(0L);
-        if (couponItems == null) {
-            couponItems = new CouponItems();
+        if (!discountList.isEmpty()) {
+            QMyCoupon myCoupon = myClient.getMyCoupon(order.getUserId(), discountList.get(0).getDiscountId());
+            CouponItems couponItems = couponItemsService.get(myCoupon.getCouponItemId());
+            if (couponItems == null) {
+                couponItems = new CouponItems();
+                couponItems.setId(-1l);
+                couponItems.setName("没有使用任何优惠券");
+            }
+            orderVO.setCouponItems(couponItems);
+        } else {
+            CouponItems couponItems = new CouponItems();
             couponItems.setId(-1l);
             couponItems.setName("没有使用任何优惠券");
+            orderVO.setCouponItems(couponItems);
         }
-        orderVO.setCouponItems(couponItems);
         //
         GiftCoupon giftCoupon = giftCouponService.get(forestOrder.getGiftCouponId());
         if (giftCoupon == null) {
@@ -173,20 +198,39 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
         combinationItemVO.setUnifiedMerchandiseId(qOrderItem.getUnifiedMerchandiseId());
         combinationItemVO.setAfterSale(qOrderItem.isAfterSale());
         combinationItemVO.setEvaluation(qOrderItem.isEvaluation());
+        combinationItemVO.setNumber(qOrderItem.getNumber());
         //
         List<OrderItemVO> orderItemList = new ArrayList<OrderItemVO>();
-        for (QUnifiedMerchandise merchandise : unifiedMerchandise.getList()) {
+        List<QOrderItemDetail> orderItemDetailList = qOrderItem.getOrderItemDetailList();
+        for (QOrderItemDetail qOrderItemDetail : orderItemDetailList) {
             OrderItemVO itemVO = new OrderItemVO();
-            itemVO.setName(merchandise.getName());
-            itemVO.setImage(merchandise.getImage());
-            itemVO.setSpecifications(merchandise.getSpecifications());
-            itemVO.setDiscount(merchandise.getDiscount());
-            itemVO.setNumber(merchandise.getNumber());
-            itemVO.setUnifiedMerchandiseId(merchandise.getId());
-            itemVO.setPrice(merchandise.getPrice());
+            itemVO.setName(qOrderItemDetail.getName());
+            itemVO.setImage(qOrderItemDetail.getImage());
+            itemVO.setSpecifications(qOrderItemDetail.getSpecifications());
+            itemVO.setDiscount(qOrderItemDetail.getDiscount());
+            itemVO.setNumber(qOrderItemDetail.getNumber());
+            itemVO.setUnifiedMerchandiseId(qOrderItemDetail.getId());
+            for (QUnifiedMerchandise merchandise : unifiedMerchandise.getList()) {
+                if (merchandise.getId().longValue() == qOrderItemDetail.getUnifiedMerchandiseId()) {
+                    itemVO.setPrice(merchandise.getPrice());
+                    break;
+                }
+            }
             orderItemList.add(itemVO);
-            combinationItemVO.setDesc(combinationItemVO.getDesc() + "+" + itemVO.getName());
+            combinationItemVO.setDesc(StringUtil.nullToEmpty(combinationItemVO.getDesc()) + "+" + itemVO.getName());
         }
+//        for (QUnifiedMerchandise merchandise : unifiedMerchandise.getList()) {
+//            OrderItemVO itemVO = new OrderItemVO();
+//            itemVO.setName(merchandise.getName());
+//            itemVO.setImage(merchandise.getImage());
+//            itemVO.setSpecifications(merchandise.getSpecifications());
+//            itemVO.setDiscount(merchandise.getDiscount());
+//            itemVO.setNumber(merchandise.getNumber());
+//            itemVO.setUnifiedMerchandiseId(merchandise.getId());
+//            itemVO.setPrice(merchandise.getPrice());
+//            orderItemList.add(itemVO);
+//            combinationItemVO.setDesc(combinationItemVO.getDesc() + "+" + itemVO.getName());
+//        }
         combinationItemVO.setDesc(combinationItemVO.getDesc().substring(1, combinationItemVO.getDesc().length() - 1));
         combinationItemVO.setOrderItemList(orderItemList);
         return combinationItemVO;

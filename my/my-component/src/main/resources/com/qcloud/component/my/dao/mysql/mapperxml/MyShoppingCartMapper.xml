@@ -20,7 +20,11 @@
     </select>
     
     <select id="getByUnifiedMerchandise" parameterType="java.util.HashMap" resultType="MyShoppingCart">  
-        select * from `${table_name}` where `userId`=#{userId} and `unifiedMerchandiseId`=#{unifiedMerchandiseId}
+        select * from `${table_name}` 
+        where 1=1
+        and `userId`=#{userId} 
+        and `unifiedMerchandiseId`=#{unifiedMerchandiseId} 
+        and `combinationMerchandiseId`=-1
     </select>    
     
     <delete id="clean" parameterType="java.util.HashMap">

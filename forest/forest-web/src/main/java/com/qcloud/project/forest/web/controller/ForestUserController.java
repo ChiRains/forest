@@ -294,7 +294,7 @@ public class ForestUserController {
         // 收藏数量
         int collectionNum = myCollectionService.countByUserId(user.getId());
         // 历史足迹数量
-        int historyNums = merchandiseBrowsingHistoryService.countByUserId(user.getId());
+        int historyNums = merchandiseBrowsingHistoryService.countByUser(user.getId());
         // 优惠券数量
         int couponNum = myCouponService.countByUser(user.getId(), 1);
         // 可用积分

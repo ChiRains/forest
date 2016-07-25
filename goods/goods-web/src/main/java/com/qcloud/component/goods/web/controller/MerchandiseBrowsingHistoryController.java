@@ -12,6 +12,7 @@ import com.qcloud.component.goods.web.vo.MerchandiseBrowsingHistoryVO;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.pirates.mvc.FrontAjaxView;
+import com.qcloud.pirates.mvc.FrontPagingView;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.pirates.web.page.PPage;
 import com.qcloud.pirates.web.page.PageParameterUtil;
@@ -34,10 +35,26 @@ public class MerchandiseBrowsingHistoryController {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         List<MerchandiseBrowsingHistory> list = merchandiseBrowsingHistoryService.listByUser(user.getId(), pPage.getPageStart(), pPage.getPageSize());
+        int total = merchandiseBrowsingHistoryService.countByUser(user.getId());
         List<MerchandiseBrowsingHistoryVO> voList = merchandiseBrowsingHistoryHandler.toVOList(list);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("查询我的浏览记录成功.");
         view.addObject("list", voList);
+        view.addObject("total", total);
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontPagingView list4Page(HttpServletRequest request, PPage pPage) {
+
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        List<MerchandiseBrowsingHistory> list = merchandiseBrowsingHistoryService.listByUser(user.getId(), pPage.getPageStart(), pPage.getPageSize());
+        int total = merchandiseBrowsingHistoryService.countByUser(user.getId());
+        List<MerchandiseBrowsingHistoryVO> voList = merchandiseBrowsingHistoryHandler.toVOList(list);
+        FrontPagingView view = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), total);
+        view.setMessage("查询我的浏览记录成功.");
+        view.setList(voList);
         return view;
     }
 

@@ -3,16 +3,13 @@ package com.qcloud.component.goods.dao.redis;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.annotation.Resource;
 import org.apache.commons.lang.NotImplementedException;
 import org.springframework.stereotype.Repository;
-import com.qcloud.pirates.core.json.Json;
-import com.qcloud.pirates.data.Page;
-import com.qcloud.pirates.data.redis.Redis;
 import com.qcloud.component.goods.dao.UnifiedMerchandiseDao;
 import com.qcloud.component.goods.model.UnifiedMerchandise;
 import com.qcloud.component.goods.model.key.TypeEnum.MerchandiseStateType;
 import com.qcloud.component.goods.model.query.UnifiedMerchandiseQuery;
+import com.qcloud.pirates.data.Page;
 
 @Repository
 public class UnifiedMerchandiseDaoRedisImpl implements UnifiedMerchandiseDao {
@@ -135,6 +132,12 @@ public class UnifiedMerchandiseDaoRedisImpl implements UnifiedMerchandiseDao {
 
     @Override
     public List<UnifiedMerchandise> listByMerchandise(long merchandiseId, MerchandiseStateType stateType) {
+
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public Page<UnifiedMerchandise> page4Back(UnifiedMerchandiseQuery query, int start, int size) {
 
         throw new NotImplementedException();
     }

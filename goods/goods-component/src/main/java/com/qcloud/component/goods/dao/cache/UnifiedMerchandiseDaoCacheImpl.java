@@ -138,4 +138,10 @@ public class UnifiedMerchandiseDaoCacheImpl implements UnifiedMerchandiseDao {
 
         return unifiedMerchandiseDaoMysqlImpl.listByMerchandise(merchandiseId, stateType);
     }
+
+    @Override
+    public Page<UnifiedMerchandise> page4Back(UnifiedMerchandiseQuery query, int start, int size) {
+
+        return unifiedMerchandiseDaoMysqlImpl.page4Back(query, start, size);
+    }
 }

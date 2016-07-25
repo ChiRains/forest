@@ -65,7 +65,7 @@ public class MerchandiseBrowsingHistoryServiceImpl implements MerchandiseBrowsin
     }
 
     @Override
-    public int countByUserId(long userId) {
+    public int countByUser(long userId) {
 
         return merchandiseBrowsingHistoryDao.countByUserId(userId);
     }

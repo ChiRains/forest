@@ -281,11 +281,13 @@ public class PointExchangeController {
         PointMerchandiseVO merchandise = new PointMerchandiseVO();
         merchandise.setDesc("补肾 ");
         merchandise.setDiscount(0);
-        merchandise.setImage("");
+        merchandise.setImage(fileSDKClient.getFileServerUrl() + "/file/get.do?uid=823318B363844E2784317CC13FBB10F1.jpg");
         merchandise.setIntegral(4000);
         merchandise.setName("牡蛎碳酸钙颗粒 ");
         merchandise.setPrice(25.8);
         merchandise.setUnifiedMerchandiseId(1010008000010601L);
+        merchandise.setMerchantName("大参林药店");
+        merchandise.setSpecifications("黄色");
         //
         FrontAjaxView view = new FrontAjaxView();
         view.addObject("merchandise", merchandise);

@@ -47,4 +47,6 @@ public interface UnifiedMerchandiseService {
     public UnifiedMerchandise getByCodeAndMerchant(String code, long merchantId);
 
     public boolean editMoneyAndStockByList(List<UnifiedMerchandise> merchandiseList);
+
+    public Page<UnifiedMerchandise> page4Back(UnifiedMerchandiseQuery query, int start, int size);
 }

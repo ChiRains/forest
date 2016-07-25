@@ -2,6 +2,10 @@ package com.qcloud.component.orderform.web.form;
 
 public class MerchandiseDetail {
 
+    private Long    combinationMerchandiseId;
+
+    private Integer combinationMerchandiseNumber;
+
     // 商品ID
     private Long    unifiedMerchandiseId;
 
@@ -31,5 +35,25 @@ public class MerchandiseDetail {
     public void setNumber(Integer number) {
 
         this.number = number;
+    }
+
+    public Long getCombinationMerchandiseId() {
+
+        return combinationMerchandiseId;
+    }
+
+    public void setCombinationMerchandiseId(Long combinationMerchandiseId) {
+
+        this.combinationMerchandiseId = combinationMerchandiseId;
+    }
+
+    public Integer getCombinationMerchandiseNumber() {
+
+        return combinationMerchandiseNumber;
+    }
+
+    public void setCombinationMerchandiseNumber(Integer combinationMerchandiseNumber) {
+
+        this.combinationMerchandiseNumber = combinationMerchandiseNumber;
     }
 }

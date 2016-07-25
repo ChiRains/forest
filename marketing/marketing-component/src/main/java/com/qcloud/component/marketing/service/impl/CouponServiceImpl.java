@@ -213,7 +213,7 @@ public class CouponServiceImpl implements CouponService {
     public Long extractIntegralCoupon(Long userId, Coupon coupon) {
 
         if (canIntegralExtract(userId, coupon)) {
-            return couponItemsService.extractCoupon(userId, coupon);
+            return couponItemsService.extractIntegralCoupon(userId, coupon);
         }
         return -1L;
     }

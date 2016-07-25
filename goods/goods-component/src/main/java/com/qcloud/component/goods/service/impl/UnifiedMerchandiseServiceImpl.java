@@ -212,4 +212,10 @@ public class UnifiedMerchandiseServiceImpl implements UnifiedMerchandiseService 
         }
         return true;
     }
+
+    @Override
+    public Page<UnifiedMerchandise> page4Back(UnifiedMerchandiseQuery query, int start, int size) {
+
+        return unifiedMerchandiseDao.page4Back(query, start, size);
+    }
 }

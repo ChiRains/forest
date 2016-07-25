@@ -52,6 +52,8 @@
                                    data-name="${item.name}" 
                                    data-specifications="${item.specifications}"
                                    data-stock="${item.stock}" 
+                                   data-purchase="${item.purchase}"
+                                   data-integral="${item.integral}"
                                    data-price="${item.price}"
                                    data-discount="${item.discount}"
                                    data-code="${item.code}"

@@ -19,6 +19,8 @@ public class CombinationListVO {
 
     private String                 group;
 
+    private int                    type            = 1;
+
     private List<MyShoppingCartVO> merchandiseList = new ArrayList<MyShoppingCartVO>();
 
     public String getName() {
@@ -99,5 +101,15 @@ public class CombinationListVO {
     public void setGroup(String group) {
 
         this.group = group;
+    }
+
+    public int getType() {
+
+        return type;
+    }
+
+    public void setType(int type) {
+
+        this.type = type;
     }
 }

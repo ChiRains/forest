@@ -111,7 +111,7 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
             vo.setImage(StringUtil.nullToEmpty(unifiedMerchandise.getImage()));
         }
         vo.setName(unifiedMerchandise.getName());
-        vo.setDiscount(NumberUtil.scale(unifiedMerchandise.getPrice(), 2));
+        vo.setDiscount(NumberUtil.scale(unifiedMerchandise.getDiscount(), 2));
         vo.setPrice(NumberUtil.scale(unifiedMerchandise.getPrice(), 2));
         vo.setSpecifications(unifiedMerchandise.getSpecifications());
         vo.setStock(unifiedMerchandise.getStock());
@@ -303,8 +303,7 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
                 // 判断
                 QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(myShoppingCartVO.getUnifiedMerchandiseId());
                 if (myShoppingCartVO.getCombinationMerchandiseId() == -1) {// 单品或者固定搭配
-                    // 单品
-                    if (unifiedMerchandise.getType().equals(UnifiedMerchandiseType.SINGLE)) {
+                    if (unifiedMerchandise.getType().equals(UnifiedMerchandiseType.SINGLE)) {// 单品
                         myShoppingCartMerchantVO.getMerchandiseList().add(myShoppingCartVO);
                     } else if (unifiedMerchandise.getType().equals(UnifiedMerchandiseType.COMBINATION)) {// 组合商品
                         CombinationListVO combination = new CombinationListVO();
@@ -314,6 +313,7 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
                         combination.setStock(unifiedMerchandise.getStock());
                         combination.setUnifiedMerchandiseId(unifiedMerchandise.getId());
                         combination.setGroup(group);
+                        combination.setType(1);
                         String desc = unifiedMerchandise.getName();
                         //
                         List<MyShoppingCartVO> comMerchandiseList = new ArrayList<MyShoppingCartVO>();
@@ -328,7 +328,6 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
                             } else {
                                 vo.setImage(StringUtil.nullToEmpty(merchandise.getImage()));
                             }
-                            vo.setDiscount(merchandise.getDiscount());
                             vo.setName(merchandise.getName());
                             vo.setUnit(merchandise.getUnit());
                             vo.setNumber(merchandise.getNumber());
@@ -351,8 +350,9 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
                         CombinationListVO combination = new CombinationListVO();
                         combination.setName(unifiedMerchandise.getName());
                         combination.setStock(unifiedMerchandise.getStock());
-                        combination.setUnifiedMerchandiseId(unifiedMerchandise.getId());
+                        combination.setUnifiedMerchandiseId(myShoppingCartVO.getCombinationMerchandiseId());
                         combination.setGroup(group);
+                        combination.setType(2);
                         String desc = "自由搭配：";
                         int combinationNumber = 1;
                         //
@@ -407,7 +407,7 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
 
         QUnifiedMerchandise combinationMerchandise = commoditycenterClient.getUnifiedMerchandise(combinationMerchandiseId);
         for (QUnifiedMerchandise merchandise : combinationMerchandise.getList()) {
-            if (freeMerchandiseId.intValue() == merchandise.getId().intValue()) {
+            if (freeMerchandiseId.longValue() == merchandise.getId().longValue()) {
                 return merchandise;
             }
         }
