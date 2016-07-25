@@ -385,7 +385,11 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
                             comMerchandiseList.add(vo);
                         }
                         combination.setNumber(combinationNumber);
-                        combination.setSum(NumberUtil.scale(sum, 2));
+                        if (comMerchandiseList.size() == combinationMerchandise.getList().size()) {// 自由搭配全买了,取自由搭配的价格
+                            combination.setSum(NumberUtil.scale(combinationMerchandise.getDiscount(), 2));
+                        } else {
+                            combination.setSum(NumberUtil.scale(sum, 2));// 没有全部买则取单品的总价
+                        }
                         combination.setDesc(desc);
                         combination.setMerchandiseList(comMerchandiseList);
                         myShoppingCartMerchantVO.getCombinationList().add(combination);
