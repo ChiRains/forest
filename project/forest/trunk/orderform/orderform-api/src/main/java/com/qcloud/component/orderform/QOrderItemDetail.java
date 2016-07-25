@@ -1,6 +1,5 @@
 package com.qcloud.component.orderform;
 
-
 public interface QOrderItemDetail {
 
     // List<QAfterSaleOrderItem> getAfterSaleOrderItemList();
@@ -27,4 +26,6 @@ public interface QOrderItemDetail {
     long getId();
 
     int getNumber();
+
+    double getDiscount();
 }

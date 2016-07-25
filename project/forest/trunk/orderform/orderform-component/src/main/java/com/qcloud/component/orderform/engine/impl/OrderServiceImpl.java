@@ -3,6 +3,7 @@ package com.qcloud.component.orderform.engine.impl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -291,12 +292,18 @@ public class OrderServiceImpl implements OrderService {
             List<OrderItemEntity> orderItemList = merchantOrderEntity.getEntityList();
             for (OrderItemEntity orderItemEntity : orderItemList) {
                 orderItemEntity.getOrderItem().setDiscount(orderItemEntity.getDiscount() * discount / 100);
-                // VIP价格
-                // Double vipDiscount = commoditycenterClient.getVipDiscount(context.getUser().getId(), orderItemEntity.getOrderItem().getUnifiedMerchandiseId());
-                // if (vipDiscount != null && new Double(vipDiscount * 100).longValue() > 0 && vipDiscount < orderItemEntity.getOrderItem().getDiscount()) {
-                // orderItemEntity.getOrderItem().setDiscount(vipDiscount);
+                double sum = orderItemEntity.getOrderItem().getDiscount() * orderItemEntity.getNumber();// orderItem的价格
+                // TODO 已经在下面 601行处理了
+                // begin 计算orderItemDetailsList的价格
+                // List<OrderItemDetailEntity> detailsList = orderItemEntity.getEntityList();
+                // double detailSum = 0.0;
+                // for (OrderItemDetailEntity orderItemDetailEntity : detailsList) {
+                // detailSum += orderItemDetailEntity.getDiscount() * discount / 100 * orderItemDetailEntity.getNumber();
                 // }
-                double sum = orderItemEntity.getOrderItem().getDiscount() * orderItemEntity.getNumber();
+                // if (detailSum != sum) {
+                // sum = detailSum;
+                // }
+                // end 计算orderItemDetailsList的价格
                 orderItemEntity.getOrderItem().setSum(sum);
                 orderItemEntity.getOrderItem().setCash(sum);
                 orderItemEntity.getOrderItem().setPreferential(orderItemEntity.getPrice() * orderItemEntity.getNumber() - sum);
@@ -321,7 +328,7 @@ public class OrderServiceImpl implements OrderService {
                 // 优惠面值
                 // TODO 优惠劵计算可能有问题
                 double price = qMyCoupon.getPrice();
-                if (limitPrice < lessCash && new Date().before(qMyCoupon.getValidDate())) {
+                if (limitPrice < lessCash && new Date().before(qMyCoupon.getInValidDate())) {
                     lessCash = lessCash - limitPrice;
                     double currentCash = merchantOrderEntity.getSubOrder().getCash();
                     if (currentCash < price) {
@@ -420,6 +427,7 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    // 总单数据组装
     private OrderEntity initOrder(OrderContext context) {
 
         CollectOrder collectOrder = new CollectOrder();
@@ -466,6 +474,8 @@ public class OrderServiceImpl implements OrderService {
 
     private void initOrder(OrderEntity orderEntity, OrderContext context) {
 
+        // 单品+固定搭配
+        Set<Long> merchantSet = new HashSet<Long>();
         Map<Long, List<QUnifiedMerchandise>> map = new HashMap<Long, List<QUnifiedMerchandise>>();
         Set<QUnifiedMerchandise> merchandiseSet = context.getMerchandiseMap().keySet();
         for (QUnifiedMerchandise qUnifiedMerchandise : merchandiseSet) {
@@ -475,16 +485,168 @@ public class OrderServiceImpl implements OrderService {
                 map.put(qUnifiedMerchandise.getMerchantId(), list);
             }
             list.add(qUnifiedMerchandise);
+            merchantSet.add(qUnifiedMerchandise.getMerchantId());
         }
         List<MerchantOrderEntity> merchantOrderList = new ArrayList<MerchantOrderEntity>();
-        for (Long merchantId : map.keySet()) {
+        // for (Long merchantId : map.keySet()) {
+        // QMerchant merchant = sellercenterClient.getMerchant(merchantId);
+        // MerchantOrderEntity merchantOrderEntity = initOrder(orderEntity, merchant, map.get(merchantId), new HashSet<QUnifiedMerchandise>(), context);
+        // merchantOrderList.add(merchantOrderEntity);
+        // }
+        // 自由搭配
+        for (QUnifiedMerchandise unifiedMerchandise : context.getFreeMerchandiseListMap().keySet()) {
+            merchantSet.add(unifiedMerchandise.getMerchantId());
+        }
+        for (Long merchantId : merchantSet) {
             QMerchant merchant = sellercenterClient.getMerchant(merchantId);
-            MerchantOrderEntity merchantOrderEntity = initOrder(orderEntity, merchant, map.get(merchantId), context);
+            MerchantOrderEntity merchantOrderEntity = initOrder(orderEntity, merchant, map.get(merchantId), getFreeMerchandiseByMerchant(merchantId, context), context);
             merchantOrderList.add(merchantOrderEntity);
         }
         orderEntity.setMerchantOrderList(merchantOrderList);
     }
 
+    private Set<QUnifiedMerchandise> getFreeMerchandiseByMerchant(long merchantId, OrderContext context) {
+
+        Set<QUnifiedMerchandise> freeMerchandiseSet = new HashSet<QUnifiedMerchandise>();
+        Set<QUnifiedMerchandise> freeMerchandiseMap = context.getFreeMerchandiseListMap().keySet();
+        for (QUnifiedMerchandise qUnifiedMerchandise : freeMerchandiseMap) {
+            if (qUnifiedMerchandise.getMerchantId() == merchantId) {
+                freeMerchandiseSet.add(qUnifiedMerchandise);
+            }
+        }
+        return freeMerchandiseSet;
+    }
+
+    // 子单 TODO
+    private MerchantOrderEntity initOrder(OrderEntity orderEntity, QMerchant merchant, List<QUnifiedMerchandise> merchandiseList, Set<QUnifiedMerchandise> freeMerchandiseSet, OrderContext context) {
+
+        SubOrder subOrder = new SubOrder();
+        subOrder.setId(-1L);
+        subOrder.setPostage(0.0);
+        subOrder.setCoupon(0.0);
+        subOrder.setSum(0);
+        subOrder.setCash(0);
+        subOrder.setConsumption(0);
+        subOrder.setExpressCode("");
+        subOrder.setIntegral(0);
+        subOrder.setPreferential(0);
+        subOrder.setMerchantId(merchant.getId());
+        subOrder.setExplain(context.getExplainMap().get(merchant));
+        subOrder.setStoreId(-1L);
+        subOrder.setState(orderConfigService.getNormalInitOrderState());
+        subOrder.setOrderNumber("");
+        //
+        subOrder.setExpressCode(null);
+        subOrder.setExpressName(null);
+        subOrder.setExpressNumber(null);
+        //
+        OrderDelivery delivery = context.getDeliveryMap().get(merchant);
+        // 配送
+        if (delivery == null || delivery.getDelivery() == null) {
+            subOrder.setDeliveryMode(DeliveryModeType.LOGISTICS.getKey());
+            subOrder.setDeliveryTimeStr("");
+            subOrder.setPickupAddressStr("");
+        } else {
+            subOrder.setDeliveryMode(delivery.getDelivery().getType().getKey());
+            subOrder.setDeliveryTimeStr(delivery.getDelivery().getTimeStr());
+            if (DeliveryModeType.PICKUP.equals(delivery.getDelivery().getType())) {
+                long storeId = delivery.getDelivery().getStoreId();
+                QStore store = sellercenterClient.getStore(storeId);
+                if (store != null) {
+                    subOrder.setPickupAddressStr(store.getAddress());
+                    subOrder.setStoreId(store.getId());
+                }
+            }
+        }
+        if (subOrder.getStoreId() <= 0) {
+            subOrder.setStoreId(calculateStore(merchant.getId(), context.getConsignee()));
+        }
+        MerchantOrderEntity merchantOrderEntity = new MerchantOrderEntity(orderEntity, subOrder);
+        List<OrderItemEntity> orderItemList = new ArrayList<OrderItemEntity>();
+        if (CollectionUtils.isNotEmpty(merchandiseList)) {
+            for (QUnifiedMerchandise qUnifiedMerchandise : merchandiseList) {
+                OrderItemEntity orderItemEntity = initOrder(orderEntity, merchantOrderEntity, qUnifiedMerchandise, context.getMerchandiseMap().get(qUnifiedMerchandise), context);
+                orderItemList.add(orderItemEntity);
+            }
+        }
+        for (QUnifiedMerchandise unifiedMerchandise : freeMerchandiseSet) {
+            Map<QUnifiedMerchandise, Integer> freeCombinationMerchandiseList = context.getFreeMerchandiseListMap().get(unifiedMerchandise);
+            OrderItemEntity orderItemEntity = initOrder(orderEntity, merchantOrderEntity, unifiedMerchandise, freeCombinationMerchandiseList, context.getFreeCombinationMap().get(unifiedMerchandise), context);
+            orderItemList.add(orderItemEntity);
+        }
+        merchantOrderEntity.setOrderItemList(orderItemList);
+        return merchantOrderEntity;
+    }
+
+    // TODO
+    private OrderItemEntity initOrder(OrderEntity orderEntity, MerchantOrderEntity merchantOrderEntity, QUnifiedMerchandise freeCombinationMerchandise, Map<QUnifiedMerchandise, Integer> freeCombinationMerchandiseList, int number, OrderContext context) {
+
+        OrderItem orderItem = new OrderItem();
+        orderItem.setId(-1L);
+        orderItem.setSum(0);
+        orderItem.setCash(0);
+        orderItem.setConsumption(0);
+        orderItem.setIntegral(0);
+        orderItem.setPreferential(0);
+        orderItem.setPreferentialStr("");
+        //
+        // orderItem.setPurchase(freeCombinationMerchandise.getPurchase());
+        // orderItem.setDiscount(freeCombinationMerchandise.getDiscount());
+        // orderItem.setPrice(freeCombinationMerchandise.getPrice());
+        orderItem.setName(freeCombinationMerchandise.getName());
+        orderItem.setImage(freeCombinationMerchandise.getImage());
+        orderItem.setSence(freeCombinationMerchandise.getType().getKey());
+        orderItem.setSnapshot("");
+        orderItem.setState(orderConfigService.getNormalInitOrderState());
+        // 先算自由搭配的价格
+        double freeSum = 0.0;
+        double freePrice = 0.0;
+        double freePurchase = 0.0;
+        for (Map.Entry<QUnifiedMerchandise, Integer> entry : freeCombinationMerchandiseList.entrySet()) {
+            freeSum += entry.getKey().getDiscount() * entry.getValue();
+            freePrice += entry.getKey().getPrice() * entry.getValue();
+            freePurchase += entry.getKey().getPurchase() * entry.getValue();
+        }
+        orderItem.setDiscount(freeSum);
+        orderItem.setPrice(freePrice);
+        orderItem.setPurchase(freePurchase);
+        orderItem.setSum(freeSum);
+        //
+        orderItem.setUnifiedMerchandiseId(freeCombinationMerchandise.getId());
+        orderItem.setNumber(number);
+        //
+        orderItem.setEvaluation(EnableType.ENABLE.getKey());
+        orderItem.setAfterSale(EnableType.ENABLE.getKey());
+        OrderItemEntity orderItemEntity = new OrderItemEntity(orderEntity, merchantOrderEntity, orderItem);
+        // List<QUnifiedMerchandise> itemList = merchandise.getList();
+        // List<OrderItemDetailEntity> list = new ArrayList<OrderItemDetailEntity>();
+        // // TODO
+        // if (merchandise.getType() == UnifiedMerchandiseType.SINGLE) {
+        // OrderItemDetailEntity orderItemDetail = initOrder(orderEntity, merchantOrderEntity, orderItemEntity, merchandise, number, context);
+        // list.add(orderItemDetail);
+        // } else {
+        // for (QUnifiedMerchandise merchandiseItem : itemList) {
+        // OrderItemDetailEntity orderItemDetail = initOrder(orderEntity, merchantOrderEntity, orderItemEntity, merchandiseItem, number, context);
+        // list.add(orderItemDetail);
+        // }
+        // }
+        List<OrderItemDetailEntity> list = new ArrayList<OrderItemDetailEntity>();
+        for (QUnifiedMerchandise qUnifiedMerchandise : freeCombinationMerchandiseList.keySet()) {
+            OrderItemDetailEntity orderItemDetail = initOrder(orderEntity, merchantOrderEntity, orderItemEntity, qUnifiedMerchandise, freeCombinationMerchandiseList.get(qUnifiedMerchandise), context);
+            list.add(orderItemDetail);
+        }
+        orderItemEntity.setOrderItemDetailList(list);
+        return orderItemEntity;
+    }
+
+    /**
+     *  子单 原先的代码
+     * @param orderEntity
+     * @param merchant
+     * @param merchandiseList
+     * @param context
+     * @return
+     */
     private MerchantOrderEntity initOrder(OrderEntity orderEntity, QMerchant merchant, List<QUnifiedMerchandise> merchandiseList, OrderContext context) {
 
         SubOrder subOrder = new SubOrder();
@@ -538,6 +700,15 @@ public class OrderServiceImpl implements OrderService {
         return merchantOrderEntity;
     }
 
+    /**
+     * 原先的代码
+     * @param orderEntity
+     * @param merchantOrderEntity
+     * @param merchandise
+     * @param number
+     * @param context
+     * @return
+     */
     private OrderItemEntity initOrder(OrderEntity orderEntity, MerchantOrderEntity merchantOrderEntity, QUnifiedMerchandise merchandise, int number, OrderContext context) {
 
         OrderItem orderItem = new OrderItem();
@@ -566,7 +737,6 @@ public class OrderServiceImpl implements OrderService {
         OrderItemEntity orderItemEntity = new OrderItemEntity(orderEntity, merchantOrderEntity, orderItem);
         List<QUnifiedMerchandise> itemList = merchandise.getList();
         List<OrderItemDetailEntity> list = new ArrayList<OrderItemDetailEntity>();
-        // TODO
         if (merchandise.getType() == UnifiedMerchandiseType.SINGLE) {
             OrderItemDetailEntity orderItemDetail = initOrder(orderEntity, merchantOrderEntity, orderItemEntity, merchandise, number, context);
             list.add(orderItemDetail);
@@ -597,6 +767,7 @@ public class OrderServiceImpl implements OrderService {
         orderItemDetail.setUnifiedMerchandiseId(merchandiseItem.getId());
         orderItemDetail.setSpecifications(merchandiseItem.getSpecifications());
         orderItemDetail.setNumber(number);
+        orderItemDetail.setDiscount(merchandiseItem.getDiscount());
         //
         orderItemDetail.setState(orderConfigService.getNormalInitOrderState());
         //

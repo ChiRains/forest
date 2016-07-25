@@ -138,26 +138,28 @@ public class AfterSaleController {
         Long result = AfterSaleCheckUtils.checkItem(list, existList);
         AssertUtil.assertTrue(result == -1L, "订单项已经在售后处理,请勿重复提交." + result);
         //
+        List<Long> refundList = new ArrayList<Long>();
         switch (afterSaleForm.getType()) {
         case 1: // 全退了
             List<OrderItemEntity> itemList = new ArrayList<OrderItemEntity>();
             for (AfterSaleItem afterSale : list) {
                 itemList.add(afterSale.getOrderItem());
             }
-            afterSaleService.applyRefund(orderEntity, itemList, afterSaleForm.getExplain(), afterSaleForm.getReason(), afterSaleForm.getAfterSaleSum());
+            refundList = afterSaleService.applyRefund(orderEntity, itemList, afterSaleForm.getExplain(), afterSaleForm.getReason(), afterSaleForm.getAfterSaleSum());
             break;
         case 2: // 按商家订单退
             List<OrderItemEntity> subList = new ArrayList<OrderItemEntity>();
             for (AfterSaleItem afterSale : list) {
                 subList.add(afterSale.getOrderItem());
             }
-            afterSaleService.applyRefund(orderEntity, subList, afterSaleForm.getExplain(), afterSaleForm.getReason(), afterSaleForm.getAfterSaleSum());
+            refundList = afterSaleService.applyRefund(orderEntity, subList, afterSaleForm.getExplain(), afterSaleForm.getReason(), afterSaleForm.getAfterSaleSum());
             break;
         default:
             throw new OrderformException("退款表单类型不正确" + afterSaleForm.getType());
         }
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("申请退款成功");
+        view.addObject("afterSaleId", refundList.get(0));
         return view;
     }
 

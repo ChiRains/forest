@@ -15,32 +15,36 @@ import com.qcloud.component.sellercenter.QMerchant;
 public class OrderContext {
 
     // 下单用户 必填
-    private QUser                                               user         = null;
+    private QUser                                                       user                   = null;
 
     // 收货信息 必填
-    private QMyConsignee                                        consignee    = null;
+    private QMyConsignee                                                consignee              = null;
 
     // 发票 可为空
-    private QMyInvoice                                          invoice;
+    private QMyInvoice                                                  invoice;
 
     // 物流信息 可为空
-    private Map<QMerchant, OrderDelivery>                       deliveryMap  = new HashMap<QMerchant, OrderDelivery>();
+    private Map<QMerchant, OrderDelivery>                               deliveryMap            = new HashMap<QMerchant, OrderDelivery>();
 
     // 下单描述 可为空
-    private Map<QMerchant, String>                              explainMap   = new HashMap<QMerchant, String>();
+    private Map<QMerchant, String>                                      explainMap             = new HashMap<QMerchant, String>();
 
     // 使用优惠劵 可为空
-    private Map<QMerchant, List<QMyCoupon>>                     myCouponMap  = new HashMap<QMerchant, List<QMyCoupon>>();
+    private Map<QMerchant, List<QMyCoupon>>                             myCouponMap            = new HashMap<QMerchant, List<QMyCoupon>>();
 
     // 购买物品 必填
-    private Map<QUnifiedMerchandise, Integer>                   merchandiseMap;
+    private Map<QUnifiedMerchandise, Integer>                           merchandiseMap;
 
-    private Map<QUnifiedMerchandise, List<QUnifiedMerchandise>> freeMerchandiseMap;
+    // 记录自由搭配的组合商品数量
+    private Map<QUnifiedMerchandise, Integer>                           freeCombinationMap     = new HashMap<QUnifiedMerchandise, Integer>();
 
-    private int                                                 discount     = 100;
+    // 记录自由搭配的子商品列表数量
+    private Map<QUnifiedMerchandise, Map<QUnifiedMerchandise, Integer>> freeMerchandiseListMap = new HashMap<QUnifiedMerchandise, Map<QUnifiedMerchandise, Integer>>();
+
+    private int                                                         discount               = 100;
 
     // 商家列表
-    private List<QMerchant>                                     merchantList = new ArrayList<QMerchant>();
+    private List<QMerchant>                                             merchantList           = new ArrayList<QMerchant>();
 
     public QUser getUser() {
 
@@ -167,5 +171,25 @@ public class OrderContext {
             }
         }
         return null;
+    }
+
+    public Map<QUnifiedMerchandise, Map<QUnifiedMerchandise, Integer>> getFreeMerchandiseListMap() {
+
+        return freeMerchandiseListMap;
+    }
+
+    public void setFreeMerchandiseListMap(Map<QUnifiedMerchandise, Map<QUnifiedMerchandise, Integer>> freeMerchandiseListMap) {
+
+        this.freeMerchandiseListMap = freeMerchandiseListMap;
+    }
+
+    public Map<QUnifiedMerchandise, Integer> getFreeCombinationMap() {
+
+        return freeCombinationMap;
+    }
+
+    public void setFreeCombinationMap(Map<QUnifiedMerchandise, Integer> freeCombinationMap) {
+
+        this.freeCombinationMap = freeCombinationMap;
     }
 }

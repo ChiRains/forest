@@ -153,9 +153,9 @@
 			userOrderStateDesc="已关闭" finish="true">已关闭：已关闭：已关闭
 		</item>
 		
-		<item init="false" orderState="70" orderStateDesc="退款中"
-			merchantOrderState="7" merchantOrderStateDesc="退款中" userOrderState="7"
-			userOrderStateDesc="取消中" finish="false">退款中：退款中：取消中
+		<item init="false" orderState="70" orderStateDesc="取消中"
+			merchantOrderState="7" merchantOrderStateDesc="取消中" userOrderState="7"
+			userOrderStateDesc="取消中" finish="false">取消中：取消中：取消中
 		</item>
 		
 		<item init="false" orderState="80" orderStateDesc="已取消"

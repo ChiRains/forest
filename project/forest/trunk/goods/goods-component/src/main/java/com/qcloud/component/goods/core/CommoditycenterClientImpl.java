@@ -133,7 +133,7 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
             if (totalStock < 0) {
                 throw new CommoditycenterException("调整库存后库存不大于等于零,调整失败." + unifiedMerchandiseId);
             }
-            return lockOnlineStock(unifiedMerchandiseId, 0 - stock);
+            return lockOnlineStock(unifiedMerchandiseId, stock);
         }
         return false;
     }
@@ -142,11 +142,11 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
     public boolean lockOnlineStock(long unifiedMerchandiseId, int stock) {
 
         QUnifiedMerchandise unifiedMerchandise = getUnifiedMerchandise(unifiedMerchandiseId);
-        int totalStock = unifiedMerchandise.getStock() + stock;
+        int totalStock = unifiedMerchandise.getStock() - stock;
         if (totalStock < 0) {
             throw new CommoditycenterException("锁定库存失败,库存不足." + unifiedMerchandise.getId() + " " + unifiedMerchandise.getStock() + " " + stock);
         }
-        return unifiedMerchandiseService.lockStock(unifiedMerchandiseId, totalStock);
+        return unifiedMerchandiseService.lockStock(unifiedMerchandiseId, stock);
     }
 
     @Override

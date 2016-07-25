@@ -16,6 +16,10 @@ public class PointMerchandiseVO {
 
     private String desc;
 
+    private String merchantName;
+
+    private String specifications;
+
     public long getUnifiedMerchandiseId() {
 
         return unifiedMerchandiseId;
@@ -84,5 +88,25 @@ public class PointMerchandiseVO {
     public void setPrice(double price) {
 
         this.price = price;
+    }
+
+    public String getMerchantName() {
+
+        return merchantName;
+    }
+
+    public void setMerchantName(String merchantName) {
+
+        this.merchantName = merchantName;
+    }
+
+    public String getSpecifications() {
+
+        return specifications;
+    }
+
+    public void setSpecifications(String specifications) {
+
+        this.specifications = specifications;
     }
 }

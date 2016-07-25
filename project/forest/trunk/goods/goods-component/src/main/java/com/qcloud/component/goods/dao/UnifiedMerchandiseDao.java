@@ -54,4 +54,6 @@ public interface UnifiedMerchandiseDao extends ISimpleDao<UnifiedMerchandise, Lo
     UnifiedMerchandise getByCodeAndMerchant(String code, long merchantId);
 
     public List<UnifiedMerchandise> listByMerchandise(long merchandiseId, MerchandiseStateType stateType);
+    
+    public Page<UnifiedMerchandise> page4Back(UnifiedMerchandiseQuery query, int start, int size);
 }

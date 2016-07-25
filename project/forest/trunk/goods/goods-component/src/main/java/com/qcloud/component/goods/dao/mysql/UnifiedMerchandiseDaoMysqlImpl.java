@@ -231,4 +231,45 @@ public class UnifiedMerchandiseDaoMysqlImpl implements UnifiedMerchandiseDao {
         List<UnifiedMerchandise> list = sqlOperator.selectList("com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper.listByMerchandiseAndState", param);
         return list;
     }
+
+    @Override
+    public Page<UnifiedMerchandise> page4Back(UnifiedMerchandiseQuery query, int start, int count) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("start", start);
+        param.put("count", count);
+        param.put("name", query.getName());
+        param.put("merchantId", query.getMerchantId());
+        QueryType queryType = query.getQueryType();
+        if (QueryType.SALES_VOLUME.getKey() == queryType.getKey()) { // 销量
+            param.put("orderField", "salesVolume");
+        } else if (QueryType.DATE.getKey() == queryType.getKey()) {// 日期
+            param.put("orderField", "recordTime");
+        } else if (QueryType.PRICE.getKey() == queryType.getKey()) {// 价格
+            param.put("orderField", "discount");
+        } else if (QueryType.HOT.getKey() == queryType.getKey()) {// 热度
+            param.put("orderField", "clickRate");
+        } else if (QueryType.GOODEVALUATION.getKey() == queryType.getKey()) {// 好评
+            param.put("orderField", "goodEvaluation");
+        } else if (QueryType.COMPLEX.getKey() == queryType.getKey()) {// 综合 TODO
+            param.put("orderField", "clickRate");
+        }
+        param.put("orderType", query.getOrderType().getKey() == OrderType.ASE.getKey() ? "" : "desc");
+        param.put("queryType", query.getQueryItemType().getKey());
+        param.put("merchantClassifyId", query.getMerchantClassifyId());
+        param.put("mallClassifyId", query.getMallClassifyId());
+        param.put("merchantClassifyBsid", query.getMerchantClassifyBsid());
+        param.put("mallClassifyBsid", query.getMallClassifyBsid());
+        param.put("brandId", query.getBrandId());
+        param.put("type", query.getType());
+        param.put("activityId", query.getActivityId());
+        param.put("maxDiscount", query.getMaxDiscount());
+        param.put("minDiscount", query.getMinDiscount());
+        List<UnifiedMerchandise> list = sqlOperator.selectList("com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper.list4Back", param);
+        Integer total = sqlOperator.selectOne("com.qcloud.component.goods.dao.mysql.mapper.UnifiedMerchandiseMapper.count4Back", param);
+        Page<UnifiedMerchandise> page = new Page<UnifiedMerchandise>();
+        page.setCount(total == null ? 0 : total);
+        page.setData(list);
+        return page;
+    }
 }

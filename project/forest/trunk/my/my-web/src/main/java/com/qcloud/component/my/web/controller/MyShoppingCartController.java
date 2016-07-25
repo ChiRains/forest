@@ -368,18 +368,11 @@ public class MyShoppingCartController {
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         List<MyShoppingCart> list = myShoppingCartService.list(user.getId(), pPage.getPageStart(), pPage.getPageSize());
         List<MyShoppingCartCombinationVO> voList = myShoppingCartHandler.toVOList4Combination(list);
-        // double sum = 0.0;
-        // for (MyShoppingCartMerchantVO myShoppingCartMerchantVO : voList) {
-        // for (MyShoppingCartVO myShoppingCartVO : myShoppingCartMerchantVO.getMerchandiseList()) {
-        // sum += myShoppingCartVO.getNumber() * myShoppingCartVO.getDiscount();
-        // }
-        // }
         int total = myShoppingCartService.count(user.getId());
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取购物车商品成功.");
         view.addObject("data", voList);
         view.addObject("total", total);
-        // view.addObject("sum", sum);
         return view;
     }
 
@@ -390,18 +383,11 @@ public class MyShoppingCartController {
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         List<MyShoppingCart> list = myShoppingCartService.list(user.getId(), pPage.getPageStart(), pPage.getPageSize());
         List<MyShoppingCartCombinationVO> voList = myShoppingCartHandler.toVOList4Group(list);
-        // double sum = 0.0;
-        // for (MyShoppingCartMerchantVO myShoppingCartMerchantVO : voList) {
-        // for (MyShoppingCartVO myShoppingCartVO : myShoppingCartMerchantVO.getMerchandiseList()) {
-        // sum += myShoppingCartVO.getNumber() * myShoppingCartVO.getDiscount();
-        // }
-        // }
         int total = myShoppingCartService.count(user.getId());
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取购物车商品成功.");
         view.addObject("data", voList);
         view.addObject("total", total);
-        // view.addObject("sum", sum);
         return view;
     }
 
@@ -438,6 +424,23 @@ public class MyShoppingCartController {
         }
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("修改购物车商品成功.");
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView removeListByGroup(HttpServletRequest request, ListForm groupForm) {
+
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        AssertUtil.assertNotEmpty(groupForm.getStringList(), "待删除购物车列表不存在.");
+        for (String group : groupForm.getStringList()) {
+            List<MyShoppingCart> llist = myShoppingCartService.listByGroup(group, user.getId());
+            for (MyShoppingCart myShoppingCart : llist) {
+                myShoppingCartService.delete(myShoppingCart.getId(), user.getId());
+            }
+        }
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("删除购物车商品成功.");
         return view;
     }
 
