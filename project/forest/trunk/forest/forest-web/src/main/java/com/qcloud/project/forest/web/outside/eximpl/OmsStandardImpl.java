@@ -1,18 +1,11 @@
 package com.qcloud.project.forest.web.outside.eximpl;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import com.qcloud.pirates.core.xml.Xml;
 import com.qcloud.pirates.core.xml.XmlFactory;
 import com.qcloud.pirates.core.xml.XmlItem;
@@ -52,14 +45,6 @@ public class OmsStandardImpl implements OmsStandard {
             }
         }
     }
-
-    // 发货接口
-    public final String LOGISTICS_OFFLINE_SEND = "logistics.offline.send";
-
-    // 库存更新接口
-    public final String ITEM_QUANTITY_UPDATE   = "item.quantity.update";
-
-    private Log         logger                 = LogFactory.getLog(getClass());
 
     @Override
     public void handle(String method) {
