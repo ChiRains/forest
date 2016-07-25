@@ -127,4 +127,13 @@ public class MyAfterSaleDaoMysqlImpl implements MyAfterSaleDao {
         int total = sqlOperator.selectOne("com.qcloud.component.my.dao.mysql.mapper.MyAfterSaleMapper.stat", userId);
         return total;
     }
+
+    @Override
+    public int countByUser(long userId) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("userId", userId);
+        int total = sqlOperator.selectOne("com.qcloud.component.my.dao.mysql.mapper.MyAfterSaleMapper.listByUser", param);
+        return total;
+    }
 }

@@ -48,4 +48,10 @@ public class GradeEntity implements QGrade {
         }
         return grade.getName();
     }
+
+    @Override
+    public long getId() {
+
+        return grade.getId();
+    }
 }

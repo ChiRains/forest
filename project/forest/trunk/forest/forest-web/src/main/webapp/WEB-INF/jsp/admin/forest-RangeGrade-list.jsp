@@ -30,7 +30,7 @@
                     <div class="col-xs-6">
                         <div class="dataTables_length">
                             <a title="新增" class="btn btn-sm btn-info"
-                               href="#admin/rangeGrade/toAdd">
+                               href="#admin/rangeGrade/toAdd?rangeId=${query.rangeId}">
                                 <i class="ace-icon fa fa-plus align-bottom bigger-125"></i>
                                 新&nbsp;增
                             </a>                           
@@ -40,25 +40,22 @@
                 <table class="table table-striped table-bordered table-hover dataTable no-footer">
                     <thead>
                     <tr role="row">     
-                                                <th></th>           
-                                                <th></th>           
-                                                <th></th>           
-                                                <th class="sorting_disabled">操作</th>
+                            <th>区间</th>           
+                            <th>会员等级</th>           
+                            <th class="sorting_disabled">操作</th>
                     </tr>
                     </thead>
 
                     <tbody>
                            <c:forEach items="${result}" var="item" varStatus="current"> 
                             <tr>            
-                                                        <td>${id}</td>                         
-                                                        <td>${rangeId}</td>                         
-                                                        <td>${gradeId}</td>                         
-                                                        <td>
+                                <td>${item.rangeName}</td>                         
+                                <td>${item.gradeName}</td>                         
+                                <td>
                                 <div class="hidden-sm hidden-xs action-buttons">
-                                    <a title="修改基本信息" class="green" 
-                                       href="#admin/rangeGrade/toEdit?id=${item.id}&queryStr=${queryStr}">
-                                        <i class="ace-icon fa fa-pencil bigger-130"></i>
-                                    </a>							                                 
+                                    <a class="btn btn-white btn-minier btn-info" title="添加积分商品" 
+                                    	href="#admin/pointMerchandise/list?activityId=1010008000018601">
+                                        	添加积分商品</a>					                                 
                                 </div>
                             </td>
                         </tr>

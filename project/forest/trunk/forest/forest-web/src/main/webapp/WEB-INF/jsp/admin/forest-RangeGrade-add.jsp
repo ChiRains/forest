@@ -21,33 +21,19 @@
         <!-- PAGE CONTENT BEGINS -->
         <form id="model-form" class="form-horizontal"  role="form" action="/admin/rangeGrade/add.do">
             <!-- #section:elements.form -->
-
-			      		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="id">  </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="id" name="id" placeholder="" value=""/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
+            
+            <input type="hidden"  id="rangeId" name="rangeId"  value="${rangeId}"/>
+            
                   		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="rangeId">  </label>
+                <label class="col-sm-3 control-label no-padding-right" for="gradeId"> 用户等级 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="rangeId" name="rangeId" placeholder="" value=""/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
-                  		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="gradeId">  </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="gradeId" name="gradeId" placeholder="" value=""/>
+						<select class="width-100" name="gradeId" id="gradeId">
+							<c:forEach items="${result}" var="grade">
+								<option value="${grade.id}">${grade.name}</option>
+							</c:forEach>
+						</select>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>

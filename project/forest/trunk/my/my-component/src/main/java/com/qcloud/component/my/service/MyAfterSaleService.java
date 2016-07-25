@@ -26,4 +26,6 @@ public interface MyAfterSaleService {
     public List<MyAfterSale> listByUserAndOrder(long userId, long orderId);
 
     int stat(long userId);
+
+    public int countByUser(long userId);
 }

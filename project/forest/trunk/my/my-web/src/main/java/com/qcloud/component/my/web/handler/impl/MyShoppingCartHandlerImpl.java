@@ -301,8 +301,8 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
                     map.put(myShoppingCartVO.getMerchantId(), myShoppingCartMerchantVO);
                 }
                 // 判断
-                QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(myShoppingCartVO.getUnifiedMerchandiseId());
                 if (myShoppingCartVO.getCombinationMerchandiseId() == -1) {// 单品或者固定搭配
+                    QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(myShoppingCartVO.getUnifiedMerchandiseId());
                     if (unifiedMerchandise.getType().equals(UnifiedMerchandiseType.SINGLE)) {// 单品
                         myShoppingCartMerchantVO.getMerchandiseList().add(myShoppingCartVO);
                     } else if (unifiedMerchandise.getType().equals(UnifiedMerchandiseType.COMBINATION)) {// 组合商品
@@ -345,11 +345,12 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
                         myShoppingCartMerchantVO.getCombinationList().add(combination);
                     }
                 } else {// 自由搭配 // TODO
+                    QUnifiedMerchandise combinationMerchandise = commoditycenterClient.getUnifiedMerchandise(myShoppingCartVO.getUnifiedMerchandiseId());
                     if (!groupCombinationList.containsKey(group)) {
                         double sum = 0.0;
                         CombinationListVO combination = new CombinationListVO();
-                        combination.setName(unifiedMerchandise.getName());
-                        combination.setStock(unifiedMerchandise.getStock());
+                        combination.setName(combinationMerchandise.getName());
+                        combination.setStock(combinationMerchandise.getStock());
                         combination.setUnifiedMerchandiseId(myShoppingCartVO.getCombinationMerchandiseId());
                         combination.setGroup(group);
                         combination.setType(2);

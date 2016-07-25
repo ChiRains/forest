@@ -92,4 +92,10 @@ public class MyAfterSaleDaoRedisImpl implements MyAfterSaleDao {
 
         throw new NotImplementedException();
     }
+
+    @Override
+    public int countByUser(long userId) {
+
+        throw new NotImplementedException();
+    }
 }

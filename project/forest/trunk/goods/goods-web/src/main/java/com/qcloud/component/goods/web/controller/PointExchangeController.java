@@ -263,7 +263,7 @@ public class PointExchangeController {
         merchandise.setIntegral(4000);
         merchandise.setName("牡蛎碳酸钙颗粒 ");
         merchandise.setPrice(25.8);
-        merchandise.setUnifiedMerchandiseId(1010008000010601L);
+        merchandise.setUnifiedMerchandiseId(1010008000016001L);
         merchandiseVO.add(merchandise);
         //
         merchandiseListVO.setMerchandiseList(merchandiseVO);

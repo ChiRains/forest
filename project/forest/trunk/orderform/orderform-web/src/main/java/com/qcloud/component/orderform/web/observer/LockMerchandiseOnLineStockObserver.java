@@ -23,7 +23,7 @@ public class LockMerchandiseOnLineStockObserver implements OrderObserver<QOrderI
 
         logger.info("锁定库存" + t.getName() + " " + t.getNumber());
         //
-        boolean result = commoditycenterClient.lockOnlineStock(t.getUnifiedMerchandiseId(), 0 - t.getNumber());
+        boolean result = commoditycenterClient.lockOnlineStock(t.getUnifiedMerchandiseId(), t.getNumber());
         if (!result) {
             QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(t.getUnifiedMerchandiseId());
             AssertUtil.assertTrue(result, "锁定库存失败." + t.getUnifiedMerchandiseId() + " " + unifiedMerchandise.getStock() + " " + t.getNumber());

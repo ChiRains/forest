@@ -28,9 +28,11 @@ public interface MyAfterSaleDao extends ISimpleDao<MyAfterSale, Long> {
 
     List<MyAfterSale> listByUser(long userId, int start, int count);
 
+    int countByUser(long userId);
+
     List<MyAfterSale> listByUserAndSubOrder(long userId, long subOrderId);
 
     List<MyAfterSale> listByUserAndOrder(long userId, long orderId);
-    
+
     int stat(long userId);
 }
