@@ -84,6 +84,12 @@ public class MyWealthDetailServiceImpl implements MyWealthDetailService {
     }
 
     @Override
+    public int countByUserAndTime(Long wealthId, Long userId, Integer type, Integer detailType, Date begin, Date end) {
+
+        return myWealthDetailDao.countByUserAndTime(wealthId, userId, type, detailType, begin, end);
+    }
+
+    @Override
     public double sumByUserAndTime(long wealthId, long userId, int type, Integer detailType, Date begin, Date end, int start, int size) {
 
         return myWealthDetailDao.sumByUserAndTime(wealthId, userId, type, detailType, begin, end, start, size);

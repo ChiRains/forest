@@ -27,6 +27,7 @@ import com.qcloud.component.personalcenter.web.vo.MyCommissionWithdrawCashVO;
 import com.qcloud.component.personalcenter.web.vo.MyWealthDetailVO;
 import com.qcloud.component.personalcenter.web.vo.MyWealthVO;
 import com.qcloud.pirates.mvc.FrontAjaxView;
+import com.qcloud.pirates.mvc.FrontPagingView;
 import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.DateUtil;
 import com.qcloud.pirates.util.NumberUtil;
@@ -165,21 +166,21 @@ public class MyWealthController {
 
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView listIntegralDetail(HttpServletRequest request, String checkTime, Integer detailType, Integer pageSize, Integer pageNum) {
+    public FrontPagingView listIntegralDetail(HttpServletRequest request, String checkTime, Integer detailType, Integer pageSize, Integer pageNum) {
 
         return listWealthDetail(request, checkTime, WealthType.INTEGRAL, detailType, pageSize, pageNum);
     }
 
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView listCommissionDetail(HttpServletRequest request, String checkTime, Integer detailType, Integer pageSize, Integer pageNum) {
+    public FrontPagingView listCommissionDetail(HttpServletRequest request, String checkTime, Integer detailType, Integer pageSize, Integer pageNum) {
 
         return listWealthDetail(request, checkTime, WealthType.COMMISSION, detailType, pageSize, pageNum);
     }
 
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView listCurrencyDetail(HttpServletRequest request, String checkTime, Integer detailType, Integer pageSize, Integer pageNum) {
+    public FrontPagingView listCurrencyDetail(HttpServletRequest request, String checkTime, Integer detailType, Integer pageSize, Integer pageNum) {
 
         return listWealthDetail(request, checkTime, WealthType.COMSUMPTION_CURRENCY, detailType, pageSize, pageNum);
     }
@@ -196,7 +197,7 @@ public class MyWealthController {
         return view;
     }
 
-    private FrontAjaxView listWealthDetail(HttpServletRequest request, String checkTime, WealthType wealthType, Integer detailType, Integer pageSize, Integer pageNum) {
+    private FrontPagingView listWealthDetail(HttpServletRequest request, String checkTime, WealthType wealthType, Integer detailType, Integer pageSize, Integer pageNum) {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         MyWealth myWealth = myWealthService.getByUserId(user.getId());
@@ -211,17 +212,14 @@ public class MyWealthController {
             endTime = DateUtils.addMonths(beginTime, 1);
         }
         List<MyWealthDetail> list = myWealthDetailService.listByUserAndTime(myWealth.getId(), user.getId(), wealthType.getKey(), detailType, beginTime, endTime, start, PAGE_SIZE);
+        int total = myWealthDetailService.countByUserAndTime(myWealth.getId(), user.getId(), wealthType.getKey(), detailType, beginTime, endTime);
         double sum = myWealthDetailService.sumByUserAndTime(myWealth.getId(), user.getId(), wealthType.getKey(), detailType, beginTime, endTime, start, PAGE_SIZE);
         List<MyWealthDetailVO> voList = myWealthDetailHandler.toVOList(list);
-        FrontAjaxView view = new FrontAjaxView();
+        FrontPagingView view = new FrontPagingView(pageNum, pageSize, total);
         view.setMessage("查询财富明细成功.");
-        view.addObject("list", voList);
-        // 总数
-        // double sum = 0;
-        // for (MyWealthDetailVO vo : voList) {
-        // sum = vo.getPoint() + sum;
-        // }
+        view.setList(voList);
         view.addObject("sum", sum);
+        view.addObject("total", total);
         return view;
     }
 

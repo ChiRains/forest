@@ -27,6 +27,8 @@
 
 	<pirates:component-scan base-package="com.qcloud.component.my.web.controller"></pirates:component-scan>
 	<pirates:component-scan base-package="com.qcloud.component.my.web.handler.impl"></pirates:component-scan>
+	<pirates:timer-scan base-package="com.qcloud.component.my.web.timer"></pirates:timer-scan>
+	
 	
 	<pirates:uriHandler class="com.qcloud.component.my.web.handler.url.MyCollectionUriHandlerImpl"></pirates:uriHandler>
 	<pirates:uriHandler class="com.qcloud.component.my.web.handler.url.MyCollectionStatisticsUriHandlerImpl"></pirates:uriHandler>	

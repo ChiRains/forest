@@ -35,9 +35,13 @@ public class MyCouponController {
     @Autowired
     private PersonalcenterClient personalcenterClient;
 
+    @PiratesApp
     @RequestMapping
     public FrontPagingView page(HttpServletRequest request, Integer type, PPage pPage) {
 
+        type = type == null ? 0 : type;
+        // 0所有 ,1未使用 ,2已使用 , 3已过期
+        AssertUtil.assertTrue(type == 0 || type == 1 || type == 2 || type == 3, "查询我的优惠劵类型取值范围不对." + type);
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         List<MyCoupon> list = myCouponService.listByUser(user.getId(), type, pPage.getPageStart(), pPage.getPageSize());
         List<MyCouponVO> voList = myCouponHandler.toVOList(list);

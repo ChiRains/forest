@@ -47,6 +47,17 @@
     	<![CDATA[order by `time` desc limit #{start},#{count}]]>
     </select>
     
+    <select id="countByUserAndTime" parameterType="java.util.HashMap" resultType="Integer">
+    	<![CDATA[select count(*) from ${table_name} where wealthId=#{wealthId} and userId=#{userId} and type=#{type} ${pointSqlFragment}]]>
+    	<if test="beginTime != null">
+    		<![CDATA[and time >= #{beginTime}]]>
+    	</if> 
+    	<if test="endTime != null">
+    		<![CDATA[and time < #{endTime}]]>
+    	</if> 
+    	<![CDATA[order by `time` desc limit #{start},#{count}]]>
+    </select>
+    
      <select id="sumByUserAndTime" parameterType="java.util.HashMap" resultType="Double">
     	<![CDATA[select sum(point) from ${table_name} where wealthId=#{wealthId} and userId=#{userId} and type=#{type} ${pointSqlFragment}]]>
     	<if test="beginTime != null">

@@ -9,6 +9,7 @@ import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.model.CombinationMerchandiseItem;
 import com.qcloud.component.goods.model.MerchandiseSpecifications;
 import com.qcloud.component.goods.model.UnifiedMerchandise;
+import com.qcloud.component.goods.model.key.TypeEnum.CombinationMerchandiseType;
 import com.qcloud.component.goods.service.MerchandiseSpecificationsService;
 import com.qcloud.component.goods.service.UnifiedMerchandiseService;
 import com.qcloud.component.goods.web.handler.CombinationMerchandiseItemHandler;
@@ -45,7 +46,11 @@ public class CombinationMerchandiseItemHandlerImpl implements CombinationMerchan
         CombinationMerchandiseItemVO combinationMerchandiseItemVO = new CombinationMerchandiseItemVO();
         UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(combinationMerchandiseItem.getRelaUnifiedMerchandiseId());
         //
-        combinationMerchandiseItemVO.setDiscount(unifiedMerchandise.getDiscount());
+        if (combinationMerchandiseItem.getType() == CombinationMerchandiseType.FREE.getKey()) {
+            combinationMerchandiseItemVO.setDiscount(combinationMerchandiseItem.getDiscount());
+        } else {
+            combinationMerchandiseItemVO.setDiscount(unifiedMerchandise.getDiscount());
+        }
         combinationMerchandiseItemVO.setMerchantId(unifiedMerchandise.getMerchantId());
         combinationMerchandiseItemVO.setName(unifiedMerchandise.getName());
         if (StringUtils.isNotEmpty(unifiedMerchandise.getImage())) {

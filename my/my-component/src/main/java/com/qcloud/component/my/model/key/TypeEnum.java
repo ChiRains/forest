@@ -115,7 +115,9 @@ public class TypeEnum {
         //
         USE(2, "使用"),
         //
-        DELETE(3, "删除");
+        Invalid(3, "已过期"),
+        //
+        DELETE(4, "删除");
 
         //
         private final int    key;
