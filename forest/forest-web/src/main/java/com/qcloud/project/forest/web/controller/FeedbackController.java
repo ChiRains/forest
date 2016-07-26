@@ -59,7 +59,7 @@ public class FeedbackController {
 
         List<Classify> classifies = publicdataClient.listClassify((long) ClassifyType.FEEDBACK.getKey());
         FrontAjaxView frontAjaxView = new FrontAjaxView();
-        frontAjaxView.addObject("result", classifies);
+        frontAjaxView.addObject("list", classifies);
         return frontAjaxView;
     }
 }
