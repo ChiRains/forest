@@ -345,7 +345,7 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
                         myShoppingCartMerchantVO.getCombinationList().add(combination);
                     }
                 } else {// 自由搭配 // TODO
-                    QUnifiedMerchandise combinationMerchandise = commoditycenterClient.getUnifiedMerchandise(myShoppingCartVO.getUnifiedMerchandiseId());
+                    QUnifiedMerchandise combinationMerchandise = commoditycenterClient.getUnifiedMerchandise(myShoppingCartVO.getCombinationMerchandiseId());
                     if (!groupCombinationList.containsKey(group)) {
                         double sum = 0.0;
                         CombinationListVO combination = new CombinationListVO();
