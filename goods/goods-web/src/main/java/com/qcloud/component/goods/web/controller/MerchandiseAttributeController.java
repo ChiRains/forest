@@ -44,6 +44,16 @@ public class MerchandiseAttributeController {
         for (MerchandiseAttributeVO merchandiseAttributeVO : voList) {
             view.addObject(merchandiseAttributeVO.getCode(), merchandiseAttributeVO);
         }
+        // MerchandiseAttributeVO vo1 = new MerchandiseAttributeVO();
+        // vo1.setCode("adasdasd");
+        // vo1.setName("adasdaASDASDsd");
+        // vo1.setValue("adasdaADAsd");
+        // voList.add(vo1);
+        // MerchandiseAttributeVO vo2 = new MerchandiseAttributeVO();
+        // vo2.setCode("adasdasd");
+        // vo2.setName("adasdDASDsd");
+        // vo2.setValue("adasdassdalksdyhfijsyhftijkweyroi719278340931yr1434647657867867867815245631");
+        // voList.add(vo2);
         view.setMessage("获取商品属性成功.");
         view.addObject("list", voList);
         return view;
