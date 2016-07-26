@@ -82,6 +82,11 @@ public class ArticleUriHandlerImpl extends AbstractUriHandler {
         list.add("/article/get.do");
         list.add("/article/getHtmlView.do");
         list.add("/article/articleClassify.do");
+        list.add("/app/article/list.do");
+        list.add("/app/article/get.do");
+        list.add("/app/article/getHtmlView.do");
+        list.add("/app/article/articleClassify.do");
+        list.add("/app/article/articlePraise.do");
         return list;
     }
 

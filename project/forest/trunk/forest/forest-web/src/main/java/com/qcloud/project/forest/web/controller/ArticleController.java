@@ -97,7 +97,7 @@ public class ArticleController {
 
         List<Classify> list = publicdataClient.listClassify((long) ClassifyType.ARTICLE.getKey());
         FrontAjaxView view = new FrontAjaxView();
-        view.addObject("result", list);
+        view.addObject("list", list);
         return view;
     }
 
