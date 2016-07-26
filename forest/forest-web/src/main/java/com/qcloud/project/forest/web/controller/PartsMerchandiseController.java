@@ -68,7 +68,7 @@ public class PartsMerchandiseController {
             classifyList = publicdataClient.listClassifyForTree(TypeConstant.PART_TYPE);
         }
         FrontAjaxView view = new FrontAjaxView();
-        view.addObject("classifyList", classifyList);
+        view.addObject("list", classifyList);
         view.setMessage("获取分类成功");
         return view;
     }
