@@ -28,6 +28,11 @@
             <div class="dataTables_wrapper form-inline no-footer">
                 <div class="row">
                     <div class="col-xs-6">
+                    <a title="设置反馈类型"
+							class="btn btn-sm btn-info" href="#admin/feedback/listClassify">
+							<i class="ace-icon fa fa-cog bigger-125"></i> 
+								设&nbsp;置&nbsp;反&nbsp;馈&nbsp;类&nbsp;型
+						</a>
                         <div class="dataTables_length">
                         </div>
                     </div>

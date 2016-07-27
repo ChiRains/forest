@@ -1,6 +1,7 @@
 package com.qcloud.project.forest.web.controller;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,13 @@ public class FeedbackController {
     public FrontAjaxView getFeedbackClassify() {
 
         List<Classify> classifies = publicdataClient.listClassify((long) ClassifyType.FEEDBACK.getKey());
+        Iterator<Classify> iter = classifies.iterator();
+        while (iter.hasNext()) {
+            Classify s = iter.next();
+            if (s.getEnable() == 0) {
+                iter.remove();
+            }
+        }
         FrontAjaxView frontAjaxView = new FrontAjaxView();
         frontAjaxView.addObject("list", classifies);
         return frontAjaxView;
