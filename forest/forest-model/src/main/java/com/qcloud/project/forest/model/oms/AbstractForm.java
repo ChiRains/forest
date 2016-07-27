@@ -1,14 +1,18 @@
 package com.qcloud.project.forest.model.oms;
 
-import java.util.Date;
-
 public abstract class AbstractForm {
 
     public String  method;
 
-    public Date    timestamp;
+    public String  timestamp;
 
     private String format;
+
+    private String app_id;
+
+    private String sign;
+
+    private String secret;
 
     public String getMethod() {
 
@@ -20,16 +24,6 @@ public abstract class AbstractForm {
         this.method = method;
     }
 
-    public Date getTimestamp() {
-
-        return timestamp;
-    }
-
-    public void setTimestamp(Date timestamp) {
-
-        this.timestamp = timestamp;
-    }
-
     public String getFormat() {
 
         return format;
@@ -38,5 +32,45 @@ public abstract class AbstractForm {
     public void setFormat(String format) {
 
         this.format = format;
+    }
+
+    public String getApp_id() {
+
+        return app_id;
+    }
+
+    public void setApp_id(String app_id) {
+
+        this.app_id = app_id;
+    }
+
+    public String getSign() {
+
+        return sign;
+    }
+
+    public void setSign(String sign) {
+
+        this.sign = sign;
+    }
+
+    public String getSecret() {
+
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+
+        this.secret = secret;
+    }
+
+    public String getTimestamp() {
+
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+
+        this.timestamp = timestamp;
     }
 }

@@ -3,6 +3,6 @@
 <xml>
 	
 	<module-list code="oms-dispacher-method">
-		<item omsToMethod="logistics.offline.send" invoke="deliverOrder" paramType="java.lang.String">发货</item>
+		<item omsToMethod="logistics.offline.send" invoke="deliverOrder" paramType="com.qcloud.project.forest.model.oms.QueryForm">发货</item>
 	</module-list>
 </xml>
