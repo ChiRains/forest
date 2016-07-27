@@ -18,6 +18,8 @@ import com.qcloud.component.goods.CommoditycenterClient;
 import com.qcloud.component.goods.QUnifiedMerchandise;
 import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.goods.exception.CommoditycenterException;
+import com.qcloud.component.marketing.MarketingClient;
+import com.qcloud.component.marketing.QCoupon;
 import com.qcloud.component.my.DeliveryModeType;
 import com.qcloud.component.my.MyClient;
 import com.qcloud.component.my.QMyConsignee;
@@ -124,6 +126,9 @@ public class ForestOrderController {
 
     @Autowired
     private MyAfterSaleService    myAfterSaleService;
+
+    @Autowired
+    private MarketingClient       marketingClient;
 
     @PiratesApp
     @RequestMapping
@@ -443,6 +448,8 @@ public class ForestOrderController {
             vo.setInvalidDate(qMyCoupon.getInValidDate());
             vo.setValidDateStr(DateUtil.date2String(qMyCoupon.getValidDate(), "yyyy-MM-dd"));
             vo.setInvalidDateStr(DateUtil.date2String(qMyCoupon.getInValidDate(), "yyyy-MM-dd"));
+            QCoupon coupon = marketingClient.getCoupon(qMyCoupon.getCouponId());
+            vo.setDescription(coupon == null ? "" : coupon.getDescription());
             voList.add(vo);
         }
         return voList;

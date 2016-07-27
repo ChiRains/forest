@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import com.qcloud.component.autoid.UniqueCodeGenerator;
 import com.qcloud.component.goods.CommoditycenterClient;
 import com.qcloud.component.goods.QUnifiedMerchandise;
@@ -64,6 +66,8 @@ import com.qcloud.pirates.util.StringUtil;
 
 @Component
 public class MyClientImpl implements MyClient {
+
+    private static final String           group_code = "my-shopping-cart-group-code";
 
     @Autowired
     private MyOrderFormService            myOrderFormService;
@@ -581,5 +585,59 @@ public class MyClientImpl implements MyClient {
     public boolean deleteAppendEvaluation(long appEvaluationId) {
 
         return myToAppendEvaluationService.delete(appEvaluationId);
+    }
+
+    @Transactional
+    @Override
+    public boolean addMyShoppingCartGroup(long userId, Map<Long, Integer> freeGroup, Map<Long, Map<Long, Integer>> merchandiseGroup) {
+
+        for (Map.Entry<Long, Map<Long, Integer>> groupMap : merchandiseGroup.entrySet()) {
+            AssertUtil.assertNotNull(groupMap.getKey(), "商品id不能为空.");
+            QUnifiedMerchandise combinationMerchandise = commoditycenterClient.getUnifiedMerchandise(groupMap.getKey());
+            if (combinationMerchandise.getCombinationType() == 2) {// 自由组合
+                String group = uniqueCodeGenerator.generate(group_code, new HashMap<String, String>());
+                for (Map.Entry<Long, Integer> merchandise : groupMap.getValue().entrySet()) {
+                    long unifiedMerchandiseId = merchandise.getKey();
+                    int number = merchandise.getValue();
+                    QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(unifiedMerchandiseId);
+                    AssertUtil.assertNotNull(unifiedMerchandise, "获取商品信息失败.");
+                    MyShoppingCart myShoppingCart = new MyShoppingCart();
+                    myShoppingCart = new MyShoppingCart();
+                    myShoppingCart.setTime(new Date());
+                    myShoppingCart.setUnifiedMerchandiseId(unifiedMerchandiseId);
+                    myShoppingCart.setMerchantId(unifiedMerchandise.getMerchantId());
+                    myShoppingCart.setMerchantClassifyId(unifiedMerchandise.getMerchantClassifyId());
+                    myShoppingCart.setUserId(userId);
+                    //
+                    myShoppingCart.setNumber(number);
+                    myShoppingCart.setGroup(group);
+                    myShoppingCart.setCombinationMerchandiseId(combinationMerchandise.getId());
+                    myShoppingCartService.add(myShoppingCart);
+                }
+            } else {// 单品/固定搭配
+                //
+                MyShoppingCart myShoppingCart = myShoppingCartService.getByUnifiedMerchandise(combinationMerchandise.getId(), userId);
+                String group = uniqueCodeGenerator.generate(group_code, new HashMap<String, String>());
+                if (myShoppingCart == null) {
+                    myShoppingCart = new MyShoppingCart();
+                    myShoppingCart.setTime(new Date());
+                    myShoppingCart.setUnifiedMerchandiseId(combinationMerchandise.getId());
+                    myShoppingCart.setMerchantId(combinationMerchandise.getMerchantId());
+                    myShoppingCart.setMerchantClassifyId(combinationMerchandise.getMerchantClassifyId());
+                    myShoppingCart.setUserId(userId);
+                    myShoppingCart.setNumber(freeGroup.get(combinationMerchandise.getId()));
+                    myShoppingCart.setGroup(group);
+                    myShoppingCart.setCombinationMerchandiseId(-1);
+                    myShoppingCartService.add(myShoppingCart);
+                } else {
+                    myShoppingCart.setTime(new Date());
+                    // 数量累计
+                    myShoppingCart.setNumber(freeGroup.get(combinationMerchandise.getId()) + myShoppingCart.getNumber());
+                    myShoppingCartService.update(myShoppingCart);
+                }
+            }
+        }
+        //
+        return true;
     }
 }

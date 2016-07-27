@@ -39,7 +39,7 @@
         <!-- PAGE CONTENT BEGINS -->
         <form id="model-form" class="form-horizontal"  role="form" action="/admin/pointMerchandise/add.do">
             <!-- #section:elements.form -->
-            
+            <input type="hidden" name="activityId" value="${activityId}"/>
             <div class="space-4"></div>
             <div class="form-group">
             	<label class="col-sm-6" style="color:red;"> 注: 下表所示原价为积分价格 ，其兑换率为 ：${bit}/100人民币</label>
@@ -83,7 +83,7 @@
                 <div class="col-md-offset-3 col-md-9">
                     <button class="btn btn-info" type="submit"><i class="ace-icon fa fa-check bigger-110"></i>&nbsp;保&nbsp;存&nbsp;</button>
                     &nbsp; &nbsp; &nbsp;
-                    <button class="btn" type="button" onclick="window.location.href='#admin/pointMerchandise/list'">
+                    <button class="btn" type="button" onclick="window.location.href='#admin/pointMerchandise/list?activityId=${activityId}'">
                     <i class="ace-icon fa fa-undo bigger-110"></i>&nbsp;返&nbsp;回&nbsp;</button>
                 </div>
             </div>

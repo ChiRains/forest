@@ -11,6 +11,7 @@ import com.qcloud.component.marketing.model.Coupon;
 import com.qcloud.component.marketing.model.CouponItems;
 import com.qcloud.component.marketing.service.CouponItemsService;
 import com.qcloud.component.marketing.service.CouponService;
+import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.DateUtil;
 
 @Service
@@ -70,5 +71,12 @@ public class MarketingClientImpl implements MarketingClient {
     public List<QCoupon> listByPlatform() {
 
         return new ArrayList<QCoupon>(couponService.listByPlatform());
+    }
+
+    @Override
+    public QCoupon getCoupon(long id) {
+
+        Coupon coupon = couponService.get(id);
+        return coupon;
     }
 }

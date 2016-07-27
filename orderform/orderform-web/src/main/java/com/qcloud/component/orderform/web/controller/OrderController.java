@@ -24,11 +24,11 @@ import com.qcloud.component.my.QMyDelivery;
 import com.qcloud.component.my.QMyInvoice;
 import com.qcloud.component.orderform.OrderContext;
 import com.qcloud.component.orderform.OrderContext.OrderDelivery;
-import com.qcloud.component.orderform.OrderMyConsignee;
 import com.qcloud.component.orderform.OrderformClient;
 import com.qcloud.component.orderform.QMerchantOrder;
 import com.qcloud.component.orderform.QOrder;
 import com.qcloud.component.orderform.QOrderItem;
+import com.qcloud.component.orderform.QOrderItemDetail;
 import com.qcloud.component.orderform.engine.OrderService;
 import com.qcloud.component.orderform.entity.MerchantOrderEntity;
 import com.qcloud.component.orderform.entity.OrderEntity;
@@ -42,7 +42,6 @@ import com.qcloud.component.orderform.web.form.OrderExpress;
 import com.qcloud.component.orderform.web.form.OrderForm;
 import com.qcloud.component.orderform.web.form.PrepareOrderForm;
 import com.qcloud.component.orderform.web.handler.OrderHandler;
-import com.qcloud.component.orderform.web.util.OrderStateType;
 import com.qcloud.component.orderform.web.vo.OrderCouponVO;
 import com.qcloud.component.orderform.web.vo.OrderExpressVO;
 import com.qcloud.component.orderform.web.vo.merchant.MerchantOrderVO;
@@ -824,7 +823,15 @@ public class OrderController {
         List<QMerchantOrder> merchantOrderList = order.getMerchantOrderList();
         for (QMerchantOrder qMerchantOrder : merchantOrderList) {
             for (QOrderItem orderItem : qMerchantOrder.getOrderItemList()) {
-                myClient.addMyShoppingCart(order.getUserId(), orderItem.getUnifiedMerchandiseId(), orderItem.getNumber());
+                Map<Long, Integer> freeGroup = new HashMap<Long, Integer>();
+                Map<Long, Map<Long, Integer>> merchandiseGroup = new HashMap<Long, Map<Long, Integer>>();
+                Map<Long, Integer> merchandiseList = new HashMap<Long, Integer>();
+                for (QOrderItemDetail details : orderItem.getOrderItemDetailList()) {
+                    merchandiseList.put(details.getUnifiedMerchandiseId(), details.getNumber());
+                }
+                freeGroup.put(orderItem.getUnifiedMerchandiseId(), orderItem.getNumber());
+                merchandiseGroup.put(orderItem.getUnifiedMerchandiseId(), merchandiseList);
+                myClient.addMyShoppingCartGroup(order.getUserId(), freeGroup, merchandiseGroup);
             }
         }
         FrontAjaxView view = new FrontAjaxView();

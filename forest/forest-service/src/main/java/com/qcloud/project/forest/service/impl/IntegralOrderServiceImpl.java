@@ -10,6 +10,7 @@ import com.qcloud.component.autoid.AutoIdGenerator;
 import com.qcloud.component.autoid.UniqueCodeGenerator;
 import com.qcloud.component.goods.CommoditycenterClient;
 import com.qcloud.component.goods.QUnifiedMerchandise;
+import com.qcloud.component.goods.service.PointMerchandiseService;
 import com.qcloud.component.my.MyClient;
 import com.qcloud.component.my.QMyConsignee;
 import com.qcloud.component.orderform.PaymentModeType;
@@ -91,11 +92,13 @@ public class IntegralOrderServiceImpl implements IntegralOrderService {
     @Override
     public int order(Long unifiedMerchandiseId, Long userId, Long consigneeId) {
 
+        QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(unifiedMerchandiseId);
+        AssertUtil.assertNotNull(unifiedMerchandise, "积分商品不存在.");
+        AssertUtil.assertTrue(unifiedMerchandise.getType().getKey() == PointMerchandiseService.unifiedMerchandise_type, "积分商品不存在.");
         QUser user = personalcenterClient.getUser(userId);
         QMyWealth myWealth = personalcenterClient.getMyWealth(user.getId());
         QMyConsignee consignee = myClient.getConsignee(consigneeId);
         AssertUtil.assertNotNull(consignee, "收货地址不存在.");
-        QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(unifiedMerchandiseId);
         // 拿到商品信息
         long integral = unifiedMerchandise.getIntegral();
         double cash = unifiedMerchandise.getDiscount();
@@ -125,7 +128,7 @@ public class IntegralOrderServiceImpl implements IntegralOrderService {
             return 0;
         } else {// 只需要给积分
             integralOrder.setState(IntegralOrderStateType.TO_SHIP.getKey());
-            personalcenterClient.calculateMyWealth(userId, WealthType.INTEGRAL, -integral, false, "购买商品：" + unifiedMerchandise.getName() + "使用积分:" + cash);
+            personalcenterClient.calculateMyWealth(userId, WealthType.INTEGRAL, -integral, false, "购买商品：" + unifiedMerchandise.getName() + "使用积分:" + integral);
             add(integralOrder);
             return 1;
         }

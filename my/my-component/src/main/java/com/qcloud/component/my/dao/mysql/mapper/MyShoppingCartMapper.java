@@ -10,14 +10,14 @@ import com.qcloud.component.my.model.MyShoppingCart;
 
 public interface MyShoppingCartMapper {
 
-	@Insert("insert into `${table_name}`(`id`,`userId`,`merchantId`,`merchantClassifyId`,`unifiedMerchandiseId`,`time`,`number`,`combinationMerchandiseId`,`group`)"
-			+ " values(#{id},#{userId},#{merchantId},#{merchantClassifyId},#{unifiedMerchandiseId},#{time},#{number},#{combinationMerchandiseId},#{group}) on DUPLICATE key update number = number + #{number}")
+	@Insert("insert into `${table_name}`(`id`,`userId`,`merchantId`,`merchantClassifyId`,`unifiedMerchandiseId`,`time`,`number`,`combinationMerchandiseId`,`combinationMerchandiseNumber`,`group`)"
+			+ " values(#{id},#{userId},#{merchantId},#{merchantClassifyId},#{unifiedMerchandiseId},#{time},#{number},#{combinationMerchandiseId},#{combinationMerchandiseNumber},#{group}) on DUPLICATE key update number = number + #{number}")
 	public void insert(MyShoppingCart myShoppingCart);
 
 	@Select("select * from `${table_name}` where `id`=#{id}")
 	public MyShoppingCart get(Long id);
 
-	@Update("update `${table_name}` set `userId`=#{userId},`merchantId`=#{merchantId},`merchantClassifyId`=#{merchantClassifyId},`unifiedMerchandiseId`=#{unifiedMerchandiseId},`time`=#{time},`number`=#{number},`combinationMerchandiseId`=#{combinationMerchandiseId},`group`=#{group} where `id`=#{id}")
+	@Update("update `${table_name}` set `userId`=#{userId},`merchantId`=#{merchantId},`merchantClassifyId`=#{merchantClassifyId},`unifiedMerchandiseId`=#{unifiedMerchandiseId},`time`=#{time},`number`=#{number},`combinationMerchandiseId`=#{combinationMerchandiseId},`combinationMerchandiseNumber`=#{combinationMerchandiseNumber},`group`=#{group} where `id`=#{id}")
 	public void update(MyShoppingCart myShoppingCart);
 
 	@Delete("delete from `${table_name}` where `id`=#{id}")

@@ -65,6 +65,7 @@ public class CombinationMerchandiseItemHandlerImpl implements CombinationMerchan
         for (MerchandiseSpecifications merchandiseSpecifications : msList) {
             sb.append(merchandiseSpecifications.getValue()).append(" ");
         }
+        combinationMerchandiseItemVO.setPrice(unifiedMerchandise.getPrice());
         combinationMerchandiseItemVO.setSpecifications(sb.toString());
         combinationMerchandiseItemVO.setUnifiedMerchandiseId(unifiedMerchandise.getId());
         return combinationMerchandiseItemVO;

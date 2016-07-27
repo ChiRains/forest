@@ -26,7 +26,7 @@ public class PointMerchandiseServiceImpl implements PointMerchandiseService {
             AssertUtil.assertTrue(unifiedMerchandise.getStock() >= merchandise.getStock(), "原商品库存不足:" + merchandise.getStock());
             AssertUtil.assertTrue(merchandise.getIntegral() > 0, unifiedMerchandise.getName() + ":" + unifiedMerchandise.getSpecifications() + ":积分兑换价必须大于0,不然会亏本哦.");
             AssertUtil.assertTrue(merchandise.getDiscount() >= 0, unifiedMerchandise.getName() + ":" + unifiedMerchandise.getSpecifications() + ":额外现金价必须大于或等于0哦");
-            commoditycenterClient.regUnifiedMerchandise(unifiedMerchandise, PointMerchandiseService.unifiedMerchandise_type, "", merchandise.getDiscount(), (int) merchandise.getIntegral(), merchandise.getStock(), -1L);
+            commoditycenterClient.regUnifiedMerchandise(unifiedMerchandise, PointMerchandiseService.unifiedMerchandise_type, "", merchandise.getDiscount(), (int) merchandise.getIntegral(), merchandise.getStock(), merchandise.getActivityId());
             commoditycenterClient.updateOnlineStock(unifiedMerchandise.getId(), merchandise.getStock());
         }
         return true;

@@ -90,4 +90,15 @@ public class RangeGradeDaoMysqlImpl implements RangeGradeDao {
         List<RangeGrade> list = sqlOperator.selectList("com.qcloud.project.forest.dao.mysql.mapper.RangeGradeMapper.listAll");
         return list;
     }
+
+    @Override
+    public List<RangeGrade> listByRange(long rangeId) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("start", 0);
+        param.put("count", Integer.MAX_VALUE);
+        param.put("rangeId", rangeId);
+        List<RangeGrade> list = sqlOperator.selectList("com.qcloud.project.forest.dao.mysql.mapper.RangeGradeMapper.list4query", param);
+        return list;
+    }
 }

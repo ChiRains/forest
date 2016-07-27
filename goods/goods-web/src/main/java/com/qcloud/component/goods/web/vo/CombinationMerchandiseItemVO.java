@@ -11,6 +11,8 @@ public class CombinationMerchandiseItemVO {
     // 缩略图
     private String image;
 
+    private double price;
+
     // 折扣价
     private double discount;
 
@@ -94,5 +96,15 @@ public class CombinationMerchandiseItemVO {
     public void setUnifiedMerchandiseId(long unifiedMerchandiseId) {
 
         this.unifiedMerchandiseId = unifiedMerchandiseId;
+    }
+
+    public double getPrice() {
+
+        return price;
+    }
+
+    public void setPrice(double price) {
+
+        this.price = price;
     }
 }

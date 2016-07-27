@@ -154,6 +154,7 @@ public class InvoiceModeController {
     @RequestMapping
     public FrontAjaxView delete(HttpServletRequest request, Long id) {
 
+        AssertUtil.greatZero(id, "发票信息不存在.");
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         InvoiceMode invoiceMode = invoiceModeService.getDefault(user.getId());
         AssertUtil.assertNotNull(invoiceMode, "发票信息不存在.");

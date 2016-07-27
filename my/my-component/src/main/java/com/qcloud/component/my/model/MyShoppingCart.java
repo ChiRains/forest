@@ -26,14 +26,17 @@ public class MyShoppingCart {
 
     private long   combinationMerchandiseId;
 
+    private int    combinationMerchandiseNumber;
+
     private String group;
 
     public MyShoppingCart() {
 
     }
 
-    public MyShoppingCart(long id, long userId, long merchantId, long merchantClassifyId, long unifiedMerchandiseId, Date time, int number, long combinationMerchandiseId, String group) {
+    public MyShoppingCart(long id, long userId, long merchantId, long merchantClassifyId, long unifiedMerchandiseId, Date time, int number, long combinationMerchandiseId, int combinationMerchandiseNumber, String group) {
 
+        super();
         this.id = id;
         this.userId = userId;
         this.merchantId = merchantId;
@@ -42,6 +45,7 @@ public class MyShoppingCart {
         this.time = time;
         this.number = number;
         this.combinationMerchandiseId = combinationMerchandiseId;
+        this.combinationMerchandiseNumber = combinationMerchandiseNumber;
         this.group = group;
     }
 
@@ -133,5 +137,15 @@ public class MyShoppingCart {
     public void setGroup(String group) {
 
         this.group = group;
+    }
+
+    public int getCombinationMerchandiseNumber() {
+
+        return combinationMerchandiseNumber;
+    }
+
+    public void setCombinationMerchandiseNumber(int combinationMerchandiseNumber) {
+
+        this.combinationMerchandiseNumber = combinationMerchandiseNumber;
     }
 }

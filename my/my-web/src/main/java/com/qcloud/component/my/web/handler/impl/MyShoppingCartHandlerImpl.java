@@ -344,7 +344,7 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
                         combination.setMerchandiseList(comMerchandiseList);
                         myShoppingCartMerchantVO.getCombinationList().add(combination);
                     }
-                } else {// 自由搭配 // TODO
+                } else {// 自由搭配
                     QUnifiedMerchandise combinationMerchandise = commoditycenterClient.getUnifiedMerchandise(myShoppingCartVO.getCombinationMerchandiseId());
                     if (!groupCombinationList.containsKey(group)) {
                         double sum = 0.0;
@@ -354,8 +354,8 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
                         combination.setUnifiedMerchandiseId(myShoppingCartVO.getCombinationMerchandiseId());
                         combination.setGroup(group);
                         combination.setType(2);
+                        combination.setNumber(myShoppingCartVO.getCombinationMerchandiseNumber());
                         String desc = "自由搭配：";
-                        int combinationNumber = 1;
                         //
                         List<MyShoppingCartVO> comMerchandiseList = new ArrayList<MyShoppingCartVO>();
                         for (MyShoppingCart combinationCart : cartList) {
@@ -373,7 +373,6 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
                             vo.setName(merchandise.getName());
                             vo.setUnit(merchandise.getUnit());
                             vo.setNumber(merchandise.getNumber());
-                            combinationNumber = combinationCart.getNumber() / merchandise.getNumber();
                             vo.setStock(merchandise.getStock());
                             vo.setTimeStr(myShoppingCartVO.getTimeStr());
                             vo.setMerchantId(merchandise.getMerchantId());
@@ -384,7 +383,6 @@ public class MyShoppingCartHandlerImpl implements MyShoppingCartHandler {
                             vo.setGroup(group);
                             comMerchandiseList.add(vo);
                         }
-                        combination.setNumber(combinationNumber);
                         if (comMerchandiseList.size() == combinationMerchandise.getList().size()) {// 自由搭配全买了,取自由搭配的价格
                             combination.setSum(NumberUtil.scale(combinationMerchandise.getDiscount(), 2));
                         } else {

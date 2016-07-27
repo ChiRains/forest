@@ -28,6 +28,8 @@ public class OrderCouponVO {
 
     private String code;
 
+    private String description;
+
     public long getId() {
 
         return id;
@@ -126,5 +128,15 @@ public class OrderCouponVO {
     public void setInvalidDateStr(String invalidDateStr) {
 
         this.invalidDateStr = invalidDateStr;
+    }
+
+    public String getDescription() {
+
+        return description;
+    }
+
+    public void setDescription(String description) {
+
+        this.description = description;
     }
 }

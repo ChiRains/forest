@@ -40,6 +40,8 @@ public class MyShoppingCartVO {
 
     private long    combinationMerchandiseId;
 
+    private int     combinationMerchandiseNumber;
+
     private String  group;
 
     public MyShoppingCartVO() {
@@ -214,5 +216,15 @@ public class MyShoppingCartVO {
     public void setGroup(String group) {
 
         this.group = group;
+    }
+
+    public int getCombinationMerchandiseNumber() {
+
+        return combinationMerchandiseNumber;
+    }
+
+    public void setCombinationMerchandiseNumber(int combinationMerchandiseNumber) {
+
+        this.combinationMerchandiseNumber = combinationMerchandiseNumber;
     }
 }

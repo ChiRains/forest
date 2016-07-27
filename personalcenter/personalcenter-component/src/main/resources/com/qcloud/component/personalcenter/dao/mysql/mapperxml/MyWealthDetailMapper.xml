@@ -55,7 +55,6 @@
     	<if test="endTime != null">
     		<![CDATA[and time < #{endTime}]]>
     	</if> 
-    	<![CDATA[order by `time` desc limit #{start},#{count}]]>
     </select>
     
      <select id="sumByUserAndTime" parameterType="java.util.HashMap" resultType="Double">

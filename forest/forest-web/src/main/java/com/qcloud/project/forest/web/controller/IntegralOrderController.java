@@ -65,19 +65,19 @@ public class IntegralOrderController {
         List<IntegralOrder> orderList = integralOrderService.listByUserAndFront(user.getId(), pPage.getPageStart(), pPage.getPageSize());
         int total = integralOrderService.countByUserAndFront(user.getId());
         List<IntegralOrderListVO> volist = integralOrderHandler.toListVOList(orderList);
-        if (volist.isEmpty()) {
-            IntegralOrderListVO order = new IntegralOrderListVO();
-            order.setCash(0);
-            order.setImage("");
-            order.setIntegral(500);
-            order.setName("loongma");
-            order.setOrderNumber("111");
-            order.setCanRemind(true);
-            order.setSpecifications("默认规格");
-            order.setState(20);
-            order.setStateStr("待发货");
-            volist.add(order);
-        }
+        // if (volist.isEmpty()) {
+        // IntegralOrderListVO order = new IntegralOrderListVO();
+        // order.setCash(0);
+        // order.setImage("");
+        // order.setIntegral(500);
+        // order.setName("loongma");
+        // order.setOrderNumber("111");
+        // order.setCanRemind(true);
+        // order.setSpecifications("默认规格");
+        // order.setState(20);
+        // order.setStateStr("待发货");
+        // volist.add(order);
+        // }
         FrontPagingView view = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), total);
         view.setList(volist);
         return view;
@@ -88,7 +88,7 @@ public class IntegralOrderController {
     public FrontAjaxView get(HttpServletRequest request, Long orderId) {
 
         AssertUtil.greatZero(orderId, "订单id不能为空.");
-        IntegralOrder order = integralOrderService.getByOrder(orderId);
+        IntegralOrder order = integralOrderService.get(orderId);
         AssertUtil.assertNotNull(order, "订单数据不存在.");
         IntegralOrderVO orderVO = integralOrderHandler.toVO(order);
         // orderVO.setAddress("ss");
@@ -120,7 +120,7 @@ public class IntegralOrderController {
     public FrontAjaxView remindOrder(HttpServletRequest request, Long orderId) {
 
         AssertUtil.greatZero(orderId, "订单id不能为空.");
-        IntegralOrder order = integralOrderService.getByOrder(orderId);
+        IntegralOrder order = integralOrderService.get(orderId);
         AssertUtil.assertNotNull(order, "订单数据不存在.");
         if (order.getRemind() == 0) {
             order.setRemind(1);
@@ -138,7 +138,7 @@ public class IntegralOrderController {
     public FrontAjaxView signOrder(HttpServletRequest request, Long orderId) {
 
         AssertUtil.greatZero(orderId, "订单id不能为空.");
-        IntegralOrder order = integralOrderService.getByOrder(orderId);
+        IntegralOrder order = integralOrderService.get(orderId);
         AssertUtil.assertNotNull(order, "订单数据不存在.");
         if (order.getState() == IntegralOrderStateType.TO_SIGN.getKey()) {
             order.setState(IntegralOrderStateType.FINISHED.getKey());
@@ -167,7 +167,7 @@ public class IntegralOrderController {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         AssertUtil.greatZero(orderId, "订单id不能为空.");
-        IntegralOrder order = integralOrderService.getByOrder(orderId);
+        IntegralOrder order = integralOrderService.get(orderId);
         AssertUtil.assertNotNull(order, "订单数据不存在.");
         List<ExpressQueryVO> volist = expressQueryService.getList(user.getId(), order.getExpressCode(), order.getExpressNumber());
         if (CollectionUtils.isEmpty(volist)) {
