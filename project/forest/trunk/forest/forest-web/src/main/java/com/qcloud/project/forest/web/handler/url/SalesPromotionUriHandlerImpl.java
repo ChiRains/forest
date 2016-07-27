@@ -63,6 +63,8 @@ public class SalesPromotionUriHandlerImpl extends AbstractUriHandler {
         List<String> list = new ArrayList<String>();
         list.add("/salesPromotion/getSalesPromotionClassify.do");
         list.add("/salesPromotion/mallList.do");
+        list.add("/app/salesPromotion/getSalesPromotionClassify.do");
+        list.add("/app/salesPromotion/mallList.do");
         return list;
     }
 
