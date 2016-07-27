@@ -30,7 +30,7 @@
                     <div class="col-xs-6">
                         <div class="dataTables_length">
                             <a title="新增" class="btn btn-sm btn-info"
-                               href="#admin/pointMerchandise/toAdd">
+                               href="#admin/pointMerchandise/toAdd?activityId=${query.activityId}">
                                 <i class="ace-icon fa fa-plus align-bottom bigger-125"></i>
                                 新&nbsp;增
                             </a>                           

@@ -215,9 +215,11 @@ public class CouponController {
         List<Coupon> list = couponService.listActivityCoupon(merchantId);
         boolean result = false;
         for (Coupon coupon : list) {
-            if (couponService.canExtract(user.getId(), coupon)) {
-                result = true;
-                break;
+            if (coupon.getType() == CouponType.Normal.getKey()) {
+                if (couponService.canExtract(user.getId(), coupon)) {
+                    result = true;
+                    break;
+                }
             }
         }
         FrontAjaxView view = new FrontAjaxView();

@@ -72,6 +72,8 @@ public interface QUnifiedMerchandise {
     // 商品类型
     UnifiedMerchandiseType getType();
 
+    int getCombinationType();
+
     // 是否包邮
     boolean getIsIncludePost();
 

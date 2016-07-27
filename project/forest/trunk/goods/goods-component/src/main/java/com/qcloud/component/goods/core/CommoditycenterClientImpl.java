@@ -97,6 +97,7 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
                 relaList.add(item);
             }
             unifiedMerchandiseEntity.setList(relaList);
+            unifiedMerchandiseEntity.setCombinationType(list.get(0).getType());
             return unifiedMerchandiseEntity;
         } else {
             Merchandise merchandise = merchandiseService.get(unifiedMerchandise.getMerchandiseId());

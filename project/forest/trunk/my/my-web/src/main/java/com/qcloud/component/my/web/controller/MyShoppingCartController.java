@@ -104,6 +104,7 @@ public class MyShoppingCartController {
                 String group = uniqueCodeGenerator.generate(group_code, new HashMap<String, String>());
                 myShoppingCart.setGroup(group);
                 myShoppingCart.setCombinationMerchandiseId(-1L);
+                myShoppingCart.setCombinationMerchandiseNumber(-1);
                 myShoppingCartService.add(myShoppingCart);
             } else {
                 myShoppingCart.setTime(new Date());
@@ -330,7 +331,7 @@ public class MyShoppingCartController {
 
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView addFreeList(HttpServletRequest request, ListForm list, Long combinationMerchandiseId) {
+    public FrontAjaxView addFreeList(HttpServletRequest request, ListForm list, Long combinationMerchandiseId, Integer combinationMerchandiseNumber) {
 
         AssertUtil.assertNotNull(combinationMerchandiseId, "组合套餐id不能为空.");
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
@@ -351,9 +352,10 @@ public class MyShoppingCartController {
             myShoppingCart.setMerchantClassifyId(unifiedMerchandise.getMerchantClassifyId());
             myShoppingCart.setUserId(user.getId());
             //
-            myShoppingCart.setNumber(number);
+            myShoppingCart.setNumber(number * combinationMerchandiseNumber);
             myShoppingCart.setGroup(group);
             myShoppingCart.setCombinationMerchandiseId(combinationMerchandise.getId());
+            myShoppingCart.setCombinationMerchandiseNumber(combinationMerchandiseNumber);
             myShoppingCartService.add(myShoppingCart);
         }
         FrontAjaxView view = new FrontAjaxView();
@@ -413,6 +415,7 @@ public class MyShoppingCartController {
                     }
                     myShoppingCart.setTime(new Date());
                     myShoppingCart.setNumber(freeMerchandiseNumber * number);
+                    myShoppingCart.setCombinationMerchandiseNumber(number);
                     myShoppingCartService.update(myShoppingCart);
                 } else {
                     // 数量累计

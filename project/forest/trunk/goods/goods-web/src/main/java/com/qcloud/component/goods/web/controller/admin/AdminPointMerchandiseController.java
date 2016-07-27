@@ -45,23 +45,29 @@ public class AdminPointMerchandiseController {
         List<AdminUnifiedMerchandiseVO> voList = unifiedMerchandiseHandler.toVOList4Admin(list);
         AcePagingView view = new AcePagingView("/admin/goods-PointMerchandise-list", DIR + "/list", pPage.getPageNum(), pPage.getPageSize(), pages.getCount());
         view.addObject("result", voList);
+        view.addObject("query", query);
         return view;
     }
 
     @RequestMapping
-    public ModelAndView toAdd() {
+    public ModelAndView toAdd(Long activityId) {
 
         ModelAndView view = new ModelAndView("/admin/goods-PointMerchandise-add");
+        view.addObject("activityId", activityId);
         return view;
     }
 
     @RequestMapping
-    public AceAjaxView add(UnifiedMerchandiseListForm form) {
+    public AceAjaxView add(UnifiedMerchandiseListForm form, Long activityId) {
 
         AssertUtil.assertNotEmpty(form.getMerchandiseList(), "待生成积分商品列表不允许为空.");
         List<UnifiedMerchandise> list = form.getMerchandiseList();
+        for (UnifiedMerchandise unifiedMerchandise : list) {
+            unifiedMerchandise.setActivityId(activityId);
+        }
         pointMerchandiseService.createList(list);
         AceAjaxView view = new AceAjaxView();
+        view.setUrl(DIR + "/list?activityId=" + activityId);
         return view;
     }
 

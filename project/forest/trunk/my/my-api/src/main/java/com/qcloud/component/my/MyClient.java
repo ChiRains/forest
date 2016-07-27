@@ -2,6 +2,7 @@ package com.qcloud.component.my;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import com.qcloud.component.publicdata.KeyValueVO;
 
 public interface MyClient {
@@ -84,6 +85,8 @@ public interface MyClient {
     boolean clearMySearchHistory(long userId, int type);
 
     boolean addMyShoppingCart(long userId, long unifiedMerchandiseId, int number);
+
+    boolean addMyShoppingCartGroup(long userId, Map<Long, Integer> freeGroup, Map<Long, Map<Long, Integer>> merchandiseGroup);
 
     boolean deleteAppendEvaluation(long appEvaluationId);
 }

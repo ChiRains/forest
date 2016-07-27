@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.publicdata.ClassifyType;
 import com.qcloud.component.publicdata.IntKeyValue;
 import com.qcloud.component.publicdata.KeyValueVO;
@@ -77,6 +78,9 @@ public class PublicdataClientImpl implements PublicdataClient {
 
     @Autowired
     private OptionsService          optionsService;
+
+    @Autowired
+    private FileSDKClient           fileSDKClient;
 
     @Override
     public List<String> listProvince() {
@@ -288,7 +292,7 @@ public class PublicdataClientImpl implements PublicdataClient {
             if (classify.getParentId() == qc.getId()) {
                 QClassify child = new QClassify();
                 child.setId(classify.getId());
-                child.setImage(classify.getImage());
+                child.setImage(fileSDKClient.getFileServerUrl() + classify.getImage());
                 child.setName(classify.getName());
                 child.setRemark(classify.getRemark());
                 child.setEnable(classify.getEnable());
@@ -315,7 +319,7 @@ public class PublicdataClientImpl implements PublicdataClient {
             if (p == null) {
                 QClassify qc = new QClassify();
                 qc.setId(classify.getId());
-                qc.setImage(classify.getImage());
+                qc.setImage(fileSDKClient.getFileServerUrl() + classify.getImage());
                 qc.setName(classify.getName());
                 qc.setRemark(classify.getRemark());
                 qc.setEnable(classify.getEnable());

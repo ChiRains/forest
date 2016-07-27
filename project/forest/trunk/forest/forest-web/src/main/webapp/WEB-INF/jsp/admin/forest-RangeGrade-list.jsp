@@ -54,7 +54,7 @@
                                 <td>
                                 <div class="hidden-sm hidden-xs action-buttons">
                                     <a class="btn btn-white btn-minier btn-info" title="添加积分商品" 
-                                    	href="#admin/pointMerchandise/list?activityId=1010008000018601">
+                                    	href="#admin/pointMerchandise/list?activityId=${item.id}">
                                         	添加积分商品</a>					                                 
                                 </div>
                             </td>

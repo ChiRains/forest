@@ -16,7 +16,7 @@
     </select>
     
    <select id="countByUser" parameterType="java.util.HashMap" resultType="Integer">  
-        select count(*) from `my_my_after_sale` where userId = #{userId} order by lastUpdateTime desc limit #{start},#{count} 
+        select count(*) from `my_my_after_sale` where userId = #{userId} 
     </select>
         
     <select id="listByUserAndSubOrder" parameterType="java.util.HashMap" resultType="MyAfterSale">  

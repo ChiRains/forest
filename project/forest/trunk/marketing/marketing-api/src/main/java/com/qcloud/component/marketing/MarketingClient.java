@@ -6,6 +6,8 @@ public interface MarketingClient {
 
     QCoupon getActivityCoupon(long merchantId);
 
+    QCoupon getCoupon(long id);
+
     boolean existCoupon(long couponId);
 
     boolean useCoupon(long couponItemId);

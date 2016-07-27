@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.pirates.core.json.Json;
@@ -21,6 +22,9 @@ public class IntegralOrderHandlerImpl implements IntegralOrderHandler {
 
     @Autowired
     private PersonalcenterClient personalcenterClient;
+
+    @Autowired
+    private FileSDKClient        fileSDKClient;
 
     @Override
     public List<IntegralOrderVO> toVOList(List<IntegralOrder> list) {
@@ -39,6 +43,8 @@ public class IntegralOrderHandlerImpl implements IntegralOrderHandler {
         IntegralOrderVO orderVO = Json.toObject(json, IntegralOrderVO.class, true);
         orderVO.setOrderDateStr(DateUtil.date2String(new Date(), "yyyy-MM-dd HH:mm:ss"));
         orderVO.setStateStr(IntegralOrderStateType.get(orderVO.getState()));
+        orderVO.setImage(fileSDKClient.getFileServerUrl() + orderVO.getImage());
+        orderVO.setOrderId(integralOrder.getId());
         orderVO.setCanRemind(integralOrder.getRemind() == 0);
         return orderVO;
     }
@@ -70,6 +76,8 @@ public class IntegralOrderHandlerImpl implements IntegralOrderHandler {
         for (IntegralOrder order : list) {
             String json = Json.toJson(order);
             IntegralOrderListVO orderVO = Json.toObject(json, IntegralOrderListVO.class, true);
+            orderVO.setOrderId(order.getId());
+            orderVO.setImage(fileSDKClient.getFileServerUrl() + orderVO.getImage());
             orderVO.setStateStr(IntegralOrderStateType.get(orderVO.getState()));
             orderVO.setCanRemind(order.getRemind() == 0);
             voList.add(orderVO);

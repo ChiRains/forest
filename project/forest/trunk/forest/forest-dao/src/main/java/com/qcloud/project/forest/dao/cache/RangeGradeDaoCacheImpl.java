@@ -65,5 +65,11 @@ public class RangeGradeDaoCacheImpl implements RangeGradeDao {
 	public List<RangeGrade> listAll(){
 		return rangeGradeDaoMysqlImpl.listAll();
 	}
+
+    @Override
+    public List<RangeGrade> listByRange(long rangeId) {
+
+        return rangeGradeDaoMysqlImpl.listByRange(rangeId);
+    }
 }
 

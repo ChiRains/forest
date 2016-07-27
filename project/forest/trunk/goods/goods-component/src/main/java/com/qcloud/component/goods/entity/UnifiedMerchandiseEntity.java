@@ -24,6 +24,8 @@ public class UnifiedMerchandiseEntity implements QUnifiedMerchandise {
 
     private double                    discount;
 
+    private int                       combinationType;
+
     public UnifiedMerchandiseEntity(UnifiedMerchandise unifiedMerchandise, Merchandise merchandise) {
 
         super();
@@ -214,5 +216,16 @@ public class UnifiedMerchandiseEntity implements QUnifiedMerchandise {
     public long getIntegral() {
 
         return unifiedMerchandise.getIntegral();
+    }
+
+    @Override
+    public int getCombinationType() {
+
+        return combinationType;
+    }
+
+    public void setCombinationType(int combinationType) {
+
+        this.combinationType = combinationType;
     }
 }

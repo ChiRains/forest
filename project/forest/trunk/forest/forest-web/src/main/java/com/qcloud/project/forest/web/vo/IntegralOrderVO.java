@@ -2,7 +2,7 @@ package com.qcloud.project.forest.web.vo;
 
 public class IntegralOrderVO {
 
-    private long    id;
+    private long    orderId;
 
     private String  orderNumber;
 
@@ -46,15 +46,6 @@ public class IntegralOrderVO {
 
     }
 
-    public void setId(long id) {
-
-        this.id = id;
-    }
-
-    public long getId() {
-
-        return id;
-    }
 
     public void setOrderNumber(String orderNumber) {
 
@@ -234,5 +225,19 @@ public class IntegralOrderVO {
     public void setMerchandiseNumber(int merchandiseNumber) {
 
         this.merchandiseNumber = merchandiseNumber;
+    }
+
+
+    
+    public long getOrderId() {
+    
+        return orderId;
+    }
+
+
+    
+    public void setOrderId(long orderId) {
+    
+        this.orderId = orderId;
     }
 }

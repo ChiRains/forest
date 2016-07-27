@@ -90,6 +90,7 @@
 		<!-- 商品库存 开始 -->
 		<item state="10" type="3" observer="lockMerchandiseOnLineStockObserver" variable="">锁定库存</item>
 		<!-- <item state="40" type="4" observer="lockMerchandiseOffLineStockObserver" variable="">锁定库存</item> -->
+		
 		<item state="60" type="3" observer="releaseMerchandiseOnLineStockObserver" variable="">订单失效,释放库存</item>
 		<item state="70" type="3" observer="releaseMerchandiseOnLineStockObserver" variable="">订单取消,释放库存</item>
 		<!-- 商品库存 结束 -->

@@ -21,6 +21,6 @@ public class ReleaseMerchandiseOnLineStockObserver implements OrderObserver<QOrd
 
         logger.info("订单 释放库存" + t.getName() + " " + t.getNumber() + " " + state);
         //
-        commoditycenterClient.lockOnlineStock(t.getUnifiedMerchandiseId(), t.getNumber());
+        commoditycenterClient.lockOnlineStock(t.getUnifiedMerchandiseId(), -t.getNumber());
     }
 }
