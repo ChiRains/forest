@@ -219,7 +219,6 @@ public class MyWealthController {
         view.setMessage("查询财富明细成功.");
         view.setList(voList);
         view.addObject("sum", sum);
-        view.addObject("total", total);
         return view;
     }
 
