@@ -96,7 +96,7 @@ public class IntegralOrderServiceImpl implements IntegralOrderService {
 
     @Transactional
     @Override
-    public int order(Long unifiedMerchandiseId, Long userId, Long consigneeId) {
+    public IntegralOrder order(Long unifiedMerchandiseId, Long userId, Long consigneeId) {
 
         QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(unifiedMerchandiseId);
         AssertUtil.assertNotNull(unifiedMerchandise, "积分商品不存在.");
@@ -137,13 +137,12 @@ public class IntegralOrderServiceImpl implements IntegralOrderService {
         if (cash > 0) {// 需要给现金
             integralOrder.setState(IntegralOrderStateType.TO_PAY.getKey());
             add(integralOrder);
-            return 0;
         } else {// 只需要给积分
             integralOrder.setState(IntegralOrderStateType.TO_SHIP.getKey());
             personalcenterClient.calculateMyWealth(userId, WealthType.INTEGRAL, -integral, false, "购买商品：" + unifiedMerchandise.getName() + "使用积分:" + integral);
             add(integralOrder);
-            return 1;
         }
+        return integralOrder;
     }
 
     @Override
