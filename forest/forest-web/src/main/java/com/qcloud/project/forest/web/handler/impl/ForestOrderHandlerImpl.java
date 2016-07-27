@@ -172,17 +172,23 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
         orderVO.setState(order.getState());
         orderVO.setDeliveryModeStr(DeliveryModeType.get(order.getMerchantOrderList().get(0).getDeliveryMode()).getName());
         orderVO.setPaymentModeStr(PaymentModeType.get(order.getPaymentMode()).getName());
-        orderVO.setResidualTime(DateUtil.addDate(order.getOrderDate(), 1).getTime());
         orderVO.setStateStr(ForestOrderState.get(order.getState()));
         orderVO.setInvoiceTypeStr(InvoiceType.get(order.getInvoiceType()).getName());
         orderVO.setMerchandiseNumber(merchandiseNumber);
         orderVO.setOrderDateStr(DateUtil.date2String(order.getOrderDate(), "yyyy-MM-dd HH:mm:ss"));
         orderVO.setDeliveryDateStr(order.getMerchantOrderList().get(0).getDeliveryTimeStr());
         orderVO.setPayDateStr(DateUtil.date2String(forestOrder.getPayDate(), "yyyy-MM-dd HH:mm:ss"));
-        // 剩余支付时间
-        orderVO.setResidualHour(1);
-        orderVO.setResidualMinute(0);
-        orderVO.setResidualSecond(0);
+        //
+        long payConfig = 1 * 60 * 60 * 1000;// 配置
+        long payLimit = payConfig + order.getOrderDate().getTime();// 支付限制时间
+        long residualTime = payLimit - new Date().getTime();// 剩余支付时间
+        long hours = residualTime / 1000 / 60 / 60;
+        long minutes = residualTime / 1000 / 60 % 60;
+        long seconds = residualTime / 1000 % 60;
+        orderVO.setResidualHour((int) hours);
+        orderVO.setResidualMinute((int) minutes);
+        orderVO.setResidualSecond((int) seconds);
+        orderVO.setResidualTime(residualTime);
         return orderVO;
     }
 

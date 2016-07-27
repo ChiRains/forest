@@ -50,10 +50,13 @@ public class IntegralOrderController {
         AssertUtil.greatZero(unifiedMerchandiseId, "积分商品id不能为空.");
         AssertUtil.greatZero(consigneeId, "收货信息不能为空.");
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
-        int result = integralOrderService.order(unifiedMerchandiseId, user.getId(), consigneeId);
+        IntegralOrder integralOrder = integralOrderService.order(unifiedMerchandiseId, user.getId(), consigneeId);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("积分订单下单成功");
-        view.addObject("needPay", result == 0);
+        view.addObject("needPay", integralOrder.getCash() > 0);
+        view.addObject("orderId", integralOrder.getId());
+        view.addObject("orderDate", DateUtil.date2String(integralOrder.getTime()));
+        view.addObject("module", "jf");
         return view;
     }
 
@@ -65,19 +68,6 @@ public class IntegralOrderController {
         List<IntegralOrder> orderList = integralOrderService.listByUserAndFront(user.getId(), pPage.getPageStart(), pPage.getPageSize());
         int total = integralOrderService.countByUserAndFront(user.getId());
         List<IntegralOrderListVO> volist = integralOrderHandler.toListVOList(orderList);
-        // if (volist.isEmpty()) {
-        // IntegralOrderListVO order = new IntegralOrderListVO();
-        // order.setCash(0);
-        // order.setImage("");
-        // order.setIntegral(500);
-        // order.setName("loongma");
-        // order.setOrderNumber("111");
-        // order.setCanRemind(true);
-        // order.setSpecifications("默认规格");
-        // order.setState(20);
-        // order.setStateStr("待发货");
-        // volist.add(order);
-        // }
         FrontPagingView view = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), total);
         view.setList(volist);
         return view;
@@ -91,23 +81,6 @@ public class IntegralOrderController {
         IntegralOrder order = integralOrderService.get(orderId);
         AssertUtil.assertNotNull(order, "订单数据不存在.");
         IntegralOrderVO orderVO = integralOrderHandler.toVO(order);
-        // orderVO.setAddress("ss");
-        // orderVO.setCash(0);
-        // orderVO.setConsignee("aa");
-        // orderVO.setEmail("@qq.com");
-        // orderVO.setId(1111L);
-        // orderVO.setImage("");
-        // orderVO.setIntegral(500);
-        // orderVO.setMobile("15876333333");
-        // orderVO.setName("loongma");
-        // orderVO.setOrderNumber("111");
-        // orderVO.setPaymentMode(102);
-        // orderVO.setPaymentModeStr("微信");
-        // orderVO.setCanRemind(true);
-        // orderVO.setSpecifications("默认规格");
-        // orderVO.setState(20);
-        // orderVO.setStateStr("待发货");
-        // orderVO.setOrderDateStr(DateUtil.date2String(new Date(), "yyyy-MM-dd HH:mm:ss"));
         order.setUnifiedMerchandiseId(11111);
         FrontAjaxView view = new FrontAjaxView();
         view.addObject("order", orderVO);

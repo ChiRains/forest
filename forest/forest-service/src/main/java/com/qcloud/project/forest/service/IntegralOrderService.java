@@ -19,7 +19,7 @@ public interface IntegralOrderService {
 
     public List<IntegralOrder> listAll();
 
-    public int order(Long unifiedMerchandiseId, Long userId, Long consigneeId);
+    public IntegralOrder order(Long unifiedMerchandiseId, Long userId, Long consigneeId);
 
     public List<IntegralOrder> listByUser(long userId, int start, int size);
 
