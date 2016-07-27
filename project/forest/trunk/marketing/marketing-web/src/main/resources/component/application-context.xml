@@ -35,6 +35,7 @@
 <!-- 	<pirates:uriHandler class="com.qcloud.component.marketing.web.handler.url.PointExchangeUriHandlerImpl"></pirates:uriHandler>	 -->
 	<pirates:uriHandler class="com.qcloud.component.marketing.web.handler.url.CurrencyExchangeUriHandlerImpl"></pirates:uriHandler>	
 	<pirates:uriHandler class="com.qcloud.component.marketing.web.handler.url.RecentDiscountUriHandlerImpl"></pirates:uriHandler>	
+	<pirates:uriHandler class="com.qcloud.component.marketing.web.handler.url.FullReducesUriHandlerImpl"></pirates:uriHandler>	
 	
 
 </beans>
