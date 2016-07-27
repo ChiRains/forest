@@ -228,4 +228,10 @@ public class UnifiedMerchandiseEntity implements QUnifiedMerchandise {
 
         this.combinationType = combinationType;
     }
+
+    @Override
+    public long getActivityId() {
+
+        return unifiedMerchandise.getActivityId();
+    }
 }

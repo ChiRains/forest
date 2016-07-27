@@ -15,6 +15,7 @@ import com.qcloud.component.my.MyClient;
 import com.qcloud.component.my.QMyConsignee;
 import com.qcloud.component.orderform.PaymentModeType;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
+import com.qcloud.component.personalcenter.QGrade;
 import com.qcloud.component.personalcenter.QMyWealth;
 import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.component.personalcenter.WealthType;
@@ -22,9 +23,11 @@ import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.project.forest.dao.IntegralOrderDao;
 import com.qcloud.project.forest.model.IntegralOrder;
+import com.qcloud.project.forest.model.RangeGrade;
 import com.qcloud.project.forest.model.key.TypeEnum.IntegralOrderStateType;
 import com.qcloud.project.forest.model.query.IntegralOrderQuery;
 import com.qcloud.project.forest.service.IntegralOrderService;
+import com.qcloud.project.forest.service.RangeGradeService;
 
 @Service
 public class IntegralOrderServiceImpl implements IntegralOrderService {
@@ -46,6 +49,9 @@ public class IntegralOrderServiceImpl implements IntegralOrderService {
 
     @Autowired
     private UniqueCodeGenerator   uniqueCodeGenerator;
+
+    @Autowired
+    private RangeGradeService     rangeGradeService;
 
     private static final String   INTEGRAL_ORDER_CODE = "forest-integral-order-code";
 
@@ -96,6 +102,12 @@ public class IntegralOrderServiceImpl implements IntegralOrderService {
         AssertUtil.assertNotNull(unifiedMerchandise, "积分商品不存在.");
         AssertUtil.assertTrue(unifiedMerchandise.getType().getKey() == PointMerchandiseService.unifiedMerchandise_type, "积分商品不存在.");
         QUser user = personalcenterClient.getUser(userId);
+        RangeGrade rangeGrade = rangeGradeService.get(unifiedMerchandise.getActivityId());
+        AssertUtil.assertNotNull(rangeGrade, "您的会员等级不足,暂时无法兑换哦");
+        QGrade merchandiseGrade = personalcenterClient.getGrade(rangeGrade.getGradeId());
+        QGrade grade = user.getGrade();
+        AssertUtil.assertTrue(grade.getPoint() >= merchandiseGrade.getPoint(), "您的会员等级不足,暂时无法兑换哦");
+        //
         QMyWealth myWealth = personalcenterClient.getMyWealth(user.getId());
         QMyConsignee consignee = myClient.getConsignee(consigneeId);
         AssertUtil.assertNotNull(consignee, "收货地址不存在.");

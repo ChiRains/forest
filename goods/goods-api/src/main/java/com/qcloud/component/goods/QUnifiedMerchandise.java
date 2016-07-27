@@ -80,4 +80,6 @@ public interface QUnifiedMerchandise {
     String getLabel();
 
     long getIntegral();
+    
+    long getActivityId();
 }
