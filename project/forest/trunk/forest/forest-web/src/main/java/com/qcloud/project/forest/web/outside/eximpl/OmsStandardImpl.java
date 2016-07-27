@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.qcloud.pirates.core.xml.Xml;
 import com.qcloud.pirates.core.xml.XmlFactory;
 import com.qcloud.pirates.core.xml.XmlItem;
+import com.qcloud.project.forest.model.oms.QueryForm;
 import com.qcloud.project.forest.service.oms.OmsDispatcherService;
 
 @Component
@@ -47,14 +48,14 @@ public class OmsStandardImpl implements OmsStandard {
     }
 
     @Override
-    public void handle(String method) {
+    public void handle(QueryForm queryForm) {
 
         for (InvokeConfig invokeConfig : invokeConfigs) {
-            if (invokeConfig.getOmsToMethod().equals(method)) {
+            if (invokeConfig.getOmsToMethod().equals(queryForm.getMethod())) {
                 try {
                     Class<?>[] paramTypes = invokeConfig.getParamTypes().toArray(new Class<?>[invokeConfig.getParamTypes().size()]);
                     Method handle = dispatcherService.getClass().getMethod(invokeConfig.getInvoke(), paramTypes);
-                    handle.invoke(dispatcherService, "张三");
+                    handle.invoke(dispatcherService, queryForm);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

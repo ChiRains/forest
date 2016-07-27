@@ -2,6 +2,7 @@ package com.qcloud.project.forest.web.outside.eximpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.qcloud.project.forest.model.oms.QueryForm;
 
 @Component
 public class OmsDispatcherClient {
@@ -18,8 +19,8 @@ public class OmsDispatcherClient {
      * 跳转的方法
      * @param method
      */
-    public void request(String method) {
+    public void request(QueryForm queryForm) {
 
-        standard.handle(method);
+        standard.handle(queryForm);
     }
 }
