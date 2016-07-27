@@ -4,10 +4,20 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
 <mapper namespace="com.qcloud.component.marketing.dao.mysql.mapper.FullReducesMapper">          
     <select id="list4query" parameterType="java.util.HashMap" resultType="FullReduces">  
-        select * from `marketing_full_reduces` limit #{start},#{count}
+        select * from `marketing_full_reduces`  where 1=1
+        <if test="merchantId !=0">
+        and `merchantId`=#{merchantId}
+        </if>
+        and state != 3
+        order by beginDate
+        limit #{start},#{count}
     </select>  
     
     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
-        select count(*) from `marketing_full_reduces`
+        select count(*) from `marketing_full_reduces`  where 1=1
+        <if test="merchantId !=0">
+        and `merchantId`=#{merchantId}
+        </if>
+         and state != 3
     </select> 
 </mapper>

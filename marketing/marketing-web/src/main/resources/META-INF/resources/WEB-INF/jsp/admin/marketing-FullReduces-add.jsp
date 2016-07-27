@@ -4,11 +4,17 @@
 <title>新增管理员</title>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/colorbox.css"/>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/chosen.css" />
-
+<link rel="stylesheet"
+	href="/qcloud-admin/assets/css/bootstrap-datetimepicker.css" />
+<link rel="stylesheet" href="/qcloud-admin/assets/css/datepicker.css" />
+<link rel="stylesheet"
+	href="/qcloud-admin/assets/css/bootstrap-timepicker.css" />
+<link rel="stylesheet"
+	href="/qcloud-admin/assets/css/daterangepicker.css" />
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
-        管理里管理
+        满减活动管理
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             新增
@@ -22,32 +28,12 @@
         <form id="model-form" class="form-horizontal"  role="form" action="/admin/fullReduces/add.do">
             <!-- #section:elements.form -->
 
-			      		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="id">  </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="id" name="id" placeholder="" value=""/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
                   		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="merchantId"> 商家id,平台为-1 </label>
+                <label class="col-sm-3 control-label no-padding-right" for="name">活动名称</label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="merchantId" name="merchantId" placeholder="商家id,平台为-1" value=""/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
-                  		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="name">  </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="name" name="name" placeholder="" value=""/>
+						<input type="text" class="width-100" maxlength="20" id="name" name="name" placeholder="活动名称" value=""/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
@@ -57,7 +43,8 @@
                 <label class="col-sm-3 control-label no-padding-right" for="benefit"> 优惠金额 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="benefit" name="benefit" placeholder="优惠金额" value=""/>
+						<input type="text" class="width-100" maxlength="20" id="benefit" name="benefit" placeholder="优惠金额" value="" onkeyup="value=value.replace(/[\W]/g,'') "   
+							onbeforepaste="this.setData('text', this.getData('text').replace(/[^\d]/g,''))"/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
@@ -67,7 +54,8 @@
                 <label class="col-sm-3 control-label no-padding-right" for="limitPrice"> 使用限额 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="limitPrice" name="limitPrice" placeholder="使用限额" value=""/>
+						<input type="text" class="width-100" maxlength="20" id="limitPrice" name="limitPrice" placeholder="使用限额" value="" onkeyup="value=value.replace(/[\W]/g,'') "   
+							onbeforepaste="this.setData('text', this.getData('text').replace(/[^\d]/g,''))"/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
@@ -94,30 +82,26 @@
             </div>
                   		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="canUseCoupon"> 是否可以和优惠券一起使用1可以2不可以 </label>
+                <label class="col-sm-3 control-label no-padding-right" for="canUseCoupon"> 与优惠券一起使用</label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="canUseCoupon" name="canUseCoupon" placeholder="是否可以和优惠券一起使用1可以2不可以" value=""/>
+						<select class="width-100"  id="canUseCoupon" name="canUseCoupon"  > 
+						<option value="2" selected="selected">否 </option>
+						<option value="1" >是</option>
+						</select> 
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
             </div>
                   		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="canUserSeckill"> 是否可以与秒杀一起1可以2不可以 </label>
+                <label class="col-sm-3 control-label no-padding-right" for="canUserSeckill"> 与秒杀一起使用 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="canUserSeckill" name="canUserSeckill" placeholder="是否可以与秒杀一起1可以2不可以" value=""/>
-						<i class="ace-icon fa"></i>
-					</span>
-                </div>
-            </div>
-                  		<div class="space-4"></div>
-            <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="state"> 是否启用1启用2禁用3删除 </label>
-                <div class="col-sm-9">
-					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="state" name="state" placeholder="是否启用1启用2禁用3删除" value=""/>
+						<select class="width-100" id="canUserSeckill" name="canUserSeckill" > 
+						<option value="2" selected="selected">否 </option>
+						<option value="1" >是</option>
+						</select> 
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
@@ -140,8 +124,11 @@
 </div><!-- /.row -->
 
 <script type="text/javascript">
-    var scripts = [null, "/qcloud-admin/assets/js/jquery.colorbox-min.js","/qcloud-admin/assets/js/upload-img.js","/qcloud-admin/assets/js/chosen.jquery.min.js", null];
-    ace.load_ajax_scripts(scripts, function () {
+var scripts = [null,"/qcloud-admin/assets/js/moment.min.js","/qcloud-admin/assets/js/bootstrap-datetimepicker.js", 
+               "/qcloud-admin/assets/js/jquery.colorbox-min.js","/qcloud-admin/assets/js/upload-img.js",
+               "/qcloud-admin/assets/js/chosen.jquery.min.js",
+               "/qcloud-admin/assets/js/date-time/bootstrap-datetimepicker.min.js", null];    
+       ace.load_ajax_scripts(scripts, function () {
         //inline scripts related to this page
         jQuery(function ($) {
             $(window)
@@ -152,6 +139,53 @@
                      $this.next().css({'width': $this.parent().width()});
                 })
             }).trigger('resize.chosen');
+
+            //获取当前时间
+	          var date = new Date();
+	          var seperator1 = "-";
+	          var seperator2 = ":";
+	          var month = date.getMonth() + 1;
+	          var strDate = date.getDate();
+	          if (month >= 1 && month <= 9) {
+	              month = "0" + month;
+	          }
+	          if (strDate >= 0 && strDate <= 9) {
+	              strDate = "0" + strDate;
+	          }
+	          var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+	                  + " " + date.getHours() + seperator2 + date.getMinutes()
+	                  + seperator2 + date.getSeconds();
+          
+            
+			//开始时间
+            $('#beginDate').datetimepicker({
+    			language: 'zh-cn',
+    			format: 'YYYY-MM-DD',
+                minDate:currentdate
+    		}).next().on(ace.click_event, function(){
+				$(this).prev().focus();
+			});
+            
+			//结束时间
+		 	$('#endDate').datetimepicker({
+    			language: 'zh-cn',
+    			format: 'YYYY-MM-DD',
+    			minDate:currentdate
+    		}).next().on(ace.click_event, function(){
+				$(this).prev().focus();
+			});
+			//验证时间
+		 	$.validator.addMethod("isCheckTime",function(value, element,params){  
+	               var isCheckTime=true;
+	               var beginDate =$('#beginDate').val();
+	               var endDate =$('#endDate').val();
+	               if(endDate<=beginDate)
+	               {
+	            	   isCheckTime=false;
+		           }
+					
+	               return isCheckTime;
+	            },"结束时间不能小于开始时间");  
                    
             //表单验证
             $("#model-form").validate({
@@ -163,8 +197,22 @@
                         required: true
                     },
                     mobile: {
+                        number:true,
                         required: true
                     },
+                    benefit: {
+                        number:true,
+                        required: true
+                    },
+                    limitPrice: {
+                        required: true
+                    },
+                    endDate: {
+                        required: true,
+                        isCheckTime:true
+                        
+                    },
+                    
 
                     sort: {
                         required: true,
@@ -205,6 +253,6 @@
                 invalidHandler: function (form) {
                 }
             });
-        });
+            });
     })
 </script>

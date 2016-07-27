@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>管理员管理</title>
+<title>满减活动管理</title>
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
-        管理员管理
+       满减活动管理
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             列表
@@ -18,7 +18,7 @@
     <div class="col-xs-12">
 
         <div class="table-header">
-            管理员列表
+            满减活动列表
         </div>
 
         <!-- <div class="table-responsive"> -->
@@ -40,16 +40,12 @@
                 <table class="table table-striped table-bordered table-hover dataTable no-footer">
                     <thead>
                     <tr role="row">     
-                                                <th></th>           
-                                                <th>商家id,平台为-1</th>           
-                                                <th></th>           
+                                                <th>名称</th>           
                                                 <th>优惠金额</th>           
                                                 <th>使用限额</th>           
-                                                <th>活动开始时间</th>           
-                                                <th>活动结束时间</th>           
-                                                <th>是否可以和优惠券一起使用1可以2不可以</th>           
-                                                <th>是否可以与秒杀一起1可以2不可以</th>           
-                                                <th>是否启用1启用2禁用3删除</th>           
+                                                <th>开始时间</th>           
+                                                <th>结束时间</th>           
+                                                <th>启用</th>           
                                                 <th class="sorting_disabled">操作</th>
                     </tr>
                     </thead>
@@ -57,21 +53,33 @@
                     <tbody>
                            <c:forEach items="${result}" var="item" varStatus="current"> 
                             <tr>            
-                                                        <td>${id}</td>                         
-                                                        <td>${merchantId}</td>                         
-                                                        <td>${name}</td>                         
-                                                        <td>${benefit}</td>                         
-                                                        <td>${limitPrice}</td>                         
-                                                        <td>${beginDate}</td>                         
-                                                        <td>${endDate}</td>                         
-                                                        <td>${canUseCoupon}</td>                         
-                                                        <td>${canUserSeckill}</td>                         
-                                                        <td>${state}</td>                         
+                                                        <td>${item.name}</td>                         
+                                                        <td>${item.benefit}</td>                         
+                                                        <td>${item.limitPrice}</td>                         
+                                                        <td>
+                                 						<fmt:formatDate value="${item.beginDate}" pattern="yyyy-MM-dd" />
+                                 					    </td>                         
+                                                        <td>
+                                 						<fmt:formatDate value="${item.endDate}" pattern="yyyy-MM-dd" />
+                                 					    </td>                         
+                                                        <td>                                                        
+                                                        <input value="${item.id}" type="checkbox" data-id="${item.id}" class="ace ace-switch ace-switch-5 ajax_switch"
+                                                        <c:if test="${item.state eq 1}">
+                                                        checked
+                                                        </c:if>>
+                                    					<span class="lbl middle"></span>  
+                                                        </td>
+
+                                                                                
                                                         <td>
                                 <div class="hidden-sm hidden-xs action-buttons">
-                                    <a title="修改基本信息" class="green" 
+                                    <a title="修改" class="green" 
                                        href="#admin/fullReduces/toEdit?id=${item.id}&queryStr=${queryStr}">
                                         <i class="ace-icon fa fa-pencil bigger-130"></i>
+                                    </a>							                                 
+                                    <a title="删除" class="red delete" 
+                                       api-path="/admin/fullReduces/delete.do?id=${item.id}">
+										<i class="ace-icon fa fa-trash-o bigger-130"></i>
                                     </a>							                                 
                                 </div>
                             </td>
@@ -94,6 +102,83 @@
     var scripts = [null, null];
     ace.load_ajax_scripts(scripts, function () {
         //inline scripts related to this page
-         
+      //删除
+       $('.delete').on('click',
+              function() {
+                  var delUrl = $(this).attr('api-path');
+                  BootstrapDialog.show({
+                      title: '确认删除信息？',
+                      message: '删除信息将不能恢复！',
+                      buttons: [{
+                          id: 'btn-1',
+                          label: '确定',
+                          cssClass: 'btn btn-primary',
+                          action: function(dialogItself) {
+                              $.get(delUrl, {},
+                              function(data) {
+                                  data = JSON.parse(data);
+                                  if (parseInt(data["status"]) === 0) {
+                                      dialogItself.setTitle('删除信息失败');
+                                      dialogItself.setMessage(data["message"]);
+                                      dialogItself.setType(BootstrapDialog.TYPE_DANGER);
+                                      dialogItself.getButton('btn-1').remove();
+                                  } else {
+                                      dialogItself.setTitle('成功');
+                                      dialogItself.setMessage("删除信息成功！");
+                                      dialogItself.setType(BootstrapDialog.TYPE_SUCCESS);
+                                      setTimeout(function() {
+                                          dialogItself.close();
+                                      },
+                                      1000);
+                                      setTimeout(function() {
+                                          location.reload(true);
+                                      },
+                                      1500);
+                                  }
+                              });
+                          }
+                      },
+                      {
+                          label: '取消',
+                          action: function(dialogItself) {
+                              dialogItself.close();
+                          }
+                      }]
+                  });
+              });
+        //启用
+    	$(".ajax_switch").on('change',function(){
+            var el = $(this);
+            var data = {
+                id:el.attr('data-id'),
+                enable:el[0].checked?'1':'2'
+            };
+            $.ajax({
+                url:'/admin/fullReduces/enable.do',
+                type:'POST',
+                data:data,
+                dataType: 'json',
+                cache: false,
+                async: false,
+                error: function(){
+                    BootstrapDialog.alert({
+                        title: '错误',
+                        message:'网络错误，请稍后再尝试！',
+                        type: BootstrapDialog.TYPE_DANGER,
+                        callback: function(){setTimeout(function(){el[0].checked = !el[0].checked;},500)}
+                    });
+                },
+                success:function(rd){
+                    if(rd['status'] != 200){
+                        BootstrapDialog.alert({
+                            title: '错误',
+                            message:rd.message,
+                            type: BootstrapDialog.TYPE_DANGER,
+                            callback: function(){setTimeout(function(){el[0].checked = !el[0].checked;},500)}
+                        });
+                    }
+                }
+            })
+        });   
     });
 </script>
