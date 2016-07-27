@@ -34,6 +34,23 @@ public class ExpressQueryUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/expressQuery/getExpressQuery.do");
         list.add("/expressQuery/getAllExpress.do");
         list.add("/app/expressQuery/getAllExpress.do");
+        return list;
+    }
+
+    @Override
+    public List<String> appUris() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("/app/expressQuery/getExpressQuery.do");
+        list.add("/app/expressQuery/getAllExpress.do");
+        list.add("/app/expressQuery/getQueryHistory.do");
+        return list;
+    }
+
+    @Override
+    public List<String> userUris() {
+
+        List<String> list = new ArrayList<String>();
         list.add("/expressQuery/getQueryHistory.do");
         list.add("/app/expressQuery/getQueryHistory.do");
         return list;

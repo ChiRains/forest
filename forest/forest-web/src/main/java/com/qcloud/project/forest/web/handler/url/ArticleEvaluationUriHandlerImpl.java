@@ -56,6 +56,7 @@ public class ArticleEvaluationUriHandlerImpl extends AbstractUriHandler {
 
         List<String> list = new ArrayList<String>();
         list.add("/articleEvaluation/list.do");
+        list.add("/app/articleEvaluation/list.do");
         return list;
     }
 

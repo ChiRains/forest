@@ -65,12 +65,20 @@ public class ModularUriHandlerImpl extends AbstractUriHandler {
     public List<String> whiteNameUris() {
 
         List<String> list = new ArrayList<String>();
-        list.add("/app/modular/myModular.do");
         list.add("/app/modular/allModular.do");
+        //
+        list.add("/modular/allModular.do");
+        return list;
+    }
+
+    @Override
+    public List<String> userUris() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("/app/modular/myModular.do");
         list.add("/app/modular/addModular.do");
         //
         list.add("/modular/myModular.do");
-        list.add("/modular/allModular.do");
         list.add("/modular/addModular.do");
         return list;
     }

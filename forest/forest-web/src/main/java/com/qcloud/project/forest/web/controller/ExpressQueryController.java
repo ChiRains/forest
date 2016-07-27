@@ -59,7 +59,7 @@ public class ExpressQueryController {
     @RequestMapping
     public FrontAjaxView getExpressQuery(HttpServletRequest request, String code, String expressNum, String expressName) {
 
-        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_IS_LOGIN_PARAMETER_KEY);
         Map<String, String> map = expressQueryService.getApiConfig();
         map.put("com", code);
         map.put("nu", expressNum);
@@ -67,20 +67,22 @@ public class ExpressQueryController {
         FrontAjaxView frontAjaxView = new FrontAjaxView();
         Map<String, Object> jsonMap = Json.toMap(result);
         if (jsonMap.get("status").equals("1")) {
-            ExpressQueryHistoryQuery expressQueryHistoryQuery = new ExpressQueryHistoryQuery();
-            expressQueryHistoryQuery.setExpressNum(expressNum);
-            expressQueryHistoryQuery.setUserId(user.getId());
-            ExpressQueryHistory expressQueryHistory1 = expressQueryHistoryService.getByUserIdAndExpressNum(expressQueryHistoryQuery);
-            if (expressQueryHistory1 != null) {
-                expressQueryHistoryService.delete(expressQueryHistory1.getId());
+            if (user != null) {
+                ExpressQueryHistoryQuery expressQueryHistoryQuery = new ExpressQueryHistoryQuery();
+                expressQueryHistoryQuery.setExpressNum(expressNum);
+                expressQueryHistoryQuery.setUserId(user.getId());
+                ExpressQueryHistory expressQueryHistory1 = expressQueryHistoryService.getByUserIdAndExpressNum(expressQueryHistoryQuery);
+                if (expressQueryHistory1 != null) {
+                    expressQueryHistoryService.delete(expressQueryHistory1.getId());
+                }
+                ExpressQueryHistory expressQueryHistory = new ExpressQueryHistory();
+                expressQueryHistory.setExpressName(expressName);
+                expressQueryHistory.setExpressNum(expressNum);
+                expressQueryHistory.setUserId(user.getId());
+                expressQueryHistory.setExpressCode(code);
+                expressQueryHistory.setTime(new Date());
+                expressQueryHistoryService.add(expressQueryHistory);
             }
-            ExpressQueryHistory expressQueryHistory = new ExpressQueryHistory();
-            expressQueryHistory.setExpressName(expressName);
-            expressQueryHistory.setExpressNum(expressNum);
-            expressQueryHistory.setUserId(user.getId());
-            expressQueryHistory.setExpressCode(code);
-            expressQueryHistory.setTime(new Date());
-            expressQueryHistoryService.add(expressQueryHistory);
             Object[] objects = JSONArray.fromObject(jsonMap.get("data")).toArray();
             List<ExpressQueryVO> list = new ArrayList<ExpressQueryVO>();
             for (int i = 0, j = objects.length; i < j; i++) {
@@ -136,7 +138,7 @@ public class ExpressQueryController {
     @RequestMapping
     public FrontPagingView getQueryHistory(HttpServletRequest request, PPage pPage) {
 
-        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
+        QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_IS_LOGIN_PARAMETER_KEY);
         ExpressQueryHistoryQuery expressQueryHistoryQuery = new ExpressQueryHistoryQuery();
         expressQueryHistoryQuery.setUserId(user.getId());
         Page<ExpressQueryHistory> page = expressQueryHistoryService.page(expressQueryHistoryQuery, pPage.getPageStart(), pPage.getPageSize());
