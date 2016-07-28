@@ -126,11 +126,10 @@
 			                                                            	
 					                                                        <a class="blue" href="#admin/partsMerchandise/toEditParts?classifyId=${levelFour.id}"><i class="ace-icon fa fa-pencil bigger-130"></i></a>
 							                                				<span class="lbl middle"></span>
-							                                				<!-- 
-							                                				<a class="red" href="#">
+							                                				<a class="red del-item-new2" href="javascript:;" 
+							                                				api-path="/admin/partsMerchandise/delete.do?classifyId=${levelFour.id}" api-name="${levelFour.name}">
 																				<i class="ace-icon fa fa-trash-o bigger-130"></i>
 																			</a>
-																			 -->
 		                                                                </div>
 		                                                            </li>
 		                                                        </c:forEach>
@@ -155,11 +154,12 @@
     var scripts = [null, null];
     ace.load_ajax_scripts(scripts, function () {
         //inline scripts related to this page
-        $('.del-item-new').on('click', function () {
+        $('.del-item-new2').on('click', function () {
             var delUrl = $(this).attr('api-path');
+            var name = $(this).attr('api-name');
             BootstrapDialog.show({
-                title: '确认删除？',
-                message: '删除后将无法恢复！',
+                title: '执行操作',
+                message: '确认删除【'+name+'】?',
                 buttons: [{
                     label: '确定',
                     cssClass: 'btn btn-primary',
