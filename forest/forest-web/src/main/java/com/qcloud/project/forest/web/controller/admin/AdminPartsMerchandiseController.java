@@ -102,10 +102,14 @@ public class AdminPartsMerchandiseController {
     }
 
     @RequestMapping
-    public AceAjaxView delete(Long id) {
+    @Transactional
+    public AceAjaxView delete(Long classifyId) {
 
-        AssertUtil.assertNotNull(id, "ID不能为空");
-        partsMerchandiseService.delete(id);
+        AssertUtil.assertNotNull(classifyId, "分类id不能为空");
+        for (PartsMerchandise partsMerchandise : partsMerchandiseService.listByClassifyId(classifyId)) {
+            partsMerchandiseService.deleteByMerchandiseId(partsMerchandise.getMerchandiseId());
+        }
+        publicdataClient.delete(classifyId);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("删除成功");
         aceAjaxView.setUrl(DIR + "/list");
@@ -217,8 +221,8 @@ public class AdminPartsMerchandiseController {
             AssertUtil.assertNotNull(qMerchandise, "请检查数据，商品不存在." + merchandiseId);
             partsMerchandise.setState(qMerchandise.getState());
             // 去除重复
-            if (!repeatList.contains(partsMerchandise.getId())) {
-                repeatList.add(partsMerchandise.getId());
+            if (!repeatList.contains(partsMerchandise.getMerchandiseId())) {
+                repeatList.add(partsMerchandise.getMerchandiseId());
                 partsMerchandiseService.add(partsMerchandise);
             }
         }
