@@ -89,4 +89,10 @@ public class GiftCouponUserDaoCacheImpl implements GiftCouponUserDao {
 
         return giftCouponUserDaoMysqlImpl.judgeCanUse(userId, id);
     }
+
+    @Override
+    public int countByUser(GiftCouponUserQuery query) {
+
+        return giftCouponUserDaoMysqlImpl.countByUser(query);
+    }
 }

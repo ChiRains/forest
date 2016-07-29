@@ -28,5 +28,5 @@ public interface MerchandiseBrowsingHistoryDao extends ISimpleDao<MerchandiseBro
 
     List<MerchandiseBrowsingHistory> listByUser(long userId, int start, int count);
 
-    public int countByUserId(long userId);
+    public int countByUser(long userId);
 }

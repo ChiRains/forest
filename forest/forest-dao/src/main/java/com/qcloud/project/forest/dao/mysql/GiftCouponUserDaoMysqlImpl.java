@@ -68,6 +68,15 @@ public class GiftCouponUserDaoMysqlImpl implements GiftCouponUserDao {
     }
 
     @Override
+    public int countByUser(GiftCouponUserQuery query) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("userId", query.getUserId());
+        int total = sqlOperator.selectOne("com.qcloud.project.forest.dao.mysql.mapper.GiftCouponUserMapper.countByUser", param);
+        return total;
+    }
+
+    @Override
     public Page<GiftCouponUser> page(int start, int count) {
 
         Map<String, Object> param = new HashMap<String, Object>();
@@ -109,7 +118,7 @@ public class GiftCouponUserDaoMysqlImpl implements GiftCouponUserDao {
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("userId", userId);
         param.put("now", DateUtil.date2String(new Date(), "yyyy-MM-dd HH:mm:ss"));
-        List<GiftCouponUser> list = sqlOperator.selectList("com.qcloud.project.forest.dao.mysql.mapper.GiftCouponUserMapper.listAll");
+        List<GiftCouponUser> list = sqlOperator.selectList("com.qcloud.project.forest.dao.mysql.mapper.GiftCouponUserMapper.listCanUse",param);
         return list;
     }
 

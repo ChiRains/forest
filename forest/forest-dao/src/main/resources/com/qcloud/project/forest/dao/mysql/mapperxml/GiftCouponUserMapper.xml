@@ -21,13 +21,22 @@
 	
 	<select id="listByUser" parameterType="java.util.HashMap" resultType="GiftCouponUser">
 		select * from `forest_gift_coupon_user`
-		where 1=1  and userId=#{userId}
+		where 1=1  
+		and userId=#{userId}
+		<![CDATA[ and `state` <> 2 ]]>
 		order by inValidDate asc
 		limit #{start},#{count}
 	</select>
 	
+	<select id="countByUser" parameterType="java.util.HashMap" resultType="Integer">
+		select count(*) from `forest_gift_coupon_user`
+		where 1=1  
+		and userId=#{userId}
+		<![CDATA[ and `state` <> 2 ]]>
+	</select>
+	
 	<select id="listCanUse" parameterType="java.util.HashMap" resultType="GiftCouponUser" >
-		select count(*) from `forest_gift_coupon_user` 
+		select * from `forest_gift_coupon_user` 
 		where 1=1
 			and	userId=#{userId}
 			<![CDATA[ and #{now} >=validDate  and #{now} <=inValidDate ]]>

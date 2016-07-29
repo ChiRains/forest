@@ -57,9 +57,6 @@ public class GiftCouponUserController {
     @Autowired
     private ConfigHandler         configHandler;
 
-    @Autowired
-    private FileSDKClient         fileSDKClient;
-
     /**
      * 获取当前用户的赠品券列表
      * @param request
@@ -71,26 +68,28 @@ public class GiftCouponUserController {
     public FrontPagingView myGiftCoupon(HttpServletRequest request, PPage pPage) {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
-        GiftCouponUserQuery giftCouponUserQuery = new GiftCouponUserQuery();
-        giftCouponUserQuery.setUserId(user.getId());
-        Page<GiftCouponUser> page = giftCouponUserService.page(giftCouponUserQuery, pPage.getPageStart(), pPage.getPageSize());
-        List<GiftCouponUserVO> voList = giftCouponUserHandler.toVOList(page.getData());
-        // 不显示不启用的赠品券
-        GiftCoupon giftCoupon = null;
-        GiftCouponUserVO giftCouponUserVO = null;
-        Iterator<GiftCouponUserVO> iter = voList.iterator();
-        while (iter.hasNext()) {
-            giftCouponUserVO = iter.next();
-            giftCoupon = giftCouponService.get(giftCouponUserVO.getGiftCouponId());
-            if (giftCoupon.getEnable() == 0) {
-                iter.remove();
-            } else if (giftCoupon.getEnable() == 1) {
-                if (giftCouponUserVO.getState() == 2) {
-                    iter.remove();
-                }
-            }
-        }
-        FrontPagingView frontPagingView = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), page.getCount());
+        GiftCouponUserQuery query = new GiftCouponUserQuery();
+        query.setUserId(user.getId());
+        List<GiftCouponUser> list = giftCouponUserService.listByUser(query, pPage.getPageStart(), pPage.getPageSize());
+        int count = giftCouponUserService.countByUser(query);
+        List<GiftCouponUserVO> voList = giftCouponUserHandler.toVOList(list);
+        // 不显示不启用的赠品券 ：
+        // 赠品券已经被用户领取到了,属于用户的财产;如果不显示下架的赠品券的话，不符合逻辑
+        // GiftCoupon giftCoupon = null;
+        // GiftCouponUserVO giftCouponUserVO = null;
+        // Iterator<GiftCouponUserVO> iter = voList.iterator();
+        // while (iter.hasNext()) {
+        // giftCouponUserVO = iter.next();
+        // giftCoupon = giftCouponService.get(giftCouponUserVO.getGiftCouponId());
+        // if (giftCoupon.getEnable() == 0) {
+        // iter.remove();
+        // } else if (giftCoupon.getEnable() == 1) {
+        // if (giftCouponUserVO.getState() == 2) {
+        // iter.remove();
+        // }
+        // }
+        // }
+        FrontPagingView frontPagingView = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), count);
         frontPagingView.setList(voList);
         return frontPagingView;
     }

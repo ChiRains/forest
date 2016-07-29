@@ -15,7 +15,9 @@ public interface GiftCouponUserService {
 
     public boolean update(GiftCouponUser giftCouponUser);
 
-    public List<GiftCouponUser> listByUser(GiftCouponUserQuery query, int start, int size) ;
+    public List<GiftCouponUser> listByUser(GiftCouponUserQuery query, int start, int size);
+
+    public int countByUser(GiftCouponUserQuery query);
 
     public Page<GiftCouponUser> page(GiftCouponUserQuery query, int start, int count);
 

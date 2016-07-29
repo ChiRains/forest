@@ -29,6 +29,9 @@ public class CombinationItemVO {
 
     private String            desc;
 
+    // 订单项
+    private Long              orderItemId;
+
     private List<OrderItemVO> orderItemList = new ArrayList<OrderItemVO>();
 
     public long getUnifiedMerchandiseId() {
@@ -129,5 +132,15 @@ public class CombinationItemVO {
     public void setDesc(String desc) {
 
         this.desc = desc;
+    }
+
+    public Long getOrderItemId() {
+
+        return orderItemId;
+    }
+
+    public void setOrderItemId(Long orderItemId) {
+
+        this.orderItemId = orderItemId;
     }
 }

@@ -102,12 +102,12 @@
             </div>
                   		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="canUserSeckill"> 与秒杀一起使用 </label>
+                <label class="col-sm-3 control-label no-padding-right" for="canUseSeckill"> 与秒杀一起使用 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<select class="width-100" id="canUserSeckill" name="canUserSeckill" > 
-						<option value="2" <c:if test="${fullReduces.canUserSeckill eq 2} ">selected="selected"</c:if>>否 </option>
-						<option value="1" <c:if test="${fullReduces.canUserSeckill eq 1} ">selected="selected"</c:if>>是</option>
+						<select class="width-100" id="canUseSeckill" name="canUseSeckill" > 
+						<option value="2" <c:if test="${fullReduces.canUseSeckill eq 2} ">selected="selected"</c:if>>否 </option>
+						<option value="1" <c:if test="${fullReduces.canUseSeckill eq 1} ">selected="selected"</c:if>>是</option>
 						</select> 
 						<i class="ace-icon fa"></i>
 					</span>

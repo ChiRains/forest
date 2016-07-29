@@ -80,8 +80,8 @@ public class MerchandiseBrowsingHistoryDaoCacheImpl implements MerchandiseBrowsi
     }
 
     @Override
-    public int countByUserId(long userId) {
+    public int countByUser(long userId) {
 
-        return merchandiseBrowsingHistoryDaoMysqlImpl.countByUserId(userId);
+        return merchandiseBrowsingHistoryDaoMysqlImpl.countByUser(userId);
     }
 }

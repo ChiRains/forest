@@ -234,4 +234,10 @@ public class UnifiedMerchandiseEntity implements QUnifiedMerchandise {
 
         return unifiedMerchandise.getActivityId();
     }
+
+    @Override
+    public int getState() {
+
+        return unifiedMerchandise.getState();
+    }
 }

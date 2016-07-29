@@ -1,7 +1,6 @@
 package com.qcloud.component.marketing.model;
 
 import java.util.Date;
-import java.math.BigDecimal;
 
 public class FullReduces {
 	
@@ -28,7 +27,7 @@ public class FullReduces {
 	private int canUseCoupon;		
 	
 	//是否可以与秒杀一起1可以2不可以
-	private int canUserSeckill;		
+	private int canUseSeckill;		
 	
 	//是否启用1启用2禁用3删除
 	private int state;		
@@ -37,7 +36,7 @@ public class FullReduces {
 	
 	}
 
-	public FullReduces(long id,long merchantId,String name,double benefit,double limitPrice,Date beginDate,Date endDate,int canUseCoupon,int canUserSeckill,int state){
+	public FullReduces(long id,long merchantId,String name,double benefit,double limitPrice,Date beginDate,Date endDate,int canUseCoupon,int canUseSeckill,int state){
 		this.id = id;		
 		this.merchantId = merchantId;		
 		this.name = name;		
@@ -46,7 +45,7 @@ public class FullReduces {
 		this.beginDate = beginDate;		
 		this.endDate = endDate;		
 		this.canUseCoupon = canUseCoupon;		
-		this.canUserSeckill = canUserSeckill;		
+		this.canUseSeckill = canUseSeckill;		
 		this.state = state;		
 	}
 	
@@ -114,12 +113,12 @@ public class FullReduces {
 		return canUseCoupon;
 	}	
 		
-	public void setCanUserSeckill(int canUserSeckill) {
-		this.canUserSeckill = canUserSeckill;
+	public void setCanUseSeckill(int canUseSeckill) {
+		this.canUseSeckill = canUseSeckill;
 	}
 
-	public int getCanUserSeckill() {
-		return canUserSeckill;
+	public int getCanUseSeckill() {
+		return canUseSeckill;
 	}	
 		
 	public void setState(int state) {

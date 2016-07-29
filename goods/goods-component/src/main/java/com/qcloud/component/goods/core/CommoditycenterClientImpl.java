@@ -145,7 +145,8 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
         QUnifiedMerchandise unifiedMerchandise = getUnifiedMerchandise(unifiedMerchandiseId);
         int totalStock = unifiedMerchandise.getStock() - stock;
         if (totalStock < 0) {
-            throw new CommoditycenterException("锁定库存失败,库存不足." + unifiedMerchandise.getId() + " " + unifiedMerchandise.getStock() + " " + stock);
+            // throw new CommoditycenterException("锁定库存失败,库存不足." + unifiedMerchandise.getId() + " " + unifiedMerchandise.getStock() + " " + stock);
+            throw new CommoditycenterException("锁定库存失败:" + unifiedMerchandise.getName() + "库存不足" + stock);
         }
         return unifiedMerchandiseService.lockStock(unifiedMerchandiseId, stock);
     }

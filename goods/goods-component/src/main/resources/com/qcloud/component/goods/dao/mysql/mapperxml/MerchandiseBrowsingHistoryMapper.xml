@@ -12,10 +12,16 @@
     </select> 
     
       <select id="listByUser" parameterType="java.util.HashMap" resultType="MerchandiseBrowsingHistory">  
-        select * from `goods_merchandise_browsing_history` where userId = #{userId} limit #{start},#{count}
+        select * from `goods_merchandise_browsing_history` 
+        where userId = #{userId} 
+        group by `unifiedMerchandiseId`
+        limit #{start},#{count}
     </select>  
     <!-- 通过UserId获取我的历史足迹数 -->
-      <select id="countByUserId" parameterType="java.util.HashMap" resultType="Integer">  
-        select count(*) from `goods_merchandise_browsing_history` where userId = #{userId} 
+      <select id="countByUser" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from (select count(*) from `goods_merchandise_browsing_history` 
+        where userId = #{userId} 
+        group by `unifiedMerchandiseId` ) A
+        
     </select>  
 </mapper>
