@@ -1,6 +1,7 @@
 package com.qcloud.project.forest.util;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -15,7 +16,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import com.qcloud.pirates.core.json.Json;
+import com.qcloud.pirates.core.reflect.BeanUtils;
 import com.qcloud.pirates.util.StringUtil;
+import com.qcloud.project.forest.model.oms.XmlResult;
 
 public class OutsideUtil {
 
@@ -77,5 +80,40 @@ public class OutsideUtil {
             }
         }
         return content;
+    }
+
+    public static String getReturnXml(Object obj) {
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        sb.append("<response>");
+        recursion(obj, sb);
+        sb.append("</response>");
+        return sb.toString();
+    }
+
+    private static String recursion(Object object, StringBuilder sb) {
+
+        Map<String, Object> beanMap = BeanUtils.transBean2Map(object);
+        for (Entry<String, Object> entry : beanMap.entrySet()) {
+            if (entry.getValue() != null) {
+                if (entry.getValue().getClass().getCanonicalName().startsWith("com.qcloud")) {
+                    recursion(entry.getValue(), sb);
+                } else if (entry.getValue() instanceof java.util.List && ((List<?>) entry.getValue()).get(0).getClass().getCanonicalName().startsWith("com.qcloud")) {
+                    sb.append("<").append(entry.getKey()).append(">");
+                    for (Object obj : ((List<?>) entry.getValue())) {
+                        sb.append("<").append(obj.getClass().getSimpleName().toLowerCase()).append(">");
+                        recursion(obj, sb);
+                        sb.append("</").append(obj.getClass().getSimpleName().toLowerCase()).append(">");
+                    }
+                    sb.append("</").append(entry.getKey()).append(">");
+                } else {
+                    sb.append("<").append(entry.getKey()).append(">");
+                    sb.append(entry.getValue());
+                    sb.append("</").append(entry.getKey()).append(">");
+                }
+            }
+        }
+        return sb.toString();
     }
 }

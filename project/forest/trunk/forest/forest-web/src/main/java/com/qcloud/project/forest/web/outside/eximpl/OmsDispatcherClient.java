@@ -8,9 +8,9 @@ import com.qcloud.project.forest.model.oms.QueryForm;
 public class OmsDispatcherClient {
 
     @Autowired
-    private OmsStandard standard;
+    private OmsCanonical standard;
 
-    public void setStandard(OmsStandard standard) {
+    public void setStandard(OmsCanonical standard) {
 
         this.standard = standard;
     }
@@ -19,8 +19,8 @@ public class OmsDispatcherClient {
      * 跳转的方法
      * @param method
      */
-    public void request(QueryForm queryForm) {
+    public String requestToXml(QueryForm queryForm) {
 
-        standard.handle(queryForm);
+        return standard.handleToXml(queryForm);
     }
 }
