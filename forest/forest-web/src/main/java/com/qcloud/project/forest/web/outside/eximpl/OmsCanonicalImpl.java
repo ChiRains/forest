@@ -2,6 +2,7 @@ package com.qcloud.project.forest.web.outside.eximpl;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,14 @@ import com.qcloud.pirates.core.xml.Xml;
 import com.qcloud.pirates.core.xml.XmlFactory;
 import com.qcloud.pirates.core.xml.XmlItem;
 import com.qcloud.project.forest.model.oms.QueryForm;
+import com.qcloud.project.forest.model.oms.XmlResult;
 import com.qcloud.project.forest.service.oms.OmsDispatcherService;
+import com.qcloud.project.forest.util.OutsideUtil;
+import com.qcloud.project.forest.web.vo.ActivityVO;
+import com.qcloud.project.forest.web.vo.MedicationVO;
 
 @Component
-public class OmsStandardImpl implements OmsStandard {
+public class OmsCanonicalImpl implements OmsCanonical {
 
     @Autowired
     public OmsDispatcherService dispatcherService;
@@ -48,18 +53,25 @@ public class OmsStandardImpl implements OmsStandard {
     }
 
     @Override
-    public void handle(QueryForm queryForm) {
+    public String handleToXml(QueryForm queryForm) {
 
+        String xml = "";
         for (InvokeConfig invokeConfig : invokeConfigs) {
             if (invokeConfig.getOmsToMethod().equals(queryForm.getMethod())) {
                 try {
                     Class<?>[] paramTypes = invokeConfig.getParamTypes().toArray(new Class<?>[invokeConfig.getParamTypes().size()]);
                     Method handle = dispatcherService.getClass().getMethod(invokeConfig.getInvoke(), paramTypes);
-                    handle.invoke(dispatcherService, queryForm);
+                    Object obj = handle.invoke(dispatcherService, queryForm);
+                    if (!Boolean.class.isInstance(obj)) {
+                        xml = OutsideUtil.getReturnXml(obj);
+                    } else {
+                        xml = OutsideUtil.getReturnXml(new XmlResult(0, "成功"));
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }
+        return xml;
     }
 }
