@@ -55,7 +55,7 @@ public class MyCollectionController {
             view.addObject("id", -1L);
             view.setMessage("尚未收藏.");
         }
-        view.addObject("collect", String.valueOf(collect));
+        view.addObject("collect", collect);
         return view;
     }
 
