@@ -36,14 +36,11 @@ public class AdminFullReducesController {
     @Autowired
     private FullReducesHandler fullReducesHandler;
 
-    @Autowired
-    private SellercenterClient sellercenterClient;
-
     @RequestMapping
     @NoReferer
     public ModelAndView list(HttpServletRequest request, Integer pageNum, PPage pPage, FullReducesQuery query) {
 
-        QMerchant merchant = PageParameterUtil.getParameterValues(request, sellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
+        QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
         query.setMerchantId(merchant.getId());
         Page<FullReduces> page = fullReducesService.page(query, pPage.getPageStart(), pPage.getPageSize());
         List<AdminFullReducesVO> list = fullReducesHandler.toVOList4Admin(page.getData());
@@ -65,7 +62,7 @@ public class AdminFullReducesController {
     @RequestMapping
     public AceAjaxView add(HttpServletRequest request, FullReduces fullReduces) {
 
-        QMerchant merchant = PageParameterUtil.getParameterValues(request, sellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
+        QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
         fullReduces.setMerchantId(merchant.getId());
         fullReduces.setState(1);
         fullReducesService.add(fullReduces);
@@ -90,7 +87,7 @@ public class AdminFullReducesController {
     @RequestMapping
     public AceAjaxView edit(HttpServletRequest request, FullReduces fullReduces, String queryStr) {
 
-        QMerchant merchant = PageParameterUtil.getParameterValues(request, sellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
+        QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
         AssertUtil.assertTrue(fullReduces.getMerchantId() == merchant.getId(), "您没权限进行当前操作");
         fullReducesService.update(fullReduces);
         AceAjaxView aceAjaxView = new AceAjaxView();
@@ -102,7 +99,7 @@ public class AdminFullReducesController {
     @RequestMapping
     public AceAjaxView delete(HttpServletRequest request, Long id) {
 
-        QMerchant merchant = PageParameterUtil.getParameterValues(request, sellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
+        QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
         AssertUtil.assertNotNull(id, "ID不能为空");
         FullReduces fullReduces = fullReducesService.get(id);
         AssertUtil.assertTrue(fullReduces.getMerchantId() == merchant.getId(), "您没权限进行当前操作");
@@ -117,7 +114,7 @@ public class AdminFullReducesController {
     @RequestMapping
     public AceAjaxView enable(HttpServletRequest request, Long id, int enable) {
 
-        QMerchant merchant = PageParameterUtil.getParameterValues(request, sellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
+        QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
         AssertUtil.assertNotNull(id, "ID不能为空");
         FullReduces fullReduces = fullReducesService.get(id);
         AssertUtil.assertTrue(fullReduces.getMerchantId() == merchant.getId(), "您没权限进行当前操作");
