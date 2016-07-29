@@ -7,11 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.qcloud.component.marketing.MarketingClient;
 import com.qcloud.component.marketing.QCoupon;
+import com.qcloud.component.marketing.QFullReduces;
+import com.qcloud.component.marketing.entity.FullReducesEntity;
 import com.qcloud.component.marketing.model.Coupon;
 import com.qcloud.component.marketing.model.CouponItems;
+import com.qcloud.component.marketing.model.FullReduces;
 import com.qcloud.component.marketing.service.CouponItemsService;
 import com.qcloud.component.marketing.service.CouponService;
-import com.qcloud.pirates.util.AssertUtil;
+import com.qcloud.component.marketing.service.FullReducesService;
 import com.qcloud.pirates.util.DateUtil;
 
 @Service
@@ -22,6 +25,9 @@ public class MarketingClientImpl implements MarketingClient {
 
     @Autowired
     CouponService      couponService;
+
+    @Autowired
+    FullReducesService fullReducesService;
 
     @Override
     public boolean useCoupon(long couponItemId) {
@@ -78,5 +84,36 @@ public class MarketingClientImpl implements MarketingClient {
 
         Coupon coupon = couponService.get(id);
         return coupon;
+    }
+
+    @Override
+    public List<QFullReduces> listCurrentReduces() {
+
+        List<FullReduces> list = fullReducesService.listCurrentReduces();
+        List<QFullReduces> qList = new ArrayList<QFullReduces>();
+        for (FullReduces fullReduces : list) {
+            FullReducesEntity entity = new FullReducesEntity(fullReduces);
+            qList.add(entity);
+        }
+        return qList;
+    }
+
+    @Override
+    public QFullReduces getCanUseReduces(double sum) {
+
+        QFullReduces appro = null;
+        List<QFullReduces> qList = listCurrentReduces();
+        for (QFullReduces fullReduces : qList) {
+            if (fullReduces.getLimitPrice() <= sum) {
+                if (appro == null) {
+                    appro = fullReduces;
+                } else {
+                    if (fullReduces.getLimitPrice() - appro.getLimitPrice() > 0) {
+                        appro = fullReduces;
+                    }
+                }
+            }
+        }
+        return appro;
     }
 }

@@ -19,4 +19,8 @@ public interface MarketingClient {
     Long extractCoupon(long userId, long couponId);
 
     List<QCoupon> listByPlatform();
+
+    List<QFullReduces> listCurrentReduces();
+
+    QFullReduces getCanUseReduces(double sum);
 }

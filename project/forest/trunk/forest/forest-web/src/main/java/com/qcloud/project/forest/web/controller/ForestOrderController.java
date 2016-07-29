@@ -20,6 +20,7 @@ import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.goods.exception.CommoditycenterException;
 import com.qcloud.component.marketing.MarketingClient;
 import com.qcloud.component.marketing.QCoupon;
+import com.qcloud.component.marketing.QFullReduces;
 import com.qcloud.component.my.DeliveryModeType;
 import com.qcloud.component.my.MyClient;
 import com.qcloud.component.my.QMyConsignee;
@@ -145,7 +146,7 @@ public class ForestOrderController {
         //
         Map<QUnifiedMerchandise, Integer> merchandiseMap = new HashMap<QUnifiedMerchandise, Integer>();
         Set<Long> freeMerchandiseSet = new HashSet<Long>();
-        // TODO
+        // 自由组合商品集合
         Map<QUnifiedMerchandise, Integer> freeCombinationMap = new HashMap<QUnifiedMerchandise, Integer>();
         Map<QUnifiedMerchandise, Map<QUnifiedMerchandise, Integer>> freeMerchandiseListMap = new HashMap<QUnifiedMerchandise, Map<QUnifiedMerchandise, Integer>>();
         for (MerchandiseDetail merchandiseDetail : merchandiseList) {
@@ -189,7 +190,6 @@ public class ForestOrderController {
         context.setFreeMerchandiseListMap(freeMerchandiseListMap);// 自由搭配商品的子商品集合 combination : unifiedMerchandiseId + number
         context.setMerchantList(new ArrayList<QMerchant>(merchantSet));
         judgePrepareMerchandiseStock(context);// 判断
-        // AssertUtil.assertTrue(false, "测试用抛异常----");
         // 计算邮费 begin TODO
         Map<QMerchant, List<OrderExpressVO>> expressMap = calculatePreparePostage(context, orderForm.getExpressCode());
         // 计算邮费 end
@@ -254,27 +254,11 @@ public class ForestOrderController {
                         orderItem.setAfterSale(false);
                         orderItem.setNumber(orderItemDetailEntity.getNumber());
                         orderItem.setEvaluation(false);
-                        // 统一商品拿过来
+                        // 从统一商品拿过来
                         orderItem.setPrice(merchandiseItem.getPrice());
                         orderItem.setUnit(merchandiseItem.getUnit());
                         preOrderCombinationVO.getOrderItemList().add(orderItem);
                     }
-                    // for (QUnifiedMerchandise merchandiseItem : merchandise.getList()) {
-                    // OrderItemVO orderItem = new OrderItemVO();
-                    // orderItem.setCode(merchandiseItem.getCode());
-                    // orderItem.setName(merchandiseItem.getName());
-                    // orderItem.setDiscount(merchandiseItem.getDiscount());
-                    // orderItem.setPrice(merchandiseItem.getPrice());
-                    // orderItem.setImage(fileSDKClient.getFileServerUrl() + merchandiseItem.getImage());
-                    // orderItem.setUnifiedMerchandiseId(merchandiseItem.getId());
-                    // orderItem.setSpecifications(merchandiseItem.getSpecifications());
-                    // orderItem.setAfterSale(false);
-                    // orderItem.setNumber(merchandiseItem.getNumber());
-                    // orderItem.setEvaluation(false);
-                    // orderItem.setUnit(merchandiseItem.getUnit());
-                    // preOrderCombinationVO.getOrderItemList().add(orderItem);
-                    // }
-                    //
                     preMerchantVO.getCombinationItemList().add(preOrderCombinationVO);
                 }
             }
@@ -301,11 +285,13 @@ public class ForestOrderController {
         // 赠品券
         List<OrderGiftCouponVO> giftCouponList = calculateGiftCoupon(user.getId());
         // List<OrderGiftCouponVO> giftCouponList = new ArrayList<OrderGiftCouponVO>();
+        List<QFullReduces> reduceList = marketingClient.listCurrentReduces();
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取下单数据成功");
         view.addObject("preOrder", preOrderMVO);
         view.addObject("discount", context.getDiscount());
         view.addObject("giftCouponList", giftCouponList);
+        view.addObject("reduceList", reduceList);
         // 会员折扣信息
         QGrade grade = user.getGrade();
         view.addObject("discountMessage", "会员尊享:" + grade.getDiscount() * 100 / 1000 + "折优惠");
