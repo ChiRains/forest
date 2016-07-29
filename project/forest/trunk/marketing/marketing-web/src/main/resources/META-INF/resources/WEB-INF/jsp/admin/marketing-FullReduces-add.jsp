@@ -95,10 +95,10 @@
             </div>
                   		<div class="space-4"></div>
             <div class="form-group">
-                <label class="col-sm-3 control-label no-padding-right" for="canUserSeckill"> 与秒杀一起使用 </label>
+                <label class="col-sm-3 control-label no-padding-right" for="canUseSeckill"> 与秒杀一起使用 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<select class="width-100" id="canUserSeckill" name="canUserSeckill" > 
+						<select class="width-100" id="canUseSeckill" name="canUseSeckill" > 
 						<option value="2" selected="selected">否 </option>
 						<option value="1" >是</option>
 						</select> 

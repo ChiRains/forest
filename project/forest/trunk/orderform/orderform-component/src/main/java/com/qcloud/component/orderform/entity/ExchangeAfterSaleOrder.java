@@ -131,4 +131,11 @@ public class ExchangeAfterSaleOrder extends AfterSaleOrder {
         // TODO Auto-generated method stub
         return 0;
     }
+
+    @Override
+    public String getAfterSaleImage() {
+
+        // TODO Auto-generated method stub
+        return "";
+    }
 }

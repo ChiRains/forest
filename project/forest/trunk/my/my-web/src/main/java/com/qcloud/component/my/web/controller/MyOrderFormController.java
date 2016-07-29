@@ -126,7 +126,7 @@ public class MyOrderFormController {
         return view;
     }
 
-    private int[] statOrderStates         = new int[] { 1};
+    private int[] statOrderStates         = new int[] { 1, 2, 3, 4, 5};
 
-    private int[] statMerchantOrderStates = new int[] { 2, 3, 4, 5};
+    private int[] statMerchantOrderStates = new int[] {};
 }

@@ -75,4 +75,10 @@ public class GiftCouponUserServiceImpl implements GiftCouponUserService {
 
         return giftCouponUserDao.judgeCanUse(userId, id);
     }
+
+    @Override
+    public int countByUser(GiftCouponUserQuery query) {
+
+        return giftCouponUserDao.countByUser(query);
+    }
 }

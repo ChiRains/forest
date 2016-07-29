@@ -1,5 +1,6 @@
 package com.qcloud.component.marketing.dao.mysql;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import com.qcloud.component.marketing.model.FullReduces;
 import com.qcloud.component.marketing.model.query.FullReducesQuery;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.data.sql.mybatis.SqlOperator;
+import com.qcloud.pirates.util.DateUtil;
 
 @Repository
 public class FullReducesDaoMysqlImpl implements FullReducesDao {
@@ -88,6 +90,15 @@ public class FullReducesDaoMysqlImpl implements FullReducesDao {
     public List<FullReduces> listAll() {
 
         List<FullReduces> list = sqlOperator.selectList("com.qcloud.component.marketing.dao.mysql.mapper.FullReducesMapper.listAll");
+        return list;
+    }
+
+    @Override
+    public List<FullReduces> listCurrentReduces() {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("now", DateUtil.date2String(new Date(), "yyyy-MM-dd") + " 00:00:00");
+        List<FullReduces> list = sqlOperator.selectList("com.qcloud.component.marketing.dao.mysql.mapper.FullReducesMapper.listCurrentReduces", param);
         return list;
     }
 }

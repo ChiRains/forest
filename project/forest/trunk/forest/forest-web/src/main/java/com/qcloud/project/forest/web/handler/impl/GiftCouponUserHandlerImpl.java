@@ -1,6 +1,7 @@
 package com.qcloud.project.forest.web.handler.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -36,6 +37,9 @@ public class GiftCouponUserHandlerImpl implements GiftCouponUserHandler {
         giftCouponUserVO.setValidDate(DateUtil.date2String(giftCouponUser.getValidDate(), "yyyy.MM.dd"));
         giftCouponUserVO.setInValidDate(DateUtil.date2String(giftCouponUser.getInValidDate(), "yyyy.MM.dd"));
         giftCouponUserVO.setImage(fileSDKClient.getFileServerUrl() + giftCouponUserVO.getImage());
+        if (new Date().after(giftCouponUser.getInValidDate())) {
+            giftCouponUserVO.setState(3);
+        }
         return giftCouponUserVO;
     }
 

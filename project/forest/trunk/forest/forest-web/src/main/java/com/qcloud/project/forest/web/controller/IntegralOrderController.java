@@ -81,9 +81,28 @@ public class IntegralOrderController {
         IntegralOrder order = integralOrderService.get(orderId);
         AssertUtil.assertNotNull(order, "订单数据不存在.");
         IntegralOrderVO orderVO = integralOrderHandler.toVO(order);
-        order.setUnifiedMerchandiseId(11111);
         FrontAjaxView view = new FrontAjaxView();
         view.addObject("order", orderVO);
+        view.setMessage("获取积分订单成功.");
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView getSimple(HttpServletRequest request, Long orderId) {
+
+        AssertUtil.greatZero(orderId, "订单id不能为空.");
+        IntegralOrder order = integralOrderService.get(orderId);
+        AssertUtil.assertNotNull(order, "订单数据不存在.");
+        IntegralOrderVO orderVO = integralOrderHandler.toVO(order);
+        FrontAjaxView view = new FrontAjaxView();
+        view.addObject("state", orderVO.getState());
+        view.addObject("orderNumber", orderVO.getOrderNumber());
+        view.addObject("cash", orderVO.getCash());
+        view.addObject("integral", orderVO.getIntegral());
+        view.addObject("paymentModeStr", orderVO.getPaymentModeStr());
+        view.addObject("giveIntegral", (int) orderVO.getCash() / 10);// 获得积分
+        view.addObject("giveGrowth", (int) orderVO.getCash() / 10);// 获得成长值
         view.setMessage("获取积分订单成功.");
         return view;
     }

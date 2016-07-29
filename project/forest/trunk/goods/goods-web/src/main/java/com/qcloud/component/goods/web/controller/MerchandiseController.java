@@ -350,7 +350,7 @@ public class MerchandiseController {
             merchandiseBrowsingHistory.setUserId(user.getId());
             merchandiseBrowsingHistoryService.add(merchandiseBrowsingHistory);
         }
-        UnifiedMerchandise unifiedMerchandise = unifiedMerchandiseService.get(unifiedMerchandiseId);
+        QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(unifiedMerchandiseId);
         AssertUtil.assertNotNull(unifiedMerchandise, "统一商品不存在." + unifiedMerchandiseId);
         AssertUtil.assertTrue(!UnifiedMerchandiseType.COMBINATION.equals(unifiedMerchandise.getType()), "组合商品数据不在这个接口提供." + unifiedMerchandiseId);
         Merchandise merchandise = merchandiseService.get(unifiedMerchandise.getMerchandiseId());
@@ -386,7 +386,8 @@ public class MerchandiseController {
             merchandiseVO.setVipDiscount(merchandiseVipDiscount == null ? 0 : merchandiseVipDiscount.getPrice());
         }
         //
-        merchandiseVO.setSpecifications("");
+        merchandiseVO.setSpecifications(unifiedMerchandise.getSpecifications());
+        //
         MerchandiseExtVO merchandiseExtVO = new MerchandiseExtVO();
         //
         merchandiseExtVO.setCertified(EnableType.ENABLE.getKey() == merchandise.getIsCertified());
@@ -436,7 +437,6 @@ public class MerchandiseController {
                 }
             }
         }
-        merchandiseVO.setSpecifications(specificationsStr);
         merchandiseExtVO.setImageList(imageStrList);
         // 为空则取默认图
         if (CollectionUtils.isEmpty(merchandiseExtVO.getImageList())) {
@@ -490,7 +490,7 @@ public class MerchandiseController {
         for (MerchandiseAttributeVO merchandiseAttributeVO : voList) {
             attrMap.put(merchandiseAttributeVO.getCode(), merchandiseAttributeVO);
         }
-        // 组合商品 TODO
+        // 组合商品
         List<CombinationMerchandiseVO> comVOList = new ArrayList<CombinationMerchandiseVO>();
         Set<Long> combinationMerchandiseIdList = new HashSet<Long>();
         List<CombinationMerchandiseItem> combinationItemList = combinationMerchandiseItemService.listByMerchandiseItem(unifiedMerchandise.getId(), 0, Integer.MAX_VALUE);
@@ -499,7 +499,6 @@ public class MerchandiseController {
                 UnifiedMerchandise combinationMerchandise = unifiedMerchandiseService.get(combinationMerchandiseItem.getCombinationUnifiedMerchandiseId());
                 CombinationMerchandiseVO combinationMerchandiseVO = combinationMerchandiseHandler.toVO(combinationMerchandise);
                 combinationMerchandiseVO.setType(combinationMerchandiseItem.getType());
-                
                 combinationMerchandiseIdList.add(combinationMerchandiseItem.getCombinationUnifiedMerchandiseId());
                 comVOList.add(combinationMerchandiseVO);
             }

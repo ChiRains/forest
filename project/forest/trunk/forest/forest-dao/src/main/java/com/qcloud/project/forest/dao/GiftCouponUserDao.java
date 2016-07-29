@@ -29,6 +29,8 @@ public interface GiftCouponUserDao extends ISimpleDao<GiftCouponUser, Long> {
 
     public List<GiftCouponUser> listByUser(GiftCouponUserQuery query, int start, int size);
 
+    public int countByUser(GiftCouponUserQuery query);
+
     public List<GiftCouponUser> listCanUse(long userId);
 
     public boolean judgeCanUse(long userId, long id);

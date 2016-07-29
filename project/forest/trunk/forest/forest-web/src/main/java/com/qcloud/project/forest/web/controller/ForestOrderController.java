@@ -231,7 +231,7 @@ public class ForestOrderController {
                     preOrderItemVO.setSum(orderItemEntity.getSum());
                     preMerchantVO.getImageList().add(fileSDKClient.getFileServerUrl() + orderItemEntity.getImage());
                     preMerchantVO.getPreOrderItemList().add(preOrderItemVO);
-                } else if (merchandise.getType().equals(UnifiedMerchandiseType.COMBINATION)) {
+                } else if (merchandise.getType().equals(UnifiedMerchandiseType.COMBINATION)) {// 组合
                     PreOrderCombinationVO preOrderCombinationVO = new PreOrderCombinationVO();
                     preOrderCombinationVO.setDiscount(orderItemEntity.getSum());
                     preOrderCombinationVO.setUnifiedMerchandiseId(orderItemEntity.getUnifiedMerchandiseId());
@@ -249,7 +249,7 @@ public class ForestOrderController {
                         orderItem.setName(orderItemDetailEntity.getName());
                         orderItem.setDiscount(orderItemDetailEntity.getDiscount());
                         orderItem.setImage(fileSDKClient.getFileServerUrl() + orderItemDetailEntity.getImage());
-                        orderItem.setUnifiedMerchandiseId(orderItemDetailEntity.getId());
+                        orderItem.setUnifiedMerchandiseId(orderItemDetailEntity.getUnifiedMerchandiseId());
                         orderItem.setSpecifications(orderItemDetailEntity.getSpecifications());
                         orderItem.setAfterSale(false);
                         orderItem.setNumber(orderItemDetailEntity.getNumber());
@@ -331,7 +331,6 @@ public class ForestOrderController {
     public FrontAjaxView order(HttpServletRequest request, OrderForm orderForm, Long giftCouponUser, String prove, DeliveryForm deliveryForm) {
 
         AssertUtil.assertNotNull(orderForm.getConsigneeId(), "收货人信息数据不能为空.");
-        // AssertUtil.assertNotNull(orderForm.getDeliveryId(), "配送信息数据不能为空.");
         AssertUtil.assertNotNull(orderForm.getInvoiceId(), "发票信息数据不能为空.");
         AssertUtil.assertNotEmpty(deliveryForm.getTime(), "配送时间/自提时间不能为空.");
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
@@ -621,6 +620,26 @@ public class ForestOrderController {
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取订单成功");
         view.addObject("order", orderVO);
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView getSimple(HttpServletRequest request, Long orderId, Date orderDate) {
+
+        AssertUtil.assertNotNull(orderId, "订单ID不能为空.");
+        AssertUtil.assertNotNull(orderDate, "订单日期不能为空.");
+        QOrder order = orderformClient.getOrder(orderId, orderDate);
+        ForestOrder forestOrder = forestOrderService.getByOrder(orderId);
+        ForestOrderVO orderVO = forestOrderHandler.toOrderVO(forestOrder, order);
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("获取订单成功");
+        view.addObject("state", orderVO.getState());
+        view.addObject("orderNumber", orderVO.getOrderNumber());
+        view.addObject("cash", orderVO.getCash());
+        view.addObject("paymentModeStr", orderVO.getPaymentModeStr());
+        view.addObject("giveIntegral", (int) orderVO.getCash() / 10);// 获得积分
+        view.addObject("giveGrowth", (int) orderVO.getCash() / 10);// 获得成长值
         return view;
     }
 

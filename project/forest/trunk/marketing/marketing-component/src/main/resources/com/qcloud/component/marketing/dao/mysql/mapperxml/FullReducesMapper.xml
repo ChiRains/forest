@@ -20,4 +20,12 @@
         </if>
          and state != 3
     </select> 
+    
+    
+    <select id="listCurrentReduces" parameterType="java.util.HashMap" resultType="FullReduces">  
+        select * from `marketing_full_reduces`  
+        where 1=1
+      	<![CDATA[ and #{now}>=`beginDate` and #{now}<=`endDate`  ]]>
+        and `state` =1
+    </select>
 </mapper>

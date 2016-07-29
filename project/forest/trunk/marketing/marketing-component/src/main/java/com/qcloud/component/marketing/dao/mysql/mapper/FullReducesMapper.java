@@ -13,14 +13,14 @@ import com.qcloud.component.marketing.model.query.FullReducesQuery;
 
 public interface FullReducesMapper {
 
-	@Insert("insert into `marketing_full_reduces`(`id`,`merchantId`,`name`,`benefit`,`limitPrice`,`beginDate`,`endDate`,`canUseCoupon`,`canUserSeckill`,`state`)"
-			+ " values(#{id},#{merchantId},#{name},#{benefit},#{limitPrice},#{beginDate},#{endDate},#{canUseCoupon},#{canUserSeckill},#{state})")
+	@Insert("insert into `marketing_full_reduces`(`id`,`merchantId`,`name`,`benefit`,`limitPrice`,`beginDate`,`endDate`,`canUseCoupon`,`canUseSeckill`,`state`)"
+			+ " values(#{id},#{merchantId},#{name},#{benefit},#{limitPrice},#{beginDate},#{endDate},#{canUseCoupon},#{canUseSeckill},#{state})")
 	public void insert(FullReduces fullReduces);
 
 	@Select("select * from `marketing_full_reduces` where `id`=#{id}")
 	public FullReduces get(Long id);
 
-	@Update("update `marketing_full_reduces` set `merchantId`=#{merchantId},`name`=#{name},`benefit`=#{benefit},`limitPrice`=#{limitPrice},`beginDate`=#{beginDate},`endDate`=#{endDate},`canUseCoupon`=#{canUseCoupon},`canUserSeckill`=#{canUserSeckill},`state`=#{state} where `id`=#{id}")
+	@Update("update `marketing_full_reduces` set `merchantId`=#{merchantId},`name`=#{name},`benefit`=#{benefit},`limitPrice`=#{limitPrice},`beginDate`=#{beginDate},`endDate`=#{endDate},`canUseCoupon`=#{canUseCoupon},`canUseSeckill`=#{canUseSeckill},`state`=#{state} where `id`=#{id}")
 	public void update(FullReduces fullReduces);
 
 	@Delete("delete from `marketing_full_reduces` where `id`=#{id}")

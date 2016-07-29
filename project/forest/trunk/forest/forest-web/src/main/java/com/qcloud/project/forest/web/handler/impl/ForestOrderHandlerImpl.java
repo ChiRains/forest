@@ -114,6 +114,7 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
                 if (unifiedMerchandise.getType().equals(UnifiedMerchandiseType.COMBINATION)) {// 自由搭配
                     //
                     CombinationItemVO combinationItemVO = toOrderItemVOList(qOrderItem, unifiedMerchandise);
+                    combinationItemVO.setOrderItemId(qOrderItem.getId());
                     combinationItemList.add(combinationItemVO);
                 } else {// 单品
                     orderVO.getOrderItemList().add(toOrderItemVO(qOrderItem, unifiedMerchandise));

@@ -39,6 +39,7 @@ public class IntegralOrderUriHandlerImpl extends AbstractUriHandler {
         list.add("/integralOrder/getAdvitise.do");
         list.add("/integralOrder/order.do");
         list.add("/integralOrder/expressByOrder.do");
+        list.add("/integralOrder/getSimple.do");
         //
         list.add("/app/integralOrder/list.do");
         list.add("/app/integralOrder/get.do");
@@ -47,6 +48,7 @@ public class IntegralOrderUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/integralOrder/getAdvitise.do");
         list.add("/app/integralOrder/order.do");
         list.add("/app/integralOrder/expressByOrder.do");
+        list.add("/app/integralOrder/getSimple.do");
         return list;
     }
 
@@ -61,6 +63,7 @@ public class IntegralOrderUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/integralOrder/getAdvitise.do");
         list.add("/app/integralOrder/order.do");
         list.add("/app/integralOrder/expressByOrder.do");
+        list.add("/app/integralOrder/getSimple.do");
         return list;
     }
 }

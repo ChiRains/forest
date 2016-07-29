@@ -72,4 +72,10 @@ public class FullReducesDaoCacheImpl implements FullReducesDao {
 
         return fullReducesDaoMysqlImpl.listAll();
     }
+
+    @Override
+    public List<FullReduces> listCurrentReduces() {
+
+        return fullReducesDaoMysqlImpl.listCurrentReduces();
+    }
 }

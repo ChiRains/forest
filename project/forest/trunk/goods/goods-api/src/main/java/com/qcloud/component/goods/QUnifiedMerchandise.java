@@ -82,4 +82,6 @@ public interface QUnifiedMerchandise {
     long getIntegral();
     
     long getActivityId();
+
+    int getState();
 }

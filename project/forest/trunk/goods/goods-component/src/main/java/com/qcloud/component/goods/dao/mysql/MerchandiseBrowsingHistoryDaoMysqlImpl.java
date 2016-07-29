@@ -91,7 +91,7 @@ public class MerchandiseBrowsingHistoryDaoMysqlImpl implements MerchandiseBrowsi
     }
 
     @Override
-    public List<MerchandiseBrowsingHistory> listByUser(long userId, int start, int count) {
+    public List<MerchandiseBrowsingHistory> listByUser(long userId, int start, int count) { 
 
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("start", start);
@@ -102,10 +102,11 @@ public class MerchandiseBrowsingHistoryDaoMysqlImpl implements MerchandiseBrowsi
     }
 
     @Override
-    public int countByUserId(long userId) {
+    public int countByUser(long userId) {
 
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("userId", userId);
-        return sqlOperator.selectOne("com.qcloud.component.goods.dao.mysql.mapper.MerchandiseBrowsingHistoryMapper.countByUserId", param);
+        Integer total = sqlOperator.selectOne("com.qcloud.component.goods.dao.mysql.mapper.MerchandiseBrowsingHistoryMapper.countByUser", param);
+        return total == null ? 0 : total;
     }
 }
