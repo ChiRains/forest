@@ -7,9 +7,13 @@ import org.springframework.stereotype.Component;
 import com.qcloud.component.orderform.OrderformClient;
 import com.qcloud.project.forest.model.oms.Item;
 import com.qcloud.project.forest.model.oms.Order;
+import com.qcloud.project.forest.model.oms.Product;
+import com.qcloud.project.forest.model.oms.Sku;
+import com.qcloud.project.forest.model.oms.XmlMerchandise;
 import com.qcloud.project.forest.model.oms.XmlOrderBatch;
 import com.qcloud.project.forest.model.oms.QueryForm;
 import com.qcloud.project.forest.model.oms.XmlOrder;
+import com.qcloud.project.forest.model.oms.XmlStock;
 
 @Component
 public class OmsDispatcherServiceImpl implements OmsDispatcherService {
@@ -30,7 +34,7 @@ public class OmsDispatcherServiceImpl implements OmsDispatcherService {
 
         XmlOrder xmlOrder = new XmlOrder();
         Order order = new Order();
-//        String tid = queryForm.getTid();
+        // String tid = queryForm.getTid();
         List<Item> itemlist = new ArrayList<Item>();
         Item item1 = new Item();
         item1.setSku_name("商铺名称1");
@@ -56,5 +60,28 @@ public class OmsDispatcherServiceImpl implements OmsDispatcherService {
         list.add(order2);
         xmlOrderBatch.setOrder_list(list);
         return xmlOrderBatch;
+    }
+
+    @Override
+    public XmlStock updateStock(QueryForm queryForm) {
+
+        XmlStock xmlStock = new XmlStock();
+        xmlStock.setChanged_at("2016-08-01 16:09:03");
+        return xmlStock;
+    }
+
+    @Override
+    public XmlMerchandise getMerchandise(QueryForm queryForm) {
+
+        XmlMerchandise xmlMerchandise = new XmlMerchandise();
+        Product product = new Product();
+        List<Sku> sku_list = new ArrayList<Sku>();
+        Sku sku1 = new Sku();
+        Sku sku2 = new Sku();
+        sku_list.add(sku1);
+        sku_list.add(sku2);
+        product.setSku_list(sku_list);
+        xmlMerchandise.setProduct(product);
+        return xmlMerchandise;
     }
 }

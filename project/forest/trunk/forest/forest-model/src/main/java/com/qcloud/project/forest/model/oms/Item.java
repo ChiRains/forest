@@ -1,23 +1,35 @@
 package com.qcloud.project.forest.model.oms;
 
+/**
+ * 产品行信息
+ */
 public class Item {
 
+    // 商品编码
     private String product_id;
 
+    // 商家商品编码
     private String shop_product_id;
 
+    // 商品名称
     private String title;
 
+    // 规格编码
     private String sku_id;
 
+    // 商家规格编码
     private String shop_sku_id;
 
+    // 规格名称
     private String sku_name;
 
+    // 商品数量
     private int    qty_ordered;
 
+    // 商品单价
     private int    price;
 
+    // 子订单号（非必要）
     private int    oid;
 
     public String getProduct_id() {

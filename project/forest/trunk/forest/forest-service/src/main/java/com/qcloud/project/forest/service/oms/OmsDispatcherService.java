@@ -1,8 +1,10 @@
 package com.qcloud.project.forest.service.oms;
 
+import com.qcloud.project.forest.model.oms.XmlMerchandise;
 import com.qcloud.project.forest.model.oms.XmlOrderBatch;
 import com.qcloud.project.forest.model.oms.QueryForm;
 import com.qcloud.project.forest.model.oms.XmlOrder;
+import com.qcloud.project.forest.model.oms.XmlStock;
 
 public interface OmsDispatcherService {
 
@@ -20,4 +22,14 @@ public interface OmsDispatcherService {
      * OMS发货
      */
     public boolean deliverOrder(QueryForm queryForm);
+
+    /**
+     * 库存更新接口
+     */
+    public XmlStock updateStock(QueryForm queryForm);
+
+    /**
+     * 单个商品接口
+     */
+    public XmlMerchandise getMerchandise(QueryForm queryForm);
 }
