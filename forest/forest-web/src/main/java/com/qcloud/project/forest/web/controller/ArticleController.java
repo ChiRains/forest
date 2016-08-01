@@ -78,7 +78,7 @@ public class ArticleController {
         articleService.update(article);
         FrontAjaxView view = new FrontAjaxView();
         view.addObject("result", articleVO);
-        view.addObject("isPraise", articlePraise == null ? 0 : 1);
+        view.addObject("isPraise", articlePraise == null ? false : true);
         return view;
     }
 
