@@ -2,23 +2,23 @@ package com.qcloud.project.forest.model.oms;
 
 public class Item {
 
-    public String product_id;
+    private String product_id;
 
-    public String shop_product_id;
+    private String shop_product_id;
 
-    public String title;
+    private String title;
 
-    public String sku_id;
+    private String sku_id;
 
-    public String shop_sku_id;
+    private String shop_sku_id;
 
-    public String sku_name;
+    private String sku_name;
 
-    public int    qty_ordered;
+    private int    qty_ordered;
 
-    public int    price;
+    private int    price;
 
-    public int    oid;
+    private int    oid;
 
     public String getProduct_id() {
 

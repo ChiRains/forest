@@ -7,7 +7,9 @@ import org.springframework.stereotype.Component;
 import com.qcloud.component.orderform.OrderformClient;
 import com.qcloud.project.forest.model.oms.Item;
 import com.qcloud.project.forest.model.oms.Order;
+import com.qcloud.project.forest.model.oms.XmlOrderBatch;
 import com.qcloud.project.forest.model.oms.QueryForm;
+import com.qcloud.project.forest.model.oms.XmlOrder;
 
 @Component
 public class OmsDispatcherServiceImpl implements OmsDispatcherService {
@@ -24,8 +26,9 @@ public class OmsDispatcherServiceImpl implements OmsDispatcherService {
     }
 
     @Override
-    public Order getOrder(QueryForm queryForm) {
+    public XmlOrder getOrder(QueryForm queryForm) {
 
+        XmlOrder xmlOrder = new XmlOrder();
         Order order = new Order();
         String tid = queryForm.getTid();
         List<Item> itemlist = new ArrayList<Item>();
@@ -36,6 +39,22 @@ public class OmsDispatcherServiceImpl implements OmsDispatcherService {
         itemlist.add(item1);
         itemlist.add(item2);
         order.setItemlist(itemlist);
-        return order;
+        xmlOrder.setOrder(order);
+        return xmlOrder;
+    }
+
+    @Override
+    public XmlOrderBatch getBatchOrder(QueryForm queryForm) {
+
+        XmlOrderBatch xmlOrderBatch = new XmlOrderBatch();
+        List<Order> list = new ArrayList<Order>();
+        Order order1 = new Order();
+        order1.setBuyer_cod_fee(1);
+        Order order2 = new Order();
+        order2.setBuyer_cod_fee(2);
+        list.add(order1);
+        list.add(order2);
+        xmlOrderBatch.setOrder_list(list);
+        return xmlOrderBatch;
     }
 }
