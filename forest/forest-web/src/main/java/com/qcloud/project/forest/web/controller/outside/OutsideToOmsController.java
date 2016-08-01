@@ -42,44 +42,21 @@ public class OutsideToOmsController {
     @RequestMapping(value = "/omsToDispatcher", method = RequestMethod.GET)
     public TextView omsToDispatcher(QueryForm queryForm) {
 
-//        String sign = queryForm.getSign();
-//        queryForm.setSign(null);
-//        AssertUtil.assertTrue(app_id.equals(queryForm.getApp_id()), "appid不合法.");
-//        Map<String, Object> param = BeanUtils.transBean2Map(queryForm);
-//        Iterator<Entry<String, Object>> it = param.entrySet().iterator();
-//        while (it.hasNext()) {
-//            Entry<String, Object> entry = it.next();
-//            if (entry.getValue() == null) {
-//                it.remove();
-//            }
-//        }
-//        AssertUtil.assertTrue(sign.equals(SignUtils.sign(secret, param)), "签名不正确.");
+        // String sign = queryForm.getSign();
+        // queryForm.setSign(null);
+        // AssertUtil.assertTrue(app_id.equals(queryForm.getApp_id()), "appid不合法.");
+        // Map<String, Object> param = BeanUtils.transBean2Map(queryForm);
+        // Iterator<Entry<String, Object>> it = param.entrySet().iterator();
+        // while (it.hasNext()) {
+        // Entry<String, Object> entry = it.next();
+        // if (entry.getValue() == null) {
+        // it.remove();
+        // }
+        // }
+        // AssertUtil.assertTrue(sign.equals(SignUtils.sign(secret, param)), "签名不正确.");
         String xmlText = client.requestToXml(queryForm);
         TextView view = new TextView(xmlText);
         logger.info(xmlText);
         return view;
-    }
-
-    public static void main(String[] args) {
-
-        BMIVO vo = new BMIVO();
-        vo.setBmi(222.0);
-        List<RangeList> rangeDatas = new ArrayList<RangeList>();
-        RangeList rangeList = new RangeList();
-        rangeList.setAfterData(2);
-        rangeList.setPreviousData(1);
-        rangeDatas.add(rangeList);
-        vo.setRangeData(rangeDatas);
-        for (Entry entry : BeanUtils.transBean2Map(vo).entrySet()) {
-            System.out.println(entry.getValue());
-            if (entry.getValue() instanceof java.util.List) {
-                for (Object obj : (List<?>) entry.getValue()) {
-                    if (obj instanceof RangeList) {
-                        System.out.println(((RangeList) obj).getAfterData());
-                    }
-                }
-            }
-        }
-        System.out.println(BeanUtils.transBean2Map(vo));
     }
 }

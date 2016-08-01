@@ -17,7 +17,6 @@ import org.apache.http.util.EntityUtils;
 import com.qcloud.pirates.core.json.Json;
 import com.qcloud.pirates.core.reflect.BeanUtils;
 import com.qcloud.pirates.util.StringUtil;
-import com.qcloud.project.forest.model.oms.XmlResult;
 
 public class OutsideUtil {
 
@@ -81,18 +80,16 @@ public class OutsideUtil {
         return content;
     }
 
-    public static String getReturnXml(XmlResult xmlResult) {
+    public static String getReturnXml() {
 
-        return getReturnXml(xmlResult, null);
+        return getReturnXml(null);
     }
 
-    public static String getReturnXml(XmlResult xmlResult, Object obj) {
+    public static String getReturnXml(Object obj) {
 
         StringBuilder sb = new StringBuilder();
         sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
         sb.append("<response>");
-        sb.append("<code>").append(xmlResult.getCode()).append("</code>");
-        sb.append("<msg>").append(xmlResult.getMsg()).append("</msg>");
         recursion(obj, sb);
         sb.append("</response>");
         return sb.toString();
@@ -102,17 +99,20 @@ public class OutsideUtil {
 
         if (object == null) return "";
         Map<String, Object> beanMap = BeanUtils.transBean2Map(object);
-        sb.append("<").append(object.getClass().getSimpleName().toLowerCase()).append(">");
         for (Entry<String, Object> entry : beanMap.entrySet()) {
             if (entry.getValue() == null) {
                 entry.setValue("");
             }
             if (entry.getValue().getClass().getCanonicalName().startsWith("com.qcloud")) {
+                sb.append("<").append(entry.getValue().getClass().getSimpleName().toLowerCase()).append(">");
                 recursion(entry.getValue(), sb);
+                sb.append("</").append(entry.getValue().getClass().getSimpleName().toLowerCase()).append(">");
             } else if (entry.getValue() instanceof java.util.List && ((List<?>) entry.getValue()).get(0).getClass().getCanonicalName().startsWith("com.qcloud")) {
                 sb.append("<").append(entry.getKey()).append(">");
                 for (Object obj : ((List<?>) entry.getValue())) {
+                    sb.append("<").append(obj.getClass().getSimpleName().toLowerCase()).append(">");
                     recursion(obj, sb);
+                    sb.append("</").append(obj.getClass().getSimpleName().toLowerCase()).append(">");
                 }
                 sb.append("</").append(entry.getKey()).append(">");
             } else {
@@ -121,7 +121,6 @@ public class OutsideUtil {
                 sb.append("</").append(entry.getKey()).append(">");
             }
         }
-        sb.append("</").append(object.getClass().getSimpleName().toLowerCase()).append(">");
         return sb.toString();
     }
 }

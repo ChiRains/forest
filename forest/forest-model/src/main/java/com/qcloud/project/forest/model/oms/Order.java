@@ -5,91 +5,91 @@ import java.util.List;
 public class Order {
 
     // 订单id
-    public String     tid;
+    private String     tid;
 
     // 订单状态
-    public String     status;
+    private String     status;
 
     // 订单最后修改时间(北京时间)
-    public String     modified;
+    private String     modified;
 
     // 订单创建时间(北京时间)
-    public String     created;
+    private String     created;
 
     // 快递方式
-    public String     shipping_type;
+    private String     shipping_type;
 
     // 运费
-    public int        post_fee;
+    private int        post_fee;
 
     // 收货人姓名
-    public String     receiver_name;
+    private String     receiver_name;
 
     // 收货省份
-    public String     receiver_state;
+    private String     receiver_state;
 
     // 收货市
-    public String     receiver_city;
+    private String     receiver_city;
 
     // 收货地区
-    public String     receiver_district;
+    private String     receiver_district;
 
     // 收货人地址
-    public String     receiver_address;
+    private String     receiver_address;
 
     // 邮编
-    public String     receiver_zip;
+    private String     receiver_zip;
 
     // 收货人手机
-    public String     receiver_mobile;
+    private String     receiver_mobile;
 
     // 收货人电话
-    public String     receiver_phone;
+    private String     receiver_phone;
 
     // 会员编码
-    public String     buyer_nick;
+    private String     buyer_nick;
 
     // 会员名称
-    public String     buyer_name;
+    private String     buyer_name;
 
     // 是否开票
-    public String     is_tax;
+    private String     is_tax;
 
     // 开票类型
-    public String     invoice_type;
+    private String     invoice_type;
 
     // 开票抬头
-    public String     invoice_title;
+    private String     invoice_title;
 
     // 支付方式
-    public String     pay_type;
+    private String     pay_type;
 
     // 实际支付金额
-    public int        real_pay;
+    private int        real_pay;
 
     // 商品总金额
-    public int        total_fee;
+    private int        total_fee;
 
     // 用户备注
-    public String     buyer_message;
+    private String     buyer_message;
 
     // 买家货到付款服务费
-    public int        buyer_cod_fee;
+    private int        buyer_cod_fee;
 
     // 积分支付
-    public int        point_fee;
+    private int        point_fee;
 
     // 优惠券支付
-    public int        coupon_pay;
+    private int        coupon_pay;
 
     // 付款时间
-    public String     paytime;
+    private String     paytime;
 
     // 卖家备注
-    public String     seller_memo;
+    private String     seller_memo;
 
     // 商品列表
-    public List<Item> itemlist;
+    private List<Item> itemlist;
 
     public String getTid() {
 

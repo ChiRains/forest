@@ -10,7 +10,6 @@ import com.qcloud.pirates.core.xml.Xml;
 import com.qcloud.pirates.core.xml.XmlFactory;
 import com.qcloud.pirates.core.xml.XmlItem;
 import com.qcloud.project.forest.model.oms.QueryForm;
-import com.qcloud.project.forest.model.oms.XmlResult;
 import com.qcloud.project.forest.service.oms.OmsDispatcherService;
 import com.qcloud.project.forest.util.OutsideUtil;
 
@@ -59,11 +58,7 @@ public class OmsCanonicalImpl implements OmsCanonical {
                     Class<?>[] paramTypes = invokeConfig.getParamTypes().toArray(new Class<?>[invokeConfig.getParamTypes().size()]);
                     Method handle = dispatcherService.getClass().getMethod(invokeConfig.getInvoke(), paramTypes);
                     Object obj = handle.invoke(dispatcherService, queryForm);
-                    if (!Boolean.class.isInstance(obj)) {
-                        xml = OutsideUtil.getReturnXml(new XmlResult(0, "成功"), obj);
-                    } else {
-                        xml = OutsideUtil.getReturnXml(new XmlResult(0, "成功"));
-                    }
+                    xml = OutsideUtil.getReturnXml(obj);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
