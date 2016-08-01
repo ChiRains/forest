@@ -30,7 +30,7 @@ public class OmsDispatcherServiceImpl implements OmsDispatcherService {
 
         XmlOrder xmlOrder = new XmlOrder();
         Order order = new Order();
-        String tid = queryForm.getTid();
+//        String tid = queryForm.getTid();
         List<Item> itemlist = new ArrayList<Item>();
         Item item1 = new Item();
         item1.setSku_name("商铺名称1");

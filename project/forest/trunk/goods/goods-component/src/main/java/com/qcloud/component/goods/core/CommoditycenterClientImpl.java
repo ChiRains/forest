@@ -376,12 +376,14 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
         long middleEvaluation = 0;
         long goodEvaluation = 0;
         long totalSalesVolume = 0;
+        long unifiedMerchandiseId = 0;
         List<UnifiedMerchandise> unifiedMerchandises = unifiedMerchandiseService.listByMerchandise(merchandiseId, MerchandiseStateType.ONLINE);
         for (UnifiedMerchandise unifiedMerchandise : unifiedMerchandises) {
             // 价格
             if (unifiedMerchandise.getDiscount() < lowDiscount || lowDiscount == 0) {
                 lowDiscount = unifiedMerchandise.getDiscount();
                 lowPrice = unifiedMerchandise.getPrice();
+                unifiedMerchandiseId = unifiedMerchandise.getId();
             }
             lowEvaluation = lowEvaluation + unifiedMerchandise.getLowEvaluation();
             middleEvaluation = middleEvaluation + unifiedMerchandise.getMiddleEvaluation();
@@ -408,6 +410,7 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
                 break;
             }
         }
+        entity.setUnifiedMerchandiseId(unifiedMerchandiseId);
         return entity;
     }
 

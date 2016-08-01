@@ -92,6 +92,8 @@ public class MerchandiseEntity implements QMerchandise {
     // 状态(1, "待初始化" 2,"新增" 3,"待审核" 4, "上线" 5"下线")
     private String stateStr;
 
+    private long   unifiedMerchandiseId;
+
     public double getLowPrice() {
 
         return lowPrice;
@@ -420,5 +422,15 @@ public class MerchandiseEntity implements QMerchandise {
     public void setStateStr(String stateStr) {
 
         this.stateStr = stateStr;
+    }
+
+    public long getUnifiedMerchandiseId() {
+
+        return unifiedMerchandiseId;
+    }
+
+    public void setUnifiedMerchandiseId(long unifiedMerchandiseId) {
+
+        this.unifiedMerchandiseId = unifiedMerchandiseId;
     }
 }
