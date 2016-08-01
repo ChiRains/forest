@@ -257,7 +257,7 @@ public class ForestMailSenderController {
             // mainPart.addBodyPart(mailArchieve);
             // mailArchieve.setHeader("Content-ID", "<image>");
             // 设置HTML内容
-            html.setContent(mailInfo.getContent(), "text/html; charset=utf-8");
+            html.setContent(mailInfo.getContent(), "text/html; charset=gbk");
             mainPart.addBodyPart(html);
             // 将MiniMultipart对象设置为邮件内容
             mailMessage.setContent(mainPart);
