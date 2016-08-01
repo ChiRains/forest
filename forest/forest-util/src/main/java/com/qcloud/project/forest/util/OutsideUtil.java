@@ -107,7 +107,8 @@ public class OutsideUtil {
                 sb.append("<").append(entry.getValue().getClass().getSimpleName().toLowerCase()).append(">");
                 recursion(entry.getValue(), sb);
                 sb.append("</").append(entry.getValue().getClass().getSimpleName().toLowerCase()).append(">");
-            } else if (entry.getValue() instanceof java.util.List && ((List<?>) entry.getValue()).get(0).getClass().getCanonicalName().startsWith("com.qcloud")) {
+            } else if (entry.getValue() instanceof java.util.List && ((List<?>) entry.getValue()).size() > 0 //
+                    && ((List<?>) entry.getValue()).get(0).getClass().getCanonicalName().startsWith("com.qcloud")) {
                 sb.append("<").append(entry.getKey()).append(">");
                 for (Object obj : ((List<?>) entry.getValue())) {
                     sb.append("<").append(obj.getClass().getSimpleName().toLowerCase()).append(">");

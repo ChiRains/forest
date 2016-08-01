@@ -9,7 +9,11 @@
 	<item omsToMethod="trades.sold.increment.get" invoke="getBatchOrder" paramType="com.qcloud.project.forest.model.oms.QueryForm">批量订单接口</item>
 	
 	<item omsToMethod="logistics.offline.send" invoke="deliverOrder" paramType="com.qcloud.project.forest.model.oms.QueryForm">发货</item>
-		
+	
+	<item omsToMethod="item.quantity.update" invoke="updateStock" paramType="com.qcloud.project.forest.model.oms.QueryForm">库存更新接口</item>
+	
+	<item omsToMethod="item.skus.get" invoke="getMerchandise" paramType="com.qcloud.project.forest.model.oms.QueryForm">单个商品接口</item>
+	
 </module-list>
 
 </xml>
