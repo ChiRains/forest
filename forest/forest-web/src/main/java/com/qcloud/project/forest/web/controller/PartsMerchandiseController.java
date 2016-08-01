@@ -77,7 +77,7 @@ public class PartsMerchandiseController {
         for (PartsMerchandiseVO vo : voList) {
             Map<String, Object> map = new HashMap<String, Object>();
             QMerchandise qMerchandise = vo.getqMerchandise();
-            map.put("departmentName", organizationClient.getDepartment(qMerchandise.getMerchantId()).getName());
+            map.put("merchantName", organizationClient.getDepartment(qMerchandise.getMerchantId()).getName());
             map.put("discount", qMerchandise.getLowDiscount());
             map.put("goodEvaluationRate", qMerchandise.getHpRate());
             map.put("image", !StringUtils.isEmpty(qMerchandise.getImage()) ? fileSDKClient.getFileServerUrl() + qMerchandise.getImage() : "");
