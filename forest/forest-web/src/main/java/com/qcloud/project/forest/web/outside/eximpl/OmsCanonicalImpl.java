@@ -2,7 +2,6 @@ package com.qcloud.project.forest.web.outside.eximpl;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,6 @@ import com.qcloud.project.forest.model.oms.QueryForm;
 import com.qcloud.project.forest.model.oms.XmlResult;
 import com.qcloud.project.forest.service.oms.OmsDispatcherService;
 import com.qcloud.project.forest.util.OutsideUtil;
-import com.qcloud.project.forest.web.vo.ActivityVO;
-import com.qcloud.project.forest.web.vo.MedicationVO;
 
 @Component
 public class OmsCanonicalImpl implements OmsCanonical {
@@ -63,7 +60,7 @@ public class OmsCanonicalImpl implements OmsCanonical {
                     Method handle = dispatcherService.getClass().getMethod(invokeConfig.getInvoke(), paramTypes);
                     Object obj = handle.invoke(dispatcherService, queryForm);
                     if (!Boolean.class.isInstance(obj)) {
-                        xml = OutsideUtil.getReturnXml(obj);
+                        xml = OutsideUtil.getReturnXml(new XmlResult(0, "成功"), obj);
                     } else {
                         xml = OutsideUtil.getReturnXml(new XmlResult(0, "成功"));
                     }
