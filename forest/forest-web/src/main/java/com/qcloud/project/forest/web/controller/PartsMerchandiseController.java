@@ -83,6 +83,7 @@ public class PartsMerchandiseController {
             map.put("image", !StringUtils.isEmpty(qMerchandise.getImage()) ? fileSDKClient.getFileServerUrl() + qMerchandise.getImage() : "");
             map.put("label", qMerchandise.getLabel());
             map.put("merchandiseId", qMerchandise.getId());
+            map.put("unifiedMerchandiseId", qMerchandise.getUnifiedMerchandiseId());
             map.put("name", qMerchandise.getName());
             map.put("price", qMerchandise.getLowPrice());
             map.put("salesVolume", qMerchandise.getTotalSalesVolume());

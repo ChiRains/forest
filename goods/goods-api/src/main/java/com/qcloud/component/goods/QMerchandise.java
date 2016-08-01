@@ -63,4 +63,6 @@ public interface QMerchandise {
     public long getTotalSalesVolume();
 
     public String getHpRate();
+
+    public long getUnifiedMerchandiseId();
 }
