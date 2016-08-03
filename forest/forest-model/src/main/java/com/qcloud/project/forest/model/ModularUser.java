@@ -1,50 +1,54 @@
 package com.qcloud.project.forest.model;
 
-import java.util.Date;
-import java.math.BigDecimal;
-
 public class ModularUser {
-	
-	private long id;		
-	
-	//模块Id
-	private long modularId;		
-	
-	//用户Id
-	private long userId;		
 
-	public ModularUser(){
-	
-	}
+    private long id;
 
-	public ModularUser(long id,long modularId,long userId){
-		this.id = id;		
-		this.modularId = modularId;		
-		this.userId = userId;		
-	}
-	
-	public void setId(long id) {
-		this.id = id;
-	}
+    // 模块编码
+    private int  modularCode;
 
-	public long getId() {
-		return id;
-	}	
-		
-	public void setModularId(long modularId) {
-		this.modularId = modularId;
-	}
+    // 用户Id
+    private long userId;
 
-	public long getModularId() {
-		return modularId;
-	}	
-		
-	public void setUserId(long userId) {
-		this.userId = userId;
-	}
+    public ModularUser() {
 
-	public long getUserId() {
-		return userId;
-	}	
-		
+    }
+
+    public ModularUser(long id, int modularCode, long userId) {
+
+        super();
+        this.id = id;
+        this.modularCode = modularCode;
+        this.userId = userId;
+    }
+
+    public long getId() {
+
+        return id;
+    }
+
+    public void setId(long id) {
+
+        this.id = id;
+    }
+
+    public long getUserId() {
+
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+
+        this.userId = userId;
+    }
+
+    public int getModularCode() {
+
+        return modularCode;
+    }
+
+    public void setModularCode(int modularCode) {
+
+        this.modularCode = modularCode;
+    }
 }
