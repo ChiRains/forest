@@ -229,7 +229,7 @@
 	
 	<module-list code="publicservice-pay-operations">			
 		<item module="fr" operate="orderPayOperator">订单支付</item>	
-		<item module="jr" operate="integralOrderPayOperator">积分订单支付</item>	
+		<item module="jf" operate="integralOrderPayOperator">积分订单支付</item>	
 	</module-list>
 
 </xml>

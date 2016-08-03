@@ -484,12 +484,12 @@ public class MerchandiseController {
             sexpressMerchandiseVO.setPostage(postage);
             sexpressVOList.add(sexpressMerchandiseVO);
         }
-        List<MerchandiseAttribute> list = merchandiseAttributeService.listByMerchandise(merchandise.getId());
-        List<MerchandiseAttributeVO> voList = merchandiseAttributeHandler.toVOList(list);
-        Map<String, MerchandiseAttributeVO> attrMap = new HashMap<String, MerchandiseAttributeVO>();
-        for (MerchandiseAttributeVO merchandiseAttributeVO : voList) {
-            attrMap.put(merchandiseAttributeVO.getCode(), merchandiseAttributeVO);
-        }
+//        List<MerchandiseAttribute> list = merchandiseAttributeService.listByMerchandise(merchandise.getId());
+//        List<MerchandiseAttributeVO> voList = merchandiseAttributeHandler.toVOList(list);
+//        Map<String, MerchandiseAttributeVO> attrMap = new HashMap<String, MerchandiseAttributeVO>();
+//        for (MerchandiseAttributeVO merchandiseAttributeVO : voList) {
+//            attrMap.put(merchandiseAttributeVO.getCode(), merchandiseAttributeVO);
+//        }
         // 组合商品
         List<CombinationMerchandiseVO> comVOList = new ArrayList<CombinationMerchandiseVO>();
         Set<Long> combinationMerchandiseIdList = new HashSet<Long>();
@@ -512,8 +512,8 @@ public class MerchandiseController {
         FrontAjaxView view = new FrontAjaxView();
         view.addObject("combinationList", comVOList);
         //
-        view.addObject("attrMap", attrMap);
-        view.addObject("attrList", voList);
+//        view.addObject("attrMap", attrMap);
+//        view.addObject("attrList", voList);
         //
         view.setMessage("获取商品详情成功.");
         view.addObject("merchandise", merchandiseVO);

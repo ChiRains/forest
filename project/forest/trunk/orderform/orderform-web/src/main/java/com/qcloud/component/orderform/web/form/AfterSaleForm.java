@@ -28,6 +28,8 @@ public class AfterSaleForm {
 
     private double                  afterSaleSum;
 
+    private String                  afterSaleImage;
+
     public Long getOrderId() {
 
         return orderId;
@@ -98,15 +100,23 @@ public class AfterSaleForm {
         this.reason = reason;
     }
 
-    
     public double getAfterSaleSum() {
-    
+
         return afterSaleSum;
     }
 
-    
     public void setAfterSaleSum(double afterSaleSum) {
-    
+
         this.afterSaleSum = afterSaleSum;
+    }
+
+    public String getAfterSaleImage() {
+
+        return afterSaleImage;
+    }
+
+    public void setAfterSaleImage(String afterSaleImage) {
+
+        this.afterSaleImage = afterSaleImage;
     }
 }

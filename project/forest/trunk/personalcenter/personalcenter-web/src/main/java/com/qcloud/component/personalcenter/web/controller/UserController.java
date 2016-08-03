@@ -209,7 +209,7 @@ public class UserController {
         }
         // 验证码是否有效
         boolean verification = verificationCodeClient.verification(mobile, code);
-        AssertUtil.assertTrue(verification||code.equals("666666"), "验证码不正确,请重新获取.");
+        AssertUtil.assertTrue(verification || code.equals("666666"), "验证码不正确,请重新获取.");
         String id = (String) request.getSession(true).getAttribute(THIRD_USER);
         // 第三方
         User user = null;
@@ -228,7 +228,7 @@ public class UserController {
             AssertUtil.assertNotNull(userThird, "第三方用户数据不存在." + id);
             user = userService.get(userThird.getUserId());
             AssertUtil.assertNotNull(user, "用户不存在.");
-            userService.changeMobile(user.getId(), mobile);
+            // userService.changeMobile(user.getId(), mobile);
             userService.changePwd(user.getId(), pwd);
         }
         verificationCodeClient.remove(mobile, code);
@@ -275,7 +275,7 @@ public class UserController {
 
     // @RequestMapping(method = RequestMethod.POST)
     @RequestMapping
-    public FrontAjaxView login(HttpServletRequest request, String username, String pwd) {
+    public FrontAjaxView login(HttpServletRequest request, String username, String pwd, String code) {
 
         AssertUtil.assertNotEmpty(username, "账号不能为空.");
         AssertUtil.assertNotEmpty(pwd, "密码不能为空.");
@@ -313,6 +313,21 @@ public class UserController {
                 return view;
             }
             identificationKey = String.valueOf(user.getId());
+            // 绑定openId
+            if (StringUtils.isNotEmpty(code)) {
+                UserThird userThird = userThirdService.getByThird(code, AccountType.WEIXIN);
+                if (userThird == null) {
+                    userThird = new UserThird();
+                    userThird.setAccountType(AccountType.WEIXIN.getKey());
+                    userThird.setCreateTime(new Date());
+                    userThird.setThirdId(code);
+                    userThird.setUserId(user.getId());
+                    userThirdService.add(userThird);
+                } else {
+                    userThird.setUserId(user.getId());
+                    userThirdService.update(userThird);
+                }
+            }
         } else {
             throw new PersonalCenterException("账号或密码有误.");
         }
@@ -598,6 +613,7 @@ public class UserController {
     }
 
     // 绑定微信,如果用户已经存在,在绑定;如果用户不存在,则创建用户
+    // TODO
     @RequestMapping
     public HtmlView loginByWeixin(HttpServletRequest request, String code, String pageUri) {
 
@@ -606,50 +622,52 @@ public class UserController {
         UserThird userThird = userThirdService.getByThird(openId, AccountType.WEIXIN);
         // 第一次
         if (userThird == null) {
-            String tokenId = userFilterService.getTokenId(request);
-            //
-            User user = null;
-            if (StringUtils.isEmpty(tokenId)) {
-                Long gradeId = parameterClient.get(USER_REGIST_GRADE_KEY);
-                user = new User();
-                user.setEmail("");
-                user.setGradeId(gradeId);
-                user.setHeadImage("");
-                user.setMobile("");
-                user.setName("");
-                user.setNickname("");
-                user.setRegistTime(new Date());
-                user.setSex(new Long(SexType.UNKNOW.getKey()).intValue());
-                user.setState(UserStateType.ACTIVATE.getKey());
-                user.setType(AccountType.WEIXIN.getKey());
-                userService.add(user, null);
-            } else {
-                String idStr = tokenClient.get(tokenId);
-                AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
-                user = userService.get(Long.parseLong(idStr));
-                AssertUtil.assertNotNull(user, "用户不存在.");
-                UserThird ut = userThirdService.getByUser(user.getId());
-                if (ut != null) {
-                    if (ut.getThirdId() != openId) {
-                        logout(request);
-                    }
-                    AssertUtil.assertTrue(ut.getThirdId() == openId, "账号已经绑定微信.");
-                }
-            }
-            userThird = new UserThird();
-            userThird.setAccountType(AccountType.WEIXIN.getKey());
-            userThird.setCreateTime(new Date());
-            userThird.setUserId(user.getId());
-            userThird.setThirdId(openId);
-            userThirdService.add(userThird);
+            // String tokenId = userFilterService.getTokenId(request);
+            // //
+            // User user = null;
+            // if (StringUtils.isEmpty(tokenId)) {
+            // Long gradeId = parameterClient.get(USER_REGIST_GRADE_KEY);
+            // user = new User();
+            // user.setEmail("");
+            // user.setGradeId(gradeId);
+            // user.setHeadImage("");
+            // user.setMobile("");
+            // user.setName("");
+            // user.setNickname("");
+            // user.setRegistTime(new Date());
+            // user.setSex(new Long(SexType.UNKNOW.getKey()).intValue());
+            // user.setState(UserStateType.ACTIVATE.getKey());
+            // user.setType(AccountType.WEIXIN.getKey());
+            // userService.add(user, null);
+            // } else {
+            // String idStr = tokenClient.get(tokenId);
+            // AssertUtil.assertNotEmpty(idStr, "获取用户标识失败.");
+            // user = userService.get(Long.parseLong(idStr));
+            // AssertUtil.assertNotNull(user, "用户不存在.");
+            // UserThird ut = userThirdService.getByUser(user.getId());
+            // if (ut != null) {
+            // if (ut.getThirdId() != openId) {
+            // logout(request);
+            // }
+            // AssertUtil.assertTrue(ut.getThirdId() == openId, "账号已经绑定微信.");
+            // }
+            // }
+            // userThird = new UserThird();
+            // userThird.setAccountType(AccountType.WEIXIN.getKey());
+            // userThird.setCreateTime(new Date());
+            // userThird.setUserId(user.getId());
+            // userThird.setThirdId(openId);
+            // userThirdService.add(userThird);
+            HtmlView view = new HtmlView("<script>window.location.href='" + "http://mp1.test.qi-cloud.com/login.html?code=" + openId + "'</script>");
+            return view;
         } else {
             QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_IS_LOGIN_PARAMETER_KEY);
             if (user != null) {
                 if (userThird.getUserId() != user.getId()) {
                     logout(request);
                 }
-                logger.error("使用新微信登录前请在旧的微信号退出." + userThird.getThirdId());
-                AssertUtil.assertTrue(userThird.getUserId() == user.getId(), "使用新微信登录前请在旧的微信号退出.");
+                // logger.error("使用新微信登录前请在旧的微信号退出." + userThird.getThirdId());
+                // AssertUtil.assertTrue(userThird.getUserId() == user.getId(), "使用新微信登录前请在旧的微信号退出.");
             }
         }
         // 开始加载把第三方数据Id放到session
@@ -688,7 +706,7 @@ public class UserController {
         }
         userFilterService.doLogout(request);
         FrontAjaxView view = new FrontAjaxView();
-        view.setMessage("已经退出并清除opneId");
+        view.setMessage("已经解绑账号.");
         return view;
     }
 

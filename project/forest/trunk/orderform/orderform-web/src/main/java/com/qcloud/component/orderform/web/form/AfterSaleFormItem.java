@@ -3,8 +3,9 @@ package com.qcloud.component.orderform.web.form;
 public class AfterSaleFormItem {
 
     private Long   orderItemId;
-//
-////    private Long   orderItemDetailId;
+
+    //
+    private Long   orderItemDetailId;
 
     private int    number;
 
@@ -31,7 +32,6 @@ public class AfterSaleFormItem {
     //
     // this.orderItemDetailId = orderItemDetailId;
     // }
-
     public String getReason() {
 
         return reason;
@@ -60,5 +60,17 @@ public class AfterSaleFormItem {
     public void setNumber(int number) {
 
         this.number = number;
+    }
+
+    
+    public Long getOrderItemDetailId() {
+    
+        return orderItemDetailId;
+    }
+
+    
+    public void setOrderItemDetailId(Long orderItemDetailId) {
+    
+        this.orderItemDetailId = orderItemDetailId;
     }
 }
