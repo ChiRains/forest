@@ -43,6 +43,11 @@ public class PartsMerchandiseUriHandlerImpl extends AbstractUriHandler {
         list.add("/partsMerchandise/list.do");
         list.add("/app/partsMerchandise/listParts.do");
         list.add("/app/partsMerchandise/list.do");
+        // 找周边
+        list.add("/nearbyDrugstore/listNearby.do");
+        list.add("/nearbyDrugstore/getStore.do");
+        list.add("/app/nearbyDrugstore/listNearby.do");
+        list.add("/app/nearbyDrugstore/getStore.do");
         return list;
     }
 

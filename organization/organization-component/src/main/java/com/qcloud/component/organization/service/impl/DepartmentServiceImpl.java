@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.qcloud.component.autoid.AutoIdGenerator;
 import com.qcloud.component.autoid.UniqueCodeGenerator;
-import com.qcloud.pirates.data.Page;
-import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.component.organization.dao.DepartmentDao;
 import com.qcloud.component.organization.exception.OrganizationException;
 import com.qcloud.component.organization.model.Department;
-import com.qcloud.component.organization.service.DepartmentService;
 import com.qcloud.component.organization.model.query.DepartmentQuery;
+import com.qcloud.component.organization.service.DepartmentService;
+import com.qcloud.pirates.data.Page;
+import com.qcloud.pirates.util.AssertUtil;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
@@ -21,7 +21,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     private DepartmentDao       departmentDao;
 
     @Autowired
-    private AutoIdGenerator     autoIdGenerator; 
+    private AutoIdGenerator     autoIdGenerator;
 
     @Autowired
     private UniqueCodeGenerator uniqueCodeGenerator;
@@ -129,5 +129,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     public int countByAddress(DepartmentQuery query) {
 
         return departmentDao.countByAddress(query);
+    }
+
+    @Override
+    public List<Department> listNearby(double latitude, double longitude) {
+
+        return departmentDao.listNearby(latitude, longitude);
     }
 }

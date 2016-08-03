@@ -3,15 +3,12 @@ package com.qcloud.component.organization.dao.redis;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.annotation.Resource;
 import org.apache.commons.lang.NotImplementedException;
 import org.springframework.stereotype.Repository;
-import com.qcloud.pirates.core.json.Json;
-import com.qcloud.pirates.data.Page;
-import com.qcloud.pirates.data.redis.Redis;
 import com.qcloud.component.organization.dao.DepartmentDao;
 import com.qcloud.component.organization.model.Department;
 import com.qcloud.component.organization.model.query.DepartmentQuery;
+import com.qcloud.pirates.data.Page;
 
 @Repository
 public class DepartmentDaoRedisImpl implements DepartmentDao {
@@ -110,6 +107,12 @@ public class DepartmentDaoRedisImpl implements DepartmentDao {
 
     @Override
     public int countByAddress(DepartmentQuery query) {
+
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public List<Department> listNearby(double latitude, double longitude) {
 
         throw new NotImplementedException();
     }

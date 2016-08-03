@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import javax.annotation.Resource;
-import org.springframework.stereotype.Repository;
 import org.apache.commons.lang.NotImplementedException;
-import com.qcloud.pirates.data.Page;
-import com.qcloud.pirates.data.sql.mybatis.SqlOperator;
+import org.springframework.stereotype.Repository;
 import com.qcloud.component.organization.dao.DepartmentDao;
 import com.qcloud.component.organization.model.Department;
 import com.qcloud.component.organization.model.query.DepartmentQuery;
+import com.qcloud.pirates.data.Page;
+import com.qcloud.pirates.data.sql.mybatis.SqlOperator;
 
 @Repository
 public class DepartmentDaoMysqlImpl implements DepartmentDao {
@@ -161,5 +161,14 @@ public class DepartmentDaoMysqlImpl implements DepartmentDao {
         param.put("address", query.getAddress());
         int total = sqlOperator.selectOne("com.qcloud.component.organization.dao.mysql.mapper.DepartmentMapper.countByAddress", param);
         return total;
+    }
+
+    @Override
+    public List<Department> listNearby(double latitude, double longitude) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("latitude", latitude);
+        param.put("longitude", longitude);
+        return sqlOperator.selectList("com.qcloud.component.organization.dao.mysql.mapper.DepartmentMapper.listNearby", param);
     }
 }

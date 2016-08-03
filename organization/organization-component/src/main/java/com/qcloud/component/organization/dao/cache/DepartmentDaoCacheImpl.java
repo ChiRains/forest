@@ -1,15 +1,15 @@
 package com.qcloud.component.organization.dao.cache;
 
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import com.qcloud.pirates.data.CacheLoader;
-import com.qcloud.pirates.data.Page;
 import com.qcloud.component.organization.dao.DepartmentDao;
 import com.qcloud.component.organization.model.Department;
 import com.qcloud.component.organization.model.query.DepartmentQuery;
+import com.qcloud.pirates.data.CacheLoader;
+import com.qcloud.pirates.data.Page;
 
 @Repository
 public class DepartmentDaoCacheImpl implements DepartmentDao {
@@ -113,5 +113,11 @@ public class DepartmentDaoCacheImpl implements DepartmentDao {
     public int countByAddress(DepartmentQuery query) {
 
         return departmentDaoMysqlImpl.countByAddress(query);
+    }
+
+    @Override
+    public List<Department> listNearby(double latitude, double longitude) {
+
+        return departmentDaoMysqlImpl.listNearby(latitude, longitude);
     }
 }
