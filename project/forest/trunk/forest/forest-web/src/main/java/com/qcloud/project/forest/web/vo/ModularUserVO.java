@@ -4,37 +4,48 @@ public class ModularUserVO {
 
     private long   id;
 
-    // 模块Id
-    private long   modularId;
+    // 模块编码
+    private int    modularCode;
 
     // 用户Id
     private long   userId;
 
-    private int    enable;
-
     private String name;
 
-    private String code;
+    private int    code;
 
     public ModularUserVO() {
 
     }
 
-    public ModularUserVO(long id, long modularId, long userId) {
+    public ModularUserVO(long id, int modularCode, long userId, int enable, String name, int code) {
+
+        super();
+        this.id = id;
+        this.modularCode = modularCode;
+        this.userId = userId;
+        this.name = name;
+        this.code = code;
+    }
+
+    public long getId() {
+
+        return id;
+    }
+
+    public void setId(long id) {
 
         this.id = id;
-        this.modularId = modularId;
+    }
+
+    public long getUserId() {
+
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+
         this.userId = userId;
-    }
-
-    public int getEnable() {
-
-        return enable;
-    }
-
-    public void setEnable(int enable) {
-
-        this.enable = enable;
     }
 
     public String getName() {
@@ -47,43 +58,23 @@ public class ModularUserVO {
         this.name = name;
     }
 
-    public String getCode() {
-
-        return code;
-    }
-
-    public void setCode(String code) {
+    public void setCode(int code) {
 
         this.code = code;
     }
 
-    public void setId(long id) {
+    public int getModularCode() {
 
-        this.id = id;
+        return modularCode;
     }
 
-    public long getId() {
+    public void setModularCode(int modularCode) {
 
-        return id;
+        this.modularCode = modularCode;
     }
 
-    public void setModularId(long modularId) {
+    public int getCode() {
 
-        this.modularId = modularId;
-    }
-
-    public long getModularId() {
-
-        return modularId;
-    }
-
-    public void setUserId(long userId) {
-
-        this.userId = userId;
-    }
-
-    public long getUserId() {
-
-        return userId;
+        return code;
     }
 }

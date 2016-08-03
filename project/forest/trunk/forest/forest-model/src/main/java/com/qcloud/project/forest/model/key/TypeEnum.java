@@ -331,4 +331,27 @@ public class TypeEnum {
             throw new PiratesRuntimeException("积分订单状态不存在.");
         }
     }
+    public enum ModularType {
+        MEDICATIONREMINDERS(1, "服药提醒"), EXPRESSQUERY(2, "物流提醒"), CHECK(3, "扫一扫"), BLOODPRESSUREANALYSIS(4, "血压分析"), BMICALCULATION(5, "BMI计算"), SEARCHMEDICINE(6, "快速找药 "), DISCOUNT(7, "折扣专区"), SHAREFORGIFT(8, "分享有礼"), SIGNIN(9, "每日签到"), COUPON(10, "优惠券"), COLLECTION(11, "收藏夹"), ACTIVITY(12, "大森林资讯 "), BRANDSALE(13, "品牌特卖"), MESSAGECENTER(14, "消息中心");
+
+        private final int    key;
+
+        private final String name;
+
+        private ModularType(int key, String name) {
+
+            this.key = key;
+            this.name = name;
+        }
+
+        public int getKey() {
+
+            return key;
+        }
+
+        public String getName() {
+
+            return name;
+        }
+    }
 }

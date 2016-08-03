@@ -1,6 +1,6 @@
 package com.qcloud.project.forest.web.controller;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,25 +13,17 @@ import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.project.forest.model.Modular;
 import com.qcloud.project.forest.model.ModularUser;
-import com.qcloud.project.forest.service.ModularService;
+import com.qcloud.project.forest.model.key.TypeEnum.ModularType;
 import com.qcloud.project.forest.service.ModularUserService;
 import com.qcloud.project.forest.web.form.ModularForm;
-import com.qcloud.project.forest.web.handler.ModularHandler;
 import com.qcloud.project.forest.web.handler.ModularUserHandler;
 import com.qcloud.project.forest.web.vo.ModularUserVO;
-import com.qcloud.project.forest.web.vo.ModularVO;
 
 @Controller
 @RequestMapping(value = ModularController.DIR)
 public class ModularController {
 
     public static final String DIR = "/modular";
-
-    @Autowired
-    private ModularService     modularService;
-
-    @Autowired
-    private ModularHandler     modularHandler;
 
     @Autowired
     private ModularUserService modularUserService;
@@ -52,7 +44,7 @@ public class ModularController {
         List<ModularUser> list = modularUserService.listByUserId(user.getId());
         List<ModularUserVO> voList = modularUserHandler.toVOList(list);
         FrontAjaxView frontAjaxView = new FrontAjaxView();
-        frontAjaxView.addObject("result", voList);
+        frontAjaxView.addObject("list", voList);
         return frontAjaxView;
     }
 
@@ -64,17 +56,16 @@ public class ModularController {
     @RequestMapping
     public FrontAjaxView allModular() {
 
-        List<Modular> list = modularService.listAll();
-        List<ModularVO> voList = modularHandler.toVOList(list);
-        Iterator<ModularVO> iter = voList.iterator();
-        while (iter.hasNext()) {
-            ModularVO s = iter.next();
-            if (s.getEnable() == 0) {
-                iter.remove();
-            }
+        List<ModularUserVO> modularUserVOs = new ArrayList<ModularUserVO>(14);
+        ModularUserVO modularUserVO = null;
+        for (ModularType modularType : ModularType.values()) {
+            modularUserVO = new ModularUserVO();
+            modularUserVO.setCode(modularType.getKey());
+            modularUserVO.setName(modularType.getName());
+            modularUserVOs.add(modularUserVO);
         }
         FrontAjaxView frontAjaxView = new FrontAjaxView();
-        frontAjaxView.addObject("result", voList);
+        frontAjaxView.addObject("list", modularUserVOs);
         return frontAjaxView;
     }
 
@@ -93,8 +84,8 @@ public class ModularController {
         ModularUser modularUser = null;
         for (Modular modular : modularForm.getModulars()) {
             modularUser = new ModularUser();
-            modularUser.setModularId(modular.getId());
             modularUser.setUserId(user.getId());
+            modularUser.setModularCode(modular.getCode());
             modularUserService.add(modularUser);
         }
         FrontAjaxView frontAjaxView = new FrontAjaxView();
