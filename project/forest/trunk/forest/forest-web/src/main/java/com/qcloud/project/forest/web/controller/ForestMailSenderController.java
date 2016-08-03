@@ -15,6 +15,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import javax.mail.internet.MimeUtility;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -239,7 +240,7 @@ public class ForestMailSenderController {
             // Message.RecipientType.TO属性表示接收者的类型为TO
             mailMessage.setRecipient(Message.RecipientType.TO, to);
             // 设置邮件消息的主题
-            mailMessage.setSubject(mailInfo.getSubject());
+            mailMessage.setSubject(MimeUtility.encodeText(mailInfo.getSubject(), "UTF-8", "B"));
             // 设置邮件消息发送的时间
             mailMessage.setSentDate(new Date());
             // MiniMultipart类是一个容器类，包含MimeBodyPart类型的对象
@@ -257,7 +258,7 @@ public class ForestMailSenderController {
             // mainPart.addBodyPart(mailArchieve);
             // mailArchieve.setHeader("Content-ID", "<image>");
             // 设置HTML内容
-            html.setContent(mailInfo.getContent(), "text/html; charset=gbk");
+            html.setContent(mailInfo.getContent(), "text/html; charset=utf-8");
             mainPart.addBodyPart(html);
             // 将MiniMultipart对象设置为邮件内容
             mailMessage.setContent(mainPart);
