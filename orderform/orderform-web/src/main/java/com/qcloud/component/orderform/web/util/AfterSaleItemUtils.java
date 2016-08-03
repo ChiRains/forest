@@ -19,7 +19,7 @@ public class AfterSaleItemUtils {
         AssertUtil.assertNotNull(afterSaleForm.getOrderId(), "订单ID不能为空.");
         AssertUtil.assertNotNull(afterSaleForm.getOrderDate(), "订单日期不能为空.");
         List<AfterSaleItem> result = new ArrayList<AfterSaleItem>();
-        switch (afterSaleForm.getType()) {
+        switch (afterSaleForm.getType()) {// 全退了
         case 1:
             for (MerchantOrderEntity merchantOrder : orderEntity.getEntityList()) {
                 for (OrderItemEntity orderItem : merchantOrder.getEntityList()) {
@@ -32,7 +32,7 @@ public class AfterSaleItemUtils {
                 }
             }
             break;
-        case 2:
+        case 2:// 按商家订单退
             AssertUtil.assertNotEmpty(afterSaleForm.getSubOrderList(), "子单列表不能为空.");
             List<Long> idList = afterSaleForm.getSubOrderList();
             for (Long id : idList) {
@@ -53,7 +53,7 @@ public class AfterSaleItemUtils {
                 }
             }
             break;
-        case 3:
+        case 3:// 按物品明细退
             AssertUtil.assertNotEmpty(afterSaleForm.getItemList(), "物品列表不能为空.");
             List<AfterSaleFormItem> itemList = afterSaleForm.getItemList();
             for (AfterSaleFormItem afterSaleFormItem : itemList) {

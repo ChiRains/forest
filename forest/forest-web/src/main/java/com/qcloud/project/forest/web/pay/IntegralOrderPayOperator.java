@@ -19,7 +19,7 @@ public class IntegralOrderPayOperator implements PaymentOperate {
     @Override
     public PayObject getPayObject(Long objectId, Date occurTime) {
 
-        final IntegralOrder order = integralOrderService.getByOrder(objectId);
+        final IntegralOrder order = integralOrderService.get(objectId);
         AssertUtil.assertNotNull(order, "订单不存在." + objectId);
         return new PayObject() {
 
@@ -58,7 +58,7 @@ public class IntegralOrderPayOperator implements PaymentOperate {
     @Override
     public boolean paid(Long objectId, Date occurTime) {
 
-        IntegralOrder order = integralOrderService.getByOrder(objectId);
+        IntegralOrder order = integralOrderService.get(objectId);
         AssertUtil.assertNotNull(order, "订单不存在." + objectId);
         order.setState(IntegralOrderStateType.TO_SHIP.getKey());
         return integralOrderService.update(order);

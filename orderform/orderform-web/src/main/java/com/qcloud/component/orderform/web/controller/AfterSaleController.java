@@ -213,6 +213,49 @@ public class AfterSaleController {
         return view;
     }
 
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView applyReturnOrder(HttpServletRequest request, AfterSaleForm afterSaleForm) {
+
+        AssertUtil.assertNotNull(afterSaleForm.getOrderId(), "订单ID不能为空.");
+        AssertUtil.assertNotNull(afterSaleForm.getOrderDate(), "订单日期不能为空.");
+        OrderEntity orderEntity = orderSelecterService.getOrder(afterSaleForm.getOrderId(), afterSaleForm.getOrderDate());
+        AssertUtil.assertNotNull(orderEntity, "订单不存在." + afterSaleForm.getOrderId() + " " + DateUtil.date2String(afterSaleForm.getOrderDate()));
+        List<AfterSaleDetail> detailList = AfterSaleDetailUtils.toAfterSales(orderEntity, afterSaleForm, afterSaleForm.getExplain(), afterSaleForm.getReason());
+        AssertUtil.assertNotEmpty(detailList, "退货清单不能为空.");
+        // check
+        List<AfterSaleOrder> existList = afterSaleSelecterService.listAfterSaleOrder(orderEntity);
+        Long result = AfterSaleCheckUtils.checkDetail(detailList, existList);
+        AssertUtil.assertTrue(result == -1L, "订单项已经在售后处理,请勿重复提交." + result);
+        Long can = AfterSaleCheckUtils.checkDetail(orderEntity, detailList, AfterSaleType.RETURN);
+        AssertUtil.assertTrue(can == -1L, "签收后才可以退货." + can);
+        //
+        switch (afterSaleForm.getType()) {
+        case 1: // 全退了
+            // List<OrderItemEntity> itemList = new ArrayList<OrderItemEntity>();
+            // for (AfterSaleItem afterSale : list) {
+            // itemList.add(afterSale.getOrderItem());
+            // }
+            // afterSaleService.applyReturn(orderEntity, itemList, afterSaleForm.getExplain(), afterSaleForm.getReason());
+            break;
+        case 2: // 按商家订单退
+            // List<OrderItemEntity> subList = new ArrayList<OrderItemEntity>();
+            // for (AfterSaleItem afterSale : list) {
+            // subList.add(afterSale.getOrderItem());
+            // }
+            // afterSaleService.applyReturn(orderEntity, subList, afterSaleForm.getExplain(), afterSaleForm.getReason());
+            break;
+        case 3: // 按物品明细退
+            afterSaleService.applyReturnDetail(orderEntity, detailList);
+            break;
+        default:
+            throw new OrderformException("退货表单类型不正确" + afterSaleForm.getType());
+        }
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("申请退货成功");
+        return view;
+    }
+
     /**
      * 换货
      * @param orderStateForm

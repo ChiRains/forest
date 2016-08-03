@@ -38,6 +38,8 @@ public class OrderItemVO {
     // 能否评论
     private boolean evaluation;
 
+    private long    orderItemDetailId;
+
     public long getUnifiedMerchandiseId() {
 
         return unifiedMerchandiseId;
@@ -156,5 +158,15 @@ public class OrderItemVO {
     public void setUnit(String unit) {
 
         this.unit = unit;
+    }
+
+    public long getOrderItemDetailId() {
+
+        return orderItemDetailId;
+    }
+
+    public void setOrderItemDetailId(long orderItemDetailId) {
+
+        this.orderItemDetailId = orderItemDetailId;
     }
 }

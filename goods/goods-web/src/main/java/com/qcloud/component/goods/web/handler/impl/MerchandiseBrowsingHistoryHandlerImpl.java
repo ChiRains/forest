@@ -69,6 +69,13 @@ public class MerchandiseBrowsingHistoryHandlerImpl implements MerchandiseBrowsin
         vo.setId(merchandiseBrowsingHistory.getId());
         QMerchant merchant = sellercenterClient.getMerchant(unifiedMerchandise.getMerchantId());
         vo.setMerchantName(merchant.getName());
+        vo.setStock(unifiedMerchandise.getStock());
+        long sum = unifiedMerchandise.getGoodEvaluation() + unifiedMerchandise.getMiddleEvaluation() + unifiedMerchandise.getLowEvaluation();
+        int goodEvaluationRate = 0;
+        if (sum != 0) {
+            goodEvaluationRate = new Double(unifiedMerchandise.getGoodEvaluation() * 100 / sum).intValue();
+        }
+        vo.setGoodEvaluationRate(goodEvaluationRate);
         return vo;
     }
 }

@@ -79,9 +79,9 @@ public class ForestController {
     public FrontAjaxView classifyList() {
 
         List<QClassify> classifyList = publicdataClient.listClassifyForTree(getMerchantClassify());
-        for (QClassify qClassify : classifyList) {
-            fillFileServerUrlBeforeImage(qClassify);
-        }
+        // for (QClassify qClassify : classifyList) {
+        // fillFileServerUrlBeforeImage(qClassify);
+        // }
         FrontAjaxView view = new FrontAjaxView();
         view.addObject("list", classifyList);
         return view;

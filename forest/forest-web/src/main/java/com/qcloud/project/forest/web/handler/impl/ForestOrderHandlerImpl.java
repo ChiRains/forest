@@ -210,12 +210,13 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
         // 从orderItemDetails里面取数据
         for (QOrderItemDetail qOrderItemDetail : orderItemDetailList) {
             OrderItemVO itemVO = new OrderItemVO();
+            itemVO.setOrderItemDetailId(qOrderItemDetail.getId());
             itemVO.setName(qOrderItemDetail.getName());
             itemVO.setImage(fileSDKClient.getFileServerUrl() + qOrderItemDetail.getImage());
             itemVO.setSpecifications(qOrderItemDetail.getSpecifications());
             itemVO.setDiscount(qOrderItemDetail.getDiscount());
             itemVO.setNumber(qOrderItemDetail.getNumber());
-            itemVO.setUnifiedMerchandiseId(qOrderItemDetail.getId());
+            itemVO.setUnifiedMerchandiseId(qOrderItemDetail.getUnifiedMerchandiseId());
             for (QUnifiedMerchandise merchandise : unifiedMerchandise.getList()) {
                 if (merchandise.getId().longValue() == qOrderItemDetail.getUnifiedMerchandiseId()) {
                     itemVO.setPrice(merchandise.getPrice());
@@ -257,6 +258,7 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
         orderItemVO.setAfterSale(qOrderItem.isAfterSale());
         orderItemVO.setEvaluation(qOrderItem.isEvaluation());
         orderItemVO.setUnit(unifiedMerchandise.getUnit());
+        orderItemVO.setOrderItemDetailId(qOrderItem.getOrderItemDetailList().get(0).getId());
         return orderItemVO;
     }
 }

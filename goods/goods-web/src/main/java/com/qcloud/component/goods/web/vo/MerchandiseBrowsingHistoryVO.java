@@ -30,6 +30,10 @@ public class MerchandiseBrowsingHistoryVO {
 
     private String merchantName;
 
+    private double stock;
+
+    private long   goodEvaluationRate;
+
     public MerchandiseBrowsingHistoryVO() {
 
     }
@@ -132,5 +136,29 @@ public class MerchandiseBrowsingHistoryVO {
     public void setMerchantName(String merchantName) {
 
         this.merchantName = merchantName;
+    }
+
+    
+    public double getStock() {
+    
+        return stock;
+    }
+
+    
+    public void setStock(double stock) {
+    
+        this.stock = stock;
+    }
+
+    
+    public long getGoodEvaluationRate() {
+    
+        return goodEvaluationRate;
+    }
+
+    
+    public void setGoodEvaluationRate(long goodEvaluationRate) {
+    
+        this.goodEvaluationRate = goodEvaluationRate;
     }
 }
