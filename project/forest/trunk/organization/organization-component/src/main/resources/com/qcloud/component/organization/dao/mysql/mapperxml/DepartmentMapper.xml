@@ -83,5 +83,21 @@
         </if>
     </select>
     
+    <select id="listNearby" parameterType="java.util.HashMap" resultType="Department">  
+    <![CDATA[ 
+		select * from `organization_department` where
+		
+		latitude > #{latitude}-1*0.0180180*2.5 and
+		
+		latitude < #{latitude}+1*0.0180180*2.5 and
+		
+		longitude > #{longitude}-1*0.0180180*2.5 and
+		
+		longitude < #{longitude}+1*0.0180180*2.5
+		
+		order by ACOS(SIN((#{latitude} * 3.1415) / 180 ) *SIN((latitude * 3.1415) / 180 ) +COS((#{latitude} * 3.1415) / 180 ) * COS((latitude * 3.1415) / 180 ) *COS((#{longitude}* 3.1415) / 180 - (longitude * 3.1415) / 180 ) ) * 6380 asc limit 4
+		]]>
+    </select>
+    
     
 </mapper>

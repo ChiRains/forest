@@ -3,10 +3,10 @@ package com.qcloud.component.organization.dao;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import com.qcloud.pirates.data.Page;
-import com.qcloud.pirates.data.api.ISimpleDao;
 import com.qcloud.component.organization.model.Department;
 import com.qcloud.component.organization.model.query.DepartmentQuery;
+import com.qcloud.pirates.data.Page;
+import com.qcloud.pirates.data.api.ISimpleDao;
 
 public interface DepartmentDao extends ISimpleDao<Department, Long> {
 
@@ -39,4 +39,6 @@ public interface DepartmentDao extends ISimpleDao<Department, Long> {
     public List<Department> listByAddress(DepartmentQuery query, int start, int count);
 
     public int countByAddress(DepartmentQuery query);
+
+    public List<Department> listNearby(double latitude, double longitude);
 }

@@ -69,4 +69,7 @@ public interface OrganizationClient {
 
     // 展示门店图片
     List<Map<String, Object>> listDepartmentImages(Long departmentId);
+
+    // 展示周边的门店
+    List<QDepartment> listNearby(double latitude, double longitude);
 }

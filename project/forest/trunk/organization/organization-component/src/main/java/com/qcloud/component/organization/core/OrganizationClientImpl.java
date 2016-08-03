@@ -550,4 +550,15 @@ public class OrganizationClientImpl implements OrganizationClient {
         }
         return strings;
     }
+
+    @Override
+    public List<QDepartment> listNearby(double latitude, double longitude) {
+
+        List<Department> list = departmentService.listNearby(latitude, longitude);
+        List<QDepartment> result = new ArrayList<QDepartment>();
+        for (Department department : list) {
+            result.add(getDepartment(department));
+        }
+        return result;
+    }
 }
