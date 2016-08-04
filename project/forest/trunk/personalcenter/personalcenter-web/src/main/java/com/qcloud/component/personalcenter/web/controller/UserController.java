@@ -275,7 +275,7 @@ public class UserController {
 
     // @RequestMapping(method = RequestMethod.POST)
     @RequestMapping
-    public FrontAjaxView login(HttpServletRequest request, String username, String pwd, String code) {
+    public FrontAjaxView login(HttpServletRequest request, String username, String pwd, String openId) {
 
         AssertUtil.assertNotEmpty(username, "账号不能为空.");
         AssertUtil.assertNotEmpty(pwd, "密码不能为空.");
@@ -314,19 +314,19 @@ public class UserController {
             }
             identificationKey = String.valueOf(user.getId());
             // 绑定openId
-            if (StringUtils.isNotEmpty(code)) {
-                UserThird userThird = userThirdService.getByThird(code, AccountType.WEIXIN);
+            if (StringUtils.isNotEmpty(openId)) {
+                UserThird userThird = userThirdService.getByThird(openId, AccountType.WEIXIN);
                 if (userThird == null) {
                     UserThird thirdByUser = userThirdService.getByUser(user.getId());
                     if (thirdByUser != null) {
                         thirdByUser.setUserId(user.getId());
-                        thirdByUser.setThirdId(code);
+                        thirdByUser.setThirdId(openId);
                         userThirdService.update(thirdByUser);
                     } else {
                         userThird = new UserThird();
                         userThird.setAccountType(AccountType.WEIXIN.getKey());
                         userThird.setCreateTime(new Date());
-                        userThird.setThirdId(code);
+                        userThird.setThirdId(openId);
                         userThird.setUserId(user.getId());
                         userThirdService.add(userThird);
                     }
