@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.qcloud.project.forest.dao.mysql.mapper.ShareGiftUserMapper">          
+    <select id="list4query" parameterType="java.util.HashMap" resultType="ShareGiftUser">  
+        select * from `forest_share_gift_user` limit #{start},#{count}
+    </select>  
+    
+    <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `forest_share_gift_user`
+    </select> 
+    
+     <select id="listByCode" parameterType="java.util.HashMap" resultType="ShareGiftUser">  
+        select * from `forest_share_gift_user` where code=#{code}
+    </select>  
+    
+     <select id="countByCode" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `forest_share_gift_user` where code=#{code}
+    </select> 
+     <select id="countCouponByCode" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `forest_share_gift_user` where code=#{code} and state > 1
+    </select> 
+</mapper>
