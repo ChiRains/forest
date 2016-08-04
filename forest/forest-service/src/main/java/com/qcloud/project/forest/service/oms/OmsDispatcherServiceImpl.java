@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.qcloud.component.orderform.OrderformClient;
 import com.qcloud.project.forest.model.oms.Item;
+import com.qcloud.project.forest.model.oms.Logistics_Company;
 import com.qcloud.project.forest.model.oms.Order;
 import com.qcloud.project.forest.model.oms.Product;
 import com.qcloud.project.forest.model.oms.Sku;
+import com.qcloud.project.forest.model.oms.XmlLogisticsCompany;
 import com.qcloud.project.forest.model.oms.XmlMerchandise;
+import com.qcloud.project.forest.model.oms.XmlMerchandiseBatch;
 import com.qcloud.project.forest.model.oms.XmlOrderBatch;
 import com.qcloud.project.forest.model.oms.QueryForm;
 import com.qcloud.project.forest.model.oms.XmlOrder;
@@ -83,5 +86,39 @@ public class OmsDispatcherServiceImpl implements OmsDispatcherService {
         product.setSku_list(sku_list);
         xmlMerchandise.setProduct(product);
         return xmlMerchandise;
+    }
+
+    @Override
+    public XmlMerchandiseBatch listMerchandises(QueryForm queryForm) {
+
+        XmlMerchandiseBatch xmlMerchandiseBatch = new XmlMerchandiseBatch();
+        List<Product> products = new ArrayList<Product>();
+        Product product = new Product();
+        Product product1 = new Product();
+        List<Sku> sku_list = new ArrayList<Sku>();
+        Sku sku1 = new Sku();
+        Sku sku2 = new Sku();
+        sku_list.add(sku1);
+        sku_list.add(sku2);
+        product.setSku_list(sku_list);
+        product1.setSku_list(sku_list);
+        products.add(product);
+        products.add(product1);
+        xmlMerchandiseBatch.setProduct_list(products);
+        return xmlMerchandiseBatch;
+    }
+
+    @Override
+    public XmlLogisticsCompany getLogisticsCompany(QueryForm queryForm) {
+
+        XmlLogisticsCompany xmlLogisticsCompany = new XmlLogisticsCompany();
+        List<Logistics_Company> list = new ArrayList<Logistics_Company>();
+        Logistics_Company logisticsCompanies = new Logistics_Company();
+        logisticsCompanies.setCode("00001");
+        logisticsCompanies.setId(1111);
+        logisticsCompanies.setName("圆通");
+        list.add(logisticsCompanies);
+        xmlLogisticsCompany.setLogistics_companies(list);
+        return xmlLogisticsCompany;
     }
 }
