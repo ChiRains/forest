@@ -317,12 +317,19 @@ public class UserController {
             if (StringUtils.isNotEmpty(code)) {
                 UserThird userThird = userThirdService.getByThird(code, AccountType.WEIXIN);
                 if (userThird == null) {
-                    userThird = new UserThird();
-                    userThird.setAccountType(AccountType.WEIXIN.getKey());
-                    userThird.setCreateTime(new Date());
-                    userThird.setThirdId(code);
-                    userThird.setUserId(user.getId());
-                    userThirdService.add(userThird);
+                    UserThird thirdByUser = userThirdService.getByUser(user.getId());
+                    if (thirdByUser != null) {
+                        thirdByUser.setUserId(user.getId());
+                        thirdByUser.setThirdId(code);
+                        userThirdService.update(thirdByUser);
+                    } else {
+                        userThird = new UserThird();
+                        userThird.setAccountType(AccountType.WEIXIN.getKey());
+                        userThird.setCreateTime(new Date());
+                        userThird.setThirdId(code);
+                        userThird.setUserId(user.getId());
+                        userThirdService.add(userThird);
+                    }
                 } else {
                     userThird.setUserId(user.getId());
                     userThirdService.update(userThird);
