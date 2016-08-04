@@ -30,7 +30,6 @@ import com.qcloud.project.forest.model.query.ArticleQuery;
 import com.qcloud.project.forest.service.ArticleService;
 import com.qcloud.project.forest.web.handler.ArticleHandler;
 import com.qcloud.project.forest.web.vo.ArticleVO;
-import com.qcloud.project.forest.web.vo.ForestOrderVO;
 
 @Controller
 @RequestMapping(value = ForestController.DIR)
@@ -157,6 +156,9 @@ public class ForestController {
         articleQuery.setEnable(1);
         Page<Article> page = articleService.page(articleQuery, 0, 5);
         List<ArticleVO> voList = articleHandler.toVOList(page.getData());
+        for (ArticleVO articleVO : voList) {
+            articleVO.setContent(null);
+        }
         FrontAjaxView view = new FrontAjaxView();
         view.addObject("result", voList);
         return view;

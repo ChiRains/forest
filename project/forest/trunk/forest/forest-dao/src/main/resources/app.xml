@@ -39,6 +39,7 @@
 		<item>organization-clerk-code</item>
 		<item>forest-integral-order-code</item>
 		<item>my-shopping-cart-group-code</item>
+		<item>forest-shareforgift-code</item>
 	</module-list>
 
 	<module-list code="my-shopping-cart-group-code">
@@ -231,5 +232,9 @@
 		<item module="fr" operate="orderPayOperator">订单支付</item>	
 		<item module="jf" operate="integralOrderPayOperator">积分订单支付</item>	
 	</module-list>
+	<!-- 分享有礼邀请码 -->
+	<module-list code="forest-shareforgift-code">
+		<item type="CHAR">ABCDEF</item>
+	</module-list>	
 
 </xml>
