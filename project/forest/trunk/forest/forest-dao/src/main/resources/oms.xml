@@ -14,6 +14,10 @@
 	
 	<item omsToMethod="item.skus.get" invoke="getMerchandise" paramType="com.qcloud.project.forest.model.oms.QueryForm">单个商品接口</item>
 	
+	<item omsToMethod="item.list.get" invoke="listMerchandises" paramType="com.qcloud.project.forest.model.oms.QueryForm">批量商品接口</item>
+	
+	<item omsToMethod="logistics.companies.get" invoke="getLogisticsCompany" paramType="com.qcloud.project.forest.model.oms.QueryForm">物流公司接口</item>
+	
 </module-list>
 
 </xml>

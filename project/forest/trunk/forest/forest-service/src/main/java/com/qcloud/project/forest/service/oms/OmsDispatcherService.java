@@ -1,6 +1,8 @@
 package com.qcloud.project.forest.service.oms;
 
+import com.qcloud.project.forest.model.oms.XmlLogisticsCompany;
 import com.qcloud.project.forest.model.oms.XmlMerchandise;
+import com.qcloud.project.forest.model.oms.XmlMerchandiseBatch;
 import com.qcloud.project.forest.model.oms.XmlOrderBatch;
 import com.qcloud.project.forest.model.oms.QueryForm;
 import com.qcloud.project.forest.model.oms.XmlOrder;
@@ -32,4 +34,14 @@ public interface OmsDispatcherService {
      * 单个商品接口
      */
     public XmlMerchandise getMerchandise(QueryForm queryForm);
+
+    /**
+     * 商品批量查询接口
+     */
+    public XmlMerchandiseBatch listMerchandises(QueryForm queryForm);
+
+    /**
+     * 物流公司接口
+     */
+    public XmlLogisticsCompany getLogisticsCompany(QueryForm queryForm);
 }
