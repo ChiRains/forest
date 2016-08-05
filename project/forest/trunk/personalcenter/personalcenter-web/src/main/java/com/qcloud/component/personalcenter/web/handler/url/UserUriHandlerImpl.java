@@ -103,6 +103,7 @@ public class UserUriHandlerImpl extends AbstractUriHandler {
         list.add("/user/setPwdByCode.do");
         list.add("/user/loginByWeixin.do");
         list.add("/user/openIdStatus.do");
+        list.add("/user/loginByWeixinAndCode.do");
         // ############################################
         list.add("/app/user/registerByMobile.do");
         list.add("/app/user/sendMsgForRegister.do");

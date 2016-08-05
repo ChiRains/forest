@@ -704,6 +704,55 @@ public class UserController {
     }
 
     @RequestMapping
+    public FrontAjaxView loginByWeixinAndCode(HttpServletRequest request, String code, String pageUri) {
+
+        String openId = weiXinUserClient.requestOpenId(code);
+        AssertUtil.assertNotNull(openId, "请求微信服务器获取用户标识失败.");
+        UserThird userThird = userThirdService.getByThird(openId, AccountType.WEIXIN);
+        // 第一次
+        if (userThird == null) {
+            FrontAjaxView view = new FrontAjaxView();
+            view.addObject("isLogin", false);
+            view.addObject("openId", openId);
+            return view;
+        } else {
+            QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_IS_LOGIN_PARAMETER_KEY);
+            if (user != null) {
+                if (userThird.getUserId() != user.getId()) {
+                    logout(request);
+                }
+                // logger.error("使用新微信登录前请在旧的微信号退出." + userThird.getThirdId());
+                // AssertUtil.assertTrue(userThird.getUserId() == user.getId(), "使用新微信登录前请在旧的微信号退出.");
+            }
+        }
+        // 开始加载把第三方数据Id放到session
+        User user = userService.get(userThird.getUserId());
+        AssertUtil.assertNotNull(user, "用户不存在." + user.getId());
+        boolean e = userService.isEnableUser(user);
+        AssertUtil.assertTrue(e, "用户可能会禁用了.");
+        if (StringUtils.isEmpty(user.getMobile())) {
+            // 让其注册
+            // TODO 这里是绑定用户
+            request.getSession(true).setAttribute(THIRD_USER, String.valueOf(userThird.getId()));
+        }
+        // else {
+        // 让其登录
+        String tokenId = userFilterService.doLogin(request);
+        boolean ok = tokenClient.reg(tokenId, String.valueOf(userThird.getUserId()));
+        if (!ok) {
+            throw new PersonalCenterException("系统服务出现异常,token添加失败.");
+        }
+        // }
+        // 获取openId的状态
+        request.getSession(true).setAttribute("STATUS", true);
+        // String url = "http://" + request.getServerName();
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("登录成功.");
+        view.addObject("isLogin", true);
+        return view;
+    }
+
+    @RequestMapping
     public FrontAjaxView logout4Weixin(HttpServletRequest request) {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
