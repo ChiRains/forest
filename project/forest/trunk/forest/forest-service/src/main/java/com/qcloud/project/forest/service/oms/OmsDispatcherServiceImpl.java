@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.qcloud.component.orderform.OrderformClient;
+import com.qcloud.component.orderform.QOrder;
+import com.qcloud.pirates.util.DateUtil;
 import com.qcloud.project.forest.model.oms.Item;
 import com.qcloud.project.forest.model.oms.Logistics_Company;
 import com.qcloud.project.forest.model.oms.Order;
@@ -22,7 +24,7 @@ import com.qcloud.project.forest.model.oms.XmlStock;
 public class OmsDispatcherServiceImpl implements OmsDispatcherService {
 
     @Autowired
-    public OrderformClient orderformClient;
+    private OrderformClient orderformClient;
 
     @Override
     public boolean deliverOrder(QueryForm queryForm) {
@@ -35,9 +37,41 @@ public class OmsDispatcherServiceImpl implements OmsDispatcherService {
     @Override
     public XmlOrder getOrder(QueryForm queryForm) {
 
-        XmlOrder xmlOrder = new XmlOrder();
+        // 订单号
+        String orderNumber = queryForm.getTid();
+        QOrder qOrder = orderformClient.getOrder(orderNumber);
+        // 订单
         Order order = new Order();
-        // String tid = queryForm.getTid();
+        // order.setTid(qOrder.getOrderNumber());
+        // order.setStatus(String.valueOf(qOrder.getState()));
+        // order.setModified(DateUtil.date2String(qOrder.getLastUpdateTime()));
+        // order.setCreated(created);
+        // order.setShipping_type(shipping_type);
+        // order.setPost_fee(post_fee);
+        // order.setReceiver_name(receiver_name);
+        // order.setReceiver_state(receiver_state);
+        // order.setReceiver_city(receiver_city);
+        // order.setReceiver_district(receiver_district);
+        // order.setReceiver_address(receiver_address);
+        // order.setReceiver_zip(receiver_zip);
+        // order.setReceiver_mobile(receiver_mobile);
+        // order.setReceiver_phone(receiver_phone);
+        // order.setBuyer_nick(buyer_nick);
+        // order.setBuyer_name(buyer_name);
+        // order.setIs_tax(is_tax);
+        // order.setInvoice_type(invoice_type);
+        // order.setInvoice_title(invoice_title);
+        // order.setPay_type(pay_type);
+        // order.setReal_pay(real_pay);
+        // order.setTotal_fee(total_fee);
+        // order.setBuyer_message(buyer_message);
+        // order.setBuyer_cod_fee(buyer_cod_fee);
+        // order.setPoint_fee(point_fee);
+        // order.setCoupon_pay(coupon_pay);
+        // order.setPaytime(paytime);
+        // order.setSeller_memo(seller_memo);
+        //
+        XmlOrder xmlOrder = new XmlOrder();
         List<Item> itemlist = new ArrayList<Item>();
         Item item1 = new Item();
         item1.setSku_name("商铺名称1");
