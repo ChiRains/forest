@@ -26,6 +26,7 @@
         <form id="delivery-form" class="form-horizontal"  role="form" action="/admin/article/editClassify.do">
             <!-- #section:elements.form -->
 			<input type="hidden" name="id" value="${result.id}">
+			<input type="hidden" name="enable" value="${result.enable}">
 		
                   		<div class="space-4"></div>
             <div class="form-group">

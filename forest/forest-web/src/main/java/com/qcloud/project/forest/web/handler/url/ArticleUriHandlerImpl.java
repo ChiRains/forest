@@ -56,7 +56,7 @@ public class ArticleUriHandlerImpl extends AbstractUriHandler {
     public Map<String, List<String>> permissionRelaMap() {
 
         Map<String, List<String>> map = new HashMap<String, List<String>>();
-        List<String> list = stringToList("/admin/activity/list.do", "/admin/article/addClassify.do");
+        List<String> list = stringToList("/admin/activity/list.do", "/admin/article/classifyList.do");
         //
         map.put("/admin/article/toAdd.do", list);
         map.put("/admin/article/toEdit.do", list);
