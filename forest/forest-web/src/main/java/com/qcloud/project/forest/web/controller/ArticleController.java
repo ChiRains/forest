@@ -87,7 +87,7 @@ public class ArticleController {
     public HtmlView getHtmlView(Long id) {
 
         Article article = articleService.get(id);
-        HtmlView htmlView = new HtmlView(article.getContent());
+        HtmlView htmlView = new HtmlView("<style>img{width:100%;} </style>" + article.getContent());
         return htmlView;
     }
 
