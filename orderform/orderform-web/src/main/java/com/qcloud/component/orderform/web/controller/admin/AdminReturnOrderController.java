@@ -300,7 +300,7 @@ public class AdminReturnOrderController {
             state = ReturnOrderStateType.RETURN_PAID.getKey();
             break;
         case 8:
-            state = ReturnOrderStateType.RETURN_CONFIRM_PAID.getKey();
+//            state = ReturnOrderStateType.RETURN_CONFIRM_PAID.getKey();
             break;
         case 9:
             // state = ReturnOrderStateType.RETURN_SUCCESS.getKey();

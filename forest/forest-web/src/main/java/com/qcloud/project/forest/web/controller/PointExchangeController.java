@@ -280,6 +280,7 @@ public class PointExchangeController {
                 merchandise.setSpecifications(unifiedMerchandise.getSpecifications());
                 QMerchant merchant = sellercenterClient.getMerchant(unifiedMerchandise.getMerchantId());
                 merchandise.setMerchantName(merchant.getName());
+                merchandise.getImageList().add(fileSDKClient.getFileServerUrl() + unifiedMerchandise.getImage());
                 merchandiseVO.add(merchandise);
             }
             merchandiseListVO.setMerchandiseList(merchandiseVO);

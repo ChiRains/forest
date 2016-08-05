@@ -265,11 +265,11 @@ public class AfterSaleStateController {
     @RequestMapping
     public FrontAjaxView confirmPayReturn(HttpServletRequest request, Long returnId) {
 
-        ReturnOrder returnOrder = returnOrderService.get(returnId);
-        AssertUtil.assertNotNull(returnOrder, "退货单不存在." + returnId);
-        MerchantOrderEntity merchantOrder = orderSelecterService.getMerchantOrder(returnOrder.getSubOrderId(), returnOrder.getOrderDate());
-        ReturnAfterSaleOrder returnAfterSaleOrder = afterSaleSelecterService.getReturnOrder(merchantOrder, returnId);
-        afterSaleStateService.exchangeReturnOrderState(returnAfterSaleOrder, ReturnOrderStateType.RETURN_CONFIRM_PAID.getKey());
+        // ReturnOrder returnOrder = returnOrderService.get(returnId);
+        // AssertUtil.assertNotNull(returnOrder, "退货单不存在." + returnId);
+        // MerchantOrderEntity merchantOrder = orderSelecterService.getMerchantOrder(returnOrder.getSubOrderId(), returnOrder.getOrderDate());
+        // ReturnAfterSaleOrder returnAfterSaleOrder = afterSaleSelecterService.getReturnOrder(merchantOrder, returnId);
+        // afterSaleStateService.exchangeReturnOrderState(returnAfterSaleOrder, ReturnOrderStateType.RETURN_CONFIRM_PAID.getKey());
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("退款成功");
         return view;

@@ -1,6 +1,9 @@
 package com.qcloud.component.my.web.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -98,16 +101,20 @@ public class MyOrderFormController {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         FrontAjaxView view = new FrontAjaxView();
-        for (int state : statOrderStates) {
-            int number = myOrderFormService.statMyOrder(user.getId(), state);
-            view.addObject(String.valueOf(state), number);
+        for (Entry<Integer, String> entry : statOrderStateMap.entrySet()) {
+            int number = myOrderFormService.statMyOrder(user.getId(), entry.getKey());
+            view.addObject(entry.getValue(), number);
         }
-        for (int state : statMerchantOrderStates) {
-            int number = myOrderFormService.statMyMerchantOrder(user.getId(), state);
-            view.addObject(String.valueOf(state), number);
-        }
+        // for (int state : statOrderStates) {
+        // int number = myOrderFormService.statMyOrder(user.getId(), state);
+        // view.addObject(String.valueOf(state), number);
+        // }
+        // for (int state : statMerchantOrderStates) {
+        // int number = myOrderFormService.statMyMerchantOrder(user.getId(), state);
+        // view.addObject(String.valueOf(state), number);
+        // }
         int number = myAfterSaleService.stat(user.getId());
-        view.addObject(String.valueOf(8), number);
+        view.addObject("after", number);
         view.setMessage("查询我的订单数量成功.");
         return view;
     }
@@ -126,7 +133,16 @@ public class MyOrderFormController {
         return view;
     }
 
-    private int[] statOrderStates         = new int[] { 1, 2, 3, 4, 5};
+    private static Map<Integer, String> statOrderStateMap       = new HashMap<Integer, String>();
+    static {
+        statOrderStateMap.put(1, "toPay");
+        statOrderStateMap.put(2, "toPacking");
+        statOrderStateMap.put(3, "toShip");
+        statOrderStateMap.put(4, "toSign");
+        statOrderStateMap.put(5, "finished");
+    }
 
-    private int[] statMerchantOrderStates = new int[] {};
+    private int[]                       statOrderStates         = new int[] { 1, 2, 3, 4, 5};
+
+    private int[]                       statMerchantOrderStates = new int[] {};
 }

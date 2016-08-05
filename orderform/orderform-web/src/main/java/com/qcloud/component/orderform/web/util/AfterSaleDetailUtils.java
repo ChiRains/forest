@@ -116,13 +116,15 @@ public class AfterSaleDetailUtils {
                 for (OrderItemEntity orderItem : merchantOrder.getEntityList()) {
                     if (orderItem.getId() == afterSaleFormItem.getOrderItemId()) {
                         for (OrderItemDetailEntity orderItemDetail : orderItem.getEntityList()) {
-                            AfterSaleDetail afterSale = new AfterSaleDetail();
-                            afterSale.setOrderItemDetail(orderItemDetail);
-                            afterSale.setExplain(StringUtils.isEmpty(afterSaleFormItem.getExplain()) ? explain : afterSaleFormItem.getExplain());
-                            afterSale.setReason(StringUtils.isEmpty(afterSaleFormItem.getReason()) ? reason : afterSaleFormItem.getReason());
-                            afterSale.setNumber(orderItemDetail.getNumber() < afterSaleFormItem.getNumber() ? orderItemDetail.getNumber() : afterSaleFormItem.getNumber());
-                            afterSale.setNumber(afterSale.getNumber() <= 0 ? orderItemDetail.getNumber() : afterSale.getNumber());
-                            afterSaleList.add(afterSale);
+                            if (orderItemDetail.getId() == afterSaleFormItem.getOrderItemDetailId()) {
+                                AfterSaleDetail afterSale = new AfterSaleDetail();
+                                afterSale.setOrderItemDetail(orderItemDetail);
+                                afterSale.setExplain(StringUtils.isEmpty(afterSaleFormItem.getExplain()) ? explain : afterSaleFormItem.getExplain());
+                                afterSale.setReason(StringUtils.isEmpty(afterSaleFormItem.getReason()) ? reason : afterSaleFormItem.getReason());
+                                afterSale.setNumber(orderItemDetail.getNumber() < afterSaleFormItem.getNumber() ? orderItemDetail.getNumber() : afterSaleFormItem.getNumber());
+                                afterSale.setNumber(afterSale.getNumber() <= 0 ? orderItemDetail.getNumber() : afterSale.getNumber());
+                                afterSaleList.add(afterSale);
+                            }
                         }
                     }
                 }

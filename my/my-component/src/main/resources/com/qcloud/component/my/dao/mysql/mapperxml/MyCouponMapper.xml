@@ -12,7 +12,7 @@
     </select> 
     
     <select id="listByUser" parameterType="java.util.HashMap" resultType="MyCoupon">  
-         <![CDATA[ select * from `my_my_coupon` where userId=#{userId} and state <> 4]]>
+         <![CDATA[ select * from `my_my_coupon` where userId=#{userId} and state <> 4 and state <> 2]]>
 	        <if test="type == 1">
 	           <![CDATA[ and validDate <= #{nowtime} and invalidDate >=#{nowtime} and state = 1]]>
 	        </if>
@@ -30,7 +30,7 @@
     </select>  
     
     <select id="countByUser" parameterType="java.util.HashMap" resultType="Integer">  
-         <![CDATA[ select count(*) from `my_my_coupon` where userId=#{userId} and state <> 4]]>
+         <![CDATA[ select count(*) from `my_my_coupon` where userId=#{userId} and state <> 4 and state <> 2]]>
 	        <if test="type == 1">
 	           <![CDATA[ and validDate <= #{nowtime} and invalidDate >=#{nowtime} and state = 1]]>
 	        </if>
@@ -61,6 +61,6 @@
     </select>    
      
     <select id="getByCode" parameterType="java.util.HashMap" resultType="MyCoupon">  
-        <![CDATA[ select * from `my_my_coupon` where code = #{code} and state <> 4]]>
+        <![CDATA[ select * from `my_my_coupon` where code = #{code} and state <> 4 and state <> 2]]>
     </select>           
 </mapper>

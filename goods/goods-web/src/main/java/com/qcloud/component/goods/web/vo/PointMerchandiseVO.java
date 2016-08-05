@@ -1,24 +1,29 @@
 package com.qcloud.component.goods.web.vo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PointMerchandiseVO {
 
-    private long   unifiedMerchandiseId;
+    private long         unifiedMerchandiseId;
 
-    private String name;
+    private String       name;
 
-    private String image;
+    private String       image;
 
-    private double price;
+    private double       price;
 
-    private double discount;
+    private double       discount;
 
-    private double integral;
+    private double       integral;
 
-    private String desc;
+    private String       desc;
 
-    private String merchantName;
+    private String       merchantName;
 
-    private String specifications;
+    private String       specifications;
+
+    private List<String> imageList = new ArrayList<String>();
 
     public long getUnifiedMerchandiseId() {
 
@@ -108,5 +113,15 @@ public class PointMerchandiseVO {
     public void setSpecifications(String specifications) {
 
         this.specifications = specifications;
+    }
+
+    public List<String> getImageList() {
+
+        return imageList;
+    }
+
+    public void setImageList(List<String> imageList) {
+
+        this.imageList = imageList;
     }
 }

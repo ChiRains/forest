@@ -28,14 +28,14 @@ public class AllocationTimer extends AbstractTimer {
     @Override
     public Period getPeriod() {
 
-        return ProjectInfo.isDev() ? new SecondPeriod(10) : new MinutePeriod(2);
+        return ProjectInfo.isDev() ? new SecondPeriod(1200) : new MinutePeriod(20);
     }
 
     @Override
     public void start() {
 
         logger.info("开始:分配佣金.");
-        brokerageEngineService.calculate();
+        // brokerageEngineService.calculate();
         logger.info("结束:分配佣金.");
     }
 }

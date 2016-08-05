@@ -356,20 +356,20 @@ public class UserController {
         view.setMessage("验证用户是否登录成功.");
         String tokenId = userFilterService.getTokenId(request);
         if (StringUtils.isEmpty(tokenId)) {
-            view.addObject("result", Boolean.FALSE.toString());
+            view.addObject("result", false);
             return view;
         }
         String idStr = tokenClient.get(tokenId);
         if (StringUtils.isEmpty(idStr)) {
-            view.addObject("result", Boolean.FALSE.toString());
+            view.addObject("result", false);
             return view;
         }
         User user = userService.get(Long.parseLong(idStr));
         if (user == null) {
-            view.addObject("result", Boolean.FALSE.toString());
+            view.addObject("result", false);
             return view;
         }
-        view.addObject("result", Boolean.TRUE.toString());
+        view.addObject("result", true);
         return view;
     }
 
@@ -379,6 +379,7 @@ public class UserController {
 
         User user = userHelper.getUser(request);
         UserVO vo = userHandler.toVO(user);
+        AssertUtil.assertTrue(false, "");
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("个人信息获取成功.");
         view.addObject("user", vo);

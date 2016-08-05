@@ -34,7 +34,7 @@ public class AutoChangeTimer extends AbstractTimer {
     @Override
     public Period getPeriod() {
 
-        return ProjectInfo.isDev() ? new SecondPeriod(10) : new PerMinutePeriod(10);
+        return ProjectInfo.isDev() ? new SecondPeriod(1200) : new PerMinutePeriod(20);
     }
 
     @Override

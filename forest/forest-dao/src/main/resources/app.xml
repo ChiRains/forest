@@ -2,7 +2,7 @@
 <xml>
 	<module-list code="loginIndex">
 		<item name="loginLogo">/qcloud-admin/assets/images/logo.png</item>
-		<item name="loginMessage">©旗云科技</item>
+		<item name="loginMessage">©旗云科技(1)</item>
 		<item name="width">180</item>
 		<item name="height">150</item>
 	</module-list>
@@ -217,7 +217,7 @@
 	
 	
 	<module-list code="commoditycenter_brand_attribute">	
-		<item value="true">是否有品牌</item>	
+		<item value="false">是否有品牌</item>	
 	</module-list>
 	
 	<module-list code="order-refund-state-message-config">
