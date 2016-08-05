@@ -133,11 +133,11 @@ public class ForestController {
      */
     @PiratesApp
     @RequestMapping
-    public FrontAjaxView goodHealthy() {
+    public FrontAjaxView goodHealthy(Integer num) {
 
         List<QClassify> classifyList = publicdataClient.listClassifyForTree((long) BrandType.Brand.getKey());
-        if (classifyList.size() > 9) {
-            classifyList.subList(0, 8);
+        if (num > 0) {
+            classifyList = classifyList.subList(0, num);
         }
         FrontAjaxView view = new FrontAjaxView();
         view.addObject("result", classifyList);
