@@ -31,6 +31,7 @@ import com.qcloud.component.orderform.model.RefundOrder;
 import com.qcloud.component.orderform.model.RefundOrderItem;
 import com.qcloud.component.orderform.model.ReturnOrder;
 import com.qcloud.component.orderform.model.ReturnOrderItem;
+import com.qcloud.component.orderform.model.ReturnOrderItemDetail;
 import com.qcloud.component.orderform.service.ExchangeOrderItemDetailService;
 import com.qcloud.component.orderform.service.ExchangeOrderService;
 import com.qcloud.component.orderform.service.OrderConfigService;
@@ -38,6 +39,7 @@ import com.qcloud.component.orderform.service.OrderNumberService;
 import com.qcloud.component.orderform.service.OrderObserverService;
 import com.qcloud.component.orderform.service.RefundOrderItemService;
 import com.qcloud.component.orderform.service.RefundOrderService;
+import com.qcloud.component.orderform.service.ReturnOrderItemDetailService;
 import com.qcloud.component.orderform.service.ReturnOrderItemService;
 import com.qcloud.component.orderform.service.ReturnOrderService;
 import com.qcloud.component.sellercenter.SellercenterClient;
@@ -78,6 +80,9 @@ public class AfterSaleServiceImpl implements AfterSaleService {
 
     @Autowired
     private AfterSaleSelecterService       afterSaleSelecterService;
+
+    @Autowired
+    private ReturnOrderItemDetailService   returnOrderItemDetailService;
 
     @Transactional
     public boolean reApplyReturnOrder(ReturnAfterSaleOrder returnAfterSaleOrder) {
@@ -499,26 +504,24 @@ public class AfterSaleServiceImpl implements AfterSaleService {
     }
 
     // 退货单项详细
-    private boolean applyReturnOrderItemDetail(AfterSaleDetail afterSale, Date date, Long returnOrderId) {
+    private boolean applyReturnOrderItemDetail(AfterSaleDetail afterSale, Date date, Long returnOrderId, Long returnItemId) {
 
-        OrderItemDetailEntity orderItemEntity = afterSale.getOrderItemDetail();
-        MerchantOrderEntity merchantOrderEntity = orderItemEntity.getMerchantOrder();
-        OrderEntity orderEntity = orderItemEntity.getOrder();
+        OrderItemDetailEntity orderItemDetailEntity = afterSale.getOrderItemDetail();
+        MerchantOrderEntity merchantOrderEntity = orderItemDetailEntity.getMerchantOrder();
+        OrderEntity orderEntity = orderItemDetailEntity.getOrder();
         //
-        ReturnOrderItem returnOrderItem = new ReturnOrderItem();
+        ReturnOrderItemDetail returnOrderItem = new ReturnOrderItemDetail();
         returnOrderItem.setReturnId(returnOrderId);
+        returnOrderItem.setReturnItemId(returnItemId);
         //
         returnOrderItem.setOrderId(orderEntity.getId());
         returnOrderItem.setSubOrderId(merchantOrderEntity.getId());
-        returnOrderItem.setOrderItemId(orderItemEntity.getId());
+        returnOrderItem.setOrderItemId(orderItemDetailEntity.getOrderItem().getId());
+        returnOrderItem.setOrderItemDetailId(orderItemDetailEntity.getId());
         //
-        returnOrderItem.setSum(0.0);
-        returnOrderItem.setExplain(afterSale.getExplain());
-        returnOrderItem.setReason(afterSale.getReason());
         returnOrderItem.setNumber(afterSale.getNumber());
         returnOrderItem.setState(orderConfigService.getReturnInitOrderState());
-        returnOrderItem.setTime(date);
-        return returnOrderItemService.add(returnOrderItem);
+        return returnOrderItemDetailService.add(returnOrderItem);
     }
 
     @Transactional
@@ -541,26 +544,36 @@ public class AfterSaleServiceImpl implements AfterSaleService {
         for (OrderItemEntity orderItemEntity : orderItemSet) {
             MerchantOrderEntity merchantOrderEntity = orderItemEntity.getMerchantOrder();
             Date now = new Date();
-            AfterSaleItem afterSaleItem=new AfterSaleItem();
+            // TODO 退货单
             Long returnOrderId = applyReturnOrder(merchantOrderEntity, now, "", "");
-//            Long returnOrderId = applyReturnOrder(merchantOrderEntity, now, itemList.get(0).getExplain(), itemList.get(0).getReason());
-//            applyReturnOrderItem(afterSale, date, returnOrderId);
+            Long returnOrderItemId = applyReturnOrderItem(orderItemEntity, now, returnOrderId, spitMap.get(orderItemEntity).get(0).getExplain(), spitMap.get(orderItemEntity).get(0).getReason());
             for (AfterSaleDetail afterSale : spitMap.get(orderItemEntity)) {
-                
+                applyReturnOrderItemDetail(afterSale, now, returnOrderId, returnOrderItemId);
             }
+            ReturnAfterSaleOrder afterSaleOrder = afterSaleSelecterService.getReturnOrder(merchantOrderEntity, returnOrderId);
+            orderObserverService.doNotify(afterSaleOrder, afterSaleOrder.getState());
         }
+        return true;
+    }
+
+    private Long applyReturnOrderItem(OrderItemEntity orderItemEntity, Date date, Long returnOrderId, String explain, String reason) {
+
+        MerchantOrderEntity merchantOrderEntity = orderItemEntity.getMerchantOrder();
+        OrderEntity orderEntity = orderItemEntity.getOrder();
         //
-        // List<List<AfterSaleDetail>> spitList = spitAfterSaleDetail(list);
-        // for (List<AfterSaleDetail> itemList : spitList) {
-        // MerchantOrderEntity merchantOrderEntity = itemList.get(0).getOrderItemDetail().getMerchantOrder();
-        // Date now = new Date();
-        // Long returnOrderId = applyReturnOrder(merchantOrderEntity, now, itemList.get(0).getExplain(), itemList.get(0).getReason());
-        // for (AfterSaleDetail afterSale : itemList) {
-        // applyReturnOrderItemDetail(afterSale, now, returnOrderId);
-        // }
-        // ReturnAfterSaleOrder afterSaleOrder = afterSaleSelecterService.getReturnOrder(merchantOrderEntity, returnOrderId);
-        // orderObserverService.doNotify(afterSaleOrder, afterSaleOrder.getState());
-        // }
-        return false;
+        ReturnOrderItem returnOrderItem = new ReturnOrderItem();
+        returnOrderItem.setReturnId(returnOrderId);
+        //
+        returnOrderItem.setOrderId(orderEntity.getId());
+        returnOrderItem.setSubOrderId(merchantOrderEntity.getId());
+        returnOrderItem.setOrderItemId(orderItemEntity.getId());
+        returnOrderItem.setExplain(explain);
+        returnOrderItem.setReason(reason);
+        //
+        returnOrderItem.setSum(0.0);
+        returnOrderItem.setState(orderConfigService.getReturnInitOrderState());
+        returnOrderItem.setTime(date);
+        returnOrderItemService.add(returnOrderItem);
+        return returnOrderItem.getId();
     }
 }

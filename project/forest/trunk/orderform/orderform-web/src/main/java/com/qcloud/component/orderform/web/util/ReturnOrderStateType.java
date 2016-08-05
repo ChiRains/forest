@@ -12,11 +12,11 @@ public enum ReturnOrderStateType {
     //
     RETURN_PAID(50, "公司退款"),
     //
-    RETURN_CONFIRM_PAID(60, "买家确认退款"),
+//    RETURN_CONFIRM_PAID(60, "买家确认退款"),
     //
-    RETURN_REFUSE(70, "门店不同意退货"),
+    RETURN_REFUSE(60, "门店不同意退货"),
     //
-    RETURN_AGAIN(80, "重新申请退货");
+    RETURN_AGAIN(70, "重新申请退货");
 
     //
     private final int    key;

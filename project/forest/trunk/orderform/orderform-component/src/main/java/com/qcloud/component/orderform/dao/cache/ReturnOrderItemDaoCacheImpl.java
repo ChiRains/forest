@@ -29,7 +29,7 @@ public class ReturnOrderItemDaoCacheImpl implements ReturnOrderItemDao {
     @Override
     public ReturnOrderItem get(Long id) {
 
-        return CacheLoader.get(returnOrderItemDaoRedisImpl, returnOrderItemDaoMysqlImpl, id);
+        return returnOrderItemDaoMysqlImpl.get(id);
     }
 
     @Override
