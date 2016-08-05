@@ -29,11 +29,11 @@
                 <div class="row">
                     <div class="col-xs-6">
                         <div class="dataTables_length">
-                            <a title="新增" class="btn btn-sm btn-info"
+<!--                             <a title="新增" class="btn btn-sm btn-info"
                                href="#admin/salesPromotion/toAddSalesPromotionClassify">
                                 <i class="ace-icon fa fa-plus align-bottom bigger-125"></i>
                                 新&nbsp;增
-                            </a>                           
+                            </a>  -->                          
                         </div>
                     </div>                    
                 </div>
@@ -64,10 +64,10 @@
 					                                </label></td>                                                                              
                                                         <td>
                                 <div class="hidden-sm hidden-xs action-buttons">
-                                    <a title="查看商品" class="green" 
+<%--                                     <a title="查看商品" class="green" 
                                        href="#admin/salesPromotion/mallList?classifyId=${item.id}&merchantId=1">
                                         查看商品
-                                    </a>							                                 
+                                    </a>		 --%>					                                 
                                     <a title="查看商品" class="green" 
                                        href="#admin/salesPromotion/toEditSalesPromotionClassify?classifyId=${item.id}">
                                       修改类别
