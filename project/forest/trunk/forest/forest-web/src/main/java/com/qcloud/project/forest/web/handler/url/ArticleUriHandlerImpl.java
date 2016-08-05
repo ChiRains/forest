@@ -64,13 +64,13 @@ public class ArticleUriHandlerImpl extends AbstractUriHandler {
         map.put("/admin/article/edit.do", list);
         map.put("/admin/article/delete.do", list);
         map.put("/admin/article/enable.do", list);
-        map.put("/admin/article/classifyList.do", list);
         map.put("/admin/article/offshelves.do", list);
         map.put("/admin/article/addClassify.do", list);
         map.put("/admin/article/toAddClassify.do", list);
         map.put("/admin/article/deleteClassify.do", list);
         map.put("/admin/article/editClassify.do", list);
         map.put("/admin/article/enableClassify.do", list);
+        map.put("/admin/article/toEditClassify.do", list);
         return map;
     }
 
