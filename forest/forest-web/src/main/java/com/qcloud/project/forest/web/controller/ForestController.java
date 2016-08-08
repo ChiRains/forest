@@ -94,6 +94,14 @@ public class ForestController {
     @RequestMapping
     public FrontAjaxView indexsModular() {
 
+        Xml xml = XmlFactory.get("forest-domain-url");
+        String domain = "";
+        if (xml != null) {
+            List<XmlItem> itemList = xml.getItemList();
+            for (XmlItem xmlItem : itemList) {
+                domain = String.valueOf(xmlItem.getAttrMap().get("url"));
+            }
+        }
         String seckillImage = String.valueOf(parameterClient.get("forest-seckill-ind-image"));
         String couponImage = String.valueOf(parameterClient.get("forest-coupon-ind-image"));
         String summerText = String.valueOf(parameterClient.get("forest-summer-ind-text"));
@@ -101,6 +109,9 @@ public class ForestController {
         view.addObject("seckillImage", seckillImage);
         view.addObject("couponImage", couponImage);
         view.addObject("summerText", summerText);
+        view.addObject("seckillUrl", domain + "activitySeckill.html");
+        view.addObject("cuxiaoUrl", domain + "activityPromotion.html");
+        view.addObject("temaiUrl", domain + "activityBrand.html");
         return view;
     }
 

@@ -26,6 +26,8 @@ public class CombinationItemVO {
     private boolean           isAfterSale;
 
     private boolean           isEvaluation;
+    
+    private boolean           isAddEvaluation;
 
     private String            desc;
 
@@ -142,5 +144,17 @@ public class CombinationItemVO {
     public void setOrderItemId(Long orderItemId) {
 
         this.orderItemId = orderItemId;
+    }
+
+    
+    public boolean isAddEvaluation() {
+    
+        return isAddEvaluation;
+    }
+
+    
+    public void setAddEvaluation(boolean isAddEvaluation) {
+    
+        this.isAddEvaluation = isAddEvaluation;
     }
 }

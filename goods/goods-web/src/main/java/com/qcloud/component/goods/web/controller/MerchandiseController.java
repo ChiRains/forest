@@ -19,7 +19,6 @@ import com.qcloud.component.goods.QUnifiedMerchandise;
 import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.goods.model.CombinationMerchandiseItem;
 import com.qcloud.component.goods.model.Merchandise;
-import com.qcloud.component.goods.model.MerchandiseAttribute;
 import com.qcloud.component.goods.model.MerchandiseBrowsingHistory;
 import com.qcloud.component.goods.model.MerchandiseEvaluation;
 import com.qcloud.component.goods.model.MerchandiseImage;
@@ -55,7 +54,6 @@ import com.qcloud.component.goods.web.handler.MerchandiseEvaluationHandler;
 import com.qcloud.component.goods.web.handler.MerchandiseHandler;
 import com.qcloud.component.goods.web.vo.AttributeSpecificationsVO;
 import com.qcloud.component.goods.web.vo.CombinationMerchandiseVO;
-import com.qcloud.component.goods.web.vo.MerchandiseAttributeVO;
 import com.qcloud.component.goods.web.vo.MerchandiseEvaluationVO;
 import com.qcloud.component.goods.web.vo.MerchandiseExtVO;
 import com.qcloud.component.goods.web.vo.MerchandiseVO;
@@ -147,12 +145,6 @@ public class MerchandiseController {
 
     @Autowired
     private ShareClient                              shareClient;
-
-    @Autowired
-    private MerchandiseAttributeService              merchandiseAttributeService;
-
-    @Autowired
-    private MerchandiseAttributeHandler              merchandiseAttributeHandler;
 
     // @Autowired
     // private EvaluationcenterClient evaluationcenterClient;
@@ -484,12 +476,12 @@ public class MerchandiseController {
             sexpressMerchandiseVO.setPostage(postage);
             sexpressVOList.add(sexpressMerchandiseVO);
         }
-//        List<MerchandiseAttribute> list = merchandiseAttributeService.listByMerchandise(merchandise.getId());
-//        List<MerchandiseAttributeVO> voList = merchandiseAttributeHandler.toVOList(list);
-//        Map<String, MerchandiseAttributeVO> attrMap = new HashMap<String, MerchandiseAttributeVO>();
-//        for (MerchandiseAttributeVO merchandiseAttributeVO : voList) {
-//            attrMap.put(merchandiseAttributeVO.getCode(), merchandiseAttributeVO);
-//        }
+        // List<MerchandiseAttribute> list = merchandiseAttributeService.listByMerchandise(merchandise.getId());
+        // List<MerchandiseAttributeVO> voList = merchandiseAttributeHandler.toVOList(list);
+        // Map<String, MerchandiseAttributeVO> attrMap = new HashMap<String, MerchandiseAttributeVO>();
+        // for (MerchandiseAttributeVO merchandiseAttributeVO : voList) {
+        // attrMap.put(merchandiseAttributeVO.getCode(), merchandiseAttributeVO);
+        // }
         // 组合商品
         List<CombinationMerchandiseVO> comVOList = new ArrayList<CombinationMerchandiseVO>();
         Set<Long> combinationMerchandiseIdList = new HashSet<Long>();
@@ -512,8 +504,8 @@ public class MerchandiseController {
         FrontAjaxView view = new FrontAjaxView();
         view.addObject("combinationList", comVOList);
         //
-//        view.addObject("attrMap", attrMap);
-//        view.addObject("attrList", voList);
+        // view.addObject("attrMap", attrMap);
+        // view.addObject("attrList", voList);
         //
         view.setMessage("获取商品详情成功.");
         view.addObject("merchandise", merchandiseVO);

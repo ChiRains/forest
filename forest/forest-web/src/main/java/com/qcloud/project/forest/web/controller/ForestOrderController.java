@@ -258,6 +258,7 @@ public class ForestOrderController {
                         orderItem.setPrice(merchandiseItem.getPrice());
                         orderItem.setUnit(merchandiseItem.getUnit());
                         preOrderCombinationVO.getOrderItemList().add(orderItem);
+                        preMerchantVO.getImageList().add(fileSDKClient.getFileServerUrl() + orderItemEntity.getImage());
                     }
                     preMerchantVO.getCombinationItemList().add(preOrderCombinationVO);
                 }
@@ -456,7 +457,7 @@ public class ForestOrderController {
         List<MerchandiseDetail> merchandiseList = orderForm.getMerchandiseList();
         Map<QUnifiedMerchandise, Integer> merchandiseMap = new HashMap<QUnifiedMerchandise, Integer>();
         Set<Long> freeMerchandiseSet = new HashSet<Long>();
-        // TODO
+        // 处理商品结构
         Map<QUnifiedMerchandise, Integer> freeCombinationMap = new HashMap<QUnifiedMerchandise, Integer>();
         Map<QUnifiedMerchandise, Map<QUnifiedMerchandise, Integer>> freeMerchandiseListMap = new HashMap<QUnifiedMerchandise, Map<QUnifiedMerchandise, Integer>>();
         for (MerchandiseDetail merchandiseDetail : merchandiseList) {
@@ -507,24 +508,6 @@ public class ForestOrderController {
             AssertUtil.assertNotNull(invoice, "发票信息不存在." + orderForm.getInvoiceId());
             context.setInvoice(invoice);
         }
-        // 配送
-        // Map<QMerchant, OrderDelivery> deliveryMap = new HashMap<QMerchant, OrderDelivery>();
-        // // 配送
-        // if (orderForm.getDeliveryId() != -1) {
-        // QMyDelivery delivery = myClient.getDelivery(orderForm.getDeliveryId());
-        // AssertUtil.assertNotNull(delivery, "配送信息不存在." + orderForm.getDeliveryId());
-        // OrderDelivery orderDelivery = new OrderDelivery();
-        // orderDelivery.setDelivery(delivery);
-        // orderDelivery.setSexpressCode(orderForm.getExpressCode());
-        // deliveryMap.put(merchant, orderDelivery);
-        // } else {
-        // OrderDelivery orderDelivery = new OrderDelivery();
-        // orderDelivery.setDelivery(null);
-        // orderDelivery.setSexpressCode(orderForm.getExpressCode());
-        // deliveryMap.put(merchant, orderDelivery);
-        // }
-        // context.setDeliveryMap(deliveryMap);
-        //
         Map<QMerchant, OrderDelivery> deliveryMap = new HashMap<QMerchant, OrderDelivery>();
         // 配送 送货上门
         DeliveryMode deliveryMode = deliveryModeService.getByUser(user.getId());

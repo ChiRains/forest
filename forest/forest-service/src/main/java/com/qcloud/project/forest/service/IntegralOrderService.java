@@ -21,13 +21,13 @@ public interface IntegralOrderService {
 
     public IntegralOrder order(Long unifiedMerchandiseId, Long userId, Long consigneeId);
 
-    public List<IntegralOrder> listByUser(long userId, int start, int size);
+    public List<IntegralOrder> listByUser(long userId, int state, int start, int size);
 
-    public List<IntegralOrder> listByUserAndFront(long userId, int start, int size);
+    public List<IntegralOrder> listByUserAndFront(long userId, int state, int start, int size);
 
-    public int countByUser(long userId);
+    public int countByUser(long userId, int state);
 
-    public int countByUserAndFront(long userId);
+    public int countByUserAndFront(long userId, int state);
 
     public IntegralOrder getByOrder(long orderId);
 }

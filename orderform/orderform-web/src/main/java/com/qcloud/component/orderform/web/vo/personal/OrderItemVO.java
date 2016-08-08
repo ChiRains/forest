@@ -38,6 +38,8 @@ public class OrderItemVO {
     // 能否评论
     private boolean evaluation;
 
+    private boolean addEvaluation;
+
     private long    orderItemDetailId;
 
     public long getUnifiedMerchandiseId() {
@@ -168,5 +170,15 @@ public class OrderItemVO {
     public void setOrderItemDetailId(long orderItemDetailId) {
 
         this.orderItemDetailId = orderItemDetailId;
+    }
+
+    public boolean isAddEvaluation() {
+
+        return addEvaluation;
+    }
+
+    public void setAddEvaluation(boolean addEvaluation) {
+
+        this.addEvaluation = addEvaluation;
     }
 }

@@ -26,9 +26,9 @@ public interface IntegralOrderDao extends ISimpleDao<IntegralOrder, Long> {
 
     public List<IntegralOrder> listAll();
 
-    public List<IntegralOrder> listByUser(long userId, int type, int start, int size);
+    public List<IntegralOrder> listByUser(long userId, int state, int type, int start, int size);
 
-    public int countByUser(long userId, int type);
+    public int countByUser(long userId, int state, int type);
 
     public IntegralOrder getByOrder(long orderId);
 }

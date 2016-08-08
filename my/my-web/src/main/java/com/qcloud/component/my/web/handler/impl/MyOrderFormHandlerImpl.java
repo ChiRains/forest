@@ -341,6 +341,7 @@ public class MyOrderFormHandlerImpl implements MyOrderFormHandler {
             }
             vo.setAfterSale(order.canApplyAfterSale());
             vo.setEvaluation(order.canEvaluation());
+            vo.setAddEvaluation(!order.canEvaluation());
             vo.setCash(order.getCash());
             vo.setMerchandiseNumber(merchandiseNumber);
             voList.add(vo);

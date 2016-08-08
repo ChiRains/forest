@@ -62,11 +62,14 @@ public class IntegralOrderController {
 
     @PiratesApp
     @RequestMapping
-    public FrontPagingView list(HttpServletRequest request, PPage pPage) {
+    public FrontPagingView list(HttpServletRequest request, PPage pPage, Integer state) {
 
+        if (state == 10) {
+            state = 0;
+        }
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
-        List<IntegralOrder> orderList = integralOrderService.listByUserAndFront(user.getId(), pPage.getPageStart(), pPage.getPageSize());
-        int total = integralOrderService.countByUserAndFront(user.getId());
+        List<IntegralOrder> orderList = integralOrderService.listByUserAndFront(user.getId(), state, pPage.getPageStart(), pPage.getPageSize());
+        int total = integralOrderService.countByUserAndFront(user.getId(), state);
         List<IntegralOrderListVO> volist = integralOrderHandler.toListVOList(orderList);
         FrontPagingView view = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), total);
         view.setList(volist);

@@ -4,7 +4,7 @@
 	
 	<!-- `state` <> 5 and  and `state` <> 7 -->
 	<module-list code="my-myOrderForm-SqlWherePart">
-		<item><![CDATA[ subOrderId = -1  and `state` <> 10 ]]></item>
+		<item><![CDATA[ subOrderId = -1 and `state` <> 9 and `state` <> 10 ]]></item>
 	</module-list>
 	
 	<module-list code="my-myOrderForm-View-Order-State">

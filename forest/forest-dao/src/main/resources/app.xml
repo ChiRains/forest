@@ -236,5 +236,10 @@
 	<module-list code="forest-shareforgift-code">
 		<item type="CHAR">ABCDEF</item>
 	</module-list>	
+	
+	<module-list code="forest-domain-url">
+		<item url="http://forest.test-qi-cloud.com/">app H5 域名</item>
+	</module-list>	
+	
 
 </xml>

@@ -70,13 +70,13 @@ public class IntegralOrderDaoRedisImpl implements IntegralOrderDao {
     }
 
     @Override
-    public List<IntegralOrder> listByUser(long userId, int type, int state, int size) {
+    public List<IntegralOrder> listByUser(long userId, int state, int type, int start, int size) {
 
         throw new NotImplementedException();
     }
 
     @Override
-    public int countByUser(long userId, int type) {
+    public int countByUser(long userId, int state, int type) {
 
         throw new NotImplementedException();
     }
