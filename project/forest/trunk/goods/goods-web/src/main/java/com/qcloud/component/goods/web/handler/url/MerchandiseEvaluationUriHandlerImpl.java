@@ -29,14 +29,14 @@ public class MerchandiseEvaluationUriHandlerImpl extends AbstractUriHandler {
     public List<String> permissionUris() {
 
         List<String> list = new ArrayList<String>();
-        list.add("/admin/merchandiseEvaluation/list.do");
-        list.add("/admin/merchandiseEvaluation/toAdd.do");
-        list.add("/admin/merchandiseEvaluation/toEdit.do");
-        list.add("/admin/merchandiseEvaluation/add.do");
-        list.add("/admin/merchandiseEvaluation/edit.do");
-        list.add("/admin/merchandiseEvaluation/agree.do");
-        list.add("/admin/merchandiseEvaluation/disagree.do");
-        list.add("/admin/merchandiseEvaluation/delete.do");
+        // list.add("/admin/merchandiseEvaluation/list.do");
+        // list.add("/admin/merchandiseEvaluation/toAdd.do");
+        // list.add("/admin/merchandiseEvaluation/toEdit.do");
+        // list.add("/admin/merchandiseEvaluation/add.do");
+        // list.add("/admin/merchandiseEvaluation/edit.do");
+        // list.add("/admin/merchandiseEvaluation/agree.do");
+        // list.add("/admin/merchandiseEvaluation/disagree.do");
+        // list.add("/admin/merchandiseEvaluation/delete.do");
         return list;
     }
 
