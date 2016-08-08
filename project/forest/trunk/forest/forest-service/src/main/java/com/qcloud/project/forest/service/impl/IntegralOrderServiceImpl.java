@@ -148,25 +148,25 @@ public class IntegralOrderServiceImpl implements IntegralOrderService {
     @Override
     public List<IntegralOrder> listByUser(long userId, int start, int size) {
 
-        return integralOrderDao.listByUser(userId, 0, start, size);
+        return integralOrderDao.listByUser(userId, 1, start, size);
     }
 
     @Override
     public List<IntegralOrder> listByUserAndFront(long userId, int start, int size) {
 
-        return integralOrderDao.listByUser(userId, 1, start, size);
+        return integralOrderDao.listByUser(userId, 0, start, size);
     }
 
     @Override
     public int countByUser(long userId) {
 
-        return integralOrderDao.countByUser(userId, 0);
+        return integralOrderDao.countByUser(userId, 1);
     }
 
     @Override
     public int countByUserAndFront(long userId) {
 
-        return integralOrderDao.countByUser(userId, 1);
+        return integralOrderDao.countByUser(userId, 0);
     }
 
     @Override
