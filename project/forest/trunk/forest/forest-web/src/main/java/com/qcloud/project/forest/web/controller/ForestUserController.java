@@ -296,7 +296,7 @@ public class ForestUserController {
         // 历史足迹数量
         int historyNums = merchandiseBrowsingHistoryService.countByUser(user.getId());
         // 优惠券数量
-        int couponNum = myCouponService.countByUser(user.getId(), 1);
+        int couponNum = myCouponService.countByUser(user.getId(), 0);
         // 可用积分
         long integralNum = personalcenterClient.getMyWealth(user.getId()).getIntegral();
         FrontAjaxView view = new FrontAjaxView();

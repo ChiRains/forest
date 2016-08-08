@@ -28,6 +28,6 @@
     </select>
     
     <select id="stat" parameterType="Long" resultType="Integer">  
-        select count(*) from `my_my_after_sale` where view = 1
+        select count(*) from `my_my_after_sale` where view = 1 and userId = #{userId}
     </select>    
 </mapper>

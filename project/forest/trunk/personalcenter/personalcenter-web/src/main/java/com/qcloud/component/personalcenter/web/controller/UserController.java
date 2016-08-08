@@ -379,7 +379,6 @@ public class UserController {
 
         User user = userHelper.getUser(request);
         UserVO vo = userHandler.toVO(user);
-        AssertUtil.assertTrue(false, "");
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("个人信息获取成功.");
         view.addObject("user", vo);

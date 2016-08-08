@@ -32,6 +32,8 @@ public class MyOrderFormListVO {
 
     private boolean      afterSale;
 
+    private boolean      addEvaluation;
+
     // 是否提醒过,true 已经提醒过,现在不可以提醒
     private boolean      remind = false;
 
@@ -177,5 +179,15 @@ public class MyOrderFormListVO {
     public void setMerchandiseNumber(int merchandiseNumber) {
 
         this.merchandiseNumber = merchandiseNumber;
+    }
+
+    public boolean isAddEvaluation() {
+
+        return addEvaluation;
+    }
+
+    public void setAddEvaluation(boolean addEvaluation) {
+
+        this.addEvaluation = addEvaluation;
     }
 }

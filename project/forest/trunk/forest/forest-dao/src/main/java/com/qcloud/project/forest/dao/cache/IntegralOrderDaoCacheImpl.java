@@ -74,15 +74,15 @@ public class IntegralOrderDaoCacheImpl implements IntegralOrderDao {
     }
 
     @Override
-    public List<IntegralOrder> listByUser(long userId, int type, int start, int size) {
+    public List<IntegralOrder> listByUser(long userId,int state, int type, int start, int size) {
 
-        return integralOrderDaoMysqlImpl.listByUser(userId, type, start, size);
+        return integralOrderDaoMysqlImpl.listByUser(userId,  state,type, start, size);
     }
 
     @Override
-    public int countByUser(long userId, int type) {
+    public int countByUser(long userId, int state,int type) {
 
-        return integralOrderDaoMysqlImpl.countByUser(userId, type);
+        return integralOrderDaoMysqlImpl.countByUser(userId, state, type);
     }
 
     @Override

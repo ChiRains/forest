@@ -92,23 +92,25 @@ public class IntegralOrderDaoMysqlImpl implements IntegralOrderDao {
     }
 
     @Override
-    public List<IntegralOrder> listByUser(long userId, int type, int start, int size) {
+    public List<IntegralOrder> listByUser(long userId, int state, int type, int start, int size) {
 
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("userId", userId);
         param.put("type", type);
         param.put("start", start);
         param.put("count", size);
+        param.put("state", state);
         List<IntegralOrder> list = sqlOperator.selectList("com.qcloud.project.forest.dao.mysql.mapper.IntegralOrderMapper.listByUser", param);
         return list;
     }
 
     @Override
-    public int countByUser(long userId, int type) {
+    public int countByUser(long userId, int state, int type) {
 
         Map<String, Object> param = new HashMap<String, Object>();
         param.put("userId", userId);
         param.put("type", type);
+        param.put("state", state);
         int total = sqlOperator.selectOne("com.qcloud.project.forest.dao.mysql.mapper.IntegralOrderMapper.countByUser", param);
         return total;
     }
