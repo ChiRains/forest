@@ -34,6 +34,11 @@
                                 <i class="ace-icon fa fa-plus align-bottom bigger-125"></i>
                                 新&nbsp;增
                             </a>                           
+                            <a title="新增" class="btn btn-sm btn-info"
+                               href="#admin/brandSales/toAdd?type=3">
+                                <i class="ace-icon fa fa-plus align-bottom bigger-125"></i>
+                                新&nbsp;增&nbsp;大&nbsp;图
+                            </a>                           
                         </div>
                     </div>                    
                 </div>
@@ -51,7 +56,7 @@
                     <tbody>
                            <c:forEach items="${brands}" var="item" varStatus="current"> 
                             <tr>            
-                                                        <td>${item.name}</td>                         
+                                                        <td>${item.name}<c:if test="${item.type eq 111}"><font color="red" size="4">大</font></c:if></td>                         
                                                         <td><img style="max-height: 150px; max-width: 150px;"
 																src="${item.image}" />
 														</td>

@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>编辑品牌特卖品牌</title>
+<title>新增品牌特卖品牌</title>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/colorbox.css"/>
 <link rel="stylesheet" href="/qcloud-admin/assets/css/chosen.css" />
 
@@ -11,7 +11,7 @@
         品牌特卖品牌管理
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
-            编辑
+            新增
         </small>
     </h1>
 </div><!-- /.page-header -->
@@ -19,19 +19,15 @@
 <div class="row">
     <div class="col-xs-12">
         <!-- PAGE CONTENT BEGINS -->
-        <form id="model-form" class="form-horizontal"  role="form" action="/admin/brandSales/edit.do">
+        <form id="model-form" class="form-horizontal"  role="form" action="/admin/brandSales/add.do?type=3">
             <!-- #section:elements.form -->
-            <input type="hidden" name="id" value="${classify.id}">
-            <input type="hidden" name="enable" value="${classify.enable}">
-            <input type="hidden" name="uid" value="${uid}">
-            <input type="hidden" name="type" value="${classify.type}">
 
-                  		<div class="space-4"></div>
+           <div class="space-4"></div>
             <div class="form-group">
                 <label class="col-sm-3 control-label no-padding-right" for="name"> 名称 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="name" name="name" placeholder="名称" value="${classify.name}"/>
+						<input type="text" class="width-100" maxlength="20" id="name" name="name" placeholder="名称" value=""/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>
@@ -41,18 +37,11 @@
                 <label class="col-sm-3 control-label no-padding-right" for="image"> 图片 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">						
-						<input type="hidden" id="image" name="image" value="${classify.image}"/>
+						<input type="hidden" id="image" name="image" value=""/>
 						<button type="button" mult="false" sid="image" vid="pic-pic-view" class="btn btn-sm btn-purple btn-upload-pic" upfrom="0">
 						<i class="ace-icon fa fa-upload"></i> 上 传
 						</button>
-						<ul sid="pic" id="pic-pic-view" class="ace-thumbnails clearfix">
-						 <li pic-id="">
-                            <a style="line-height: 150px;text-align: center;width:150px;height: 150px;" href="" data-rel="colorbox" class="cboxElement">
-                                <img style="max-height: 150px;max-width: 150px;" alt="" src="${classify.image}">
-                            </a>
-                            <div class="tools tools-bottom"><a onclick="imgDel(this);" href="javascript:;" title="删除"><i class="ace-icon fa fa-times red"></i></a></div>
-                        </li>
-						</ul>
+						<ul sid="pic" id="pic-pic-view" class="ace-thumbnails clearfix"></ul>
 					</span>
                 </div>
             </div>
@@ -61,7 +50,7 @@
                 <label class="col-sm-3 control-label no-padding-right" for="remark"> 备注 </label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="remark" name="remark" placeholder="备注" value="${classify.remark}"/>
+						<input type="text" class="width-100" maxlength="20" id="remark" name="remark" placeholder="备注" value=""/>
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>

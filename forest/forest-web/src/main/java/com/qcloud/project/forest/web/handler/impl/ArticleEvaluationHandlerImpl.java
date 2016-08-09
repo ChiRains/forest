@@ -53,9 +53,9 @@ public class ArticleEvaluationHandlerImpl implements ArticleEvaluationHandler {
             QUser user = personalcenterClient.getUser(articleEvaluation.getUserId());
             if (user != null) {
                 QGrade grade = user.getGrade();
-                articleEvaluationVO.setUserName(user.getName());// userName
-                articleEvaluationVO.setHeadImage(user.getHeadImage());// 头像
-                articleEvaluationVO.setGradeIcon(grade.getImage());
+                articleEvaluationVO.setUserName(fileSDKClient.getFileServerUrl() + user.getName());// userName
+                articleEvaluationVO.setHeadImage(fileSDKClient.getFileServerUrl() + user.getHeadImage());// 头像
+                articleEvaluationVO.setGradeIcon(fileSDKClient.getFileServerUrl() + grade.getImage());
             }
         }
         return articleEvaluationVO;

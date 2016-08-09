@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.qcloud.pirates.mvc.FrontAjaxView;
+import com.qcloud.pirates.mvc.HtmlView;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
-import com.qcloud.pirates.web.security.annotation.NoReferer;
 import com.qcloud.project.forest.model.Analysisresult;
 import com.qcloud.project.forest.model.key.TypeEnum.AnalysisresultType;
 import com.qcloud.project.forest.service.AnalysisresultService;
@@ -28,7 +28,6 @@ public class AnalysisresultController {
 
     @PiratesApp
     @RequestMapping
-    @NoReferer
     public FrontAjaxView bmiCalculation(BMIForm query) {
 
         int type = AnalysisresultType.BIM.getKey();
@@ -43,7 +42,6 @@ public class AnalysisresultController {
 
     @PiratesApp
     @RequestMapping
-    @NoReferer
     public FrontAjaxView bpCalculation(BMIForm query) {
 
         int type = AnalysisresultType.BIM.getKey();
@@ -54,5 +52,14 @@ public class AnalysisresultController {
         view.addObject("result", list);
         view.setMessage("BMI计算成功！");
         return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public HtmlView getHtmlView(Long id) {
+
+        Analysisresult analysisresult = analysisresultService.get(id);
+        HtmlView htmlView = new HtmlView("<style>img{width:100%;} </style>" + analysisresult.getDescription());
+        return htmlView;
     }
 }

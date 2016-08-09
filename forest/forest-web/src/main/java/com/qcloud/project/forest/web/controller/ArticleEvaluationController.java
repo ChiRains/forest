@@ -65,11 +65,11 @@ public class ArticleEvaluationController {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         articleEvaluation.setState(0);// 默认状态为未处理
-        articleEvaluation.setUserId(user.getId());// 用户id
-        articleEvaluation.setTime(new Date());// 当前时间
+        articleEvaluation.setUserId(user.getId());
+        articleEvaluation.setTime(new Date());
         articleEvaluationService.add(articleEvaluation);
         FrontAjaxView view = new FrontAjaxView();
-        view.setMessage("添加成功");
+        view.setMessage("评论已成功提交，请等待管理员审核");
         return view;
     }
 }
