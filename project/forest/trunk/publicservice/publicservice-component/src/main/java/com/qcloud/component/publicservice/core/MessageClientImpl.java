@@ -54,7 +54,7 @@ public class MessageClientImpl implements MessageClient {
     }
 
     @Override
-    public boolean sendMsg(String typeCode, int classify, long receiver, String title, String content) {
+    public boolean sendMsg(String typeCode, int classify, long receiver, String title, String content, String url) {
 
         MessageType type = messageTypeService.getByCode(typeCode);
         AssertUtil.assertNotNull(type, "消息类型不存在." + typeCode);
@@ -65,6 +65,7 @@ public class MessageClientImpl implements MessageClient {
         message.setTypeId(type.getId());
         message.setReceiver(receiver);
         message.setClassify(classify);
+        message.setUrl(url);
         return messageService.add(type, message);
     }
 
@@ -155,6 +156,7 @@ public class MessageClientImpl implements MessageClient {
             me.setTitle(message.getTitle());
             me.setContent(message.getContent());
             me.setTime(message.getTime());
+            me.setUrl(message.getUrl());
             me.setRead(MessageStateType.READ.getKey() == message.getState());
             me.setClassify(message.getClassify());
             entityList.add(me);

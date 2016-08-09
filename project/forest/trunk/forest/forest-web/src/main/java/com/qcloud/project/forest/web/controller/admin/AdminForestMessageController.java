@@ -51,19 +51,19 @@ public class AdminForestMessageController {
      */
     @RequestMapping
     @Transactional
-    public AceAjaxView sendPrivateMessage(HttpServletRequest request, String userId_send, String content, String title) {
+    public AceAjaxView sendPrivateMessage(HttpServletRequest request, String userId_send, String content, String title, String url) {
 
         QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
         AssertUtil.assertNotEmpty(content, "请填写好发送内容");
         if (!userId_send.equals("-1")) {
             String[] ary = userId_send.split(",");
             for (String item : ary) {
-                messageClient.sendMsg(MessageType.USER.getKey(), MessageClassify.MERCHANTPRIVATEMESSAGE.getKey(), Long.valueOf(item), title, content);
+                messageClient.sendMsg(MessageType.USER.getKey(), MessageClassify.MERCHANTPRIVATEMESSAGE.getKey(), Long.valueOf(item), title, content, url);
             }
         } else if (userId_send.equals("-1")) {
             List<QUser> users = personalcenterClientl.userListAll();
             for (QUser qUser : users) {
-                messageClient.sendMsg(MessageType.USER.getKey(), MessageClassify.MERCHANTPRIVATEMESSAGE.getKey(), qUser.getId(), title, content);
+                messageClient.sendMsg(MessageType.USER.getKey(), MessageClassify.MERCHANTPRIVATEMESSAGE.getKey(), qUser.getId(), title, content, url);
             }
         }
         MessageSource messageSource = new MessageSource();

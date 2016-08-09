@@ -144,7 +144,7 @@ public class PersonalcenterClientImpl implements PersonalcenterClient {
     @Override
     public boolean sendMsg(long userId, UserMessageType type, String title, String content) {
 
-        return messageClient.sendMsg(TypeEnum.USER_MESSAGE_CODE, type.getKey(), userId, title, content);
+        return messageClient.sendMsg(TypeEnum.USER_MESSAGE_CODE, type.getKey(), userId, title, content, null);
     }
 
     @Override
