@@ -13,14 +13,14 @@ import com.qcloud.component.orderform.model.query.ReturnOrderItemDetailQuery;
 
 public interface ReturnOrderItemDetailMapper {
 
-	@Insert("insert into `orderform_return_order_item_detail`(`id`,`orderId`,`subOrderId`,`orderItemId`,`orderItemDetailId`,`number`,`returnId`,`returnItemId`,`state`,`returnType`)"
-			+ " values(#{id},#{orderId},#{subOrderId},#{orderItemId},#{orderItemDetailId},#{number},#{returnId},#{returnItemId},#{state},#{returnType})")
+	@Insert("insert into `orderform_return_order_item_detail`(`id`,`orderId`,`subOrderId`,`orderItemId`,`orderItemDetailId`,`number`,`returnId`,`returnItemId`,`state`,`returnType`,`reason`,`explain`,`time`)"
+			+ " values(#{id},#{orderId},#{subOrderId},#{orderItemId},#{orderItemDetailId},#{number},#{returnId},#{returnItemId},#{state},#{returnType},#{reason},#{explain},#{time})")
 	public void insert(ReturnOrderItemDetail returnOrderItemDetail);
 
 	@Select("select * from `orderform_return_order_item_detail` where `id`=#{id}")
 	public ReturnOrderItemDetail get(Long id);
 
-	@Update("update `orderform_return_order_item_detail` set `orderId`=#{orderId},`subOrderId`=#{subOrderId},`orderItemId`=#{orderItemId},`orderItemDetailId`=#{orderItemDetailId},`number`=#{number},`returnId`=#{returnId},`returnItemId`=#{returnItemId},`state`=#{state},`returnType`=#{returnType} where `id`=#{id}")
+	@Update("update `orderform_return_order_item_detail` set `orderId`=#{orderId},`subOrderId`=#{subOrderId},`orderItemId`=#{orderItemId},`orderItemDetailId`=#{orderItemDetailId},`number`=#{number},`returnId`=#{returnId},`returnItemId`=#{returnItemId},`state`=#{state},`returnType`=#{returnType},`reason`=#{reason},`explain`=#{explain},`time`=#{time}  where `id`=#{id}")
 	public void update(ReturnOrderItemDetail returnOrderItemDetail);
 
 	@Delete("delete from `orderform_return_order_item_detail` where `id`=#{id}")

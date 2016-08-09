@@ -7,6 +7,8 @@ public class MyAfterSaleVO {
     // 类型
     private int                            type;
 
+    private int                            returnType;
+
     // 售后单号
     private long                           afterSaleId;
 
@@ -147,5 +149,15 @@ public class MyAfterSaleVO {
     public void setMerchantImage(String merchantImage) {
 
         this.merchantImage = merchantImage;
+    }
+
+    public int getReturnType() {
+
+        return returnType;
+    }
+
+    public void setReturnType(int returnType) {
+
+        this.returnType = returnType;
     }
 }

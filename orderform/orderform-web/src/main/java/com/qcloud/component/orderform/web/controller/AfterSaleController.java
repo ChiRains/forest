@@ -219,6 +219,7 @@ public class AfterSaleController {
 
         AssertUtil.assertNotNull(afterSaleForm.getOrderId(), "订单ID不能为空.");
         AssertUtil.assertNotNull(afterSaleForm.getOrderDate(), "订单日期不能为空.");
+        AssertUtil.assertTrue(afterSaleForm.getReturnType() == 1 || afterSaleForm.getReturnType() == 2, "不支持该售后方式.");
         OrderEntity orderEntity = orderSelecterService.getOrder(afterSaleForm.getOrderId(), afterSaleForm.getOrderDate());
         AssertUtil.assertNotNull(orderEntity, "订单不存在." + afterSaleForm.getOrderId() + " " + DateUtil.date2String(afterSaleForm.getOrderDate()));
         List<AfterSaleDetail> detailList = AfterSaleDetailUtils.toAfterSales(orderEntity, afterSaleForm, afterSaleForm.getExplain(), afterSaleForm.getReason());
@@ -229,7 +230,9 @@ public class AfterSaleController {
         AssertUtil.assertTrue(result == -1L, "订单项已经在售后处理,请勿重复提交." + result);
         Long can = AfterSaleCheckUtils.checkDetail(orderEntity, detailList, AfterSaleType.RETURN);
         AssertUtil.assertTrue(can == -1L, "签收后才可以退货." + can);
+        afterSaleForm.setType(3);
         //
+        Long returnOrderId = -1L;
         switch (afterSaleForm.getType()) {
         case 1: // 全退了
             // List<OrderItemEntity> itemList = new ArrayList<OrderItemEntity>();
@@ -246,13 +249,15 @@ public class AfterSaleController {
             // afterSaleService.applyReturn(orderEntity, subList, afterSaleForm.getExplain(), afterSaleForm.getReason());
             break;
         case 3: // 按物品明细退
-            afterSaleService.applyReturnDetail(orderEntity, detailList);
+            returnOrderId = afterSaleService.applyReturnDetail(orderEntity, detailList, afterSaleForm.getReturnType(), afterSaleForm.getAfterSaleSum(), afterSaleForm.getAfterSaleImage());
             break;
         default:
             throw new OrderformException("退货表单类型不正确" + afterSaleForm.getType());
         }
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage("申请退货成功");
+        view.addObject("afterSaleId", returnOrderId);
+        view.addObject("type", 2);
         return view;
     }
 

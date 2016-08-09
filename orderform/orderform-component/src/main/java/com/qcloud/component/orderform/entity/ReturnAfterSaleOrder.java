@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import com.qcloud.component.my.AfterSaleType;
-import com.qcloud.component.orderform.QAfterSaleItem;
+import com.qcloud.component.orderform.QAfterSaleDetail;
+import com.qcloud.component.orderform.QAfterSaleOrderItem;
 import com.qcloud.component.orderform.model.ReturnOrder;
 
 public class ReturnAfterSaleOrder extends AfterSaleOrder {
@@ -41,11 +42,11 @@ public class ReturnAfterSaleOrder extends AfterSaleOrder {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<QAfterSaleItem> listItem() {
+    public List<QAfterSaleDetail> listItem() {
 
-        List<QAfterSaleItem> list = new ArrayList<QAfterSaleItem>();
+        List<QAfterSaleDetail> list = new ArrayList<QAfterSaleDetail>();
         for (AfterSaleOrderItem afterSaleOrderItem : getList()) {
-            list.add((QAfterSaleItem) afterSaleOrderItem);
+            list.add((QAfterSaleDetail) afterSaleOrderItem);
         }
         return list;
     }
@@ -132,5 +133,11 @@ public class ReturnAfterSaleOrder extends AfterSaleOrder {
     public String getAfterSaleImage() {
 
         return returnOrder.getAfterSaleImage();
+    }
+
+    @Override
+    public int getReturnType() {
+
+        return returnOrder.getReturnType();
     }
 }

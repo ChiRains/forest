@@ -37,8 +37,8 @@ public interface AfterSaleService {
     // 申请退货
     boolean applyReturn(OrderEntity orderEntity, List<AfterSaleItem> list);
 
-    // 申请退货
-    boolean applyReturnDetail(OrderEntity orderEntity, List<AfterSaleDetail> list);
+    // 新申请退货
+    Long applyReturnDetail(OrderEntity orderEntity, List<AfterSaleDetail> list, Integer returnType, double afterSaleSum, String afterSaleImage);
 
     // 申请退货
     boolean applyRefund(OrderEntity orderEntity, List<AfterSaleItem> list, Double afterSaleSum);

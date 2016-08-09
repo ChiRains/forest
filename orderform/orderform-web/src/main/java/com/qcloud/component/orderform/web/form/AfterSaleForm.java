@@ -30,6 +30,9 @@ public class AfterSaleForm {
 
     private String                  afterSaleImage;
 
+    // 1仅退款2退货退款
+    private Integer                 returnType   = 1;
+
     public Long getOrderId() {
 
         return orderId;
@@ -118,5 +121,15 @@ public class AfterSaleForm {
     public void setAfterSaleImage(String afterSaleImage) {
 
         this.afterSaleImage = afterSaleImage;
+    }
+
+    public Integer getReturnType() {
+
+        return returnType;
+    }
+
+    public void setReturnType(Integer returnType) {
+
+        this.returnType = returnType;
     }
 }

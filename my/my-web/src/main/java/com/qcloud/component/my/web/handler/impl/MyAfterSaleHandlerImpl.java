@@ -56,11 +56,11 @@ public class MyAfterSaleHandlerImpl implements MyAfterSaleHandler {
         myAfterSaleVO.setType(afterSaleOrder.getAfterSaleType().getKey());
         List<MyAfterSaleMerchandiseVO> voList = new ArrayList<MyAfterSaleMerchandiseVO>();
         int number = 0;
-        if (AfterSaleType.EXCHANGE.equals(afterSaleType)) {
+        if (AfterSaleType.EXCHANGE.equals(afterSaleType) || AfterSaleType.RETURN.equals(afterSaleType)) {
             List<QAfterSaleDetail> list = afterSaleOrder.listItem();
             for (QAfterSaleDetail detail : list) {
                 MyAfterSaleMerchandiseVO myAfterSaleMerchandiseVO = new MyAfterSaleMerchandiseVO();
-                myAfterSaleMerchandiseVO.setDiscount(detail.getOrderItemDetail().getOrderItem().getDiscount());
+                myAfterSaleMerchandiseVO.setDiscount(detail.getOrderItemDetail().getDiscount());
                 myAfterSaleMerchandiseVO.setImage(fileSDKClient.getFileServerUrl() + detail.getOrderItemDetail().getImage());
                 myAfterSaleMerchandiseVO.setName(detail.getOrderItemDetail().getName());
                 myAfterSaleMerchandiseVO.setNumber(detail.getNumber());
@@ -87,6 +87,7 @@ public class MyAfterSaleHandlerImpl implements MyAfterSaleHandler {
         myAfterSaleVO.setState(afterSaleOrder.getUserState());
         myAfterSaleVO.setStateStr(afterSaleOrder.getUserStateStr());
         myAfterSaleVO.setAfterSaleOrderNumber(afterSaleOrder.getAfterSaleOrderNumber());
+        myAfterSaleVO.setReturnType(afterSaleOrder.getReturnType());
         return myAfterSaleVO;
     }
     //

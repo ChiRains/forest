@@ -24,11 +24,13 @@ import com.qcloud.component.orderform.model.RefundOrder;
 import com.qcloud.component.orderform.model.RefundOrderItem;
 import com.qcloud.component.orderform.model.ReturnOrder;
 import com.qcloud.component.orderform.model.ReturnOrderItem;
+import com.qcloud.component.orderform.model.ReturnOrderItemDetail;
 import com.qcloud.component.orderform.service.ExchangeOrderItemDetailService;
 import com.qcloud.component.orderform.service.ExchangeOrderService;
 import com.qcloud.component.orderform.service.OrderConfigService;
 import com.qcloud.component.orderform.service.RefundOrderItemService;
 import com.qcloud.component.orderform.service.RefundOrderService;
+import com.qcloud.component.orderform.service.ReturnOrderItemDetailService;
 import com.qcloud.component.orderform.service.ReturnOrderItemService;
 import com.qcloud.component.orderform.service.ReturnOrderService;
 import com.qcloud.pirates.util.AssertUtil;
@@ -56,6 +58,9 @@ public class AfterSaleSelecterServiceImpl implements AfterSaleSelecterService {
 
     @Autowired
     OrderConfigService             orderConfigService;
+
+    @Autowired
+    ReturnOrderItemDetailService   returnOrderItemDetailService;
 
     @Override
     public ExchangeAfterSaleOrder getExchangeOrder(MerchantOrderEntity merchantOrderEntity, Long exchangeId) {
@@ -158,12 +163,13 @@ public class AfterSaleSelecterServiceImpl implements AfterSaleSelecterService {
 
         ReturnAfterSaleOrder afterSaleOrder = new ReturnAfterSaleOrder(merchantOrderEntity, returnOrder);
         afterSaleOrder.setFinish(orderConfigService.isReturnFinish(returnOrder.getState()));
-        List<ReturnOrderItem> modelList = returnOrderItemService.listByReturn(returnOrder.getId());
+        // List<ReturnOrderItem> modelList = returnOrderItemService.listByReturn(returnOrder.getId());
+        List<ReturnOrderItemDetail> modelList = returnOrderItemDetailService.listByReturn(returnOrder.getId());
         List<AfterSaleOrderItem> entityList = new ArrayList<AfterSaleOrderItem>();
-        for (ReturnOrderItem returnOrderItem : modelList) {
-            OrderItemEntity orderItemEntity = getItemInSub(merchantOrderEntity, returnOrderItem.getOrderItemId());
-            AssertUtil.assertNotNull(orderItemEntity, "订单项不存在." + returnOrderItem.getOrderItemId());
-            ReturnAfterSaleOrderItem returnAfterSaleOrderItem = modelToEntity(orderItemEntity, afterSaleOrder, returnOrderItem);
+        for (ReturnOrderItemDetail returnOrderItemDetail : modelList) {
+            OrderItemDetailEntity orderItemDetailEntity = getDetailInSub(merchantOrderEntity, returnOrderItemDetail.getOrderItemDetailId());
+            AssertUtil.assertNotNull(orderItemDetailEntity, "订单项不存在." + returnOrderItemDetail.getOrderItemId());
+            ReturnAfterSaleOrderItem returnAfterSaleOrderItem = modelToEntity(orderItemDetailEntity, afterSaleOrder, returnOrderItemDetail);
             entityList.add(returnAfterSaleOrderItem);
         }
         afterSaleOrder.setList(entityList);
@@ -180,9 +186,9 @@ public class AfterSaleSelecterServiceImpl implements AfterSaleSelecterService {
         return afterSaleOrderItem;
     }
 
-    private ReturnAfterSaleOrderItem modelToEntity(OrderItemEntity orderItemEntity, ReturnAfterSaleOrder returnAfterSaleOrder, ReturnOrderItem returnOrderItem) {
+    private ReturnAfterSaleOrderItem modelToEntity(OrderItemDetailEntity orderItemDetailEntity, ReturnAfterSaleOrder returnAfterSaleOrder, ReturnOrderItemDetail returnOrderItemDetail) {
 
-        ReturnAfterSaleOrderItem afterSaleOrderItem = new ReturnAfterSaleOrderItem(returnAfterSaleOrder, orderItemEntity, returnOrderItem);
+        ReturnAfterSaleOrderItem afterSaleOrderItem = new ReturnAfterSaleOrderItem(returnAfterSaleOrder, orderItemDetailEntity, returnOrderItemDetail);
         return afterSaleOrderItem;
     }
 

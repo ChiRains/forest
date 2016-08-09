@@ -40,16 +40,16 @@
                                           	 placeholder="退货单号" name="returnNumber" value="${query.returnNumber}">                                                   	                            	
 		                                   	 状态
 		                                   	 <select class="form-control" id="state" name="state">
-	                                        	<option value="0">请选择</option>
-			                                   		 <option <c:if test="${state==310}"> selected </c:if> value="1">申请退货</option>			                                   		
-			                                   		 <option <c:if test="${state==320}"> selected </c:if> value="2">门店不同意退货</option>			                                   		
-			                                   		 <option <c:if test="${state==330}"> selected </c:if> value="3">退货失败</option>			                                   		
-			                                   		 <option <c:if test="${state==340}"> selected </c:if> value="4">门店同意退货</option>			                                   		
-			                                   		 <option <c:if test="${state==350}"> selected </c:if> value="5">买家发货</option>			                                   		
-			                                   		 <option <c:if test="${state==360}"> selected </c:if> value="6">门店签收</option>			                                   		
-			                                   		 <option <c:if test="${state==370}"> selected </c:if> value="7">公司退款</option>			                                   		
-			                               			 <option <c:if test="${state==380}"> selected </c:if> value="8">买家确认退款</option>			                                   		
-			                                   		 <option <c:if test="${state==390}"> selected </c:if> value="9">退货成功</option>			                                   		
+	                                        	 <option value="0">请选择</option>
+		                                   		 <option <c:if test="${state==310}"> selected </c:if> value="1">申请退货</option>			                                   		
+		                                   		 <option <c:if test="${state==320}"> selected </c:if> value="2">门店不同意退货</option>			                                   		
+		                                   		 <option <c:if test="${state==330}"> selected </c:if> value="3">退货失败</option>			                                   		
+		                                   		 <option <c:if test="${state==340}"> selected </c:if> value="4">门店同意退货</option>			                                   		
+		                                   		 <option <c:if test="${state==350}"> selected </c:if> value="5">买家发货</option>			                                   		
+		                                   		 <option <c:if test="${state==360}"> selected </c:if> value="6">门店签收</option>			                                   		
+		                                   		 <option <c:if test="${state==370}"> selected </c:if> value="7">公司退款</option>			                                   		
+		                               			 <option <c:if test="${state==380}"> selected </c:if> value="8">买家确认退款</option>			                                   		
+		                                   		 <option <c:if test="${state==390}"> selected </c:if> value="9">退货成功</option>			                                   		
 			                                </select>
 				                      		&nbsp;&nbsp;
 	                                   		<button type="submit" class="btn btn-purple btn-sm">
@@ -70,7 +70,8 @@
                                                 <th>子单ID</th>           
                                                 <th>用户</th>           
                                                 <th>退货单号</th>      
-                                                <th>申请退货时间</th>        
+                                                <th>申请退货时间</th>
+                                                <th>退货类型</th>        
                                                 <th>状态</th>                
                                                 <th class="sorting_disabled">操作</th>
                     </tr>
@@ -83,7 +84,15 @@
                                 <td>${item.subOrderId}</td>                      
                                 <td>${item.userName}</td>                         
                                 <td>${item.returnNumber}</td> 
-                                <td><fmt:formatDate value="${item.time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>                         
+                                <td><fmt:formatDate value="${item.time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>   
+                                <td>
+                                	<c:if test="${item.returnType eq 1}">
+                                		仅退款
+                                	</c:if>
+                                	<c:if test="${item.returnType eq 2}">
+                                		退货退款
+                                	</c:if>
+                                </td>                       
                                 <td>
                                 	  <c:forEach items="${orderStateType}" var="orderStateType" varStatus="current">
                                  		<c:if test="${orderStateType.key eq item.state}">${orderStateType.name}</c:if> 

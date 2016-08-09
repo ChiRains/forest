@@ -1,51 +1,46 @@
 package com.qcloud.component.orderform.model;
 
+import java.util.Date;
+
 public class ReturnOrderItemDetail {
 
-    private long id;
+    private long   id;
 
     // 订单id
-    private long orderId;
+    private long   orderId;
 
     // 子单id
-    private long subOrderId;
+    private long   subOrderId;
 
     // 订单项id
-    private long orderItemId;
+    private long   orderItemId;
 
     // 订单项详细
-    private long orderItemDetailId;
+    private long   orderItemDetailId;
 
     // 退货数量
-    private int  number;
+    private int    number;
 
     // 退货单id
-    private long returnId;
+    private long   returnId;
 
     // 退货单项id
-    private long returnItemId;
+    private long   returnItemId;
 
     // 状态(1:已申请 2:通过 3:未通过 )
-    private int  state;
+    private int    state;
 
-    private int  returnType;
+    private int    returnType;
+
+    private String explain;
+
+    private String reason;
+
+    private Date   time;
+
 
     public ReturnOrderItemDetail() {
 
-    }
-
-    public ReturnOrderItemDetail(long id, long orderId, long subOrderId, long orderItemId, long orderItemDetailId, int number, long returnId, long returnItemId, int state, int returnType) {
-
-        this.id = id;
-        this.orderId = orderId;
-        this.subOrderId = subOrderId;
-        this.orderItemId = orderItemId;
-        this.orderItemDetailId = orderItemDetailId;
-        this.number = number;
-        this.returnId = returnId;
-        this.returnItemId = returnItemId;
-        this.state = state;
-        this.returnType = returnType;
     }
 
     public void setId(long id) {
@@ -146,5 +141,36 @@ public class ReturnOrderItemDetail {
     public int getReturnType() {
 
         return returnType;
+    }
+
+    public String getExplain() {
+
+        return explain;
+    }
+
+    public void setExplain(String explain) {
+
+        this.explain = explain;
+    }
+
+    public String getReason() {
+
+        return reason;
+    }
+
+    public void setReason(String reason) {
+
+        this.reason = reason;
+    }
+
+
+    public Date getTime() {
+
+        return time;
+    }
+
+    public void setTime(Date time) {
+
+        this.time = time;
     }
 }

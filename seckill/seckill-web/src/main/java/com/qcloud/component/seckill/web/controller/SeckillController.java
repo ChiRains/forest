@@ -95,10 +95,7 @@ public class SeckillController {
         }
         // ScreeningsVO screeningsVO = current == null ? null : screeningsHandler.toVO4Classify(current);
         ScreeningsVO screeningsVO = current == null ? null : screeningsHandler.toVO4Merchandise(current);
-        List<MerchandiseSeckillVO> carzySeckillList = new ArrayList<MerchandiseSeckillVO>();
-        MerchandiseSeckillVO carzySeckill = screeningsHandler.getCrazySeckill(current);
-        carzySeckillList.add(carzySeckill);
-        carzySeckillList.add(carzySeckill);
+        List<MerchandiseSeckillVO> carzySeckillList = screeningsHandler.getCrazySeckill(current);
         FrontAjaxView view = new FrontAjaxView();
         view.setMessage(screeningsVO == null ? "今天暂无秒杀数据" : "获取秒杀数据成功.");
         view.addObject("list", voList);

@@ -18,15 +18,19 @@ import com.qcloud.component.orderform.QOrderItem;
 import com.qcloud.component.orderform.model.OrderItem;
 import com.qcloud.component.orderform.model.ReturnOrder;
 import com.qcloud.component.orderform.model.ReturnOrderItem;
+import com.qcloud.component.orderform.model.ReturnOrderItemDetail;
 import com.qcloud.component.orderform.model.SubOrder;
 import com.qcloud.component.orderform.model.query.ReturnOrderQuery;
 import com.qcloud.component.orderform.service.OrderItemService;
+import com.qcloud.component.orderform.service.ReturnOrderItemDetailService;
 import com.qcloud.component.orderform.service.ReturnOrderItemService;
 import com.qcloud.component.orderform.service.ReturnOrderService;
 import com.qcloud.component.orderform.service.SubOrderService;
 import com.qcloud.component.orderform.web.handler.ReturnOrderHandler;
+import com.qcloud.component.orderform.web.handler.ReturnOrderItemDetailHandler;
 import com.qcloud.component.orderform.web.handler.ReturnOrderItemHandler;
 import com.qcloud.component.orderform.web.util.ReturnOrderStateType;
+import com.qcloud.component.orderform.web.vo.admin.AdminReturnOrderItemDetailVO;
 import com.qcloud.component.orderform.web.vo.admin.AdminReturnOrderItemVO;
 import com.qcloud.component.orderform.web.vo.admin.AdminReturnOrderVO;
 import com.qcloud.component.sellercenter.QMerchant;
@@ -38,6 +42,7 @@ import com.qcloud.pirates.mvc.AcePagingView;
 import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.NumberUtil;
 import com.qcloud.pirates.util.RequestUtil;
+import com.qcloud.pirates.web.page.PPage;
 import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.pirates.web.security.annotation.NoReferer;
 
@@ -45,39 +50,40 @@ import com.qcloud.pirates.web.security.annotation.NoReferer;
 @RequestMapping(value = "/" + AdminReturnOrderController.DIR)
 public class AdminReturnOrderController {
 
-    public static final String     DIR = "admin/returnOrder";
+    public static final String           DIR = "admin/returnOrder";
 
     @Autowired
-    private ReturnOrderService     returnOrderService;
+    private ReturnOrderService           returnOrderService;
 
     @Autowired
-    private ReturnOrderHandler     returnOrderHandler;
+    private ReturnOrderHandler           returnOrderHandler;
 
     @Autowired
-    private ReturnOrderItemService returnOrderItemService;
+    private ReturnOrderItemService       returnOrderItemService;
 
     @Autowired
-    private ReturnOrderItemHandler returnOrderItemHandler;
-
-    // @Autowired
-    // private AdminFilterService adminFilterService;
-    //
-    // @Autowired
-    // private TokenClient tokenClient;
-    @Autowired
-    private SubOrderService        subOrderService;
+    private ReturnOrderItemHandler       returnOrderItemHandler;
 
     @Autowired
-    private SellercenterClient     sellercenterClient;
+    private SubOrderService              subOrderService;
 
     @Autowired
-    private OrderItemService       orderItemService;
+    private SellercenterClient           sellercenterClient;
 
     @Autowired
-    private OrderformClient        orderformClient;
+    private OrderItemService             orderItemService;
 
     @Autowired
-    private FileSDKClient          fileSDKClient;
+    private OrderformClient              orderformClient;
+
+    @Autowired
+    private FileSDKClient                fileSDKClient;
+
+    @Autowired
+    private ReturnOrderItemDetailService returnOrderItemDetailService;
+
+    @Autowired
+    private ReturnOrderItemDetailHandler returnOrderItemDetailHandler;
 
     @RequestMapping
     @NoReferer
@@ -252,21 +258,16 @@ public class AdminReturnOrderController {
 
     @RequestMapping
     @NoReferer
-    public ModelAndView list4Merchant(HttpServletRequest request, Integer pageNum, ReturnOrderQuery query) {
+    public ModelAndView list4Merchant(HttpServletRequest request, PPage pPage, ReturnOrderQuery query) {
 
         int state = query.getState();
         query.setState(getChangeState(state));
-        // long memberId = getMemberId(request);
-        // long merchantId = getMerchantId(memberId);
         QMerchant merchant = PageParameterUtil.getParameterValues(request, SellercenterClient.MERCHANT_LOGIN_PARAMETER_KEY);
         query.setMerchantId(merchant.getId());
-        final int PAGE_SIZE = 10;
-        pageNum = RequestUtil.getPageid(pageNum);
-        int start = NumberUtil.getPageStart(pageNum, PAGE_SIZE);
-        Page<ReturnOrder> page = returnOrderService.page(query, start, PAGE_SIZE);
+        Page<ReturnOrder> page = returnOrderService.page(query, pPage.getPageStart(), pPage.getPageSize());
         List<AdminReturnOrderVO> list = returnOrderHandler.toVOList4Admin(page.getData());
         String param = "state=" + state;
-        AcePagingView pagingView = new AcePagingView("/admin/orderform-ReturnOrder-list4Merchant", DIR + "/list4Merchant?" + param, pageNum, PAGE_SIZE, page.getCount());
+        AcePagingView pagingView = new AcePagingView("/admin/orderform-ReturnOrder-list4Merchant", DIR + "/list4Merchant?" + param, pPage.getPageNum(), pPage.getPageSize(), page.getCount());
         pagingView.addObject("result", list);
         pagingView.addObject("orderStateType", ReturnOrderStateType.values());
         pagingView.addObject("state", state);
@@ -300,7 +301,7 @@ public class AdminReturnOrderController {
             state = ReturnOrderStateType.RETURN_PAID.getKey();
             break;
         case 8:
-//            state = ReturnOrderStateType.RETURN_CONFIRM_PAID.getKey();
+            // state = ReturnOrderStateType.RETURN_CONFIRM_PAID.getKey();
             break;
         case 9:
             // state = ReturnOrderStateType.RETURN_SUCCESS.getKey();
@@ -318,6 +319,9 @@ public class AdminReturnOrderController {
         AssertUtil.assertNotNull(id, "id不能为空");
         ReturnOrder returnOrder = returnOrderService.get(id);
         AdminReturnOrderVO returnOrderVO = returnOrderHandler.toVO4Admin(returnOrder);
+        List<ReturnOrderItemDetail> detailsList = returnOrderItemDetailService.listByReturn(returnOrderVO.getId());
+        List<AdminReturnOrderItemDetailVO> adminDetailList = returnOrderItemDetailHandler.toVOList4Admin(detailsList);
+        
         // 明细
         List<ReturnOrderItem> details = returnOrderItemService.listByReturn(returnOrderVO.getId());
         List<AdminReturnOrderItemVO> adminDetailVOs = returnOrderItemHandler.toVOList4Admin(details);

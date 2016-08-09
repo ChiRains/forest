@@ -38,6 +38,8 @@ public interface QAfterSaleOrder {
 
     public String getUserStateStr();
 
+    public int getReturnType();
+
     public double getAfterSaleSum();
 
     public String getAfterSaleImage();
