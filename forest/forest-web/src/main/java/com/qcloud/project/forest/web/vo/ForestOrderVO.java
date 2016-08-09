@@ -97,9 +97,8 @@ public class ForestOrderVO {
     private int                     residualSecond;
 
     private List<String>            imageList           = new ArrayList<String>();
-    
-    private boolean addEvaluation;
-    
+
+    private boolean                 addEvaluation;
 
     public ForestOrderVO() {
 
@@ -505,15 +504,13 @@ public class ForestOrderVO {
         this.imageList = imageList;
     }
 
-    
     public boolean isAddEvaluation() {
-    
+
         return addEvaluation;
     }
 
-    
     public void setAddEvaluation(boolean addEvaluation) {
-    
+
         this.addEvaluation = addEvaluation;
     }
 }
