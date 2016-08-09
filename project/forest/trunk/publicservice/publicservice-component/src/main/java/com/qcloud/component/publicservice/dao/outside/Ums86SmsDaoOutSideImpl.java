@@ -1,15 +1,25 @@
 package com.qcloud.component.publicservice.dao.outside;
 
+import java.rmi.RemoteException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.axis2.AxisFault;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Repository;
+import cn.com.flaginfo.ws.SmsStub;
 import com.qcloud.component.publicservice.dao.SmsDao;
+import com.qcloud.component.publicservice.exception.PublicServiceException;
 import com.qcloud.component.publicservice.model.SmsResult;
 import com.qcloud.component.publicservice.model.Ums86Config;
+import com.qcloud.pirates.core.xml.Xml;
+import com.qcloud.pirates.core.xml.XmlFactory;
+import com.qcloud.pirates.core.xml.XmlItem;
 
 @Repository
 public class Ums86SmsDaoOutSideImpl implements SmsDao {
@@ -24,10 +34,10 @@ public class Ums86SmsDaoOutSideImpl implements SmsDao {
 
     public static void main(String[] args) {
 
-        // Ums86Config config = new Ums86Config();
-        // config.setEnterpriseNumber("223185");
-        // config.setAdminName("admin2");
-        // config.setAdminPsw("qcloud#@3399366");
+        Ums86Config config = new Ums86Config();
+        config.setEnterpriseNumber("223185");
+        config.setAdminName("admin2");
+        config.setAdminPsw("qcloud#@3399366");
         // SmsResult[] sms = new Ums86SmsDaoOutSideImpl().send(config, "您好，注册码是854569,有效时间2分钟,请使用!", "13232282158");
         // for (SmsResult smsResult : sms) {
         // System.out.println(smsResult.getReceiver());
@@ -64,12 +74,12 @@ public class Ums86SmsDaoOutSideImpl implements SmsDao {
         // SmsResult[] sms = new Ums86SmsDaoOutSideImpl().send(config, "您好!宝贝已打包发货,正以火箭般速度为您送达,请耐心等待并注意查收,谢谢!", "18676416282");
         // SmsResult[] sms = new Ums86SmsDaoOutSideImpl().send(config, "您好！您已成功注册，可分享页面及二维码给他人进行绑定。您成功消费将返还２５％财富,二级成功消费返还给您５％财富。三级成功消费返还给您２％财富，财富可１：１兑现。", "13232282158");
         // SmsResult[] sms = new Ums86SmsDaoOutSideImpl().send(config, "您好！您已成功注册，可分享页面及二维码给他人进行绑定。您成功消费将返还２５％财富,二级成功消费返还给您５％财富。三级成功消费返还给您２％财富，财富可１：１兑现。", "13232282158");
-        Ums86Config config = new Ums86Config();
-        config.setEnterpriseNumber("103904"); // 尊敬的会员您好!您找回密码的验证码为{code}请在2分钟内使用!谢谢!
-        config.setAdminName("htt_dqgs"); // 尊敬的会员您好!您本次的注册码为{code}请在2分钟内使用!谢谢!
-        config.setAdminPsw("htt_123@abc$");
+        // Ums86Config config = new Ums86Config();
+        // config.setEnterpriseNumber("103904"); // 尊敬的会员您好!您找回密码的验证码为{code}请在2分钟内使用!谢谢!
+        // config.setAdminName("htt_dqgs"); // 尊敬的会员您好!您本次的注册码为{code}请在2分钟内使用!谢谢!
+        // config.setAdminPsw("htt_123@abc$");
         // SmsResult[] sms = new Ums86SmsDaoOutSideImpl().send(config, "您的验证码为123456", "15876309014");
-        SmsResult[] sms = new Ums86SmsDaoOutSideImpl().send(config, "  你有一项编号为12345的事务需要处理.", "15876309014");
+        SmsResult[] sms = new Ums86SmsDaoOutSideImpl().send(config, "您好，验证码725232。注册30分钟内有效，工作人员不会向您索要密码、验证码等信息，如非本人操作，请联系旗云科技或忽略。", "15876309014");
         for (SmsResult smsResult : sms) {
             System.out.println(smsResult.getReceiver());
             System.out.println(smsResult.getMessage());
@@ -110,61 +120,73 @@ public class Ums86SmsDaoOutSideImpl implements SmsDao {
 
     private Map<String, Integer> sendSms(Ums86Config config, String content, String receivers) {
 
-        // try {
-        String[] receiverStrs = receivers.split(",");
-        Map<String, Integer> map = new HashMap<String, Integer>();
-        // for (String str : receiverStrs) {
-        // map.put(str, 0);
-        // }
-        // SimpleDateFormat format = new SimpleDateFormat("yyyyMMddhhmmssSSS");
-        // SmsStub stub = new SmsStub("http://gd.ums86.com:8899/sms_hb/services/Sms?wsdl");
-        // SmsStub.Sms sms = new SmsStub.Sms();
-        // sms.setIn0(config.getEnterpriseNumber());
-        // sms.setIn1(config.getAdminName());
-        // sms.setIn2(config.getAdminPsw());
-        // sms.setIn3(content);
-        // sms.setIn4(receivers);
-        // sms.setIn5("999" + format.format(new Date()));
-        // sms.setIn6("");
-        // sms.setIn7("1");
-        // sms.setIn8("");
-        // SmsStub.SmsResponse resp = stub.Sms(sms);
-        // String out = resp.getOut();
-        // logger.info("发送短信返回结果." + out + " ===== " + receivers);
-        // if (StringUtils.isNotEmpty(out)) {
-        // if (out.indexOf("result=0") != -1) {
-        // String[] resultArray = out.split("&");
-        // for (String str : resultArray) {
-        // if (str.startsWith("faillist=") && str.length() > 9) {
-        // String failMobileStr = str.substring(9, str.length());
-        // String[] failMobiles = failMobileStr.split(",");
-        // for (String mobile : failMobiles) {
-        // map.put(mobile, 6);
-        // }
-        // break;
-        // }
-        // }
-        // } else {
-        // String[] resultArray = out.split("&");
-        // for (String str : resultArray) {
-        // if (str.startsWith("result=") && str.length() > 7) {
-        // String failCodeStr = str.substring(7, str.length());
-        // int code = Integer.parseInt(failCodeStr);
-        // for (String receiver : receiverStrs) {
-        // map.put(receiver, code);
-        // }
-        // break;
-        // }
-        // }
-        // }
-        // }
-        // 在这里处理异常.
-        return map;
-        // } catch (AxisFault e) {
-        // throw new PublicServiceException("发送短信失败." + e.getMessage(), e);
-        // } catch (RemoteException e) {
-        // throw new PublicServiceException("发送短信失败." + e.getMessage(), e);
-        // }
+        try {
+            String[] receiverStrs = receivers.split(",");
+            Map<String, Integer> map = new HashMap<String, Integer>();
+            for (String str : receiverStrs) {
+                map.put(str, 0);
+            }
+            // 旧接口地址 === http://gd.ums86.com:8899/sms_hb/services/Sms?wsdl
+            // 新接口地址 === https://api.ums86.com:9600/sms_hb/services/Sms?wsdl
+            String apiUrl = "https://api.ums86.com:9600/sms_hb/services/Sms?wsdl";
+            Xml xml = XmlFactory.get("publicservice-ums86-api-url");
+            if (xml != null) {
+                List<XmlItem> itemList = xml.getItemList();
+                for (XmlItem xmlItem : itemList) {
+                    apiUrl = xmlItem.getAttrMap().get("url");
+                    break;
+                }
+            }
+            SimpleDateFormat format = new SimpleDateFormat("yyyyMMddhhmmssSSS");
+            // SmsStub stub = new SmsStub("https://api.ums86.com:9600/sms_hb/services/Sms?wsdl");
+            SmsStub stub = new SmsStub(apiUrl);
+            SmsStub.Sms sms = new SmsStub.Sms();
+            sms.setIn0(config.getEnterpriseNumber());
+            sms.setIn1(config.getAdminName());
+            sms.setIn2(config.getAdminPsw());
+            sms.setIn3(content);
+            sms.setIn4(receivers);
+            sms.setIn5("999" + format.format(new Date()));
+            sms.setIn6("");
+            sms.setIn7("1");
+            sms.setIn8("");
+            SmsStub.SmsResponse resp = stub.Sms(sms);
+            String out = resp.getOut();
+            logger.info("发送短信返回结果." + out + " ===== " + receivers);
+            if (StringUtils.isNotEmpty(out)) {
+                if (out.indexOf("result=0") != -1) {
+                    String[] resultArray = out.split("&");
+                    for (String str : resultArray) {
+                        if (str.startsWith("faillist=") && str.length() > 9) {
+                            String failMobileStr = str.substring(9, str.length());
+                            String[] failMobiles = failMobileStr.split(",");
+                            for (String mobile : failMobiles) {
+                                map.put(mobile, 6);
+                            }
+                            break;
+                        }
+                    }
+                } else {
+                    String[] resultArray = out.split("&");
+                    for (String str : resultArray) {
+                        if (str.startsWith("result=") && str.length() > 7) {
+                            String failCodeStr = str.substring(7, str.length());
+                            int code = Integer.parseInt(failCodeStr);
+                            for (String receiver : receiverStrs) {
+                                map.put(receiver, code);
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            // 在这里处理异常.
+            return map;
+        } catch (AxisFault e) {
+            throw new PublicServiceException("发送短信失败." + e.getMessage(), e);
+        } catch (RemoteException e) {
+            throw new PublicServiceException("发送短信失败." + e.getMessage(), e);
+        }
     }
 
     private String[] splitReceivers(String[] receivers, int size) {

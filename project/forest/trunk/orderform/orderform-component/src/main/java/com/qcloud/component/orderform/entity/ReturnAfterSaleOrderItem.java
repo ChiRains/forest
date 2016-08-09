@@ -1,77 +1,83 @@
 package com.qcloud.component.orderform.entity;
 
 import java.util.Date;
-import com.qcloud.component.orderform.QAfterSaleItem;
-import com.qcloud.component.orderform.model.ReturnOrderItem;
+import com.qcloud.component.orderform.QAfterSaleDetail;
+import com.qcloud.component.orderform.model.ReturnOrderItemDetail;
 
-public class ReturnAfterSaleOrderItem extends AfterSaleOrderItem implements QAfterSaleItem {
+public class ReturnAfterSaleOrderItem extends AfterSaleOrderItem implements QAfterSaleDetail {
 
-    private OrderItemEntity orderItemEntity;
+    private OrderItemDetailEntity orderItemDetailEntity;
 
-    private ReturnOrderItem returnOrderItem;
+    private ReturnOrderItemDetail returnOrderItemDetail;
 
-    public ReturnAfterSaleOrderItem(AfterSaleOrder afterSaleOrder, OrderItemEntity orderItemEntity, ReturnOrderItem returnOrderItem) {
+    public ReturnAfterSaleOrderItem(AfterSaleOrder afterSaleOrder, OrderItemDetailEntity orderItemDetailEntity, ReturnOrderItemDetail returnOrderItemDetail) {
 
         super(afterSaleOrder);
-        this.orderItemEntity = orderItemEntity;
-        this.returnOrderItem = returnOrderItem;
+        this.orderItemDetailEntity = orderItemDetailEntity;
+        this.returnOrderItemDetail = returnOrderItemDetail;
     }
 
-    public OrderItemEntity getOrderItem() {
+    public OrderItemDetailEntity getOrderItemDetailEntity() {
 
-        return orderItemEntity;
+        return orderItemDetailEntity;
     }
 
-    public ReturnOrderItem getReturnOrderItem() {
+    public ReturnOrderItemDetail getReturnOrderItemDetail() {
 
-        return returnOrderItem;
+        return returnOrderItemDetail;
     }
 
     @Override
     public long getAfterSaleOrderItemId() {
 
-        return returnOrderItem.getId();
+        return returnOrderItemDetail.getId();
     }
 
     @Override
     public int getState() {
 
-        return returnOrderItem.getState();
+        return returnOrderItemDetail.getState();
     }
 
     @Override
     public Date getTime() {
 
-        return returnOrderItem.getTime();
+        return returnOrderItemDetail.getTime();
     }
 
     @Override
     public int getNumber() {
 
-        return returnOrderItem.getNumber();
+        return returnOrderItemDetail.getNumber();
     }
 
     @Override
     public double getSum() {
 
-        return returnOrderItem.getSum();
+        return 0.0;
     }
 
     @Override
     public String getExplain() {
 
-        return returnOrderItem.getExplain();
+        return returnOrderItemDetail.getExplain();
     }
 
     @Override
     public String getReason() {
 
-        return returnOrderItem.getReason();
+        return returnOrderItemDetail.getReason();
     }
 
     @Override
     public void setState(int state) {
 
-        returnOrderItem.setState(state);
+        returnOrderItemDetail.setState(state);
+    }
+
+    @Override
+    public OrderItemDetailEntity getOrderItemDetail() {
+
+        return orderItemDetailEntity;
     }
 }

@@ -19,7 +19,7 @@ public interface ScreeningsHandler {
 
     ScreeningsIndexVO toVO4Index(Screenings screenings);
 
-    MerchandiseSeckillVO getCrazySeckill(Screenings screenings);
+    List<MerchandiseSeckillVO> getCrazySeckill(Screenings screenings);
 
     List<AdminScreeningsVO> toVOList4Admin(List<Screenings> list);
 

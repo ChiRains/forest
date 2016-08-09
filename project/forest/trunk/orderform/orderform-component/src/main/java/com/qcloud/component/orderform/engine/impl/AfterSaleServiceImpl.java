@@ -97,10 +97,10 @@ public class AfterSaleServiceImpl implements AfterSaleService {
         List<AfterSaleOrderItem> list = returnAfterSaleOrder.getList();
         for (AfterSaleOrderItem afterSaleOrderItem : list) {
             ReturnAfterSaleOrderItem returnAfterSaleOrderItem = (ReturnAfterSaleOrderItem) afterSaleOrderItem;
-            ReturnOrderItem returnOrderItem = returnAfterSaleOrderItem.getReturnOrderItem();
-            returnOrderItem.setState(orderConfigService.getReturnInitOrderState());
-            returnOrderItem.setReturnId(returnOrder.getId());
-            returnOrderItemService.add(returnOrderItem);
+            // ReturnOrderItem returnOrderItem = returnAfterSaleOrderItem.getReturnOrderItem();
+            // returnOrderItem.setState(orderConfigService.getReturnInitOrderState());
+            // returnOrderItem.setReturnId(returnOrder.getId());
+            // returnOrderItemService.add(returnOrderItem);
         }
         ReturnAfterSaleOrder afterSaleOrder = afterSaleSelecterService.getReturnOrder(returnAfterSaleOrder.getMerchantOrder(), returnOrder.getId());
         orderObserverService.doNotify(afterSaleOrder, returnOrder.getState());
@@ -187,24 +187,25 @@ public class AfterSaleServiceImpl implements AfterSaleService {
     @Transactional
     public boolean applyReturn(OrderEntity orderEntity, List<OrderItemEntity> list, String explain, String reason) {
 
-        AssertUtil.assertNotEmpty(list, "退货商品列表不能为空.");
-        List<List<OrderItemEntity>> spitList = spitOrderItem(list);
-        for (List<OrderItemEntity> itemList : spitList) {
-            MerchantOrderEntity merchantOrderEntity = itemList.get(0).getMerchantOrder();
-            Date now = new Date();
-            Long returnOrderId = applyReturnOrder(merchantOrderEntity, now, explain, reason);
-            for (OrderItemEntity orderItem : itemList) {
-                AfterSaleItem afterSale = new AfterSaleItem();
-                afterSale.setOrderItem(orderItem);
-                afterSale.setExplain(explain);
-                afterSale.setReason(reason);
-                afterSale.setNumber(orderItem.getNumber());
-                applyReturnOrderItem(afterSale, now, returnOrderId);
-            }
-            ReturnAfterSaleOrder afterSaleOrder = afterSaleSelecterService.getReturnOrder(merchantOrderEntity, returnOrderId);
-            orderObserverService.doNotify(afterSaleOrder, afterSaleOrder.getState());
-            // sellercenterClient.updateOrderFormState(merchantOrderEntity.getMerchantId(), merchantOrderEntity.getId(), MerchantOrderStateType.RETURN.getKey());
-        }
+        AssertUtil.assertTrue(false, "不支持该退货方式.");
+        // AssertUtil.assertNotEmpty(list, "退货商品列表不能为空.");
+        // List<List<OrderItemEntity>> spitList = spitOrderItem(list);
+        // for (List<OrderItemEntity> itemList : spitList) {
+        // MerchantOrderEntity merchantOrderEntity = itemList.get(0).getMerchantOrder();
+        // Date now = new Date();
+        // Long returnOrderId = applyReturnOrder(merchantOrderEntity, now, explain, reason);
+        // for (OrderItemEntity orderItem : itemList) {
+        // AfterSaleItem afterSale = new AfterSaleItem();
+        // afterSale.setOrderItem(orderItem);
+        // afterSale.setExplain(explain);
+        // afterSale.setReason(reason);
+        // afterSale.setNumber(orderItem.getNumber());
+        // applyReturnOrderItem(afterSale, now, returnOrderId);
+        // }
+        // ReturnAfterSaleOrder afterSaleOrder = afterSaleSelecterService.getReturnOrder(merchantOrderEntity, returnOrderId);
+        // orderObserverService.doNotify(afterSaleOrder, afterSaleOrder.getState());
+        // // sellercenterClient.updateOrderFormState(merchantOrderEntity.getMerchantId(), merchantOrderEntity.getId(), MerchantOrderStateType.RETURN.getKey());
+        // }
         // myClient.updateMyOrderFormState(orderEntity.getUserId(), orderEntity.getId(), MyOrderStateType.AFTERSALES.getKey());
         return true;
     }
@@ -260,19 +261,20 @@ public class AfterSaleServiceImpl implements AfterSaleService {
     @Transactional
     public boolean applyReturn(OrderEntity orderEntity, List<AfterSaleItem> list) {
 
-        AssertUtil.assertNotEmpty(list, "退货商品列表不能为空.");
-        List<List<AfterSaleItem>> spitList = spitAfterSaleItem(list);
-        for (List<AfterSaleItem> itemList : spitList) {
-            MerchantOrderEntity merchantOrderEntity = itemList.get(0).getOrderItem().getMerchantOrder();
-            Date now = new Date();
-            Long returnOrderId = applyReturnOrder(merchantOrderEntity, now, itemList.get(0).getExplain(), itemList.get(0).getReason());
-            for (AfterSaleItem afterSale : itemList) {
-                applyReturnOrderItem(afterSale, now, returnOrderId);
-            }
-            ReturnAfterSaleOrder afterSaleOrder = afterSaleSelecterService.getReturnOrder(merchantOrderEntity, returnOrderId);
-            orderObserverService.doNotify(afterSaleOrder, afterSaleOrder.getState());
-            // sellercenterClient.updateOrderFormState(merchantOrderEntity.getMerchantId(), merchantOrderEntity.getId(), MerchantOrderStateType.RETURN.getKey());
-        }
+        AssertUtil.assertTrue(false, "不支持该退货方式.");
+        // AssertUtil.assertNotEmpty(list, "退货商品列表不能为空.");
+        // List<List<AfterSaleItem>> spitList = spitAfterSaleItem(list);
+        // for (List<AfterSaleItem> itemList : spitList) {
+        // MerchantOrderEntity merchantOrderEntity = itemList.get(0).getOrderItem().getMerchantOrder();
+        // Date now = new Date();
+        // Long returnOrderId = applyReturnOrder(merchantOrderEntity, now, itemList.get(0).getExplain(), itemList.get(0).getReason());
+        // for (AfterSaleItem afterSale : itemList) {
+        // applyReturnOrderItem(afterSale, now, returnOrderId);
+        // }
+        // ReturnAfterSaleOrder afterSaleOrder = afterSaleSelecterService.getReturnOrder(merchantOrderEntity, returnOrderId);
+        // orderObserverService.doNotify(afterSaleOrder, afterSaleOrder.getState());
+        // // sellercenterClient.updateOrderFormState(merchantOrderEntity.getMerchantId(), merchantOrderEntity.getId(), MerchantOrderStateType.RETURN.getKey());
+        // }
         // myClient.updateMyOrderFormState(orderEntity.getUserId(), orderEntity.getId(), MyOrderStateType.AFTERSALES.getKey());
         return true;
     }
@@ -454,7 +456,7 @@ public class AfterSaleServiceImpl implements AfterSaleService {
     }
 
     // 退货单
-    private Long applyReturnOrder(MerchantOrderEntity merchantOrderEntity, Date date, String explain, String reason) {
+    private Long applyReturnOrder(MerchantOrderEntity merchantOrderEntity, Date date, String explain, String reason, Integer returnType, double afterSaleSum, String afterSaleImage) {
 
         OrderEntity orderEntity = merchantOrderEntity.getOrder();
         ReturnOrder returnOrder = new ReturnOrder();
@@ -471,6 +473,9 @@ public class AfterSaleServiceImpl implements AfterSaleService {
         returnOrder.setUserId(orderEntity.getUserId());
         returnOrder.setState(orderConfigService.getReturnInitOrderState());
         returnOrder.setReturnNumber(orderNumberService.generate());
+        returnOrder.setReturnType(returnType);
+        returnOrder.setAfterSaleImage(afterSaleImage);
+        returnOrder.setAfterSaleSum(afterSaleSum);
         returnOrderService.add(returnOrder);
         // 发短信
         String returnNumber = returnOrder.getReturnNumber();
@@ -481,6 +486,7 @@ public class AfterSaleServiceImpl implements AfterSaleService {
     }
 
     // 退货单项
+    @Deprecated
     private boolean applyReturnOrderItem(AfterSaleItem afterSale, Date date, Long returnOrderId) {
 
         OrderItemEntity orderItemEntity = afterSale.getOrderItem();
@@ -504,76 +510,50 @@ public class AfterSaleServiceImpl implements AfterSaleService {
     }
 
     // 退货单项详细
-    private boolean applyReturnOrderItemDetail(AfterSaleDetail afterSale, Date date, Long returnOrderId, Long returnItemId) {
+    private boolean applyReturnOrderItemDetail(AfterSaleDetail afterSale, Date date, Long returnOrderId, Integer returnType) {
 
         OrderItemDetailEntity orderItemDetailEntity = afterSale.getOrderItemDetail();
         MerchantOrderEntity merchantOrderEntity = orderItemDetailEntity.getMerchantOrder();
         OrderEntity orderEntity = orderItemDetailEntity.getOrder();
         //
-        ReturnOrderItemDetail returnOrderItem = new ReturnOrderItemDetail();
-        returnOrderItem.setReturnId(returnOrderId);
-        returnOrderItem.setReturnItemId(returnItemId);
+        ReturnOrderItemDetail returnOrderItemDetail = new ReturnOrderItemDetail();
+        returnOrderItemDetail.setReturnId(returnOrderId);
         //
-        returnOrderItem.setOrderId(orderEntity.getId());
-        returnOrderItem.setSubOrderId(merchantOrderEntity.getId());
-        returnOrderItem.setOrderItemId(orderItemDetailEntity.getOrderItem().getId());
-        returnOrderItem.setOrderItemDetailId(orderItemDetailEntity.getId());
+        returnOrderItemDetail.setOrderId(orderEntity.getId());
+        returnOrderItemDetail.setSubOrderId(merchantOrderEntity.getId());
+        returnOrderItemDetail.setOrderItemId(orderItemDetailEntity.getOrderItem().getId());
+        returnOrderItemDetail.setOrderItemDetailId(orderItemDetailEntity.getId());
         //
-        returnOrderItem.setNumber(afterSale.getNumber());
-        returnOrderItem.setState(orderConfigService.getReturnInitOrderState());
-        return returnOrderItemDetailService.add(returnOrderItem);
+        returnOrderItemDetail.setNumber(afterSale.getNumber());
+        returnOrderItemDetail.setState(orderConfigService.getReturnInitOrderState());
+        returnOrderItemDetail.setExplain(afterSale.getExplain());
+        returnOrderItemDetail.setReason(afterSale.getReason());
+        returnOrderItemDetail.setReturnType(returnType);
+        returnOrderItemDetail.setTime(date);
+        return returnOrderItemDetailService.add(returnOrderItemDetail);
     }
 
+    /**
+     * 子项售后
+     */
     @Transactional
     @Override
-    public boolean applyReturnDetail(OrderEntity orderEntity, List<AfterSaleDetail> list) {
+    public Long applyReturnDetail(OrderEntity orderEntity, List<AfterSaleDetail> list, Integer returnType, double afterSaleSum, String afterSaleImage) {
 
+        Long returnOrderId = -1L;
         AssertUtil.assertNotEmpty(list, "退货商品列表不能为空.");
-        Map<OrderItemEntity, List<AfterSaleDetail>> spitMap = new HashMap<OrderItemEntity, List<AfterSaleDetail>>();
-        Set<OrderItemEntity> orderItemSet = new HashSet<OrderItemEntity>();
-        for (AfterSaleDetail afterSaleDetail : list) {
-            OrderItemEntity item = afterSaleDetail.getOrderItemDetail().getOrderItem();
-            List<AfterSaleDetail> detailList = spitMap.get(item);
-            if (detailList == null) {
-                detailList = new ArrayList<AfterSaleDetail>();
-            }
-            detailList.add(afterSaleDetail);
-            orderItemSet.add(item);
-            spitMap.put(item, detailList);
-        }
-        for (OrderItemEntity orderItemEntity : orderItemSet) {
-            MerchantOrderEntity merchantOrderEntity = orderItemEntity.getMerchantOrder();
+        List<List<AfterSaleDetail>> spitList = spitAfterSaleDetail(list);
+        for (List<AfterSaleDetail> itemList : spitList) {
+            MerchantOrderEntity merchantOrderEntity = itemList.get(0).getOrderItemDetail().getMerchantOrder();
             Date now = new Date();
-            // TODO 退货单
-            Long returnOrderId = applyReturnOrder(merchantOrderEntity, now, "", "");
-            Long returnOrderItemId = applyReturnOrderItem(orderItemEntity, now, returnOrderId, spitMap.get(orderItemEntity).get(0).getExplain(), spitMap.get(orderItemEntity).get(0).getReason());
-            for (AfterSaleDetail afterSale : spitMap.get(orderItemEntity)) {
-                applyReturnOrderItemDetail(afterSale, now, returnOrderId, returnOrderItemId);
+            //
+            returnOrderId = applyReturnOrder(merchantOrderEntity, now, itemList.get(0).getExplain(), itemList.get(0).getReason(), returnType, afterSaleSum, afterSaleImage);
+            for (AfterSaleDetail afterSale : itemList) {
+                applyReturnOrderItemDetail(afterSale, now, returnOrderId, returnType);
             }
             ReturnAfterSaleOrder afterSaleOrder = afterSaleSelecterService.getReturnOrder(merchantOrderEntity, returnOrderId);
             orderObserverService.doNotify(afterSaleOrder, afterSaleOrder.getState());
         }
-        return true;
-    }
-
-    private Long applyReturnOrderItem(OrderItemEntity orderItemEntity, Date date, Long returnOrderId, String explain, String reason) {
-
-        MerchantOrderEntity merchantOrderEntity = orderItemEntity.getMerchantOrder();
-        OrderEntity orderEntity = orderItemEntity.getOrder();
-        //
-        ReturnOrderItem returnOrderItem = new ReturnOrderItem();
-        returnOrderItem.setReturnId(returnOrderId);
-        //
-        returnOrderItem.setOrderId(orderEntity.getId());
-        returnOrderItem.setSubOrderId(merchantOrderEntity.getId());
-        returnOrderItem.setOrderItemId(orderItemEntity.getId());
-        returnOrderItem.setExplain(explain);
-        returnOrderItem.setReason(reason);
-        //
-        returnOrderItem.setSum(0.0);
-        returnOrderItem.setState(orderConfigService.getReturnInitOrderState());
-        returnOrderItem.setTime(date);
-        returnOrderItemService.add(returnOrderItem);
-        return returnOrderItem.getId();
+        return returnOrderId;
     }
 }

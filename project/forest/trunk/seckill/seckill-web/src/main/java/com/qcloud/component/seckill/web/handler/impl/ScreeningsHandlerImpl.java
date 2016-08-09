@@ -245,22 +245,26 @@ public class ScreeningsHandlerImpl implements ScreeningsHandler {
     }
 
     @Override
-    public MerchandiseSeckillVO getCrazySeckill(Screenings screenings) {
+    public List<MerchandiseSeckillVO> getCrazySeckill(Screenings screenings) {
 
-        List<MerchandiseSeckill> merchandiseList = merchandiseSeckillService.listByScreenings(screenings.getId());
-        List<MerchandiseSeckillVO> merchandiseVOList = merchandiseSeckillHandler.toVOList(merchandiseList);
-        if (CollectionUtils.isNotEmpty(merchandiseVOList)) {
-            Collections.sort(merchandiseVOList, new Comparator<MerchandiseSeckillVO>() {
+        if (screenings != null) {
+            List<MerchandiseSeckill> merchandiseList = merchandiseSeckillService.listByScreenings(screenings.getId());
+            List<MerchandiseSeckillVO> merchandiseVOList = merchandiseSeckillHandler.toVOList(merchandiseList);
+            if (CollectionUtils.isNotEmpty(merchandiseVOList)) {
+                Collections.sort(merchandiseVOList, new Comparator<MerchandiseSeckillVO>() {
 
-                @Override
-                public int compare(MerchandiseSeckillVO arg0, MerchandiseSeckillVO arg1) {
+                    @Override
+                    public int compare(MerchandiseSeckillVO arg0, MerchandiseSeckillVO arg1) {
 
-                    return String.valueOf(arg1.getSalesVolume()).compareTo(String.valueOf(arg0.getSalesVolume()));
-                }
-            });
-            return merchandiseVOList.get(0);
+                        return String.valueOf(arg1.getSalesVolume()).compareTo(String.valueOf(arg0.getSalesVolume()));
+                    }
+                });
+                return merchandiseVOList;
+            } else {
+                return new ArrayList<MerchandiseSeckillVO>();
+            }
         } else {
-            return null;
+            return new ArrayList<MerchandiseSeckillVO>();
         }
     }
 }

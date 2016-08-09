@@ -178,15 +178,12 @@ public class AfterSaleHandlerImpl implements AfterSaleHandler {
     public AfterSaleInfoDetailsVO toDetailsVO(QAfterSaleOrder afterSaleOrder) {
 
         AfterSaleInfoDetailsVO afterSaleInfo = new AfterSaleInfoDetailsVO();
-        afterSaleInfo.setAfterSaleSum(afterSaleOrder.getAfterSaleSum());
-        afterSaleInfo.setAfterSaleType(afterSaleOrder.getAfterSaleType().getKey());
-        afterSaleInfo.setExplain(afterSaleOrder.getExplain());
         int number = 0;
-        if (AfterSaleType.EXCHANGE.equals(afterSaleOrder.getAfterSaleType().getKey())) {
+        if (AfterSaleType.EXCHANGE.getKey() == afterSaleOrder.getAfterSaleType().getKey() || AfterSaleType.RETURN.getKey() == afterSaleOrder.getAfterSaleType().getKey()) {
             List<QAfterSaleDetail> list = afterSaleOrder.listItem();
             for (QAfterSaleDetail detail : list) {
                 AfterSaleInfoMerchandiseVO myAfterSaleMerchandiseVO = new AfterSaleInfoMerchandiseVO();
-                myAfterSaleMerchandiseVO.setDiscount(detail.getOrderItemDetail().getOrderItem().getDiscount());
+                myAfterSaleMerchandiseVO.setDiscount(detail.getOrderItemDetail().getDiscount());
                 myAfterSaleMerchandiseVO.setImage(fileSDKClient.getFileServerUrl() + detail.getOrderItemDetail().getImage());
                 myAfterSaleMerchandiseVO.setName(detail.getOrderItemDetail().getName());
                 myAfterSaleMerchandiseVO.setNumber(detail.getNumber());
@@ -212,6 +209,10 @@ public class AfterSaleHandlerImpl implements AfterSaleHandler {
         afterSaleInfo.setReason(afterSaleOrder.getReason());
         afterSaleInfo.setState(afterSaleOrder.getState());
         afterSaleInfo.setStateStr(afterSaleOrder.getUserStateStr());
+        afterSaleInfo.setImage(afterSaleOrder.getAfterSaleImage());
+        afterSaleInfo.setAfterSaleSum(afterSaleOrder.getAfterSaleSum());
+        afterSaleInfo.setAfterSaleType(afterSaleOrder.getAfterSaleType().getKey());
+        afterSaleInfo.setExplain(afterSaleOrder.getExplain());
         return afterSaleInfo;
     }
 

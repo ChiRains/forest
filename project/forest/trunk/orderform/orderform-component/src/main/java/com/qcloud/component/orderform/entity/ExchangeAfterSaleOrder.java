@@ -123,7 +123,6 @@ public class ExchangeAfterSaleOrder extends AfterSaleOrder {
         exchangeOrder.setState(state);
     }
 
-
     @Override
     public double getAfterSaleSum() {
 
@@ -136,5 +135,12 @@ public class ExchangeAfterSaleOrder extends AfterSaleOrder {
 
         // TODO Auto-generated method stub
         return "";
+    }
+
+    @Override
+    public int getReturnType() {
+
+        // TODO Auto-generated method stub
+        return 0;
     }
 }

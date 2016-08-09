@@ -10,4 +10,10 @@
     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
         select count(*) from `orderform_return_order_item_detail`
     </select> 
+    
+    <select id="listByReturn" parameterType="java.util.HashMap" resultType="ReturnOrderItemDetail">  
+        select * from `orderform_return_order_item_detail` 
+        where 1=1 and returnId=#{returnId}
+    </select>  
+    
 </mapper>
