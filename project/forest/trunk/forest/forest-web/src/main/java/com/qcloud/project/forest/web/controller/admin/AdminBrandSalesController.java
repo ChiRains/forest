@@ -26,11 +26,13 @@ import com.qcloud.project.forest.web.vo.PromotionalOffersVO;
 @RequestMapping(value = "/" + AdminBrandSalesController.DIR)
 public class AdminBrandSalesController {
 
-    public static final String        DIR      = "admin/brandSales";
+    public static final String        DIR            = "admin/brandSales";
 
-    public static final int           BRAND    = 1;                 // 品牌
+    public static final int           BRAND          = 1;                 // 品牌
 
-    public static final int           CLASSIFY = 2;                 // 类别
+    public static final int           CLASSIFY       = 2;                 // 类别
+
+    public static final int           BRANDFORBIGPIC = 3;                 // 品牌（大图）
 
     @Autowired
     private PublicdataClient          publicdataClient;
@@ -47,15 +49,12 @@ public class AdminBrandSalesController {
     @Autowired
     private CommoditycenterClient     commoditycenterClient;
 
-    /**
-     * 品牌特卖品牌列表
-     * @param pPage
-     * @return
-     */
     @RequestMapping
     public AcePagingView listBrand(PPage pPage) {
 
         List<Classify> list = publicdataClient.listClassify((long) ClassifyType.BRANDONSALEBRAND.getKey(), true);
+        List<Classify> listForBigPic = publicdataClient.listClassify((long) ClassifyType.BRANDONSALEBRANDFORBIGPIC.getKey(), true);
+        list.addAll(listForBigPic);
         int i = (pPage.getPageNum() - 1) * pPage.getPageSize() + pPage.getPageSize();
         if (i > list.size()) {
             i = list.size();
@@ -69,11 +68,6 @@ public class AdminBrandSalesController {
         return acePagingView;
     }
 
-    /**
-     * 品牌特卖类别列表
-     * @param pPage
-     * @return
-     */
     @RequestMapping
     public AcePagingView listClassify(PPage pPage) {
 
@@ -92,12 +86,6 @@ public class AdminBrandSalesController {
         return acePagingView;
     }
 
-    /**
-     * 是否启用品牌或类别
-     * @param classifyId
-     * @param enable
-     * @return
-     */
     @RequestMapping
     public AceAjaxView enable(Long classifyId, int enable) {
 
@@ -110,11 +98,6 @@ public class AdminBrandSalesController {
         return aceAjaxView;
     }
 
-    /**
-     * 添加品牌或类别
-     * @param type
-     * @return
-     */
     @RequestMapping
     public ModelAndView toAdd(int type) {
 
@@ -123,17 +106,13 @@ public class AdminBrandSalesController {
             jsp = "/admin/forest-BrandSales-addBrand";
         } else if (type == CLASSIFY) {
             jsp = "/admin/forest-BrandSales-addClassify";
+        } else if (type == BRANDFORBIGPIC) {
+            jsp = "/admin/forest-BrandSales-addBrandForBigPic";
         }
         ModelAndView modelAndView = new ModelAndView(jsp);
         return modelAndView;
     }
 
-    /**
-     * 提交添加品牌或类别
-     * @param classify
-     * @param type
-     * @return
-     */
     @RequestMapping
     public AceAjaxView add(Classify classify, int type) {
 
@@ -142,6 +121,8 @@ public class AdminBrandSalesController {
             classifyType = ClassifyType.BRANDONSALEBRAND.getKey();
         } else if (type == CLASSIFY) {
             classifyType = ClassifyType.BRANDONSALECLASSIFY.getKey();
+        } else if (type == BRANDFORBIGPIC) {
+            classifyType = ClassifyType.BRANDONSALEBRANDFORBIGPIC.getKey();
         }
         classify.setType(classifyType);
         publicdataClient.addClassify(classify);
@@ -150,11 +131,6 @@ public class AdminBrandSalesController {
         return aceAjaxView;
     }
 
-    /**
-     * 编辑品牌或类别
-     * @param id
-     * @return
-     */
     @RequestMapping
     public ModelAndView toEdit(Long id, Integer type) {
 
@@ -172,11 +148,6 @@ public class AdminBrandSalesController {
         return modelAndView;
     }
 
-    /**
-     * 提交编辑品牌或类别
-     * @param classify
-     * @return
-     */
     @RequestMapping
     public AceAjaxView edit(Classify classify, String uid) {
 
@@ -191,12 +162,6 @@ public class AdminBrandSalesController {
         return aceAjaxView;
     }
 
-    /**
-     * 展示品牌特卖的商品
-     * @param pPage
-     * @param classifyId
-     * @return
-     */
     @RequestMapping
     public AcePagingView listMerchandise(PPage pPage, Long classifyId) {
 
@@ -218,11 +183,6 @@ public class AdminBrandSalesController {
         return pagingView;
     }
 
-    /**
-     * 添加品牌特卖的商品
-     * @param classifyId
-     * @return
-     */
     @RequestMapping
     public ModelAndView toAddMerchandise(Long classifyId) {
 
@@ -231,16 +191,6 @@ public class AdminBrandSalesController {
         return modelAndView;
     }
 
-    /**
-     * 提交添加品牌特卖的商品
-     * @param unifiedMerchandiseId
-     * @param image
-     * @param discount
-     * @param integral
-     * @param stock
-     * @param classifyId
-     * @return
-     */
     @RequestMapping
     public AceAjaxView addMerchandise(Long unifiedMerchandiseId, String image, Double discount, Integer integral, Integer stock, Long classifyId) {
 
@@ -251,11 +201,6 @@ public class AdminBrandSalesController {
         return aceAjaxView;
     }
 
-    /**
-     * 删除品牌特卖的商品
-     * @param id
-     * @return
-     */
     @RequestMapping
     public AceAjaxView deleteMerchandise(Long id) {
 

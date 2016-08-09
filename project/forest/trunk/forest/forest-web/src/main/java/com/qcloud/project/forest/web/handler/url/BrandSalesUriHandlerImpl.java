@@ -71,9 +71,11 @@ public class BrandSalesUriHandlerImpl extends AbstractUriHandler {
         list.add("/brandSales/brandOnSaleBrands.do");
         list.add("/brandSales/getBrandSalesClassify.do");
         list.add("/brandSales/getBrandSaleslist.do");
+        list.add("/brandSales/brandOnSaleBrandsForBigPic.do");
         list.add("/app/brandSales/brandOnSaleBrands.do");
         list.add("/app/brandSales/getBrandSalesClassify.do");
         list.add("/app/brandSales/getBrandSaleslist.do");
+        list.add("/app/brandSales/brandOnSaleBrandsForBigPic.do");
         return list;
     }
 
@@ -84,6 +86,7 @@ public class BrandSalesUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/brandSales/brandOnSaleBrands.do");
         list.add("/app/brandSales/getBrandSalesClassify.do");
         list.add("/app/brandSales/getBrandSaleslist.do");
+        list.add("/app/brandSales/brandOnSaleBrandsForBigPic.do");
         return list;
     }
 }

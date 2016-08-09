@@ -39,17 +39,31 @@ public class BrandSalesController {
     @Autowired
     private FileSDKClient             fileSDKClient;
 
-    /**
-     * 展示六个品牌
-     * @return
-     */
     @PiratesApp
     @RequestMapping
     public FrontAjaxView brandOnSaleBrands() {
 
         List<Classify> classifies = publicdataClient.listClassify((long) ClassifyType.BRANDONSALEBRAND.getKey());
-        if (classifies.size() >= 6) {
-            classifies.subList(0, 6);
+        Iterator<Classify> iter = classifies.iterator();
+        while (iter.hasNext()) {
+            Classify s = iter.next();
+            s.setImage(fileSDKClient.getFileServerUrl() + s.getImage());
+            if (s.getEnable() != 1) {
+                iter.remove();
+            }
+        }
+        FrontAjaxView view = new FrontAjaxView();
+        view.addObject("list", classifies);
+        return view;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView brandOnSaleBrandsForBigPic() {
+
+        List<Classify> classifies = publicdataClient.listClassify((long) ClassifyType.BRANDONSALEBRANDFORBIGPIC.getKey());
+        if (classifies.size() >= 2) {
+            classifies.subList(0, 2);
         }
         Iterator<Classify> iter = classifies.iterator();
         while (iter.hasNext()) {

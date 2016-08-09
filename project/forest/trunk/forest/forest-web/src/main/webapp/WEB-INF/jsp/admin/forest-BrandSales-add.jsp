@@ -74,7 +74,7 @@
                 <label class="col-sm-3 control-label no-padding-right" for="discount"> 商品价格</label>
                 <div class="col-sm-9">
 					<span class="col-sm-5 no-padding block input-icon input-icon-right mr10">
-						<input type="text" class="width-100" maxlength="20" id="discount" name="discount" placeholder="商品价格" value="" onkeyup="this.value=this.value.replace(/\D/g, '')"/>
+						<input type="text" class="width-100" maxlength="20" id="discount" name="discount" placeholder="商品价格" value="" />
 						<i class="ace-icon fa"></i>
 					</span>
                 </div>

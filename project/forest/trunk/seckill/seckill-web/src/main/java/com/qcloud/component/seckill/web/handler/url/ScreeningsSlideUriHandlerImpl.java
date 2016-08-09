@@ -30,17 +30,18 @@ public class ScreeningsSlideUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/screeningsSlide/add.do");
         list.add("/admin/screeningsSlide/edit.do");
         list.add("/admin/screeningsSlide/delete.do");
+        list.add("/admin/screeningsSlide/list.do");
         return list;
     }
 
     @Override
     public Map<String, List<String>> permissionRelaMap() {
 
-        List<String> strList = stringToList("/admin/screeningsSlide/list.do");
         Map<String, List<String>> map = new HashMap<String, List<String>>();
+        List<String> strList = stringToList("/admin/screeningsSlide/list.do", "/admin/screenings/list.do");
         map.put("/admin/screeningsSlide/toAdd.do", strList);
         map.put("/admin/screeningsSlide/toEdit.do", strList);
-        map.put("/admin/merchandiseSeckill/delete.do", strList);
+        map.put("/admin/screeningsSlide/delete.do", strList);
         map.put("/admin/screeningsSlide/add.do", strList);
         map.put("/admin/screeningsSlide/edit.do", strList);
         map.put("/admin/screeningsSlide/delete.do", strList);

@@ -40,7 +40,7 @@ public class AnalysisresultUriHandlerImpl extends AbstractUriHandler {
     public Map<String, List<String>> permissionRelaMap() {
 
         Map<String, List<String>> map = new HashMap<String, List<String>>();
-        List<String> list = stringToList("/admin/analysisresult/list.do");
+        List<String> list = stringToList("/admin/analysisresult/list.do", "/admin/analysisresult/listBMI.do");
         //
         map.put("/admin/analysisresult/toAdd.do", list);
         map.put("/admin/analysisresult/toEdit.do", list);
@@ -57,6 +57,8 @@ public class AnalysisresultUriHandlerImpl extends AbstractUriHandler {
         List<String> list = new ArrayList<String>();
         list.add("/analysisresult/bmiCalculation.do");
         list.add("/app/analysisresult/bmiCalculation.do");
+        list.add("/analysisresult/getHtmlView.do");
+        list.add("/app/analysisresult/getHtmlView.do");
         return list;
     }
 
@@ -65,6 +67,7 @@ public class AnalysisresultUriHandlerImpl extends AbstractUriHandler {
 
         List<String> list = new ArrayList<String>();
         list.add("/app/analysisresult/bmiCalculation.do");
+        list.add("/app/analysisresult/getHtmlView.do");
         return list;
     }
 }
