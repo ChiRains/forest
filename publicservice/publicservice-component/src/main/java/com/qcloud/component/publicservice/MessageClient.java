@@ -24,7 +24,7 @@ public interface MessageClient {
     boolean resetNewMsgNumber(String typeCode, long receiver);
 
     // 发送消息
-    boolean sendMsg(String typeCode, int classify, long receiver, String title, String content);
+    boolean sendMsg(String typeCode, int classify, long receiver, String title, String content, String url);
 
     // 发送消息,返回id
     Long sendMsgForId(String typeCode, int classify, long receiver, String title, String content);

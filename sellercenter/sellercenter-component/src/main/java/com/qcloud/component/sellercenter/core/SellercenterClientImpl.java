@@ -23,7 +23,6 @@ import com.qcloud.component.sellercenter.model.MerchantOrderForm;
 import com.qcloud.component.sellercenter.model.Sexpress;
 import com.qcloud.component.sellercenter.model.SexpressDistrict;
 import com.qcloud.component.sellercenter.model.key.TypeEnum;
-import com.qcloud.component.sellercenter.model.key.TypeEnum.NotifyType;
 import com.qcloud.component.sellercenter.model.key.TypeEnum.SexpressType;
 import com.qcloud.component.sellercenter.service.MerchantEvaluationService;
 import com.qcloud.component.sellercenter.service.MerchantOrderFormService;
@@ -100,13 +99,13 @@ public class SellercenterClientImpl implements SellercenterClient {
     @Override
     public boolean sendMsgToMerchant(long merchantId, SellerMessageType type, String title, String content) {
 
-        return messageClient.sendMsg(TypeEnum.MERCHANT_MESSAGE_CODE, type.getKey(), merchantId, title, content);
+        return messageClient.sendMsg(TypeEnum.MERCHANT_MESSAGE_CODE, type.getKey(), merchantId, title, content, null);
     }
 
     @Override
     public boolean sendMsgToStore(long storeId, SellerMessageType type, String title, String content) {
 
-        return messageClient.sendMsg(TypeEnum.STORE_MESSAGE_CODE, type.getKey(), storeId, title, content);
+        return messageClient.sendMsg(TypeEnum.STORE_MESSAGE_CODE, type.getKey(), storeId, title, content, null);
     }
 
     @Override

@@ -35,7 +35,7 @@ public class AnalysisresultController {
         Analysisresult analysisResult = analysisresultService.getBMI(type, BMI);
         List<BMIVO> list = analysisresultHandler.toBMIVO(analysisResult, BMI);
         FrontAjaxView view = new FrontAjaxView();
-        view.addObject("result", list);
+        view.addObject("list", list);
         view.setMessage("BMI计算成功！");
         return view;
     }

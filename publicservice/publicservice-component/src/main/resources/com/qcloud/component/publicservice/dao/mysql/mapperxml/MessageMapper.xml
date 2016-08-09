@@ -34,7 +34,7 @@
     </select>
     
     <select id="listContentByReceiver" parameterType="java.util.HashMap" resultType="Message">  
-        <![CDATA[select `id`,`title`, `content`,`time`,`state`,`classify` from `${table_name}` where `receiver`=#{receiver} and `state` <> 3]]>  
+        <![CDATA[select `id`,`title`, `content`,`time`,`state`,`classify`,`url` from `${table_name}` where `receiver`=#{receiver} and `state` <> 3]]>  
         <if test="classify > 0">
         	and classify=#{classify}
         </if>

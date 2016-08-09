@@ -96,9 +96,12 @@ public class MessageCenterController {
             messageVO = new MessageVO();
             messageVO.setContent(qMessage.getContent());
             messageVO.setTime(DateUtil.date2String(qMessage.getTime(), "yyyy-MM-dd HH:mm:ss"));
-            messageVO.setUrl(qMessage.getTitle());
+            messageVO.setTitle(qMessage.getTitle());
+            messageVO.setUrl(qMessage.getUrl());
             messageVOs.add(messageVO);
-            messageClient.read(MessageType.USER.getKey(), user.getId(), qMessage.getId());
+            if (!qMessage.isRead()) {
+                messageClient.read(MessageType.USER.getKey(), user.getId(), qMessage.getId());
+            }
         }
         FrontPagingView frontPagingView = new FrontPagingView(pPage.getPageNum(), pPage.getPageSize(), messageNum);
         frontPagingView.setList(messageVOs);

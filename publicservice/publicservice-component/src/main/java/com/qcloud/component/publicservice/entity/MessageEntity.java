@@ -23,6 +23,8 @@ public class MessageEntity implements QMessage {
 
     private int     classify;
 
+    private String  url;
+
     public Long getId() {
 
         return id;
@@ -91,5 +93,16 @@ public class MessageEntity implements QMessage {
     public void setClassify(int classify) {
 
         this.classify = classify;
+    }
+
+    @Override
+    public String getUrl() {
+
+        return url;
+    }
+
+    public void setUrl(String url) {
+
+        this.url = url;
     }
 }

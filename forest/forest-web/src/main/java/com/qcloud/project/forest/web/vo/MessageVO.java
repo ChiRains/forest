@@ -8,17 +8,11 @@ public class MessageVO {
 
     private String url;
 
+    private String title;
+
     public MessageVO() {
 
         super();
-    }
-
-    public MessageVO(String content, String time, String url) {
-
-        super();
-        this.content = content;
-        this.time = time;
-        this.url = url;
     }
 
     public String getContent() {
@@ -49,5 +43,15 @@ public class MessageVO {
     public void setUrl(String url) {
 
         this.url = url;
+    }
+
+    public String getTitle() {
+
+        return title;
+    }
+
+    public void setTitle(String title) {
+
+        this.title = title;
     }
 }

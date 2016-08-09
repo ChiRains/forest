@@ -20,6 +20,8 @@ public interface QMessage {
     String getTimeStr();
 
     boolean isRead();
-    
+
     int getClassify();
+
+    String getUrl();
 }

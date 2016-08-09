@@ -446,7 +446,7 @@ public class OrganizationClientImpl implements OrganizationClient {
     @Override
     public boolean sendMsg(long userId, ClerkMessageType type, String title, String content) {
 
-        return messageClient.sendMsg(TypeEnum.CLERK_MESSAGE_CODE, type.getKey(), userId, title, content);
+        return messageClient.sendMsg(TypeEnum.CLERK_MESSAGE_CODE, type.getKey(), userId, title, content, null);
     }
 
     @Override
