@@ -40,10 +40,10 @@ public class AutoChangeTimer extends AbstractTimer {
     @Override
     public void start() {
 
-        if (moduleConfigService.enable("orderform")) {
-            logger.info("使订单组件状态自动跳转定时器 start" + DateUtil.date2String(new Date()));
-            autoChangeService.autoChange();
-            logger.info("使订单组件状态自动跳转定时器 end" + DateUtil.date2String(new Date()));
-        }
+        // if (moduleConfigService.enable("orderform")) {
+        logger.info("使订单组件状态自动跳转定时器 start" + DateUtil.date2String(new Date()));
+        autoChangeService.autoChange();
+        logger.info("使订单组件状态自动跳转定时器 end" + DateUtil.date2String(new Date()));
+        // }
     }
 }

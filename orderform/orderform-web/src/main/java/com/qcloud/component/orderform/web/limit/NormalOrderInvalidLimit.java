@@ -10,6 +10,6 @@ public class NormalOrderInvalidLimit implements AutoChangeTimeLimit {
     public int limit() {
 
         // TODO
-        return 180;
+        return 60;
     }
 }
