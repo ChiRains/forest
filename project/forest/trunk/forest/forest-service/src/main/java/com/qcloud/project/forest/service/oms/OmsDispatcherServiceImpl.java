@@ -4,8 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import com.qcloud.component.goods.CommoditycenterClient;
+import com.qcloud.component.goods.QUnifiedMerchandise;
+import com.qcloud.component.goods.model.MerchandiseSpecifications;
+import com.qcloud.component.my.InvoiceType;
+import com.qcloud.component.my.NeedInvoiceType;
 import com.qcloud.component.orderform.OrderformClient;
+import com.qcloud.component.orderform.PaymentModeType;
+import com.qcloud.component.orderform.QMerchantOrder;
 import com.qcloud.component.orderform.QOrder;
+import com.qcloud.component.orderform.QOrderItem;
+import com.qcloud.component.pay.PayRecordClient;
+import com.qcloud.component.pay.QPayRecord;
+import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.DateUtil;
 import com.qcloud.project.forest.model.oms.Item;
 import com.qcloud.project.forest.model.oms.Logistics_Company;
@@ -24,7 +35,13 @@ import com.qcloud.project.forest.model.oms.XmlStock;
 public class OmsDispatcherServiceImpl implements OmsDispatcherService {
 
     @Autowired
-    private OrderformClient orderformClient;
+    private OrderformClient       orderformClient;
+
+    @Autowired
+    private CommoditycenterClient commoditycenterClient;
+
+    @Autowired
+    private PayRecordClient             payClient;
 
     @Override
     public boolean deliverOrder(QueryForm queryForm) {
@@ -37,51 +54,81 @@ public class OmsDispatcherServiceImpl implements OmsDispatcherService {
     @Override
     public XmlOrder getOrder(QueryForm queryForm) {
 
+        XmlOrder xmlOrder = new XmlOrder();
         // 订单号
         String orderNumber = queryForm.getTid();
         QOrder qOrder = orderformClient.getOrder(orderNumber);
-        // 订单
-        Order order = new Order();
-        // order.setTid(qOrder.getOrderNumber());
-        // order.setStatus(String.valueOf(qOrder.getState()));
-        // order.setModified(DateUtil.date2String(qOrder.getLastUpdateTime()));
-        // order.setCreated(created);
-        // order.setShipping_type(shipping_type);
-        // order.setPost_fee(post_fee);
-        // order.setReceiver_name(receiver_name);
-        // order.setReceiver_state(receiver_state);
-        // order.setReceiver_city(receiver_city);
-        // order.setReceiver_district(receiver_district);
-        // order.setReceiver_address(receiver_address);
-        // order.setReceiver_zip(receiver_zip);
-        // order.setReceiver_mobile(receiver_mobile);
-        // order.setReceiver_phone(receiver_phone);
-        // order.setBuyer_nick(buyer_nick);
-        // order.setBuyer_name(buyer_name);
-        // order.setIs_tax(is_tax);
-        // order.setInvoice_type(invoice_type);
-        // order.setInvoice_title(invoice_title);
-        // order.setPay_type(pay_type);
-        // order.setReal_pay(real_pay);
-        // order.setTotal_fee(total_fee);
-        // order.setBuyer_message(buyer_message);
-        // order.setBuyer_cod_fee(buyer_cod_fee);
-        // order.setPoint_fee(point_fee);
-        // order.setCoupon_pay(coupon_pay);
-        // order.setPaytime(paytime);
-        // order.setSeller_memo(seller_memo);
-        //
-        XmlOrder xmlOrder = new XmlOrder();
+        Order order = toOrder(qOrder);
+        // 商品
         List<Item> itemlist = new ArrayList<Item>();
-        Item item1 = new Item();
-        item1.setSku_name("商铺名称1");
-        Item item2 = new Item();
-        item2.setSku_name("商铺名称2");
-        itemlist.add(item1);
-        itemlist.add(item2);
+        List<QMerchantOrder> qMerchantOrders = qOrder.getMerchantOrderList();
+        for (QMerchantOrder qMerchantOrder : qMerchantOrders) {
+            List<QOrderItem> qOrderItems = qMerchantOrder.getOrderItemList();
+            for (QOrderItem qOrderItem : qOrderItems) {
+                long unifiedMerchandiseId = qOrderItem.getUnifiedMerchandiseId();
+                QUnifiedMerchandise qUnifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(unifiedMerchandiseId);
+                AssertUtil.assertNotNull(qUnifiedMerchandise, "统一商品不存在." + unifiedMerchandiseId);
+                Item item = new Item();
+                item.setProduct_id(String.valueOf(unifiedMerchandiseId));
+                // 商家商品编码(什么鬼)
+                item.setShop_product_id(String.valueOf(unifiedMerchandiseId));
+                item.setTitle(qOrderItem.getName());
+                // 无规格id，组合商品如何给规格id
+                item.setSku_id(String.valueOf(unifiedMerchandiseId));
+                // 无商家规格编码id，组合商品如何给规格id
+                item.setShop_sku_id(String.valueOf(unifiedMerchandiseId));
+                item.setSku_name(qUnifiedMerchandise.getSpecifications());
+                item.setQty_ordered(qOrderItem.getNumber());
+                // 单价，折后还是未打折？
+                item.setPrice(qOrderItem.getDiscount());
+                // 子订单号,没卵用.
+                item.setOid(-1);
+                itemlist.add(item);
+            }
+        }
         order.setItemlist(itemlist);
         xmlOrder.setOrder(order);
         return xmlOrder;
+    }
+
+    private Order toOrder(QOrder qOrder) {
+
+        // 订单
+        Order order = new Order();
+        order.setTid(qOrder.getOrderNumber());
+        order.setStatus(String.valueOf(qOrder.getState()));
+        order.setModified(DateUtil.date2String(qOrder.getLastUpdateTime()));
+        order.setCreated(DateUtil.date2String(qOrder.getOrderDate()));
+        order.setShipping_type("快递方式");
+        order.setPost_fee(qOrder.getPostage());
+        order.setReceiver_name(qOrder.getConsignee());
+        order.setReceiver_state("无收货省");
+        order.setReceiver_city("无收货市");
+        order.setReceiver_district("无收货区");
+        order.setReceiver_address(qOrder.getAddress());
+        order.setReceiver_zip("无邮编");
+        order.setReceiver_mobile(qOrder.getMobile());
+        order.setReceiver_phone(qOrder.getMobile());
+        order.setBuyer_nick(qOrder.getMobile());
+        order.setBuyer_name("无会员名称");
+        order.setIs_tax(NeedInvoiceType.get(qOrder.getNeedInvoiceType()).getName());
+        order.setInvoice_type(InvoiceType.get(qOrder.getInvoiceType()).getName());
+        order.setInvoice_title(qOrder.getInvoice());
+        order.setPay_type(PaymentModeType.get(qOrder.getPaymentMode()).getName());
+        order.setReal_pay(qOrder.getCash());
+        order.setTotal_fee(qOrder.getSum());
+        List<QMerchantOrder> merchantOrderList = qOrder.getMerchantOrderList();
+        order.setBuyer_message(merchantOrderList.size() > 0 ? merchantOrderList.get(0).getExplain() : "");
+        // "无买家货到付款服务费"
+        order.setBuyer_cod_fee(0);
+        // 无积分支付
+        order.setPoint_fee(0);
+        order.setCoupon_pay(qOrder.getCoupon());
+        QPayRecord qPayRecord = payClient.getQPayRecord(qOrder.getId());
+        AssertUtil.assertNotNull(qPayRecord, "订单对应支付记录不存在." + qOrder.getId());
+        order.setPaytime(DateUtil.date2String(qPayRecord.getTime()));
+        order.setSeller_memo("无卖家备注");
+        return order;
     }
 
     @Override

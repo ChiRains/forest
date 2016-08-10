@@ -10,4 +10,9 @@
     <select id="count4query" parameterType="java.util.HashMap" resultType="Integer">  
         select count(*) from `pay_pay_record`
     </select> 
+    
+    <select id="getByObjectId" parameterType="java.util.HashMap" resultType="PayRecord">  
+        select * from `pay_pay_record` where `objectId`=#{objectId} limit 0,1
+    </select>
+    
 </mapper>
