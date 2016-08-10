@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xml>
 	<module-list code="orderform-auto-change">
-		<item source="10" dest="60" type="1" timeSplit="15"
+		<item source="10" dest="60" type="1" timeSplit="10"
 			timeLimit="normalOrderInvalidLimit" condition="">关闭订单</item>
 			
 		<item source="30" dest="40" type="1" timeSplit="1440"
