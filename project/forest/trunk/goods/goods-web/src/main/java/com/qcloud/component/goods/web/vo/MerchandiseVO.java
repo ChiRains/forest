@@ -67,6 +67,10 @@ public class MerchandiseVO {
 
     private String label;
 
+    private int    originalStock;
+
+    private int    surplusPercentage;
+
     public MerchandiseVO() {
 
     }
@@ -309,5 +313,25 @@ public class MerchandiseVO {
     public void setLabel(String label) {
 
         this.label = StringUtil.nullToEmpty(label);
+    }
+
+    public int getOriginalStock() {
+
+        return originalStock;
+    }
+
+    public void setOriginalStock(int originalStock) {
+
+        this.originalStock = originalStock;
+    }
+
+    public int getSurplusPercentage() {
+
+        return surplusPercentage;
+    }
+
+    public void setSurplusPercentage(int surplusPercentage) {
+
+        this.surplusPercentage = surplusPercentage;
     }
 }

@@ -100,6 +100,10 @@ public class ForestOrderVO {
 
     private boolean                 addEvaluation;
 
+    private boolean                 evaluation;
+
+    private boolean                 remind;
+
     public ForestOrderVO() {
 
     }
@@ -512,5 +516,29 @@ public class ForestOrderVO {
     public void setAddEvaluation(boolean addEvaluation) {
 
         this.addEvaluation = addEvaluation;
+    }
+
+    
+    public boolean isEvaluation() {
+    
+        return evaluation;
+    }
+
+    
+    public void setEvaluation(boolean evaluation) {
+    
+        this.evaluation = evaluation;
+    }
+
+    
+    public boolean isRemind() {
+    
+        return remind;
+    }
+
+    
+    public void setRemind(boolean remind) {
+    
+        this.remind = remind;
     }
 }

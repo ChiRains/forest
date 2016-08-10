@@ -659,4 +659,150 @@ public class MerchandiseController {
         view.addObject("list", listMap);
         return view;
     }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView getSeckillMerchandise(Long unifiedMerchandiseId) {
+
+        QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(unifiedMerchandiseId);
+        AssertUtil.assertNotNull(unifiedMerchandise, "统一商品不存在." + unifiedMerchandiseId);
+        AssertUtil.assertTrue(UnifiedMerchandiseType.Factory.get(4).getKey() == unifiedMerchandise.getType().getKey(), "秒杀商品不存在." + unifiedMerchandiseId);
+        Merchandise merchandise = merchandiseService.get(unifiedMerchandise.getMerchandiseId());
+        AssertUtil.assertNotNull(merchandise, "商品不存在." + unifiedMerchandise.getMerchandiseId());
+        MerchandiseVO merchandiseVO = merchandiseHandler.toVO(merchandise);
+        merchandiseVO.setPrice(unifiedMerchandise.getPrice());
+        merchandiseVO.setDiscount(unifiedMerchandise.getDiscount());
+        merchandiseVO.setSalesVolume(unifiedMerchandise.getSalesVolume());
+        merchandiseVO.setStock(unifiedMerchandise.getStock());
+        merchandiseVO.setOriginalStock(unifiedMerchandise.getStock());
+        double percentage = (merchandiseVO.getOriginalStock() - merchandiseVO.getStock()) / merchandiseVO.getOriginalStock() * 100;
+        merchandiseVO.setSurplusPercentage((int) percentage);
+        //
+        long sum = unifiedMerchandise.getGoodEvaluation() + unifiedMerchandise.getMiddleEvaluation() + unifiedMerchandise.getLowEvaluation();
+        int goodEvaluationRate = 0;
+        if (sum != 0) {
+            goodEvaluationRate = new Double(unifiedMerchandise.getGoodEvaluation() * 100 / sum).intValue();
+        }
+        merchandiseVO.setGoodEvaluationRate(goodEvaluationRate);
+        merchandiseVO.setEvaluationNumber(sum);
+        //
+        if (StringUtils.isNotEmpty(merchandise.getImage())) {
+            merchandiseVO.setImage(fileSDKClient.getFileServerUrl() + merchandise.getImage());
+        }
+        merchandiseVO.setUnifiedMerchandiseId(unifiedMerchandise.getId());
+        // vip 价格
+        double minVip = merchandiseVipDiscountService.statMin(unifiedMerchandise.getId());
+        double maxVip = merchandiseVipDiscountService.statMax(unifiedMerchandise.getId());
+        minVip = minVip > unifiedMerchandise.getDiscount() || new Double(minVip).longValue() <= 0 ? unifiedMerchandise.getDiscount() : minVip;
+        maxVip = maxVip > unifiedMerchandise.getDiscount() || new Double(maxVip).longValue() <= 0 ? unifiedMerchandise.getDiscount() : maxVip;
+        merchandiseVO.setMinVipDiscount(minVip);
+        merchandiseVO.setMaxVipDiscount(maxVip);
+        merchandiseVO.setVipDiscount(0);
+        //
+        merchandiseVO.setSpecifications(unifiedMerchandise.getSpecifications());
+        //
+        MerchandiseExtVO merchandiseExtVO = new MerchandiseExtVO();
+        //
+        merchandiseExtVO.setCertified(EnableType.ENABLE.getKey() == merchandise.getIsCertified());
+        merchandiseExtVO.setCertifiedDesc(merchandise.getCertified());
+        merchandiseExtVO.setSpecialService(EnableType.ENABLE.getKey() == merchandise.getIsSpecialService());
+        merchandiseExtVO.setSpecialServiceDesc(merchandise.getSpecialService());
+        merchandiseExtVO.setNoReason(EnableType.ENABLE.getKey() == merchandise.getIsNoReason());
+        merchandiseExtVO.setNoReasonDesc(merchandise.getNoReason());
+        //
+        // TODO 邮费计算,判断商家是否包邮
+        merchandiseExtVO.setFreeShipping(merchandise.getIsIncludePost() == MerchandiseIsIncludePost.YES.getKey());
+        //
+        merchandiseExtVO.setStock(unifiedMerchandise.getStock());
+        merchandiseExtVO.setEnable(MerchandiseStateType.ONLINE.getKey() == unifiedMerchandise.getState());
+        merchandiseExtVO.setGoodEvaluationNumber(unifiedMerchandise.getGoodEvaluation());
+        merchandiseExtVO.setMiddleEvaluationNumber(unifiedMerchandise.getMiddleEvaluation());
+        merchandiseExtVO.setLowEvaluationNumber(unifiedMerchandise.getLowEvaluation());
+        // 规格
+        List<MerchandiseSpecifications> merchandiseSpecificationses = merchandiseSpecificationsService.listByUnifiedMerchandise(unifiedMerchandise.getId());
+        // TODO 先用着
+        int i = 0;
+        List<String> imageStrList = new ArrayList<String>();
+        for (MerchandiseSpecifications merchandiseSpecifications : merchandiseSpecificationses) {
+            if (i == 0) {
+                merchandiseExtVO.setAttributeId0(merchandiseSpecifications.getAttributeId());
+                merchandiseExtVO.setValue0(merchandiseSpecifications.getValue());
+            } else if (i == 1) {
+                merchandiseExtVO.setAttributeId1(merchandiseSpecifications.getAttributeId());
+                merchandiseExtVO.setValue1(merchandiseSpecifications.getValue());
+            } else if (i == 2) {
+                merchandiseExtVO.setAttributeId2(merchandiseSpecifications.getAttributeId());
+                merchandiseExtVO.setValue2(merchandiseSpecifications.getValue());
+            }
+            i++;
+            //
+            if (merchandiseSpecifications.getAttributeId() > 0) {
+                List<MerchandiseImage> imageList = merchandiseImageService.listByMerchandiseAndAttribute(merchandise.getId(), merchandiseSpecifications.getAttributeId(), merchandiseSpecifications.getValue());
+                for (MerchandiseImage merchandiseImage : imageList) {
+                    if (StringUtils.isNotEmpty(merchandiseImage.getImage())) {
+                        String[] strs = merchandiseImage.getImage().split(",");
+                        for (int index = 0; index < strs.length; index++) {
+                            imageStrList.add(fileSDKClient.getFileServerUrl() + fileSDKClient.uidToUrl(strs[index]));
+                        }
+                    }
+                }
+            }
+        }
+        merchandiseExtVO.setImageList(imageStrList);
+        // 为空则取默认图
+        if (CollectionUtils.isEmpty(merchandiseExtVO.getImageList())) {
+            List<MerchandiseImage> imageList = merchandiseImageService.listByMerchandiseAndAttribute(merchandise.getId(), -1L, "-1");
+            for (MerchandiseImage merchandiseImage : imageList) {
+                if (StringUtils.isNotEmpty(merchandiseImage.getImage())) {
+                    String[] strs = merchandiseImage.getImage().split(",");
+                    for (int index = 0; index < strs.length; index++) {
+                        imageStrList.add(fileSDKClient.getFileServerUrl() + fileSDKClient.uidToUrl(strs[index]));
+                    }
+                }
+            }
+            merchandiseExtVO.setImageList(imageStrList);
+        }
+        merchandiseExtVO.setShareUrl(shareClient.getShareDomain() + "/merchandiseShare.html?unifiedMerchandiseId=" + unifiedMerchandiseId);
+        //
+        Page<MerchandiseEvaluation> page = merchandiseEvaluationService.page(merchandise.getId(), StarLevelType.ALL, 0, 1);
+        MerchandiseEvaluationVO merchandiseEvaluationVO = null;
+        if (CollectionUtils.isNotEmpty(page.getData())) {
+            List<MerchandiseEvaluationVO> voList = merchandiseEvaluationHandler.toVOList(page.getData());
+            merchandiseEvaluationVO = voList.get(0);
+        }
+        MerchantMerchandiseVO merchantMerchandiseVO = new MerchantMerchandiseVO();
+        int collectNumber = myClient.countMerchantCollectionNumber(merchandise.getMerchantId());
+        merchantMerchandiseVO.setCollectNumber(collectNumber);
+        int merchandiseNumber = merchandiseService.countMerchantOnlineNumber(merchandise.getMerchantId());
+        merchantMerchandiseVO.setMerchandiseNumber(merchandiseNumber);
+        merchantMerchandiseVO.setMerchantId(merchandise.getMerchantId());
+        QMerchant merchant = sellercenterClient.getMerchant(merchandise.getMerchantId());
+        merchantMerchandiseVO.setMerchantName(merchant.getName());
+        if (StringUtils.isEmpty(merchant.getProvince())) {
+            merchantMerchandiseVO.setDeliveryPlace(StringUtil.nullToEmpty(merchant.getCity()));
+        } else {
+            merchantMerchandiseVO.setDeliveryPlace(merchant.getProvince() + " " + StringUtil.nullToEmpty(merchant.getCity()));
+        }
+        merchantMerchandiseVO.setMerchantImage(fileSDKClient.getFileServerUrl() + merchant.getImage());
+        //
+        List<KeyValueVO> sexpressList = sellercenterClient.listExpress(merchant);
+        List<SexpressMerchandiseVO> sexpressVOList = new ArrayList<SexpressMerchandiseVO>();
+        for (KeyValueVO keyValueVO : sexpressList) {
+            SexpressMerchandiseVO sexpressMerchandiseVO = new SexpressMerchandiseVO();
+            sexpressMerchandiseVO.setSexpressCode(keyValueVO.getKey());
+            sexpressMerchandiseVO.setSexpressName(keyValueVO.getValue());
+            double postage = sellercenterClient.calculatePostage(sexpressMerchandiseVO.getSexpressCode(), merchant.getId(), merchandise.getWeight(), "");
+            sexpressMerchandiseVO.setPostage(postage);
+            sexpressVOList.add(sexpressMerchandiseVO);
+        }
+        // 组合商品
+        FrontAjaxView view = new FrontAjaxView();
+        view.setMessage("获取商品详情成功.");
+        view.addObject("merchandise", merchandiseVO);
+        view.addObject("merchandiseExt", merchandiseExtVO);
+        view.addObject("merchantExt", merchantMerchandiseVO);
+        view.addObject("sexpressList", sexpressVOList);
+        view.addObject("evaluation", merchandiseEvaluationVO == null ? new HashMap<String, String>() : merchandiseEvaluationVO);
+        return view;
+    }
 }

@@ -124,7 +124,10 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
             }
             discountList = orderDiscountService.listBySubOrder(qMerchantOrder.getId());
             orderVO.setCombinationItemList(combinationItemList);
+            orderVO.setExplain(qMerchantOrder.getExplain());
+            orderVO.setRemind(qMerchantOrder.canRemind());
         }
+        orderVO.setEvaluation(order.canEvaluation());
         //
         if (!discountList.isEmpty()) {
             QMyCoupon myCoupon = myClient.getMyCoupon(order.getUserId(), discountList.get(0).getDiscountId());
@@ -210,6 +213,7 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
         // 从orderItemDetails里面取数据
         for (QOrderItemDetail qOrderItemDetail : orderItemDetailList) {
             OrderItemVO itemVO = new OrderItemVO();
+            itemVO.setOrderItemId(qOrderItem.getId());
             itemVO.setOrderItemDetailId(qOrderItemDetail.getId());
             itemVO.setName(qOrderItemDetail.getName());
             itemVO.setImage(fileSDKClient.getFileServerUrl() + qOrderItemDetail.getImage());
@@ -220,6 +224,8 @@ public class ForestOrderHandlerImpl implements ForestOrderHandler {
             for (QUnifiedMerchandise merchandise : unifiedMerchandise.getList()) {
                 if (merchandise.getId().longValue() == qOrderItemDetail.getUnifiedMerchandiseId()) {
                     itemVO.setPrice(merchandise.getPrice());
+                    itemVO.setUnit(merchandise.getUnit());
+                    itemVO.setCode(merchandise.getCode());
                     break;
                 }
             }
