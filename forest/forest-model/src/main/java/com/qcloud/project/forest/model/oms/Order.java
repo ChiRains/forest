@@ -5,91 +5,94 @@ import java.util.List;
 public class Order {
 
     // 订单id
-    private String     tid;
+    private String        tid;
 
     // 订单状态
-    private String     status;
+    private String        status;
 
     // 订单最后修改时间(北京时间)
-    private String     modified;
+    private String        modified;
 
     // 订单创建时间(北京时间)
-    private String     created;
+    private String        created;
 
     // 快递方式
-    private String     shipping_type;
+    private String        shipping_type;
 
     // 运费
-    private int        post_fee;
+    private double        post_fee;
 
     // 收货人姓名
-    private String     receiver_name;
+    private String        receiver_name;
 
     // 收货省份
-    private String     receiver_state;
+    private String        receiver_state;
 
     // 收货市
-    private String     receiver_city;
+    private String        receiver_city;
 
     // 收货地区
-    private String     receiver_district;
+    private String        receiver_district;
 
     // 收货人地址
-    private String     receiver_address;
+    private String        receiver_address;
 
     // 邮编
-    private String     receiver_zip;
+    private String        receiver_zip;
 
     // 收货人手机
-    private String     receiver_mobile;
+    private String        receiver_mobile;
 
     // 收货人电话
-    private String     receiver_phone;
+    private String        receiver_phone;
 
     // 会员编码
-    private String     buyer_nick;
+    private String        buyer_nick;
 
     // 会员名称
-    private String     buyer_name;
+    private String        buyer_name;
 
     // 是否开票
-    private String     is_tax;
+    private String        is_tax;
 
     // 开票类型
-    private String     invoice_type;
+    private String        invoice_type;
 
     // 开票抬头
-    private String     invoice_title;
+    private String        invoice_title;
 
     // 支付方式
-    private String     pay_type;
+    private String        pay_type;
 
     // 实际支付金额
-    private int        real_pay;
+    private double        real_pay;
 
     // 商品总金额
-    private int        total_fee;
+    private double        total_fee;
 
     // 用户备注
-    private String     buyer_message;
+    private String        buyer_message;
 
     // 买家货到付款服务费
-    private int        buyer_cod_fee;
+    private double        buyer_cod_fee;
 
     // 积分支付
-    private int        point_fee;
+    private double        point_fee;
 
     // 优惠券支付
-    private int        coupon_pay;
+    private double        coupon_pay;
 
     // 付款时间
-    private String     paytime;
+    private String        paytime;
 
     // 卖家备注
-    private String     seller_memo;
+    private String        seller_memo;
 
     // 商品列表
-    private List<Item> itemlist;
+    private List<Item>    itemlist;
+
+    // 支付方式
+    private List<Payment> payments;
 
     public String getTid() {
 
@@ -139,16 +142,6 @@ public class Order {
     public void setShipping_type(String shipping_type) {
 
         this.shipping_type = shipping_type;
-    }
-
-    public int getPost_fee() {
-
-        return post_fee;
-    }
-
-    public void setPost_fee(int post_fee) {
-
-        this.post_fee = post_fee;
     }
 
     public String getReceiver_name() {
@@ -291,26 +284,6 @@ public class Order {
         this.pay_type = pay_type;
     }
 
-    public int getReal_pay() {
-
-        return real_pay;
-    }
-
-    public void setReal_pay(int real_pay) {
-
-        this.real_pay = real_pay;
-    }
-
-    public int getTotal_fee() {
-
-        return total_fee;
-    }
-
-    public void setTotal_fee(int total_fee) {
-
-        this.total_fee = total_fee;
-    }
-
     public String getBuyer_message() {
 
         return buyer_message;
@@ -319,36 +292,6 @@ public class Order {
     public void setBuyer_message(String buyer_message) {
 
         this.buyer_message = buyer_message;
-    }
-
-    public int getBuyer_cod_fee() {
-
-        return buyer_cod_fee;
-    }
-
-    public void setBuyer_cod_fee(int buyer_cod_fee) {
-
-        this.buyer_cod_fee = buyer_cod_fee;
-    }
-
-    public int getPoint_fee() {
-
-        return point_fee;
-    }
-
-    public void setPoint_fee(int point_fee) {
-
-        this.point_fee = point_fee;
-    }
-
-    public int getCoupon_pay() {
-
-        return coupon_pay;
-    }
-
-    public void setCoupon_pay(int coupon_pay) {
-
-        this.coupon_pay = coupon_pay;
     }
 
     public String getPaytime() {
@@ -379,5 +322,75 @@ public class Order {
     public void setItemlist(List<Item> itemlist) {
 
         this.itemlist = itemlist;
+    }
+
+    public double getPost_fee() {
+
+        return post_fee;
+    }
+
+    public void setPost_fee(double post_fee) {
+
+        this.post_fee = post_fee;
+    }
+
+    public double getReal_pay() {
+
+        return real_pay;
+    }
+
+    public void setReal_pay(double real_pay) {
+
+        this.real_pay = real_pay;
+    }
+
+    public double getTotal_fee() {
+
+        return total_fee;
+    }
+
+    public void setTotal_fee(double total_fee) {
+
+        this.total_fee = total_fee;
+    }
+
+    public double getPoint_fee() {
+
+        return point_fee;
+    }
+
+    public void setPoint_fee(double point_fee) {
+
+        this.point_fee = point_fee;
+    }
+
+    public double getBuyer_cod_fee() {
+
+        return buyer_cod_fee;
+    }
+
+    public void setBuyer_cod_fee(double buyer_cod_fee) {
+
+        this.buyer_cod_fee = buyer_cod_fee;
+    }
+
+    public double getCoupon_pay() {
+
+        return coupon_pay;
+    }
+
+    public void setCoupon_pay(double coupon_pay) {
+
+        this.coupon_pay = coupon_pay;
+    }
+
+    public List<Payment> getPayments() {
+
+        return payments;
+    }
+
+    public void setPayments(List<Payment> payments) {
+
+        this.payments = payments;
     }
 }

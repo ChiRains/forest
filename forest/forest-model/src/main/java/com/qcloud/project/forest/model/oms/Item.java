@@ -27,7 +27,7 @@ public class Item {
     private int    qty_ordered;
 
     // 商品单价
-    private int    price;
+    private double price;
 
     // 子订单号（非必要）
     private int    oid;
@@ -102,16 +102,6 @@ public class Item {
         this.qty_ordered = qty_ordered;
     }
 
-    public int getPrice() {
-
-        return price;
-    }
-
-    public void setPrice(int price) {
-
-        this.price = price;
-    }
-
     public int getOid() {
 
         return oid;
@@ -120,5 +110,15 @@ public class Item {
     public void setOid(int oid) {
 
         this.oid = oid;
+    }
+
+    public double getPrice() {
+
+        return price;
+    }
+
+    public void setPrice(double price) {
+
+        this.price = price;
     }
 }
