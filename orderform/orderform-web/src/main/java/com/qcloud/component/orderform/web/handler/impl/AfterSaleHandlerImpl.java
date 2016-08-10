@@ -144,7 +144,7 @@ public class AfterSaleHandlerImpl implements AfterSaleHandler {
         AfterSaleOrderItemVO afterSaleOrderItemVO = null;
         int number = 0;
         for (AfterSaleOrder afterSaleOrder : afterSaleList) {
-            if (AfterSaleType.EXCHANGE.equals(afterSaleOrder.getAfterSaleType())) {
+            if (AfterSaleType.EXCHANGE.getKey() == afterSaleOrder.getAfterSaleType().getKey() || AfterSaleType.RETURN.getKey() == afterSaleOrder.getAfterSaleType().getKey()) {
                 List<QAfterSaleDetail> list = afterSaleOrder.listItem();
                 for (QAfterSaleDetail afterSaleOrderItem : list) {
                     if (afterSaleOrderItem.getOrderItemDetail().getOrderItem().getId() == qOrderItem.getId()) {
