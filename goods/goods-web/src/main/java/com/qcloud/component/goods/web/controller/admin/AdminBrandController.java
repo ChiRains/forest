@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import com.qcloud.component.filesdk.FileSDKClient;
 import com.qcloud.component.goods.CommoditycenterClient;
+import com.qcloud.component.goods.UnifiedMerchandiseType;
 import com.qcloud.component.goods.model.UnifiedMerchandise;
 import com.qcloud.component.goods.model.key.TypeEnum.BrandType;
 import com.qcloud.component.goods.model.key.TypeEnum.QueryItemType;
@@ -114,13 +115,13 @@ public class AdminBrandController {
         unifiedMerchandiseQuery.setActivityId(classifyId);
         unifiedMerchandiseQuery.setQueryItemType(QueryItemType.S);
         Page<UnifiedMerchandise> page = unifiedMerchandiseService.page(unifiedMerchandiseQuery, pPage.getPageStart(), pPage.getPageSize());
-        Iterator<UnifiedMerchandise> iter = page.getData().iterator();
-        while (iter.hasNext()) {
-            UnifiedMerchandise s = iter.next();
-            if (s.getState() == 5) {
-                iter.remove();
-            }
-        }
+        // Iterator<UnifiedMerchandise> iter = page.getData().iterator();
+        // while (iter.hasNext()) {
+        // UnifiedMerchandise s = iter.next();
+        // if (s.getState() == 5) {
+        // iter.remove();
+        // }
+        // }
         List<AdminUnifiedMerchandiseVO> list = unifiedMerchandiseHandler.toVOList4Admin(page.getData());
         AcePagingView pagingView = new AcePagingView("/admin/goods-Brand-listMerchandise", DIR + "/listMerchandise", pPage.getPageNum(), pPage.getPageSize(), page.getCount());
         pagingView.addObject("result", list);
@@ -140,7 +141,7 @@ public class AdminBrandController {
     public AceAjaxView addMerchandise(Long unifiedMerchandiseId, String image, Double discount, Integer integral, Integer stock, Long classifyId) {
 
         image = fileSDKClient.uidToUrl(image);
-        commoditycenterClient.regUnifiedMerchandise(unifiedMerchandiseId, 1, image, discount, integral, stock, classifyId);
+        commoditycenterClient.regUnifiedMerchandise(unifiedMerchandiseId, UnifiedMerchandiseType.SINGLE.getKey(), image, discount, integral, stock, classifyId);
         AceAjaxView aceAjaxView = new AceAjaxView();
         aceAjaxView.setMessage("添加成功");
         return aceAjaxView;
