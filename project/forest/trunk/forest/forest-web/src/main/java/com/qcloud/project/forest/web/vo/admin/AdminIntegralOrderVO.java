@@ -6,7 +6,7 @@ public class AdminIntegralOrderVO {
 
     private long   id;
 
-    private long   orderNumber;
+    private String orderNumber;
 
     private Date   time;
 
@@ -54,8 +54,9 @@ public class AdminIntegralOrderVO {
 
     }
 
-    public AdminIntegralOrderVO(long id, long orderNumber, Date time, long userId, double sum, double cash, int integral, long unfiedMerchandiseId, String name, String image, String specifications, int state, int paymentMode, String consignee, String address, String email, String mobile, int remind) {
+    public AdminIntegralOrderVO(long id, String orderNumber, Date time, long userId, double sum, double cash, int integral, long unfiedMerchandiseId, String name, String image, String specifications, int state, int paymentMode, String consignee, String address, String email, String mobile, int remind, String userName, String expressName, String expressCode, String expressNumber) {
 
+        super();
         this.id = id;
         this.orderNumber = orderNumber;
         this.time = time;
@@ -74,11 +75,10 @@ public class AdminIntegralOrderVO {
         this.email = email;
         this.mobile = mobile;
         this.remind = remind;
-    }
-
-    public void setId(long id) {
-
-        this.id = id;
+        this.userName = userName;
+        this.expressName = expressName;
+        this.expressCode = expressCode;
+        this.expressNumber = expressNumber;
     }
 
     public long getId() {
@@ -86,19 +86,19 @@ public class AdminIntegralOrderVO {
         return id;
     }
 
-    public void setOrderNumber(long orderNumber) {
+    public void setId(long id) {
 
-        this.orderNumber = orderNumber;
+        this.id = id;
     }
 
-    public long getOrderNumber() {
+    public String getOrderNumber() {
 
         return orderNumber;
     }
 
-    public void setTime(Date time) {
+    public void setOrderNumber(String orderNumber) {
 
-        this.time = time;
+        this.orderNumber = orderNumber;
     }
 
     public Date getTime() {
@@ -106,9 +106,9 @@ public class AdminIntegralOrderVO {
         return time;
     }
 
-    public void setUserId(long userId) {
+    public void setTime(Date time) {
 
-        this.userId = userId;
+        this.time = time;
     }
 
     public long getUserId() {
@@ -116,9 +116,9 @@ public class AdminIntegralOrderVO {
         return userId;
     }
 
-    public void setSum(double sum) {
+    public void setUserId(long userId) {
 
-        this.sum = sum;
+        this.userId = userId;
     }
 
     public double getSum() {
@@ -126,9 +126,9 @@ public class AdminIntegralOrderVO {
         return sum;
     }
 
-    public void setCash(double cash) {
+    public void setSum(double sum) {
 
-        this.cash = cash;
+        this.sum = sum;
     }
 
     public double getCash() {
@@ -136,9 +136,9 @@ public class AdminIntegralOrderVO {
         return cash;
     }
 
-    public void setIntegral(int integral) {
+    public void setCash(double cash) {
 
-        this.integral = integral;
+        this.cash = cash;
     }
 
     public int getIntegral() {
@@ -146,9 +146,9 @@ public class AdminIntegralOrderVO {
         return integral;
     }
 
-    public void setUnfiedMerchandiseId(long unfiedMerchandiseId) {
+    public void setIntegral(int integral) {
 
-        this.unfiedMerchandiseId = unfiedMerchandiseId;
+        this.integral = integral;
     }
 
     public long getUnfiedMerchandiseId() {
@@ -156,9 +156,9 @@ public class AdminIntegralOrderVO {
         return unfiedMerchandiseId;
     }
 
-    public void setName(String name) {
+    public void setUnfiedMerchandiseId(long unfiedMerchandiseId) {
 
-        this.name = name;
+        this.unfiedMerchandiseId = unfiedMerchandiseId;
     }
 
     public String getName() {
@@ -166,9 +166,9 @@ public class AdminIntegralOrderVO {
         return name;
     }
 
-    public void setImage(String image) {
+    public void setName(String name) {
 
-        this.image = image;
+        this.name = name;
     }
 
     public String getImage() {
@@ -176,9 +176,9 @@ public class AdminIntegralOrderVO {
         return image;
     }
 
-    public void setSpecifications(String specifications) {
+    public void setImage(String image) {
 
-        this.specifications = specifications;
+        this.image = image;
     }
 
     public String getSpecifications() {
@@ -186,9 +186,9 @@ public class AdminIntegralOrderVO {
         return specifications;
     }
 
-    public void setState(int state) {
+    public void setSpecifications(String specifications) {
 
-        this.state = state;
+        this.specifications = specifications;
     }
 
     public int getState() {
@@ -196,9 +196,9 @@ public class AdminIntegralOrderVO {
         return state;
     }
 
-    public void setPaymentMode(int paymentMode) {
+    public void setState(int state) {
 
-        this.paymentMode = paymentMode;
+        this.state = state;
     }
 
     public int getPaymentMode() {
@@ -206,9 +206,9 @@ public class AdminIntegralOrderVO {
         return paymentMode;
     }
 
-    public void setConsignee(String consignee) {
+    public void setPaymentMode(int paymentMode) {
 
-        this.consignee = consignee;
+        this.paymentMode = paymentMode;
     }
 
     public String getConsignee() {
@@ -216,9 +216,9 @@ public class AdminIntegralOrderVO {
         return consignee;
     }
 
-    public void setAddress(String address) {
+    public void setConsignee(String consignee) {
 
-        this.address = address;
+        this.consignee = consignee;
     }
 
     public String getAddress() {
@@ -226,9 +226,9 @@ public class AdminIntegralOrderVO {
         return address;
     }
 
-    public void setEmail(String email) {
+    public void setAddress(String address) {
 
-        this.email = email;
+        this.address = address;
     }
 
     public String getEmail() {
@@ -236,9 +236,9 @@ public class AdminIntegralOrderVO {
         return email;
     }
 
-    public void setMobile(String mobile) {
+    public void setEmail(String email) {
 
-        this.mobile = mobile;
+        this.email = email;
     }
 
     public String getMobile() {
@@ -246,14 +246,19 @@ public class AdminIntegralOrderVO {
         return mobile;
     }
 
-    public void setRemind(int remind) {
+    public void setMobile(String mobile) {
 
-        this.remind = remind;
+        this.mobile = mobile;
     }
 
     public int getRemind() {
 
         return remind;
+    }
+
+    public void setRemind(int remind) {
+
+        this.remind = remind;
     }
 
     public String getUserName() {

@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="../taglib.inc.jsp" %>
 
-<title>品牌特卖商品管理</title>
+<title>品牌类别商品管理</title>
 
 <!-- ajax layout which only needs content area -->
 <div class="page-header">
     <h1>
-        品牌特卖商品管理
+        品牌类别商品管理
         <small>
             <i class="ace-icon fa fa-angle-double-right"></i>
             列表
@@ -18,25 +18,12 @@
     <div class="col-xs-12">
 
         <div class="table-header">
-            品牌特卖商品列表
+            品牌类别商品列表
         </div>
 
         <!-- <div class="table-responsive"> -->
 
         <!-- <div class="dataTables_borderWrap"> -->
-<%--         <div>
-            <div class="dataTables_wrapper form-inline no-footer">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <div class="dataTables_length">
-                            <a title="新增" class="btn btn-sm btn-info"
-                               href="#admin/brandSales/toAddMerchandise?classifyId=${classifyId}">
-                                <i class="ace-icon fa fa-plus align-bottom bigger-125"></i>
-                                新&nbsp;增
-                            </a>                           
-                        </div>
-                    < --%>/div>                    
-                </div>
                         <div>
             <div class="dataTables_wrapper form-inline no-footer">
                 <div class="row">
