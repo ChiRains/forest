@@ -43,7 +43,7 @@ public class MerchandiseSeckillHandlerImpl implements MerchandiseSeckillHandler 
         QUnifiedMerchandise unifiedMerchandise = commoditycenterClient.getUnifiedMerchandise(merchandiseSeckill.getUnifiedMerchandiseId());
         AssertUtil.assertNotNull(unifiedMerchandise, "秒杀商品不存在" + merchandiseSeckill.getUnifiedMerchandiseId());
         MerchandiseSeckillVO vo = new MerchandiseSeckillVO();
-        vo.setId(merchandiseSeckill.getId());
+        vo.setId(merchandiseSeckill.getUnifiedMerchandiseId());
         vo.setPrice(unifiedMerchandise.getPrice());
         vo.setSeckillPrice(unifiedMerchandise.getDiscount());
         vo.setStock(unifiedMerchandise.getStock());
