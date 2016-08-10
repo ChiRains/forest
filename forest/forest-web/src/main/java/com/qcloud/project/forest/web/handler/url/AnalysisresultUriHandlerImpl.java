@@ -18,7 +18,12 @@ public class AnalysisresultUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/analysisresult/add.do");
         list.add("/admin/analysisresult/edit.do");
         list.add("/admin/analysisresult/delete.do");
-        list.add("/admin/analysisresult/listPB.do");
+        list.add("/admin/bpCalculation/toAdd.do");
+        list.add("/admin/bpCalculation/toEdit.do");
+        list.add("/admin/bpCalculation/add.do");
+        list.add("/admin/bpCalculation/edit.do");
+        list.add("/admin/bpCalculation/list.do");
+        list.add("/admin/bpCalculation/delete.do");
         return list;
     }
 
@@ -32,7 +37,12 @@ public class AnalysisresultUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/analysisresult/add.do");
         list.add("/admin/analysisresult/edit.do");
         list.add("/admin/analysisresult/delete.do");
-        list.add("/admin/analysisresult/listPB.do");
+        list.add("/admin/bpCalculation/toAdd.do");
+        list.add("/admin/bpCalculation/toEdit.do");
+        list.add("/admin/bpCalculation/add.do");
+        list.add("/admin/bpCalculation/edit.do");
+        list.add("/admin/bpCalculation/list.do");
+        list.add("/admin/bpCalculation/delete.do");
         return list;
     }
 
@@ -40,14 +50,19 @@ public class AnalysisresultUriHandlerImpl extends AbstractUriHandler {
     public Map<String, List<String>> permissionRelaMap() {
 
         Map<String, List<String>> map = new HashMap<String, List<String>>();
-        List<String> list = stringToList("/admin/analysisresult/list.do", "/admin/analysisresult/listBMI.do");
+        List<String> list = stringToList("/admin/analysisresult/list.do", "/admin/analysisresult/listBMI.do", "/admin/bpCalculation/list.do");
         //
         map.put("/admin/analysisresult/toAdd.do", list);
         map.put("/admin/analysisresult/toEdit.do", list);
         map.put("/admin/analysisresult/add.do", list);
         map.put("/admin/analysisresult/edit.do", list);
         map.put("/admin/analysisresult/delete.do", list);
-        map.put("/admin/analysisresult/listPB.do", list);
+        map.put("/admin/bpCalculation/toAdd.do", list);
+        map.put("/admin/bpCalculation/toEdit.do", list);
+        map.put("/admin/bpCalculation/add.do", list);
+        map.put("/admin/bpCalculation/edit.do", list);
+        map.put("/admin/bpCalculation/list.do", list);
+        map.put("/admin/bpCalculation/delete.do", list);
         return map;
     }
 
@@ -59,6 +74,10 @@ public class AnalysisresultUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/analysisresult/bmiCalculation.do");
         list.add("/analysisresult/getHtmlView.do");
         list.add("/app/analysisresult/getHtmlView.do");
+        list.add("/analysisresult/bpCalculation.do");
+        list.add("/app/analysisresult/bpCalculation.do");
+        list.add("/analysisresult/getBpCalculationHtmlView.do");
+        list.add("/app/analysisresult/getBpCalculationHtmlView.do");
         return list;
     }
 

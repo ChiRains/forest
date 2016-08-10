@@ -17,6 +17,11 @@ public class BrandUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/brand/toEdit.do");
         list.add("/admin/brand/add.do");
         list.add("/admin/brand/edit.do");
+        list.add("/admin/brand/enable.do");
+        list.add("/admin/brand/listMerchandise.do");
+        list.add("/admin/brand/toAddMerchandise.do");
+        list.add("/admin/brand/addMerchandise.do");
+        list.add("/admin/brand/deleteMerchandise.do");
         return list;
     }
 

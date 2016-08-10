@@ -50,6 +50,7 @@ public class ArticleController {
     public FrontPagingView list(ArticleQuery articleQuery, PPage pPage) {
 
         AssertUtil.assertNotNull(articleQuery.getClassifyId(), "ID不能为空");
+        articleQuery.setEnable(1);
         Page<Article> page = articleService.page(articleQuery, pPage.getPageStart(), pPage.getPageSize());
         List<ArticleVO> articleVOs = articleHandler.toVOList(page.getData());
         for (ArticleVO articleVO : articleVOs) {
