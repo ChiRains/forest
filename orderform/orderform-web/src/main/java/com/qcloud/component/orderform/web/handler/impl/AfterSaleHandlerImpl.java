@@ -26,7 +26,6 @@ import com.qcloud.component.orderform.web.vo.AfterSaleOrderItemVO;
 import com.qcloud.component.orderform.web.vo.personal.AfterSaleItemVO;
 import com.qcloud.component.orderform.web.vo.personal.AfterSaleVO;
 import com.qcloud.component.parameter.ParameterClient;
-import com.qcloud.component.publicdata.model.Classify;
 import com.qcloud.component.sellercenter.QMerchant;
 import com.qcloud.component.sellercenter.SellercenterClient;
 import com.qcloud.pirates.core.xml.Xml;
@@ -213,6 +212,7 @@ public class AfterSaleHandlerImpl implements AfterSaleHandler {
         afterSaleInfo.setAfterSaleSum(afterSaleOrder.getAfterSaleSum());
         afterSaleInfo.setAfterSaleType(afterSaleOrder.getAfterSaleType().getKey());
         afterSaleInfo.setExplain(afterSaleOrder.getExplain());
+        afterSaleInfo.setAfterSaleId(afterSaleOrder.getAfterSaleId());
         return afterSaleInfo;
     }
 

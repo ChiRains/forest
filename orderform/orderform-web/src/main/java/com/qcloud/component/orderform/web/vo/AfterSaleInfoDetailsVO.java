@@ -7,6 +7,8 @@ public class AfterSaleInfoDetailsVO {
 
     private int                              afterSaleType;
 
+    private long                             afterSaleId;
+
     private String                           reason;
 
     private String                           explain;
@@ -123,5 +125,15 @@ public class AfterSaleInfoDetailsVO {
     public void setMessageList(List<AfterSaleInfoMessage> messageList) {
 
         this.messageList = messageList;
+    }
+
+    public long getAfterSaleId() {
+
+        return afterSaleId;
+    }
+
+    public void setAfterSaleId(long afterSaleId) {
+
+        this.afterSaleId = afterSaleId;
     }
 }

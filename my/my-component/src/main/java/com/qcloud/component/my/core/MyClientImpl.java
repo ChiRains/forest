@@ -335,9 +335,9 @@ public class MyClientImpl implements MyClient {
         myEvaluationService.add(myEvaluation);
         myToEvaluationService.synAppendEvaluation(toEvaluationId, evaluationId);
         boolean result = canEvaluate(userId, myToEvaluation.getSubOrderId());
-        if (!result) {
-            updateMyOrderFormState(userId, myToEvaluation.getOrderId(), MyOrderStateType.EVALUATED.getKey());
-        }
+        // if (!result) {
+        // updateMyOrderFormState(userId, myToEvaluation.getOrderId(), MyOrderStateType.EVALUATED.getKey());
+        // }
         return true;
     }
 
