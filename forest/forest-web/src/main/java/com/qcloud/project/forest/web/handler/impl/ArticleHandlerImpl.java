@@ -49,6 +49,7 @@ public class ArticleHandlerImpl implements ArticleHandler {
         String json = Json.toJson(article);
         ArticleVO articleVO = Json.toObject(json, ArticleVO.class, true);
         articleVO.setDate(DateUtil.date2String(article.getDate(), "yyyy年MM月dd日"));
+        articleVO.setEvaluationCount(articleEvaluationService.countEnable(article.getId()));
         if (articleVO.getImage() != null) {
             articleVO.setImage(fileSDKClient.getFileServerUrl() + articleVO.getImage());
         } else {

@@ -18,6 +18,7 @@ import com.qcloud.pirates.web.page.PageParameterUtil;
 import com.qcloud.project.forest.model.ArticleEvaluation;
 import com.qcloud.project.forest.model.query.ArticleEvaluationQuery;
 import com.qcloud.project.forest.service.ArticleEvaluationService;
+import com.qcloud.project.forest.service.ArticleService;
 import com.qcloud.project.forest.web.handler.ArticleEvaluationHandler;
 import com.qcloud.project.forest.web.vo.ArticleEvaluationVO;
 
@@ -32,6 +33,9 @@ public class ArticleEvaluationController {
 
     @Autowired
     private ArticleEvaluationHandler articleEvaluationHandler;
+
+    @Autowired
+    private ArticleService           articleService;
 
     /**
      * 评论列表

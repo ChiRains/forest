@@ -102,4 +102,10 @@ public class ArticleEvaluationDaoMysqlImpl implements ArticleEvaluationDao {
         List<ArticleEvaluation> list = sqlOperator.selectList("com.qcloud.project.forest.dao.mysql.mapper.ArticleEvaluationMapper.listAll");
         return list;
     }
+
+    @Override
+    public int countEnable(Long id) {
+
+        return sqlOperator.selectOne("com.qcloud.project.forest.dao.mysql.mapper.ArticleEvaluationMapper.countEnable", id);
+    }
 }

@@ -1,4 +1,4 @@
-package com.qcloud.component.publicdata.web.Util;
+package com.qcloud.component.publicdata.web.util;
 
 import java.io.UnsupportedEncodingException;
 import java.text.Collator;

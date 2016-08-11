@@ -30,4 +30,9 @@
         and content like #{keyWord}
         </if>
     </select> 
+    <select id="countEnable" parameterType="java.util.HashMap" resultType="Integer">
+	select count(*) from `forest_article_evaluation` where 1=1
+		and articleId=#{id}
+        and state=1
+    </select> 
 </mapper>
