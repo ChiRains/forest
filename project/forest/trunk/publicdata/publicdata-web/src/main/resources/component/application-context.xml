@@ -27,6 +27,7 @@
 
 	<pirates:component-scan base-package="com.qcloud.component.publicdata.web.controller"></pirates:component-scan>
 	<pirates:component-scan base-package="com.qcloud.component.publicdata.web.handler.impl"></pirates:component-scan>
+	<pirates:component-scan base-package="com.qcloud.component.publicdata.web.helper"></pirates:component-scan>
 	
 	<pirates:uriHandler class="com.qcloud.component.publicdata.web.handler.url.ProvinceUriHandlerImpl"></pirates:uriHandler>	
 	<pirates:uriHandler class="com.qcloud.component.publicdata.web.handler.url.DistrictUriHandlerImpl"></pirates:uriHandler>	

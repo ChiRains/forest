@@ -82,4 +82,11 @@ public class ArticleEvaluationDaoCacheImpl implements ArticleEvaluationDao {
 
         return articleEvaluationDaoMysqlImpl.listAll();
     }
+
+    @Override
+    public int countEnable(Long id) {
+
+        // TODO Auto-generated method stub
+        return articleEvaluationDaoMysqlImpl.countEnable(id);
+    }
 }

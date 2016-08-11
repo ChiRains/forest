@@ -13,7 +13,7 @@ import com.qcloud.component.publicdata.model.Province;
 import com.qcloud.component.publicdata.service.CityService;
 import com.qcloud.component.publicdata.service.DistrictService;
 import com.qcloud.component.publicdata.service.ProvinceService;
-import com.qcloud.component.publicdata.web.Util.PinyinSort;
+import com.qcloud.component.publicdata.web.util.PinyinSort;
 import com.qcloud.component.publicdata.web.vo.CityStructVO;
 import com.qcloud.component.publicdata.web.vo.DistrictStructVO;
 import com.qcloud.component.publicdata.web.vo.ProvinceStructVO;

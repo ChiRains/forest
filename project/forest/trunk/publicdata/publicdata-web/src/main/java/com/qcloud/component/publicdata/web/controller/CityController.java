@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.qcloud.component.publicdata.KeyValueVO;
 import com.qcloud.component.publicdata.PublicdataClient;
 import com.qcloud.component.publicdata.model.City;
-import com.qcloud.component.publicdata.web.Util.PinyinSort;
+import com.qcloud.component.publicdata.web.util.PinyinSort;
 import com.qcloud.pirates.mvc.FrontAjaxView;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 
