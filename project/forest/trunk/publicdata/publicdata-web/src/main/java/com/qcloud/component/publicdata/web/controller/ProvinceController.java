@@ -2,6 +2,7 @@ package com.qcloud.component.publicdata.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,10 +13,12 @@ import com.qcloud.component.publicdata.model.Province;
 import com.qcloud.component.publicdata.service.CityService;
 import com.qcloud.component.publicdata.service.DistrictService;
 import com.qcloud.component.publicdata.service.ProvinceService;
+import com.qcloud.component.publicdata.web.Util.PinyinSort;
 import com.qcloud.component.publicdata.web.vo.CityStructVO;
 import com.qcloud.component.publicdata.web.vo.DistrictStructVO;
 import com.qcloud.component.publicdata.web.vo.ProvinceStructVO;
 import com.qcloud.pirates.mvc.FrontAjaxView;
+import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 
 @Controller
 @RequestMapping(value = ProvinceController.DIR)
@@ -88,6 +91,28 @@ public class ProvinceController {
         FrontAjaxView frontAjaxView = new FrontAjaxView();
         frontAjaxView.setMessage("查询成功");
         frontAjaxView.addObject("list", voList);
+        return frontAjaxView;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView listByInitial() {
+
+        List<Province> provinceList = provinceService.listAll();
+        String[] provinces = new String[provinceList.size()];
+        for (int i = 0, j = provinceList.size(); i < j; i++) {
+            provinces[i] = provinceList.get(i).getName();
+        }
+        List<Map<String, Object>> resultList = PinyinSort.SortByInitial(provinces);
+        List<String> strs = new ArrayList<String>();
+        for (Map<String, Object> map : resultList) {
+            for (Object string : map.values()) {
+                strs.add(string.toString());
+            }
+        }
+        FrontAjaxView frontAjaxView = new FrontAjaxView();
+        frontAjaxView.setMessage("查询成功");
+        frontAjaxView.addObject("provinceList", strs);
         return frontAjaxView;
     }
 }

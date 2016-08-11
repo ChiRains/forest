@@ -2,12 +2,14 @@ package com.qcloud.component.publicdata.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.qcloud.component.publicdata.KeyValueVO;
 import com.qcloud.component.publicdata.PublicdataClient;
 import com.qcloud.component.publicdata.model.City;
+import com.qcloud.component.publicdata.web.Util.PinyinSort;
 import com.qcloud.pirates.mvc.FrontAjaxView;
 import com.qcloud.pirates.web.mvc.annotation.PiratesApp;
 
@@ -71,6 +73,28 @@ public class CityController {
         FrontAjaxView frontAjaxView = new FrontAjaxView();
         frontAjaxView.setMessage("查询成功");
         frontAjaxView.addObject("cityList", strList);
+        return frontAjaxView;
+    }
+
+    @PiratesApp
+    @RequestMapping
+    public FrontAjaxView listByInitial(String province) {
+
+        List<City> cityList = publicdataClient.listAllCity(province);
+        String[] cities = new String[cityList.size()];
+        for (int i = 0, j = cityList.size(); i < j; i++) {
+            cities[i] = cityList.get(i).getName();
+        }
+        List<Map<String, Object>> resultList = PinyinSort.SortByInitial(cities);
+        List<String> strs = new ArrayList<String>();
+        for (Map<String, Object> map : resultList) {
+            for (Object string : map.values()) {
+                strs.add(string.toString());
+            }
+        }
+        FrontAjaxView frontAjaxView = new FrontAjaxView();
+        frontAjaxView.setMessage("查询成功");
+        frontAjaxView.addObject("cityList", strs);
         return frontAjaxView;
     }
 }

@@ -87,6 +87,8 @@ public class AnalysisresultUriHandlerImpl extends AbstractUriHandler {
         List<String> list = new ArrayList<String>();
         list.add("/app/analysisresult/bmiCalculation.do");
         list.add("/app/analysisresult/getHtmlView.do");
+        list.add("/analysisresult/getBpCalculationHtmlView.do");
+        list.add("/app/analysisresult/getBpCalculationHtmlView.do");
         return list;
     }
 }

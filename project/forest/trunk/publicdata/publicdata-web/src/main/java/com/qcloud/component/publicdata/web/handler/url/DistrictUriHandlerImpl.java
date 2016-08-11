@@ -1,12 +1,16 @@
 package com.qcloud.component.publicdata.web.handler.url;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.qcloud.pirates.web.filter.AbstractUriHandler;
+
 public class DistrictUriHandlerImpl extends AbstractUriHandler {
+
     @Override
     public List<String> adminUris() {
+
         List<String> list = new ArrayList<String>();
         list.add("/admin/district/list.do");
         list.add("/admin/district/toAdd.do");
@@ -18,6 +22,7 @@ public class DistrictUriHandlerImpl extends AbstractUriHandler {
 
     @Override
     public List<String> permissionUris() {
+
         List<String> list = new ArrayList<String>();
         list.add("/admin/district/list.do");
         list.add("/admin/district/toAdd.do");
@@ -26,7 +31,7 @@ public class DistrictUriHandlerImpl extends AbstractUriHandler {
         list.add("/admin/district/edit.do");
         return list;
     }
-    
+
     @Override
     public Map<String, List<String>> permissionRelaMap() {
 
@@ -41,10 +46,21 @@ public class DistrictUriHandlerImpl extends AbstractUriHandler {
 
     @Override
     public List<String> whiteNameUris() {
+
         List<String> list = new ArrayList<String>();
         list.add("/district/queryByCity.do");
         list.add("/district/listByCity.do");
         list.add("/district/listDistrictByCity.do");
+        list.add("/district/listByInitial.do");
+        list.add("/app/district/listByInitial.do");
+        return list;
+    }
+
+    @Override
+    public List<String> appUris() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("/app/district/listByInitial.do");
         return list;
     }
 }
