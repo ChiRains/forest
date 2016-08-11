@@ -51,6 +51,16 @@ public class ProvinceUriHandlerImpl extends AbstractUriHandler {
         list.add("/province/list.do");
         list.add("/province/listProvince.do");
         list.add("/province/listAddress3grade.do");
+        list.add("/province/listByInitial.do");
+        list.add("/app/province/listByInitial.do");
+        return list;
+    }
+
+    @Override
+    public List<String> appUris() {
+
+        List<String> list = new ArrayList<String>();
+        list.add("/app/province/listByInitial.do");
         return list;
     }
 }

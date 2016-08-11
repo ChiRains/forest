@@ -55,11 +55,13 @@ public class CityUriHandlerImpl extends AbstractUriHandler {
         list.add("/city/listByProvince.do");
         list.add("/city/listCityByProvince.do");
         list.add("/city/listAllCity.do");
+        list.add("/city/listByInitial.do");
         //
         list.add("/app/city/queryByProvince.do");
         list.add("/app/city/listByProvince.do");
         list.add("/app/city/listCityByProvince.do");
         list.add("/app/city/listAllCity.do");
+        list.add("/app/city/listByInitial.do");
         return list;
     }
 
@@ -71,6 +73,7 @@ public class CityUriHandlerImpl extends AbstractUriHandler {
         list.add("/app/city/listByProvince.do");
         list.add("/app/city/listCityByProvince.do");
         list.add("/app/city/listAllCity.do");
+        list.add("/app/city/listByInitial.do");
         return list;
     }
 }
