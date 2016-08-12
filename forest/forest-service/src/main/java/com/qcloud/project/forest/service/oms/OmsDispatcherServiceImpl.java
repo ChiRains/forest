@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.qcloud.component.goods.CommoditycenterClient;
 import com.qcloud.component.goods.QUnifiedMerchandise;
-import com.qcloud.component.goods.model.MerchandiseSpecifications;
 import com.qcloud.component.my.InvoiceType;
 import com.qcloud.component.my.NeedInvoiceType;
 import com.qcloud.component.orderform.OrderformClient;
@@ -41,7 +40,7 @@ public class OmsDispatcherServiceImpl implements OmsDispatcherService {
     private CommoditycenterClient commoditycenterClient;
 
     @Autowired
-    private PayRecordClient             payClient;
+    private PayRecordClient       payClient;
 
     @Override
     public boolean deliverOrder(QueryForm queryForm) {
@@ -135,6 +134,7 @@ public class OmsDispatcherServiceImpl implements OmsDispatcherService {
     public XmlOrderBatch getBatchOrder(QueryForm queryForm) {
 
         XmlOrderBatch xmlOrderBatch = new XmlOrderBatch();
+        
         List<Order> list = new ArrayList<Order>();
         Order order1 = new Order();
         order1.setBuyer_cod_fee(1);

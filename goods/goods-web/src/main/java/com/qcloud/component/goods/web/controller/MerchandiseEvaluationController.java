@@ -25,6 +25,7 @@ import com.qcloud.component.my.QMyToAppendEvaluation;
 import com.qcloud.component.my.QMyToEvaluation;
 import com.qcloud.component.personalcenter.PersonalcenterClient;
 import com.qcloud.component.personalcenter.QUser;
+import com.qcloud.component.sellercenter.model.key.TypeEnum.StatusType;
 import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.mvc.FrontAjaxView;
 import com.qcloud.pirates.mvc.FrontPagingView;
@@ -75,6 +76,9 @@ public class MerchandiseEvaluationController {
         Page<MerchandiseEvaluation> page = merchandiseEvaluationService.page(merchandiseId, t, start, PAGE_SIZE);
         List<MerchandiseEvaluationVO> voList = merchandiseEvaluationHandler.toVOList(page.getData());
         List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
+        long goodEvaluation = 0;
+        long middleEvaluation = 0;
+        long lowEvaluation = 0;
         for (MerchandiseEvaluationVO vo : voList) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("addContent", vo.getAddContent() != null ? vo.getAddContent() : "");
@@ -94,22 +98,19 @@ public class MerchandiseEvaluationController {
             map.put("star", vo.getStar() / 10);
             map.put("time", vo.getTime());
             map.put("userName", vo.getUserName());
+            // 好评、中评、差评
+            int star = vo.getStar();
+            if (StarLevelType.CP.getKey() >= star) {
+                lowEvaluation = lowEvaluation + 1;
+            } else if (StarLevelType.ZP.getKey() >= star && star > StarLevelType.CP.getKey()) {
+                middleEvaluation = middleEvaluation + 1;
+            } else {
+                goodEvaluation = goodEvaluation + 1;
+            }
             mapList.add(map);
         }
         FrontPagingView view = new FrontPagingView(pageNum, PAGE_SIZE, page.getCount());
         view.setList(mapList);
-        List<UnifiedMerchandise> unifiedMerchandiseList = unifiedMerchandiseService.listByMerchandise(merchandiseId);
-        long goodEvaluation = 0;
-        long middleEvaluation = 0;
-        long lowEvaluation = 0;
-        for (UnifiedMerchandise unifiedMerchandise : unifiedMerchandiseList) {
-            goodEvaluation = goodEvaluation + unifiedMerchandise.getGoodEvaluation();
-            middleEvaluation = middleEvaluation + unifiedMerchandise.getMiddleEvaluation();
-            lowEvaluation = lowEvaluation + unifiedMerchandise.getLowEvaluation();
-        }
-        view.addObject("goodEvaluation", goodEvaluation);
-        view.addObject("middleEvaluation", middleEvaluation);
-        view.addObject("lowEvaluation", lowEvaluation);
         view.addObject("merchandiseId", merchandiseId);
         return view;
     }
