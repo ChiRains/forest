@@ -21,19 +21,19 @@
     
      <select id="list" parameterType="java.util.HashMap" resultType="MerchandiseEvaluation">  
         select * from `${table_name}` WHERE merchandiseId=#{merchandiseId} AND status=#{status}
-<!--          AND star &gt;= #{star} -->
-<!--         <if test="nextStar != 0"> -->
-<!--             AND star &lt; #{nextStar} -->
-<!--         </if> -->
-<!--          ORDER BY time DESC limit #{start},#{count} -->
+         AND star &gt;= #{star}
+        <if test="nextStar != 0">
+            AND star &lt; #{nextStar}
+        </if>
+         ORDER BY time DESC limit #{start},#{count}
     </select>
     
     <select id="count" parameterType="java.util.HashMap" resultType="Integer">  
        select count(*) from `${table_name}` where merchandiseId=#{merchandiseId} AND status=#{status}
-<!--         AND star &gt;= #{star}  -->
-<!--         <if test="nextStar != 0"> -->
-<!--             AND star &lt; #{nextStar} -->
-<!--         </if> -->
+        AND star &gt;= #{star} 
+        <if test="nextStar != 0">
+            AND star &lt; #{nextStar}
+        </if>
     </select>
     
      <delete id="deleteByMerchandiseId">

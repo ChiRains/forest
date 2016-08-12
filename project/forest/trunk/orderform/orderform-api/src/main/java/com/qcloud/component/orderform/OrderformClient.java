@@ -18,7 +18,7 @@ public interface OrderformClient {
     QOrder getOrder(String orderNumber);
 
     QOrder getOrder(Long orderId, Date orderDate);
-
+    
     QMerchantOrder getMerchantOrder(String orderNumber);
 
     QMerchantOrder getMerchantOrder(Long subOrderId, Date orderDate);
