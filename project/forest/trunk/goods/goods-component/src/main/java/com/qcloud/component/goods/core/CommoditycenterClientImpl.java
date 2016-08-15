@@ -29,6 +29,7 @@ import com.qcloud.component.goods.model.key.TypeEnum.MerchandiseStateType;
 import com.qcloud.component.goods.model.key.TypeEnum.OrderType;
 import com.qcloud.component.goods.model.key.TypeEnum.QueryItemType;
 import com.qcloud.component.goods.model.key.TypeEnum.QueryType;
+import com.qcloud.component.goods.model.key.TypeEnum.StarLevelType;
 import com.qcloud.component.goods.model.query.UnifiedMerchandiseQuery;
 import com.qcloud.component.goods.service.CombinationMerchandiseItemService;
 import com.qcloud.component.goods.service.MerchandiseDealRecordService;
@@ -377,6 +378,19 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
         long goodEvaluation = 0;
         long totalSalesVolume = 0;
         long unifiedMerchandiseId = 0;
+        // 取全部
+        Page<MerchandiseEvaluation> page = merchandiseEvaluationService.page(merchandiseId, StarLevelType.get(-1), 0, Integer.MAX_VALUE);
+        for (MerchandiseEvaluation merchandiseEvaluation : page.getData()) {
+            int star = merchandiseEvaluation.getStar();
+            if (StarLevelType.CP.getKey() >= star) {
+                lowEvaluation = lowEvaluation + 1;
+            } else if (StarLevelType.ZP.getKey() >= star && star > StarLevelType.CP.getKey()) {
+                middleEvaluation = middleEvaluation + 1;
+            } else {
+                goodEvaluation = goodEvaluation + 1;
+            }
+        }
+        // 组合商品评价数不能取统一商品的
         List<UnifiedMerchandise> unifiedMerchandises = unifiedMerchandiseService.listByMerchandise(merchandiseId, MerchandiseStateType.ONLINE);
         for (UnifiedMerchandise unifiedMerchandise : unifiedMerchandises) {
             // 价格
@@ -385,9 +399,6 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
                 lowPrice = unifiedMerchandise.getPrice();
                 unifiedMerchandiseId = unifiedMerchandise.getId();
             }
-            lowEvaluation = lowEvaluation + unifiedMerchandise.getLowEvaluation();
-            middleEvaluation = middleEvaluation + unifiedMerchandise.getMiddleEvaluation();
-            goodEvaluation = goodEvaluation + unifiedMerchandise.getGoodEvaluation();
             totalSalesVolume = totalSalesVolume + unifiedMerchandise.getSalesVolume() + unifiedMerchandise.getVirtualSalesVolume();
         }
         DecimalFormat df = new DecimalFormat("0.00");// 格式化小数
