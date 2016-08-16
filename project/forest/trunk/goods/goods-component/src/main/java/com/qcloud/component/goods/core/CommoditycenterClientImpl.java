@@ -410,10 +410,10 @@ public class CommoditycenterClientImpl implements CommoditycenterClient {
         entity.setTotalSalesVolume(totalSalesVolume);
         long totalEvaluation = lowEvaluation + middleEvaluation + goodEvaluation;
         if (totalEvaluation > 0) {
-            float rate = (float) goodEvaluation / totalEvaluation;
-            entity.setHpRate(df.format(rate));
+            double rate = (double) goodEvaluation / totalEvaluation;
+            entity.setHpRate(Double.valueOf(df.format(rate)));
         } else {
-            entity.setHpRate("0.00");
+            entity.setHpRate(0.00);
         }
         for (MerchandiseStateType stateType : MerchandiseStateType.values()) {
             if (stateType.getKey() == entity.getState()) {
