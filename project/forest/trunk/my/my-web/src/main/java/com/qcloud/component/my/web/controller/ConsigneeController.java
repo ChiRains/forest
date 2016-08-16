@@ -175,13 +175,13 @@ public class ConsigneeController {
 
         QUser user = PageParameterUtil.getParameterValues(request, PersonalcenterClient.USER_LOGIN_PARAMETER_KEY);
         Consignee consignee = consigneeService.getDefault(user.getId());
+        FrontAjaxView view = new FrontAjaxView();
         if (consignee == null) {
-            FrontAjaxView view = new FrontAjaxView();
+            view.addObject("consignee", null);
             view.setMessage("获取收货人信息成功.");
             return view;
         }
         ConsigneeVO vo = consigneeHandler.toVO(consignee);
-        FrontAjaxView view = new FrontAjaxView();
         view.setMessage("获取收货人信息成功.");
         view.addObject("consignee", vo);
         return view;
