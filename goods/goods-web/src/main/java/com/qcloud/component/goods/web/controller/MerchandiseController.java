@@ -211,10 +211,13 @@ public class MerchandiseController {
                 }
                 merchandiseVO.setSpecifications(sb.toString());
             }
-            long sum = unifiedMerchandise.getGoodEvaluation() + unifiedMerchandise.getMiddleEvaluation() + unifiedMerchandise.getLowEvaluation();
             int goodEvaluationRate = 0;
+            long sum = merchandiseEvaluationService.getEvaluationCount(unifiedMerchandise.getMerchandiseId(), StarLevelType.ALL);
+            // long sum = unifiedMerchandise.getGoodEvaluation() + unifiedMerchandise.getMiddleEvaluation() + unifiedMerchandise.getLowEvaluation();
+            long goodEvaluation = merchandiseEvaluationService.getEvaluationCount(unifiedMerchandise.getMerchandiseId(), StarLevelType.HP);
             if (sum != 0) {
-                goodEvaluationRate = new Double(unifiedMerchandise.getGoodEvaluation() * 100 / sum).intValue();
+                // goodEvaluationRate = new Double(unifiedMerchandise.getGoodEvaluation() * 100 / sum).intValue();
+                goodEvaluationRate = new Double(goodEvaluation * 100 / sum).intValue();
             }
             merchandiseVO.setGoodEvaluationRate(goodEvaluationRate);
             // vip 价格

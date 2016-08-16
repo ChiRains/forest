@@ -87,7 +87,7 @@ public class MerchandiseEntity implements QMerchandise {
     private long   totalSalesVolume;
 
     // 好评率
-    private String hpRate;
+    private double hpRate;
 
     // 状态(1, "待初始化" 2,"新增" 3,"待审核" 4, "上线" 5"下线")
     private String stateStr;
@@ -404,12 +404,12 @@ public class MerchandiseEntity implements QMerchandise {
         this.totalSalesVolume = totalSalesVolume;
     }
 
-    public String getHpRate() {
+    public double getHpRate() {
 
         return hpRate;
     }
 
-    public void setHpRate(String hpRate) {
+    public void setHpRate(double hpRate) {
 
         this.hpRate = hpRate;
     }
