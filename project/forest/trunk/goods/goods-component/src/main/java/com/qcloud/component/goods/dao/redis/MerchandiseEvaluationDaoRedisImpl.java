@@ -49,4 +49,10 @@ public class MerchandiseEvaluationDaoRedisImpl implements MerchandiseEvaluationD
 
         throw new NotImplementedException();
     }
+
+    @Override
+    public int getEvaluationCount(Long merchandiseId, StarLevelType starLevelType) {
+
+        throw new NotImplementedException();
+    }
 }

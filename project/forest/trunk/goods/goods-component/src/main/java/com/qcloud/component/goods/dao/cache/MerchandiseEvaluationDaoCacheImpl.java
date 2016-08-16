@@ -29,7 +29,7 @@ public class MerchandiseEvaluationDaoCacheImpl implements MerchandiseEvaluationD
     }
 
     @Override
-    public boolean delete(Long id, Long merchandiseId)  {
+    public boolean delete(Long id, Long merchandiseId) {
 
         return merchandiseEvaluationDaoMysqlImpl.delete(id, merchandiseId);
     }
@@ -50,5 +50,11 @@ public class MerchandiseEvaluationDaoCacheImpl implements MerchandiseEvaluationD
     public Page<MerchandiseEvaluation> page(long merchandiseId, StarLevelType starLevelType, int start, int count) {
 
         return merchandiseEvaluationDaoMysqlImpl.page(merchandiseId, starLevelType, start, count);
+    }
+
+    @Override
+    public int getEvaluationCount(Long merchandiseId, StarLevelType starLevelType) {
+
+        return merchandiseEvaluationDaoMysqlImpl.getEvaluationCount(merchandiseId, starLevelType);
     }
 }

@@ -76,9 +76,6 @@ public class MerchandiseEvaluationController {
         Page<MerchandiseEvaluation> page = merchandiseEvaluationService.page(merchandiseId, t, start, PAGE_SIZE);
         List<MerchandiseEvaluationVO> voList = merchandiseEvaluationHandler.toVOList(page.getData());
         List<Map<String, Object>> mapList = new ArrayList<Map<String, Object>>();
-        long goodEvaluation = 0;
-        long middleEvaluation = 0;
-        long lowEvaluation = 0;
         for (MerchandiseEvaluationVO vo : voList) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("addContent", vo.getAddContent() != null ? vo.getAddContent() : "");
@@ -98,21 +95,13 @@ public class MerchandiseEvaluationController {
             map.put("star", vo.getStar() / 10);
             map.put("time", vo.getTime());
             map.put("userName", vo.getUserName());
-            // 好评、中评、差评
-            int star = vo.getStar();
-            if (StarLevelType.CP.getKey() >= star) {
-                lowEvaluation = lowEvaluation + 1;
-            } else if (StarLevelType.ZP.getKey() >= star && star > StarLevelType.CP.getKey()) {
-                middleEvaluation = middleEvaluation + 1;
-            } else {
-                goodEvaluation = goodEvaluation + 1;
-            }
             mapList.add(map);
         }
         FrontPagingView view = new FrontPagingView(pageNum, PAGE_SIZE, page.getCount());
-        view.addObject("goodEvaluation", goodEvaluation);
-        view.addObject("middleEvaluation", middleEvaluation);
-        view.addObject("lowEvaluation", lowEvaluation);
+        view.addObject("goodEvaluation", merchandiseEvaluationService.getEvaluationCount(merchandiseId, StarLevelType.HP));
+        view.addObject("middleEvaluation", merchandiseEvaluationService.getEvaluationCount(merchandiseId, StarLevelType.ZP));
+        view.addObject("lowEvaluation", merchandiseEvaluationService.getEvaluationCount(merchandiseId, StarLevelType.CP));
+        view.addObject("allEvaluation", merchandiseEvaluationService.getEvaluationCount(merchandiseId, StarLevelType.ALL));
         view.setList(mapList);
         view.addObject("merchandiseId", merchandiseId);
         return view;

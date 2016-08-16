@@ -39,4 +39,12 @@
      <delete id="deleteByMerchandiseId">
         delete FROM `${table_name}` where `id` = #{id}
     </delete>  
+    
+    <select id="getEvaluationCount" parameterType="java.util.HashMap" resultType="Integer">  
+        select count(*) from `${table_name}` WHERE merchandiseId=#{merchandiseId} AND status=#{status}
+         AND star &gt;= #{star}
+        <if test="nextStar != 0">
+            AND star &lt; #{nextStar}
+        </if>
+    </select>
 </mapper>
