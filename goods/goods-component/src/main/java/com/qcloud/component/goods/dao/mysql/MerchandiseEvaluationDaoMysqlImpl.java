@@ -112,4 +112,23 @@ public class MerchandiseEvaluationDaoMysqlImpl implements MerchandiseEvaluationD
         page.setData(list);
         return page;
     }
+
+    @Override
+    public int getEvaluationCount(Long merchandiseId, StarLevelType starLevelType) {
+
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("table_name", getTableName(merchandiseId));
+        param.put("merchandiseId", merchandiseId);
+        param.put("status", StatusType.PASS.getKey());
+        int star = starLevelType.getKey();
+        int nextStar = 0;
+        if (star == StarLevelType.CP.getKey()) {
+            nextStar = StarLevelType.ZP.getKey();
+        } else if (star == StarLevelType.ZP.getKey()) {
+            nextStar = StarLevelType.HP.getKey();
+        }
+        param.put("star", star);
+        param.put("nextStar", nextStar);
+        return sqlOperator.selectOne("com.qcloud.component.goods.dao.mysql.mapper.MerchandiseEvaluationMapper.getEvaluationCount", param);
+    }
 }

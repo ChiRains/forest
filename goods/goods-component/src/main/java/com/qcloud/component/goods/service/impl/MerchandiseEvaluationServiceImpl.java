@@ -164,4 +164,10 @@ public class MerchandiseEvaluationServiceImpl implements MerchandiseEvaluationSe
         myClient.addMyEvaluation(merchandiseEvaluation.getId(), merchandiseEvaluation.getUserId(), merchandiseEvaluation.getMerchandiseId(), toEvaluationId);
         return true;
     }
+
+    @Override
+    public int getEvaluationCount(Long merchandiseId, StarLevelType starLevelType) {
+
+        return merchandiseEvaluationDao.getEvaluationCount(merchandiseId, starLevelType);
+    }
 }

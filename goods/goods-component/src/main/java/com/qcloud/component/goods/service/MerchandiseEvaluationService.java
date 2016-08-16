@@ -23,17 +23,18 @@ public interface MerchandiseEvaluationService {
     public Page<MerchandiseEvaluation> page(long merchandiseId, StarLevelType starLevelType, int start, int count);
 
     public boolean synUnifiedMerchandiseEvaluation(MerchandiseEvaluation merchandiseEvaluation);
+
     // /**
     // * 获取评论表数据
     // * @param idList obj[0]=评价表id,obj[1]=商品档案id
     // * @return
     // */
     // public List<MerchandiseEvaluation> getListByMerchandiseIds(List<Long[]> idList);
-    // /**
-    // * 获得商品差评、中评、好评或者全部评价数
-    // * @param merchandiseId
-    // * @param starLevelType
-    // * @return
-    // */
-    // public EvaluationcentMerchandiseEntity getQEvaluationcentMerchandise(Long merchandiseId);
+    /**
+     * 获得全部评价数、商品好评、中评、差评
+     * @param merchandiseId
+     * @param starLevelType
+     * @return
+     */
+    public int getEvaluationCount(Long merchandiseId, StarLevelType starLevelType);
 }
