@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.qcloud.component.goods.CommoditycenterClient;
 import com.qcloud.component.goods.QUnifiedMerchandise;
+import com.qcloud.component.my.DeliveryModeType;
 import com.qcloud.component.my.InvoiceType;
 import com.qcloud.component.my.NeedInvoiceType;
 import com.qcloud.component.orderform.OrderformClient;
@@ -15,6 +16,8 @@ import com.qcloud.component.orderform.QOrder;
 import com.qcloud.component.orderform.QOrderItem;
 import com.qcloud.component.pay.PayRecordClient;
 import com.qcloud.component.pay.QPayRecord;
+import com.qcloud.component.personalcenter.PersonalcenterClient;
+import com.qcloud.component.personalcenter.QUser;
 import com.qcloud.pirates.util.AssertUtil;
 import com.qcloud.pirates.util.DateUtil;
 import com.qcloud.project.forest.model.oms.Item;
@@ -42,6 +45,9 @@ public class OmsDispatcherServiceImpl implements OmsDispatcherService {
     @Autowired
     private PayRecordClient       payClient;
 
+    @Autowired
+    private PersonalcenterClient  personalcenterClient;
+
     @Override
     public boolean deliverOrder(QueryForm queryForm) {
 
@@ -58,7 +64,57 @@ public class OmsDispatcherServiceImpl implements OmsDispatcherService {
         String orderNumber = queryForm.getTid();
         QOrder qOrder = orderformClient.getOrder(orderNumber);
         Order order = toOrder(qOrder);
-        // 商品
+        order.setItemlist(toItemList(qOrder));
+        xmlOrder.setOrder(order);
+        return xmlOrder;
+    }
+
+    private Order toOrder(QOrder qOrder) {
+
+        // 订单
+        QMerchantOrder qMerchantOrder = qOrder.getMerchantOrderList().get(0);
+        QUser qUser = personalcenterClient.getUser(qOrder.getMobile());
+        Order order = new Order();
+        order.setTid(qOrder.getOrderNumber());
+        order.setStatus(String.valueOf(qOrder.getState()));
+        order.setModified(DateUtil.date2String(qOrder.getLastUpdateTime()));
+        order.setCreated(DateUtil.date2String(qOrder.getOrderDate()));
+        order.setShipping_type(DeliveryModeType.get(qMerchantOrder.getDeliveryMode()).getName());
+        order.setPost_fee(qOrder.getPostage());
+        order.setReceiver_name(qOrder.getConsignee());
+        order.setReceiver_state(qOrder.getProvince());
+        order.setReceiver_city(qOrder.getCity());
+        order.setReceiver_district(qOrder.getDistrict());
+        order.setReceiver_address(qOrder.getAddress());
+        // 无邮编
+        order.setReceiver_zip("-");
+        order.setReceiver_mobile(qOrder.getMobile());
+        order.setReceiver_phone(qOrder.getMobile());
+        order.setBuyer_nick(qOrder.getMobile());
+        order.setBuyer_name(qUser.getNickname());
+        order.setIs_tax(NeedInvoiceType.get(qOrder.getNeedInvoiceType()).getName());
+        order.setInvoice_type(InvoiceType.get(qOrder.getInvoiceType()).getName());
+        order.setInvoice_title(qOrder.getInvoice());
+        order.setPay_type(PaymentModeType.get(qOrder.getPaymentMode()).getName());
+        order.setReal_pay(qOrder.getCash());
+        order.setTotal_fee(qOrder.getSum());
+        List<QMerchantOrder> merchantOrderList = qOrder.getMerchantOrderList();
+        order.setBuyer_message(merchantOrderList.size() > 0 ? merchantOrderList.get(0).getExplain() : "");
+        // "无买家货到付款服务费"，货到付款第二期考虑
+        order.setBuyer_cod_fee(0);
+        // 无积分支付,下一期考虑积分
+        order.setPoint_fee(0);
+        order.setCoupon_pay(qOrder.getCoupon());
+        QPayRecord qPayRecord = payClient.getQPayRecord(qOrder.getId());
+        AssertUtil.assertNotNull(qPayRecord, "订单对应支付记录不存在." + qOrder.getId());
+        order.setPaytime(DateUtil.date2String(qPayRecord.getTime()));
+        // 无卖家备注
+        order.setSeller_memo("-");
+        return order;
+    }
+
+    private List<Item> toItemList(QOrder qOrder) {
+
         List<Item> itemlist = new ArrayList<Item>();
         List<QMerchantOrder> qMerchantOrders = qOrder.getMerchantOrderList();
         for (QMerchantOrder qMerchantOrder : qMerchantOrders) {
@@ -70,71 +126,28 @@ public class OmsDispatcherServiceImpl implements OmsDispatcherService {
                 Item item = new Item();
                 item.setProduct_id(String.valueOf(unifiedMerchandiseId));
                 // 商家商品编码(什么鬼)
-                item.setShop_product_id(String.valueOf(unifiedMerchandiseId));
+                item.setShop_product_id(qUnifiedMerchandise.getCode());
                 item.setTitle(qOrderItem.getName());
                 // 无规格id，组合商品如何给规格id
-                item.setSku_id(String.valueOf(unifiedMerchandiseId));
+                item.setSku_id(qUnifiedMerchandise.getCode());
                 // 无商家规格编码id，组合商品如何给规格id
-                item.setShop_sku_id(String.valueOf(unifiedMerchandiseId));
+                item.setShop_sku_id(qUnifiedMerchandise.getCode());
                 item.setSku_name(qUnifiedMerchandise.getSpecifications());
                 item.setQty_ordered(qOrderItem.getNumber());
-                // 单价，折后还是未打折？
+                // 单价，折后？
                 item.setPrice(qOrderItem.getDiscount());
                 // 子订单号,没卵用.
                 item.setOid(-1);
                 itemlist.add(item);
             }
         }
-        order.setItemlist(itemlist);
-        xmlOrder.setOrder(order);
-        return xmlOrder;
-    }
-
-    private Order toOrder(QOrder qOrder) {
-
-        // 订单
-        Order order = new Order();
-        order.setTid(qOrder.getOrderNumber());
-        order.setStatus(String.valueOf(qOrder.getState()));
-        order.setModified(DateUtil.date2String(qOrder.getLastUpdateTime()));
-        order.setCreated(DateUtil.date2String(qOrder.getOrderDate()));
-        order.setShipping_type("快递方式");
-        order.setPost_fee(qOrder.getPostage());
-        order.setReceiver_name(qOrder.getConsignee());
-        order.setReceiver_state("无收货省");
-        order.setReceiver_city("无收货市");
-        order.setReceiver_district("无收货区");
-        order.setReceiver_address(qOrder.getAddress());
-        order.setReceiver_zip("无邮编");
-        order.setReceiver_mobile(qOrder.getMobile());
-        order.setReceiver_phone(qOrder.getMobile());
-        order.setBuyer_nick(qOrder.getMobile());
-        order.setBuyer_name("无会员名称");
-        order.setIs_tax(NeedInvoiceType.get(qOrder.getNeedInvoiceType()).getName());
-        order.setInvoice_type(InvoiceType.get(qOrder.getInvoiceType()).getName());
-        order.setInvoice_title(qOrder.getInvoice());
-        order.setPay_type(PaymentModeType.get(qOrder.getPaymentMode()).getName());
-        order.setReal_pay(qOrder.getCash());
-        order.setTotal_fee(qOrder.getSum());
-        List<QMerchantOrder> merchantOrderList = qOrder.getMerchantOrderList();
-        order.setBuyer_message(merchantOrderList.size() > 0 ? merchantOrderList.get(0).getExplain() : "");
-        // "无买家货到付款服务费"
-        order.setBuyer_cod_fee(0);
-        // 无积分支付
-        order.setPoint_fee(0);
-        order.setCoupon_pay(qOrder.getCoupon());
-        QPayRecord qPayRecord = payClient.getQPayRecord(qOrder.getId());
-        AssertUtil.assertNotNull(qPayRecord, "订单对应支付记录不存在." + qOrder.getId());
-        order.setPaytime(DateUtil.date2String(qPayRecord.getTime()));
-        order.setSeller_memo("无卖家备注");
-        return order;
+        return itemlist;
     }
 
     @Override
     public XmlOrderBatch getBatchOrder(QueryForm queryForm) {
 
         XmlOrderBatch xmlOrderBatch = new XmlOrderBatch();
-        
         List<Order> list = new ArrayList<Order>();
         Order order1 = new Order();
         order1.setBuyer_cod_fee(1);

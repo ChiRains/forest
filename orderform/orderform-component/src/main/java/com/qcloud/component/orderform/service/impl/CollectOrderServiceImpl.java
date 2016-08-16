@@ -158,6 +158,9 @@ public class CollectOrderServiceImpl implements CollectOrderService {
         collectOrder.setConsignee(consignee.getName());
         collectOrder.setMobile(consignee.getMobile());
         collectOrder.setAddress(StringUtil.nullToEmpty(consignee.getProvince()) + StringUtil.nullToEmpty(consignee.getCity()) + StringUtil.nullToEmpty(consignee.getDistrict()) + consignee.getAddress());
+        collectOrder.setProvince(consignee.getProvince());
+        collectOrder.setCity(consignee.getCity());
+        collectOrder.setDistrict(consignee.getDistrict());
         return collectOrderDao.update(collectOrder);
     }
 

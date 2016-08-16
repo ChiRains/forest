@@ -11,6 +11,7 @@ import com.qcloud.component.my.AfterSaleType;
 import com.qcloud.component.orderform.OrderContext;
 import com.qcloud.component.orderform.OrderformClient;
 import com.qcloud.component.orderform.QAfterSaleOrder;
+import com.qcloud.component.orderform.QOrder;
 import com.qcloud.component.orderform.engine.AfterSaleSelecterService;
 import com.qcloud.component.orderform.engine.OrderSelecterService;
 import com.qcloud.component.orderform.engine.OrderService;
@@ -32,6 +33,7 @@ import com.qcloud.component.orderform.service.ReturnOrderService;
 import com.qcloud.component.orderform.service.SubOrderService;
 import com.qcloud.component.orderform.util.OrderTableSplitUtil;
 import com.qcloud.component.personalcenter.QUser;
+import com.qcloud.pirates.data.Page;
 import com.qcloud.pirates.util.AssertUtil;
 
 @Service
@@ -232,5 +234,11 @@ public class OrderformClientImpl implements OrderformClient {
     public String getNormalPersonalOrderStateDesc(int state) {
 
         return orderConfigService.getNormalPersonalOrderStateDesc(state);
+    }
+
+    @Override
+    public Page<QOrder> pageOrders(Date starttime, Date endtime, int state, int page, int pagesize) {
+
+        return null;
     }
 }

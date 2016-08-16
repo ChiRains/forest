@@ -339,4 +339,22 @@ public class OrderEntity implements QOrder {
 
         return collectOrder.getLastUpdateTime();
     }
+
+    @Override
+    public String getProvince() {
+
+        return collectOrder.getProvince();
+    }
+
+    @Override
+    public String getCity() {
+
+        return collectOrder.getCity();
+    }
+
+    @Override
+    public String getDistrict() {
+
+        return collectOrder.getDistrict();
+    }
 }

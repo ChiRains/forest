@@ -13,14 +13,14 @@ import com.qcloud.component.orderform.model.query.CollectOrderQuery;
 
 public interface CollectOrderMapper {
 
-	@Insert("insert into `${table_name}`(`id`,`orderNumber`,`userId`,`time`,`lastUpdateTime`,`sum`,`cash`,`discount`,`coupon`,`postage`,`integral`,`consumption`,`preferential`,`consignee`,`address`,`mobile`,`email`,`paymentMode`,`state`,`prestate`,`needInvoice`,`invoiceType`,`invoiceHead`,`invoiceContent`,`evaluation`,`afterSale`,`stateValidTime`)"
-			+ " values(#{id},#{orderNumber},#{userId},#{time},#{lastUpdateTime},#{sum},#{cash},#{discount},#{coupon},#{postage},#{integral},#{consumption},#{preferential},#{consignee},#{address},#{mobile},#{email},#{paymentMode},#{state},#{prestate},#{needInvoice},#{invoiceType},#{invoiceHead},#{invoiceContent},#{evaluation},#{afterSale},#{stateValidTime})")
+	@Insert("insert into `${table_name}`(`id`,`orderNumber`,`userId`,`time`,`lastUpdateTime`,`sum`,`cash`,`discount`,`coupon`,`postage`,`integral`,`consumption`,`preferential`,`consignee`,`address`,`mobile`,`email`,`paymentMode`,`state`,`prestate`,`needInvoice`,`invoiceType`,`invoiceHead`,`invoiceContent`,`evaluation`,`afterSale`,`stateValidTime`,`province`,`city`,`district`)"
+			+ " values(#{id},#{orderNumber},#{userId},#{time},#{lastUpdateTime},#{sum},#{cash},#{discount},#{coupon},#{postage},#{integral},#{consumption},#{preferential},#{consignee},#{address},#{mobile},#{email},#{paymentMode},#{state},#{prestate},#{needInvoice},#{invoiceType},#{invoiceHead},#{invoiceContent},#{evaluation},#{afterSale},#{stateValidTime},#{province},#{city},#{district})")
 	public void insert(CollectOrder collectOrder);
 
 	@Select("select * from `${table_name}` where `id`=#{id}")
 	public CollectOrder get(Long id);
 
-	@Update("update `${table_name}` set `orderNumber`=#{orderNumber},`userId`=#{userId},`time`=#{time},`lastUpdateTime`=#{lastUpdateTime},`sum`=#{sum},`cash`=#{cash},`discount`=#{discount},`coupon`=#{coupon},`postage`=#{postage},`integral`=#{integral},`consumption`=#{consumption},`preferential`=#{preferential},`consignee`=#{consignee},`address`=#{address},`mobile`=#{mobile},`email`=#{email},`paymentMode`=#{paymentMode},`state`=#{state},`prestate`=#{prestate},`needInvoice`=#{needInvoice},`invoiceType`=#{invoiceType},`invoiceHead`=#{invoiceHead},`invoiceContent`=#{invoiceContent},`evaluation`=#{evaluation},`afterSale`=#{afterSale},`stateValidTime`=#{stateValidTime} where `id`=#{id}")
+	@Update("update `${table_name}` set `orderNumber`=#{orderNumber},`userId`=#{userId},`time`=#{time},`lastUpdateTime`=#{lastUpdateTime},`sum`=#{sum},`cash`=#{cash},`discount`=#{discount},`coupon`=#{coupon},`postage`=#{postage},`integral`=#{integral},`consumption`=#{consumption},`preferential`=#{preferential},`consignee`=#{consignee},`address`=#{address},`mobile`=#{mobile},`email`=#{email},`paymentMode`=#{paymentMode},`state`=#{state},`prestate`=#{prestate},`needInvoice`=#{needInvoice},`invoiceType`=#{invoiceType},`invoiceHead`=#{invoiceHead},`invoiceContent`=#{invoiceContent},`evaluation`=#{evaluation},`afterSale`=#{afterSale},`stateValidTime`=#{stateValidTime},`province`=#{province},`city`=#{city},`district`=#{district} where `id`=#{id}")
 	public void update(CollectOrder collectOrder);
 
 	@Delete("delete from `${table_name}` where `id`=#{id}")

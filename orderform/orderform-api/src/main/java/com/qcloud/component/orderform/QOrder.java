@@ -62,4 +62,10 @@ public interface QOrder {
     String getUserStateStr();
 
     Date getLastUpdateTime();
+
+    String getProvince();
+
+    String getCity();
+
+    String getDistrict();
 }

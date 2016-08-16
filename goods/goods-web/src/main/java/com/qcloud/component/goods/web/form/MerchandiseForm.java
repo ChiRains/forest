@@ -1,5 +1,7 @@
 package com.qcloud.component.goods.web.form;
 
+import com.qcloud.pirates.util.AssertUtil;
+
 public class MerchandiseForm {
 
     private String  keywords;
@@ -89,6 +91,7 @@ public class MerchandiseForm {
                 orderType = 2;
                 break;
             default:
+                orderType = 1;
                 break;
             }
         }

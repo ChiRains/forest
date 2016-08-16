@@ -83,7 +83,7 @@ public class UnifiedMerchandiseDaoMysqlImpl implements UnifiedMerchandiseDao {
         param.put("merchantId", query.getMerchantId());
         QueryType queryType = query.getQueryType();
         if (QueryType.SALES_VOLUME.getKey() == queryType.getKey()) { // 销量
-            param.put("orderField", "salesVolume");
+            param.put("orderField", "vv");
         } else if (QueryType.DATE.getKey() == queryType.getKey()) {// 日期
             param.put("orderField", "recordTime");
         } else if (QueryType.PRICE.getKey() == queryType.getKey()) {// 价格
@@ -93,9 +93,14 @@ public class UnifiedMerchandiseDaoMysqlImpl implements UnifiedMerchandiseDao {
         } else if (QueryType.GOODEVALUATION.getKey() == queryType.getKey()) {// 好评
             param.put("orderField", "goodEvaluation");
         } else if (QueryType.COMPLEX.getKey() == queryType.getKey()) {// 综合 TODO
-            param.put("orderField", "clickRate");
+            if (query.getOrderType().getKey() == OrderType.ASE.getKey()) {
+                param.put("orderField", "vv desc,discount");
+            } else {
+                param.put("orderField", "vv asc,discount");
+            }
+            // param.put("orderField", "clickRate");
         }
-        param.put("orderType", query.getOrderType().getKey() == OrderType.ASE.getKey() ? "" : "desc");
+        param.put("orderType", query.getOrderType().getKey() == OrderType.ASE.getKey() ? "asc" : "desc");
         param.put("queryType", query.getQueryItemType().getKey());
         param.put("merchantClassifyId", query.getMerchantClassifyId());
         param.put("mallClassifyId", query.getMallClassifyId());

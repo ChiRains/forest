@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
 
     private static final String            MEMBERSHIPCARD_TYPE_CODE = "membershipCard";
 
-    @PostConstruct
+    @PostConstruct 
     public void init() {
 
         boolean mobile = enableAccountType(MOBILE_TYPE_CODE);

@@ -6,6 +6,7 @@ import java.util.Map;
 import com.qcloud.component.goods.QUnifiedMerchandise;
 import com.qcloud.component.my.AfterSaleType;
 import com.qcloud.component.personalcenter.QUser;
+import com.qcloud.pirates.data.Page;
 
 public interface OrderformClient {
 
@@ -18,7 +19,9 @@ public interface OrderformClient {
     QOrder getOrder(String orderNumber);
 
     QOrder getOrder(Long orderId, Date orderDate);
-    
+
+    Page<QOrder> pageOrders(Date starttime, Date endtime, int state, int page, int pagesize);
+
     QMerchantOrder getMerchantOrder(String orderNumber);
 
     QMerchantOrder getMerchantOrder(Long subOrderId, Date orderDate);
