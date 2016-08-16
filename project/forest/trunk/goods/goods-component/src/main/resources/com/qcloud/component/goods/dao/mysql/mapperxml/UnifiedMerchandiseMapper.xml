@@ -101,7 +101,7 @@
     </select>
     
     <select id="list4Front" parameterType="java.util.HashMap" resultType="UnifiedMerchandise">  
-        select * from `goods_unified_merchandise`  
+        select *,SUM(salesVolume + virtualSalesVolume) AS vv from `goods_unified_merchandise`  
         where 1=1 and `state`!=1 AND `state`!=5
         <if test="type !=null and type !=0">
         	and `type`=#{type}

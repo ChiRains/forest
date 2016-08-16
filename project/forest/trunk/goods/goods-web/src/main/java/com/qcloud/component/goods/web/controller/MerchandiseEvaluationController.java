@@ -110,6 +110,9 @@ public class MerchandiseEvaluationController {
             mapList.add(map);
         }
         FrontPagingView view = new FrontPagingView(pageNum, PAGE_SIZE, page.getCount());
+        view.addObject("goodEvaluation", goodEvaluation);
+        view.addObject("middleEvaluation", middleEvaluation);
+        view.addObject("lowEvaluation", lowEvaluation);
         view.setList(mapList);
         view.addObject("merchandiseId", merchandiseId);
         return view;

@@ -467,6 +467,9 @@ public class OrderServiceImpl implements OrderService {
         collectOrder.setState(orderConfigService.getNormalInitOrderState());
         collectOrder.setEvaluation(EnableType.ENABLE.getKey());
         collectOrder.setAfterSale(EnableType.ENABLE.getKey());
+        collectOrder.setProvince(consignee.getProvince());
+        collectOrder.setCity(consignee.getCity());
+        collectOrder.setDistrict(consignee.getDistrict());
         OrderEntity orderEntity = new OrderEntity(collectOrder);
         initOrder(orderEntity, context);
         return orderEntity;
